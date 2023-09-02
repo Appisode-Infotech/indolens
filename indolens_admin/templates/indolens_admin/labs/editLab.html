@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <style>
+    #map {
+        width: 100%;
+        height: 400px; /* Adjust the height as needed */
+    }
+
+
+    </style>
+    <!-- ===========================`====================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens admin - Edit Lab</title>
+
+    {% load static %}
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <!-- Favicon and Manifest -->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+
+    <!-- JavaScript Dependencies -->
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- Stylesheets -->
+    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar.html' %}
+        <div class="content">
+
+            <h2 class="mb-4">Edit a Lab</h2>
+            <div class="row mb-4">
+                <div class="col-xl-9">
+                    <form class="row g-3 needs-validation" novalidate="">
+                        <div class="col-md-6">
+
+                            <label class="form-label" for="storeName">Lab name</label>
+
+                            <input class="form-control" id="storeName" name="storeName" required="" type="text"
+                                   value=""/>
+                            <div class="invalid-feedback">Please provide a valid Lab name.</div>
+                        </div>
+                        <div class="col-md-6">
+
+                            <label class="form-label" for="storeDisplayName">Lab Display Name</label>
+
+                            <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
+                                   type="text" value=""/>
+                            <div class="invalid-feedback">Please provide a valid Lab display name.</div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label class="form-label" for="storePhone">Lab Phone</label>
+
+                            <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
+                                   value=""/>
+                            <div class="invalid-feedback">Please provide a valid Labphone number.</div>
+                        </div>
+                        <div class="col-md-4">
+
+                            <label class="form-label" for="storeGSTIN">Lab GSTIN</label>
+
+                            <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
+                                   value=""/>
+                            <div class="invalid-feedback">Please provide a valid Lab GSTIN.</div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label class="form-label" for="storeEmail">Lab Email</label>
+
+                            <input class="form-control" id="storeEmail" name="storeEmail" required="" type="text"
+                                   value=""/>
+                            <div class="invalid-feedback">Please provide a valid Labemail.</div>
+                        </div>
+
+                        <div class="col-md-4">
+
+                            <label class="form-label" for="storeCity">City</label>
+
+                            <input class="form-control" id="storeCity" name="storeCity" required="" type="text"/>
+                            <div class="invalid-feedback">Please provide a valid city.</div>
+                        </div>
+                        <div class="col-md-4">
+
+                            <label class="form-label" for="storeState">State</label>
+
+                            <input class="form-control" id="storeState" name="storeState" required="" type="text"/>
+                            <div class="invalid-feedback">Please provide a valid state.</div>
+                        </div>
+                        <div class="col-md-4">
+
+                            <label class="form-label" for="storeZipCode">Zip</label>
+
+                            <input class="form-control" id="storeZipCode" name="storeZipCode" required="" type="text"/>
+                            <div class="invalid-feedback">Please provide a valid zip.</div>
+                        </div>
+                        <div class="col-12">
+
+                            <label class="form-label" for="completeAddress">Complete Address</label>
+
+                            <textarea class="form-control" id="completeAddress" name="completeAddress" required
+                                      rows="3"> </textarea>
+                            <div class="invalid-feedback">Please provide a valid address.</div>
+                        </div>
+                        <div class="col-sm-12">
+                            <input class="form-control" id="searchInput" placeholder="Search for a location"
+                                   required type="text">
+                        </div>
+                        <div class="col-sm-12">
+                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates"
+                                   readonly
+                                   required type="text">
+                        </div>
+                        <div class="col-12" id="map"></div>
+
+                        <div class="col-12">
+
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            {% include 'footer.html' %}
+
+        </div>
+    </div>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+
+
+<script async
+        defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6O2CG9zBAksJH4SCgCZlbx3XRWVwzY1E&libraries=places&callback=initMap"></script>
+<script>
+        var map, marker, store_lat_lng, searchInput;
+
+        function initMap() {
+            var mapOptions = {
+                zoom: 12,
+            };
+
+            var mapDiv = document.getElementById('map');
+            map = new google.maps.Map(mapDiv, mapOptions);
+
+            store_lat_lng = document.getElementById('store_lat_lng');
+            searchInput = document.getElementById('searchInput');
+
+             // Set the default center to Bangalore
+             var defaultCenter = {
+                 lat: 12.9716,
+                 lng: 77.5946
+             };
+             map.setCenter(defaultCenter);
+            // Try to get the user's current position
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    var userLatLng = {
+                        lat: position.coords.latitude,
+                        lng: position.coords.longitude
+                    };
+
+                    map.setCenter(userLatLng);
+                    marker = new google.maps.Marker({
+                        position: userLatLng,
+                        map: map,
+                        draggable: true,
+                        title: 'Drag me to set the location',
+                    });
+
+                    google.maps.event.addListener(marker, 'dragend', function(event) {
+                        var lat = event.latLng.lat();
+                        var lng = event.latLng.lng();
+                        store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
+                    });
+
+                    store_lat_lng.value = 'Latitude: ' + userLatLng.lat + ', Longitude: ' + userLatLng.lng;
+                });
+            }
+
+            // Initialize Google Places Autocomplete for search
+            var autocomplete = new google.maps.places.Autocomplete(searchInput);
+            autocomplete.bindTo('bounds', map);
+
+            // Set listener to update map and marker on autocomplete selection
+            autocomplete.addListener('place_changed', function() {
+                var place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    return;
+                }
+
+                map.setCenter(place.geometry.location);
+
+                if (!marker) {
+                    marker = new google.maps.Marker({
+                        position: place.geometry.location,
+                        map: map,
+                        draggable: true,
+                        title: 'Drag me to set the location',
+                    });
+                    google.maps.event.addListener(marker, 'dragend', function(event) {
+                        var lat = event.latLng.lat();
+                        var lng = event.latLng.lng();
+                        store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
+                    });
+                } else {
+                    marker.setPosition(place.geometry.location);
+                }
+
+                var lat = marker.getPosition().lat();
+                var lng = marker.getPosition().lng();
+                store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
+            });
+        }
+
+
+
+
+</script>
+
+</body>
+
+</html>

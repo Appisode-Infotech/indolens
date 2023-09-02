@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens admin - Manage Sales Executive</title>
+
+    {% load static %}
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar.html' %}
+
+
+        <div class="content">
+
+            <div class="mb-9">
+                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                     id="projectSummary">
+                    <div class="row mb-4 gx-6 gy-3 align-items-center">
+                        <div class="col-auto">
+                            <h2 class="mb-0">Sales Executive<span class="fw-normal text-700 ms-3">(2)</span></h2>
+                        </div>
+                    </div>
+                    <div class="row g-3 justify-content-between align-items-end mb-4">
+
+                        <div class="col-12 col-sm-auto">
+                            <div class="d-flex align-items-center">
+                                <div class="search-box me-3">
+                                    <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
+                                        <input aria-label="Search" class="form-control search-input search"
+                                               placeholder="Search projects" type="search"/>
+                                        <span class="fas fa-search search-box-icon"></span>
+                                    </form>
+                                </div>
+                                <div class="col-auto"><a class="btn btn-primary px-5"
+                                                         href="{% url 'create_sales_executives' %}"><i
+                                        class="fa-solid fa-plus me-2"></i>Add Sales Executive</a></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="table-responsive scrollbar">
+                        <table class="table fs--1 mb-0 border-top border-200">
+                            <thead>
+                            <tr>
+                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
+
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                    scope="col" style="width:30%;">NAME
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                    PHONE
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                    EMAIL
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                    style="width:5%;">ASSIGNED TO STORE
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                    style="width:5%;">STATUS
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                    CREATED AT
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="deadline" scope="col" style="width:15%;">
+                                    CREATED BY
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                    style="width:5%;">UPDATED ON
+                                </th>
+
+                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                    style="width:5%;">UPDATED BY
+                                </th>
+
+                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                    style="width:5%;">ADDRESS
+                                </th>
+
+
+                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list" id="project-list-table-body">
+                            <tr class="position-static">
+                                <td>
+                                    <div class="avatar avatar-m"><img alt=""
+                                                                      class="rounded-circle" src="{% static 'img/team/32.png' %}"/>
+                                    </div>
+                                </td>
+                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_sales_executives' %}">Santhosh
+                                    Kumar</a>
+                                </td>
+
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">8660225160</p>
+                                </td>
+
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">devsandy12@gmail.com</p>
+                                </td>
+
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    <a class="text-decoration-none fw-semi-bold fs-0" href="{%url 'view_own_store'%}">Indolens
+                                        - 01</a>
+                                </td>
+
+                                <td class="align-middle white-space-nowrap text-end statuses"><span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
+                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                </td>
+                                <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                </td>
+                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                </td>
+                                <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                </td>
+                                <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                    <p class="fw-bo text-900 fs--1 mb-0">#31, first cross ,madanayakanahalli,
+                                        bangalore</p>
+                                </td>
+
+                                <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                    <div class="font-sans-serif btn-reveal-trigger position-static">
+                                        <button aria-expanded="false"
+                                                aria-haspopup="true"
+                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                data-boundary="window"
+                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
+                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
+                                                                                             href="{% url 'view_sales_executives' %}">View</a>
+                                            <a class="dropdown-item" href="{% url 'edit_sales_executives' %}">Update/Change
+                                                Password</a>
+                                            <a class="dropdown-item" href="{% url 'edit_sales_executives' %}">Allocate
+                                                Store</a>
+
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item text-danger" href="#!">Make Inactive</a>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
+                        <div class="d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
+                            all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                        </div>
+                        <div class="d-flex">
+                            <button class="page-link" data-list-pagination="prev"><span
+                                    class="fas fa-chevron-left"></span></button>
+                            <ul class="mb-0 pagination"></ul>
+                            <button class="page-link pe-0" data-list-pagination="next"><span
+                                    class="fas fa-chevron-right"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'footer.html' %}
+        </div>
+    </div>
+    <script>
+        var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
+        var navbarTop = document.querySelector('.navbar-top');
+        if (navbarTopStyle === 'darker') {
+          navbarTop.classList.add('navbar-darker');
+        }
+
+        var navbarVerticalStyle = localStorage.getItem('phoenixNavbarVerticalStyle');
+        var navbarVertical = document.querySelector('.navbar-vertical');
+        if (navbarVerticalStyle === 'darker') {
+          navbarVertical.classList.add('navbar-darker');
+        }
+
+
+
+
+
+
+
+
+
+    </script>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+
+</body>
+
+</html>
