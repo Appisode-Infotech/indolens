@@ -3876,14 +3876,15 @@
 
   const fromValidationInit = () => {
     const forms = document.querySelectorAll('.needs-validation');
-
     forms.forEach(form => {
       form.addEventListener(
         'submit',
         event => {
-          event.preventDefault();
-          event.stopPropagation();
-          form.classList.add('was-validated');
+        if (!form.checkValidity()) {
+        event.preventDefault();   // Prevent submission if the form is not valid.
+        event.stopPropagation();  // Stop the event from propagating further.
+      }
+      form.classList.add('was-validated');
         },
         false
       );

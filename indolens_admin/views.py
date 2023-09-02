@@ -70,6 +70,10 @@ def manageSubAdmins(request):
 
 
 def createSubAdmin(request):
+    if request.method == 'POST':
+        data = request.POST.get
+        print(data)
+        # return redirect('dashboard')
     return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
 
 
@@ -423,5 +427,5 @@ def viewCompletedStockRequests(request):
     return render(request, 'indolens_admin/stockRequests/viewCompletedStockRequests.html')
 
 
-def viewrejectedStockRequests(request):
+def viewRejectedStockRequests(request):
     return render(request, 'indolens_admin/stockRequests/viewrejectedStockRequests.html')

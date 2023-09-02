@@ -31,7 +31,7 @@ urlpatterns = [
     path('all_stock_requests/', viewAllStockRequests, name='all_stock_requests'),
     path('pending_stock_requests/', viewPendingStockRequests, name='pending_stock_requests'),
     path('completed_stock_requests/', viewCompletedStockRequests, name='completed_stock_requests'),
-    path('rejected_stock_requests/', viewrejectedStockRequests, name='rejected_stock_requests'),
+    path('rejected_stock_requests/', viewRejectedStockRequests, name='rejected_stock_requests'),
     # masters management
     path('manage_central_inventory_category/', manageMastersCategory, name='manage_central_inventory_category'),
     path('manage_central_inventory_category/add_product_category/', addProductCategory, name='add_product_category'),
