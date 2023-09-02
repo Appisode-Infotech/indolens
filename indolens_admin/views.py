@@ -71,8 +71,11 @@ def manageSubAdmins(request):
 
 def createSubAdmin(request):
     if request.method == 'POST':
-        data = request.POST.get
+        data = request.POST
+        profile_pic = request.FILES
+
         print(data)
+        print(profile_pic)
         # return redirect('dashboard')
     return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
 

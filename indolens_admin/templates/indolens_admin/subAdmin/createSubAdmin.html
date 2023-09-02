@@ -59,6 +59,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -76,13 +77,14 @@
             <h2 class="mb-4">Create a sub admin</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'create_sub_admin' %}" class="row g-3 needs-validation" novalidate="" method="post">
-                            {% csrf_token %}
+                    <form action="{% url 'create_sub_admin' %}" class="row g-3 needs-validation" novalidate=""
+                          method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="row g-4 mb-4" data-dropzone="data-dropzone"
-                             data-options='{"maxFiles":1,"data":[{"name":"avatar.png","size":"54kb","url":"/static/img/team/"}]}'>
+                             data-options='{"maxFiles":1,"data":[{"name":"avatar.png","size":"54kb","url":"/static/img/team"}]}'>
                             <div class="fallback">
-                                <input name="profilePic" type="file"/>
-                                <div class="invalid-feedback">Please upload profile picture.</div>
+                                <input class="form-control" id="profilePic" name="profilePic"
+                                       type="image"/>
                             </div>
                             <div class="col-md-auto">
                                 <div class="dz-preview dz-preview-single">

@@ -76,7 +76,8 @@
         {% include 'nav_bar.html' %}
         <div class="content">
 
-            <form class="mb-9">
+            <form class="mb-9" method="post">
+                {% csrf_token %}
                 <div class="row g-3 flex-between-end mb-5">
                     <div class="col-auto">
                         <h2 class="mb-2">Add a product</h2>
@@ -91,7 +92,7 @@
                 <h4 class="mb-3">Product Title</h4>
                 <div class="row g-5">
                     <div class="col-12 col-xl-8">
-                        <input class="form-control mb-5" type="text" placeholder="Write title here..."/>
+                        <input name="productTitle" class="form-control mb-5" type="text" placeholder="Write title here..."/>
                         <div class="mb-6">
                             <h4 class="mb-3"> Product Description</h4>
                             <textarea class="tinymce" name="content"
