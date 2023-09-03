@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html dir="ltr" lang="en-US">
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
 
 
     <!-- ===============================================-->
@@ -17,13 +17,13 @@
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicons/favicon-16x16.png' %}">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicons/favicon.ico' %}">
-    <link rel="manifest" href="{% static 'img/favicons/manifest.json' %}">
-    <meta name="msapplication-TileImage" content="{% static 'img/favicons/mstile-150x150.png' %}">
-    <meta name="theme-color" content="#ffffff">
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
     <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
     <script src="{% static 'js/config.js' %}"></script>
@@ -34,16 +34,16 @@
     <link href="{% static 'vendors/dropzone/dropzone.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
           rel="stylesheet">
     <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link href="{% static 'css/theme-rtl.min.css' %}" type="text/css" rel="stylesheet" id="style-rtl">
-    <link href="{% static 'css/theme.min.css' %}" type="text/css" rel="stylesheet" id="style-default">
-    <link href="{% static 'css/user-rtl.min.css' %}" type="text/css" rel="stylesheet" id="user-style-rtl">
-    <link href="{% static 'css/user.min.css' %}" type="text/css" rel="stylesheet" id="user-style-default">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
 
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -62,6 +62,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -76,7 +77,8 @@
         {% include 'nav_bar.html' %}
         <div class="content">
 
-            <form class="mb-9">
+            <form class="mb-9" method="post">
+                {% csrf_token %}
                 <div class="row g-3 flex-between-end mb-5">
                     <div class="col-auto">
                         <h2 class="mb-2">Add a product</h2>
@@ -84,81 +86,82 @@
                     </div>
                     <div class="col-auto">
                         <button class="btn btn-phoenix-secondary me-2 mb-2 mb-sm-0">Discard</button>
-<!--                        <button class="btn btn-phoenix-primary me-2 mb-2 mb-sm-0">Save draft</button>-->
+                        <!--                        <button class="btn btn-phoenix-primary me-2 mb-2 mb-sm-0">Save draft</button>-->
                         <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Publish product</button>
                     </div>
                 </div>
                 <h4 class="mb-3">Product Title</h4>
                 <div class="row g-5">
                     <div class="col-12 col-xl-8">
-                        <input class="form-control mb-5" type="text" placeholder="Write title here..."/>
+                        <input class="form-control mb-5" name="productTitle" placeholder="Write title here..."
+                               type="text"/>
                         <div class="mb-6">
                             <h4 class="mb-3"> Product Description</h4>
-                            <textarea class="tinymce" name="content"
-                                      data-tinymce='{"height":"15rem","placeholder":"Write a description here..."}'></textarea>
+                            <textarea class="tinymce" data-tinymce='{"height":"15rem","placeholder":"Write a description here..."}'
+                                      name="content"></textarea>
                         </div>
                         <h4 class="mb-3">Display images</h4>
-                        <div class="dropzone dropzone-multiple p-0 mb-5" id="my-awesome-dropzone"
-                             data-dropzone="data-dropzone">
+                        <div class="dropzone dropzone-multiple p-0 mb-5" data-dropzone="data-dropzone"
+                             id="my-awesome-dropzone">
                             <div class="fallback">
-                                <input name="file" type="file" multiple="multiple"/>
+                                <input multiple="multiple" name="file" type="file"/>
                             </div>
                             <div class="dz-preview d-flex flex-wrap">
                                 <div class="border bg-white rounded-3 d-flex flex-center position-relative me-2 mb-2"
-                                     style="height:80px;width:80px;"><img class="dz-image"
-                                                                          src="../../../assets/img/products/23.png"
-                                                                          alt="..."
-                                                                          data-dz-thumbnail="data-dz-thumbnail"/><a
-                                        class="dz-remove text-400" href="#!" data-dz-remove="data-dz-remove"><span
+                                     style="height:80px;width:80px;"><img alt="..."
+                                                                          class="dz-image"
+                                                                          data-dz-thumbnail="data-dz-thumbnail"
+                                                                          src="../../../assets/img/products/23.png"/><a
+                                        class="dz-remove text-400" data-dz-remove="data-dz-remove" href="#!"><span
                                         data-feather="x"></span></a></div>
                             </div>
                             <div class="dz-message text-600" data-dz-message="data-dz-message">
                                 Drag your photo here <span class="text-800">or </span>
                                 <button class="btn btn-link p-0" type="button">Browse from device</button>
-                                <br/><img class="mt-3 me-2" src="../../../assets/img/icons/image-icon.png" width="40"
-                                          alt=""/>
+                                <br/><img alt="" class="mt-3 me-2" src="../../../assets/img/icons/image-icon.png"
+                                          width="40"/>
                             </div>
                         </div>
                         <h4 class="mb-3">Inventory</h4>
                         <div class="row g-0 border-top border-bottom border-300">
                             <div class="col-sm-4">
-                                <div class="nav flex-sm-column border-bottom border-bottom-sm-0 border-end-sm border-300 fs--1 vertical-tab h-100 justify-content-between"
-                                     role="tablist" aria-orientation="vertical"><a
-                                        class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center active"
-                                        id="pricingTab" data-bs-toggle="tab" data-bs-target="#pricingTabContent"
-                                        role="tab" aria-controls="pricingTabContent" aria-selected="true"> <span
+                                <div aria-orientation="vertical"
+                                     class="nav flex-sm-column border-bottom border-bottom-sm-0 border-end-sm border-300 fs--1 vertical-tab h-100 justify-content-between" role="tablist"><a
+                                        aria-controls="pricingTabContent"
+                                        aria-selected="true" class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center active" data-bs-target="#pricingTabContent"
+                                        data-bs-toggle="tab" id="pricingTab" role="tab"> <span
                                         class="me-sm-2 fs-4 nav-icons" data-feather="tag"></span><span
                                         class="d-none d-sm-inline">Pricing</span></a>
-<!--                                    <a-->
-<!--                                        class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center"-->
-<!--                                        id="restockTab" data-bs-toggle="tab" data-bs-target="#restockTabContent"-->
-<!--                                        role="tab" aria-controls="restockTabContent" aria-selected="false"> <span-->
-<!--                                        class="me-sm-2 fs-4 nav-icons" data-feather="package"></span><span-->
-<!--                                        class="d-none d-sm-inline">Restock</span></a>-->
-<!--                                    <a-->
-<!--                                        class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center"-->
-<!--                                        id="shippingTab" data-bs-toggle="tab" data-bs-target="#shippingTabContent"-->
-<!--                                        role="tab" aria-controls="shippingTabContent" aria-selected="false"> <span-->
-<!--                                        class="me-sm-2 fs-4 nav-icons" data-feather="truck"></span><span-->
-<!--                                        class="d-none d-sm-inline">Shipping</span></a>-->
-<!--                                    <a-->
-<!--                                        class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center"-->
-<!--                                        id="productsTab" data-bs-toggle="tab" data-bs-target="#productsTabContent"-->
-<!--                                        role="tab" aria-controls="productsTabContent" aria-selected="false"> <span-->
-<!--                                        class="me-sm-2 fs-4 nav-icons" data-feather="globe"></span><span-->
-<!--                                        class="d-none d-sm-inline">Global Delivery</span></a>-->
-<!--                                    <a-->
-<!--                                        class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center"-->
-<!--                                        id="attributesTab" data-bs-toggle="tab" data-bs-target="#attributesTabContent"-->
-<!--                                        role="tab" aria-controls="attributesTabContent" aria-selected="false"> <span-->
-<!--                                        class="me-sm-2 fs-4 nav-icons" data-feather="sliders"></span><span-->
-<!--                                        class="d-none d-sm-inline">Attributes</span></a>-->
+                                    <!--                                    <a-->
+                                    <!--                                        class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center"-->
+                                    <!--                                        id="restockTab" data-bs-toggle="tab" data-bs-target="#restockTabContent"-->
+                                    <!--                                        role="tab" aria-controls="restockTabContent" aria-selected="false"> <span-->
+                                    <!--                                        class="me-sm-2 fs-4 nav-icons" data-feather="package"></span><span-->
+                                    <!--                                        class="d-none d-sm-inline">Restock</span></a>-->
+                                    <!--                                    <a-->
+                                    <!--                                        class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center"-->
+                                    <!--                                        id="shippingTab" data-bs-toggle="tab" data-bs-target="#shippingTabContent"-->
+                                    <!--                                        role="tab" aria-controls="shippingTabContent" aria-selected="false"> <span-->
+                                    <!--                                        class="me-sm-2 fs-4 nav-icons" data-feather="truck"></span><span-->
+                                    <!--                                        class="d-none d-sm-inline">Shipping</span></a>-->
+                                    <!--                                    <a-->
+                                    <!--                                        class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center"-->
+                                    <!--                                        id="productsTab" data-bs-toggle="tab" data-bs-target="#productsTabContent"-->
+                                    <!--                                        role="tab" aria-controls="productsTabContent" aria-selected="false"> <span-->
+                                    <!--                                        class="me-sm-2 fs-4 nav-icons" data-feather="globe"></span><span-->
+                                    <!--                                        class="d-none d-sm-inline">Global Delivery</span></a>-->
+                                    <!--                                    <a-->
+                                    <!--                                        class="nav-link border-end border-end-sm-0 border-bottom-sm border-300 text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center"-->
+                                    <!--                                        id="attributesTab" data-bs-toggle="tab" data-bs-target="#attributesTabContent"-->
+                                    <!--                                        role="tab" aria-controls="attributesTabContent" aria-selected="false"> <span-->
+                                    <!--                                        class="me-sm-2 fs-4 nav-icons" data-feather="sliders"></span><span-->
+                                    <!--                                        class="d-none d-sm-inline">Attributes</span></a>-->
                                     <a
-                                        class="nav-link text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center"
-                                        id="advancedTab" data-bs-toggle="tab" data-bs-target="#advancedTabContent"
-                                        role="tab" aria-controls="advancedTabContent" aria-selected="false"> <span
-                                        class="me-sm-2 fs-4 nav-icons" data-feather="lock"></span><span
-                                        class="d-none d-sm-inline">Attributes</span></a></div>
+                                            aria-controls="advancedTabContent"
+                                            aria-selected="false" class="nav-link text-center text-sm-start cursor-pointer outline-none d-sm-flex align-items-sm-center" data-bs-target="#advancedTabContent"
+                                            data-bs-toggle="tab" id="advancedTab" role="tab"> <span
+                                            class="me-sm-2 fs-4 nav-icons" data-feather="lock"></span><span
+                                            class="d-none d-sm-inline">Attributes</span></a></div>
                             </div>
                             <div class="col-sm-8">
                                 <div class="tab-content py-3 ps-sm-4 h-100">
@@ -167,21 +170,21 @@
                                         <div class="row g-3">
                                             <div class="col-12 col-lg-6">
                                                 <h5 class="mb-2 text-1000">Cost price</h5>
-                                                <input class="form-control" type="text" placeholder="₹"/>
+                                                <input class="form-control" placeholder="₹" type="text"/>
                                             </div>
                                             <div class="col-12 col-lg-6">
                                                 <h5 class="mb-2 text-1000">Sale price</h5>
-                                                <input class="form-control" type="text" placeholder="₹"/>
+                                                <input class="form-control" placeholder="₹" type="text"/>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="tab-pane fade h-100" id="restockTabContent" role="tabpanel"
-                                         aria-labelledby="restockTab">
+                                    <div aria-labelledby="restockTab" class="tab-pane fade h-100" id="restockTabContent"
+                                         role="tabpanel">
                                         <div class="d-flex flex-column h-100">
                                             <h5 class="mb-3 text-1000">Add to Stock</h5>
                                             <div class="row g-3 flex-1 mb-4">
                                                 <div class="col-sm-7">
-                                                    <input class="form-control" type="number" placeholder="Quantity"/>
+                                                    <input class="form-control" placeholder="Quantity" type="number"/>
                                                 </div>
                                                 <div class="col-sm">
                                                     <button class="btn btn-primary" type="button"><span
@@ -221,49 +224,49 @@
                                             </table>
                                         </div>
                                     </div>
-<!--                                    <div class="tab-pane fade h-100" id="shippingTabContent" role="tabpanel"-->
-<!--                                         aria-labelledby="shippingTab">-->
-<!--                                        <div class="d-flex flex-column h-100">-->
-<!--                                            <h5 class="mb-3 text-1000">Shipping Type</h5>-->
-<!--                                            <div class="flex-1">-->
-<!--                                                <div class="mb-4">-->
-<!--                                                    <div class="form-check mb-1">-->
-<!--                                                        <input class="form-check-input" type="radio"-->
-<!--                                                               name="shippingRadio" id="fullfilledBySeller"/>-->
-<!--                                                        <label class="form-check-label fs-0 text-900"-->
-<!--                                                               for="fullfilledBySeller">Fullfilled by Seller</label>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="ps-4">-->
-<!--                                                        <p class="text-800 fs&#45;&#45;1 mb-0">You’ll be responsible for product-->
-<!--                                                            delivery. <br/>Any damage or delay during shipping may cost-->
-<!--                                                            you a Damage fee.</p>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                                <div class="mb-4">-->
-<!--                                                    <div class="form-check mb-1">-->
-<!--                                                        <input class="form-check-input" type="radio"-->
-<!--                                                               name="shippingRadio" id="fullfilledByPhoenix"-->
-<!--                                                               checked="checked"/>-->
-<!--                                                        <label class="form-check-label fs-0 text-900 d-flex align-items-center"-->
-<!--                                                               for="fullfilledByPhoenix">Fullfilled by Phoenix <span-->
-<!--                                                                class="badge badge-phoenix badge-phoenix-warning fs&#45;&#45;2 ms-2">Recommended</span></label>-->
-<!--                                                    </div>-->
-<!--                                                    <div class="ps-4">-->
-<!--                                                        <p class="text-800 fs&#45;&#45;1 mb-0">Your product, Our responsibility.<br/>For-->
-<!--                                                            a measly fee, we will handle the delivery process for you.-->
-<!--                                                        </p>-->
-<!--                                                    </div>-->
-<!--                                                </div>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-                                    <div class="tab-pane fade" id="productsTabContent" role="tabpanel"
-                                         aria-labelledby="productsTab">
+                                    <!--                                    <div class="tab-pane fade h-100" id="shippingTabContent" role="tabpanel"-->
+                                    <!--                                         aria-labelledby="shippingTab">-->
+                                    <!--                                        <div class="d-flex flex-column h-100">-->
+                                    <!--                                            <h5 class="mb-3 text-1000">Shipping Type</h5>-->
+                                    <!--                                            <div class="flex-1">-->
+                                    <!--                                                <div class="mb-4">-->
+                                    <!--                                                    <div class="form-check mb-1">-->
+                                    <!--                                                        <input class="form-check-input" type="radio"-->
+                                    <!--                                                               name="shippingRadio" id="fullfilledBySeller"/>-->
+                                    <!--                                                        <label class="form-check-label fs-0 text-900"-->
+                                    <!--                                                               for="fullfilledBySeller">Fullfilled by Seller</label>-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                    <div class="ps-4">-->
+                                    <!--                                                        <p class="text-800 fs&#45;&#45;1 mb-0">You’ll be responsible for product-->
+                                    <!--                                                            delivery. <br/>Any damage or delay during shipping may cost-->
+                                    <!--                                                            you a Damage fee.</p>-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                </div>-->
+                                    <!--                                                <div class="mb-4">-->
+                                    <!--                                                    <div class="form-check mb-1">-->
+                                    <!--                                                        <input class="form-check-input" type="radio"-->
+                                    <!--                                                               name="shippingRadio" id="fullfilledByPhoenix"-->
+                                    <!--                                                               checked="checked"/>-->
+                                    <!--                                                        <label class="form-check-label fs-0 text-900 d-flex align-items-center"-->
+                                    <!--                                                               for="fullfilledByPhoenix">Fullfilled by Phoenix <span-->
+                                    <!--                                                                class="badge badge-phoenix badge-phoenix-warning fs&#45;&#45;2 ms-2">Recommended</span></label>-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                    <div class="ps-4">-->
+                                    <!--                                                        <p class="text-800 fs&#45;&#45;1 mb-0">Your product, Our responsibility.<br/>For-->
+                                    <!--                                                            a measly fee, we will handle the delivery process for you.-->
+                                    <!--                                                        </p>-->
+                                    <!--                                                    </div>-->
+                                    <!--                                                </div>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <div aria-labelledby="productsTab" class="tab-pane fade" id="productsTabContent"
+                                         role="tabpanel">
                                         <h5 class="mb-3 text-1000">Global Delivery</h5>
                                         <div class="mb-3">
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="deliveryRadio"
-                                                       id="worldwideDelivery"/>
+                                                <input class="form-check-input" id="worldwideDelivery" name="deliveryRadio"
+                                                       type="radio"/>
                                                 <label class="form-check-label fs-0 text-900" for="worldwideDelivery">Worldwide
                                                     delivery</label>
                                             </div>
@@ -272,79 +275,79 @@
                                                         href="#!">Fullfilled by Indolens</a></p>
                                             </div>
                                         </div>
-<!--                                        <div class="mb-3">-->
-<!--                                            <div class="form-check">-->
-<!--                                                <input class="form-check-input" type="radio" name="deliveryRadio"-->
-<!--                                                       checked="checked" id="selectedCountry"/>-->
-<!--                                                <label class="form-check-label fs-0 text-900" for="selectedCountry">Selected-->
-<!--                                                    Countries</label>-->
-<!--                                            </div>-->
-<!--                                            <div class="ps-4" style="max-width: 350px;">-->
-<!--                                                <select class="form-select ps-4" id="organizerMultiple"-->
-<!--                                                        data-choices="data-choices" multiple="multiple"-->
-<!--                                                        data-options='{"removeItemButton":true,"placeholder":true}'>-->
-<!--                                                    <option value="">Type Country name</option>-->
-<!--                                                    <option>United States of America</option>-->
-<!--                                                    <option>United Kingdom</option>-->
-<!--                                                    <option>Canada</option>-->
-<!--                                                    <option>Mexico</option>-->
-<!--                                                </select>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
+                                        <!--                                        <div class="mb-3">-->
+                                        <!--                                            <div class="form-check">-->
+                                        <!--                                                <input class="form-check-input" type="radio" name="deliveryRadio"-->
+                                        <!--                                                       checked="checked" id="selectedCountry"/>-->
+                                        <!--                                                <label class="form-check-label fs-0 text-900" for="selectedCountry">Selected-->
+                                        <!--                                                    Countries</label>-->
+                                        <!--                                            </div>-->
+                                        <!--                                            <div class="ps-4" style="max-width: 350px;">-->
+                                        <!--                                                <select class="form-select ps-4" id="organizerMultiple"-->
+                                        <!--                                                        data-choices="data-choices" multiple="multiple"-->
+                                        <!--                                                        data-options='{"removeItemButton":true,"placeholder":true}'>-->
+                                        <!--                                                    <option value="">Type Country name</option>-->
+                                        <!--                                                    <option>United States of America</option>-->
+                                        <!--                                                    <option>United Kingdom</option>-->
+                                        <!--                                                    <option>Canada</option>-->
+                                        <!--                                                    <option>Mexico</option>-->
+                                        <!--                                                </select>-->
+                                        <!--                                            </div>-->
+                                        <!--                                        </div>-->
                                         <div>
                                             <div class="form-check">
-                                                <input class="form-check-input" type="radio" name="deliveryRadio"
-                                                       id="localDelivery"/>
+                                                <input class="form-check-input" id="localDelivery" name="deliveryRadio"
+                                                       type="radio"/>
                                                 <label class="form-check-label fs-0 text-900" for="localDelivery">Local
                                                     delivery</label>
                                             </div>
 
                                         </div>
                                     </div>
-<!--                                    <div class="tab-pane fade" id="attributesTabContent" role="tabpanel"-->
-<!--                                         aria-labelledby="attributesTab">-->
-<!--                                        <h5 class="mb-3 text-1000">Attributes</h5>-->
-<!--                                        <div class="form-check">-->
-<!--                                            <input class="form-check-input" id="fragileCheck" type="checkbox"/>-->
-<!--                                            <label class="form-check-label text-900 fs-0" for="fragileCheck">Fragile-->
-<!--                                                Product</label>-->
-<!--                                        </div>-->
-<!--                                        <div class="form-check">-->
-<!--                                            <input class="form-check-input" id="biodegradableCheck" type="checkbox"/>-->
-<!--                                            <label class="form-check-label text-900 fs-0" for="biodegradableCheck">Biodegradable</label>-->
-<!--                                        </div>-->
-<!--                                        <div class="mb-3">-->
-<!--                                            <div class="form-check">-->
-<!--                                                <input class="form-check-input" id="frozenCheck" type="checkbox"-->
-<!--                                                       checked="checked"/>-->
-<!--                                                <label class="form-check-label text-900 fs-0" for="frozenCheck">Frozen-->
-<!--                                                    Product</label>-->
-<!--                                                <input class="form-control" type="text"-->
-<!--                                                       placeholder="Max. allowed Temperature"-->
-<!--                                                       style="max-width: 350px;"/>-->
-<!--                                            </div>-->
-<!--                                        </div>-->
-<!--                                        <div class="form-check">-->
-<!--                                            <input class="form-check-input" id="productCheck" type="checkbox"-->
-<!--                                                   checked="checked"/>-->
-<!--                                            <label class="form-check-label text-900 fs-0" for="productCheck">Expiry Date-->
-<!--                                                of Product</label>-->
-<!--                                            <input class="form-control inventory-attributes datetimepicker"-->
-<!--                                                   id="inventory" type="text" style="max-width: 350px;"-->
-<!--                                                   placeholder="d/m/y" data-options='{"disableMobile":true}'/>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-                                    <div class="tab-pane fade" id="advancedTabContent" role="tabpanel"
-                                         aria-labelledby="advancedTab">
+                                    <!--                                    <div class="tab-pane fade" id="attributesTabContent" role="tabpanel"-->
+                                    <!--                                         aria-labelledby="attributesTab">-->
+                                    <!--                                        <h5 class="mb-3 text-1000">Attributes</h5>-->
+                                    <!--                                        <div class="form-check">-->
+                                    <!--                                            <input class="form-check-input" id="fragileCheck" type="checkbox"/>-->
+                                    <!--                                            <label class="form-check-label text-900 fs-0" for="fragileCheck">Fragile-->
+                                    <!--                                                Product</label>-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div class="form-check">-->
+                                    <!--                                            <input class="form-check-input" id="biodegradableCheck" type="checkbox"/>-->
+                                    <!--                                            <label class="form-check-label text-900 fs-0" for="biodegradableCheck">Biodegradable</label>-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div class="mb-3">-->
+                                    <!--                                            <div class="form-check">-->
+                                    <!--                                                <input class="form-check-input" id="frozenCheck" type="checkbox"-->
+                                    <!--                                                       checked="checked"/>-->
+                                    <!--                                                <label class="form-check-label text-900 fs-0" for="frozenCheck">Frozen-->
+                                    <!--                                                    Product</label>-->
+                                    <!--                                                <input class="form-control" type="text"-->
+                                    <!--                                                       placeholder="Max. allowed Temperature"-->
+                                    <!--                                                       style="max-width: 350px;"/>-->
+                                    <!--                                            </div>-->
+                                    <!--                                        </div>-->
+                                    <!--                                        <div class="form-check">-->
+                                    <!--                                            <input class="form-check-input" id="productCheck" type="checkbox"-->
+                                    <!--                                                   checked="checked"/>-->
+                                    <!--                                            <label class="form-check-label text-900 fs-0" for="productCheck">Expiry Date-->
+                                    <!--                                                of Product</label>-->
+                                    <!--                                            <input class="form-control inventory-attributes datetimepicker"-->
+                                    <!--                                                   id="inventory" type="text" style="max-width: 350px;"-->
+                                    <!--                                                   placeholder="d/m/y" data-options='{"disableMobile":true}'/>-->
+                                    <!--                                        </div>-->
+                                    <!--                                    </div>-->
+                                    <div aria-labelledby="advancedTab" class="tab-pane fade" id="advancedTabContent"
+                                         role="tabpanel">
                                         <h5 class="mb-3 text-1000">Attributes</h5>
                                         <div class="row g-3">
                                             <div class="col-12 col-lg-6">
                                                 <h5 class="mb-2 text-1000">Model Number</h5>
-                                                <input class="form-control" type="text" placeholder="Model Number"/>
+                                                <input class="form-control" placeholder="Model Number" type="text"/>
                                             </div>
                                             <div class="col-12 col-lg-6">
                                                 <h5 class="mb-2 text-1000">HSN Number</h5>
-                                                <input class="form-control" type="text" placeholder="HSN Number"/>
+                                                <input class="form-control" placeholder="HSN Number" type="text"/>
                                             </div>
                                         </div>
                                     </div>
@@ -363,10 +366,11 @@
                                                 <div class="mb-4">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
                                                         <h5 class="mb-0 text-1000">Category</h5><a class="fw-bold fs--1"
-                                                                                                   href="{% url 'add_product_category' %}">Add new
+                                                                                                   href="{% url 'add_product_category' %}">Add
+                                                        new
                                                         category</a>
                                                     </div>
-                                                    <select class="form-select mb-3" aria-label="category">
+                                                    <select aria-label="category" class="form-select mb-3">
                                                         <option value="men-cloth">Frame</option>
                                                         <option value="women-cloth">Lens</option>
                                                         <option value="kid-cloth">Accessories</option>
@@ -377,10 +381,11 @@
                                                 <div class="mb-4">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
                                                         <h5 class="mb-0 text-1000">Brand</h5><a class="fw-bold fs--1"
-                                                                                                 href="{% url 'add_product_brand' %}">Add new
+                                                                                                href="{% url 'add_product_brand' %}">Add
+                                                        new
                                                         Brand</a>
                                                     </div>
-                                                    <select class="form-select mb-3" aria-label="category">
+                                                    <select aria-label="category" class="form-select mb-3">
                                                         <option value="men-cloth">John Jacob</option>
                                                         <option value="women-cloth">Fossil</option>
                                                     </select>
@@ -390,7 +395,8 @@
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="text-1000">Material</h5><a class="fw-bold fs--1"
-                                                                                          href="{% url 'add_master_material' %}">Add new material</a>
+                                                                                          href="{% url 'add_master_material' %}">Add
+                                                    new material</a>
                                                 </div>
                                                 <select class="form-select mb-3">
                                                     <option value="size">Metallic</option>
@@ -402,7 +408,8 @@
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="text-1000">Frame Type</h5><a class="fw-bold fs--1"
-                                                                                          href="{% url 'add_frame_type' %}">Add new frame type</a>
+                                                                                            href="{% url 'add_frame_type' %}">Add
+                                                    new frame type</a>
                                                 </div>
                                                 <select class="form-select mb-3">
                                                     <option value="size">Half Frame</option>
@@ -415,7 +422,8 @@
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="text-1000">Frame Shape</h5><a class="fw-bold fs--1"
-                                                                                          href="{% url 'add_frame_shape' %}">Add new Shape</a>
+                                                                                             href="{% url 'add_frame_shape' %}">Add
+                                                    new Shape</a>
                                                 </div>
                                                 <select class="form-select mb-3">
                                                     <option value="size">Round</option>
@@ -439,7 +447,8 @@
                                                 <div class="border-dashed-bottom pb-4 pb-xl-0">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
                                                         <h5 class="text-1000">Color</h5><a class="fw-bold fs--1"
-                                                                                              href="{% url 'add_master_color' %}">Add new Color</a>
+                                                                                           href="{% url 'add_master_color' %}">Add
+                                                        new Color</a>
                                                     </div>
                                                     <select class="form-select mb-3">
                                                         <option value="size">C1 - Metallic grey</option>
@@ -462,7 +471,7 @@
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="mb-0 text-1000">Origin</h5>
                                                 </div>
-                                                <select class="form-select" aria-label="category">
+                                                <select aria-label="category" class="form-select">
                                                     <option value="men-cloth">Indian</option>
                                                     <option value="women-cloth">Foreign</option>
                                                     <option value="women-cloth">Domestic</option>
@@ -494,6 +503,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
 

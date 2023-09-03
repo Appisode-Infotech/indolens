@@ -61,6 +61,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -79,39 +80,18 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="/admin/lol" class="row g-3" method="post" novalidate="">
-                        <div class="row g-4 mb-4" data-dropzone="data-dropzone"
-                             data-options='{"maxFiles":1,"data":[{"name":"avatar.png","size":"54kb","url":"/static/img/team/"}]}'>
-                            <div class="fallback">
-                                <input class="form-control" name="file" type="file"/>
-                            </div>
-                            <div class="col-md-auto">
-                                <div class="dz-preview dz-preview-single">
-                                    <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
-                                        <div class="avatar avatar-4xl">
-                                            <img alt="..."
-                                                 class="rounded-circle avatar-placeholder"
-                                                 data-dz-thumbnail="data-dz-thumbnail"
-                                                 src="{% static 'img/team/avatar.png' %}"/>
-
-                                        </div>
-                                        <div class="dz-progress">
-                                            <span class="dz-upload" data-dz-uploadprogress=""></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md">
-                                <div class="dz-message dropzone-area px-2 py-3" data-dz-message="data-dz-message">
-                                    <div class="text-center text-1100">
-                                        <h5 class="mb-2"><span class="fa-solid fa-upload me-2"></span>Upload Profile
-                                            Picture</h5>
-                                        <p class="mb-0 fs--1 text-600 lh-sm">Upload a 300x300 jpg image with <br/>a
-                                            maximum size of 400KB</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
+                            <div class="avatar avatar-4xl"><img alt="..."
+                                                                class="rounded-circle avatar-placeholder"
+                                                                data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
+                                                                src="/static/img/team/avatar.png"/></div>
                         </div>
 
+                        <div class="col-md-12">
+                            <label class="form-label" for="profilePic">Upload profile pic</label>
+                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic" required
+                                   type="file"/>
+                        </div>
                         <div class="col-md-6">
 
                             <label class="form-label" for="storeName">Name</label>
@@ -178,7 +158,8 @@
                             <label class="form-label" for="document1">Document 1 Upload (Can choose
                                 multiple)</label>
 
-                            <input name="document1" class="form-control" id="document1" multiple="multiple" type="file"/>
+                            <input class="form-control" id="document1" multiple="multiple" name="document1"
+                                   type="file"/>
                         </div>
 
                         <div class="mb-3">
@@ -194,7 +175,8 @@
                             <label class="form-label" for="document2">Document 2 Upload (Can choose
                                 multiple)</label>
 
-                            <input class="form-control" name="document2" id="document2" multiple="multiple" type="file"/>
+                            <input class="form-control" id="document2" multiple="multiple" name="document2"
+                                   type="file"/>
                         </div>
 
                         <div class="mb-3">
@@ -209,23 +191,24 @@
                                 </div>
                                 <div class="card-body p-0">
                                     <div class="p-4 code-to-copy">
-                                        <div class="dropzone dropzone-multiple p-0" id="dropzone-multiple"
-                                              data-dropzone="data-dropzone">
+                                        <div class="dropzone dropzone-multiple p-0" data-dropzone="data-dropzone"
+                                             id="dropzone-multiple">
                                             <div class="fallback">
-                                                <input class="form-control" name="certificates" type="file" multiple="multiple"/>
+                                                <input class="form-control" multiple="multiple" name="certificates"
+                                                       type="file"/>
                                             </div>
-                                            <div class="dz-message" data-dz-message="data-dz-message"><img class="me-2"
+                                            <div class="dz-message" data-dz-message="data-dz-message"><img alt=""
+                                                                                                           class="me-2"
                                                                                                            src="{% static 'img/icons/cloud-upload.svg' %}"
-                                                                                                           width="25"
-                                                                                                           alt=""/>Drop
+                                                                                                           width="25"/>Drop
                                                 your files here
                                             </div>
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                 <div class="d-flex mb-3 pb-3 border-bottom media">
                                                     <div class="border border-300 p-2 rounded-2 me-2"><img
-                                                            class="rounded-2 dz-image"
-                                                            src="{% static 'img/icons/file.png' %}" alt="..."
-                                                            data-dz-thumbnail="data-dz-thumbnail"/></div>
+                                                            alt="..."
+                                                            class="rounded-2 dz-image" data-dz-thumbnail="data-dz-thumbnail"
+                                                            src="{% static 'img/icons/file.png' %}"/></div>
                                                     <div class="flex-1 d-flex flex-between-center">
                                                         <div>
                                                             <h6 data-dz-name="data-dz-name"></h6>
@@ -240,13 +223,13 @@
                                                                   data-dz-errormessage="data-dz-errormessage"></span>
                                                         </div>
                                                         <div class="dropdown font-sans-serif">
-                                                            <button class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal dropdown-caret-none"
-                                                                    type="button" data-bs-toggle="dropdown"
-                                                                    aria-haspopup="true" aria-expanded="false"><span
+                                                            <button aria-expanded="false"
+                                                                    aria-haspopup="true" class="btn btn-link text-600 btn-sm dropdown-toggle btn-reveal dropdown-caret-none"
+                                                                    data-bs-toggle="dropdown" type="button"><span
                                                                     class="fas fa-ellipsis-h"></span></button>
                                                             <div class="dropdown-menu dropdown-menu-end border py-2"><a
-                                                                    class="dropdown-item" href="#!"
-                                                                    data-dz-remove="data-dz-remove">Remove File</a>
+                                                                    class="dropdown-item" data-dz-remove="data-dz-remove"
+                                                                    href="#!">Remove File</a>
                                                             </div>
                                                         </div>
                                                     </div>

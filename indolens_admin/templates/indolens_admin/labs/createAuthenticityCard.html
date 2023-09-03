@@ -12,6 +12,7 @@
         height: 400px; /* Adjust the height as needed */
     }
 
+
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -65,6 +66,7 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
+
     </script>
 </head>
 
@@ -83,36 +85,17 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="/admin/lol" class="row g-3 needs-validation" method="post" novalidate="">
-                        <div class="row g-4 mb-4" data-dropzone="data-dropzone"
-                             data-options='{"maxFiles":1,"data":[{"name":"avatar.png","size":"54kb","url":"/static/img/team/"}]}'>
-                            <div class="fallback">
-                                <input name="file" type="file"/>
-                            </div>
-                            <div class="col-md-auto">
-                                <div class="dz-preview dz-preview-single">
-                                    <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
-                                        <div class="avatar avatar-4xl">
-                                            <img alt="..."
-                                                 class="rounded-circle avatar-placeholder" data-dz-thumbnail="data-dz-thumbnail"
-                                                 src="{% static 'img/team/avatar.png' %}"/>
+                        <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
+                            <div class="avatar avatar-4xl"><img alt="..."
+                                                                class="rounded-circle avatar-placeholder"
+                                                                data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
+                                                                src="/static/img/team/avatar.png"/></div>
+                        </div>
 
-                                        </div>
-                                        <div class="dz-progress">
-                                            <span class="dz-upload" data-dz-uploadprogress=""></span>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-md">
-                                <div class="dz-message dropzone-area px-2 py-3" data-dz-message="data-dz-message">
-                                    <div class="text-center text-1100">
-                                        <h5 class="mb-2"><span class="fa-solid fa-upload me-2"></span>Upload Card
-                                            Picture</h5>
-                                        <p class="mb-0 fs--1 text-600 lh-sm">Upload a 300x300 jpg image with <br/>a
-                                            maximum size of 400KB</p>
-                                    </div>
-                                </div>
-                            </div>
+                        <div class="col-md-12">
+                            <label class="form-label" for="profilePic">Upload profile pic</label>
+                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic" required
+                                   type="file"/>
                         </div>
 
                         <div class="col-md-12">
