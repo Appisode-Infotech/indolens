@@ -6024,7 +6024,49 @@
       }
     });
   };
+  /* -------------------------------------------------------------------------- */
+  /*                                 Profile pic upload                         */
+  /* -------------------------------------------------------------------------- */
 
+document.addEventListener('DOMContentLoaded', function () {
+  // Get the file input element and the preview image element
+  const fileInput = document.getElementById('profilePic');
+  const previewImage = document.getElementById('previewImage');
+
+  // Add an event listener to the file input to handle file selection
+  fileInput.addEventListener('change', function () {
+    const file = fileInput.files[0];
+
+    // Check if a file was selected
+    if (file) {
+      // Check if the selected file is an image
+          if (file.type.startsWith('image/')) {
+            const reader = new FileReader();
+
+            // Set up a FileReader to read the selected file
+            reader.onload = function (e) {
+              // Set the source of the preview image to the selected file's data URL
+              previewImage.src = e.target.result;
+              // Display the preview image
+              previewImage.style.display = 'block';
+            };
+
+            // Read the selected file as a data URL
+            reader.readAsDataURL(file);
+          } else {
+            // Clear the file input and hide the preview image if the selected file is not an image
+            fileInput.value = '';
+            previewImage.src = '';
+            previewImage.style.display = 'none';
+            alert('Please select an image file.');
+          }
+        } else {
+          // Hide the preview image if no file was selected
+          previewImage.src = '';
+          previewImage.style.display = 'none';
+        }
+      });
+    });
 
 
   /* eslint-disable import/no-extraneous-dependencies */
