@@ -53,8 +53,8 @@ class OwnStoreModel:
     store_lat_lng: Optional[str] = None
     complete_address: Optional[str] = None
     status: Optional[int] = None
-    created_by: Optional[int] = None
-    last_updated_by: Optional[int] = None
+    created_by: Optional[str] = None
+    last_updated_by: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'OwnStoreModel':
@@ -71,8 +71,8 @@ class OwnStoreModel:
         store_lat_lng = from_union([from_str, from_none], obj.get("storeLatLng"))
         complete_address = from_union([from_str, from_none], obj.get("completeAddress"))
         status = from_union([from_int, from_none], obj.get("status"))
-        created_by = from_union([from_int, from_none], obj.get("created_by"))
-        last_updated_by = from_union([from_int, from_none], obj.get("last_updated_by"))
+        created_by = from_union([from_str, from_none], obj.get("created_by"))
+        last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
         return OwnStoreModel(store_zip_code, store_id, store_name, store_display_name, store_phone, store_gstin, store_email, store_city, store_state, store_lat_lng, complete_address, status, created_by, last_updated_by)
 
     def to_dict(self) -> dict:
@@ -102,9 +102,9 @@ class OwnStoreModel:
         if self.status is not None:
             result["status"] = from_union([from_int, from_none], self.status)
         if self.created_by is not None:
-            result["created_by"] = from_union([from_int, from_none], self.created_by)
+            result["created_by"] = from_union([from_str, from_none], self.created_by)
         if self.last_updated_by is not None:
-            result["last_updated_by"] = from_union([from_int, from_none], self.last_updated_by)
+            result["last_updated_by"] = from_union([from_str, from_none], self.last_updated_by)
         return result
 
 

@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
-from indolens_admin.admin_controllers import admin_auth_controller
-from indolens_admin.admin_models.admin_req_model import admin_auth_model
+from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller
+from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model
 
 
 # =================================ADMIN START======================================
@@ -15,7 +15,6 @@ def login(request):
     if request.method == 'POST':
         admin_obj = admin_auth_model.admin_auth_model_from_dict(request.POST)
         response, status_code = admin_auth_controller.login(admin_obj)
-        print(response)
         if response['status']:
             request.session.update({
                 'is_admin_logged_in': True,
@@ -48,11 +47,14 @@ def dashboard(request):
 # =================================ADMIN STORE MANAGEMENT======================================
 
 def manageOwnStores(request):
-    return render(request, 'indolens_admin/ownStore/manageOwnStores.html')
+    response, status_code = own_store_controller.get_all_own_stores()
+    return render(request, 'indolens_admin/ownStore/manageOwnStores.html', {"own_store_list": response['own_stores']})
 
 
-def viewOwnStore(request):
-    return render(request, 'indolens_admin/ownStore/ownStore.html')
+def viewOwnStore(request, sid):
+    response, status_code = own_store_controller.get_own_store_by_id(sid)
+    print(response)
+    return render(request, 'indolens_admin/ownStore/ownStore.html', {"store_data": response['own_stores']})
 
 
 def editOwnStore(request):
@@ -60,6 +62,13 @@ def editOwnStore(request):
 
 
 def createOwnStore(request):
+    if request.method == 'POST':
+        store_obj = own_store_model.own_store_model_from_dict(request.POST)
+        response, status_code = own_store_controller.create_own_store(store_obj)
+        if status_code != 200:
+            return render(request, 'indolens_admin/ownStore/createOwnStore.html', {"message": response['message']})
+        else:
+            return redirect('manage_own_stores')
     return render(request, 'indolens_admin/ownStore/createOwnStore.html')
 
 

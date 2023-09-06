@@ -14,7 +14,7 @@ urlpatterns = [
     # own store management
     path('create_own_store/', createOwnStore, name='create_own_store'),
     path('manage_own_stores/', manageOwnStores, name='manage_own_stores'),
-    path('manage_own_stores/view_own_store/', viewOwnStore, name='view_own_store'),
+    path('manage_own_stores/view_own_store/store_<int:sid>', viewOwnStore, name='view_own_store'),
     path('manage_own_stores/edit_own_store/', editOwnStore, name='edit_own_store'),
     # franchise store management
     path('create_franchise_store/', createFranchiseStore, name='create_franchise_store'),
