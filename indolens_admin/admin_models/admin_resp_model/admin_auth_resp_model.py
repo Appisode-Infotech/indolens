@@ -48,4 +48,3 @@ def get_admin_user(response):
 
 # Example usage:
 
-admin_user_data = get_admin_user(response)

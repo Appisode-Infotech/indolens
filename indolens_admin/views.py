@@ -14,8 +14,19 @@ def index(request):
 def login(request):
     if request.method == 'POST':
         admin_obj = admin_auth_model.admin_auth_model_from_dict(request.POST)
-        resp, status_code = admin_auth_controller.login(admin_obj)
-        return redirect('dashboard')
+        response, status_code = admin_auth_controller.login(admin_obj)
+        print(response)
+        if response['status']:
+            request.session.update({
+                'is_admin_logged_in': True,
+                'id': response['admin'].admin_id,
+                'name': response['admin'].name,
+                'profile_pic': response['admin'].profile_pic,
+            })
+            return redirect('dashboard')
+        else:
+            return render(request, 'indolens_admin/auth/sign_in.html', {"message": response['message']})
+
     else:
         return render(request, 'indolens_admin/auth/sign_in.html')
 
