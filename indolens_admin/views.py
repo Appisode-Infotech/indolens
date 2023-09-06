@@ -1,5 +1,8 @@
 from django.shortcuts import render, redirect
 
+from indolens_admin.admin_controllers import admin_auth_controller
+from indolens_admin.admin_models.admin_req_model import admin_auth_model
+
 
 # =================================ADMIN START======================================
 def index(request):
@@ -10,6 +13,8 @@ def index(request):
 
 def login(request):
     if request.method == 'POST':
+        admin_obj = admin_auth_model.admin_auth_model_from_dict(request.POST)
+        resp, status_code = admin_auth_controller.login(admin_obj)
         return redirect('dashboard')
     else:
         return render(request, 'indolens_admin/auth/sign_in.html')
