@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
-from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller
-from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model
+from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller
+from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model
 
 
 # =================================ADMIN START======================================
@@ -53,12 +53,22 @@ def manageOwnStores(request):
 
 def viewOwnStore(request, sid):
     response, status_code = own_store_controller.get_own_store_by_id(sid)
-    print(response)
     return render(request, 'indolens_admin/ownStore/ownStore.html', {"store_data": response['own_stores']})
 
 
-def editOwnStore(request):
-    return render(request, 'indolens_admin/ownStore/editOwnStore.html')
+def editOwnStore(request, sid):
+    if request.method == 'POST':
+        store_obj = own_store_model.own_store_model_from_dict(request.POST)
+        response, status_code = own_store_controller.edit_own_store_by_id(store_obj)
+        if status_code != 200:
+            return render(request, 'indolens_admin/ownStore/editOwnStore.html', {"message": response['message']})
+        else:
+            return redirect('manage_own_stores')
+
+    else:
+        response, status_code = own_store_controller.get_own_store_by_id(sid)
+        return render(request, 'indolens_admin/ownStore/editOwnStore.html',
+                      {"store_data": response['own_stores'], "id": sid})
 
 
 def createOwnStore(request):
@@ -73,18 +83,43 @@ def createOwnStore(request):
 
 
 def manageFranchiseStores(request):
-    return render(request, 'indolens_admin/franchiseStores/manageFranchiseStores.html')
+    response, status_code = franchise_store_controller.get_all_franchise_stores()
+    return render(request, 'indolens_admin/franchiseStores/manageFranchiseStores.html',
+                  {"franchise_store_list": response['franchise_store']})
 
 
-def viewFranchiseStore(request):
-    return render(request, 'indolens_admin/franchiseStores/franchiseStore.html')
+def viewFranchiseStore(request, fid):
+    response, status_code = franchise_store_controller.get_franchise_store_by_id(fid)
+    return render(request, 'indolens_admin/franchiseStores/franchiseStore.html',
+                  {"franchise_store": response['franchise_store']})
 
 
-def editFranchiseStore(request):
-    return render(request, 'indolens_admin/franchiseStores/editFranchiseStore.html')
+def editFranchiseStore(request, fid):
+    if request.method == 'POST':
+        franchise_obj = franchise_store_model.franchise_store_model_from_dict(request.POST)
+        response, status_code = franchise_store_controller.edit_franchise_store_by_id(franchise_obj)
+        if status_code != 200:
+            return render(request, 'indolens_admin/ownStore/editOwnStore.html', {"message": response['message']})
+        else:
+            return redirect('manage_Franchise_stores')
+
+    else:
+        response, status_code = franchise_store_controller.get_franchise_store_by_id(fid)
+        return render(request, 'indolens_admin/franchiseStores/editFranchiseStore.html',
+                      {"franchise_store": response['franchise_store'], "id": fid})
+
 
 
 def createFranchiseStore(request):
+    if request.method == 'POST':
+        franchise_obj = franchise_store_model.franchise_store_model_from_dict(request.POST)
+        response, status_code = franchise_store_controller.create_franchise_store(franchise_obj)
+        if status_code != 200:
+            return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html',
+                          {"message": response['message']})
+        else:
+            return redirect('manage_Franchise_stores')
+
     return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html')
 
 

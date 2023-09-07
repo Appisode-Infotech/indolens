@@ -1,11 +1,9 @@
-import json
-
 import pymysql
 from django.db import connection
 import datetime
 import pytz
 
-from indolens_admin.admin_models.admin_resp_model.own_store_resp_model import get_store
+from indolens_admin.admin_models.admin_resp_model.own_store_resp_model import get_own_store
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
@@ -48,7 +46,7 @@ def get_all_own_stores():
             stores_data = cursor.fetchall()
             return {
                 "status": True,
-                "own_stores": get_store(stores_data)
+                "own_stores": get_own_store(stores_data)
             }, 200
 
     except pymysql.Error as e:
@@ -65,10 +63,49 @@ def get_own_store_by_id(sid):
             stores_data = cursor.fetchall()
             return {
                 "status": True,
-                "own_stores": get_store(stores_data)
+                "own_stores": get_own_store(stores_data)
             }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def edit_own_store_by_id(store_obj):
+    cleaned_str = store_obj.store_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
+    store_lat, store_lng = map(float, cleaned_str.split(', '))
+    try:
+        with connection.cursor() as cursor:
+            update_own_store_query = f"""
+                UPDATE own_store
+                SET 
+                    store_zip = '{store_obj.store_zip_code}',
+                    store_name = '{store_obj.store_name}',
+                    store_display_name = '{store_obj.store_display_name}',
+                    store_phone = '{store_obj.store_phone}',
+                    store_gst = '{store_obj.store_gstin}',
+                    store_email = '{store_obj.store_email}',
+                    store_city = '{store_obj.store_city}',
+                    store_state = '{store_obj.store_state}',
+                    store_lat = '{store_lat}',
+                    store_lng = '{store_lng}',
+                    store_address = '{store_obj.complete_address}',
+                    last_updated_on = '{today}',
+                    last_updated_by = {store_obj.last_updated_by}
+                WHERE store_id = {store_obj.store_id}
+            """
+
+            cursor.execute(update_own_store_query)
+            connection.commit()  # Commit the transaction after executing the update query
+
+            return {
+                "status": True,
+                "message": "Own store updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+

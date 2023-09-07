@@ -14,13 +14,13 @@ urlpatterns = [
     # own store management
     path('create_own_store/', createOwnStore, name='create_own_store'),
     path('manage_own_stores/', manageOwnStores, name='manage_own_stores'),
-    path('manage_own_stores/view_own_store/store_<int:sid>', viewOwnStore, name='view_own_store'),
-    path('manage_own_stores/edit_own_store/', editOwnStore, name='edit_own_store'),
+    path('manage_own_stores/view_own_store/store-<int:sid>', viewOwnStore, name='view_own_store'),
+    path('manage_own_stores/edit_own_store/store-<int:sid>', editOwnStore, name='edit_own_store'),
     # franchise store management
     path('create_franchise_store/', createFranchiseStore, name='create_franchise_store'),
     path('manage_Franchise_stores/', manageFranchiseStores, name='manage_Franchise_stores'),
-    path('manage_Franchise_stores/view_franchise_store/', viewFranchiseStore, name='view_franchise_store'),
-    path('manage_Franchise_stores/edit_franchise_store/', editFranchiseStore, name='edit_franchise_store'),
+    path('manage_Franchise_stores/view_franchise_store/store-<int:fid>', viewFranchiseStore, name='view_franchise_store'),
+    path('manage_Franchise_stores/edit_franchise_store/store-<int:fid>', editFranchiseStore, name='edit_franchise_store'),
     # inventory management
     path('manage_out_of_stock/', manageCentralInventoryOutOfStock, name='manage_out_of_stock'),
     path('manage_central_inventory_products/', manageCentralInventoryProducts,

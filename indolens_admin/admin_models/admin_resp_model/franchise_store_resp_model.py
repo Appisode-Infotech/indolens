@@ -34,7 +34,7 @@ class Store:
         }
 
 
-def get_own_store(response):
+def get_franchise_store(response):
     store_list = []
     for values in response:
         store = Store(values)
