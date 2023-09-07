@@ -146,6 +146,7 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
+                            {% for manager in store_managers%}
                             <tr class="position-static">
                                 <td>
                                     <div class="avatar avatar-m"><img alt=""
@@ -154,40 +155,45 @@
                                     </div>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
-                                        class="text-decoration-none fw-bold fs-0" href="{% url 'view_store_manager' %}">Santhosh
-                                    Kumar</a>
+                                        class="text-decoration-none fw-bold fs-0" href="{% url 'view_store_manager' manager.store_manager_id %}">
+                                    {{manager.name}}
+                                </a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">8660225160</p>
+                                    <p class="mb-0 fs--1 text-900">{{manager.phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">devsandy12@gmail.com</p>
+                                    <p class="mb-0 fs--1 text-900">{{manager.email}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <a class="text-decoration-none fw-semi-bold fs-0" href="{%url 'view_own_store'%}">Indolens
-                                        - 01</a>
+                                    <a class="text-decoration-none fw-semi-bold fs-0" href="{%url 'view_own_store' manager.assigned_store_id%}">
+                                        {{manager.store_name}}</a>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if manager.status == 0 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
+                                    {% elif manager.status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                    {% endif %}
+                                </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{manager.created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{manager.creator_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{manager.last_updated_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{manager.updater_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">#31, first cross ,madanayakanahalli,
-                                        bangalore</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{manager.address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -199,7 +205,7 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_store_manager' %}">View</a>
+                                                                                             href="{% url 'view_store_manager' manager.store_manager_id %}">View</a>
                                             <a class="dropdown-item" href="{% url 'edit_store_manager' %}">Update/Change
                                                 Password</a>
                                             <a class="dropdown-item" href="{% url 'edit_area_head' %}">Allocate
@@ -211,6 +217,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

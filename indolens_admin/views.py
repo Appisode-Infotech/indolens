@@ -1,7 +1,11 @@
 from django.shortcuts import render, redirect
+from django.core.files.storage import default_storage
+import time
 
-from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller
-from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model
+from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
+    sub_admin_controller, store_manager_controller
+from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
+    sub_admin_model, store_manager_model
 
 
 # =================================ADMIN START======================================
@@ -41,7 +45,11 @@ def resetPassword(request):
 # =================================ADMIN DASH======================================
 
 def dashboard(request):
-    return render(request, 'indolens_admin/dashboard.html')
+    own_stores, status_code = own_store_controller.get_all_own_stores()
+    franchise_store, status_code = franchise_store_controller.get_all_franchise_stores()
+    return render(request, 'indolens_admin/dashboard.html',
+                  {"own_store_list": own_stores['own_stores'],
+                   "franchise_store_list": franchise_store['franchise_store']})
 
 
 # =================================ADMIN STORE MANAGEMENT======================================
@@ -109,7 +117,6 @@ def editFranchiseStore(request, fid):
                       {"franchise_store": response['franchise_store'], "id": fid})
 
 
-
 def createFranchiseStore(request):
     if request.method == 'POST':
         franchise_obj = franchise_store_model.franchise_store_model_from_dict(request.POST)
@@ -131,13 +138,34 @@ def manageSubAdmins(request):
 
 def createSubAdmin(request):
     if request.method == 'POST':
-        data = request.POST
-        profile_pic = request.FILES
+        form_data = request.POST
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
 
-        print(data)
-        print(profile_pic)
-        # return redirect('dashboard')
-    return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
+            for file_obj in file_objs:
+                file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                form_data_key = f"{file_key}"
+
+                form_data = form_data.copy()
+                form_data[form_data_key] = file_name
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+        sub_admin = sub_admin_model.sub_admin_model_from_dict(form_data)
+        print(sub_admin)
+        sub_admin_controller.create_sub_admin(sub_admin)
+        return redirect('manage_sub_admins')
+
+    else:
+        return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
 
 
 def editSubAdmin(request):
@@ -151,15 +179,46 @@ def viewSubAdmin(request):
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
 def manageStoreManagers(request):
-    return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html')
+    response, status_code = store_manager_controller.get_all_store_manager()
+    return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
+                  {"store_managers": response['store_managers']})
 
 
 def createStoreManager(request):
-    return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
+    if request.method == 'POST':
+        form_data = request.POST
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+
+            for file_obj in file_objs:
+                file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                form_data_key = f"{file_key}"
+
+                form_data = form_data.copy()
+                form_data[form_data_key] = file_name
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+        store_manager = store_manager_model.store_manager_model_from_dict(form_data)
+        resp, status_code = store_manager_controller.create_store_manager(store_manager)
+        return redirect('manage_store_managers')
+    else:
+        return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
 
 
-def viewStoreManager(request):
-    return render(request, 'indolens_admin/storeManagers/viewStoreManager.html')
+def viewStoreManager(request, mid):
+    response, status_code = store_manager_controller.get_store_manager_by_id(mid)
+    print(response['store_manager'])
+    return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
+                  {"store_manager": response['store_manager']})
 
 
 def editStoreManager(request):
@@ -468,7 +527,9 @@ def manageCentralInventoryOutOfStock(request):
 
 
 def manageMoveStocks(request):
-    return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html')
+    response, status_code = own_store_controller.get_all_own_stores()
+    return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html',
+                  {"own_store_list": response['own_stores']})
 
 
 def manageMoveAStock(request):
