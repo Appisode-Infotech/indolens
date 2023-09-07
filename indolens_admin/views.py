@@ -8,6 +8,7 @@ from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_st
     sub_admin_model, store_manager_model
 
 
+
 # =================================ADMIN START======================================
 def index(request):
     return redirect('login')
