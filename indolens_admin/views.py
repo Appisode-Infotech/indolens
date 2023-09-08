@@ -133,7 +133,8 @@ def createFranchiseStore(request):
 # =================================ADMIN SUB ADMIN MANAGEMENT======================================
 
 def manageSubAdmins(request):
-    return render(request, 'indolens_admin/subAdmin/manageSubAdmins.html')
+    response, status_code = sub_admin_controller.get_all_sub_admin()
+    return render(request, 'indolens_admin/subAdmin/manageSubAdmins.html', {"sub_admin_list": response['sub_admins']})
 
 
 def createSubAdmin(request):
@@ -160,20 +161,21 @@ def createSubAdmin(request):
                         destination.write(chunk)
 
         sub_admin = sub_admin_model.sub_admin_model_from_dict(form_data)
-        print(sub_admin)
-        sub_admin_controller.create_sub_admin(sub_admin)
+        response = sub_admin_controller.create_sub_admin(sub_admin)
         return redirect('manage_sub_admins')
 
     else:
         return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
 
 
-def editSubAdmin(request):
-    return render(request, 'indolens_admin/subAdmin/editSubAdmin.html')
+def editSubAdmin(request, said):
+    response, status_code = sub_admin_controller.get_sub_admin_by_id(said)
+    return render(request, 'indolens_admin/subAdmin/editSubAdmin.html', {"sub_admin": response['sub_admin']})
 
 
-def viewSubAdmin(request):
-    return render(request, 'indolens_admin/subAdmin/viewSubAdmin.html')
+def viewSubAdmin(request, said):
+    response, status_code = sub_admin_controller.get_sub_admin_by_id(said)
+    return render(request, 'indolens_admin/subAdmin/viewSubAdmin.html', {"sub_admin": response['sub_admin']})
 
 
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================

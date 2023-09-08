@@ -169,6 +169,12 @@
                             <input class="form-control" id="document2" multiple="multiple" name="document2" required
                                    type="file"/>
                         </div>
+                        <input required type="hidden" name="created_by"
+                                                           name="created_by_uid"
+                                                           value="{{ request.session.id }}">
+                        <input required type="hidden" name="last_updated_by"
+                                                           name="created_by_uid"
+                                                           value="{{ request.session.id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>

@@ -53,8 +53,8 @@ urlpatterns = [
     # sub admins
     path('manage_sub_admins/', manageSubAdmins, name='manage_sub_admins'),
     path('manage_sub_admins/create_sub_admin/', createSubAdmin, name='create_sub_admin'),
-    path('manage_sub_admins/edit_sub_admin/', editSubAdmin, name='edit_sub_admin'),
-    path('manage_sub_admins/view_sub_admin/', viewSubAdmin, name='view_sub_admin'),
+    path('manage_sub_admins/edit_sub_admin/?subAdminId=<int:said>', editSubAdmin, name='edit_sub_admin'),
+    path('manage_sub_admins/view_sub_admin/?subAdminId=<int:said>', viewSubAdmin, name='view_sub_admin'),
     # store managers
     path('manage_store_managers/', manageStoreManagers, name='manage_store_managers'),
     path('manage_store_managers/create_store_manager/', createStoreManager, name='create_store_manager'),
