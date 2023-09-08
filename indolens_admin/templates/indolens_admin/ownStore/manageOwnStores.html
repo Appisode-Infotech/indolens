@@ -62,6 +62,8 @@
 
 
 
+
+
     </script>
 </head>
 
@@ -133,7 +135,8 @@
                             {% for store in own_store_list %}
                             <tr class="position-static">
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
-                                        class="text-decoration-none fw-bold fs-0" href="{% url 'view_own_store' store.store_id %}">{{store.store_name}}</a>
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_own_store' store.store_id %}">{{store.store_name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
@@ -150,7 +153,7 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end statuses">
-                                {% if store.status == 0 %}
+                                    {% if store.status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
                                     {% elif store.status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
@@ -213,6 +216,8 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
 
 
 

@@ -58,7 +58,7 @@ urlpatterns = [
     # store managers
     path('manage_store_managers/', manageStoreManagers, name='manage_store_managers'),
     path('manage_store_managers/create_store_manager/', createStoreManager, name='create_store_manager'),
-    path('manage_store_managers/edit_store_manager/', editStoreManager, name='edit_store_manager'),
+    path('manage_store_managers/edit_store_manager/?managerId=<int:mid>', editStoreManager, name='edit_store_manager'),
     path('manage_store_managers/view_store_manager/?managerId=<int:mid>', viewStoreManager, name='view_store_manager'),
     # store franchise owners
     path('manage_franchise_owners/', manageFranchiseOwners, name='manage_franchise_owners'),

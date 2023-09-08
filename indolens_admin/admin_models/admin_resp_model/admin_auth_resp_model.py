@@ -7,7 +7,7 @@ class AdminUser:
         self.email = values[2]
         self.phone = values[3]
         self.password = values[4]
-        self.sales_executive = values[5]
+        self.role = values[5]
         self.profile_pic = values[6]
         self.address = values[7]
         self.document_1_type = values[8]
@@ -27,7 +27,7 @@ class AdminUser:
             'email': self.email,
             'phone': self.phone,
             'password': self.password,
-            'sales_executive': self.sales_executive,
+            'role': self.role,
             'profile_pic': self.profile_pic,
             'address': self.address,
             'document_1_type': self.document_1_type,
@@ -42,9 +42,8 @@ class AdminUser:
         }
 
 def get_admin_user(response):
-    values = response  # Replace this with your actual response data
+    values = response
     admin_user = AdminUser(values)
     return admin_user.to_dict()
 
-# Example usage:
 

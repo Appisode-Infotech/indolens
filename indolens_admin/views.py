@@ -8,7 +8,6 @@ from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_st
     sub_admin_model, store_manager_model
 
 
-
 # =================================ADMIN START======================================
 def index(request):
     return redirect('login')
@@ -217,13 +216,14 @@ def createStoreManager(request):
 
 def viewStoreManager(request, mid):
     response, status_code = store_manager_controller.get_store_manager_by_id(mid)
-    print(response['store_manager'])
     return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
                   {"store_manager": response['store_manager']})
 
 
-def editStoreManager(request):
-    return render(request, 'indolens_admin/storeManagers/editStoreManager.html')
+def editStoreManager(request, mid):
+    response, status_code = store_manager_controller.get_store_manager_by_id(mid)
+    return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
+                  {"store_manager": response['store_manager']})
 
 
 # =================================ADMIN FRANCHISE OWNERS MANAGEMENT======================================

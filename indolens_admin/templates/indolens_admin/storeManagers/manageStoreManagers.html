@@ -169,8 +169,13 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    {% if manager.assigned_store_id != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0" href="{%url 'view_own_store' manager.assigned_store_id%}">
                                         {{manager.store_name}}</a>
+                                    {% else %}
+                                        Not Assigned
+                                    {% endif %}
+
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end statuses">
