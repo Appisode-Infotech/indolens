@@ -2,10 +2,12 @@ from django.shortcuts import render, redirect
 from django.core.files.storage import default_storage
 import time
 
+from rest_framework.reverse import reverse
+
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
-    sub_admin_controller, store_manager_controller
+    sub_admin_controller, store_manager_controller, franchise_owner_controller
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
-    sub_admin_model, store_manager_model
+    sub_admin_model, store_manager_model, franchise_owner_model
 
 
 # =================================ADMIN START======================================
@@ -19,7 +21,9 @@ def login(request):
     if request.method == 'POST':
         admin_obj = admin_auth_model.admin_auth_model_from_dict(request.POST)
         response, status_code = admin_auth_controller.login(admin_obj)
+        print(response)
         if response['status']:
+            print("pass hogya")
             request.session.update({
                 'is_admin_logged_in': True,
                 'id': response['admin'].admin_id,
@@ -45,11 +49,14 @@ def resetPassword(request):
 # =================================ADMIN DASH======================================
 
 def dashboard(request):
-    own_stores, status_code = own_store_controller.get_all_own_stores()
-    franchise_store, status_code = franchise_store_controller.get_all_franchise_stores()
-    return render(request, 'indolens_admin/dashboard.html',
-                  {"own_store_list": own_stores['own_stores'],
-                   "franchise_store_list": franchise_store['franchise_store']})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        own_stores, status_code = own_store_controller.get_all_own_stores()
+        franchise_store, status_code = franchise_store_controller.get_all_franchise_stores()
+        return render(request, 'indolens_admin/dashboard.html',
+                      {"own_store_list": own_stores['own_stores'],
+                       "franchise_store_list": franchise_store['franchise_store']})
+    else:
+        return redirect('login')
 
 
 # =================================ADMIN STORE MANAGEMENT======================================
@@ -139,6 +146,7 @@ def manageSubAdmins(request):
 
 def createSubAdmin(request):
     if request.method == 'POST':
+        print(request.POST)
         form_data = request.POST
         file_label_mapping = {
             'profilePic': 'profile_pic',
@@ -169,8 +177,13 @@ def createSubAdmin(request):
 
 
 def editSubAdmin(request, said):
-    response, status_code = sub_admin_controller.get_sub_admin_by_id(said)
-    return render(request, 'indolens_admin/subAdmin/editSubAdmin.html', {"sub_admin": response['sub_admin']})
+    if request.method == 'POST':
+        sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
+        response, status_code = sub_admin_controller.edit_sub_admin(sub_admin)
+        return redirect('manageSubAdmins')
+    else:
+        response, status_code = sub_admin_controller.get_sub_admin_by_id(said)
+        return render(request, 'indolens_admin/subAdmin/editSubAdmin.html', {"sub_admin": response['sub_admin']})
 
 
 def viewSubAdmin(request, said):
@@ -223,6 +236,11 @@ def viewStoreManager(request, mid):
 
 
 def editStoreManager(request, mid):
+    if request.method == 'POST':
+        print(request.POST)
+        store_manager = store_manager_model.store_manager_model_from_dict(request.POST)
+        print(store_manager)
+
     response, status_code = store_manager_controller.get_store_manager_by_id(mid)
     return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
                   {"store_manager": response['store_manager']})
@@ -231,19 +249,82 @@ def editStoreManager(request, mid):
 # =================================ADMIN FRANCHISE OWNERS MANAGEMENT======================================
 
 def manageFranchiseOwners(request):
-    return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html')
+    response, status_code = franchise_owner_controller.get_all_franchise_owner()
+    return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
+                  {"franchise_owners": response['franchise_owners']})
 
 
 def createFranchiseOwners(request):
-    return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html')
+    if request.method == 'POST':
+        form_data = request.POST
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+
+            for file_obj in file_objs:
+                file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                form_data_key = f"{file_key}"
+
+                form_data = form_data.copy()
+                form_data[form_data_key] = file_name
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+        franchise_owner_obj = franchise_owner_model.franchise_owner_model_from_dict(form_data)
+        response, status_code = franchise_owner_controller.create_franchise_owner(franchise_owner_obj)
+        url = reverse('view_franchise_owner', kwargs={'foid': response['foid']})
+        return redirect(url)
+
+    else:
+        return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html')
 
 
-def editFranchiseOwners(request):
-    return render(request, 'indolens_admin/franchiseOwners/editFranchiseOwner.html')
+def editFranchiseOwners(request, foid):
+    if request.method == 'POST':
+        form_data = request.POST
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+        for file_key, file_objs in request.FILES.lists():
+            print("file also updated")
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+
+            for file_obj in file_objs:
+                file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                form_data_key = f"{file_key}"
+
+                form_data = form_data.copy()
+                form_data[form_data_key] = file_name
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+        franchise_owner = franchise_owner_model.franchise_owner_model_from_dict(form_data)
+        response, status_code = franchise_owner_controller.edit_franchise_owner(franchise_owner)
+        url = reverse('view_franchise_owner', kwargs={'foid': franchise_owner.franchise_owner_id})
+        return redirect(url)
+
+    else:
+        response, status_code = franchise_owner_controller.get_franchise_owner_by_id(foid)
+        return render(request, 'indolens_admin/franchiseOwners/editFranchiseOwner.html',
+                      {"franchise_owner": response['franchise_owner']})
 
 
-def viewFranchiseOwners(request):
-    return render(request, 'indolens_admin/franchiseOwners/viewFranchiseOwner.html')
+def viewFranchiseOwners(request, foid):
+    response, status_code = franchise_owner_controller.get_franchise_owner_by_id(foid)
+    return render(request, 'indolens_admin/franchiseOwners/viewFranchiseOwner.html',
+                  {"franchise_owner": response['franchise_owner']})
 
 
 # =================================ADMIN AREA HEADS MANAGEMENT======================================

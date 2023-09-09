@@ -61,6 +61,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -146,6 +147,7 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
+                            {% for owner in franchise_owners %}
                             <tr class="position-static">
                                 <td>
                                     <div class="avatar avatar-m"><img alt=""
@@ -155,40 +157,44 @@
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_franchise_owner' %}">Santhosh
-                                    Kumar</a>
+                                        href="{% url 'view_franchise_owner' owner.franchise_owner_id %}">{{owner.name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">8660225160</p>
+                                    <p class="mb-0 fs--1 text-900">{{owner.phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">devsandy12@gmail.com</p>
+                                    <p class="mb-0 fs--1 text-900">{{owner.email}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <a class="text-decoration-none fw-semi-bold fs-0" href="{%url 'view_own_store'%}">FR-Indolens
-                                        - Jayanagar</a>
+                                    <a class="text-decoration-none fw-semi-bold fs-0" href="{%url 'view_own_store' 1%}">
+                                        {{owner.store_name}}
+                                    </a>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if owner.status == 0 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
+                                {% elif owner.status == 1 %}
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                {% endif %}
+                                </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{owner.created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{owner.creator_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{owner.last_updated_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{owner.updater_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">#31, first cross ,madanayakanahalli,
-                                        bangalore</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{owner.address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -200,8 +206,8 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_franchise_owner' %}">View</a>
-                                            <a class="dropdown-item" href="{% url 'edit_franchise_owner' %}">Update/Change
+                                                                                             href="{% url 'view_franchise_owner' owner.franchise_owner_id %}">View</a>
+                                            <a class="dropdown-item" href="{% url 'edit_franchise_owner' owner.franchise_owner_id %}">Update/Change
                                                 Password</a>
                                             <a class="dropdown-item" href="{% url 'edit_area_head' %}">Allocate
                                                 Store</a>
@@ -212,6 +218,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -248,6 +255,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
 

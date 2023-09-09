@@ -76,7 +76,9 @@
             <h2 class="mb-4">Create a Franchise Owners</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="/admin/lol" class="row g-3 needs-validation" method="post" novalidate="">
+                    <form  action="{% url 'create_franchise_owner' %}" class="row g-3 needs-validation" enctype="multipart/form-data"
+                          method="post" novalidate="">
+                        {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
@@ -90,90 +92,79 @@
                                    type="file"/>
                         </div>
 
+
                         <div class="col-md-6">
-
-                            <label class="form-label" for="storeName">Name</label>
-
-                            <input class="form-control" id="storeName" name="storeName" required="" type="text"
-                                   value=""/>
+                            <label class="form-label" for="fullName">Name</label>
+                            <input class="form-control" id="fullName" name="fullName" required type="text" value=""/>
                             <div class="invalid-feedback">Please provide a valid Name.</div>
                         </div>
                         <div class="col-md-6">
-
-                            <label class="form-label" for="storeDisplayName">Email</label>
-
-                            <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
-                                   type="text" value=""/>
-                            <div class="invalid-feedback">Please provide a valid store display name.</div>
+                            <label class="form-label" for="email">Email</label>
+                            <input class="form-control" id="email" name="email" required
+                                   type="email" value="">
+                            <div class="invalid-feedback">Please provide a valid email.</div>
                         </div>
 
                         <div class="col-md-6">
-
-                            <label class="form-label" for="storePhone">Phone</label>
-
-                            <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
+                            <label class="form-label" for="phone">Phone</label>
+                            <input class="form-control" id="phone" name="phone" required type="number"
                                    value=""/>
                             <div class="invalid-feedback">Please provide a valid phone number.</div>
                         </div>
                         <div class="col-md-6">
-
-                            <label class="form-label" for="storeGSTIN">Password</label>
-
-                            <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
+                            <label class="form-label" for="password">Password</label>
+                            <input class="form-control" id="password" name="password" required type="password"
                                    value=""/>
                             <div class="invalid-feedback">Please provide a valid Password.</div>
                         </div>
 
                         <div class="col-md-12">
-
-                            <label class="form-label" for="storeGSTIN">Confirm Password</label>
-
-                            <input class="form-control" id="confirmPassword" name="storeGSTIN" required="" type="text"
-                                   value=""/>
+                            <label class="form-label" for="confirmPassword">Confirm Password</label>
+                            <input class="form-control" id="confirmPassword" name="confirmPassword" required
+                                   type="password" value=""/>
                             <div class="invalid-feedback">Please provide a valid Password.</div>
                         </div>
 
                         <div class="col-12">
-
                             <label class="form-label" for="completeAddress">Complete Address</label>
-
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3"> </textarea>
+                                      rows="3"></textarea>
                             <div class="invalid-feedback">Please provide a valid address.</div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="document1">Document 1 Type</label>
-                            <select aria-label="Default select example" class="form-select">
+                            <label class="form-label" for="document1Type">Document 1 Type</label>
+                            <select aria-label="Default select example" class="form-select" id="document1Type" name="document1Type"
+                                    required>
                                 <option selected="">Open this select menu</option>
-                                <option value="1">Aadhar</option>
-                                <option value="2">Driving Licence</option>
-                                <option value="3">Ration Card</option>
-                                <option value="3">Voter Id</option>
+                                <option value="Aadhar">Aadhar</option>
+                                <option value="Driving Licence">Driving Licence</option>
+                                <option value="Ration Card">Ration Card</option>
+                                <option value="Voter Id">Voter Id</option>
                             </select>
                         </div>
                         <div class="mb-3">
-
-                            <label class="form-label" for="document1">Document 1 Upload (Can choose
-                                multiple)</label>
-
-                            <input class="form-control" id="document1" multiple="multiple" type="file"/>
+                            <label class="form-label" for="document1">Document 1 Upload (Can choose multiple)</label>
+                            <input class="form-control" id="document1" multiple="multiple" name="document1" required
+                                   type="file"/>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label" for="document1">Document 2 Type</label>
-
-                            <select aria-label="Default select example" class="form-select">
+                            <label class="form-label" for="document2Type">Document 2 Type</label>
+                            <select aria-label="Default select example" class="form-select" id="document2Type" name="document2Type"
+                                    required>
                                 <option selected="">Open this select menu</option>
-                                <option value="1">Pan Card</option>
+                                <option value="Pan Card">Pan Card</option>
                             </select>
                         </div>
                         <div class="mb-3">
-
-                            <label class="form-label" for="document2">Document 2 Upload (Can choose
-                                multiple)</label>
-
-                            <input class="form-control" id="document2" multiple="multiple" type="file"/>
+                            <label class="form-label" for="document2">Document 2 Upload (Can choose multiple)</label>
+                            <input class="form-control" id="document2" multiple="multiple" name="document2" required
+                                   type="file"/>
                         </div>
+                        <input required type="hidden" name="created_by"
+                                                           value="{{ request.session.id }}">
+                        <input required type="hidden" name="last_updated_by"
+                                                           value="{{ request.session.id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>

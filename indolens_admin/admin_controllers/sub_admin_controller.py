@@ -79,3 +79,40 @@ def get_sub_admin_by_id(said):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def edit_sub_admin(sub_admin):
+    try:
+        with connection.cursor() as cursor:
+            update_admin_query = f"""
+                UPDATE admin
+                SET
+                    name = '{sub_admin.full_name}',
+                    email = '{sub_admin.email}',
+                    phone = '{sub_admin.phone}',
+                    password = '{sub_admin.password}',
+                    profile_pic = '{sub_admin.profile_pic}',
+                    address = '{sub_admin.complete_address}',
+                    document_1_type = '{sub_admin.document_1_type}',
+                    document_1_url = '{sub_admin.document1}',
+                    document_2_type = '{sub_admin.document_2_type}',
+                    document_2_url = '{sub_admin.document2}',
+                    status = 1,
+                    last_updated_by = '{sub_admin.last_updated_by}',
+                    last_updated_on = '{today}'
+                WHERE
+                    admin_id = {sub_admin.admin_id}
+            """
+
+            # Execute the update query using your cursor
+            cursor.execute(update_admin_query)
+
+            return {
+                "status": True,
+                "message": "sub admin updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

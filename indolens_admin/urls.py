@@ -63,8 +63,8 @@ urlpatterns = [
     # store franchise owners
     path('manage_franchise_owners/', manageFranchiseOwners, name='manage_franchise_owners'),
     path('manage_franchise_owners/create_franchise_owner/', createFranchiseOwners, name='create_franchise_owner'),
-    path('manage_franchise_owners/edit_franchise_owner/', editFranchiseOwners, name='edit_franchise_owner'),
-    path('manage_franchise_owners/view_franchise_owner/', viewFranchiseOwners, name='view_franchise_owner'),
+    path('manage_franchise_owners/edit_franchise_owner/?franchiseOwnerId=<int:foid>', editFranchiseOwners, name='edit_franchise_owner'),
+    path('manage_franchise_owners/view_franchise_owner/?franchiseOwnerId=<int:foid>', viewFranchiseOwners, name='view_franchise_owner'),
     # area heads
     path('manage_area_head/', manageAreaHead, name='manage_area_head'),
     path('manage_area_head/create_area_head/', createAreaHead, name='create_area_head'),

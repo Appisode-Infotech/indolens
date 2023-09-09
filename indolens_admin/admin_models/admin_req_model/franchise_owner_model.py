@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -35,8 +34,8 @@ def to_class(c: Type[T], x: Any) -> dict:
 
 
 @dataclass
-class SubAdminModel:
-    admin_id: Optional[int] = None
+class FranchiseOwnerModel:
+    franchise_owner_id: Optional[int] = None
     full_name: Optional[str] = None
     email: Optional[str] = None
     phone: Optional[str] = None
@@ -50,11 +49,12 @@ class SubAdminModel:
     document2: Optional[str] = None
     created_by: Optional[int] = None
     last_updated_by: Optional[int] = None
+    franchise_store_id: Optional[int] = None
 
     @staticmethod
-    def from_dict(obj: Any) -> 'SubAdminModel':
+    def from_dict(obj: Any) -> 'FranchiseOwnerModel':
         assert isinstance(obj, dict)
-        admin_id = from_union([from_str, from_none], obj.get("admin_id"))
+        franchise_owner_id = from_union([from_str, from_none], obj.get("franchise_owner_id"))
         full_name = from_union([from_str, from_none], obj.get("fullName"))
         email = from_union([from_str, from_none], obj.get("email"))
         phone = from_union([from_str, from_none], obj.get("phone"))
@@ -68,12 +68,15 @@ class SubAdminModel:
         document2 = from_union([from_str, from_none], obj.get("document2"))
         created_by = from_union([from_str, from_none], obj.get("created_by"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
-        return SubAdminModel(admin_id, full_name, email, phone, password, confirm_password, complete_address, document_1_type, document_2_type, profile_pic, document1, document2, created_by, last_updated_by)
+        franchise_store_id = from_union([from_str, from_none], obj.get("franchise_store_id"))
+        return FranchiseOwnerModel(franchise_owner_id, full_name, email, phone, password, confirm_password, complete_address,
+                             document_1_type, document_2_type, profile_pic, document1, document2, created_by,
+                             last_updated_by, franchise_store_id)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        if self.admin_id is not None:
-            result["admin_id"] = from_union([from_int, from_none], self.admin_id)
+        if self.franchise_owner_id is not None:
+            result["franchise_owner_id"] = from_union([from_int, from_none], self.franchise_owner_id)
         if self.full_name is not None:
             result["fullName"] = from_union([from_str, from_none], self.full_name)
         if self.email is not None:
@@ -100,12 +103,14 @@ class SubAdminModel:
             result["created_by"] = from_union([from_int, from_none], self.created_by)
         if self.last_updated_by is not None:
             result["last_updated_by"] = from_union([from_int, from_none], self.last_updated_by)
+        if self.franchise_store_id is not None:
+            result["franchise_store_id"] = from_union([from_int, from_none], self.franchise_store_id)
         return result
 
 
-def sub_admin_model_from_dict(s: Any) -> SubAdminModel:
-    return SubAdminModel.from_dict(s)
+def franchise_owner_model_from_dict(s: Any) -> FranchiseOwnerModel:
+    return FranchiseOwnerModel.from_dict(s)
 
 
-def sub_admin_model_to_dict(x: SubAdminModel) -> Any:
-    return to_class(SubAdminModel, x)
+def franchise_owner_model_to_dict(x: FranchiseOwnerModel) -> Any:
+    return to_class(FranchiseOwnerModel, x)
