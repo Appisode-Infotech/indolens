@@ -5,9 +5,10 @@ import time
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
-    sub_admin_controller, store_manager_controller, franchise_owner_controller
+    sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller
+from indolens_admin.admin_controllers.employee_files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
-    sub_admin_model, store_manager_model, franchise_owner_model
+    sub_admin_model, store_manager_model, franchise_owner_model, area_head_model
 
 
 # =================================ADMIN START======================================
@@ -21,9 +22,7 @@ def login(request):
     if request.method == 'POST':
         admin_obj = admin_auth_model.admin_auth_model_from_dict(request.POST)
         response, status_code = admin_auth_controller.login(admin_obj)
-        print(response)
         if response['status']:
-            print("pass hogya")
             request.session.update({
                 'is_admin_logged_in': True,
                 'id': response['admin'].admin_id,
@@ -146,30 +145,43 @@ def manageSubAdmins(request):
 
 def createSubAdmin(request):
     if request.method == 'POST':
-        print(request.POST)
-        form_data = request.POST
+        form_data = {}
+        file_data = {}
         file_label_mapping = {
             'profilePic': 'profile_pic',
             'document1': 'documents',
             'document2': 'documents',
         }
+
         for file_key, file_objs in request.FILES.lists():
             label = file_label_mapping.get(file_key, 'unknown')
             subdirectory = f"{label}/"
+            file_list = []
 
-            for file_obj in file_objs:
+            for index, file_obj in enumerate(file_objs):
                 file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
-                form_data_key = f"{file_key}"
-
-                form_data = form_data.copy()
-                form_data[form_data_key] = file_name
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
 
                 with default_storage.open(file_name, 'wb+') as destination:
                     for chunk in file_obj.chunks():
                         destination.write(chunk)
 
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        file_data = FileData(form_data)
+
         sub_admin = sub_admin_model.sub_admin_model_from_dict(form_data)
-        response = sub_admin_controller.create_sub_admin(sub_admin)
+        response = sub_admin_controller.create_sub_admin(sub_admin, file_data)
         return redirect('manage_sub_admins')
 
     else:
@@ -201,29 +213,43 @@ def manageStoreManagers(request):
 
 def createStoreManager(request):
     if request.method == 'POST':
-        form_data = request.POST
+        form_data = {}
+        file_data = {}
         file_label_mapping = {
             'profilePic': 'profile_pic',
             'document1': 'documents',
             'document2': 'documents',
         }
+
         for file_key, file_objs in request.FILES.lists():
             label = file_label_mapping.get(file_key, 'unknown')
             subdirectory = f"{label}/"
+            file_list = []
 
-            for file_obj in file_objs:
+            for index, file_obj in enumerate(file_objs):
                 file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
-                form_data_key = f"{file_key}"
-
-                form_data = form_data.copy()
-                form_data[form_data_key] = file_name
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
 
                 with default_storage.open(file_name, 'wb+') as destination:
                     for chunk in file_obj.chunks():
                         destination.write(chunk)
 
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        file_data = FileData(form_data)
+
         store_manager = store_manager_model.store_manager_model_from_dict(form_data)
-        resp, status_code = store_manager_controller.create_store_manager(store_manager)
+        resp, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
         return redirect('manage_store_managers')
     else:
         return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
@@ -256,29 +282,43 @@ def manageFranchiseOwners(request):
 
 def createFranchiseOwners(request):
     if request.method == 'POST':
-        form_data = request.POST
+        form_data = {}
+        file_data = {}
         file_label_mapping = {
             'profilePic': 'profile_pic',
             'document1': 'documents',
             'document2': 'documents',
         }
+
         for file_key, file_objs in request.FILES.lists():
             label = file_label_mapping.get(file_key, 'unknown')
             subdirectory = f"{label}/"
+            file_list = []
 
-            for file_obj in file_objs:
+            for index, file_obj in enumerate(file_objs):
                 file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
-                form_data_key = f"{file_key}"
-
-                form_data = form_data.copy()
-                form_data[form_data_key] = file_name
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
 
                 with default_storage.open(file_name, 'wb+') as destination:
                     for chunk in file_obj.chunks():
                         destination.write(chunk)
 
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        file_data = FileData(form_data)
+
         franchise_owner_obj = franchise_owner_model.franchise_owner_model_from_dict(form_data)
-        response, status_code = franchise_owner_controller.create_franchise_owner(franchise_owner_obj)
+        response, status_code = franchise_owner_controller.create_franchise_owner(franchise_owner_obj, file_data)
         url = reverse('view_franchise_owner', kwargs={'foid': response['foid']})
         return redirect(url)
 
@@ -323,6 +363,7 @@ def editFranchiseOwners(request, foid):
 
 def viewFranchiseOwners(request, foid):
     response, status_code = franchise_owner_controller.get_franchise_owner_by_id(foid)
+
     return render(request, 'indolens_admin/franchiseOwners/viewFranchiseOwner.html',
                   {"franchise_owner": response['franchise_owner']})
 
@@ -330,11 +371,57 @@ def viewFranchiseOwners(request, foid):
 # =================================ADMIN AREA HEADS MANAGEMENT======================================
 
 def manageAreaHead(request):
-    return render(request, 'indolens_admin/areaHead/manageAreaHead.html')
+    response, status_code = area_head_controller.get_all_area_head()
+    print(response)
+    return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
+                  {"area_heads_list": response['area_heads_list']})
 
 
 def createAreaHead(request):
-    return render(request, 'indolens_admin/areaHead/createAreaHead.html')
+    if request.method == 'POST':
+        form_data = {}
+        file_data = {}
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+            file_list = []
+
+            for index, file_obj in enumerate(file_objs):
+                file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        file_data = FileData(form_data)
+
+        area_head = area_head_model.area_head_model_from_dict(request.POST)
+        response, status_code = area_head_controller.create_area_head(area_head, file_data)
+
+        url = reverse('view_area_head', kwargs={'foid': response['ahid']})
+        return redirect(url)
+
+    else:
+        return render(request, 'indolens_admin/areaHead/createAreaHead.html')
 
 
 def editAreaHead(request):

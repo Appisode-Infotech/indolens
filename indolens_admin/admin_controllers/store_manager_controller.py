@@ -9,7 +9,7 @@ ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
 
 
-def create_store_manager(sub_admin):
+def create_store_manager(sub_admin, files):
     try:
         with connection.cursor() as cursor:
             insert_store_manager_query = f"""
@@ -20,8 +20,8 @@ def create_store_manager(sub_admin):
                     last_updated_by, last_updated_on
                 ) VALUES (
                     '{sub_admin.name}', '{sub_admin.email}', '{sub_admin.phone}', '{sub_admin.password}', '{sub_admin.profile_pic}', 
-                    '{sub_admin.assigned_store_id}', '{sub_admin.address}', '{sub_admin.document_1_type}', '{sub_admin.document_1_url}', 
-                    '{sub_admin.document_2_type}', '{sub_admin.document_2_url}', 1, '{sub_admin.created_by}', '{today}', 
+                    '{sub_admin.assigned_store_id}', '{sub_admin.address}', '{sub_admin.document_1_type}', '{files.document1}', 
+                    '{sub_admin.document_2_type}', '{files.document2}', 1, '{sub_admin.created_by}', '{today}', 
                     '{sub_admin.last_updated_by}', '{today}'
                 )
             """

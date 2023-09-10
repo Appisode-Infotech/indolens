@@ -41,13 +41,10 @@ class StoreManagerModel:
     email: Optional[str] = None
     phone: Optional[str] = None
     password: Optional[str] = None
-    profile_pic: Optional[str] = None
     assigned_store_id: Optional[str] = None
     address: Optional[str] = None
     document_1_type: Optional[str] = None
-    document_1_url: Optional[str] = None
     document_2_type: Optional[str] = None
-    document_2_url: Optional[str] = None
     status: Optional[int] = None
     created_by: Optional[int] = None
     last_updated_by: Optional[int] = None
@@ -60,17 +57,14 @@ class StoreManagerModel:
         email = from_union([from_str, from_none], obj.get("email"))
         phone = from_union([from_str, from_none], obj.get("phone"))
         password = from_union([from_str, from_none], obj.get("password"))
-        profile_pic = from_union([from_str, from_none], obj.get("profilePic"))
         assigned_store_id = from_union([from_str, from_none], obj.get("assigned_store_id"))
         address = from_union([from_str, from_none], obj.get("completeAddress"))
         document_1_type = from_union([from_str, from_none], obj.get("document1Type"))
-        document_1_url = from_union([from_str, from_none], obj.get("document1"))
         document_2_type = from_union([from_str, from_none], obj.get("document2Type"))
-        document_2_url = from_union([from_str, from_none], obj.get("document2"))
         status = from_union([from_int, from_none], obj.get("status"))
         created_by = from_union([from_str, from_none], obj.get("created_by"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
-        return StoreManagerModel(store_manager_id, name, email, phone, password, profile_pic, assigned_store_id, address, document_1_type, document_1_url, document_2_type, document_2_url, status, created_by, last_updated_by)
+        return StoreManagerModel(store_manager_id, name, email, phone, password, assigned_store_id, address, document_1_type, document_2_type, status, created_by, last_updated_by)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -84,20 +78,14 @@ class StoreManagerModel:
             result["phone"] = from_union([from_str, from_none], self.phone)
         if self.password is not None:
             result["password"] = from_union([from_str, from_none], self.password)
-        if self.profile_pic is not None:
-            result["profile_pic"] = from_union([from_str, from_none], self.profile_pic)
         if self.assigned_store_id is not None:
             result["assigned_store_id"] = from_union([from_str, from_none], self.assigned_store_id)
         if self.address is not None:
             result["address"] = from_union([from_str, from_none], self.address)
         if self.document_1_type is not None:
             result["document_1_type"] = from_union([from_str, from_none], self.document_1_type)
-        if self.document_1_url is not None:
-            result["document_1_url"] = from_union([from_str, from_none], self.document_1_url)
         if self.document_2_type is not None:
             result["document_2_type"] = from_union([from_str, from_none], self.document_2_type)
-        if self.document_2_url is not None:
-            result["document_2_url"] = from_union([from_str, from_none], self.document_2_url)
         if self.status is not None:
             result["status"] = from_union([from_int, from_none], self.status)
         if self.created_by is not None:

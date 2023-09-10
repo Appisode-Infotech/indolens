@@ -9,7 +9,7 @@ ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
 
 
-def create_franchise_owner(franchise_owner):
+def create_franchise_owner(franchise_owner, files):
     try:
         with connection.cursor() as cursor:
             insert_franchise_owner_query = f"""
@@ -19,8 +19,8 @@ def create_franchise_owner(franchise_owner):
                     status, created_by, created_on, last_updated_by, last_updated_on
                 ) VALUES (
                     '{franchise_owner.full_name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{franchise_owner.password}',
-                    '{franchise_owner.profile_pic}', '{franchise_owner.complete_address}', '{franchise_owner.document_1_type}', 
-                    '{franchise_owner.document1}', '{franchise_owner.document_2_type}', '{franchise_owner.document2}', 
+                    '{files.profile_pic}', '{franchise_owner.complete_address}', '{franchise_owner.document_1_type}', 
+                    '{files.document1}', '{franchise_owner.document_2_type}', '{files.document2}', 
                     1, '{franchise_owner.created_by}', '{today}', '{franchise_owner.last_updated_by}', '{today}'
                 )
             """

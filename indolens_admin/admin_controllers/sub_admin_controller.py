@@ -9,7 +9,7 @@ ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
 
 
-def create_sub_admin(sub_admin):
+def create_sub_admin(sub_admin, files):
     try:
         with connection.cursor() as cursor:
             insert_admin_query = f"""
@@ -19,8 +19,8 @@ def create_sub_admin(sub_admin):
                     status, created_by, created_on, last_updated_by, last_updated_on
                 ) VALUES (
                     '{sub_admin.full_name}', '{sub_admin.email}', '{sub_admin.phone}', '{sub_admin.password}', 2, 
-                    '{sub_admin.profile_pic}', '{sub_admin.complete_address}', '{sub_admin.document_1_type}', 
-                    '{sub_admin.document1}', '{sub_admin.document_2_type}', '{sub_admin.document2}', 
+                    '{files.profile_pic}', '{sub_admin.complete_address}', '{sub_admin.document_1_type}', 
+                    '{files.document1}', '{sub_admin.document_2_type}', '{files.document2}', 
                     1, '{sub_admin.created_by}', '{today}', '{sub_admin.last_updated_by}', '{today}'
                 )
             """
