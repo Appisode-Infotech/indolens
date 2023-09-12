@@ -48,17 +48,48 @@ def get_all_area_head():
     try:
         with connection.cursor() as cursor:
             get_area_head_query = f"""
-                SELECT a.*, GROUP_CONCAT(os.store_name) AS store_names, creator.name, updater.name
-                FROM area_head AS a
-                LEFT JOIN own_store AS os ON FIND_IN_SET(os.store_id, a.assigned_stores) > 0
-                LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
-                LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id
+            SELECT ah.*, GROUP_CONCAT(os.store_name SEPARATOR ', ') AS assigned_stores_names, creator.name, updater.name
+            FROM area_head AS ah
+            LEFT JOIN own_store AS os
+            ON FIND_IN_SET(os.store_id, ah.assigned_stores)
+            LEFT JOIN admin AS creator ON ah.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON ah.last_updated_by = updater.admin_id
+            GROUP BY ah.area_head_id
             """
             cursor.execute(get_area_head_query)
             area_heads = cursor.fetchall()
+
             return {
                 "status": True,
                 "area_heads_list": get_area_heads(area_heads)
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_area_head_by_id(ahid):
+    try:
+        with connection.cursor() as cursor:
+            get_area_head_query = f"""
+            SELECT ah.*, GROUP_CONCAT(os.store_name SEPARATOR ', ') AS assigned_stores_names, creator.name, updater.name
+            FROM area_head AS ah
+            LEFT JOIN own_store AS os
+            ON FIND_IN_SET(os.store_id, ah.assigned_stores)
+            LEFT JOIN admin AS creator ON ah.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON ah.last_updated_by = updater.admin_id
+            WHERE area_head_id = '{ahid}'
+            GROUP BY ah.area_head_id
+            """
+            cursor.execute(get_area_head_query)
+            area_heads = cursor.fetchall()
+            print(area_heads)
+
+            return {
+                "status": True,
+                "area_head": get_area_heads(area_heads)
             }, 200
 
     except pymysql.Error as e:

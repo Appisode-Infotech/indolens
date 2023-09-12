@@ -372,7 +372,6 @@ def viewFranchiseOwners(request, foid):
 
 def manageAreaHead(request):
     response, status_code = area_head_controller.get_all_area_head()
-    print(response)
     return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
                   {"area_heads_list": response['area_heads_list']})
 
@@ -428,8 +427,10 @@ def editAreaHead(request):
     return render(request, 'indolens_admin/areaHead/editAreaHead.html')
 
 
-def viewAreaHead(request):
-    return render(request, 'indolens_admin/areaHead/viewAreaHead.html')
+def viewAreaHead(request, ahid):
+    response, status_code = area_head_controller.get_area_head_by_id(ahid)
+    return render(request, 'indolens_admin/areaHead/viewAreaHead.html',
+                  {"area_head": response['area_head']})
 
 
 # =================================ADMIN MARKETING HEADS MANAGEMENT======================================

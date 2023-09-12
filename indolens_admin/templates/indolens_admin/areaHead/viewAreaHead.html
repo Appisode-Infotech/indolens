@@ -64,6 +64,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -77,6 +78,7 @@
     <div class="container-fluid px-0">
 
         {% include 'nav_bar.html' %}
+        {% for area_head in area_head %}
 
         <div class="content">
 
@@ -88,7 +90,7 @@
                     <div class="col-auto">
                         <div class="row g-3">
                             <div class="col-auto">
-                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_sub_admin' %}">
+                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_area_head' %}">
                                     <span class="fas fa-refresh me-2"></span> Update
                                 </a>
 
@@ -111,23 +113,31 @@
 
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
-                                                <h3>John Doe</h3>
-                                                <p class="text-800">Joined 3 months ago</p>
-                                                <p class="text-800">Manager - <a href="{%url 'view_own_store'%}">indolens
-                                                    store 1</a></p>
+                                                <h3> {{area_head.name}}</h3>
+                                                <p class="text-800">Joined on {{area_head.created_on}}</p>
+                                                <p class="text-800">Area Head</p>
+                                                <p class="text-800">
+                                                    {% for id, name in area_head.id_name_pair %}
+                                                    <a class="text-decoration-none fw-semi-bold fs-0"
+                                                       href="{% url 'view_own_store' id %}">
+                                                        {{name}}
+                                                    </a><br>
+                                                    {% endfor %}</p>
 
                                             </div>
                                         </div>
                                         <div class="d-flex flex-between-center border-top border-dashed border-300 pt-4">
                                             <div>
                                                 <h6><a>Document 1</a></h6>
-                                                <a href="">john_Aadhar_front.pdf</a><br>
-                                                <a href="">john_Aadhar_back.pdf</a>
+                                                {% for doc in area_head.document_1_url %}
+                                                <a href="">{{doc}}</a><br>
+                                                {% endfor %}
                                             </div>
                                             <div>
                                                 <h6><a>Document 2</a></h6>
-                                                <a href="">john_pan_front.pdf</a><br>
-                                                <a href="">john_pan_back.pdf</a>
+                                                {% for doc in area_head.document_2_url %}
+                                                <a href="">{{doc}}</a><br>
+                                                {% endfor %}
                                             </div>
                                         </div>
                                     </div>
@@ -137,17 +147,17 @@
                                 <div class="card h-100">
                                     <div class="card-body pb-3">
                                         <div class="d-flex align-items-center mb-3">
-                                            <h3 class="me-1">Default Address</h3>
+                                            <h3 class="me-1"></h3>
                                             <button class="btn btn-link p-0"><span
                                                     class="fas fa-pen fs-0 ms-3 text-500"></span></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
-                                        <p class="text-800">Shatinon Mekalan<br/>Vancouver, British Columbia<br/>Canada
+                                        <p class="text-800">{{area_head.address}}
                                         </p>
                                         <div class="mb-3">
-                                            <h5 class="text-800">Email</h5><a href="mailto:shatinon@jeemail.com">shatinon@jeemail.com</a>
+                                            <h5 class="text-800">Email</h5><a href="mailto:{{area_head.email}}">{{area_head.email}}</a>
                                         </div>
-                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:+1234567890">+1234567890</a>
+                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:{{area_head.phone}}">+{{area_head.phone}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -247,6 +257,7 @@
                 </div>
             </div>
         </div>
+        {% endfor %}
     </div>
 </main>
 <!-- ===============================================-->

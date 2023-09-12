@@ -1,11 +1,12 @@
 from datetime import datetime
+import json
 
 class AreaHead:
     def __init__(self, values):
         (
             self.area_head_id, self.name, self.email, self.phone, self.password,
             self.profile_pic, assigned_stores, self.address, self.document_1_type,
-            self.document_1_url, self.document_2_type, self.document_2_url, self.status,
+            document_1_urls, self.document_2_type, document_2_urls, self.status,
             self.created_by, self.created_on, self.last_updated_by, self.last_updated_on,
             store_names, self.creator_name, self.updater_name
         ) = values
@@ -15,6 +16,10 @@ class AreaHead:
 
         # Split the store_names string into a list using a comma as a separator
         self.store_name = store_names.split(',') if store_names else []
+
+        # Parse document URLs from JSON strings to lists
+        self.document_1_url = json.loads(document_1_urls) if document_1_urls else []
+        self.document_2_url = json.loads(document_2_urls) if document_2_urls else []
 
         # Create a list of id_name_pair tuples by pairing elements from assigned_stores and store_name lists
         self.id_name_pair = [(str(assigned_store), store_name) for assigned_store, store_name in zip(self.assigned_stores, self.store_name)]
