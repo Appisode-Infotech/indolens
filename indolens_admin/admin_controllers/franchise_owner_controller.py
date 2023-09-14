@@ -1,3 +1,5 @@
+import json
+
 import pymysql
 from django.db import connection
 import datetime
@@ -20,7 +22,7 @@ def create_franchise_owner(franchise_owner, files):
                 ) VALUES (
                     '{franchise_owner.full_name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{franchise_owner.password}',
                     '{files.profile_pic}', '{franchise_owner.complete_address}', '{franchise_owner.document_1_type}', 
-                    '{files.document1}', '{franchise_owner.document_2_type}', '{files.document2}', 
+                    '{json.dumps(files.document1)}', '{franchise_owner.document_2_type}', '{json.dumps(files.document2)}', 
                     1, '{franchise_owner.created_by}', '{today}', '{franchise_owner.last_updated_by}', '{today}'
                 )
             """

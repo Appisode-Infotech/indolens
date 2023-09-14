@@ -1,3 +1,5 @@
+import json
+
 import pymysql
 from django.db import connection
 import datetime
@@ -19,18 +21,23 @@ def create_store_manager(sub_admin, files):
                     document_2_type, document_2_url, status, created_by, created_on, 
                     last_updated_by, last_updated_on
                 ) VALUES (
-                    '{sub_admin.name}', '{sub_admin.email}', '{sub_admin.phone}', '{sub_admin.password}', '{sub_admin.profile_pic}', 
-                    '{sub_admin.assigned_store_id}', '{sub_admin.address}', '{sub_admin.document_1_type}', '{files.document1}', 
-                    '{sub_admin.document_2_type}', '{files.document2}', 1, '{sub_admin.created_by}', '{today}', 
+                    '{sub_admin.name}', '{sub_admin.email}', '{sub_admin.phone}', '{sub_admin.password}', '{files.profile_pic}', 
+                    '{sub_admin.assigned_store_id}', '{sub_admin.address}', '{sub_admin.document_1_type}', '{json.dumps(files.document1)}', 
+                    '{sub_admin.document_2_type}', '{json.dumps(files.document2)}', 1, '{sub_admin.created_by}', '{today}', 
                     '{sub_admin.last_updated_by}', '{today}'
                 )
             """
 
             # Execute the query using your cursor
             cursor.execute(insert_store_manager_query)
+
+            # Execute the query using your cursor
+            cursor.execute(insert_store_manager_query)
+            mid = cursor.lastrowid
             return {
                 "status": True,
-                "message": "sub admin added"
+                "message": "sub admin added",
+                "mid": mid
             }, 200
 
     except pymysql.Error as e:

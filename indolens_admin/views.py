@@ -216,12 +216,10 @@ def createSubAdmin(request):
 
             file_data = FileData(form_data)
 
-            print(form_data)
             sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
-            print(sub_admin)
             response = sub_admin_controller.create_sub_admin(sub_admin, file_data)
-            print(response)
-            return redirect('manage_sub_admins')
+            url = reverse('view_sub_admin', kwargs={'said': response['said']})
+            return redirect(url)
 
         else:
             return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
@@ -301,9 +299,11 @@ def createStoreManager(request):
 
             file_data = FileData(form_data)
 
-            store_manager = store_manager_model.store_manager_model_from_dict(form_data)
-            resp, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
-            return redirect('manage_store_managers')
+            store_manager = store_manager_model.store_manager_model_from_dict(request.POST)
+            response, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
+            url = reverse('view_store_manager', kwargs={'mid': response['mid']})
+            return redirect(url)
+
         else:
             return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
     else:
@@ -375,7 +375,7 @@ def createFranchiseOwners(request):
 
         file_data = FileData(form_data)
 
-        franchise_owner_obj = franchise_owner_model.franchise_owner_model_from_dict(form_data)
+        franchise_owner_obj = franchise_owner_model.franchise_owner_model_from_dict(request.POST)
         response, status_code = franchise_owner_controller.create_franchise_owner(franchise_owner_obj, file_data)
         url = reverse('view_franchise_owner', kwargs={'foid': response['foid']})
         return redirect(url)
@@ -474,7 +474,7 @@ def createAreaHead(request):
         area_head = area_head_model.area_head_model_from_dict(request.POST)
         response, status_code = area_head_controller.create_area_head(area_head, file_data)
 
-        url = reverse('view_area_head', kwargs={'foid': response['ahid']})
+        url = reverse('view_area_head', kwargs={'ahid': response['ahid']})
         return redirect(url)
 
     else:
