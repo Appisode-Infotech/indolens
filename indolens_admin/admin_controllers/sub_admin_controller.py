@@ -1,3 +1,5 @@
+import json
+
 import pymysql
 from django.db import connection
 import datetime
@@ -20,7 +22,7 @@ def create_sub_admin(sub_admin, files):
                 ) VALUES (
                     '{sub_admin.full_name}', '{sub_admin.email}', '{sub_admin.phone}', '{sub_admin.password}', 2, 
                     '{files.profile_pic}', '{sub_admin.complete_address}', '{sub_admin.document_1_type}', 
-                    '{files.document1}', '{sub_admin.document_2_type}', '{files.document2}', 
+                    '{json.dumps(files.document1)}', '{sub_admin.document_2_type}', '{json.dumps(files.document2)}', 
                     1, '{sub_admin.created_by}', '{today}', '{sub_admin.last_updated_by}', '{today}'
                 )
             """

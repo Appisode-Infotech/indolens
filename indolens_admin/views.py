@@ -216,8 +216,11 @@ def createSubAdmin(request):
 
             file_data = FileData(form_data)
 
-            sub_admin = sub_admin_model.sub_admin_model_from_dict(form_data)
+            print(form_data)
+            sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
+            print(sub_admin)
             response = sub_admin_controller.create_sub_admin(sub_admin, file_data)
+            print(response)
             return redirect('manage_sub_admins')
 
         else:
