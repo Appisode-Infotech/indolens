@@ -76,7 +76,7 @@
             <h2 class="mb-4">Create a Franchise Owners</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form  action="{% url 'create_franchise_owner' %}" class="row g-3 needs-validation" enctype="multipart/form-data"
+                    <form  action="{% url 'create_franchise_owner' %}" class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data"
                           method="post" novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
