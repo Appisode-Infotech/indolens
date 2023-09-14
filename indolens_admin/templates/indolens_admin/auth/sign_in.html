@@ -61,6 +61,9 @@
 
 
 
+
+
+
     </script>
 </head>
 
@@ -80,6 +83,7 @@
 
             </div>
             <div class="col-lg-6">
+
                 <div class="row flex-center h-100 g-0 px-4 px-sm-0">
                     <div class="col col-sm-6 col-lg-7 col-xl-6"><a class="d-flex flex-center text-decoration-none mb-4"
                                                                    href="#">
@@ -91,23 +95,34 @@
                             <h3 class="text-1000">Sign In</h3>
                             <p class="text-700">Get access to your account</p>
                         </div>
-                        <form action="{% url 'login' %}" class="position-relative" method="post">
+                        {% if message %}
+                        <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
+                            <strong>{{message}}</strong> You should check in on some of those fields below.
+
+                            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                        </div>
+                        {% endif %}
+
+                        <form action="{% url 'login' %}" class="position-relative needs-validation" method="post" novalidate="">
                             {% csrf_token %}
                             <div class="mb-3 text-start">
                                 <label class="form-label" for="email">Email address</label>
                                 <div class="form-icon-container">
-                                    <input class="form-control form-icon-input" id="email" name="email"
+                                    <input required class="form-control form-icon-input" id="email" name="email"
                                            placeholder="name@example.com"
                                            type="email"/><span
                                         class="fas fa-user text-900 fs--1 form-icon"></span>
+                                    <div class="invalid-feedback">Please provide a valid email.</div>
+
                                 </div>
                             </div>
                             <div class="mb-3 text-start">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="form-icon-container">
-                                    <input class="form-control form-icon-input" id="password" placeholder="Password"
+                                    <input required class="form-control form-icon-input" id="password" placeholder="Password"
                                            type="password" name="password"/><span
                                         class="fas fa-key text-900 fs--1 form-icon"></span>
+                                    <div class="invalid-feedback">Please provide a valid password.</div>
                                 </div>
                             </div>
                             <div class="row flex-between-center mb-7">
