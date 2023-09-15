@@ -389,7 +389,6 @@ def editFranchiseOwners(request, foid):
             'document2': 'documents',
         }
         for file_key, file_objs in request.FILES.lists():
-            print("file also updated")
             label = file_label_mapping.get(file_key, 'unknown')
             subdirectory = f"{label}/"
 
@@ -413,6 +412,11 @@ def editFranchiseOwners(request, foid):
         response, status_code = franchise_owner_controller.get_franchise_owner_by_id(foid)
         return render(request, 'indolens_admin/franchiseOwners/editFranchiseOwner.html',
                       {"franchise_owner": response['franchise_owner']})
+
+def enableDisableFranchiseOwner(request, foid, status):
+    response = franchise_owner_controller.enable_disable_franchise_owner(foid, status)
+    print(response)
+    return redirect('manage_franchise_owners')
 
 
 def viewFranchiseOwners(request, foid):
@@ -483,7 +487,7 @@ def editAreaHead(request):
 
 def enableDisableAreaHead(request, ahid, status):
     area_head_controller.enable_disable_area_head(ahid, status)
-    return render(request, 'indolens_admin/areaHead/editAreaHead.html')
+    return redirect('manage_area_head')
 
 
 def viewAreaHead(request, ahid):

@@ -102,16 +102,14 @@ def enable_disable_area_head(ahid, status):
     # update table set status= '{status}' where area_head_id = '{ahid}'
     try:
         with connection.cursor() as cursor:
-            # get_area_head_query = f"""
-            # UPDATE
-            # """
-            # cursor.execute(get_area_head_query)
-            # area_heads = cursor.fetchall()
-            # print(area_heads)
+            set_area_head_query = f"""
+            UPDATE area_head SET status = '{status}' WHERE area_head_id = '{ahid}';
+            """
+            cursor.execute(set_area_head_query)
 
             return {
                 "status": True,
-                "area_head": get_area_heads(area_heads)
+                "message": "Updated"
             }, 200
 
     except pymysql.Error as e:
@@ -119,4 +117,3 @@ def enable_disable_area_head(ahid, status):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
-    return None
