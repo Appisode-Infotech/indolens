@@ -80,7 +80,7 @@
                 <div class="row g-4">
                     <div class="col-12 col-xxl-6">
                         <div class="mb-8">
-                            <h2 class="mb-2">Hi {admin name}</h2>
+                            <h2 class="mb-2">Hi {{ request.session.name }}</h2>
                             <h5 class="text-700 fw-semi-bold">Here’s what’s going on at your business right now</h5>
                         </div>
 
@@ -261,7 +261,7 @@
                                         <tbody class="list">
                                         <tr>
                                             <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal">5</h4>
+                                                <h4 class="mb-0 fw-normal"> {{ own_store_list|length }}</h4>
                                             </td>
                                             <td class="align-middle py-4">
                                                 <h4 class="mb-0 fw-normal">₹22,367</h4>
@@ -274,13 +274,14 @@
                                                 <h4 class="mb-0 fw-normal">₹15,758</h4>
                                             </td>
                                         </tr>
+                                        {% for store in own_store_list %}
                                         <tr>
                                             <td class="white-space-nowrap ps-0" style="width:32%">
                                                 <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">1. </h6><a href="#!">
+                                                    <h6 class="mb-0 me-3">{{store.store_id}} </h6><a href="#!">
                                                     <div class="d-flex align-items-center">
                                                         <p class="mb-0 text-primary fw-bold fs--1"><a
-                                                                href="{% url 'view_own_store' %}">Nelamangala</a></p>
+                                                                href="{% url 'view_own_store' store.store_id %}">{{store.store_city}}</a></p>
                                                     </div>
                                                 </a>
                                                 </div>
@@ -298,106 +299,7 @@
                                                         class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">2. </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1">Bagalugunte</p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">3. </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1">Basavanagudi</p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">4. </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1">Mysore central</p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">5. </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1">Bidadi</p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-
-
+                                        {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
@@ -459,7 +361,7 @@
                                         <tbody class="list">
                                         <tr>
                                             <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal">5</h4>
+                                                <h4 class="mb-0 fw-normal"> {{ franchise_store_list|length }}</h4>
                                             </td>
                                             <td class="align-middle py-4">
                                                 <h4 class="mb-0 fw-normal">₹377,620</h4>
@@ -471,13 +373,14 @@
                                                 <h4 class="mb-0 fw-normal">₹15,758</h4>
                                             </td>
                                         </tr>
+                                        {% for store in franchise_store_list %}
                                         <tr>
                                             <td class="white-space-nowrap ps-0" style="width:32%">
                                                 <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">1. </h6><a href="#!">
+                                                    <h6 class="mb-0 me-3">{{store.store_id}} </h6><a href="#!">
                                                     <div class="d-flex align-items-center">
                                                         <p class="mb-0 text-primary fw-bold fs--1"><a
-                                                                href="{% url 'view_franchise_store' %}">Jalahalli</a>
+                                                                href="{% url 'view_franchise_store' store.store_id  %}">{{store.store_city}}</a>
                                                         </p>
                                                     </div>
                                                 </a>
@@ -496,105 +399,7 @@
                                                         class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
                                             </td>
                                         </tr>
-
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">2. </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1">Chikpet</p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">3. </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1">Hessarghatta</p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">4. </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1">Hebbala</p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-
-
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">5. </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1">KR Puram</p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-
+                                        {% endfor %}
 
                                         </tbody>
                                     </table>

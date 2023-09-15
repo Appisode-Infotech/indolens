@@ -14,6 +14,7 @@
 
 
 
+
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -68,6 +69,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -80,25 +82,26 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
+        {% for store in store_data %}
         <div class="content">
-
             <h2 class="mb-4">Edit Own Store</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form class="row g-3 " novalidate="">
+                    <form class="row g-3 " action="{% url 'edit_own_store' store.store_id %}" method="post" novalidate="">
+                        {% csrf_token %}
                         <div class="col-md-6">
 
                             <label class="form-label" for="storeName">Store name</label>
 
                             <input class="form-control" id="storeName" name="storeName" required="" type="text"
-                                   value=""/>
+                                   value="{{store.store_name}}"/>
                         </div>
                         <div class="col-md-6">
 
                             <label class="form-label" for="storeDisplayName">Store Display Name</label>
 
                             <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
-                                   type="text" value=""/>
+                                   type="text" value="{{store.store_display_name}}"/>
                         </div>
 
                         <div class="col-md-4">
@@ -106,14 +109,14 @@
                             <label class="form-label" for="storePhone">Store Phone</label>
 
                             <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
-                                   value=""/>
+                                   value="{{store.store_phone}}"/>
                         </div>
                         <div class="col-md-4">
 
                             <label class="form-label" for="storeGSTIN">Store GSTIN</label>
 
                             <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
-                                   value=""/>
+                                   value="{{store.store_gst}}"/>
                         </div>
 
                         <div class="col-md-4">
@@ -121,44 +124,50 @@
                             <label class="form-label" for="storeEmail">Store Email</label>
 
                             <input class="form-control" id="storeEmail" name="storeEmail" required="" type="text"
-                                   value=""/>
+                                   value="{{store.store_email}}"/>
                         </div>
 
                         <div class="col-md-4">
 
                             <label class="form-label" for="storeCity">City</label>
 
-                            <input class="form-control" id="storeCity" name="storeCity" required="" type="text"/>
+                            <input class="form-control" id="storeCity" name="storeCity" required="" type="text"
+                                   value="{{store.store_city}}"/>
                         </div>
                         <div class="col-md-4">
 
                             <label class="form-label" for="storeState">State</label>
 
-                            <input class="form-control" id="storeState" name="storeState" required="" type="text"/>
+                            <input class="form-control" id="storeState" name="storeState" required="" type="text"
+                                   value="{{store.store_state}}"/>
                         </div>
                         <div class="col-md-4">
 
                             <label class="form-label" for="storeZipCode">Zip</label>
 
-                            <input class="form-control" id="storeZipCode" name="storeZipCode" required="" type="text"/>
+                            <input class="form-control" id="storeZipCode" name="storeZipCode" required="" type="text"
+                                   value="{{store.store_zip}}"/>
                         </div>
                         <div class="col-12">
 
                             <label class="form-label" for="completeAddress">Complete Address</label>
 
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3"> </textarea>
+                                      rows="3"> {{store.store_address}}</textarea>
                         </div>
                         <div class="col-sm-12">
                             <input class="form-control" id="searchInput" placeholder="Search for a location"
                                    required type="text">
                         </div>
                         <div class="col-sm-12">
-                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates"
-                                   readonly
-                                   required type="text">
+                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates" name="storeLatLng"
+                                   readonly value="Latitude: {{store.store_lat}}, Longitude: {{store.store_lng}}" required type="text">
                         </div>
                         <div class="col-12" id="map"></div>
+                        <input required type="hidden" name="last_updated_by"
+                               value="{{ request.session.id }}">
+                        <input required type="hidden" name="store_id"
+                               value="{{ store.store_id}}">
 
                         <div class="col-12">
 
@@ -167,9 +176,12 @@
                     </form>
                 </div>
             </div>
+
             {% include 'footer.html' %}
 
         </div>
+        {% endfor %}
+
     </div>
 </main>
 <!-- ===============================================-->
@@ -277,6 +289,7 @@
                 store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
             });
         }
+
 
 
 

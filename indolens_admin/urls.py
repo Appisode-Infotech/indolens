@@ -14,13 +14,13 @@ urlpatterns = [
     # own store management
     path('create_own_store/', createOwnStore, name='create_own_store'),
     path('manage_own_stores/', manageOwnStores, name='manage_own_stores'),
-    path('manage_own_stores/view_own_store/', viewOwnStore, name='view_own_store'),
-    path('manage_own_stores/edit_own_store/', editOwnStore, name='edit_own_store'),
+    path('manage_own_stores/view_own_store/?storeId=<int:sid>', viewOwnStore, name='view_own_store'),
+    path('manage_own_stores/edit_own_store/?storeId=<int:sid>', editOwnStore, name='edit_own_store'),
     # franchise store management
     path('create_franchise_store/', createFranchiseStore, name='create_franchise_store'),
     path('manage_Franchise_stores/', manageFranchiseStores, name='manage_Franchise_stores'),
-    path('manage_Franchise_stores/view_franchise_store/', viewFranchiseStore, name='view_franchise_store'),
-    path('manage_Franchise_stores/edit_franchise_store/', editFranchiseStore, name='edit_franchise_store'),
+    path('manage_Franchise_stores/view_franchise_store/?storeId=<int:fid>', viewFranchiseStore, name='view_franchise_store'),
+    path('manage_Franchise_stores/edit_franchise_store/?storeId=<int:fid>', editFranchiseStore, name='edit_franchise_store'),
     # inventory management
     path('manage_out_of_stock/', manageCentralInventoryOutOfStock, name='manage_out_of_stock'),
     path('manage_central_inventory_products/', manageCentralInventoryProducts,
@@ -53,23 +53,23 @@ urlpatterns = [
     # sub admins
     path('manage_sub_admins/', manageSubAdmins, name='manage_sub_admins'),
     path('manage_sub_admins/create_sub_admin/', createSubAdmin, name='create_sub_admin'),
-    path('manage_sub_admins/edit_sub_admin/', editSubAdmin, name='edit_sub_admin'),
-    path('manage_sub_admins/view_sub_admin/', viewSubAdmin, name='view_sub_admin'),
+    path('manage_sub_admins/edit_sub_admin/?subAdminId=<int:said>', editSubAdmin, name='edit_sub_admin'),
+    path('manage_sub_admins/view_sub_admin/?subAdminId=<int:said>', viewSubAdmin, name='view_sub_admin'),
     # store managers
     path('manage_store_managers/', manageStoreManagers, name='manage_store_managers'),
     path('manage_store_managers/create_store_manager/', createStoreManager, name='create_store_manager'),
-    path('manage_store_managers/edit_store_manager/', editStoreManager, name='edit_store_manager'),
-    path('manage_store_managers/view_store_manager/', viewStoreManager, name='view_store_manager'),
+    path('manage_store_managers/edit_store_manager/?managerId=<int:mid>', editStoreManager, name='edit_store_manager'),
+    path('manage_store_managers/view_store_manager/?managerId=<int:mid>', viewStoreManager, name='view_store_manager'),
     # store franchise owners
     path('manage_franchise_owners/', manageFranchiseOwners, name='manage_franchise_owners'),
     path('manage_franchise_owners/create_franchise_owner/', createFranchiseOwners, name='create_franchise_owner'),
-    path('manage_franchise_owners/edit_franchise_owner/', editFranchiseOwners, name='edit_franchise_owner'),
-    path('manage_franchise_owners/view_franchise_owner/', viewFranchiseOwners, name='view_franchise_owner'),
+    path('manage_franchise_owners/edit_franchise_owner/?franchiseOwnerId=<int:foid>', editFranchiseOwners, name='edit_franchise_owner'),
+    path('manage_franchise_owners/view_franchise_owner/?franchiseOwnerId=<int:foid>', viewFranchiseOwners, name='view_franchise_owner'),
     # area heads
     path('manage_area_head/', manageAreaHead, name='manage_area_head'),
     path('manage_area_head/create_area_head/', createAreaHead, name='create_area_head'),
     path('manage_area_head/edit_area_head/', editAreaHead, name='edit_area_head'),
-    path('manage_area_head/view_area_head/', viewAreaHead, name='view_area_head'),
+    path('manage_area_head/view_area_head/?areaHeadId=<int:ahid>', viewAreaHead, name='view_area_head'),
     # marketing head
     path('manage_marketing_head/', manageMarketingHead, name='manage_marketing_head'),
     path('manage_marketing_head/create_marketing_head/', createMarketingHead, name='create_marketing_head'),

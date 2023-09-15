@@ -3870,26 +3870,50 @@
     });
   };
 
-  /* -------------------------------------------------------------------------- */
-  /*                              Form Validation                               */
-  /* -------------------------------------------------------------------------- */
-
-  const fromValidationInit = () => {
+// Your existing form validation function
+const formValidationInit = () => {
     const forms = document.querySelectorAll('.needs-validation');
     forms.forEach(form => {
-      form.addEventListener(
-        'submit',
-        event => {
-        if (!form.checkValidity()) {
-        event.preventDefault();   // Prevent submission if the form is not valid.
-        event.stopPropagation();  // Stop the event from propagating further.
-      }
-      form.classList.add('was-validated');
-        },
-        false
-      );
+        form.addEventListener(
+            'submit',
+            event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();   // Prevent submission if the form is not valid.
+                    event.stopPropagation();  // Stop the event from propagating further.
+                }
+                form.classList.add('was-validated');
+            },
+            false
+        );
     });
-  };
+};
+
+// Add an event listener for the form submit
+document.addEventListener("DOMContentLoaded", function () {
+    formValidationInit(); // Call your existing form validation function
+
+    // Add password matching validation
+    const forms = document.querySelectorAll('.needs-password-validation');
+    forms.forEach(form => {
+        form.addEventListener(
+            'submit',
+            event => {
+                const passwordField = form.querySelector('#password');
+                const confirmPasswordField = form.querySelector('#confirmPassword');
+                if (passwordField.value !== confirmPasswordField.value) {
+                    event.preventDefault(); // Prevent form submission
+                    event.stopPropagation(); // Stop the event from propagating further.
+                    confirmPasswordField.setCustomValidity("Passwords do not match.");
+                } else {
+                    confirmPasswordField.setCustomValidity("");
+                }
+                form.classList.add('was-validated');
+            },
+            false
+        );
+    });
+});
+
 
   /*-----------------------------------------------
   |   Chat

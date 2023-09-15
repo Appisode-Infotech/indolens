@@ -36,7 +36,7 @@ sql_queries = [
         email VARCHAR(255) NOT NULL,
         phone INT(12) NOT NULL,
         password VARCHAR(255) NOT NULL,
-        sales_executive VARCHAR(255) NOT NULL,
+        role INT(12) NOT NULL,
         profile_pic VARCHAR(255) NOT NULL,
         address VARCHAR(255) NOT NULL,
         document_1_type VARCHAR(255) NOT NULL,
