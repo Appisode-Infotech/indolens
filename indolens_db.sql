@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 15, 2023 at 07:56 AM
+-- Generation Time: Sep 18, 2023 at 09:21 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -113,7 +113,7 @@ CREATE TABLE `area_head` (
 --
 
 INSERT INTO `area_head` (`area_head_id`, `name`, `email`, `phone`, `password`, `profile_pic`, `assigned_stores`, `address`, `document_1_type`, `document_1_url`, `document_2_type`, `document_2_url`, `status`, `created_by`, `created_on`, `last_updated_by`, `last_updated_on`) VALUES
-(1, 'ROOP RAJ THAPA', 'rooprajt@gmail.com', 2147483647, '1234test', 'profile_pic/profile_pic_profile.png_1694343962', '2,4', '4rd Cross\r\n#A148', 'Aadhar', '[\"documents/documents_wed2.jpg_1694343962\", \"documents/documents_wed1.jpg_1694343962\"]', 'Pan Card', '[\"documents/documents_greeting_logo (2).png_1694343962\", \"documents/documents_greeting_logo (1).png_1694343962\"]', 1, 1, '2023-09-10 16:34:46', 1, '2023-09-10 16:34:46'),
+(1, 'ROOP RAJ THAPA', 'rooprajt@gmail.com', 2147483647, '1234test', 'profile_pic/profile_pic_profile.png_1694343962', '2,4', '4rd Cross\r\n#A148', 'Aadhar', '[\"documents/documents_wed2.jpg_1694343962\", \"documents/documents_wed1.jpg_1694343962\"]', 'Pan Card', '[\"documents/documents_greeting_logo (2).png_1694343962\", \"documents/documents_greeting_logo (1).png_1694343962\"]', 0, 1, '2023-09-10 16:34:46', 1, '2023-09-10 16:34:46'),
 (2, 'Niraj Thapa', 'niraj@gmail.com', 2147483647, 'niraj', 'profile_pic/profile_pic_profile.png_1694349566', '2', 'peenya 1st stage bangalore 560058 ', 'Aadhar', '[\"documents/documents_greeting_logo (2).png_1694349566\"]', 'Pan Card', '[\"documents/documents_wed2.jpg_1694349566\", \"documents/documents_wed1.jpg_1694349566\"]', 1, 1, '2023-09-10 17:52:05', 1, '2023-09-10 17:52:05'),
 (3, 'Darshan Bhandari', 'darshu@gmail.com', 2147483647, 'Darsh@123', 'profile_pic/profile_pic_DSC_0179-removebg-preview (1).png_1694700697', '', '4rd Cross\r\n#A148', 'Aadhar', '[\"documents/documents_user2-160x160.jpg_1694700697\", \"documents/documents_user1-128x128.jpg_1694700697\"]', 'Pan Card', '[\"documents/documents_user2-160x160.jpg_1694700697\", \"documents/documents_user1-128x128.jpg_1694700697\"]', 1, 1, '2023-09-14 19:39:46', 1, '2023-09-14 19:39:46'),
 (4, 'Darshan Bhandari', 'darshu@gmail.com', 2147483647, 'Darsh@123', 'profile_pic/profile_pic_DSC_0179-removebg-preview (1).png_1694700793', '', '4rd Cross\r\n#A148', 'Aadhar', '[\"documents/documents_user2-160x160.jpg_1694700793\", \"documents/documents_user1-128x128.jpg_1694700793\"]', 'Pan Card', '[\"documents/documents_user2-160x160.jpg_1694700793\", \"documents/documents_user1-128x128.jpg_1694700793\"]', 1, 1, '2023-09-14 19:43:10', 1, '2023-09-14 19:43:10');
@@ -139,7 +139,9 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('5gj03vrfwajgoqzq1o48jz7yp48m3dtl', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLUUcpLzE1VslLyzEvJz0nNK1ZwBKlW0lEqKMpPy8xJjS_ITAZKI_NqARplHgQ:1qh1cR:Id6-gP3ffaZ5flRk1d7HRzC7nL2SpELZFKmJI_dMrno', '2023-09-29 05:43:55.156342'),
 ('5hre8c1y1e4robl9ame8jgsqrbesrlzi', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLUUcpLzE1VslLyzEvJz0nNK1ZwBKlW0lEqKMpPy8xJjS_ITAZKI_NqARplHgQ:1qgjg3:bNwp2HesoyhwiQ02rhL9epSiu4UWe54rbjc6-QXmnT4', '2023-09-28 10:34:27.213659'),
 ('b8l3vfkf2qtznvms7w09y1r6opo146ch', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLUUcpLzE1VslLyzEvJz0nNK1ZwBKlW0lEqKMpPy8xJjS_ITAZKI_NqARplHgQ:1qe8AS:AQWws2m8ssIEcc8FGwTvo-3kzJ0FO5JkIon0l_GqkRM', '2023-09-21 06:07:04.464787'),
+('d7pwgjwjmmg7nxn8mlcqk7nkd4g5gd3e', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLUUcpLzE1VslLyzEvJz0nNK1ZwBKlW0lEqKMpPy8xJjS_ITAZKI_NqARplHgQ:1qi8Uu:P1GmoZkL0J9mZ1jWMKHHzbpD_v_pDTy_pksArtJGg-A', '2023-10-02 07:16:44.080677'),
 ('kwfqssbraq7v9k0sge34r9d4v6imow36', '.eJxNi0EKgCAQRa8Ss5YO4KqWnUJEJxkYR9FaRXdvDIKW773_L6DufMwkjktKGB0J2KOdaACzJwYLb17SoDmUDAbEZ9SwSSyM0qd1LNQ3xe-gWFvZidFVCmr_dD_zTym7:1qdkJR:pH9aDyhztk66uZHOD2ZKfn1S51ppkQ2f2OmhickWkAI', '2023-09-06 12:38:45.368165'),
+('nxnsxhy0xnp6om110uebpnykwes3hvqe', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLUUcpLzE1VslLyzEvJz0nNK1ZwBKlW0lEqKMpPy8xJjS_ITAZKI_NqARplHgQ:1qi8XI:efTbMDgR1qtcuaz7stjO-AgGjXL9TK6zjbtS-Lgr6hc', '2023-10-02 07:19:12.333375'),
 ('p99wzi3peasn8a8tmlmu6rb6hao8kc1n', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLUUcpLzE1VslLyzEvJz0nNK1ZwBKlW0lEqKMpPy8xJjS_ITAZKI_NqARplHgQ:1qeUul:Weic5A0bPxB9kzKEzJLzeeLuMAmSNQD7_x1szm0lxgU', '2023-09-22 06:24:23.175906'),
 ('xhpbnmkif52qgusnthxpqpnqes0a0we3', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLUUcpLzE1VslLyzEvJz0nNK1ZwBKlW0lEqKMpPy8xJjS_ITAZKI_NqARplHgQ:1qfDd2:zdkjUO4uKjRM8XdYkyu9YWVcd_VH6dCrbPOnBDCpBNU', '2023-09-24 06:09:04.816750');
 
@@ -174,12 +176,7 @@ CREATE TABLE `franchise_owner` (
 --
 
 INSERT INTO `franchise_owner` (`franchise_owner_id`, `name`, `email`, `phone`, `password`, `profile_pic`, `franchise_store_id`, `address`, `document_1_type`, `document_1_url`, `document_2_type`, `document_2_url`, `status`, `created_by`, `created_on`, `last_updated_by`, `last_updated_on`) VALUES
-(1, 'ROOP RAJ THAPA test', 'rooprajt@gmail.comtest', 1111122222, 'admin1234test', 'profile.png', 1, '     4rd Cross\r\n#A148 test', 'Driving Licence', '', '1', '', 1, 1, '2023-09-09 16:18:01', 1, '2023-09-09 18:29:39'),
-(2, 'Nirmala Bhandari', 'nimmi123@gmail.com', 2147483647, '9620', 'profile_pic/profile_pic_profile.png_1694264883', 0, '#Peegwhvebjdfkghjdf ', 'Driving Licence', '', 'Pan Card', '', 1, 1, '2023-09-09 18:34:56', 1, '2023-09-09 18:34:56'),
-(3, 'Nirmala Bhandari', 'nimmi123@gmail.com', 2147483647, '9620', 'profile_pic/profile_pic_profile.png_1694264908', 0, '#Peegwhvebjdfkghjdf ', 'Driving Licence', '', 'Pan Card', '', 1, 1, '2023-09-09 18:38:25', 1, '2023-09-09 18:38:25'),
-(4, 'test name', 'test@gmail.com', 2147483647, 'testpwd', 'profile_pic/profile_pic_profile.png_1694337477', 0, ' test address', 'Driving Licence', '', 'Pan Card', '', 1, 1, '2023-09-10 14:47:00', 1, '2023-09-10 14:47:00'),
-(5, 'Test123', 'test@gmail.com', 2147483647, 'Test@123', 'profile_pic/profile_pic_DSC_0179-removebg-preview (1).png_1694700159', 0, '4rd Cross\r\n#A148', 'Ration Card', '', 'Pan Card', '', 1, 1, '2023-09-14 19:29:47', 1, '2023-09-14 19:29:47'),
-(6, 'Test123', 'test@gmail.com', 2147483647, 'Test@123', 'profile_pic/profile_pic_DSC_0179-removebg-preview (1).png_1694700222', 0, '4rd Cross\r\n#A148', 'Ration Card', '', 'Pan Card', '', 1, 1, '2023-09-14 19:29:47', 1, '2023-09-14 19:29:47');
+(7, 'test', 'test@gmail.com', 2147483647, 'Test@12', 'profile_pic/profile_pic_profile.png_1694762964', 0, '#A-148 3rd Cross 1st stage Peenya Industrial Estate Bangalore-58', 'Aadhar', '[\"documents/documents_user2-160x160.jpg_1694762964\", \"documents/documents_user1-128x128.jpg_1694762964\"]', 'Pan Card', '[\"documents/documents_user1-128x128.jpg_1694762964\"]', 0, 1, '2023-09-15 12:54:16', 1, '2023-09-15 12:54:16');
 
 -- --------------------------------------------------------
 
@@ -554,7 +551,7 @@ ALTER TABLE `area_head`
 -- AUTO_INCREMENT for table `franchise_owner`
 --
 ALTER TABLE `franchise_owner`
-  MODIFY `franchise_owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `franchise_owner_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `franchise_store`

@@ -7,6 +7,7 @@ urlpatterns = [
     path('', index, name='index'),
     # auth
     path('login/', login, name='login'),
+    path('admin_logout/', adminLogout, name='admin_logout'),
     path('forgot_password/', forgotPassword, name='forgot_password'),
     path('reset_password/', resetPassword, name='reset_password'),
     # Dashboard
