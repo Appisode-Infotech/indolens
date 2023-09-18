@@ -15,7 +15,7 @@ today = datetime.datetime.now(ist)
 def create_area_head(area_head, files):
     try:
         with connection.cursor() as cursor:
-            insert_franchise_owner_query = f"""
+            insert_area_head_query = f"""
                 INSERT INTO area_head (
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
@@ -29,12 +29,12 @@ def create_area_head(area_head, files):
             """
 
             # Execute the query using your cursor
-            cursor.execute(insert_franchise_owner_query)
+            cursor.execute(insert_area_head_query)
             ahid = cursor.lastrowid
 
             return {
                 "status": True,
-                "message": "franchise owner added",
+                "message": "Area Head added",
                 "ahid": ahid
             }, 200
 

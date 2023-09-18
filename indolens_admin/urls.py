@@ -80,7 +80,8 @@ urlpatterns = [
     path('manage_marketing_head/', manageMarketingHead, name='manage_marketing_head'),
     path('manage_marketing_head/create_marketing_head/', createMarketingHead, name='create_marketing_head'),
     path('manage_marketing_head/edit_marketing_head/', editMarketingHead, name='edit_marketing_head'),
-    path('manage_marketing_head/view_marketing_head/', viewMarketingHead, name='view_marketing_head'),
+    path('manage_marketing_head/view_marketing_head/?marketingHeadId=<int:mhid>', viewMarketingHead, name='view_marketing_head'),
+    path('manage_marketing_head/enable_disable_marketing_head/?marketingHeadId=<int:mhid>/?status=<int:status>', enableDisableMarketingHead, name='enable_disable_marketing_head'),
     # manage optimetry
     path('manage_optimetry/', manageOptimetry, name='manage_optimetry'),
     path('manage_optimetry/create_optimetry/', createOptimetry, name='create_optimetry'),
