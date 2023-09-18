@@ -25,6 +25,7 @@ def login(request):
         if request.method == 'POST':
             admin_obj = admin_auth_model.admin_auth_model_from_dict(request.POST)
             response, status_code = admin_auth_controller.login(admin_obj)
+            print(response)
             if response['status']:
                 request.session.update({
                     'is_admin_logged_in': True,
