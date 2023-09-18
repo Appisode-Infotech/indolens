@@ -40,6 +40,14 @@ def login(request):
             return render(request, 'indolens_admin/auth/sign_in.html')
 
 
+def adminLogout(request):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        request.session.clear()
+        return redirect(login)
+    else:
+        return redirect(login)
+
+
 def forgotPassword(request):
     return render(request, 'indolens_admin/auth/forgot_password.html')
 
