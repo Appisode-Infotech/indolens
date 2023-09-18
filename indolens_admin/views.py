@@ -253,6 +253,11 @@ def viewSubAdmin(request, said):
     else:
         return redirect('login')
 
+def enableDisableSubAdmin(request, said, status):
+    response = sub_admin_controller.enable_disable_sub_admin(said, status)
+    print(response)
+    return redirect('manage_sub_admins')
+
 
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
@@ -332,6 +337,11 @@ def editStoreManager(request, mid):
     response, status_code = store_manager_controller.get_store_manager_by_id(mid)
     return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
                   {"store_manager": response['store_manager']})
+
+def enableDisableStoreManager(request, mid, status):
+    response = store_manager_controller.enable_disable_store_manager(mid, status)
+    print(response)
+    return redirect('manage_store_managers')
 
 
 # =================================ADMIN FRANCHISE OWNERS MANAGEMENT======================================

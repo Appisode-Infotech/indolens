@@ -56,11 +56,14 @@ urlpatterns = [
     path('manage_sub_admins/create_sub_admin/', createSubAdmin, name='create_sub_admin'),
     path('manage_sub_admins/edit_sub_admin/?subAdminId=<int:said>', editSubAdmin, name='edit_sub_admin'),
     path('manage_sub_admins/view_sub_admin/?subAdminId=<int:said>', viewSubAdmin, name='view_sub_admin'),
+    path('manage_sub_admins/enable_disable_sub_admin/?subAdminId=<int:said>/status=<int:status>', enableDisableSubAdmin, name='enable_disable_sub_admin'),
+
     # store managers
     path('manage_store_managers/', manageStoreManagers, name='manage_store_managers'),
     path('manage_store_managers/create_store_manager/', createStoreManager, name='create_store_manager'),
     path('manage_store_managers/edit_store_manager/?managerId=<int:mid>', editStoreManager, name='edit_store_manager'),
     path('manage_store_managers/view_store_manager/?managerId=<int:mid>', viewStoreManager, name='view_store_manager'),
+    path('manage_store_managers/enable_disable_store_manager/?managerId=<int:mid>/status=<int:status>', enableDisableStoreManager, name='enable_disable_store_manager'),
     # store franchise owners
     path('manage_franchise_owners/', manageFranchiseOwners, name='manage_franchise_owners'),
     path('manage_franchise_owners/create_franchise_owner/', createFranchiseOwners, name='create_franchise_owner'),
