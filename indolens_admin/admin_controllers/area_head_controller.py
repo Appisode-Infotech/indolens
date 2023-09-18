@@ -96,3 +96,24 @@ def get_area_head_by_id(ahid):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def enable_disable_area_head(ahid, status):
+    # update table set status= '{status}' where area_head_id = '{ahid}'
+    try:
+        with connection.cursor() as cursor:
+            set_area_head_query = f"""
+            UPDATE area_head SET status = '{status}' WHERE area_head_id = '{ahid}';
+            """
+            cursor.execute(set_area_head_query)
+
+            return {
+                "status": True,
+                "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+

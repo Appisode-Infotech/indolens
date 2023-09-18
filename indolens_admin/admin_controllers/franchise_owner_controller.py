@@ -53,7 +53,6 @@ def get_all_franchise_owner():
                                             LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id """
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
-            print(franchise_owners)
             return {
                 "status": True,
                 "franchise_owners": get_franchise_owners(franchise_owners)
@@ -79,6 +78,31 @@ def get_franchise_owner_by_id(foid):
             return {
                 "status": True,
                 "franchise_owner": get_franchise_owners(franchise_owners)
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def enable_disable_franchise_owner(foid, status):
+    try:
+        with connection.cursor() as cursor:
+            update_franchise_owners_query = f"""
+                UPDATE franchise_owner
+                SET
+                    status = {status}
+                WHERE
+                    franchise_owner_id = {foid}
+            """
+
+            # Execute the update query using your cursor
+            cursor.execute(update_franchise_owners_query)
+
+            return {
+                "status": True,
+                "message": "franchise owner updated"
             }, 200
 
     except pymysql.Error as e:

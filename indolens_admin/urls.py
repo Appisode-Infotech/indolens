@@ -65,11 +65,13 @@ urlpatterns = [
     path('manage_franchise_owners/create_franchise_owner/', createFranchiseOwners, name='create_franchise_owner'),
     path('manage_franchise_owners/edit_franchise_owner/?franchiseOwnerId=<int:foid>', editFranchiseOwners, name='edit_franchise_owner'),
     path('manage_franchise_owners/view_franchise_owner/?franchiseOwnerId=<int:foid>', viewFranchiseOwners, name='view_franchise_owner'),
+    path('manage_franchise_owners/enable_disable_franchise_owner/?franchiseOwnerId=<int:foid>/status=<int:status>', enableDisableFranchiseOwner, name='enable_disable_franchise_owner'),
     # area heads
     path('manage_area_head/', manageAreaHead, name='manage_area_head'),
     path('manage_area_head/create_area_head/', createAreaHead, name='create_area_head'),
     path('manage_area_head/edit_area_head/', editAreaHead, name='edit_area_head'),
     path('manage_area_head/view_area_head/?areaHeadId=<int:ahid>', viewAreaHead, name='view_area_head'),
+    path('manage_area_head/enable_disable_area_head/?areaHeadId=<int:ahid>/?status=<int:status>', enableDisableAreaHead, name='enable_disable_area_head'),
     # marketing head
     path('manage_marketing_head/', manageMarketingHead, name='manage_marketing_head'),
     path('manage_marketing_head/create_marketing_head/', createMarketingHead, name='create_marketing_head'),

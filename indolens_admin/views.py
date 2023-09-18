@@ -6,7 +6,7 @@ from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller
-from indolens_admin.admin_controllers.employee_files_model import FileData
+from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, store_manager_model, franchise_owner_model, area_head_model
 
@@ -40,7 +40,6 @@ def login(request):
             return render(request, 'indolens_admin/auth/sign_in.html')
 
 
-
 def forgotPassword(request):
     return render(request, 'indolens_admin/auth/forgot_password.html')
 
@@ -67,7 +66,8 @@ def dashboard(request):
 def manageOwnStores(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = own_store_controller.get_all_own_stores()
-        return render(request, 'indolens_admin/ownStore/manageOwnStores.html', {"own_store_list": response['own_stores']})
+        return render(request, 'indolens_admin/ownStore/manageOwnStores.html',
+                      {"own_store_list": response['own_stores']})
     else:
         return redirect('login')
 
@@ -98,7 +98,6 @@ def editOwnStore(request, sid):
         return redirect('login')
 
 
-
 def createOwnStore(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
@@ -113,7 +112,6 @@ def createOwnStore(request):
         return redirect('login')
 
 
-
 def manageFranchiseStores(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_all_franchise_stores()
@@ -123,7 +121,6 @@ def manageFranchiseStores(request):
         return redirect('login')
 
 
-
 def viewFranchiseStore(request, fid):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_franchise_store_by_id(fid)
@@ -131,7 +128,6 @@ def viewFranchiseStore(request, fid):
                       {"franchise_store": response['franchise_store']})
     else:
         return redirect('login')
-
 
 
 def editFranchiseStore(request, fid):
@@ -150,7 +146,6 @@ def editFranchiseStore(request, fid):
                           {"franchise_store": response['franchise_store'], "id": fid})
     else:
         return redirect('login')
-
 
 
 def createFranchiseStore(request):
@@ -174,9 +169,11 @@ def createFranchiseStore(request):
 def manageSubAdmins(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sub_admin_controller.get_all_sub_admin()
-        return render(request, 'indolens_admin/subAdmin/manageSubAdmins.html', {"sub_admin_list": response['sub_admins']})
+        return render(request, 'indolens_admin/subAdmin/manageSubAdmins.html',
+                      {"sub_admin_list": response['sub_admins']})
     else:
         return redirect('login')
+
 
 def createSubAdmin(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -225,7 +222,6 @@ def createSubAdmin(request):
             return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
     else:
         return redirect('login')
-
 
 
 def editSubAdmin(request, said):
@@ -393,7 +389,6 @@ def editFranchiseOwners(request, foid):
             'document2': 'documents',
         }
         for file_key, file_objs in request.FILES.lists():
-            print("file also updated")
             label = file_label_mapping.get(file_key, 'unknown')
             subdirectory = f"{label}/"
 
@@ -417,6 +412,11 @@ def editFranchiseOwners(request, foid):
         response, status_code = franchise_owner_controller.get_franchise_owner_by_id(foid)
         return render(request, 'indolens_admin/franchiseOwners/editFranchiseOwner.html',
                       {"franchise_owner": response['franchise_owner']})
+
+def enableDisableFranchiseOwner(request, foid, status):
+    response = franchise_owner_controller.enable_disable_franchise_owner(foid, status)
+    print(response)
+    return redirect('manage_franchise_owners')
 
 
 def viewFranchiseOwners(request, foid):
@@ -483,6 +483,11 @@ def createAreaHead(request):
 
 def editAreaHead(request):
     return render(request, 'indolens_admin/areaHead/editAreaHead.html')
+
+
+def enableDisableAreaHead(request, ahid, status):
+    area_head_controller.enable_disable_area_head(ahid, status)
+    return redirect('manage_area_head')
 
 
 def viewAreaHead(request, ahid):
