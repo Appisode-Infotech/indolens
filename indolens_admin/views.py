@@ -523,7 +523,6 @@ def viewAreaHead(request, ahid):
 
 def manageMarketingHead(request):
     response, status_code = marketing_head_controller.get_all_marketing_head()
-    print(response)
     return render(request, 'indolens_admin/marketingHeads/manageMarketingHead.html',
                   {"marketing_heads_list": response['marketing_heads_list']})
 
@@ -573,14 +572,16 @@ def createMarketingHead(request):
 
 def editMarketingHead(request, mhid):
     response, status_code = marketing_head_controller.get_marketing_head_by_id(mhid)
-    print(response)
-    return render(request, 'indolens_admin/marketingHeads/editMarketingHead.html')
+    return render(request, 'indolens_admin/marketingHeads/editMarketingHead.html',
+                  {"marketing_head": response['marketing_head']})
 
 
 def viewMarketingHead(request, mhid):
     response, status_code = marketing_head_controller.get_marketing_head_by_id(mhid)
+    print(response)
     return render(request, 'indolens_admin/marketingHeads/viewMarketingHead.html',
-                  {"marketing_heads_list": response['marketing_heads_list']})
+                  {"marketing_head": response['marketing_head']})
+
 
 def enableDisableMarketingHead(request, mhid, status):
     marketing_head_controller.enable_disable_marketing_head(mhid, status)
@@ -610,7 +611,10 @@ def viewOptimetry(request):
 
 
 def manageSaleExecutives(request):
-    return render(request, 'indolens_admin/salesExecutive/manageSaleExecutives.html')
+    response, status_code = sales_executives_controller.get_all_sales_executive()
+    print(response)
+    return render(request, 'indolens_admin/salesExecutive/manageSaleExecutives.html',
+                  {"sales_executive_list": response['sales_executive_list']})
 
 
 def createSaleExecutives(request):
@@ -648,7 +652,6 @@ def createSaleExecutives(request):
         for key, value in file_data.items():
             form_data[key] = value
 
-
         print(form_data)
         file_data = FileData(form_data)
         sales_executives_obj = sales_executives_model.sales_executives_model_from_dict(request.POST)
@@ -664,8 +667,11 @@ def editSaleExecutives(request):
     return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html')
 
 
-def viewSaleExecutives(request):
-    return render(request, 'indolens_admin/salesExecutive/viewSaleExecutives.html')
+def viewSaleExecutives(request, seid):
+    response, status_code = sales_executives_controller.get_sales_executive_by_id(seid)
+    print(response)
+    return render(request, 'indolens_admin/salesExecutive/viewSaleExecutives.html',
+                  {"sales_executive": response['sales_executive']})
 
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================

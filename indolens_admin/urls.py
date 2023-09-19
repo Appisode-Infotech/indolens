@@ -79,7 +79,7 @@ urlpatterns = [
     # marketing head
     path('manage_marketing_head/', manageMarketingHead, name='manage_marketing_head'),
     path('manage_marketing_head/create_marketing_head/', createMarketingHead, name='create_marketing_head'),
-    path('manage_marketing_head/edit_marketing_head/', editMarketingHead, name='edit_marketing_head'),
+    path('manage_marketing_head/edit_marketing_head/?marketingHeadId=<int:mhid>', editMarketingHead, name='edit_marketing_head'),
     path('manage_marketing_head/view_marketing_head/?marketingHeadId=<int:mhid>', viewMarketingHead, name='view_marketing_head'),
     path('manage_marketing_head/enable_disable_marketing_head/?marketingHeadId=<int:mhid>/?status=<int:status>', enableDisableMarketingHead, name='enable_disable_marketing_head'),
     # manage optimetry
@@ -91,7 +91,7 @@ urlpatterns = [
     path('manage_sales_executives/', manageSaleExecutives, name='manage_sales_executives'),
     path('manage_sales_executives/create_sales_executives/', createSaleExecutives, name='create_sales_executives'),
     path('manage_sales_executives/edit_sales_executives/', editSaleExecutives, name='edit_sales_executives'),
-    path('manage_sales_executives/view_sales_executives/', viewSaleExecutives, name='view_sales_executives'),
+    path('manage_sales_executives/view_sales_executives/salesExecutiveId=<int:seid>', viewSaleExecutives, name='view_sales_executives'),
     # manage accountant
     path('manage_accountant/', manageAccountant, name='manage_accountant'),
     path('manage_accountant/create_accountant/', createAccountant, name='create_accountant'),

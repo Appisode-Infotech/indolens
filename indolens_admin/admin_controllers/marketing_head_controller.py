@@ -91,7 +91,7 @@ def get_marketing_head_by_id(mhid):
 
             return {
                 "status": True,
-                "marketing_heads_list": get_marketing_heads(marketing_head)
+                "marketing_head": get_marketing_heads(marketing_head)
             }, 200
 
     except pymysql.Error as e:

@@ -6,6 +6,7 @@ import datetime
 import pytz
 
 from indolens_admin.admin_models.admin_resp_model.marketing_head_resp_model import get_marketing_heads
+from indolens_admin.admin_models.admin_resp_model.sales_executive_resp_model import get_sales_executives
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
@@ -43,28 +44,25 @@ def create_sales_executives(sales_executives, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def marketing_heads_list(marketing_heads):
-    pass
 
-
-def get_all_marketing_head():
+def get_all_sales_executive():
     try:
         with connection.cursor() as cursor:
-            get_marketing_head_query = f"""
-            SELECT mh.*, creator.name, updater.name, ah.name
-            FROM marketing_head AS mh
-            LEFT JOIN area_head AS ah ON mh.assigned_area_head = ah.area_head_id
-            LEFT JOIN admin AS creator ON mh.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON mh.last_updated_by = updater.admin_id
-            GROUP BY mh.marketing_head_id
+            get_sales_executive_query = f"""
+            SELECT se.*, creator.name, updater.name, os.store_name
+            FROM sales_executive AS se
+            LEFT JOIN own_store AS os ON se.assigned_store_id = os.store_id
+            LEFT JOIN admin AS creator ON se.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON se.last_updated_by = updater.admin_id
+            GROUP BY se.sales_executive_id
             """
-            cursor.execute(get_marketing_head_query)
-            marketing_head = cursor.fetchall()
-            print(marketing_head)
+            cursor.execute(get_sales_executive_query)
+            sales_executive = cursor.fetchall()
+            print(sales_executive)
 
             return {
                 "status": True,
-                "marketing_heads_list": get_marketing_heads(marketing_head)
+                "sales_executive_list": get_sales_executives(sales_executive)
             }, 200
 
     except pymysql.Error as e:
@@ -73,25 +71,25 @@ def get_all_marketing_head():
         return {"status": False, "message": str(e)}, 301
 
 
-def get_marketing_head_by_id(mhid):
+def get_sales_executive_by_id(seid):
     try:
         with connection.cursor() as cursor:
-            get_marketing_head_query = f"""
-            SELECT mh.*, creator.name, updater.name, ah.name
-            FROM marketing_head AS mh
-            LEFT JOIN area_head AS ah ON mh.assigned_area_head = ah.area_head_id
-            LEFT JOIN admin AS creator ON mh.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON mh.last_updated_by = updater.admin_id
-            WHERE marketing_head_id = '{mhid}'
-            GROUP BY mh.marketing_head_id
+            get_sales_executive_query = f"""
+            SELECT se.*, creator.name, updater.name, os.store_name
+            FROM sales_executive AS se
+            LEFT JOIN own_store AS os ON se.assigned_store_id = os.store_id
+            LEFT JOIN admin AS creator ON se.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON se.last_updated_by = updater.admin_id
+            WHERE sales_executive_id = '{seid}'
+            GROUP BY se.sales_executive_id
             """
-            cursor.execute(get_marketing_head_query)
-            marketing_head = cursor.fetchall()
-            print(marketing_head)
+            cursor.execute(get_sales_executive_query)
+            sales_executive = cursor.fetchall()
+            print(sales_executive)
 
             return {
                 "status": True,
-                "marketing_heads_list": get_marketing_heads(marketing_head)
+                "sales_executive": get_sales_executives(sales_executive)
             }, 200
 
     except pymysql.Error as e:
