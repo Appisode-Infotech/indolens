@@ -85,3 +85,28 @@ def get_store_manager_by_id(mid):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def enable_disable_store_manager(mid, status):
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE store_manager
+                SET
+                    status = {status}
+                WHERE
+                    store_manager_id = {mid}
+            """
+
+            # Execute the update query using your cursor
+            cursor.execute(update_store_manager_query)
+
+            return {
+                "status": True,
+                "message": "Store Manager updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

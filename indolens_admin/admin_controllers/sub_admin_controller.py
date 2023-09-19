@@ -74,7 +74,7 @@ def get_sub_admin_by_id(said):
                                             FROM admin AS a
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id
-                                            WHERE a.role = 2 and a.admin_id = '{said}'"""
+                                            WHERE a.role = 2 AND a.admin_id = '{said}'"""
             cursor.execute(get_all_sub_admin_query)
             sub_admins = cursor.fetchall()
             return {
@@ -117,6 +117,31 @@ def edit_sub_admin(sub_admin):
             return {
                 "status": True,
                 "message": "sub admin updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def enable_disable_sub_admin(said, status):
+    try:
+        with connection.cursor() as cursor:
+            update_sub_admin_query = f"""
+                UPDATE admin
+                SET
+                    status = {status}
+                WHERE
+                    admin_id = {said}
+            """
+
+            # Execute the update query using your cursor
+            cursor.execute(update_sub_admin_query)
+
+            return {
+                "status": True,
+                "message": "Sub Admin updated"
             }, 200
 
     except pymysql.Error as e:

@@ -56,11 +56,14 @@ urlpatterns = [
     path('manage_sub_admins/create_sub_admin/', createSubAdmin, name='create_sub_admin'),
     path('manage_sub_admins/edit_sub_admin/?subAdminId=<int:said>', editSubAdmin, name='edit_sub_admin'),
     path('manage_sub_admins/view_sub_admin/?subAdminId=<int:said>', viewSubAdmin, name='view_sub_admin'),
+    path('manage_sub_admins/enable_disable_sub_admin/?subAdminId=<int:said>/status=<int:status>', enableDisableSubAdmin, name='enable_disable_sub_admin'),
+
     # store managers
     path('manage_store_managers/', manageStoreManagers, name='manage_store_managers'),
     path('manage_store_managers/create_store_manager/', createStoreManager, name='create_store_manager'),
     path('manage_store_managers/edit_store_manager/?managerId=<int:mid>', editStoreManager, name='edit_store_manager'),
     path('manage_store_managers/view_store_manager/?managerId=<int:mid>', viewStoreManager, name='view_store_manager'),
+    path('manage_store_managers/enable_disable_store_manager/?managerId=<int:mid>/status=<int:status>', enableDisableStoreManager, name='enable_disable_store_manager'),
     # store franchise owners
     path('manage_franchise_owners/', manageFranchiseOwners, name='manage_franchise_owners'),
     path('manage_franchise_owners/create_franchise_owner/', createFranchiseOwners, name='create_franchise_owner'),
@@ -76,8 +79,9 @@ urlpatterns = [
     # marketing head
     path('manage_marketing_head/', manageMarketingHead, name='manage_marketing_head'),
     path('manage_marketing_head/create_marketing_head/', createMarketingHead, name='create_marketing_head'),
-    path('manage_marketing_head/edit_marketing_head/', editMarketingHead, name='edit_marketing_head'),
-    path('manage_marketing_head/view_marketing_head/', viewMarketingHead, name='view_marketing_head'),
+    path('manage_marketing_head/edit_marketing_head/?marketingHeadId=<int:mhid>', editMarketingHead, name='edit_marketing_head'),
+    path('manage_marketing_head/view_marketing_head/?marketingHeadId=<int:mhid>', viewMarketingHead, name='view_marketing_head'),
+    path('manage_marketing_head/enable_disable_marketing_head/?marketingHeadId=<int:mhid>/?status=<int:status>', enableDisableMarketingHead, name='enable_disable_marketing_head'),
     # manage optimetry
     path('manage_optimetry/', manageOptimetry, name='manage_optimetry'),
     path('manage_optimetry/create_optimetry/', createOptimetry, name='create_optimetry'),
@@ -87,7 +91,7 @@ urlpatterns = [
     path('manage_sales_executives/', manageSaleExecutives, name='manage_sales_executives'),
     path('manage_sales_executives/create_sales_executives/', createSaleExecutives, name='create_sales_executives'),
     path('manage_sales_executives/edit_sales_executives/', editSaleExecutives, name='edit_sales_executives'),
-    path('manage_sales_executives/view_sales_executives/', viewSaleExecutives, name='view_sales_executives'),
+    path('manage_sales_executives/view_sales_executives/salesExecutiveId=<int:seid>', viewSaleExecutives, name='view_sales_executives'),
     # manage accountant
     path('manage_accountant/', manageAccountant, name='manage_accountant'),
     path('manage_accountant/create_accountant/', createAccountant, name='create_accountant'),

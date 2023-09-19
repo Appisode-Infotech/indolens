@@ -5,10 +5,12 @@ import time
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
-    sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller
+    sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller, \
+    marketing_head_controller, sales_executives_controller
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
-    sub_admin_model, store_manager_model, franchise_owner_model, area_head_model
+    sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
+    sales_executives_model
 
 
 # =================================ADMIN START======================================
@@ -200,7 +202,7 @@ def createSubAdmin(request):
                 file_list = []
 
                 for index, file_obj in enumerate(file_objs):
-                    file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
                     form_data_key = f"doc"
                     file_dict = {form_data_key: file_name}
 
@@ -254,6 +256,12 @@ def viewSubAdmin(request, said):
         return redirect('login')
 
 
+def enableDisableSubAdmin(request, said, status):
+    response = sub_admin_controller.enable_disable_sub_admin(said, status)
+    print(response)
+    return redirect('manage_sub_admins')
+
+
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
 def manageStoreManagers(request):
@@ -282,7 +290,7 @@ def createStoreManager(request):
                 file_list = []
 
                 for index, file_obj in enumerate(file_objs):
-                    file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
                     form_data_key = f"doc"
                     file_dict = {form_data_key: file_name}
 
@@ -334,6 +342,12 @@ def editStoreManager(request, mid):
                   {"store_manager": response['store_manager']})
 
 
+def enableDisableStoreManager(request, mid, status):
+    response = store_manager_controller.enable_disable_store_manager(mid, status)
+    print(response)
+    return redirect('manage_store_managers')
+
+
 # =================================ADMIN FRANCHISE OWNERS MANAGEMENT======================================
 
 def manageFranchiseOwners(request):
@@ -358,7 +372,7 @@ def createFranchiseOwners(request):
             file_list = []
 
             for index, file_obj in enumerate(file_objs):
-                file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
                 form_data_key = f"doc"
                 file_dict = {form_data_key: file_name}
 
@@ -401,7 +415,7 @@ def editFranchiseOwners(request, foid):
             subdirectory = f"{label}/"
 
             for file_obj in file_objs:
-                file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
                 form_data_key = f"{file_key}"
 
                 form_data = form_data.copy()
@@ -420,6 +434,7 @@ def editFranchiseOwners(request, foid):
         response, status_code = franchise_owner_controller.get_franchise_owner_by_id(foid)
         return render(request, 'indolens_admin/franchiseOwners/editFranchiseOwner.html',
                       {"franchise_owner": response['franchise_owner']})
+
 
 def enableDisableFranchiseOwner(request, foid, status):
     response = franchise_owner_controller.enable_disable_franchise_owner(foid, status)
@@ -458,7 +473,7 @@ def createAreaHead(request):
             file_list = []
 
             for index, file_obj in enumerate(file_objs):
-                file_name = f"{subdirectory}{label}_{str(file_obj)}_{int(time.time())}"
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
                 form_data_key = f"doc"
                 file_dict = {form_data_key: file_name}
 
@@ -507,19 +522,70 @@ def viewAreaHead(request, ahid):
 # =================================ADMIN MARKETING HEADS MANAGEMENT======================================
 
 def manageMarketingHead(request):
-    return render(request, 'indolens_admin/marketingHeads/manageMarketingHead.html')
+    response, status_code = marketing_head_controller.get_all_marketing_head()
+    return render(request, 'indolens_admin/marketingHeads/manageMarketingHead.html',
+                  {"marketing_heads_list": response['marketing_heads_list']})
 
 
 def createMarketingHead(request):
-    return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html')
+    if request.method == 'POST':
+        form_data = {}
+        file_data = {}
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+            file_list = []
+
+            for index, file_obj in enumerate(file_objs):
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        file_data = FileData(form_data)
+        marketing_head_obj = marketing_head_model.marketing_head_model_from_dict(request.POST)
+        resp = marketing_head_controller.create_marketing_head(marketing_head_obj, file_data)
+        return redirect('manage_marketing_head')
+    else:
+        return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html')
 
 
-def editMarketingHead(request):
-    return render(request, 'indolens_admin/marketingHeads/editMarketingHead.html')
+def editMarketingHead(request, mhid):
+    response, status_code = marketing_head_controller.get_marketing_head_by_id(mhid)
+    return render(request, 'indolens_admin/marketingHeads/editMarketingHead.html',
+                  {"marketing_head": response['marketing_head']})
 
 
-def viewMarketingHead(request):
-    return render(request, 'indolens_admin/marketingHeads/viewMarketingHead.html')
+def viewMarketingHead(request, mhid):
+    response, status_code = marketing_head_controller.get_marketing_head_by_id(mhid)
+    print(response)
+    return render(request, 'indolens_admin/marketingHeads/viewMarketingHead.html',
+                  {"marketing_head": response['marketing_head']})
+
+
+def enableDisableMarketingHead(request, mhid, status):
+    marketing_head_controller.enable_disable_marketing_head(mhid, status)
+    return redirect('manage_marketing_head')
 
 
 # =================================ADMIN OPTIMETRY MANAGEMENT======================================
@@ -545,19 +611,67 @@ def viewOptimetry(request):
 
 
 def manageSaleExecutives(request):
-    return render(request, 'indolens_admin/salesExecutive/manageSaleExecutives.html')
+    response, status_code = sales_executives_controller.get_all_sales_executive()
+    print(response)
+    return render(request, 'indolens_admin/salesExecutive/manageSaleExecutives.html',
+                  {"sales_executive_list": response['sales_executive_list']})
 
 
 def createSaleExecutives(request):
-    return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html')
+    if request.method == 'POST':
+        form_data = {}
+        file_data = {}
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+            file_list = []
+
+            for index, file_obj in enumerate(file_objs):
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        print(form_data)
+        file_data = FileData(form_data)
+        sales_executives_obj = sales_executives_model.sales_executives_model_from_dict(request.POST)
+        print(sales_executives_obj)
+        resp = sales_executives_controller.create_sales_executives(sales_executives_obj, file_data)
+        print(resp)
+        return redirect('manage_sales_executives')
+    else:
+        return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html')
 
 
 def editSaleExecutives(request):
     return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html')
 
 
-def viewSaleExecutives(request):
-    return render(request, 'indolens_admin/salesExecutive/viewSaleExecutives.html')
+def viewSaleExecutives(request, seid):
+    response, status_code = sales_executives_controller.get_sales_executive_by_id(seid)
+    print(response)
+    return render(request, 'indolens_admin/salesExecutive/viewSaleExecutives.html',
+                  {"sales_executive": response['sales_executive']})
 
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
