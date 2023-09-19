@@ -91,12 +91,13 @@ urlpatterns = [
     path('manage_sales_executives/', manageSaleExecutives, name='manage_sales_executives'),
     path('manage_sales_executives/create_sales_executives/', createSaleExecutives, name='create_sales_executives'),
     path('manage_sales_executives/edit_sales_executives/', editSaleExecutives, name='edit_sales_executives'),
+    path('manage_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seid>/?status=<int:status>', enableDisableSaleExecutives, name='enable_disable_sales_executive'),
     path('manage_sales_executives/view_sales_executives/salesExecutiveId=<int:seid>', viewSaleExecutives, name='view_sales_executives'),
     # manage accountant
     path('manage_accountant/', manageAccountant, name='manage_accountant'),
     path('manage_accountant/create_accountant/', createAccountant, name='create_accountant'),
     path('manage_accountant/edit_accountant/', editAccountant, name='edit_accountant'),
-    path('manage_accountant/view_accountant/', viewAccountant, name='view_accountant'),
+    path('manage_accountant/view_accountant/accountantId=<int:aid>', viewAccountant, name='view_accountant'),
     # manage lab tech
     path('manage_lab_technician/', manageLabTechnician, name='manage_lab_technician'),
     path('manage_lab_technician/create_lab_technician/', createLabTechnician, name='create_lab_technician'),

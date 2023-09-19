@@ -6,11 +6,11 @@ from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller, \
-    marketing_head_controller, sales_executives_controller
+    marketing_head_controller, sales_executives_controller, accountant_controller
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
-    sales_executives_model
+    sales_executives_model, accountant_model
 
 
 # =================================ADMIN START======================================
@@ -655,9 +655,7 @@ def createSaleExecutives(request):
         print(form_data)
         file_data = FileData(form_data)
         sales_executives_obj = sales_executives_model.sales_executives_model_from_dict(request.POST)
-        print(sales_executives_obj)
         resp = sales_executives_controller.create_sales_executives(sales_executives_obj, file_data)
-        print(resp)
         return redirect('manage_sales_executives')
     else:
         return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html')
@@ -674,14 +672,65 @@ def viewSaleExecutives(request, seid):
                   {"sales_executive": response['sales_executive']})
 
 
+def enableDisableSaleExecutives(request, seid, status):
+    sales_executives_controller.enable_disable_sales_executive(seid, status)
+    return redirect('manage_marketing_head')
+
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
 def manageAccountant(request):
-    return render(request, 'indolens_admin/accountant/manageAccountant.html')
+    response, status_code = accountant_controller.get_all_accountant()
+    print(response)
+    return render(request, 'indolens_admin/accountant/manageAccountant.html',
+                  {"accountant_list": response['accountant_list']})
 
 
 def createAccountant(request):
-    return render(request, 'indolens_admin/accountant/createAccountant.html')
+    if request.method == 'POST':
+        form_data = {}
+        file_data = {}
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+            file_list = []
+
+            for index, file_obj in enumerate(file_objs):
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        print(form_data)
+        file_data = FileData(form_data)
+
+        accountant_obj = accountant_model.accountant_model_from_dict(request.POST)
+        print(accountant_obj)
+        resp = accountant_controller.create_accountant(accountant_obj, file_data)
+        print(resp)
+        return redirect('manage_accountant')
+
+    else:
+        return render(request, 'indolens_admin/accountant/createAccountant.html')
 
 
 def editAccountant(request):
