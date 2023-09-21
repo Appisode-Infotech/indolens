@@ -92,17 +92,18 @@ urlpatterns = [
     path('manage_sales_executives/create_sales_executives/', createSaleExecutives, name='create_sales_executives'),
     path('manage_sales_executives/edit_sales_executives/', editSaleExecutives, name='edit_sales_executives'),
     path('manage_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seid>/?status=<int:status>', enableDisableSaleExecutives, name='enable_disable_sales_executive'),
-    path('manage_sales_executives/view_sales_executives/salesExecutiveId=<int:seid>', viewSaleExecutives, name='view_sales_executives'),
+    path('manage_sales_executives/view_sales_executives/?salesExecutiveId=<int:seid>', viewSaleExecutives, name='view_sales_executives'),
     # manage accountant
     path('manage_accountant/', manageAccountant, name='manage_accountant'),
     path('manage_accountant/create_accountant/', createAccountant, name='create_accountant'),
     path('manage_accountant/edit_accountant/', editAccountant, name='edit_accountant'),
-    path('manage_accountant/view_accountant/accountantId=<int:aid>', viewAccountant, name='view_accountant'),
+    path('manage_accountant/view_accountant/?accountantId=<int:aid>', viewAccountant, name='view_accountant'),
+    path('manage_accountant/enable_disable_accountant/?accountantId=<int:aid>/?status=<int:status>', enableDisableAccountant, name='enable_disable_accountant'),
     # manage lab tech
     path('manage_lab_technician/', manageLabTechnician, name='manage_lab_technician'),
     path('manage_lab_technician/create_lab_technician/', createLabTechnician, name='create_lab_technician'),
-    path('manage_lab_technician/edit_lab_technician/', editLabTechnician, name='edit_lab_technician'),
-    path('manage_lab_technician/view_lab_technician/', viewLabTechnician, name='view_lab_technician'),
+    path('manage_lab_technician/edit_lab_technician/labTechnicianId=<int:ltid>', editLabTechnician, name='edit_lab_technician'),
+    path('manage_lab_technician/view_lab_technician/labTechnicianId=<int:ltid>', viewLabTechnician, name='view_lab_technician'),
     # housekeeping
     path('manage_other_employees/', manageOtherEmployees, name='manage_other_employees'),
     path('manage_other_employees/create_other_employees/', createOtherEmployees, name='create_other_employees'),

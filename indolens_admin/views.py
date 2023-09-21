@@ -6,11 +6,11 @@ from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller, \
-    marketing_head_controller, sales_executives_controller, accountant_controller
+    marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
-    sales_executives_model, accountant_model
+    sales_executives_model, accountant_model, lab_technician_model
 
 
 # =================================ADMIN START======================================
@@ -676,11 +676,11 @@ def enableDisableSaleExecutives(request, seid, status):
     sales_executives_controller.enable_disable_sales_executive(seid, status)
     return redirect('manage_marketing_head')
 
+
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
 def manageAccountant(request):
     response, status_code = accountant_controller.get_all_accountant()
-    print(response)
     return render(request, 'indolens_admin/accountant/manageAccountant.html',
                   {"accountant_list": response['accountant_list']})
 
@@ -733,30 +733,83 @@ def createAccountant(request):
         return render(request, 'indolens_admin/accountant/createAccountant.html')
 
 
-def editAccountant(request):
+def editAccountant(request, aid):
     return render(request, 'indolens_admin/accountant/editAccountant.html')
 
 
-def viewAccountant(request):
-    return render(request, 'indolens_admin/accountant/viewAccountant.html')
+def viewAccountant(request, aid):
+    response, status_code = accountant_controller.get_accountant_by_id(aid)
+    return render(request, 'indolens_admin/accountant/viewAccountant.html',
+                  {"accountant": response['accountant']})
+
+
+def enableDisableAccountant(request, aid, status):
+    accountant_controller.enable_disable_accountant(aid, status)
+    return redirect('manage_accountant')
 
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
 def manageLabTechnician(request):
-    return render(request, 'indolens_admin/labTechnician/manageLabTechnician.html')
+    response, status_code = lab_technician_controller.get_all_lab_technician()
+    return render(request, 'indolens_admin/labTechnician/manageLabTechnician.html',
+                  {"lab_technician_list": response['lab_technician_list']})
 
 
 def createLabTechnician(request):
-    return render(request, 'indolens_admin/labTechnician/createLabTechnician.html')
+    if request.method == 'POST':
+        form_data = {}
+        file_data = {}
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+            file_list = []
+
+            for index, file_obj in enumerate(file_objs):
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        file_data = FileData(form_data)
+
+        lab_tech_obj = lab_technician_model.lab_technician_model_from_dict(request.POST)
+        resp = lab_technician_controller.create_lab_technician(lab_tech_obj, file_data)
+        return redirect('manage_lab_technician')
+    else:
+        return render(request, 'indolens_admin/labTechnician/createLabTechnician.html')
 
 
-def editLabTechnician(request):
-    return render(request, 'indolens_admin/labTechnician/editLabTechnician.html')
+def editLabTechnician(request, ltid):
+    response, status_code = lab_technician_controller.get_lab_technician_by_id(ltid)
+    return render(request, 'indolens_admin/labTechnician/editLabTechnician.html',
+                  {"lab_technician": response['lab_technician']})
 
 
-def viewLabTechnician(request):
-    return render(request, 'indolens_admin/labTechnician/viewLabTechnician.html')
+def viewLabTechnician(request, ltid):
+    response, status_code = lab_technician_controller.get_lab_technician_by_id(ltid)
+    return render(request, 'indolens_admin/labTechnician/viewLabTechnician.html',
+                  {"lab_technician": response['lab_technician']})
 
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================

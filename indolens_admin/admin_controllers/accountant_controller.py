@@ -70,25 +70,23 @@ def get_all_accountant():
         return {"status": False, "message": str(e)}, 301
 
 
-def get_sales_executive_by_id(seid):
+def get_accountant_by_id(aid):
     try:
         with connection.cursor() as cursor:
-            get_sales_executive_query = f"""
-            SELECT se.*, creator.name, updater.name, os.store_name
-            FROM sales_executive AS se
-            LEFT JOIN own_store AS os ON se.assigned_store_id = os.store_id
-            LEFT JOIN admin AS creator ON se.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON se.last_updated_by = updater.admin_id
-            WHERE sales_executive_id = '{seid}'
-            GROUP BY se.sales_executive_id
+            get_accountant_query = f"""
+            SELECT ac.*, creator.name, updater.name
+            FROM accountant AS ac
+            LEFT JOIN admin AS creator ON ac.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON ac.last_updated_by = updater.admin_id
+            WHERE accountant_id = '{aid}'
+            GROUP BY ac.accountant_id
             """
-            cursor.execute(get_sales_executive_query)
-            sales_executive = cursor.fetchall()
-            print(sales_executive)
+            cursor.execute(get_accountant_query)
+            accountant = cursor.fetchall()
 
             return {
                 "status": True,
-                "sales_executive": get_sales_executives(sales_executive)
+                "accountant": get_accountants(accountant)
             }, 200
 
     except pymysql.Error as e:
@@ -97,23 +95,23 @@ def get_sales_executive_by_id(seid):
         return {"status": False, "message": str(e)}, 301
 
 
-def enable_disable_sales_executive(seid, status):
+def enable_disable_accountant(aid, status):
     try:
         with connection.cursor() as cursor:
-            update_marketing_head_query = f"""
-                UPDATE sales_executive
+            update_accountant_query = f"""
+                UPDATE accountant
                 SET
                     status = {status}
                 WHERE
-                    sales_executive_id = {seid}
+                    accountant_id = {aid}
             """
 
             # Execute the update query using your cursor
-            cursor.execute(update_marketing_head_query)
+            cursor.execute(update_accountant_query)
 
             return {
                 "status": True,
-                "message": "Marketing  Head updated"
+                "message": "Accountant updated"
             }, 200
 
     except pymysql.Error as e:
