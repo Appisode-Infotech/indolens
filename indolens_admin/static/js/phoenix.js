@@ -512,14 +512,14 @@
       </div>
     `
       : ''
-  } 
+  }
   <div class="mt-4 ${event.extendedProps.location ? 'border-bottom pb-3' : ''}">
     <h5 class='mb-0 text-800'>Date and Time</h5>
     <p class="mb-1 mt-2">
     ${
       window.dayjs &&
       window.dayjs(event.start).format('dddd, MMMM D, YYYY, h:mm A')
-    } 
+    }
     ${
       event.end
         ? `– ${
@@ -3875,20 +3875,36 @@
   /* -------------------------------------------------------------------------- */
 
   const fromValidationInit = () => {
-    const forms = document.querySelectorAll('.needs-validation');
-
+    const forms = document.querySelectorAll('.needs-validation, .needs-password-validation');
     forms.forEach(form => {
-      form.addEventListener(
-        'submit',
-        event => {
-          event.preventDefault();
-          event.stopPropagation();
-          form.classList.add('was-validated');
-        },
-        false
-      );
+        form.addEventListener(
+            'submit',
+            event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();   // Prevent submission if the form is not valid.
+                    event.stopPropagation();  // Stop the event from propagating further.
+                }
+
+                // Password matching validation
+                if (form.classList.contains('needs-password-validation')) {
+                    const passwordField = form.querySelector('#password');
+                    const confirmPasswordField = form.querySelector('#confirmPassword');
+                    if (passwordField.value !== confirmPasswordField.value) {
+                        event.preventDefault(); // Prevent form submission
+                        event.stopPropagation(); // Stop the event from propagating further.
+                        confirmPasswordField.setCustomValidity("Passwords do not match.");
+                    } else {
+                        confirmPasswordField.setCustomValidity("");
+                    }
+                }
+
+                form.classList.add('was-validated');
+            },
+            false
+        );
     });
-  };
+};
+
 
   /*-----------------------------------------------
   |   Chat
