@@ -1,4 +1,5 @@
 from django.urls import path
+
 from .views import *
 
 urlpatterns = [
@@ -25,13 +26,15 @@ urlpatterns = [
     path('cancelled_store_orders/', dashboard, name='cancelled_store_orders'),
     path('refunded_store_orders/', dashboard, name='refunded_store_orders'),
     path('order_store_details/', dashboard, name='order_store_details'),
-
-
+    # inventory items
+    path('manage_store_inventory_products/', dashboard, name='manage_store_inventory_products'),
     path('manage_store_out_of_stock/', dashboard, name='manage_store_out_of_stock'),
     path('move_stocks_store/', dashboard, name='move_stocks_store'),
-    path('manage_store_inventory_products/', dashboard,name='manage_store_inventory_products'),
-    path('all_stock_store_requests/', dashboard,name='all_stock_store_requests'),
-    path('pending_store_stock_requests/', dashboard,name='pending_store_stock_requests'),
-    path('completed_store_stock_requests/', dashboard,name='completed_store_stock_requests'),
-    path('rejected_store_stock_requests/', dashboard,name='rejected_store_stock_requests'),
+    # stock request management
+    path('all_stock_store_requests/', dashboard, name='all_stock_store_requests'),
+    path('pending_store_stock_requests/', dashboard, name='pending_store_stock_requests'),
+    path('completed_store_stock_requests/', dashboard, name='completed_store_stock_requests'),
+    path('rejected_store_stock_requests/', dashboard, name='rejected_store_stock_requests'),
+    # Make sale
+    path('own_store_make_sale/', dashboard, name='own_store_make_sale'),
 ]
