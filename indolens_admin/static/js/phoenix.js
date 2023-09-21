@@ -3870,50 +3870,25 @@
     });
   };
 
-// Your existing form validation function
-const formValidationInit = () => {
+  /* -------------------------------------------------------------------------- */
+  /*                              Form Validation                               */
+  /* -------------------------------------------------------------------------- */
+
+  const fromValidationInit = () => {
     const forms = document.querySelectorAll('.needs-validation');
+
     forms.forEach(form => {
-        form.addEventListener(
-            'submit',
-            event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault();   // Prevent submission if the form is not valid.
-                    event.stopPropagation();  // Stop the event from propagating further.
-                }
-                form.classList.add('was-validated');
-            },
-            false
-        );
+      form.addEventListener(
+        'submit',
+        event => {
+          event.preventDefault();
+          event.stopPropagation();
+          form.classList.add('was-validated');
+        },
+        false
+      );
     });
-};
-
-// Add an event listener for the form submit
-document.addEventListener("DOMContentLoaded", function () {
-    formValidationInit(); // Call your existing form validation function
-
-    // Add password matching validation
-    const forms = document.querySelectorAll('.needs-password-validation');
-    forms.forEach(form => {
-        form.addEventListener(
-            'submit',
-            event => {
-                const passwordField = form.querySelector('#password');
-                const confirmPasswordField = form.querySelector('#confirmPassword');
-                if (passwordField.value !== confirmPasswordField.value) {
-                    event.preventDefault(); // Prevent form submission
-                    event.stopPropagation(); // Stop the event from propagating further.
-                    confirmPasswordField.setCustomValidity("Passwords do not match.");
-                } else {
-                    confirmPasswordField.setCustomValidity("");
-                }
-                form.classList.add('was-validated');
-            },
-            false
-        );
-    });
-});
-
+  };
 
   /*-----------------------------------------------
   |   Chat
@@ -5789,8 +5764,8 @@ document.addEventListener("DOMContentLoaded", function () {
             skin: 'oxide',
             menubar: false,
             content_style: `
-        .mce-content-body { 
-          color: ${getColor('black')} 
+        .mce-content-body {
+          color: ${getColor('black')}
         }
         .mce-content-body[data-mce-placeholder]:not(.mce-visualblocks)::before {
           color: ${getColor('gray-400')};
@@ -6048,50 +6023,6 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   };
-  /* -------------------------------------------------------------------------- */
-  /*                                 Profile pic upload                         */
-  /* -------------------------------------------------------------------------- */
-
-document.addEventListener('DOMContentLoaded', function () {
-  // Get the file input element and the preview image element
-  const fileInput = document.getElementById('profilePic');
-  const previewImage = document.getElementById('previewImage');
-
-  // Add an event listener to the file input to handle file selection
-  fileInput.addEventListener('change', function () {
-    const file = fileInput.files[0];
-
-    // Check if a file was selected
-    if (file) {
-      // Check if the selected file is an image
-          if (file.type.startsWith('image/')) {
-            const reader = new FileReader();
-
-            // Set up a FileReader to read the selected file
-            reader.onload = function (e) {
-              // Set the source of the preview image to the selected file's data URL
-              previewImage.src = e.target.result;
-              // Display the preview image
-              previewImage.style.display = 'block';
-            };
-
-            // Read the selected file as a data URL
-            reader.readAsDataURL(file);
-          } else {
-            // Clear the file input and hide the preview image if the selected file is not an image
-            fileInput.value = '';
-            previewImage.src = '';
-            previewImage.style.display = 'none';
-            alert('Please select an image file.');
-          }
-        } else {
-          // Hide the preview image if no file was selected
-          previewImage.src = '';
-          previewImage.style.display = 'none';
-        }
-      });
-    });
-
 
   /* eslint-disable import/no-extraneous-dependencies */
 
