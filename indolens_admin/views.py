@@ -6,11 +6,12 @@ from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller, \
-    marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller
+    marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
+    lab_controller
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
-    sales_executives_model, accountant_model, lab_technician_model
+    sales_executives_model, accountant_model, lab_technician_model, lab_model
 
 
 # =================================ADMIN START======================================
@@ -881,10 +882,16 @@ def viewCustomerDetails(request):
 # =================================ADMIN LABS MANAGEMENT======================================
 
 def manageLabs(request):
-    return render(request, 'indolens_admin/labs/manageLabs.html')
+    response, status_code = lab_controller.get_all_labs()
+    print(response)
+    return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
 
 
 def createLab(request):
+    if request.method == 'POST':
+        lab_obj = lab_model.lab_model_from_dict(request.POST)
+        print(lab_obj)
+        lab_controller.create_lab(lab_obj)
     return render(request, 'indolens_admin/labs/createLab.html')
 
 
@@ -893,6 +900,7 @@ def editLab(request):
 
 
 def viewLab(request):
+    lab_controller.get_lab_by_id(1)
     return render(request, 'indolens_admin/labs/viewLab.html')
 
 

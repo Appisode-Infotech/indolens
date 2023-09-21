@@ -93,7 +93,8 @@
             <h2 class="mb-4">Create a Lab</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form class="row g-3 needs-validation" novalidate="">
+                    <form ction="{% url 'create_lab' %}" method="post" class="row g-3 needs-validation" novalidate="">
+                        {% csrf_token %}
                         <div class="col-md-6">
 
                             <label class="form-label" for="labName">Lab name</label>
@@ -171,11 +172,15 @@
                                    required type="text">
                         </div>
                         <div class="col-sm-12">
-                            <input class="form-control" id="lab_lat_lng" placeholder="Co Ordinates" name="lab_lat_lng"
+                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates" name="lab_lat_lng"
                                    readonly
                                    required type="text">
                         </div>
                         <div class="col-12" id="map"></div>
+                        <input required type="hidden" name="created_by"
+                                                           value="{{ request.session.id }}">
+                        <input required type="hidden" name="last_updated_by"
+                                                           value="{{ request.session.id }}">
 
                         <div class="col-12">
 

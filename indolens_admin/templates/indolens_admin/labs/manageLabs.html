@@ -62,6 +62,8 @@
 
 
 
+
+
     </script>
 </head>
 
@@ -83,7 +85,7 @@
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Labs<span class="fw-normal text-700 ms-3">(6)</span></h2>
+                            <h2 class="mb-0">Labs<span class="fw-normal text-700 ms-3">({{lab_list|length}})</span></h2>
                         </div>
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -130,19 +132,20 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
+                            {% for lab in lab_list %}
                             <tr class="position-static">
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
-                                        class="text-decoration-none fw-bold fs-0" href="{% url 'view_lab' %}">Indolens
-                                    Lab
-                                    - 01</a>
+                                        class="text-decoration-none fw-bold fs-0" href="{% url 'view_lab' %}">
+                                    {{lab.lab_name}}
+                                </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_active_jobs' %}">23</a>
+                                        href="{% url 'view_active_jobs'  %}">23</a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_lab_technician' %}">Santhosh Kumar M</a>
+                                        href="{% url 'view_lab_technician' 1 %}">{{lab.lab_technician_name}}</a>
                                 </td>
 
                                 <!--                                <td class="align-middle white-space-nowrap text-end statuses"><span-->
@@ -178,6 +181,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -214,6 +218,8 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
 
 
 
