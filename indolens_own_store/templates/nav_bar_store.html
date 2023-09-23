@@ -47,8 +47,8 @@
                 <li class="nav-item">
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'all_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'all_store_orders' %}" role="button">
+                                                     class="nav-link label-1 {% if 'all_sales_store' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'all_sales_store' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="tag"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">All Sales</span></span>
@@ -59,8 +59,8 @@
                 <li class="nav-item">
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'all_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'all_store_orders' %}"
+                                                     class="nav-link label-1 {% if 'all_expenses_store' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'all_expenses_store' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="file-text"></span></span><span class="nav-link-text-wrapper"><span
@@ -151,6 +151,18 @@
                                 id="stock_requests">
                                 <li class="collapsed-nav-item-title d-none">Stock Requests
                                 </li>
+
+                                <li class="nav-item"><a aria-expanded="false" asd="index"
+                                                        class="nav-link {% if 'create_request_store' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'create_request_store' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">Create Request</span>
+                                    </div>
+                                </a>
+                                    <!-- more inner pages-->
+                                </li>
+
                                 <li class="nav-item"><a aria-expanded="false" asd="index"
                                                         class="nav-link {% if 'all_stock_store_requests' in request.path %}active{% endif %}"
                                                         data-bs-toggle=""

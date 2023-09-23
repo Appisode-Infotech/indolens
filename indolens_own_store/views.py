@@ -25,3 +25,59 @@ def resetPassword(request):
 # ================================= OWN STORE DASHBOARD ======================================
 def dashboard(request):
     return render(request, 'dashboard.html')
+
+
+# ================================= OWN STORE EMPLOYEES ======================================
+def manageStoreEmployees(request):
+    return render(request, 'employee/manageEmployees.html')
+
+
+def viewEmployees(request):
+    return render(request, 'employee/viewEmployee.html')
+
+
+# ================================= OWN STORE ORDER MANAGEMENT ======================================
+def allStoreOrders(request):
+    return render(request, 'orders/allStoreOrders.html')
+
+
+def pendingStoreOrders(request):
+    return render(request, 'orders/pendingStoreOrders.html')
+
+
+def receivedStoreOrders(request):
+    return render(request, 'orders/receivedStoreOrders.html')
+
+
+def processingStoreOrders(request):
+    return render(request, 'orders/processingStoreOrders.html')
+
+
+def readyStoreOrders(request):
+    return render(request, 'orders/readyStoreOrders.html')
+
+
+def deliveredStoreOrders(request):
+    return render(request, 'orders/deliveredStoreOrders.html')
+
+
+def cancelledStoreOrders(request):
+    return render(request, 'orders/cancelledStoreOrders.html')
+
+
+def refundedStoreOrders(request):
+    return render(request, 'orders/refundedStoreOrders.html')
+
+
+def orderDetails(request):
+    return render(request, 'orders/orderDetails.html')
+
+
+# ================================= OWN STORE CUSTIOMER MANAGEMENT ======================================
+
+def viewStoreCustomers(request):
+    return render(request, 'customers/viewAllCustomersStore.html')
+
+
+def viewStoreCustomerDetails(request):
+    return render(request, 'customers/viewCustomerDetailsStore.html')

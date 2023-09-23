@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens store - Order details</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- Stylesheets -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+
+        {% include 'nav_bar_store.html' %}
+
+        <div class="content">
+
+            <div class="mb-9">
+                <h2 class="mb-0">Order <span>#349</span></h2>
+                <div class="d-flex flex-wrap flex-between-center mb-1">
+                    <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold" href="#!"> 2364847</a></p>
+                    <div class="d-flex">
+                        <button class="btn pe-3 ps-0 text-900"><span class="fas fa-print me-2"></span>Print</button>
+                        <button class="btn px-3 text-900"><span class="fas fa-undo me-2"></span>Refund</button>
+                        <div class="dropdown">
+                            <button aria-expanded="false"
+                                    class="btn text-900 dropdown-toggle dropdown-caret-none ps-3 pe-0"
+                                    data-bs-toggle="dropdown" type="button">More action<span
+                                    class="fas fa-chevron-down ms-2"></span></button>
+                            <ul class="dropdown-menu dropdown-menu-end">
+                                <li><a class="dropdown-item" href="#">Action</a></li>
+                                <li><a class="dropdown-item" href="#">Another action</a></li>
+                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-5 gy-7">
+                    <div class="col-12 col-xl-8 col-xxl-9">
+                        <div data-list='{"valueNames":["products","color","size","price","quantity","total"],"page":10}'
+                             id="orderTable">
+                            <div class="table-responsive scrollbar">
+                                <table class="table fs--1 mb-0 border-top border-200">
+                                    <thead>
+                                    <tr>
+                                        <th class="sort white-space-nowrap align-middle fs--2" scope="col"></th>
+                                        <th class="sort white-space-nowrap align-middle" data-sort="products"
+                                            scope="col" style="min-width:400px;">PRODUCTS
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="color" scope="col"
+                                            style="width:150px;">COLOR
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="size" scope="col"
+                                            style="width:300px;">SIZE
+                                        </th>
+                                        <th class="sort align-middle text-end ps-4" data-sort="price" scope="col"
+                                            style="width:150px;">PRICE
+                                        </th>
+                                        <th class="sort align-middle text-end ps-4" data-sort="quantity" scope="col"
+                                            style="width:200px;">QUANTITY
+                                        </th>
+                                        <th class="sort align-middle text-end ps-4" data-sort="total" scope="col"
+                                            style="width:250px;">TOTAL
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list" id="order-table-body">
+
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                        <td class="align-middle white-space-nowrap py-2">
+                                            <div class="border rounded-2"><img
+                                                    alt="" src="{% static 'img/products/1.png' %}" width="53"/>
+                                            </div>
+                                        </td>
+                                        <td class="products align-middle py-0">
+                                            <a class="fw-semi-bold line-clamp-2 mb-0" href="#!">Prescription Glasses
+                                                with Anti-Glare Coating</a>
+                                        </td>
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">Crystal
+                                            Clear
+                                        </td>
+                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            Medium
+                                        </td>
+                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹149
+                                        </td>
+                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">3</td>
+                                        <td class="total align-middle fw-bold text-1000 text-end py-0 ps-4">₹447</td>
+                                    </tr>
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                        <td class="align-middle white-space-nowrap py-2">
+                                            <div class="border rounded-2"><img
+                                                    alt="" src="{% static 'img/products/2.png' %}" width="53"/></div>
+                                        </td>
+                                        <td class="products align-middle py-0">
+                                            <a class="fw-semi-bold line-clamp-2 mb-0" href="#!">Camera Lens with Image
+                                                Stabilization</a>
+                                        </td>
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">Telephoto
+                                        </td>
+                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            50mm
+                                        </td>
+                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹299
+                                        </td>
+                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">1</td>
+                                        <td class="total align-middle fw-bold text-1000 text-end py-0 ps-4">₹299</td>
+                                    </tr>
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="d-flex flex-between-center py-3 border-bottom mb-7">
+                            <p class="text-1100 fw-semi-bold lh-sm mb-0">Items subtotal :</p>
+                            <p class="text-1100 fw-bold lh-sm mb-0">₹1690</p>
+                        </div>
+                        <div class="row gx-4 gy-6 g-xl-7 justify-content-sm-center justify-content-xl-start">
+                            <div class="col-12 col-sm-auto">
+                                <h4 class="mb-5">Billing details</h4>
+                                <div class="row g-4 flex-sm-column">
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="user"
+                                                                                          style="stroke-width:2.5;"></span>
+                                            <h6 class="mb-0">Customer</h6>
+                                        </div>
+                                        <a class="fs--1 ms-4" href="#!">Shatinon Mekalan</a>
+                                    </div>
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="mail"
+                                                                                          style="stroke-width:2.5;"></span>
+                                            <h6 class="mb-0">Email</h6>
+                                        </div>
+                                        <a class="fs--1 ms-4"
+                                           href="mailto:shatinon@jeemail.com:">shatinon@jeemail.com</a>
+                                    </div>
+                                    <div class="col-6 col-sm-12 order-sm-1">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="home"
+                                                                                          style="stroke-width:2.5;"></span>
+                                            <h6 class="mb-0">Address</h6>
+                                        </div>
+                                        <div class="ms-4">
+                                            <p class="text-800 mb-0 fs--1">Shatinon Mekalan</p>
+                                            <p class="text-800 mb-0 fs--1">Vancouver, British Columbia,<br
+                                                    class="d-none d-sm-block"/>Canada</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="phone"
+                                                                                          style="stroke-width:2.5;">  </span>
+                                            <h6 class="mb-0">Phone</h6>
+                                        </div>
+                                        <a class="fs--1 ms-4" href="tel:+1234567890">+1234567890</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-auto">
+                                <h4 class="mb-5">Shipping details</h4>
+                                <div class="row g-4 flex-sm-column">
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="mail"
+                                                                                          style="stroke-width:2.5;">  </span>
+                                            <h6 class="mb-0">Email</h6>
+                                        </div>
+                                        <a class="fs--1 ms-4"
+                                           href="mailto:shatinon@jeemail.com:">shatinon@jeemail.com</a>
+                                    </div>
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="phone"
+                                                                                          style="stroke-width:2.5;">  </span>
+                                            <h6 class="mb-0">Phone</h6>
+                                        </div>
+                                        <a class="fs--1 ms-4" href="tel:+1234567890">+1234567890</a>
+                                    </div>
+                                    <div class="col-6 col-sm-12 order-sm-1">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="home"
+                                                                                          style="stroke-width:2.5;">  </span>
+                                            <h6 class="mb-0">Address</h6>
+                                        </div>
+                                        <div class="ms-4">
+                                            <p class="text-800 mb-0 fs--1">Shatinon Mekalan</p>
+                                            <p class="text-800 mb-0 fs--1">Vancouver, British Columbia <br/>Canada</p>
+                                        </div>
+                                    </div>
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="calendar"
+                                                                                          style="stroke-width:2.5;"></span>
+                                            <h6 class="mb-0">Shipping Date</h6>
+                                        </div>
+                                        <p class="mb-0 text-800 fs--1 ms-4">12 Nov, 2021</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-auto">
+                                <h4 class="mb-5">Other details</h4>
+                                <div class="row g-4 flex-sm-column">
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="shopping-bag"
+                                                                                          style="stroke-width:2.5;"></span>
+                                            <h6 class="mb-0">Gift order</h6>
+                                        </div>
+                                        <a class="mb-0 text-800 fs--1 ms-4">Yes</a>
+                                    </div>
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="package"
+                                                                                          style="stroke-width:2.5;">  </span>
+                                            <h6 class="mb-0">Wraping</h6>
+                                        </div>
+                                        <p class="mb-0 text-800 fs--1 ms-4">Magic wrapper</p>
+                                    </div>
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="file-text"
+                                                                                          style="stroke-width:2.5;">  </span>
+                                            <h6 class="mb-0">Recipient</h6>
+                                        </div>
+                                        <p class="mb-0 text-800 fs--1 ms-4">Monjito Shiniga</p>
+                                    </div>
+                                    <div class="col-6 col-sm-12">
+                                        <div class="d-flex align-items-center mb-1"><span class="me-2"
+                                                                                          data-feather="mail"
+                                                                                          style="stroke-width:2.5;">  </span>
+                                            <h6 class="mb-0">Gift Meaasge</h6>
+                                        </div>
+                                        <div class="ms-4">
+                                            <p class="text-800 fs--1 mb-0">Happy Birthday Shiniga <br/>Lots of Love Buga
+                                                Buga!!</p>
+                                            <p class="mb-0 text-800 fs--1">Yours, <br/>Mekalan</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-4 col-xxl-3">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h3 class="card-title mb-4">Summary</h3>
+                                        <div>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-900 fw-semi-bold">Items subtotal :</p>
+                                                <p class="text-1100 fw-semi-bold">₹691</p>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-900 fw-semi-bold">Discount :</p>
+                                                <p class="text-danger fw-semi-bold">-₹59</p>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-900 fw-semi-bold">Tax :</p>
+                                                <p class="text-1100 fw-semi-bold">₹126.20</p>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-900 fw-semi-bold">Subtotal :</p>
+                                                <p class="text-1100 fw-semi-bold">₹665</p>
+                                            </div>
+                                            <div class="d-flex justify-content-between">
+                                                <p class="text-900 fw-semi-bold">Shipping Cost :</p>
+                                                <p class="text-1100 fw-semi-bold">₹30</p>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex justify-content-between border-top border-dashed pt-4">
+                                            <h4 class="mb-0">Total :</h4>
+                                            <h4 class="mb-0">₹695.20</h4>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h3 class="card-title mb-4">Order Status</h3>
+                                        <h6 class="mb-2">Payment status</h6>
+                                        <select aria-label="delivery type" class="form-select mb-4">
+                                            <option value="cod">Processing</option>
+                                            <option value="card">Canceled</option>
+                                            <option value="paypal">Completed</option>
+                                        </select>
+                                        <h6 class="mb-2">Order status</h6>
+                                        <select aria-label="delivery type" class="form-select">
+                                            <option value="cod">Unfulfilled</option>
+                                            <option value="card">Fulfilled</option>
+                                            <option value="paypal">Pending</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'footer.html' %}
+
+        </div>
+    </div>
+
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+
+
+</body>
+
+</html>

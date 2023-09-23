@@ -79,12 +79,13 @@
             <div class="pb-5">
                 <div class="row g-4">
                     <div class="col-12 col-xxl-6">
-                        <div class="mb-8">
+                        <div class="mb-4">
                             <h2 class="mb-2">Hi {name}</h2>
                             <h5 class="text-700 fw-semi-bold">Here’s what’s going on at your business right now</h5>
                         </div>
 
-                        <div class="row align-items-center g-4">
+                        <div class="row align-items-center g-4 mt-2">
+
                             <div class="col-12 col-md-auto">
                                 <div class="d-flex align-items-center"><img
                                         alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
@@ -92,51 +93,18 @@
 
                                     <div class="ms-3">
                                         <h4 class="mb-0">₹18,000 Sales</h4>
-                                        <p class="text-800 fs--1 mb-0">From Own Stores Today</p>
+                                        <p class="text-800 fs--1 mb-0">From Your store Today</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt=""
-                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
 
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">₹12,000 Sales</h4>
-                                        <p class="text-800 fs--1 mb-0">From Franchise Stores Today</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt=""
-                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">15 Orders</h4>
-                                        <p class="text-800 fs--1 mb-0">From Own Stores Today</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt=""
-                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">5 Delivered</h4>
-                                        <p class="text-800 fs--1 mb-0">From Franchise Stores Today</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center g-4 mt-2">
                             <div class="col-12 col-md-auto">
                                 <div class="d-flex align-items-center"><img
                                         alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
                                         width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'pending_orders' %}">57
+                                        <h4 class="mb-0"><a href="{% url 'pending_store_orders' %}">57
                                             new orders</a></h4>
                                         <p class="text-800 fs--1 mb-0">Pending orders</p>
                                     </div>
@@ -148,7 +116,7 @@
                                         height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'delivered_orders' %}">5 Delivered</a></h4>
+                                        <h4 class="mb-0"><a href="{% url 'delivered_store_orders' %}">5 Delivered</a></h4>
                                         <p class="text-800 fs--1 mb-0">Orders delivered today</p>
                                     </div>
                                 </div>
@@ -158,7 +126,7 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'manage_out_of_stock' %}">15 products</a>
+                                        <h4 class="mb-0"><a href="{% url 'manage_store_out_of_stock' %}">15 products</a>
                                         </h4>
                                         <p class="text-800 fs--1 mb-0">Out of stock</p>
                                     </div>
@@ -166,37 +134,11 @@
                             </div>
                         </div>
 
-                        <div class="row align-items-center g-4 mt-2">
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
-                                        width="46"/>
-
-                                    <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'manage_own_stores' %}">9 Own stores</a></h4>
-                                        <p class="text-800 fs--1 mb-0">Indolens owns them</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt=""
-                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
-
-                                    <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'manage_Franchise_stores' %}">5 Franchise
-                                            stores</a>
-                                        </h4>
-                                        <p class="text-800 fs--1 mb-0">For franchise owners</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
 
                         <hr class="bg-200 mb-6 mt-4"/>
                         <div class="row flex-between-center mb-4 g-3">
                             <div class="col-auto">
-                                <h3>Total sells Own Stores v/s Franchise</h3>
+                                <h3>Total sales  v/s Expenses</h3>
                                 <p class="text-700 lh-sm mb-0">Payment received across all channels</p>
                             </div>
                             <div class="col-8 col-sm-4">
@@ -214,27 +156,8 @@
                         <div class="row gx-6">
                             <div class="col-12 col-xl-6">
                                 <div class="mb-5 mt-7">
-                                    <h3>Own stores - Analytics</h3>
-                                    <p class="text-700">Glimpses of revenue and spend for own stores</p>
-                                    <div class="col-12 col-sm-auto">
-                                        <div class="btn-group" data-gantt-scale="data-gantt-scale" role="group">
-                                            <input checked="" class="btn-check" id="own_stores_weekView"
-                                                   name="scaleView"
-                                                   type="radio" value="week"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="own_stores_weekView">Week</label>
-                                            <input class="btn-check" id="own_stores_monthView" name="scaleView"
-                                                   type="radio"
-                                                   value="month"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="own_stores_monthView">Month</label>
-                                            <input class="btn-check" id="own_stores_yearView" name="scaleView"
-                                                   type="radio"
-                                                   value="year"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="own_stores_yearView">Year</label>
-                                        </div>
-                                    </div>
+                                    <h3>Your store - Analytics This Week</h3>
+                                    <p class="text-700">Glimpses of revenue and spend for your store this week</p>
                                 </div>
                                 <div class="table-responsive scrollbar">
                                     <table class="table fs--2 mb-0">
@@ -242,7 +165,7 @@
                                         <tr>
                                             <th class="border-top border-200 ps-0 align-middle" scope="col"
                                                 style="width:32%">
-                                                SHOP
+                                                DAY
                                             </th>
                                             <th class="border-top border-200 align-middle" scope="col"
                                                 style="width:17%">SALES
@@ -261,7 +184,7 @@
                                         <tbody class="list">
                                         <tr>
                                             <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal"> {{ own_store_list|length }}</h4>
+                                                <h4 class="mb-0 fw-normal">Monday</h4>
                                             </td>
                                             <td class="align-middle py-4">
                                                 <h4 class="mb-0 fw-normal">₹22,367</h4>
@@ -274,67 +197,91 @@
                                                 <h4 class="mb-0 fw-normal">₹15,758</h4>
                                             </td>
                                         </tr>
-                                        {% for store in own_store_list %}
                                         <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">{{store.store_id}} </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1"><a
-                                                                href="{% url 'view_own_store' store.store_id %}">{{store.store_city}}</a></p>
-                                                    </div>
-                                                </a>
-                                                </div>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">Tuesday</h4>
                                             </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">₹22,367</h4>
+
                                             </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
                                             </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
                                             </td>
                                         </tr>
-                                        {% endfor %}
+                                        <tr>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">Wednesday</h4>
+                                            </td>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">₹22,367</h4>
+
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">Thursday</h4>
+                                            </td>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">₹22,367</h4>
+
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">Friday</h4>
+                                            </td>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">₹22,367</h4>
+
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">Saturday</h4>
+                                            </td>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">₹22,367</h4>
+
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
+                                            </td>
+                                        </tr>
                                         </tbody>
                                     </table>
                                 </div>
-                                <!--                                <div class="d-flex align-items-center justify-content-between py-2 fs&#45;&#45;1 mb-1">-->
-                                <!--                                    <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="">1 to-->
-                                <!--                                        5 <span-->
-                                <!--                                                class="text-600"> Items of </span> 15</p><a class="fw-semi-bold"-->
-                                <!--                                                                                            href="#!"-->
-                                <!--                                                                                            data-list-view="*">View-->
-                                <!--                                    all<span-->
-                                <!--                                            class="fas fa-angle-right ms-2" data-fa-transform="down-1"></span></a>-->
-                                <!--                                </div>-->
                             </div>
 
 
                             <div class="col-12 col-xl-6">
                                 <div class="mb-5 mt-7">
-                                    <h3>Franchise stores - Analytics</h3>
-                                    <p class="text-700">Glimpses of revenue and spend for franchise stores</p>
-                                    <div class="col-12 col-sm-auto">
-                                        <div class="btn-group" data-gantt-scale="data-gantt-scale" role="group">
-                                            <input checked="" class="btn-check" id="weekView2" name="scaleView"
-                                                   type="radio" value="week"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="weekView2">Week</label>
-                                            <input class="btn-check" id="monthView2" name="scaleView" type="radio"
-                                                   value="month"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="monthView2">Month</label>
-                                            <input class="btn-check" id="yearView2" name="scaleView" type="radio"
-                                                   value="year"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="yearView2">Year</label>
-                                        </div>
-                                    </div>
+                                    <h3>Your store - Analytics This Month</h3>
+                                    <p class="text-700">Glimpses of revenue and spend for your store this month</p>
                                 </div>
                                 <div class="table-responsive scrollbar">
                                     <table class="table fs--2 mb-0">
@@ -342,7 +289,7 @@
                                         <tr>
                                             <th class="border-top border-200 ps-0 align-middle" scope="col"
                                                 style="width:32%">
-                                                SHOP
+                                                WEEK
                                             </th>
                                             <th class="border-top border-200 align-middle" scope="col"
                                                 style="width:17%">SALES
@@ -361,7 +308,7 @@
                                         <tbody class="list">
                                         <tr>
                                             <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal"> {{ franchise_store_list|length }}</h4>
+                                                <h4 class="mb-0 fw-normal"> WEEK 1</h4>
                                             </td>
                                             <td class="align-middle py-4">
                                                 <h4 class="mb-0 fw-normal">₹377,620</h4>
@@ -373,46 +320,66 @@
                                                 <h4 class="mb-0 fw-normal">₹15,758</h4>
                                             </td>
                                         </tr>
-                                        {% for store in franchise_store_list %}
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">{{store.store_id}} </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1"><a
-                                                                href="{% url 'view_franchise_store' store.store_id  %}">{{store.store_city}}</a>
-                                                        </p>
-                                                    </div>
-                                                </a>
-                                                </div>
+                                         <tr>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal"> WEEK 2</h4>
                                             </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">₹377,620</h4>
                                             </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
                                             </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
                                             </td>
                                         </tr>
-                                        {% endfor %}
+                                         <tr>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal"> WEEK 3</h4>
+                                            </td>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">₹377,620</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal"> WEEK 4</h4>
+                                            </td>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">₹377,620</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
+                                            </td>
+                                        </tr>
+                                         <tr>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal"> WEEK 5</h4>
+                                            </td>
+                                            <td class="align-middle py-4">
+                                                <h4 class="mb-0 fw-normal">₹377,620</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
+                                            </td>
+                                            <td class="align-middle text-end py-4">
+                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
+                                            </td>
+                                        </tr>
 
                                         </tbody>
                                     </table>
                                 </div>
-                                <!--                                <div class="d-flex align-items-center justify-content-between py-2 fs&#45;&#45;1 mb-1">-->
-                                <!--                                    <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="">1 to-->
-                                <!--                                        5 <span-->
-                                <!--                                                class="text-600"> Items of </span> 15</p><a class="fw-semi-bold"-->
-                                <!--                                                                                            href="#!"-->
-                                <!--                                                                                            data-list-view="*">View-->
-                                <!--                                    all<span-->
-                                <!--                                            class="fas fa-angle-right ms-2" data-fa-transform="down-1"></span></a>-->
-                                <!--                                </div>-->
                             </div>
                         </div>
 
@@ -450,7 +417,7 @@
                                             <h4>16,247</h4>
                                         </div>
                                         <div class="d-flex justify-content-center px-4 py-6">
-                                            <div class="echart-total-orders" style="height:85px;width:115px"></div>
+                                            <div class="echart-total-orders" style="height:180px;width:100%"></div>
                                         </div>
                                         <div class="mt-2">
                                             <div class="d-flex align-items-center mb-2">
@@ -520,7 +487,7 @@
                                         <form class="position-relative" data-bs-display="static"
                                               data-bs-toggle="search">
                                             <input aria-label="Search"
-                                                   class="form-control search-input search form-control-sm"
+                                                   class="form-control search-input search"
                                                    placeholder="Search" type="search"/>
                                             <span class="fas fa-search search-box-icon"></span>
 
@@ -529,7 +496,7 @@
                                 </div>
                                 <div class="col-auto">
                                     <a class="btn btn-sm btn-phoenix-secondary bg-white hover-bg-100 me-2"
-                                       href="{% url 'all_orders' %}"
+                                       href="{% url 'all_sales_store' %}"
                                        type="button">View All Sales
                                     </a>
 
@@ -541,11 +508,6 @@
                         <table class="table fs--1 mb-0 border-top border-200">
                             <thead>
                             <tr>
-                                <th class="white-space-nowrap fs--1 ps-0 align-middle">
-                                    <div class="form-check mb-0 fs-0">
-                                        <!--                                        <input class="form-check-input" type="checkbox"/>-->
-                                    </div>
-                                </th>
                                 <th class="sort white-space-nowrap align-middle" scope="col"></th>
                                 <th class="sort white-space-nowrap align-middle" data-sort="product" scope="col"
                                     style="min-width:360px;">PRODUCT
@@ -554,11 +516,8 @@
                                     CUSTOMER
                                 </th>
                                 <th class="sort align-middle" data-sort="rating" scope="col" style="min-width:110px;">
-                                    STORE
+                                    AMOUNT
                                 </th>
-                                <!--                                <th class="sort align-middle" scope="col" style="max-width:350px;" data-sort="review">-->
-                                <!--                                    REVIEW-->
-                                <!--                                </th>-->
                                 <th class="sort text-start ps-5 align-middle" data-sort="status" scope="col">STATUS</th>
                                 <th class="sort text-end align-middle" data-sort="time" scope="col">TIME</th>
                                 <th class="sort text-end pe-0 align-middle" scope="col"></th>
@@ -566,19 +525,14 @@
                             </thead>
                             <tbody class="list" id="table-latest-review-body">
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="fs--1 align-middle ps-0">
-                                    <div class="form-check mb-0 fs-0">
-                                        <!--                                        <input class="form-check-input" type="checkbox"/>-->
-                                    </div>
-                                </td>
                                 <td class="align-middle product white-space-nowrap py-0">
                                     <div class="rounded-2 border"><img alt=""
                                                                        src="{% static 'img/products/1.png' %}"
                                                                        width="53"/></div>
                                 </td>
-                                <td class="align-middle product white-space-nowrap"><a class="fw-semi-bold"
-                                                                                       href="apps/e-commerce/landing/product-details.html">
-                                    INDOLENS - Grey Metallic spects </a></td>
+                                <td class="product align-middle ps-4"><a
+                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!">Indolens - Metallic
+                                        frame 2x2 frame fro kids</a></td>
                                 <td class="align-middle customer white-space-nowrap"><a
                                         class="d-flex align-items-center" href="#!">
                                     <div class="avatar avatar-l">
@@ -587,7 +541,7 @@
                                     <h6 class="mb-0 ms-3 text-900">John Doe</h6>
                                 </a></td>
                                 <td class="align-middle customer white-space-nowrap">
-                                    <h6 class="mb-0 ms-3 text-900">Nelamangala store</h6>
+                                    <h6 class="mb-0 ms-3 text-900">₹900</h6>
                                 </td>
 
                                 <td class="align-middle text-start ps-5 status"><span
