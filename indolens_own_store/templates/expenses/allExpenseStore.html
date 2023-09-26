@@ -41,6 +41,7 @@
     <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet" type="text/css">
 
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -56,6 +57,11 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
+
+
+
+
 
 
 
@@ -100,9 +106,67 @@
 
                             </div>
                         </div>
-                      <div class="col-auto"><a class="btn btn-primary px-5"
-                                                     href="{% url 'add_expense_store' %}"><i
-                                    class="fa-solid fa-plus me-2"></i>Add Expense</a></div>
+                        <button class="col-auto btn btn-primary" type="button"
+                                data-bs-toggle="modal" data-bs-target="#verticallyCentered">Add Expense
+                        </button>
+
+
+                        <!--                        Add expense Modal-->
+                        <div class="modal fade" id="verticallyCentered" tabindex="-1"
+                             aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="verticallyCenteredModalLabel">Add new expense</h5>
+                                        <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                                                aria-label="Close"><span class="fas fa-times fs--1"></span></button>
+                                    </div>
+                                    <div class="p-4 code-to-copy">
+                                        <form method='POST' action='/' class="row g-3 needs-validation" novalidate="">
+                                            <div class="col-12">
+
+                                                <label class="form-label" for="validationCustom01">Expense
+                                                    amount</label>
+
+                                                <input class="form-control" id="validationCustom01" type="text"
+                                                       value="" required=""/>
+                                                <div class="invalid-feedback">Enter valid amount!</div>
+                                            </div>
+
+                                            <div class="col-12">
+
+                                                <label class="form-label" for="expense_reason">Expense Reason</label>
+
+                                                <input class="form-control" id="expense_reason" type="text"
+                                                       maxlength="256"
+                                                       value="" required=""/>
+                                                <div class="invalid-feedback">Enter valid Reason!</div>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label" for="expense_reason">Expense Date</label>
+
+                                                <input class="form-control datetimepicker" id="datepicker" type="text"
+                                                       placeholder="dd/mm/yyyy"
+                                                       data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'/>
+
+                                            </div>
+
+
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <button class="btn btn-outline-primary" type="button"
+                                                        data-bs-dismiss="modal">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+
                     </div>
                     <div class="table-responsive scrollbar">
                         <table class="table fs--1 mb-0 border-top border-200">
@@ -132,7 +196,7 @@
                             <tbody class="list" id="project-list-table-body">
                             <tr class="position-static">
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
-                                  <h5>01</h5>
+                                    <h5>01</h5>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start py-4">
@@ -211,6 +275,11 @@
 
 
 
+
+
+
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -232,6 +301,7 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 
 </body>
 

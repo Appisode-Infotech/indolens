@@ -5960,6 +5960,8 @@
       let count = 0;
       let showEvent = null;
 
+
+
       forms.forEach(form => {
         form.addEventListener(events.SUBMIT, e => {
           e.preventDefault();
@@ -6023,7 +6025,11 @@
               }
             }
             // card footer remove at last step
-            if (count > tabToggleButtonEl.length - 2) {
+            console.log(count);
+            if(count==3){
+                          nextButton.classList.add('d-none');
+            }
+            if (count > tabToggleButtonEl.length - 1) {
               wizardFooter.classList.add('d-none');
             } else {
               wizardFooter.classList.remove('d-none');

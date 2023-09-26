@@ -41,5 +41,4 @@ urlpatterns = [
     # Make sale
     path('own_store_make_sale/', makeSaleOwnStore, name='own_store_make_sale'),
     path('all_expenses_store/', allExpenseStore, name='all_expenses_store'),
-    path('all_expenses_store/add_expense_store/', dashboard, name='add_expense_store'),
 ]
