@@ -67,15 +67,6 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -89,73 +80,77 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
         <div class="content">
-
+            {% for lab in lab_data %}
             <h2 class="mb-4">Edit a Lab</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form class="row g-3 needs-validation" novalidate="">
+                    <form action="{% url 'edit_lab' lab.lab_id %}" class="row g-3 needs-validation" novalidate="" method="post">
+                        {% csrf_token %}
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeName">Lab name</label>
+                            <label class="form-label" for="labName">Lab name</label>
 
-                            <input class="form-control" id="storeName" name="storeName" required="" type="text"
-                                   value=""/>
+                            <input class="form-control" id="labName" name="labName" required="" type="text"
+                                   value="{{lab.lab_name}}"/>
                             <div class="invalid-feedback">Please provide a valid Lab name.</div>
                         </div>
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeDisplayName">Lab Display Name</label>
+                            <label class="form-label" for="labDisplayName">Lab Display Name</label>
 
-                            <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
-                                   type="text" value=""/>
+                            <input class="form-control" id="labDisplayName" name="labDisplayName" required=""
+                                   type="text" value="{{lab.lab_display_name}}"/>
                             <div class="invalid-feedback">Please provide a valid Lab display name.</div>
                         </div>
 
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storePhone">Lab Phone</label>
+                            <label class="form-label" for="labPhone">Lab Phone</label>
 
-                            <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
-                                   value=""/>
+                            <input class="form-control" id="labPhone" name="labPhone" required="" type="text"
+                                   value="{{lab.lab_phone}}"/>
                             <div class="invalid-feedback">Please provide a valid Labphone number.</div>
                         </div>
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeGSTIN">Lab GSTIN</label>
+                            <label class="form-label" for="labGSTIN">Lab GSTIN</label>
 
-                            <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
-                                   value=""/>
+                            <input class="form-control" id="labGSTIN" name="labGSTIN" required="" type="text"
+                                   value="{{lab.lab_gst}}"/>
                             <div class="invalid-feedback">Please provide a valid Lab GSTIN.</div>
                         </div>
 
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeEmail">Lab Email</label>
+                            <label class="form-label" for="labEmail">Lab Email</label>
 
-                            <input class="form-control" id="storeEmail" name="storeEmail" required="" type="text"
-                                   value=""/>
+                            <input class="form-control" id="labEmail" name="labEmail" required="" type="text"
+                                   value="{{lab.lab_email}}"/>
                             <div class="invalid-feedback">Please provide a valid Labemail.</div>
                         </div>
 
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeCity">City</label>
+                            <label class="form-label" for="labCity">City</label>
 
-                            <input class="form-control" id="storeCity" name="storeCity" required="" type="text"/>
+                            <input class="form-control" id="labCity" name="labCity" required="" type="text"
+                            value="{{lab.lab_city}}"/>
                             <div class="invalid-feedback">Please provide a valid city.</div>
                         </div>
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeState">State</label>
+                            <label class="form-label" for="labState">State</label>
 
-                            <input class="form-control" id="storeState" name="storeState" required="" type="text"/>
+                            <input class="form-control" id="labState" name="labState" required="" type="text"
+                            value="{{lab.lab_state}}"/>
                             <div class="invalid-feedback">Please provide a valid state.</div>
                         </div>
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeZipCode">Zip</label>
+                            <label class="form-label" for="labZipCode">Zip</label>
 
-                            <input class="form-control" id="storeZipCode" name="storeZipCode" required="" type="text"/>
+                            <input class="form-control" id="labZipCode" name="labZipCode" required="" type="text"
+                            value="{{lab.lab_zip}}"/>
                             <div class="invalid-feedback">Please provide a valid zip.</div>
                         </div>
                         <div class="col-12">
@@ -163,19 +158,23 @@
                             <label class="form-label" for="completeAddress">Complete Address</label>
 
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3"> </textarea>
+                                      rows="3"> {{lab.lab_address}}</textarea>
                             <div class="invalid-feedback">Please provide a valid address.</div>
                         </div>
                         <div class="col-sm-12">
                             <input class="form-control" id="searchInput" placeholder="Search for a location"
-                                   required type="text">
+                                   type="text">
                         </div>
                         <div class="col-sm-12">
-                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates"
+                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates" name="lab_lat_lng"
                                    readonly
-                                   required type="text">
+                                   required type="text" value="Latitude: {{lab.lab_lat}}, Longitude: {{lab.lab_lng}}">
                         </div>
                         <div class="col-12" id="map"></div>
+                        <input required type="hidden" name="last_updated_by"
+                                                           value="{{ request.session.id }}">
+                        <input required type="hidden" name="labId"
+                                                           value="{{ lab.lab_id }}">
 
                         <div class="col-12">
 
@@ -184,6 +183,7 @@
                     </form>
                 </div>
             </div>
+            {% endfor %}
             {% include 'footer.html' %}
 
         </div>

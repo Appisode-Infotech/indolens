@@ -109,3 +109,27 @@ def edit_own_store_by_id(store_obj):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
+def enable_disable_own_store(sid, status):
+    try:
+        with connection.cursor() as cursor:
+            update_sub_admin_query = f"""
+                UPDATE own_store
+                SET
+                    status = {status}
+                WHERE
+                    store_id = {sid}
+            """
+
+            # Execute the update query using your cursor
+            cursor.execute(update_sub_admin_query)
+
+            return {
+                "status": True,
+                "message": "Own Store updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

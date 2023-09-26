@@ -62,7 +62,7 @@ class LabModel:
     def from_dict(obj: Any) -> 'LabModel':
         assert isinstance(obj, dict)
         lab_zip_code = from_union([from_none, lambda x: int(from_str(x))], obj.get("labZipCode"))
-        lab_id = from_union([from_int, from_none], obj.get("labId"))
+        lab_id = from_union([from_str, from_none], obj.get("labId"))
         status = from_union([from_int, from_none], obj.get("status"))
         created_by = from_union([from_str, from_none], obj.get("created_by"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))

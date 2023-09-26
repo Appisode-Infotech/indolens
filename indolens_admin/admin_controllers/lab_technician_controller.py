@@ -66,7 +66,7 @@ def get_all_lab_technician():
         return {"status": False, "message": str(e)}, 301
 
 
-def get_lab_technician_by_id(mhid):
+def get_lab_technician_by_id(ltid):
     try:
         with connection.cursor() as cursor:
             get_lab_technician_query = f"""
@@ -75,12 +75,11 @@ def get_lab_technician_by_id(mhid):
                         LEFT JOIN lab AS l ON lt.assigned_lab_id = l.lab_id
                         LEFT JOIN admin AS creator ON lt.created_by = creator.admin_id
                         LEFT JOIN admin AS updater ON lt.last_updated_by = updater.admin_id
+                        WHERE lt.lab_technician_id = {ltid}
                         GROUP BY lt.lab_technician_id
                         """
             cursor.execute(get_lab_technician_query)
             lab_technician = cursor.fetchall()
-            print(lab_technician)
-
             return {
                 "status": True,
                 "lab_technician": get_lab_technicians(lab_technician)
@@ -92,23 +91,23 @@ def get_lab_technician_by_id(mhid):
         return {"status": False, "message": str(e)}, 301
 
 
-def enable_disable_marketing_head(mhid, status):
+def enable_disable_lab_technician(ltid, status):
     try:
         with connection.cursor() as cursor:
-            update_marketing_head_query = f"""
-                UPDATE marketing_head
+            update_lab_technician_query = f"""
+                UPDATE lab_technician
                 SET
                     status = {status}
                 WHERE
-                    marketing_head_id = {mhid}
+                    lab_technician_id = {ltid}
             """
 
             # Execute the update query using your cursor
-            cursor.execute(update_marketing_head_query)
+            cursor.execute(update_lab_technician_query)
 
             return {
                 "status": True,
-                "message": "Marketing  Head updated"
+                "message": "Lab Technician   updated"
             }, 200
 
     except pymysql.Error as e:

@@ -17,11 +17,13 @@ urlpatterns = [
     path('manage_own_stores/', manageOwnStores, name='manage_own_stores'),
     path('manage_own_stores/view_own_store/?storeId=<int:sid>', viewOwnStore, name='view_own_store'),
     path('manage_own_stores/edit_own_store/?storeId=<int:sid>', editOwnStore, name='edit_own_store'),
+    path('manage_own_stores/enable_disable_own_store/?storeId=<int:sid>/?status=<int:status>', enableDisableOwnStore, name='enable_disable_own_store'),
     # franchise store management
     path('create_franchise_store/', createFranchiseStore, name='create_franchise_store'),
     path('manage_Franchise_stores/', manageFranchiseStores, name='manage_Franchise_stores'),
     path('manage_Franchise_stores/view_franchise_store/?storeId=<int:fid>', viewFranchiseStore, name='view_franchise_store'),
     path('manage_Franchise_stores/edit_franchise_store/?storeId=<int:fid>', editFranchiseStore, name='edit_franchise_store'),
+    path('manage_Franchise_stores/enable_disable_franchise_store/?storeId=<int:fid>/?status=<int:status>', enableDisableFranchiseStore, name='enable_disable_franchise_store'),
     # inventory management
     path('manage_out_of_stock/', manageCentralInventoryOutOfStock, name='manage_out_of_stock'),
     path('manage_central_inventory_products/', manageCentralInventoryProducts,
@@ -102,13 +104,17 @@ urlpatterns = [
     # manage lab tech
     path('manage_lab_technician/', manageLabTechnician, name='manage_lab_technician'),
     path('manage_lab_technician/create_lab_technician/', createLabTechnician, name='create_lab_technician'),
-    path('manage_lab_technician/edit_lab_technician/labTechnicianId=<int:ltid>', editLabTechnician, name='edit_lab_technician'),
-    path('manage_lab_technician/view_lab_technician/labTechnicianId=<int:ltid>', viewLabTechnician, name='view_lab_technician'),
+    path('manage_lab_technician/edit_lab_technician/?labTechnicianId=<int:ltid>', editLabTechnician, name='edit_lab_technician'),
+    path('manage_lab_technician/view_lab_technician/?labTechnicianId=<int:ltid>', viewLabTechnician, name='view_lab_technician'),
+    path('manage_lab_technician/enable_disable_lab_technician/?labTechnicianId=<int:ltid>/?status=<int:status>',
+         enableDisableLabTechnician, name='enable_disable_lab_technician'),
+
     # housekeeping
     path('manage_other_employees/', manageOtherEmployees, name='manage_other_employees'),
     path('manage_other_employees/create_other_employees/', createOtherEmployees, name='create_other_employees'),
-    path('manage_other_employees/edit_other_employees/', editOtherEmployees, name='edit_other_employees'),
-    path('manage_other_employees/view_other_employees/', viewOtherEmployees, name='view_other_employees'),
+    path('manage_other_employees/edit_other_employees/?empId=<int:empid>', editOtherEmployees, name='edit_other_employees'),
+    path('manage_other_employees/view_other_employees/empId=<int:empid>', viewOtherEmployees, name='view_other_employees'),
+    path('manage_other_employees/enable_disable_other_employees/empId=<int:empid>/?status=<int:status>', enableDisableOtherEmployees, name='enable_disable_other_employees'),
     # orders management
     path('all_orders/', viewAllOrders, name='all_orders'),
     path('pending_orders/', viewPendingOrders, name='pending_orders'),
@@ -122,8 +128,9 @@ urlpatterns = [
     # labs
     path('manage_labs/', manageLabs, name='manage_labs'),
     path('manage_labs/create_lab/', createLab, name='create_lab'),
-    path('manage_labs/edit_lab/', editLab, name='edit_lab'),
-    path('manage_labs/view_lab/', viewLab, name='view_lab'),
+    path('manage_labs/edit_lab/labId=<int:labid>', editLab, name='edit_lab'),
+    path('manage_labs/view_lab/?labId=<int:labid>', viewLab, name='view_lab'),
+    path('manage_labs/enable_disable_lab/?labId=<int:labid>/?status=<int:status>', enableDisableLab, name='enable_disable_lab'),
     path('manage_labs/view_active_jobs/', viewActiveJobs, name='view_active_jobs'),
     path('manage_labs/view_all_jobs/', viewAllJobs, name='view_all_jobs'),
     path('manage_labs/job_details/', jobDetails, name='job_details'),

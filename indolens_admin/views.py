@@ -7,11 +7,11 @@ from rest_framework.reverse import reverse
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller, \
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
-    lab_controller
+    lab_controller, other_employee_controller
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
-    sales_executives_model, accountant_model, lab_technician_model, lab_model
+    sales_executives_model, accountant_model, lab_technician_model, lab_model, other_employee_model
 
 
 # =================================ADMIN START======================================
@@ -123,6 +123,11 @@ def createOwnStore(request):
         return redirect('login')
 
 
+def enableDisableOwnStore(request, sid, status):
+    response = own_store_controller.enable_disable_own_store(sid, status)
+    print(response)
+    return redirect('manage_own_stores')
+
 def manageFranchiseStores(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_all_franchise_stores()
@@ -173,6 +178,11 @@ def createFranchiseStore(request):
         return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html')
     else:
         return redirect('login')
+
+def enableDisableFranchiseStore(request, fid, status):
+    response = franchise_store_controller.enable_disable_franchise_store(fid, status)
+    print(response)
+    return redirect('manage_Franchise_stores')
 
 
 # =================================ADMIN SUB ADMIN MANAGEMENT======================================
@@ -813,22 +823,75 @@ def viewLabTechnician(request, ltid):
                   {"lab_technician": response['lab_technician']})
 
 
+def enableDisableLabTechnician(request, ltid, status):
+    lab_technician_controller.enable_disable_lab_technician(ltid, status)
+    return redirect('manage_lab_technician')
+
+
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
 def manageOtherEmployees(request):
-    return render(request, 'indolens_admin/otherEmployees/manageOtherEmployees.html')
+    response, status_code = other_employee_controller.get_all_other_emp()
+    print(response)
+    return render(request, 'indolens_admin/otherEmployees/manageOtherEmployees.html',
+                  {"other_employee_list": response['other_emp_list']})
 
 
 def createOtherEmployees(request):
-    return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html')
+    if request.method == 'POST':
+        form_data = {}
+        file_data = {}
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+            file_list = []
+
+            for index, file_obj in enumerate(file_objs):
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        file_data = FileData(form_data)
+        other_emp_obj = other_employee_model.other_employee_model_from_dict(request.POST)
+        resp, status_code = other_employee_controller.create_other_employee(other_emp_obj, file_data)
+        return redirect('manage_other_employees')
+    else:
+        return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html',)
 
 
 def editOtherEmployees(request):
     return render(request, 'indolens_admin/otherEmployees/editOtherEmployees.html')
 
 
-def viewOtherEmployees(request):
-    return render(request, 'indolens_admin/otherEmployees/viewOtherEmployees.html')
+def viewOtherEmployees(request, empid):
+    response, status_code = other_employee_controller.get_other_emp_by_id(empid)
+    return render(request, 'indolens_admin/otherEmployees/viewOtherEmployees.html',
+                  {"other_employee": response['other_employee']})
+
+def enableDisableOtherEmployees(request, empid, status):
+    other_employee_controller.enable_disable_other_employees(empid, status)
+    return redirect('manage_other_employees')
 
 
 # =================================ADMIN ORDERS MANAGEMENT======================================
@@ -883,25 +946,35 @@ def viewCustomerDetails(request):
 
 def manageLabs(request):
     response, status_code = lab_controller.get_all_labs()
-    print(response)
     return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
 
 
 def createLab(request):
     if request.method == 'POST':
         lab_obj = lab_model.lab_model_from_dict(request.POST)
-        print(lab_obj)
         lab_controller.create_lab(lab_obj)
     return render(request, 'indolens_admin/labs/createLab.html')
 
 
-def editLab(request):
-    return render(request, 'indolens_admin/labs/editLab.html')
+def editLab(request, labid):
+    if request.method == 'POST':
+        lab_obj = lab_model.lab_model_from_dict(request.POST)
+        lab_controller.edit_lab_by_id(lab_obj)
+        return redirect('manage_labs')
+    else:
+        response, status_code = lab_controller.get_lab_by_id(labid)
+        return render(request, 'indolens_admin/labs/editLab.html', {"lab_data": response['lab_data']})
 
 
-def viewLab(request):
-    lab_controller.get_lab_by_id(1)
-    return render(request, 'indolens_admin/labs/viewLab.html')
+def viewLab(request, labid):
+    response, status_code = lab_controller.get_lab_by_id(labid)
+    return render(request, 'indolens_admin/labs/viewLab.html',
+                  {"lab_data": response['lab_data']})
+
+
+def enableDisableLab(request, labid, status):
+    lab_controller.enable_disable_lab(labid, status)
+    return redirect('manage_labs')
 
 
 def viewActiveJobs(request):
@@ -927,10 +1000,14 @@ def createAuthenticityCard(request):
 # =================================ADMIN LABS MANAGEMENT======================================
 
 def manageMastersCategory(request):
+    if request.method == 'POST':
+        print(request.POST)
     return render(request, 'indolens_admin/masters/manageMastersCategory.html')
 
 
 def addProductCategory(request):
+    if request.method == 'POST':
+        print(request.POST)
     return render(request, 'indolens_admin/masters/addProductCategory.html')
 
 
@@ -939,6 +1016,8 @@ def manageMastersBrands(request):
 
 
 def addMastersBrands(request):
+    if request.method == 'POST':
+        print(request.POST)
     return render(request, 'indolens_admin/masters/addMastersBrand.html')
 
 
@@ -947,6 +1026,8 @@ def manageMastersShapes(request):
 
 
 def addMastersShapes(request):
+    if request.method == 'POST':
+        print(request.POST)
     return render(request, 'indolens_admin/masters/addMastersShapes.html')
 
 
@@ -955,6 +1036,8 @@ def manageMastersFrameType(request):
 
 
 def addMastersFrameType(request):
+    if request.method == 'POST':
+        print(request.POST)
     return render(request, 'indolens_admin/masters/addMastersFrameType.html')
 
 
@@ -963,6 +1046,8 @@ def manageMastersColor(request):
 
 
 def addMastersColor(request):
+    if request.method == 'POST':
+        print(request.POST)
     return render(request, 'indolens_admin/masters/addMastersColor.html')
 
 
@@ -971,6 +1056,8 @@ def manageMastersMaterials(request):
 
 
 def addMastersMaterials(request):
+    if request.method == 'POST':
+        print(request.POST)
     return render(request, 'indolens_admin/masters/addMastersMaterials.html')
 
 
