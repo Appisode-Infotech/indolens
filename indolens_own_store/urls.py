@@ -29,17 +29,17 @@ urlpatterns = [
     path('refunded_store_orders/', refundedStoreOrders, name='refunded_store_orders'),
     path('order_details_store/', orderDetails, name='order_details_store'),
     # inventory items
-    path('manage_store_inventory_products/', dashboard, name='manage_store_inventory_products'),
-    path('manage_store_out_of_stock/', dashboard, name='manage_store_out_of_stock'),
-    path('move_stocks_store/', dashboard, name='move_stocks_store'),
+    path('manage_store_inventory_products/', storeInventoryProducts, name='manage_store_inventory_products'),
+    path('manage_store_out_of_stock/', inventoryOutOfStock, name='manage_store_out_of_stock'),
+    path('move_stocks_store/', moveStocksStore, name='move_stocks_store'),
     # stock request management
-    path('create_request_store/', dashboard, name='create_request_store'),
-    path('all_stock_store_requests/', dashboard, name='all_stock_store_requests'),
-    path('pending_store_stock_requests/', dashboard, name='pending_store_stock_requests'),
-    path('completed_store_stock_requests/', dashboard, name='completed_store_stock_requests'),
-    path('rejected_store_stock_requests/', dashboard, name='rejected_store_stock_requests'),
+    path('create_request_store/', createStockRequestStore, name='create_request_store'),
+    path('all_stock_store_requests/', viewAllStockRequestsStore, name='all_stock_store_requests'),
+    path('pending_store_stock_requests/', viewPendingStockRequestsStore, name='pending_store_stock_requests'),
+    path('completed_store_stock_requests/', viewCompletedStockRequestsStore, name='completed_store_stock_requests'),
+    path('rejected_store_stock_requests/', viewRejectedStockRequestsStore, name='rejected_store_stock_requests'),
     # Make sale
-    path('own_store_make_sale/', dashboard, name='own_store_make_sale'),
-    path('all_expenses_store/', dashboard, name='all_expenses_store'),
-    path('all_sales_store/', dashboard, name='all_sales_store'),
+    path('own_store_make_sale/', makeSaleOwnStore, name='own_store_make_sale'),
+    path('all_expenses_store/', allExpenseStore, name='all_expenses_store'),
+    path('all_expenses_store/add_expense_store/', dashboard, name='add_expense_store'),
 ]

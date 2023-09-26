@@ -81,3 +81,49 @@ def viewStoreCustomers(request):
 
 def viewStoreCustomerDetails(request):
     return render(request, 'customers/viewCustomerDetailsStore.html')
+
+
+# ================================= OWN STORE STOCK REQUESTS MANAGEMENT ======================================
+
+def createStockRequestStore(request):
+    return render(request, 'stockRequests/createStockRequestStore.html')
+
+
+def viewAllStockRequestsStore(request):
+    return render(request, 'stockRequests/viewAllStockRequestsStore.html')
+
+
+def viewPendingStockRequestsStore(request):
+    return render(request, 'stockRequests/viewPendingStockRequestsStore.html')
+
+
+def viewCompletedStockRequestsStore(request):
+    return render(request, 'stockRequests/viewCompletedStockRequestsStore.html')
+
+
+def viewRejectedStockRequestsStore(request):
+    return render(request, 'stockRequests/viewRejectedStockRequestsStore.html')
+
+
+# ================================= OWN STORE INVENTORY MANAGEMENT ======================================
+
+def storeInventoryProducts(request):
+    return render(request, 'inventory/storeInventoryProducts.html')
+
+
+def inventoryOutOfStock(request):
+    return render(request, 'inventory/inventoryOutOfStock.html')
+
+
+def moveStocksStore(request):
+    return render(request, 'inventory/moveStocksStore.html')
+
+
+# ================================= SALES AND EXPENSES ======================================
+
+def allExpenseStore(request):
+    return render(request, 'expenses/allExpenseStore.html')
+
+
+def makeSaleOwnStore(request):
+    return render(request, 'expenses/makeSaleOwnStore.html')
