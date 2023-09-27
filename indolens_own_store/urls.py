@@ -9,6 +9,7 @@ urlpatterns = [
     path('login/', login, name='own_store_login'),
     path('forgot_password/', forgotPassword, name='own_store_forgot_password'),
     path('reset_password/', resetPassword, name='own_store_reset_password'),
+    path('store_manager_logout/', storeManagerLogout, name='store_manager_logout'),
     # Dashboard
     path('own_store_dashboard/', dashboard, name='own_store_dashboard'),
     path('dashboard/', dashboard, name='manage_store_employees'),

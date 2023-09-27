@@ -1,6 +1,7 @@
-# =================================ADMIN START======================================
 from django.shortcuts import redirect, render
 
+
+# =================================ADMIN START======================================
 
 def index(request):
     return redirect('own_store_login')
@@ -20,6 +21,10 @@ def forgotPassword(request):
 
 def resetPassword(request):
     return render(request, 'auth/reset_password.html')
+
+
+def storeManagerLogout(request):
+    return redirect('own_store_login')
 
 
 # ================================= OWN STORE DASHBOARD ======================================
