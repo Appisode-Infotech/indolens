@@ -18,11 +18,14 @@ from django.urls import path, include
 urlpatterns = [
     path('', include('front_end_website.urls')),
     path('accountant/', include('indolens_accountant.urls')),
+    # admin ui done
     path('admin/', include('indolens_admin.urls')),
     path('area_head/', include('indolens_area_head.urls')),
     path('employee/', include('indolens_employee.urls')),
+    # franchise store ui done
     path('franchise_store/', include('indolens_franchise_store.urls')),
     path('lab/', include('indolens_lab.urls')),
     path('marketing_head/', include('indolens_marketing_head.urls')),
+    # own store ui done
     path('own_store/', include('indolens_own_store.urls')),
 ]

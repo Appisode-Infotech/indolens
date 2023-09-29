@@ -59,6 +59,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -76,7 +77,9 @@
             <h2 class="mb-4">Create a Store Manager</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'create_store_manager' %}" class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data" method="post" novalidate="">
+                    <form action="{% url 'create_store_manager' %}"
+                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data"
+                          method="post" novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
@@ -129,23 +132,23 @@
 
                             <label class="form-label" for="confirmPassword">Confirm Password</label>
 
-                            <input class="form-control" id="confirmPassword" name="confirmPassword" required="" type="text"
+                            <input class="form-control" id="confirmPassword" name="confirmPassword" required=""
+                                   type="text"
                                    value=""/>
                             <div class="invalid-feedback">Passwords do not match.</div>
                         </div>
 
                         <div class="col-12">
-
                             <label class="form-label" for="completeAddress">Complete Address</label>
-
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3"> </textarea>
+                                      rows="3"></textarea>
                             <div class="invalid-feedback">Please provide a valid address.</div>
                         </div>
                         <div class="mb-3">
-                            <label class="form-label" for="document1">Document 1 Type</label>
-                            <select aria-label="Default select example" class="form-select" name="document1Type">
-                                <option selected="">Open this select menu</option>
+                            <label class="form-label" for="document1Type">Document 1 Type</label>
+                            <select id="document1Type" aria-label="Default select example" class="form-select"
+                                    name="document1Type" required>
+                                <option selected="" value="">Open this select menu</option>
                                 <option value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
@@ -157,14 +160,16 @@
                             <label class="form-label" for="document1">Document 1 Upload (Can choose
                                 multiple)</label>
 
-                            <input class="form-control" id="document1" multiple="multiple" name="document1" type="file"/>
+                            <input required class="form-control" id="document1" multiple="multiple" name="document1"
+                                   type="file"/>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="document1">Document 2 Type</label>
 
-                            <select aria-label="Default select example" class="form-select" name="document2Type">
-                                <option selected="">Open this select menu</option>
+                            <select required aria-label="Default select example" class="form-select"
+                                    name="document2Type">
+                                <option selected="" value="">Open this select menu</option>
                                 <option value="Pan Card">Pan Card</option>
                             </select>
                         </div>
@@ -173,15 +178,16 @@
                             <label class="form-label" for="document2">Document 2 Upload (Can choose
                                 multiple)</label>
 
-                            <input class="form-control" id="document2" multiple="multiple" name="document2" type="file"/>
+                            <input required class="form-control" id="document2" multiple="multiple" name="document2"
+                                   type="file"/>
                         </div>
 
                         <input required type="hidden" name="created_by"
 
-                                                           value="{{ request.session.id }}">
+                               value="{{ request.session.id }}">
                         <input required type="hidden" name="last_updated_by"
 
-                                                           value="{{ request.session.id }}">
+                               value="{{ request.session.id }}">
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
