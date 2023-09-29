@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens store - Customer details</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar_franchise.html' %}
+
+        <div class="content">
+
+            <div class="mb-9">
+                <div class="row align-items-center justify-content-between g-3 mb-4">
+                    <div class="col-auto">
+                        <h2 class="mb-0">Customer Details</h2>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row g-3">
+                            <!--                           -->
+                            <!--                            <div class="col-auto">-->
+                            <!--                                <button class="btn btn-phoenix-secondary"><span class="fas fa-key me-2"></span>Reset-->
+                            <!--                                    password-->
+                            <!--                                </button>-->
+                            <!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-5">
+                    <div class="col-12 col-xxl-4">
+                        <div class="row g-3 g-xxl-0 h-100">
+                            <div class="col-12 col-md-7 col-xxl-12 mb-xxl-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex flex-column justify-content-between pb-3">
+                                        <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
+                                            <div class="col-12 col-sm-auto mb-sm-2">
+                                                <div class="avatar avatar-5xl">
+                                                    <img alt=""
+                                                         class="rounded-circle"
+                                                         src="{% static 'img/team/15.png' %}"/>
+                                                </div>
+
+                                            </div>
+                                            <div class="col-12 col-sm-auto flex-1">
+                                                <h3>Ansolo Lazinatov</h3>
+                                                <p class="text-800">Joined 3 months ago</p>
+                                                <div><a class="me-2" href="#!"><span
+                                                        class="fab fa-linkedin-in text-400 hover-primary"></span></a><a
+                                                        class="me-2" href="#!"><span
+                                                        class="fab fa-facebook text-400 hover-primary"></span></a><a
+                                                        href="#!"><span
+                                                        class="fab fa-twitter text-400 hover-primary"></span></a></div>
+                                            </div>
+                                        </div>
+                                        <div class="d-flex flex-between-center border-top border-dashed border-300 pt-4">
+                                            <h4>Gold Member</h4>
+                                            <h6>Since 19 - sept - 2023</h6>
+                                            <button aria-expanded="false"
+                                                    aria-haspopup="true"
+                                                    class="btn btn-phoenix-secondary px-7 flex-shrink-0"
+                                                    data-boundary="window"
+                                                    data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                    type="button">Upgrade
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-5 col-xxl-12 mb-xxl-3">
+                                <div class="card h-100">
+                                    <div class="card-body pb-3">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <h3 class="me-1">Default Address</h3>
+                                            <button class="btn btn-link p-0"><span
+                                                    class="fas fa-pen fs-0 ms-3 text-500"></span></button>
+                                        </div>
+                                        <h5 class="text-800">Address</h5>
+                                        <p class="text-800">Shatinon Mekalan<br/>Vancouver, British Columbia<br/>Canada
+                                        </p>
+                                        <div class="mb-3">
+                                            <h5 class="text-800">Email</h5><a href="mailto:shatinon@jeemail.com">shatinon@jeemail.com</a>
+                                        </div>
+                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:+1234567890">+1234567890</a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <div class="card h-100">
+                                    <div class="card-body">
+                                        <h3 class="mb-4">Notes on Customer</h3>
+                                        <textarea class="form-control mb-3" rows="4"></textarea>
+                                        <button class="btn btn-phoenix-primary w-100 mb-4">Add Note</button>
+                                        <div class="fs--1 fw-semi-bold pb-3 mb-4 border-bottom border-dashed border-300">
+                                            <p class="text-1000 mb-1">Gave us a nice feedback</p>
+                                            <div class="text-end">
+                                                <p class="text-600 mb-0">12 Nov, 2020</p>
+                                            </div>
+                                        </div>
+                                        <div class="fs--1 fw-semi-bold pb-3 mb-4 border-bottom border-dashed border-300">
+                                            <p class="text-1000 mb-1">Customer added product to cart and then forgot to
+                                                checkout. Later knocked the customer support to ask about update on
+                                                shipping. Later, settled on “One day Shipping” though “Free delivery”
+                                                was preferred. Overall good behavior.</p>
+                                            <div class="text-end">
+                                                <p class="text-600 mb-0">23 Dec, 2019</p>
+                                            </div>
+                                        </div>
+                                        <div class="fs--1 fw-semi-bold pb-3 mb-4 border-bottom border-dashed border-300">
+                                            <p class="text-1000 mb-1">User of this support ticket won a 100% off coupon
+                                                and received top-notch service from the technical support engineer.
+                                                Along with providing a good review, user highly appreciated the
+                                                team.</p>
+                                            <div class="text-end">
+                                                <p class="text-600 mb-0">2 Oct, 2019</p>
+                                            </div>
+                                        </div>
+                                        <div class="fs--1 fw-semi-bold">
+                                            <p class="text-1000 mb-1">Customer returned and bought 2 related items,
+                                                which is currently being shipped. Customer chose “One day Shipping”.
+                                                Additional notes were added regarding customised wrapping. Customer
+                                                submitted positive review.</p>
+                                            <div class="text-end">
+                                                <p class="text-600 mb-0">26 Apr, 2019</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xxl-8">
+                        <div class="mb-6">
+                            <h3 class="mb-4">Orders <span class="text-700 fw-normal">(97)</span></h3>
+                            <div class="border-top border-bottom border-200"
+                                 data-list='{"valueNames":["order","total","payment_status","fulfilment_status","delivery_type","date"],"page":6,"pagination":true}'
+                                 id="customerOrdersTable">
+                                <div class="table-responsive scrollbar">
+                                    <table class="table table-sm fs--1 mb-0">
+                                        <thead>
+                                        <tr>
+                                            <th class="sort white-space-nowrap align-middle ps-0 pe-3" data-sort="order"
+                                                scope="col" style="width:10%;">ORDER
+                                            </th>
+                                            <th class="sort align-middle text-end pe-7" data-sort="total" scope="col"
+                                                style="width:10%;">TOTAL
+                                            </th>
+                                            <th class="sort align-middle white-space-nowrap pe-3"
+                                                data-sort="payment_status"
+                                                scope="col" style="width:15%;">PAYMENT STATUS
+                                            </th>
+                                            <th class="sort align-middle white-space-nowrap text-start pe-3"
+                                                data-sort="fulfilment_status"
+                                                scope="col" style="width:20%;">FULFILMENT STATUS
+                                            </th>
+                                            <th class="sort align-middle white-space-nowrap text-start"
+                                                data-sort="delivery_type"
+                                                scope="col" style="width:30%;">DELIVERY TYPE
+                                            </th>
+                                            <th class="sort align-middle text-end pe-0" data-sort="date" scope="col">
+                                                DATE
+                                            </th>
+                                            <th class="sort text-end align-middle pe-0 ps-5" scope="col"></th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list" id="customer-order-table-body">
+                                        <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                            <td class="order align-middle white-space-nowrap ps-0"><a
+                                                    class="fw-semi-bold" href="{% url 'order_details' %}">#2453</a></td>
+                                            <td class="total align-middle text-end fw-semi-bold pe-7 text-1000">$87</td>
+                                            <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                        class="badge-label">Paid</span><span class="ms-1"
+                                                                                             data-feather="check"
+                                                                                             style="height:12.8px;width:12.8px;"></span></span>
+                                            </td>
+                                            <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                        class="badge-label">Order Fulfilled</span><span class="ms-1"
+                                                                                                        data-feather="check"
+                                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                            </td>
+                                            <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                                Cash on delivery
+                                            </td>
+                                            <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                                Dec 12, 12:56 PM
+                                            </td>
+                                            <td class="align-middle white-space-nowrap text-end pe-0 ps-5">
+                                                <div class="font-sans-serif btn-reveal-trigger position-static">
+                                                    <button aria-expanded="false"
+                                                            aria-haspopup="true"
+                                                            class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                            data-boundary="window" data-bs-reference="parent"
+                                                            data-bs-toggle="dropdown" type="button"><span
+                                                            class="fas fa-ellipsis-h fs--2"></span></button>
+                                                    <div class="dropdown-menu dropdown-menu-end py-2"><a
+                                                            class="dropdown-item" href="#!">View</a><a
+                                                            class="dropdown-item" href="#!">Export</a>
+                                                        <div class="dropdown-divider"></div>
+                                                        <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                                    </div>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                                    <div class="col-auto d-flex">
+                                        <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                           data-list-info="data-list-info"></p><a class="fw-semi-bold"
+                                                                                  data-list-view="*"
+                                                                                  href="#!">View all<span
+                                            class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                            class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                            class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                                    </div>
+                                    <div class="col-auto d-flex">
+                                        <button class="page-link" data-list-pagination="prev"><span
+                                                class="fas fa-chevron-left"></span></button>
+                                        <ul class="mb-0 pagination"></ul>
+                                        <button class="page-link pe-0" data-list-pagination="next"><span
+                                                class="fas fa-chevron-right"></span></button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+            {% include 'footer.html' %}
+
+        </div>
+    </div>
+
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+
+</body>
+
+</html>
