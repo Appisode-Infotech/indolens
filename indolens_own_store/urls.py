@@ -12,7 +12,6 @@ urlpatterns = [
     path('store_manager_logout/', storeManagerLogout, name='store_manager_logout'),
     # Dashboard
     path('own_store_dashboard/', dashboard, name='own_store_dashboard'),
-    path('dashboard/', dashboard, name='manage_store_employees'),
     # manage store Employee
     path('manage_store_employees/', manageStoreEmployees, name='manage_store_employees'),
     path('manage_store_employees/view_employee/', viewEmployees, name='view_employee'),
