@@ -43,10 +43,6 @@ def create_marketing_head(marketing_head, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def marketing_heads_list(marketing_heads):
-    pass
-
-
 def get_all_marketing_head():
     try:
         with connection.cursor() as cursor:
