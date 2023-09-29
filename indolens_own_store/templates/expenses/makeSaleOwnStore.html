@@ -60,6 +60,7 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
+
     </script>
 </head>
 
@@ -526,7 +527,8 @@
                                                                 <td class="align-middle fw-bold text-1500" colspan="6">
                                                                     <h5>Three Hundred and Ninenty Eight USD</h5>
                                                                 </td>
-                                                                <td class="align-middle text-center fw-bold"><h5>₹398</h5>
+                                                                <td class="align-middle text-center fw-bold"><h5>
+                                                                    ₹398</h5>
                                                                 <td></td>
                                                             </tr>
                                                             </tbody>
@@ -586,6 +588,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -628,7 +631,7 @@
         // Increment the product counter and update the label
         productCounter++;
         const productLabel = clonedWidget.querySelector('h5');
-        productLabel.textContent = `Product ₹{productCounter}`;
+        productLabel.textContent = `Product ${productCounter}`;
 
         // Append the cloned widget after the last product_widget
         productWidgets.appendChild(clonedWidget);
@@ -673,6 +676,7 @@
             removeButton.style.display = 'none';
         }
     }
+
 
 </script>
 <script>
@@ -730,6 +734,7 @@
             });
             return object;
         }
+
 
 </script>
 
