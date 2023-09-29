@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens Admin - Manage Products</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar_area_head.html' %}
+
+        <div class="content">
+
+            <div class="mb-1">
+                <div class="row g-3 mb-4">
+                    <div class="col-auto">
+                        <h2 class="mb-0">Products</h2>
+                    </div>
+                </div>
+
+                <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
+                    <li class="nav-item"><a aria-current="page" class="nav-link active" href="#">All <span
+                            class="text-700 fw-semi-bold">(68817)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Frames <span
+                            class="text-700 fw-semi-bold">(70348)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Lens <span
+                            class="text-700 fw-semi-bold">(17)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Accessories<span
+                            class="text-700 fw-semi-bold">(810)</span></a></li>
+                </ul>
+                <div data-list='{"valueNames":["product","price","category","tags","vendor","time"],"page":10,"pagination":true}'
+                     id="products">
+                    <div class="mb-4">
+                        <div class="row g-3">
+                            <div class="col-auto">
+                                <div class="search-box">
+                                    <form class="position-relative" data-bs-display="static"
+                                          data-bs-toggle="search">
+                                        <input aria-label="Search" class="form-control search-input search"
+                                               placeholder="Search products" type="search"/>
+                                        <span class="fas fa-search search-box-icon"></span>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                                <div class="btn-group position-static" role="group">
+                                    <div class="btn-group position-static text-nowrap">
+                                        <button aria-expanded="false"
+                                                aria-haspopup="true"
+                                                class="btn btn-phoenix-secondary px-7 flex-shrink-0"
+                                                data-boundary="window"
+                                                data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                type="button">
+                                            Category<span class="fas fa-angle-down ms-2"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#">Action</a></li>
+                                            <li><a class="dropdown-item" href="#">Another action</a></li>
+                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider"/>
+                                            </li>
+                                            <li><a class="dropdown-item" href="#">Separated link</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-auto">
+                                <button class="btn btn-link text-900 me-4 px-0"><span
+                                        class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                        <div class="table-responsive scrollbar mx-n1 px-1">
+                            <table class="table fs--1 mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="white-space-nowrap fs--1 align-middle"
+                                        style="max-width:20px; width:18px;">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </th>
+                                    <th class="sort white-space-nowrap align-middle fs--2" scope="col"
+                                        style="width:70px;"></th>
+                                    <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
+                                        scope="col" style="width:350px;">PRODUCT NAME
+                                    </th>
+                                    <th class="sort align-middle text-end ps-4" data-sort="price" scope="col"
+                                        style="width:150px;">PRICE
+                                    </th>
+                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                        style="width:150px;">CATEGORY
+                                    </th>
+                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                        style="width:150px;">BRAND
+                                    </th>
+
+                                    <th class="sort align-middle ps-3" data-sort="tags" scope="col"
+                                        style="width:250px;">IN STOCK
+                                    </th>
+                                    <th class="sort align-middle ps-4" data-sort="time" scope="col"
+                                        style="width:50px;">PUBLISHED ON
+                                    </th>
+                                    <th class="sort text-end align-middle pe-0 ps-4" scope="col"></th>
+                                </tr>
+                                </thead>
+                                <tbody class="list" id="products-table-body">
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="align-middle white-space-nowrap py-0">
+                                        <div class="border rounded-2"><img alt=""
+                                                                           src="{% static 'img/products/1.png' %}"
+                                                                           width="53"/>
+                                        </div>
+                                    </td>
+                                    <td class="product align-middle ps-4"><a
+                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!">Indolens - Metallic
+                                        frame 2x2 frame fro kids</a></td>
+                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                        ₹3,900
+                                    </td>
+                                    <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                        Category name
+                                    </td>
+                                    <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                        Brand name
+                                    </td>
+
+                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                        25
+                                    </td>
+                                    <td class="time align-middle white-space-nowrap text-600 ps-4">Nov 12, 10:45
+                                        PM
+                                    </td>
+                                    <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
+                                        <div class="position-relative">
+                                            <div class="hover-actions">
+                                                <button class="btn btn-sm btn-phoenix-secondary me-1 fs--2">
+                                                    <span class="fas fa-check"></span></button>
+                                                <button class="btn btn-sm btn-phoenix-secondary fs--2"><span
+                                                        class="fas fa-trash"></span></button>
+                                            </div>
+                                        </div>
+                                        <div class="font-sans-serif btn-reveal-trigger position-static">
+                                            <button aria-expanded="false"
+                                                    aria-haspopup="true"
+                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                    data-boundary="window" data-bs-reference="parent"
+                                                    data-bs-toggle="dropdown" type="button"><span
+                                                    class="fas fa-ellipsis-h fs--2"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-end py-2"><a
+                                                    class="dropdown-item" href="#!">Restock</a><a
+                                                    class="dropdown-item" href="#!">View</a><a
+                                                    class="dropdown-item" href="#!">Export</a>
+                                                <div class="dropdown-divider"></div>
+                                                <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                            <div class="col-auto d-flex">
+                                <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                   data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
+                                                                          href="#!">View all<span
+                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                    class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                            </div>
+                            <div class="col-auto d-flex">
+                                <button class="page-link" data-list-pagination="prev"><span
+                                        class="fas fa-chevron-left"></span></button>
+                                <ul class="mb-0 pagination"></ul>
+                                <button class="page-link pe-0" data-list-pagination="next"><span
+                                        class="fas fa-chevron-right"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'footer.html' %}
+        </div>
+    </div>
+    <script>
+        var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
+        var navbarTop = document.querySelector('.navbar-top');
+        if (navbarTopStyle === 'darker') {
+          navbarTop.classList.add('navbar-darker');
+        }
+
+        var navbarVerticalStyle = localStorage.getItem('phoenixNavbarVerticalStyle');
+        var navbarVertical = document.querySelector('.navbar-vertical');
+        if (navbarVerticalStyle === 'darker') {
+          navbarVertical.classList.add('navbar-darker');
+        }
+
+
+
+
+
+    </script>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+
+</body>
+
+</html>
