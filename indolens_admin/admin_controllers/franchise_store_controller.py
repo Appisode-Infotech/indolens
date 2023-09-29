@@ -106,3 +106,28 @@ def edit_franchise_store_by_id(franchise_obj):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def enable_disable_franchise_store(fid, status):
+    try:
+        with connection.cursor() as cursor:
+            update_franchise_store_query = f"""
+                UPDATE franchise_store
+                SET
+                    status = {status}
+                WHERE
+                    store_id = {fid}
+            """
+
+            # Execute the update query using your cursor
+            cursor.execute(update_franchise_store_query)
+
+            return {
+                "status": True,
+                "message": "Franchise Store updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

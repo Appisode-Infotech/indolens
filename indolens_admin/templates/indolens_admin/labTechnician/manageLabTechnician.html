@@ -81,7 +81,7 @@
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Lab Technician<span class="fw-normal text-700 ms-3">(2)</span></h2>
+                            <h2 class="mb-0">Lab Technician<span class="fw-normal text-700 ms-3">({{lab_technician_list|length}})</span></h2>
                         </div>
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -147,7 +147,7 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
-
+                            {% for lab_technician in lab_technician_list%}
                             <tr class="position-static">
                                 <td>
                                     <div class="avatar avatar-m"><img alt=""
@@ -157,40 +157,49 @@
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_lab_technician' %}">Santhosh
-                                    Kumar</a>
+                                        href="{% url 'view_lab_technician' lab_technician.lab_technician_id %}">{{lab_technician.name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">8660225160</p>
+                                    <p class="mb-0 fs--1 text-900">{{lab_technician.phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">devsandy12@gmail.com</p>
+                                    <p class="mb-0 fs--1 text-900">{{lab_technician.email}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
-
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if lab_technician.status == 0 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
+                                    {% elif lab_technician.status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                    {% endif %}
+                                </td>
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <a class="mb-0 fs--1" href="{% url 'manage_labs' %}">INDOLENS-Lab-01</a>
+                                    {% if lab_technician.lab_name|length != 0 %}
+                                    <a class="text-decoration-none fw-semi-bold fs-0"
+                                       href="{% url 'view_lab' lab_technician.assigned_lab_id %}">
+                                        {{lab_technician.lab_name}}
+                                    </a>
+                                    {% else %}
+                                    Not Assigned
+                                    {% endif %}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{lab_technician.created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{lab_technician.creator_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{lab_technician.last_updated_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{lab_technician.updater_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">#31, first cross ,madanayakanahalli,
-                                        bangalore</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{lab_technician.address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -202,15 +211,24 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_lab_technician' %}">View</a>
-                                            <a class="dropdown-item" href="{% url 'edit_lab_technician' %}">Update/Change
+                                                                                             href="{% url 'view_lab_technician' lab_technician.lab_technician_id %}">View</a>
+                                            <a class="dropdown-item" href="{% url 'edit_lab_technician' lab_technician.lab_technician_id %}">Update/Change
                                                 Password</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="#!">Make Inactive</a>
+                                            {% if lab_technician.status == 0 %}
+                                            <a class="dropdown-item text-success"
+                                               href="{% url 'enable_disable_lab_technician' lab_technician.lab_technician_id 1 %}">Make
+                                                Active</a>
+                                            {% elif lab_technician.status == 1 %}
+                                            <a class="dropdown-item text-danger"
+                                               href="{% url 'enable_disable_lab_technician' lab_technician.lab_technician_id 0 %}">Make
+                                                Inactive</a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

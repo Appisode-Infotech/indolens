@@ -93,69 +93,70 @@
             <h2 class="mb-4">Create a Lab</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form class="row g-3 needs-validation" novalidate="">
+                    <form ction="{% url 'create_lab' %}" method="post" class="row g-3 needs-validation" novalidate="">
+                        {% csrf_token %}
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeName">Lab name</label>
+                            <label class="form-label" for="labName">Lab name</label>
 
-                            <input class="form-control" id="storeName" name="storeName" required="" type="text"
+                            <input class="form-control" id="labName" name="labName" required="" type="text"
                                    value=""/>
                             <div class="invalid-feedback">Please provide a valid Lab name.</div>
                         </div>
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeDisplayName">Lab Display Name</label>
+                            <label class="form-label" for="labDisplayName">Lab Display Name</label>
 
-                            <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
+                            <input class="form-control" id="labDisplayName" name="labDisplayName" required=""
                                    type="text" value=""/>
                             <div class="invalid-feedback">Please provide a valid Lab display name.</div>
                         </div>
 
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storePhone">Lab Phone</label>
+                            <label class="form-label" for="labPhone">Lab Phone</label>
 
-                            <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
+                            <input class="form-control" id="labPhone" name="labPhone" required="" type="text"
                                    value=""/>
                             <div class="invalid-feedback">Please provide a valid Labphone number.</div>
                         </div>
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeGSTIN">Lab GSTIN</label>
+                            <label class="form-label" for="labGSTIN">Lab GSTIN</label>
 
-                            <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
+                            <input class="form-control" id="labGSTIN" name="labGSTIN" required="" type="text"
                                    value=""/>
                             <div class="invalid-feedback">Please provide a valid Lab GSTIN.</div>
                         </div>
 
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeEmail">Lab Email</label>
+                            <label class="form-label" for="labEmail">Lab Email</label>
 
-                            <input class="form-control" id="storeEmail" name="storeEmail" required="" type="text"
+                            <input class="form-control" id="labEmail" name="labEmail" required="" type="text"
                                    value=""/>
                             <div class="invalid-feedback">Please provide a valid Labemail.</div>
                         </div>
 
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeCity">City</label>
+                            <label class="form-label" for="labCity">City</label>
 
-                            <input class="form-control" id="storeCity" name="storeCity" required="" type="text"/>
+                            <input class="form-control" id="labCity" name="labCity" required="" type="text"/>
                             <div class="invalid-feedback">Please provide a valid city.</div>
                         </div>
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeState">State</label>
+                            <label class="form-label" for="labState">State</label>
 
-                            <input class="form-control" id="storeState" name="storeState" required="" type="text"/>
+                            <input class="form-control" id="labState" name="labState" required="" type="text"/>
                             <div class="invalid-feedback">Please provide a valid state.</div>
                         </div>
                         <div class="col-md-4">
 
-                            <label class="form-label" for="storeZipCode">Zip</label>
+                            <label class="form-label" for="labZipCode">Zip</label>
 
-                            <input class="form-control" id="storeZipCode" name="storeZipCode" required="" type="text"/>
+                            <input class="form-control" id="labZipCode" name="labZipCode" required="" type="text"/>
                             <div class="invalid-feedback">Please provide a valid zip.</div>
                         </div>
                         <div class="col-12">
@@ -171,11 +172,15 @@
                                    required type="text">
                         </div>
                         <div class="col-sm-12">
-                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates"
+                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates" name="lab_lat_lng"
                                    readonly
                                    required type="text">
                         </div>
                         <div class="col-12" id="map"></div>
+                        <input required type="hidden" name="created_by"
+                                                           value="{{ request.session.id }}">
+                        <input required type="hidden" name="last_updated_by"
+                                                           value="{{ request.session.id }}">
 
                         <div class="col-12">
 

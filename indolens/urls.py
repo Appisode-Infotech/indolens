@@ -14,6 +14,9 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.urls import path, include
+from django.conf.urls.static import static
+
+from indolens import settings
 
 urlpatterns = [
     path('', include('front_end_website.urls')),
@@ -29,3 +32,5 @@ urlpatterns = [
     # own store ui done
     path('own_store/', include('indolens_own_store.urls')),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
