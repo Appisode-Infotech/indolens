@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -77,12 +76,17 @@ class AccountantModel:
         created_on = from_union([from_str, from_none], obj.get("created_on"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
         last_updated_on = from_union([from_str, from_none], obj.get("last_updated_on"))
-        return AccountantModel(accountant_id, name, email, phone, password, profile_pic, address, document_1_type, document_1_url, document_2_type, document_2_url, status, created_by, created_on, last_updated_by, last_updated_on)
+        return AccountantModel(accountant_id, name, email, phone, password, profile_pic, address, document_1_type,
+                               document_1_url, document_2_type, document_2_url, status, created_by, created_on,
+                               last_updated_by, last_updated_on)
 
     def to_dict(self) -> dict:
         result: dict = {}
         if self.accountant_id is not None:
-            result["accountant_id"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)), lambda x: from_str((lambda x: str((lambda x: is_type(int, x))(x)))(x))], self.accountant_id)
+            result["accountant_id"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)),
+                                                  lambda x: from_str(
+                                                      (lambda x: str((lambda x: is_type(int, x))(x)))(x))],
+                                                 self.accountant_id)
         if self.name is not None:
             result["name"] = from_union([from_str, from_none], self.name)
         if self.email is not None:

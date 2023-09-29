@@ -29,11 +29,13 @@ urlpatterns = [
     # inventory items
     path('manage_franchise_store_inventory_products/', franchiseInventoryProducts,
          name='manage_franchise_store_inventory_products'),
-    path('manage_franchise_store_out_of_stock/', inventoryOutOfStockFranchise, name='manage_franchise_store_out_of_stock'),
+    path('manage_franchise_store_out_of_stock/', inventoryOutOfStockFranchise,
+         name='manage_franchise_store_out_of_stock'),
     path('move_stocks_franchise_store/', moveStocksFranchise, name='move_stocks_franchise_store'),
     # stock request management
     path('create_request_franchise_store/', createStockRequestFranchise, name='create_request_franchise_store'),
-    path('all_stock_franchise_store_requests/', viewAllStockRequestsFranchise, name='all_stock_franchise_store_requests'),
+    path('all_stock_franchise_store_requests/', viewAllStockRequestsFranchise,
+         name='all_stock_franchise_store_requests'),
     path('pending_franchise_store_stock_requests/', viewPendingStockRequestsFranchise,
          name='pending_franchise_store_stock_requests'),
     path('completed_franchise_store_stock_requests/', viewCompletedStockRequestsFranchise,

@@ -1,9 +1,9 @@
+import datetime
 import json
 
 import pymysql
-from django.db import connection
-import datetime
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.store_manager_resp_model import get_store_managers
 
@@ -35,10 +35,10 @@ def create_store_manager(sub_admin, files):
             cursor.execute(insert_store_manager_query)
             mid = cursor.lastrowid
             return {
-                "status": True,
-                "message": "sub admin added",
-                "mid": mid
-            }, 200
+                       "status": True,
+                       "message": "sub admin added",
+                       "mid": mid
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -56,9 +56,9 @@ def get_all_store_manager():
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {
-                "status": True,
-                "store_managers": get_store_managers(store_managers)
-            }, 200
+                       "status": True,
+                       "store_managers": get_store_managers(store_managers)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -77,9 +77,9 @@ def get_store_manager_by_id(mid):
             cursor.execute(get_store_manager_query)
             store_manager = cursor.fetchall()
             return {
-                "status": True,
-                "store_manager": get_store_managers(store_manager)
-            }, 200
+                       "status": True,
+                       "store_manager": get_store_managers(store_manager)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -102,9 +102,9 @@ def enable_disable_store_manager(mid, status):
             cursor.execute(update_store_manager_query)
 
             return {
-                "status": True,
-                "message": "Store Manager updated"
-            }, 200
+                       "status": True,
+                       "message": "Store Manager updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

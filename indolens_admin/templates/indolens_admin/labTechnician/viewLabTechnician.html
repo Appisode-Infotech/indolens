@@ -65,6 +65,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -90,7 +91,8 @@
                     <div class="col-auto">
                         <div class="row g-3">
                             <div class="col-auto">
-                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_lab_technician' lab_technician.lab_technician_id %}">
+                                <a class="btn btn-phoenix-secondary"
+                                   href="{% url 'edit_lab_technician' lab_technician.lab_technician_id %}">
                                     <span class="fas fa-refresh me-2"></span> Update
                                 </a>
                             </div>
@@ -122,7 +124,7 @@
                                                 <h6><a>Document 1</a></h6>
                                                 {% for doc in lab_technician.document_1_url %}
                                                 <a href="{{MEDIA_URL}}{{ doc }}" target="_blank">
-                                                    <img src="{{MEDIA_URL}}{{ doc }}" alt="image"/>
+                                                    <img alt="image" src="{{MEDIA_URL}}{{ doc }}"/>
                                                 </a>
                                                 {% endfor %}
                                             </div>
@@ -130,7 +132,7 @@
                                                 <h6><a>Document 2</a></h6>
                                                 {% for doc in lab_technician.document_2_url %}
                                                 <a href="{{MEDIA_URL}}{{ doc }}" target="_blank">
-                                                    <img src="{{MEDIA_URL}}{{ doc }}" alt="image"/>
+                                                    <img alt="image" src="{{MEDIA_URL}}{{ doc }}"/>
                                                 </a>
                                                 {% endfor %}
                                             </div>

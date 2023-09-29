@@ -65,6 +65,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -131,7 +132,7 @@
                                                 <h6><a>Document 1</a></h6>
                                                 {% for doc in emp.document_1_url %}
                                                 <a href="{{MEDIA_URL}}{{ doc }}" target="_blank">
-                                                    <img src="{{MEDIA_URL}}{{ doc }}" alt="image"/>
+                                                    <img alt="image" src="{{MEDIA_URL}}{{ doc }}"/>
                                                 </a>
                                                 {% endfor %}
                                             </div>
@@ -139,7 +140,7 @@
                                                 <h6><a>Document 2</a></h6>
                                                 {% for doc in emp.document_2_url %}
                                                 <a href="{{MEDIA_URL}}{{ doc }}" target="_blank">
-                                                    <img src="{{MEDIA_URL}}{{ doc }}" alt="image"/>
+                                                    <img alt="image" src="{{MEDIA_URL}}{{ doc }}"/>
                                                 </a>
                                                 {% endfor %}
                                             </div>

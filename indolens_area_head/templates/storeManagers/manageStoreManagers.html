@@ -61,6 +61,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -153,7 +154,8 @@
                                     </div>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
-                                        class="text-decoration-none fw-bold fs-0" href="{% url 'view_store_manager' manager.store_manager_id %}">
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_store_manager' manager.store_manager_id %}">
                                     {{manager.name}}
                                 </a>
                                 </td>
@@ -168,11 +170,12 @@
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
                                     {% if manager.assigned_store_id != 0 %}
-                                    <a class="text-decoration-none fw-semi-bold fs-0" href="{%url 'view_own_store_area_head'%}">
+                                    <a class="text-decoration-none fw-semi-bold fs-0"
+                                       href="{%url 'view_own_store_area_head'%}">
                                         {{manager.store_name}}</a>
                                     {% else %}
-                                        <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                     {% endif %}
 
                                 </td>
@@ -180,9 +183,9 @@
                                 <td class="align-middle white-space-nowrap text-end statuses">
                                     {% if manager.status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
-                                    {% elif manager.status == 1 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
-                                    {% endif %}
+                                {% elif manager.status == 1 %}
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
                                     <p class="mb-0 fs--1 text-900">{{manager.created_on}}</p>
@@ -210,7 +213,8 @@
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
                                                                                              href="{% url 'view_store_manager' manager.store_manager_id %}">View</a>
-                                            <a class="dropdown-item" href="{% url 'edit_store_manager' manager.store_manager_id %}">Update/Change
+                                            <a class="dropdown-item"
+                                               href="{% url 'edit_store_manager' manager.store_manager_id %}">Update/Change
                                                 Password</a>
                                             <a class="dropdown-item" href="{% url 'edit_area_head' %}">Allocate
                                                 Store</a>
@@ -266,6 +270,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
 

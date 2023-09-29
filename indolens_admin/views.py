@@ -1,17 +1,17 @@
-from django.shortcuts import render, redirect
-from django.core.files.storage import default_storage
 import time
 
+from django.core.files.storage import default_storage
+from django.shortcuts import render, redirect
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller, \
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
     lab_controller, other_employee_controller
-from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
     sales_executives_model, accountant_model, lab_technician_model, lab_model, other_employee_model
+from indolens_admin.admin_models.admin_req_model.files_model import FileData
 
 
 # =================================ADMIN START======================================
@@ -128,6 +128,7 @@ def enableDisableOwnStore(request, sid, status):
     print(response)
     return redirect('manage_own_stores')
 
+
 def manageFranchiseStores(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_all_franchise_stores()
@@ -178,6 +179,7 @@ def createFranchiseStore(request):
         return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html')
     else:
         return redirect('login')
+
 
 def enableDisableFranchiseStore(request, fid, status):
     response = franchise_store_controller.enable_disable_franchise_store(fid, status)
@@ -877,7 +879,7 @@ def createOtherEmployees(request):
         resp, status_code = other_employee_controller.create_other_employee(other_emp_obj, file_data)
         return redirect('manage_other_employees')
     else:
-        return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html',)
+        return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html', )
 
 
 def editOtherEmployees(request):
@@ -888,6 +890,7 @@ def viewOtherEmployees(request, empid):
     response, status_code = other_employee_controller.get_other_emp_by_id(empid)
     return render(request, 'indolens_admin/otherEmployees/viewOtherEmployees.html',
                   {"other_employee": response['other_employee']})
+
 
 def enableDisableOtherEmployees(request, empid, status):
     other_employee_controller.enable_disable_other_employees(empid, status)

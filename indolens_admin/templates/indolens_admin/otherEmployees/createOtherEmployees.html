@@ -60,6 +60,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -78,7 +79,8 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'create_other_employees' %}"
-                          class="row g-3 needs-validation needs-password-validation" method="post" novalidate="" enctype="multipart/form-data">
+                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data" method="post"
+                          novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
@@ -147,8 +149,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="document_1_type">Document 1 Type</label>
-                            <select aria-label="Default select example" class="form-select" name="document_1_type"
-                            id="document_1_type">
+                            <select aria-label="Default select example" class="form-select" id="document_1_type"
+                                    name="document_1_type">
                                 <option selected="">Open this select menu</option>
                                 <option value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
@@ -168,8 +170,8 @@
                         <div class="mb-3">
                             <label class="form-label" for="document_2_type">Document 2 Type</label>
 
-                            <select aria-label="Default select example" class="form-select" name="document_2_type"
-                            id="document_2_type">
+                            <select aria-label="Default select example" class="form-select" id="document_2_type"
+                                    name="document_2_type">
                                 <option selected="">Open this select menu</option>
                                 <option value="Pan Card">Pan Card</option>
                             </select>
@@ -183,10 +185,10 @@
                                    type="file"/>
                         </div>
 
-                        <input required type="hidden" name="created_by"
+                        <input name="created_by" required type="hidden"
 
                                value="{{ request.session.id }}">
-                        <input required type="hidden" name="last_updated_by"
+                        <input name="last_updated_by" required type="hidden"
 
                                value="{{ request.session.id }}">
                         <div class="col-12">

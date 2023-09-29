@@ -57,6 +57,7 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
     </script>
 </head>
 
@@ -92,17 +93,18 @@
                         <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
                             <strong>{{message}}</strong> You should check in on some of those fields below.
 
-                            <button class="btn-close" type="button" data-bs-dismiss="alert" aria-label="Close"></button>
+                            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
                         </div>
                         {% endif %}
 
-                        <form action="{% url 'own_store_login' %}" class="position-relative needs-validation" method="post" novalidate="">
+                        <form action="{% url 'own_store_login' %}" class="position-relative needs-validation"
+                              method="post" novalidate="">
                             {% csrf_token %}
                             <div class="mb-3 text-start">
                                 <label class="form-label" for="email">Email address</label>
                                 <div class="form-icon-container">
-                                    <input required class="form-control form-icon-input" id="email" name="email"
-                                           placeholder="name@example.com"
+                                    <input class="form-control form-icon-input" id="email" name="email" placeholder="name@example.com"
+                                           required
                                            type="email"/><span
                                         class="fas fa-user text-900 fs--1 form-icon"></span>
                                     <div class="invalid-feedback">Please provide a valid email.</div>
@@ -112,8 +114,9 @@
                             <div class="mb-3 text-start">
                                 <label class="form-label" for="password">Password</label>
                                 <div class="form-icon-container">
-                                    <input required class="form-control form-icon-input" id="password" placeholder="Password"
-                                           type="password" name="password"/><span
+                                    <input class="form-control form-icon-input" id="password" name="password"
+                                           placeholder="Password"
+                                           required type="password"/><span
                                         class="fas fa-key text-900 fs--1 form-icon"></span>
                                     <div class="invalid-feedback">Please provide a valid password.</div>
                                 </div>

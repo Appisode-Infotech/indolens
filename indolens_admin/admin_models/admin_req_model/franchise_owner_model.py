@@ -63,9 +63,10 @@ class FranchiseOwnerModel:
         created_by = from_union([from_str, from_none], obj.get("created_by"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
         franchise_store_id = from_union([from_str, from_none], obj.get("franchise_store_id"))
-        return FranchiseOwnerModel(franchise_owner_id, full_name, email, phone, password, confirm_password, complete_address,
-                             document_1_type, document_2_type, created_by,
-                             last_updated_by, franchise_store_id)
+        return FranchiseOwnerModel(franchise_owner_id, full_name, email, phone, password, confirm_password,
+                                   complete_address,
+                                   document_1_type, document_2_type, created_by,
+                                   last_updated_by, franchise_store_id)
 
     def to_dict(self) -> dict:
         result: dict = {}

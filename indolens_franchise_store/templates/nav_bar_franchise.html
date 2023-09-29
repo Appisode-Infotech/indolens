@@ -6,6 +6,7 @@
             if (navbarStyle && navbarStyle !== 'transparent') {
               document.querySelector('body').classList.add(`navbar-${navbarStyle}`);
             }
+
     </script>
     <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
         <!-- scrollbar removed-->
@@ -16,7 +17,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'franchise_store_dashboard' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'franchise_store_dashboard' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'franchise_store_dashboard' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="monitor"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Dashboard</span></span>
@@ -35,7 +37,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'franchise_store_make_sale' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'franchise_store_make_sale' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'franchise_store_make_sale' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="dollar-sign"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Make Sale</span></span>
@@ -211,7 +214,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'all_franchise_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'all_franchise_store_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'all_franchise_store_orders' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="shopping-bag"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">All Orders</span></span>
@@ -224,7 +228,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'pending_franchise_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'pending_franchise_store_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'pending_franchise_store_orders' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Pending Orders</span></span>
@@ -237,7 +242,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'received_franchise_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'received_franchise_store_orders' %}" role="button">
+                                                     data-bs-toggle=""
+                                                     href="{% url 'received_franchise_store_orders' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-circle"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Received Orders</span></span>
@@ -250,7 +256,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'processing_franchise_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'processing_franchise_store_orders' %}"
+                                                     data-bs-toggle=""
+                                                     href="{% url 'processing_franchise_store_orders' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="activity"></span></span><span class="nav-link-text-wrapper"><span
@@ -263,7 +270,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'ready_franchise_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'ready_franchise_store_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'ready_franchise_store_orders' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Ready Orders</span></span>
@@ -276,7 +284,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'delivered_franchise_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'delivered_franchise_store_orders' %}"
+                                                     data-bs-toggle=""
+                                                     href="{% url 'delivered_franchise_store_orders' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check"></span></span><span class="nav-link-text-wrapper"><span
@@ -289,7 +298,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'cancelled_franchise_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'cancelled_franchise_store_orders' %}"
+                                                     data-bs-toggle=""
+                                                     href="{% url 'cancelled_franchise_store_orders' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="x-circle"></span></span><span class="nav-link-text-wrapper"><span
@@ -303,7 +313,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'refunded_franchise_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'refunded_franchise_store_orders' %}" role="button">
+                                                     data-bs-toggle=""
+                                                     href="{% url 'refunded_franchise_store_orders' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="refresh-cw"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Refunded Orders</span></span>
@@ -323,7 +334,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'view_franchise_store_customers' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'view_franchise_store_customers' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'view_franchise_store_customers' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="users"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">View Customers</span></span>

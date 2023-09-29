@@ -17,7 +17,8 @@ urlpatterns = [
     path('manage_store_employees/view_employee/', viewEmployees, name='view_employee'),
     # Manage customers
     path('view_store_customers/', viewStoreCustomers, name='view_store_customers'),
-    path('view_store_customers/view_store_customer_details/', viewStoreCustomerDetails, name='view_store_customer_details'),
+    path('view_store_customers/view_store_customer_details/', viewStoreCustomerDetails,
+         name='view_store_customer_details'),
     # orders management
     path('all_store_orders/', allStoreOrders, name='all_store_orders'),
     path('pending_store_orders/', pendingStoreOrders, name='pending_store_orders'),

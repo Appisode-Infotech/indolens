@@ -64,6 +64,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -89,7 +90,8 @@
                     <div class="col-auto">
                         <div class="row g-3">
                             <div class="col-auto">
-                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_marketing_head' marketing_head.marketing_head_id%}">
+                                <a class="btn btn-phoenix-secondary"
+                                   href="{% url 'edit_marketing_head' marketing_head.marketing_head_id%}">
                                     <span class="fas fa-refresh me-2"></span> Update
                                 </a>
 
@@ -147,7 +149,8 @@
                                         <div class="mb-3">
                                             <h5 class="text-800">Email</h5><a href="mailto:{{marketing_head.email}}">{{marketing_head.email}}</a>
                                         </div>
-                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:{{marketing_head.phone}}">{{marketing_head.phone}}</a>
+                                        <h5 class="text-800">Phone</h5><a class="text-800"
+                                                                          href="tel:{{marketing_head.phone}}">{{marketing_head.phone}}</a>
                                     </div>
                                 </div>
                             </div>

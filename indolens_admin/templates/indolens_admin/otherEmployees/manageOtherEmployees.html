@@ -65,6 +65,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -184,12 +185,12 @@
                                     </a>
                                     {% else %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                     {% endif %}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end statuses">
-                                        {% if emp.status == 0 %}
+                                    {% if emp.status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
                                 {% elif emp.status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
@@ -277,6 +278,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
 

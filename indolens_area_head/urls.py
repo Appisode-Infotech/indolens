@@ -1,4 +1,5 @@
 from django.urls import path
+
 from .views import *
 
 urlpatterns = [
@@ -16,10 +17,12 @@ urlpatterns = [
     path('manage_own_stores/view_own_store/', viewOwnStore, name='view_own_store_area_head'),
     # franchise store management
     path('manage_Franchise_stores/', manageFranchiseStores, name='manage_Franchise_stores_area_head'),
-    path('manage_Franchise_stores/view_franchise_store/?storeId=<int:fid>', viewFranchiseStore, name='view_franchise_store_area_head'),
+    path('manage_Franchise_stores/view_franchise_store/?storeId=<int:fid>', viewFranchiseStore,
+         name='view_franchise_store_area_head'),
     # inventory management
     path('manage_out_of_stock/', manageCentralInventoryOutOfStock, name='manage_out_of_stock_area_head'),
-    path('manage_central_inventory_products/', manageCentralInventoryProducts, name='manage_central_inventory_products_area_head'),
+    path('manage_central_inventory_products/', manageCentralInventoryProducts,
+         name='manage_central_inventory_products_area_head'),
     path('manageMoveStocks/', manageMoveStocks, name='manageMoveStocks_area_head'),
     path('manageMoveStocks/move_a_stock/', manageMoveAStock, name='move_a_stock_area_head'),
     path('all_stock_requests/', viewAllStockRequests, name='all_stock_requests_area_head'),
@@ -31,28 +34,34 @@ urlpatterns = [
     path('view_customers/customer_details/', viewCustomerDetails, name='customer_details_area_head'),
     # store managers
     path('manage_store_managers/', manageStoreManagers, name='manage_store_managers_area_head'),
-    path('manage_store_managers/view_store_manager/?managerId=<int:mid>', viewStoreManager, name='view_store_manager_area_head'),
+    path('manage_store_managers/view_store_manager/?managerId=<int:mid>', viewStoreManager,
+         name='view_store_manager_area_head'),
     # store franchise owners
     path('manage_franchise_owners/', manageFranchiseOwners, name='manage_franchise_owners_area_head'),
-    path('manage_franchise_owners/view_franchise_owner/?franchiseOwnerId=<int:foid>', viewFranchiseOwners, name='view_franchise_owner_area_head'),
+    path('manage_franchise_owners/view_franchise_owner/?franchiseOwnerId=<int:foid>', viewFranchiseOwners,
+         name='view_franchise_owner_area_head'),
     # marketing head
     path('manage_marketing_head/', manageMarketingHead, name='manage_marketing_head_area_head'),
-    path('manage_marketing_head/view_marketing_head/?marketingHeadId=<int:mhid>', viewMarketingHead, name='view_marketing_head_area_head'),
+    path('manage_marketing_head/view_marketing_head/?marketingHeadId=<int:mhid>', viewMarketingHead,
+         name='view_marketing_head_area_head'),
     # manage optimetry
     path('manage_optimetry/', manageOptimetry, name='manage_optimetry_area_head'),
     path('manage_optimetry/view_optimetry/', viewOptimetry, name='view_optimetry_area_head'),
     # manage sales executive
     path('manage_sales_executives/', manageSaleExecutives, name='manage_sales_executives_area_head'),
-    path('manage_sales_executives/view_sales_executives/?salesExecutiveId=<int:seid>', viewSaleExecutives, name='view_sales_executives_area_head'),
+    path('manage_sales_executives/view_sales_executives/?salesExecutiveId=<int:seid>', viewSaleExecutives,
+         name='view_sales_executives_area_head'),
     # manage accountant
     path('manage_accountant/', manageAccountant, name='manage_accountant_area_head'),
     path('manage_accountant/view_accountant/?accountantId=<int:aid>', viewAccountant, name='view_accountant_area_head'),
     # manage lab tech
     path('manage_lab_technician/', manageLabTechnician, name='manage_lab_technician_area_head'),
-    path('manage_lab_technician/view_lab_technician/?labTechnicianId=<int:ltid>', viewLabTechnician, name='view_lab_technician_area_head'),
+    path('manage_lab_technician/view_lab_technician/?labTechnicianId=<int:ltid>', viewLabTechnician,
+         name='view_lab_technician_area_head'),
     # housekeeping
     path('manage_other_employees/', manageOtherEmployees, name='manage_other_employees_area_head'),
-    path('manage_other_employees/view_other_employees/empId=<int:empid>', viewOtherEmployees, name='view_other_employees_area_head'),
+    path('manage_other_employees/view_other_employees/empId=<int:empid>', viewOtherEmployees,
+         name='view_other_employees_area_head'),
     # orders management
     path('all_orders/', viewAllOrders, name='all_orders_area_head'),
     path('pending_orders/', viewPendingOrders, name='pending_orders_area_head'),

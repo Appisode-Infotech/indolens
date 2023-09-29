@@ -60,6 +60,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -146,7 +147,7 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="document1Type">Document 1 Type</label>
-                            <select id="document1Type" aria-label="Default select example" class="form-select"
+                            <select aria-label="Default select example" class="form-select" id="document1Type"
                                     name="document1Type" required>
                                 <option selected="" value="">Open this select menu</option>
                                 <option value="Aadhar">Aadhar</option>
@@ -160,15 +161,15 @@
                             <label class="form-label" for="document1">Document 1 Upload (Can choose
                                 multiple)</label>
 
-                            <input required class="form-control" id="document1" multiple="multiple" name="document1"
+                            <input class="form-control" id="document1" multiple="multiple" name="document1" required
                                    type="file"/>
                         </div>
 
                         <div class="mb-3">
                             <label class="form-label" for="document1">Document 2 Type</label>
 
-                            <select required aria-label="Default select example" class="form-select"
-                                    name="document2Type">
+                            <select aria-label="Default select example" class="form-select" name="document2Type"
+                                    required>
                                 <option selected="" value="">Open this select menu</option>
                                 <option value="Pan Card">Pan Card</option>
                             </select>
@@ -178,14 +179,14 @@
                             <label class="form-label" for="document2">Document 2 Upload (Can choose
                                 multiple)</label>
 
-                            <input required class="form-control" id="document2" multiple="multiple" name="document2"
+                            <input class="form-control" id="document2" multiple="multiple" name="document2" required
                                    type="file"/>
                         </div>
 
-                        <input required type="hidden" name="created_by"
+                        <input name="created_by" required type="hidden"
 
                                value="{{ request.session.id }}">
-                        <input required type="hidden" name="last_updated_by"
+                        <input name="last_updated_by" required type="hidden"
 
                                value="{{ request.session.id }}">
                         <div class="col-12">

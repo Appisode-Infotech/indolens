@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en-US" dir="ltr">
+<html dir="ltr" lang="en-US">
 
 <head>
     <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
 
 
     <!-- ===============================================-->
@@ -17,13 +17,13 @@
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <link rel="apple-touch-icon" sizes="180x180" href="{% static 'img/favicons/apple-touch-icon.png' %}">
-    <link rel="icon" type="image/png" sizes="32x32" href="{% static 'img/favicons/favicon-32x32.png' %}">
-    <link rel="icon" type="image/png" sizes="16x16" href="{% static 'img/favicons/favicon-16x16.png' %}">
-    <link rel="shortcut icon" type="image/x-icon" href="{% static 'img/favicons/favicon.ico' %}">
-    <link rel="manifest" href="{% static 'img/favicons/manifest.json' %}">
-    <meta name="msapplication-TileImage" content="{% static 'img/favicons/mstile-150x150.png' %}">
-    <meta name="theme-color" content="#ffffff">
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
     <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
     <script src="{% static 'js/config.js' %}"></script>
@@ -34,16 +34,16 @@
     <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
     <link href="{% static 'vendors/prism/prism-okaidia.css' %}" rel="stylesheet">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
           rel="stylesheet">
     <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
-    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
-    <link href="{% static 'css/theme-rtl.min.css' %}" type="text/css" rel="stylesheet" id="style-rtl">
-    <link href="{% static 'css/theme.min.css' %}" type="text/css" rel="stylesheet" id="style-default">
-    <link href="{% static 'css/user-rtl.min.css' %}" type="text/css" rel="stylesheet" id="user-style-rtl">
-    <link href="{% static 'css/user.min.css' %}" type="text/css" rel="stylesheet" id="user-style-default">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
 
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -59,6 +59,7 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
 
 
     </script>
@@ -91,32 +92,32 @@
                                 <div class="card-header bg-100 pt-3 pb-2 border-bottom-0">
                                     <ul class="nav justify-content-between nav-wizard">
                                         <li class="nav-item"><a class="nav-link active fw-semi-bold"
-                                                                href="#bootstrap-wizard-validation-tab1"
-                                                                data-bs-toggle="tab" data-wizard-step="1">
+                                                                data-bs-toggle="tab"
+                                                                data-wizard-step="1" href="#bootstrap-wizard-validation-tab1">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle">            <span
                                                     class="fas fa-shopping-cart"></span></span></span></span><span
                                                     class="d-none d-md-block mt-1 fs--1">Products</span></div>
                                         </a></li>
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
-                                                                href="#bootstrap-wizard-validation-tab2"
-                                                                data-bs-toggle="tab" data-wizard-step="2">
+                                                                data-bs-toggle="tab"
+                                                                data-wizard-step="2" href="#bootstrap-wizard-validation-tab2">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-user"></span></span></span><span
                                                     class="d-none d-md-block mt-1 fs--1">Customer details</span></div>
                                         </a></li>
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
-                                                                href="#bootstrap-wizard-validation-tab3"
-                                                                data-bs-toggle="tab" data-wizard-step="3">
+                                                                data-bs-toggle="tab"
+                                                                data-wizard-step="3" href="#bootstrap-wizard-validation-tab3">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-file-alt"></span></span></span><span
                                                     class="d-none d-md-block mt-1 fs--1">Billing Details</span></div>
                                         </a></li>
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
-                                                                href="#bootstrap-wizard-validation-tab4"
-                                                                data-bs-toggle="tab" data-wizard-step="4">
+                                                                data-bs-toggle="tab"
+                                                                data-wizard-step="4" href="#bootstrap-wizard-validation-tab4">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-eye"></span></span></span><span
@@ -126,24 +127,24 @@
                                 </div>
                                 <div class="card-body pt-4 pb-0">
                                     <div class="tab-content">
-                                        <div class="tab-pane active" role="tabpanel"
-                                             aria-labelledby="bootstrap-wizard-validation-tab1"
-                                             id="bootstrap-wizard-validation-tab1">
-                                            <form class="needs-validation" id="wizardValidationForm1"
-                                                  novalidate="novalidate" data-wizard-form="1">
+                                        <div aria-labelledby="bootstrap-wizard-validation-tab1" class="tab-pane active"
+                                             id="bootstrap-wizard-validation-tab1"
+                                             role="tabpanel">
+                                            <form class="needs-validation" data-wizard-form="1"
+                                                  id="wizardValidationForm1" novalidate="novalidate">
 
                                                 <div id="product_widgets">
-                                                    <div id="product_widget"
-                                                         class="product_widget card-header bg-100 mb-4">
+                                                    <div class="product_widget card-header bg-100 mb-4"
+                                                         id="product_widget">
                                                         <div class="bg-200 mb-4">
-                                                            <h5 class="p-3" align="center">Product 1</h5>
+                                                            <h5 align="center" class="p-3">Product 1</h5>
                                                         </div>
                                                         <div class="row g-3 mb-3">
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3">Select Category</h5>
-                                                                <select name="category" class="form-select"
-                                                                        data-choices="data-choices"
-                                                                        data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                                <select class="form-select" data-choices="data-choices"
+                                                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                        name="category">
                                                                     <option value="">Select category</option>
                                                                     <option>8660225160</option>
                                                                     <option>9538806282</option>
@@ -152,9 +153,9 @@
                                                             </div>
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3 ">Select Brand</h5>
-                                                                <select name="brand" class="form-select"
-                                                                        data-choices="data-choices"
-                                                                        data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                                <select class="form-select" data-choices="data-choices"
+                                                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                        name="brand">
                                                                     <option value="">Select brand</option>
                                                                     <option>8660225160</option>
                                                                     <option>9538806282</option>
@@ -166,9 +167,9 @@
                                                         <div class="row g-3 mb-3">
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3">Select Product</h5>
-                                                                <select name="product" class="form-select"
-                                                                        data-choices="data-choices"
-                                                                        data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                                <select class="form-select" data-choices="data-choices"
+                                                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                        name="product">
                                                                     <option value="">Select product</option>
                                                                     <option>8660225160</option>
                                                                     <option>9538806282</option>
@@ -177,43 +178,43 @@
                                                             </div>
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3 ">Product SKU</h5>
-                                                                <input class="form-control" type="text" name="sku"
-                                                                       placeholder="Product SKU"
-                                                                       required="required" value="abc"/>
+                                                                <input class="form-control" name="sku" placeholder="Product SKU"
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
                                                             </div>
                                                         </div>
 
                                                         <div class="row g-3 mb-3">
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3">Available quantity</h5>
-                                                                <input class="form-control" type="text"
-                                                                       name="available_qty"
+                                                                <input class="form-control" name="available_qty"
                                                                        placeholder="Available quantity"
-                                                                       required="required" value="abc"/>
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
                                                             </div>
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3 ">Purchase quantity</h5>
-                                                                <input class="form-control" type="text"
-                                                                       name="purchase_qty"
+                                                                <input class="form-control" name="purchase_qty"
                                                                        placeholder="Purchase quantity"
-                                                                       required="required" value="abc"/>
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
                                                             </div>
                                                         </div>
 
                                                         <div class="row g-3 mb-3">
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3">Unit Price</h5>
-                                                                <input class="form-control" type="text"
-                                                                       name="unit_price"
+                                                                <input class="form-control" name="unit_price"
                                                                        placeholder="Unit Price"
-                                                                       required="required" value="abc"/>
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
                                                             </div>
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3 ">Product Total</h5>
-                                                                <input class="form-control" type="text"
-                                                                       name="product_total"
+                                                                <input class="form-control" name="product_total"
                                                                        placeholder="Product Total"
-                                                                       required="required" value="abc"/>
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
                                                             </div>
                                                         </div>
 
@@ -222,30 +223,30 @@
                                                 </div>
                                                 <div class="row g-3 mb-3 justify-content-between">
 
-                                                    <button class="col-auto btn btn-danger px-6 px-sm-6" type="button"
-                                                            onclick="removeProduct(this)">Remove Product<span
+                                                    <button class="col-auto btn btn-danger px-6 px-sm-6" onclick="removeProduct(this)"
+                                                            type="button">Remove Product<span
                                                             class="fas fa-trash ms-1"
                                                             data-fa-transform="shrink-3"></span></button>
                                                     <button class="col-auto btn btn-primary px-6 px-sm-6 mr-4"
-                                                            type="button"
-                                                            onclick="addProduct()">Add Product<span
+                                                            onclick="addProduct()"
+                                                            type="button">Add Product<span
                                                             class="fas fa-plus ms-1"
                                                             data-fa-transform="shrink-3"></span></button>
                                                 </div>
                                             </form>
                                         </div>
-                                        <div class="tab-pane" role="tabpanel"
-                                             aria-labelledby="bootstrap-wizard-validation-tab2"
-                                             id="bootstrap-wizard-validation-tab2">
-                                            <form class="needs-validation" id="wizardValidationForm2"
-                                                  novalidate="novalidate" data-wizard-form="2">
+                                        <div aria-labelledby="bootstrap-wizard-validation-tab2" class="tab-pane"
+                                             id="bootstrap-wizard-validation-tab2"
+                                             role="tabpanel">
+                                            <form class="needs-validation" data-wizard-form="2"
+                                                  id="wizardValidationForm2" novalidate="novalidate">
                                                 <div class="row g-3 mb-3">
                                                     <div class="col-9">
                                                         <h4 class="mb-3">Customer Phone</h4>
-                                                        <select name="customer_phone" class="form-select"
+                                                        <select class="form-select" data-choices="data-choices"
+                                                                data-options='{"removeItemButton":true,"placeholder":true}'
                                                                 id="organizerSingle"
-                                                                data-choices="data-choices"
-                                                                data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                                name="customer_phone">
                                                             <option value="">Enter Phone</option>
                                                             <option>8660225160</option>
                                                             <option>9538806282</option>
@@ -262,22 +263,22 @@
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb2 col-6">
                                                         <h5 class="mb-3">Customer Name</h5>
-                                                        <input class="form-control" type="text" name="customr_name"
-                                                               placeholder="Customer Name"
-                                                               required="required" value="abc"/>
+                                                        <input class="form-control" name="customr_name" placeholder="Customer Name"
+                                                               required="required"
+                                                               type="text" value="abc"/>
                                                     </div>
                                                     <div class="mb2 col-6">
                                                         <h5 class="mb-3 ">Customer Age</h5>
-                                                        <input class="form-control" type="number" name="customer_age"
-                                                               placeholder="Customer Age"
-                                                               required="required" value="12"/>
+                                                        <input class="form-control" name="customer_age" placeholder="Customer Age"
+                                                               required="required"
+                                                               type="number" value="12"/>
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb-2 col-6">
                                                         <h5 class="mb-3 ">Gender</h5>
-                                                        <select class="form-select" name="customer_gender"
-                                                                id="bootstrap-wizard-validation-gender"
+                                                        <select class="form-select" id="bootstrap-wizard-validation-gender"
+                                                                name="customer_gender"
                                                                 required="required">
                                                             <option value="">Select customer gender</option>
                                                             <option value="Male">Male</option>
@@ -288,16 +289,16 @@
                                                     </div>
                                                     <div class="mb2 col-6">
                                                         <h5 class="mb-3 ">Customer email</h5>
-                                                        <input class="form-control" type="email" name="customer_email"
-                                                               placeholder="Customer email"
-                                                               required="required" value="dan@gmail.com"/>
+                                                        <input class="form-control" name="customer_email" placeholder="Customer email"
+                                                               required="required"
+                                                               type="email" value="dan@gmail.com"/>
                                                     </div>
                                                 </div>
 
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb-2 col-6">
                                                         <h5 class="mb-3 ">Language</h5>
-                                                        <select data-dz-name="customer_language" class="form-select"
+                                                        <select class="form-select" data-dz-name="customer_language"
                                                                 name="language"
                                                                 required="required">
                                                             <option value="">Select customer language</option>
@@ -325,9 +326,9 @@
                                                     <div class="mb-2">
                                                         <label class="form-label"
                                                                for="bootstrap-wizard-validation-wizard-address">Address</label>
-                                                        <textarea name="customer_address" class="form-control" rows="3"
-                                                                  id="bootstrap-wizard-validation-wizard-address"
-                                                                  required="required"></textarea>
+                                                        <textarea class="form-control" id="bootstrap-wizard-validation-wizard-address" name="customer_address"
+                                                                  required="required"
+                                                                  rows="3"></textarea>
                                                         <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                                 </div>
@@ -335,28 +336,28 @@
 
                                             </form>
                                         </div>
-                                        <div class="tab-pane" role="tabpanel"
-                                             aria-labelledby="bootstrap-wizard-validation-tab3"
-                                             id="bootstrap-wizard-validation-tab3">
-                                            <form class="mb-2 needs-validation" id="wizardValidationForm3"
-                                                  novalidate="novalidate" data-wizard-form="3">
+                                        <div aria-labelledby="bootstrap-wizard-validation-tab3" class="tab-pane"
+                                             id="bootstrap-wizard-validation-tab3"
+                                             role="tabpanel">
+                                            <form class="mb-2 needs-validation" data-wizard-form="3"
+                                                  id="wizardValidationForm3" novalidate="novalidate">
 
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb-2 col-6">
                                                         <h5 class="mb-3 ">Sale Date</h5>
-                                                        <input name="sale_date" class="form-control datetimepicker"
+                                                        <input class="form-control datetimepicker" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
                                                                id="datepicker"
-                                                               type="text"
+                                                               name="sale_date"
                                                                placeholder="dd/mm/yyyy"
-                                                               data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'/>
+                                                               type="text"/>
 
                                                         <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                                     <div class="mb-2 col-6">
                                                         <h5 class="mb-3 ">Order Placed By</h5>
-                                                        <select name="sales_person" class="form-select"
-                                                                data-choices="data-choices"
-                                                                data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                        <select class="form-select" data-choices="data-choices"
+                                                                data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                name="sales_person">
                                                             <option value="">Select employee</option>
                                                             <option>Smitha</option>
                                                             <option>Avinash</option>
@@ -369,19 +370,19 @@
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb-2 col-6">
                                                         <h5 class="mb-3 ">Est Delivery Date</h5>
-                                                        <input name="delivery_date" class="form-control datetimepicker"
+                                                        <input class="form-control datetimepicker" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
                                                                id="datepicker2"
-                                                               type="text"
+                                                               name="delivery_date"
                                                                placeholder="dd/mm/yyyy"
-                                                               data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'/>
+                                                               type="text"/>
 
                                                         <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                                     <div class="mb-2 col-6">
                                                         <h5 class="mb-3 ">Choose lab</h5>
-                                                        <select name="lab" class="form-select"
-                                                                data-choices="data-choices"
-                                                                data-options='{"removeItemButton":true,"placeholder":true}'>
+                                                        <select class="form-select" data-choices="data-choices"
+                                                                data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                name="lab">
                                                             <option value="">Select employee</option>
                                                             <option>Ind-Lab1</option>
                                                             <option>Ind-Lab2</option>
@@ -393,9 +394,9 @@
 
                                             </form>
                                         </div>
-                                        <div class="tab-pane" role="tabpanel"
-                                             aria-labelledby="bootstrap-wizard-validation-tab4"
-                                             id="bootstrap-wizard-validation-tab4">
+                                        <div aria-labelledby="bootstrap-wizard-validation-tab4" class="tab-pane"
+                                             id="bootstrap-wizard-validation-tab4"
+                                             role="tabpanel">
                                             <div class="row flex-center pb-8 pt-4 gx-3 gy-4">
 
                                                 <div class="px-0">
@@ -551,13 +552,13 @@
                                 </div>
                                 <div class="card-footer border-top-0" data-wizard-footer="data-wizard-footer">
                                     <div class="d-flex pager wizard list-inline mb-0">
-                                        <button class="d-none btn btn-link ps-0" type="button"
-                                                data-wizard-prev-btn="data-wizard-prev-btn"><span
+                                        <button class="d-none btn btn-link ps-0" data-wizard-prev-btn="data-wizard-prev-btn"
+                                                type="button"><span
                                                 class="fas fa-chevron-left me-1" data-fa-transform="shrink-3"></span>Previous
                                         </button>
                                         <div class="flex-1 text-end">
-                                            <button class="btn btn-primary px-6 px-sm-6" type="submit"
-                                                    data-wizard-next-btn="data-wizard-next-btn">Next<span
+                                            <button class="btn btn-primary px-6 px-sm-6" data-wizard-next-btn="data-wizard-next-btn"
+                                                    type="submit">Next<span
                                                     class="fas fa-chevron-right ms-1"
                                                     data-fa-transform="shrink-3"> </span></button>
                                         </div>
@@ -585,6 +586,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
 
@@ -678,6 +680,7 @@
     }
 
 
+
 </script>
 <script>
         // Add an event listener to the "Start Over" button
@@ -734,6 +737,7 @@
             });
             return object;
         }
+
 
 
 </script>

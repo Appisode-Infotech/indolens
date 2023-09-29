@@ -1,12 +1,11 @@
+import datetime
 import json
 
 import pymysql
-from django.db import connection
-import datetime
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.accountant_resp_model import get_accountants
-from indolens_admin.admin_models.admin_resp_model.sales_executive_resp_model import get_sales_executives
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
@@ -33,16 +32,15 @@ def create_accountant(accountant, files):
             aid = cursor.lastrowid
 
             return {
-                "status": True,
-                "message": "Accountant Added",
-                "aid": aid
-            }, 200
+                       "status": True,
+                       "message": "Accountant Added",
+                       "aid": aid
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-
 
 
 def get_all_accountant():
@@ -60,9 +58,9 @@ def get_all_accountant():
             print(accountant)
 
             return {
-                "status": True,
-                "accountant_list": get_accountants(accountant)
-            }, 200
+                       "status": True,
+                       "accountant_list": get_accountants(accountant)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -85,9 +83,9 @@ def get_accountant_by_id(aid):
             accountant = cursor.fetchall()
 
             return {
-                "status": True,
-                "accountant": get_accountants(accountant)
-            }, 200
+                       "status": True,
+                       "accountant": get_accountants(accountant)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -110,9 +108,9 @@ def enable_disable_accountant(aid, status):
             cursor.execute(update_accountant_query)
 
             return {
-                "status": True,
-                "message": "Accountant updated"
-            }, 200
+                       "status": True,
+                       "message": "Accountant updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

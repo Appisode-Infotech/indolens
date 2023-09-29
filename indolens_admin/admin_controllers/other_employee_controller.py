@@ -1,9 +1,9 @@
+import datetime
 import json
 
 import pymysql
-from django.db import connection
-import datetime
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.other_emp_resp_model import get_other_employees
 
@@ -32,10 +32,10 @@ def create_other_employee(other_emp, files):
             empid = cursor.lastrowid
 
             return {
-                "status": True,
-                "message": "Employee added",
-                "seid": empid
-            }, 200
+                       "status": True,
+                       "message": "Employee added",
+                       "seid": empid
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -58,9 +58,9 @@ def get_all_other_emp():
             other_emp = cursor.fetchall()
 
             return {
-                "status": True,
-                "other_emp_list": get_other_employees(other_emp)
-            }, 200
+                       "status": True,
+                       "other_emp_list": get_other_employees(other_emp)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -82,9 +82,9 @@ def get_other_emp_by_id(empid):
             cursor.execute(get_other_employee_query)
             other_emp = cursor.fetchall()
             return {
-                "status": True,
-                "other_employee": get_other_employees(other_emp)
-            }, 200
+                       "status": True,
+                       "other_employee": get_other_employees(other_emp)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -107,9 +107,9 @@ def enable_disable_other_employees(empid, status):
             cursor.execute(update_other_employees_query)
 
             return {
-                "status": True,
-                "message": "Employee updated"
-            }, 200
+                       "status": True,
+                       "message": "Employee updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 class StoreManager:
     def __init__(self, values):
         (
@@ -28,11 +29,13 @@ class StoreManager:
             'created_by': self.created_by,
             'created_on': self.created_on.strftime('%Y-%m-%d') if isinstance(self.created_on, datetime) else None,
             'last_updated_by': self.last_updated_by,
-            'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on, datetime) else None,
+            'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on,
+                                                                                                datetime) else None,
             'store_name': self.store_name,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name
         }
+
 
 def get_store_managers(response):
     store_manager_list = []
@@ -40,4 +43,3 @@ def get_store_managers(response):
         store_manager = StoreManager(values)
         store_manager_list.append(store_manager.to_dict())
     return store_manager_list
-

@@ -67,6 +67,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -157,25 +158,25 @@
                             <select aria-label="Default select example" class="form-select" id="document1Type"
                                     name="document1Type">
                                 {% if lab_technician.document_1_type == "Aadhar" %}
-                                <option value="Aadhar" selected>Aadhar</option>
+                                <option selected value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                                 {% elif lab_technician.document_1_type == "Driving Licence" %}
                                 <option value="Aadhar">Aadhar</option>
-                                <option value="Driving Licence" selected>Driving Licence</option>
+                                <option selected value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                                 {% elif lab_technician.document_1_type == "Voter ID" %}
                                 <option value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
-                                <option value="Ration Card" selected>Ration Card</option>
+                                <option selected value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                                 {% elif lab_technician.document_1_type == "Ration Card" %}
                                 <option value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
-                                <option value="Voter Id" selected>Voter Id</option>
+                                <option selected value="Voter Id">Voter Id</option>
                                 {% endif %}
                             </select>
                         </div>
@@ -193,8 +194,8 @@
 
                             <select aria-label="Default select example" class="form-select" id="document_2_type"
                                     name="document2Type">
-                                <option >Open this select menu</option>
-                                <option value="Pan Card1" selected>Pan Card</option>
+                                <option>Open this select menu</option>
+                                <option selected value="Pan Card1">Pan Card</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -206,7 +207,7 @@
                                    type="file"/>
                         </div>
 
-                        <input required type="hidden" name="last_updated_by"
+                        <input name="last_updated_by" required type="hidden"
 
                                value="{{ request.session.id }}">
                         <div class="col-12">

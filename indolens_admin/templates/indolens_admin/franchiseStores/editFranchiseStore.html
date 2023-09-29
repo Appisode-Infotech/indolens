@@ -16,6 +16,7 @@
 
 
 
+
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -80,6 +81,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -98,7 +100,8 @@
             <h2 class="mb-4">Edit a Franchise Store</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form class="row g-3 needs-validation needs-password-validation" action="{% url 'edit_franchise_store' id %}" method="post" novalidate="">
+                    <form action="{% url 'edit_franchise_store' id %}"
+                          class="row g-3 needs-validation needs-password-validation" method="post" novalidate="">
                         {% csrf_token %}
                         <div class="col-md-6">
 
@@ -180,15 +183,15 @@
                                    type="text">
                         </div>
                         <div class="col-sm-12">
-                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates" name="storeLatLng"
-                                   readonly value="Latitude: {{store.store_lat}}, Longitude: {{store.store_lng}}"
-                                   required type="text">
+                            <input class="form-control" id="store_lat_lng" name="storeLatLng" placeholder="Co Ordinates"
+                                   readonly required
+                                   type="text" value="Latitude: {{store.store_lat}}, Longitude: {{store.store_lng}}">
                         </div>
                         <div class="col-12" id="map"></div>
-                        <input required type="hidden" name="last_updated_by"
+                        <input name="last_updated_by" required type="hidden"
 
                                value="{{ request.session.id }}">
-                        <input required type="hidden" name="store_id"
+                        <input name="store_id" required type="hidden"
 
                                value="{{ store.store_id}}">
 
@@ -310,6 +313,7 @@
                 store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
             });
         }
+
 
 
 

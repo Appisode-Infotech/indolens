@@ -1,9 +1,9 @@
+import datetime
 import json
 
 import pymysql
-from django.db import connection
-import datetime
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.franchise_owner_resp_model import get_franchise_owners
 
@@ -32,10 +32,10 @@ def create_franchise_owner(franchise_owner, files):
             foid = cursor.lastrowid
 
             return {
-                "status": True,
-                "message": "franchise owner added",
-                "foid": foid
-            }, 200
+                       "status": True,
+                       "message": "franchise owner added",
+                       "foid": foid
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -54,9 +54,9 @@ def get_all_franchise_owner():
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {
-                "status": True,
-                "franchise_owners": get_franchise_owners(franchise_owners)
-            }, 200
+                       "status": True,
+                       "franchise_owners": get_franchise_owners(franchise_owners)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -76,9 +76,9 @@ def get_franchise_owner_by_id(foid):
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {
-                "status": True,
-                "franchise_owner": get_franchise_owners(franchise_owners)
-            }, 200
+                       "status": True,
+                       "franchise_owner": get_franchise_owners(franchise_owners)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -101,9 +101,9 @@ def enable_disable_franchise_owner(foid, status):
             cursor.execute(update_franchise_owners_query)
 
             return {
-                "status": True,
-                "message": "franchise owner updated"
-            }, 200
+                       "status": True,
+                       "message": "franchise owner updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -138,9 +138,9 @@ def edit_franchise_owner(franchise_owner):
             cursor.execute(update_franchise_owners_query)
 
             return {
-                "status": True,
-                "message": "franchise owner updated"
-            }, 200
+                       "status": True,
+                       "message": "franchise owner updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

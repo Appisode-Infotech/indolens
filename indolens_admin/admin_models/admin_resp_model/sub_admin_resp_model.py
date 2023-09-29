@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 class User:
     def __init__(self, values):
         (
@@ -26,12 +27,15 @@ class User:
             'document_2_url': self.document_2_url,
             'status': self.status,
             'created_by': self.created_by,
-            'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on, datetime) else None,
+            'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on,
+                                                                                      datetime) else None,
             'last_updated_by': self.last_updated_by,
-            'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on, datetime) else None,
+            'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on,
+                                                                                                datetime) else None,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name,
         }
+
 
 def get_sub_admin(response):
     user_list = []

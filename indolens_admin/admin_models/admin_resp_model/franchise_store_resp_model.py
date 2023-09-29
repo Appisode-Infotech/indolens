@@ -40,4 +40,3 @@ def get_franchise_store(response):
         store = Store(values)
         store_list.append(store.to_dict())
     return store_list
-

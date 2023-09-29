@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -64,7 +63,8 @@ class StoreManagerModel:
         status = from_union([from_int, from_none], obj.get("status"))
         created_by = from_union([from_str, from_none], obj.get("created_by"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
-        return StoreManagerModel(store_manager_id, name, email, phone, password, assigned_store_id, address, document_1_type, document_2_type, status, created_by, last_updated_by)
+        return StoreManagerModel(store_manager_id, name, email, phone, password, assigned_store_id, address,
+                                 document_1_type, document_2_type, status, created_by, last_updated_by)
 
     def to_dict(self) -> dict:
         result: dict = {}

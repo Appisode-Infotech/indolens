@@ -1,5 +1,3 @@
-import json
-import bcrypt
 import pymysql
 from django.db import connection
 
@@ -15,22 +13,22 @@ def login(admin_obj):
             admin_data = cursor.fetchone()
             if admin_data is None:
                 return {
-                    "status": False,
-                    "message": "Invalid admin email",
-                    "admin": None
-                }, 301
+                           "status": False,
+                           "message": "Invalid admin email",
+                           "admin": None
+                       }, 301
             elif admin_data[4] != admin_obj.password:
                 return {
-                    "status": False,
-                    "message": "Invalid admin password",
-                    "admin": None
-                }, 301
+                           "status": False,
+                           "message": "Invalid admin password",
+                           "admin": None
+                       }, 301
             else:
                 return {
-                    "status": True,
-                    "message": "admin login successfull",
-                    "admin": admin_auth_model.admin_auth_model_from_dict(get_admin_user(admin_data))
-                }, 200
+                           "status": True,
+                           "message": "admin login successfull",
+                           "admin": admin_auth_model.admin_auth_model_from_dict(get_admin_user(admin_data))
+                       }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:

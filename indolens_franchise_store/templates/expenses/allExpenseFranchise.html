@@ -68,6 +68,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -106,30 +107,30 @@
 
                             </div>
                         </div>
-                        <button class="col-auto btn btn-primary" type="button"
-                                data-bs-toggle="modal" data-bs-target="#verticallyCentered">Add Expense
+                        <button class="col-auto btn btn-primary" data-bs-target="#verticallyCentered"
+                                data-bs-toggle="modal" type="button">Add Expense
                         </button>
 
 
                         <!--                        Add expense Modal-->
-                        <div class="modal fade" id="verticallyCentered" tabindex="-1"
-                             aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+                        <div aria-hidden="true" aria-labelledby="verticallyCenteredModalLabel" class="modal fade"
+                             id="verticallyCentered" tabindex="-1">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header">
                                         <h5 class="modal-title" id="verticallyCenteredModalLabel">Add new expense</h5>
-                                        <button class="btn p-1" type="button" data-bs-dismiss="modal"
-                                                aria-label="Close"><span class="fas fa-times fs--1"></span></button>
+                                        <button aria-label="Close" class="btn p-1" data-bs-dismiss="modal"
+                                                type="button"><span class="fas fa-times fs--1"></span></button>
                                     </div>
                                     <div class="p-4 code-to-copy">
-                                        <form method='POST' action='/' class="row g-3 needs-validation" novalidate="">
+                                        <form action='/' class="row g-3 needs-validation" method='POST' novalidate="">
                                             <div class="col-12">
 
                                                 <label class="form-label" for="validationCustom01">Expense
                                                     amount</label>
 
-                                                <input class="form-control" id="validationCustom01" type="text"
-                                                       value="" required=""/>
+                                                <input class="form-control" id="validationCustom01" required=""
+                                                       type="text" value=""/>
                                                 <div class="invalid-feedback">Enter valid amount!</div>
                                             </div>
 
@@ -137,25 +138,25 @@
 
                                                 <label class="form-label" for="expense_reason">Expense Reason</label>
 
-                                                <input class="form-control" id="expense_reason" type="text"
-                                                       maxlength="256"
-                                                       value="" required=""/>
+                                                <input class="form-control" id="expense_reason" maxlength="256"
+                                                       required=""
+                                                       type="text" value=""/>
                                                 <div class="invalid-feedback">Enter valid Reason!</div>
                                             </div>
                                             <div class="col-12">
                                                 <label class="form-label" for="expense_reason">Expense Date</label>
 
-                                                <input class="form-control datetimepicker" id="datepicker" type="text"
+                                                <input class="form-control datetimepicker" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}' id="datepicker"
                                                        placeholder="dd/mm/yyyy"
-                                                       data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'/>
+                                                       type="text"/>
 
                                             </div>
 
 
                                             <div class="modal-footer">
                                                 <button class="btn btn-primary" type="submit">Submit</button>
-                                                <button class="btn btn-outline-primary" type="button"
-                                                        data-bs-dismiss="modal">
+                                                <button class="btn btn-outline-primary" data-bs-dismiss="modal"
+                                                        type="button">
                                                     Cancel
                                                 </button>
                                             </div>
@@ -269,6 +270,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
 
