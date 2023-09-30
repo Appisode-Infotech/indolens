@@ -29,7 +29,7 @@ def storeManagerLogout(request):
 
 # ================================= OWN STORE DASHBOARD ======================================
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    return render(request, 'dashboardOwnStore.html')
 
 
 # ================================= OWN STORE EMPLOYEES ======================================

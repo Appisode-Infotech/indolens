@@ -62,6 +62,11 @@
 
 
 
+
+
+
+
+
     </script>
 </head>
 
@@ -93,7 +98,8 @@
                                     <ul class="nav justify-content-between nav-wizard">
                                         <li class="nav-item"><a class="nav-link active fw-semi-bold"
                                                                 data-bs-toggle="tab"
-                                                                data-wizard-step="1" href="#bootstrap-wizard-validation-tab1">
+                                                                data-wizard-step="1"
+                                                                href="#bootstrap-wizard-validation-tab1">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle">            <span
                                                     class="fas fa-shopping-cart"></span></span></span></span><span
@@ -101,7 +107,8 @@
                                         </a></li>
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
                                                                 data-bs-toggle="tab"
-                                                                data-wizard-step="2" href="#bootstrap-wizard-validation-tab2">
+                                                                data-wizard-step="2"
+                                                                href="#bootstrap-wizard-validation-tab2">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-user"></span></span></span><span
@@ -109,7 +116,8 @@
                                         </a></li>
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
                                                                 data-bs-toggle="tab"
-                                                                data-wizard-step="3" href="#bootstrap-wizard-validation-tab3">
+                                                                data-wizard-step="3"
+                                                                href="#bootstrap-wizard-validation-tab3">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-file-alt"></span></span></span><span
@@ -117,7 +125,8 @@
                                         </a></li>
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
                                                                 data-bs-toggle="tab"
-                                                                data-wizard-step="4" href="#bootstrap-wizard-validation-tab4">
+                                                                data-wizard-step="4"
+                                                                href="#bootstrap-wizard-validation-tab4">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-eye"></span></span></span><span
@@ -144,23 +153,28 @@
                                                                 <h5 class="mb-3">Select Category</h5>
                                                                 <select class="form-select" data-choices="data-choices"
                                                                         data-options='{"removeItemButton":true,"placeholder":true}'
-                                                                        name="category">
+                                                                        name="category" required="required">
                                                                     <option value="">Select category</option>
                                                                     <option>8660225160</option>
                                                                     <option>9538806282</option>
                                                                     <option>1234567890</option>
                                                                 </select>
+                                                                <div class="custom-error" style="color: red;"></div>
+
                                                             </div>
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3 ">Select Brand</h5>
                                                                 <select class="form-select" data-choices="data-choices"
                                                                         data-options='{"removeItemButton":true,"placeholder":true}'
-                                                                        name="brand">
+                                                                        name="brand" required="required">
                                                                     <option value="">Select brand</option>
                                                                     <option>8660225160</option>
                                                                     <option>9538806282</option>
                                                                     <option>1234567890</option>
                                                                 </select>
+                                                                <div class="custom-error" style="color: red;"></div>
+
+
                                                             </div>
                                                         </div>
 
@@ -169,18 +183,23 @@
                                                                 <h5 class="mb-3">Select Product</h5>
                                                                 <select class="form-select" data-choices="data-choices"
                                                                         data-options='{"removeItemButton":true,"placeholder":true}'
-                                                                        name="product">
+                                                                        name="product" required="required">
                                                                     <option value="">Select product</option>
                                                                     <option>8660225160</option>
                                                                     <option>9538806282</option>
                                                                     <option>1234567890</option>
                                                                 </select>
+                                                                <div class="custom-error" style="color: red;"></div>
                                                             </div>
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3 ">Product SKU</h5>
-                                                                <input class="form-control" name="sku" placeholder="Product SKU"
+                                                                <input class="form-control" name="sku"
+                                                                       placeholder="Product SKU"
                                                                        required="required"
                                                                        type="text" value="abc"/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+
                                                             </div>
                                                         </div>
 
@@ -191,6 +210,9 @@
                                                                        placeholder="Available quantity"
                                                                        required="required"
                                                                        type="text" value="abc"/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+
                                                             </div>
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3 ">Purchase quantity</h5>
@@ -198,6 +220,9 @@
                                                                        placeholder="Purchase quantity"
                                                                        required="required"
                                                                        type="text" value="abc"/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+
                                                             </div>
                                                         </div>
 
@@ -208,6 +233,9 @@
                                                                        placeholder="Unit Price"
                                                                        required="required"
                                                                        type="text" value="abc"/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+
                                                             </div>
                                                             <div class="mb2 col-6">
                                                                 <h5 class="mb-3 ">Product Total</h5>
@@ -215,6 +243,9 @@
                                                                        placeholder="Product Total"
                                                                        required="required"
                                                                        type="text" value="abc"/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+
                                                             </div>
                                                         </div>
 
@@ -223,7 +254,8 @@
                                                 </div>
                                                 <div class="row g-3 mb-3 justify-content-between">
 
-                                                    <button class="col-auto btn btn-danger px-6 px-sm-6" onclick="removeProduct(this)"
+                                                    <button class="col-auto btn btn-danger px-6 px-sm-6"
+                                                            onclick="removeProduct(this)"
                                                             type="button">Remove Product<span
                                                             class="fas fa-trash ms-1"
                                                             data-fa-transform="shrink-3"></span></button>
@@ -263,13 +295,15 @@
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb2 col-6">
                                                         <h5 class="mb-3">Customer Name</h5>
-                                                        <input class="form-control" name="customr_name" placeholder="Customer Name"
+                                                        <input class="form-control" name="customr_name"
+                                                               placeholder="Customer Name"
                                                                required="required"
                                                                type="text" value="abc"/>
                                                     </div>
                                                     <div class="mb2 col-6">
                                                         <h5 class="mb-3 ">Customer Age</h5>
-                                                        <input class="form-control" name="customer_age" placeholder="Customer Age"
+                                                        <input class="form-control" name="customer_age"
+                                                               placeholder="Customer Age"
                                                                required="required"
                                                                type="number" value="12"/>
                                                     </div>
@@ -277,7 +311,8 @@
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb-2 col-6">
                                                         <h5 class="mb-3 ">Gender</h5>
-                                                        <select class="form-select" id="bootstrap-wizard-validation-gender"
+                                                        <select class="form-select"
+                                                                id="bootstrap-wizard-validation-gender"
                                                                 name="customer_gender"
                                                                 required="required">
                                                             <option value="">Select customer gender</option>
@@ -289,7 +324,8 @@
                                                     </div>
                                                     <div class="mb2 col-6">
                                                         <h5 class="mb-3 ">Customer email</h5>
-                                                        <input class="form-control" name="customer_email" placeholder="Customer email"
+                                                        <input class="form-control" name="customer_email"
+                                                               placeholder="Customer email"
                                                                required="required"
                                                                type="email" value="dan@gmail.com"/>
                                                     </div>
@@ -326,7 +362,9 @@
                                                     <div class="mb-2">
                                                         <label class="form-label"
                                                                for="bootstrap-wizard-validation-wizard-address">Address</label>
-                                                        <textarea class="form-control" id="bootstrap-wizard-validation-wizard-address" name="customer_address"
+                                                        <textarea class="form-control"
+                                                                  id="bootstrap-wizard-validation-wizard-address"
+                                                                  name="customer_address"
                                                                   required="required"
                                                                   rows="3"></textarea>
                                                         <div class="invalid-feedback">This field is required.</div>
@@ -345,7 +383,8 @@
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb-2 col-6">
                                                         <h5 class="mb-3 ">Sale Date</h5>
-                                                        <input class="form-control datetimepicker" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
+                                                        <input class="form-control datetimepicker"
+                                                               data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
                                                                id="datepicker"
                                                                name="sale_date"
                                                                placeholder="dd/mm/yyyy"
@@ -370,7 +409,8 @@
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb-2 col-6">
                                                         <h5 class="mb-3 ">Est Delivery Date</h5>
-                                                        <input class="form-control datetimepicker" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
+                                                        <input class="form-control datetimepicker"
+                                                               data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
                                                                id="datepicker2"
                                                                name="delivery_date"
                                                                placeholder="dd/mm/yyyy"
@@ -552,12 +592,14 @@
                                 </div>
                                 <div class="card-footer border-top-0" data-wizard-footer="data-wizard-footer">
                                     <div class="d-flex pager wizard list-inline mb-0">
-                                        <button class="d-none btn btn-link ps-0" data-wizard-prev-btn="data-wizard-prev-btn"
+                                        <button class="d-none btn btn-link ps-0"
+                                                data-wizard-prev-btn="data-wizard-prev-btn"
                                                 type="button"><span
                                                 class="fas fa-chevron-left me-1" data-fa-transform="shrink-3"></span>Previous
                                         </button>
                                         <div class="flex-1 text-end">
-                                            <button class="btn btn-primary px-6 px-sm-6" data-wizard-next-btn="data-wizard-next-btn"
+                                            <button class="btn btn-primary px-6 px-sm-6"
+                                                    data-wizard-next-btn="data-wizard-next-btn"
                                                     type="submit">Next<span
                                                     class="fas fa-chevron-right ms-1"
                                                     data-fa-transform="shrink-3"> </span></button>
@@ -619,26 +661,88 @@
     removeButton.style.display = 'none';
 
     function addProduct() {
-        // Clone the product_widget element
+        // Find the container for product widgets
         const productWidgets = document.getElementById('product_widgets');
-        const productWidget = productWidgets.querySelector('.product_widget:last-child');
-        const clonedWidget = productWidget.cloneNode(true);
 
-        // Clear input values in the cloned widget
-        const inputs = clonedWidget.querySelectorAll('input');
-        for (const input of inputs) {
-            input.value = '';
-        }
+        // Create a new product widget div
+        const newWidget = document.createElement('div');
+        newWidget.classList.add('product_widget', 'card-header', 'bg-100', 'mb-4');
 
-        // Increment the product counter and update the label
+        // Create the content for the new product widget
+        newWidget.innerHTML = `
+            <div class="bg-200 mb-4">
+                <h5 align="center" class="p-3">Product ${productCounter + 1}</h5>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="mb2 col-6">
+                    <h5 class="mb-3">Select Category</h5>
+                    <select class="form-select" data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}' name="category" required="required">
+                        <option value="">Select category</option>
+                        <option>8660225160</option>
+                        <option>9538806282</option>
+                        <option>1234567890</option>
+                    </select>
+                </div>
+                <div class="mb2 col-6">
+                    <h5 class="mb-3 ">Select Brand</h5>
+                    <select class="form-select" data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}' name="brand" required="required">
+                        <option value="">Select brand</option>
+                        <option>8660225160</option>
+                        <option>9538806282</option>
+                        <option>1234567890</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="mb2 col-6">
+                    <h5 class="mb-3">Select Product</h5>
+                    <select class="form-select" data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}' name="product" required="required">
+                        <option value="">Select product</option>
+                        <option>8660225160</option>
+                        <option>9538806282</option>
+                        <option>1234567890</option>
+                    </select>
+                </div>
+                <div class="mb2 col-6">
+                    <h5 class="mb-3 ">Product SKU</h5>
+                    <input class="form-control" name="sku" placeholder="Product SKU" required="required" type="text" value="abc"/>
+                </div>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="mb2 col-6">
+                    <h5 class="mb-3">Available quantity</h5>
+                    <input class="form-control" name="available_qty" placeholder="Available quantity" required="required" type="text" value="abc"/>
+                </div>
+                <div class="mb2 col-6">
+                    <h5 class="mb-3 ">Purchase quantity</h5>
+                    <input class="form-control" name="purchase_qty" placeholder="Purchase quantity" required="required" type="text" value="abc"/>
+                </div>
+            </div>
+            <div class="row g-3 mb-3">
+                <div class="mb2 col-6">
+                    <h5 class="mb-3">Unit Price</h5>
+                    <input class="form-control" name="unit_price" placeholder="Unit Price" required="required" type="text" value="abc"/>
+                </div>
+                <div class="mb2 col-6">
+                    <h5 class="mb-3 ">Product Total</h5>
+                    <input class="form-control" name="product_total" placeholder="Product Total" required="required" type="text" value="abc"/>
+                </div>
+            </div>
+        `;
+
+        // Increment the product counter
         productCounter++;
-        const productLabel = clonedWidget.querySelector('h5');
-        productLabel.textContent = `Product ${productCounter}`;
 
-        // Append the cloned widget after the last product_widget
-        productWidgets.appendChild(clonedWidget);
+        // Append the new product widget to the container
+        productWidgets.appendChild(newWidget);
+
+        // Update the "Remove Product" button visibility
         updateRemoveButtonVisibility();
-
+         // Initialize Choices.js for the new select elements
+        const newSelects = newWidget.querySelectorAll('select[data-choices="data-choices"]');
+        newSelects.forEach((select) => {
+            new Choices(select);
+        });
     }
 
     function removeProduct() {
@@ -659,8 +763,9 @@
             // Decrement the product counter
             productCounter--;
         }
-        updateRemoveButtonVisibility();
 
+        // Update the "Remove Product" button visibility
+        updateRemoveButtonVisibility();
     }
 
     function updateRemoveButtonVisibility() {
@@ -679,9 +784,8 @@
         }
     }
 
-
-
 </script>
+
 <script>
         // Add an event listener to the "Start Over" button
         document.querySelector('.btn-start-over').addEventListener('click', function () {
@@ -737,7 +841,6 @@
             });
             return object;
         }
-
 
 
 </script>
