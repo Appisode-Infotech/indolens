@@ -165,6 +165,8 @@
                             <input class="form-control" id="document2" multiple="multiple" name="document2" required
                                    type="file"/>
                         </div>
+                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="document2Previews"></div>
+
                         <input name="created_by" required type="hidden"
                                value="{{ request.session.id }}">
                         <input name="last_updated_by" required type="hidden"
@@ -202,159 +204,12 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/file-upload-preview.js' %}"></script>
 <script src="{% static 'vendors/dropzone/dropzone.min.js' %}"></script>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
-<script>
-        document.addEventListener('DOMContentLoaded', function () {
-            const documentInput = document.getElementById('document1');
-            const documentPreviews = document.getElementById('documentPreviews');
 
-            documentInput.addEventListener('change', function () {
-                const files = documentInput.files;
-
-                for (let i = 0; i < files.length; i++) {
-                    const file = files[i];
-                    const previewContainer = createPreviewContainer(file);
-                    documentPreviews.appendChild(previewContainer);
-                }
-            });
-
-            // Function to create a preview container for a file
-            function createPreviewContainer(file) {
-                const previewContainer = document.createElement('div');
-                previewContainer.classList.add('d-flex', 'mb-3', 'pb-3', 'border-bottom', 'media');
-
-                const imageContainer = document.createElement('div');
-                imageContainer.classList.add('border', 'border-300', 'p-2', 'rounded-2', 'me-2');
-
-                const image = document.createElement('img');
-                imageContainer.classList.add('border', 'border-300', 'p-2', 'rounded-2', 'me-2');
-                if (file.type.startsWith('image/')) {
-                    // If it's an image, display the image preview
-                    const image = document.createElement('img');
-                    image.classList.add('rounded-2', 'dz-image');
-                    image.src = URL.createObjectURL(file);
-                    image.onload = function () {
-                        URL.revokeObjectURL(image.src);
-                    };
-                     image.style.maxWidth = '50px'; // Adjust the maximum width as needed
-                image.style.maxHeight = '50px'; // Adjust the maximum height as needed
-
-                    imageContainer.appendChild(image);
-                } else {
-                    // If it's not an image, display the file icon
-                    const fileIcon = document.createElement('i');
-                    fileIcon.classList.add('fas', 'fa-file'); // Add your file icon classes here
-                    imageContainer.appendChild(fileIcon);
-                }
-
-                imageContainer.appendChild(image);
-                previewContainer.appendChild(imageContainer);
-
-                const infoContainer = document.createElement('div');
-                infoContainer.classList.add('flex-1', 'd-flex', 'flex-between-center');
-
-                const infoLeft = document.createElement('div');
-
-                const fileName = document.createElement('h6');
-                fileName.textContent = file.name;
-
-                const fileInfo = document.createElement('div');
-                fileInfo.classList.add('d-flex', 'align-items-center');
-
-                const fileSize = document.createElement('p');
-                fileSize.classList.add('mb-0', 'fs--1', 'text-400', 'lh-1');
-                fileSize.textContent = formatFileSize(file.size);
-
-                const progressContainer = document.createElement('div');
-                progressContainer.classList.add('dz-progress');
-
-                const uploadProgress = document.createElement('span');
-                uploadProgress.classList.add('dz-upload');
-                uploadProgress.dataset.dzUploadprogress = '';
-
-                progressContainer.appendChild(uploadProgress);
-
-                fileInfo.appendChild(fileSize);
-                fileInfo.appendChild(progressContainer);
-
-                const errorMessage = document.createElement('span');
-                errorMessage.classList.add('fs--2', 'text-danger');
-                errorMessage.dataset.dzErrormessage = '';
-
-                infoLeft.appendChild(fileName);
-                infoLeft.appendChild(fileInfo);
-                infoLeft.appendChild(errorMessage);
-
-                const dropdownContainer = document.createElement('div');
-                dropdownContainer.classList.add('dropdown', 'font-sans-serif');
-
-                const dropdownButton = document.createElement('button');
-                dropdownButton.classList.add('btn', 'btn-link', 'text-600', 'btn-sm', 'dropdown-toggle', 'btn-reveal', 'dropdown-caret-none');
-                dropdownButton.type = 'button';
-                dropdownButton.dataset.bsToggle = 'dropdown';
-                dropdownButton.setAttribute('aria-haspopup', 'true');
-                dropdownButton.setAttribute('aria-expanded', 'false');
-
-                const ellipsisIcon = document.createElement('span');
-                ellipsisIcon.classList.add('fas', 'fa-ellipsis-h');
-
-                dropdownButton.appendChild(ellipsisIcon);
-
-                const dropdownMenu = document.createElement('div');
-                dropdownMenu.classList.add('dropdown-menu', 'dropdown-menu-end', 'border', 'py-2');
-
-                const removeFileItem = document.createElement('a');
-                removeFileItem.classList.add('dropdown-item');
-                removeFileItem.href = '#!';
-                removeFileItem.dataset.dzRemove = 'data-dz-remove';
-                removeFileItem.textContent = 'Remove File';
-
-                dropdownMenu.appendChild(removeFileItem);
-
-                dropdownContainer.appendChild(dropdownButton);
-                dropdownContainer.appendChild(dropdownMenu);
-
-                infoContainer.appendChild(infoLeft);
-                infoContainer.appendChild(dropdownContainer);
-
-                previewContainer.appendChild(infoContainer);
-
-                // Add a click event to remove the file preview
-                removeFileItem.addEventListener('click', function () {
-                    previewContainer.remove();
-
-                    const currentFiles = Array.from(documentInput.files);
-                    const currentIndex = currentFiles.indexOf(file);
-
-                    if (currentIndex !== -1) {
-                        currentFiles.splice(currentIndex, 1);
-                        // Create a new FileList with the updated files
-                        const newFileList = new DataTransfer();
-                        currentFiles.forEach((file) => {
-                            newFileList.items.add(file);
-                        });
-                        // Update the input field's files property with the new FileList
-                        documentInput.files = newFileList.files;
-                    }
-                });
-                return previewContainer;
-            }
-
-            // Function to format file size for display
-            function formatFileSize(size) {
-                if (size < 1024) {
-                    return size + ' B';
-                } else if (size < 1024 * 1024) {
-                    return (size / 1024).toFixed(2) + ' KB';
-                } else {
-                    return (size / (1024 * 1024)).toFixed(2) + ' MB';
-                }
-            }
-        });
-    </script>
 </body>
 
 </html>
