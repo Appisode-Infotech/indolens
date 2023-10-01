@@ -40,7 +40,6 @@ INSTALLED_APPS = [
     'indolens_accountant',
     'indolens_admin',
     'indolens_area_head',
-    'indolens_employee',
     'indolens_franchise_store',
     'indolens_lab',
     'indolens_marketing_head',

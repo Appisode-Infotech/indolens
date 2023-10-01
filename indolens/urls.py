@@ -25,7 +25,6 @@ urlpatterns = [
     path('admin/', include('indolens_admin.urls')),
     # area head ui done
     path('area_head/', include('indolens_area_head.urls')),
-    path('employee/', include('indolens_employee.urls')),
     # franchise store ui done
     path('franchise_store/', include('indolens_franchise_store.urls')),
     path('lab/', include('indolens_lab.urls')),
