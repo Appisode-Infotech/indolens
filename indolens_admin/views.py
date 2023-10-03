@@ -7,11 +7,12 @@ from rest_framework.reverse import reverse
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller, \
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
-    lab_controller, other_employee_controller
+    lab_controller, other_employee_controller, product_category_controller, master_brand_controller
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
-    sales_executives_model, accountant_model, lab_technician_model, lab_model, other_employee_model
+    sales_executives_model, accountant_model, lab_technician_model, lab_model, other_employee_model, \
+    product_category_model, master_brand_model
 
 
 # =================================ADMIN START======================================
@@ -28,6 +29,7 @@ def login(request):
         if request.method == 'POST':
             admin_obj = admin_auth_model.admin_auth_model_from_dict(request.POST)
             response, status_code = admin_auth_controller.login(admin_obj)
+            print(response)
             if response['status']:
                 request.session.update({
                     'is_admin_logged_in': True,
@@ -1002,12 +1004,16 @@ def createAuthenticityCard(request):
 def manageMastersCategory(request):
     if request.method == 'POST':
         print(request.POST)
+        # response, status_code = product_category_controller.manage_central_inventory_category()
     return render(request, 'indolens_admin/masters/manageMastersCategory.html')
 
 
 def addProductCategory(request):
     if request.method == 'POST':
         print(request.POST)
+        product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
+        print(product_cat_obj.category_name)
+        product_category_controller.add_product_category(product_cat_obj)
     return render(request, 'indolens_admin/masters/addProductCategory.html')
 
 
@@ -1018,6 +1024,10 @@ def manageMastersBrands(request):
 def addMastersBrands(request):
     if request.method == 'POST':
         print(request.POST)
+        master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
+        print(master_brand_obj)
+        resp = master_brand_controller.create_master_brand(master_brand_obj)
+        print(resp)
     return render(request, 'indolens_admin/masters/addMastersBrand.html')
 
 

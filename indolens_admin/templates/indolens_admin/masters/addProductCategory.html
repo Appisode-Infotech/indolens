@@ -78,21 +78,21 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'add_product_category' %}"
-                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data"
+                          class="row g-3 needs-validation" enctype="multipart/form-data"
                           method="post" novalidate="">
                         {% csrf_token %}
                         <div class="col-md-6">
 
                             <label class="form-label" for="categoryName">Category name</label>
 
-                            <input class="form-control" id="categoryName" name="categoryName" required="" type="text"
+                            <input class="form-control" id="categoryName" name="category_name" required="" type="text"
                                    value=""/>
                         </div>
                         <div class="col-md-6">
 
                             <label class="form-label" for="productPrefix">Product Prefix</label>
 
-                            <input class="form-control" id="productPrefix" name="productPrefix" required=""
+                            <input class="form-control" id="productPrefix" name="category_prefix" required=""
                                    type="text" value=""/>
                         </div>
 
@@ -101,9 +101,13 @@
 
                             <label class="form-label" for="description">Description</label>
 
-                            <textarea class="form-control" id="description" name="description" required
+                            <textarea class="form-control" id="description" name="category_description" required
                                       rows="3"> </textarea>
                         </div>
+                        <input required type="hidden" name="created_by"
+                               value="{{ request.session.id }}">
+                        <input required type="hidden" name="last_updated_by"
+                               value="{{ request.session.id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>

@@ -97,6 +97,12 @@
                             <textarea class="form-control" id="description" name="description" required
                                       rows="3"> </textarea>
                         </div>
+                        <input required type="hidden" name="created_by"
+
+                               value="{{ request.session.id }}">
+                        <input required type="hidden" name="last_updated_by"
+
+                               value="{{ request.session.id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>

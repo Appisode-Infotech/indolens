@@ -79,23 +79,24 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'add_product_brand' %}"
-                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data"
+                          class="row g-3 needs-validation" enctype="multipart/form-data"
                           method="post" novalidate="">
                         {% csrf_token %}
                         <div class="col-md-6">
 
                             <label class="form-label" for="brandName">Brand name</label>
 
-                            <input class="form-control" id="brandName" name="brandName" required="" type="text"
+                            <input class="form-control" id="brandName" name="brand_name" required="" type="text"
                                    value=""/>
                         </div>
                         <div class="col-md-6">
 
                             <label class="form-label" for="validationCustom04">Category</label>
 
-                            <select class="form-select" id="validationCustom04" required="">
-                                <option disabled="" selected="" value="">Choose</option>
-                                <option>...</option>
+                            <select class="form-select" id="validationCustom04" required="" name="category_id">
+                                <option disabled selected value="">Choose</option>
+                                <option value="1">Value1</option>
+                                <option value="2">Value2</option>
                             </select>
                         </div>
 
@@ -104,9 +105,15 @@
 
                             <label class="form-label" for="description">Description</label>
 
-                            <textarea class="form-control" id="description" name="description" required
+                            <textarea class="form-control" id="description" name="brand_description" required
                                       rows="3"> </textarea>
                         </div>
+                        <input required type="hidden" name="created_by"
+
+                               value="{{ request.session.id }}">
+                        <input required type="hidden" name="last_updated_by"
+
+                               value="{{ request.session.id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>
