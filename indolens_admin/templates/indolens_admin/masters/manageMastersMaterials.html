@@ -140,39 +140,45 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
+                            {% for material in frame_material %}
 
                             <tr class="position-static">
                                 <td>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">1</p>
+                                    <p class="mb-0 fs--1 text-900">{{material.material_id}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">Metallic fiber</p>
+                                    <p class="mb-0 fs--1 text-900">{{material.material_name}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">COLOR for Frames - Eyeware by Indolens</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{material.material_description}}</p>
                                 </td>
+
                                 <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">ACTIVE</span><span class="ms-1"
-                                                                                       data-feather="check"
-                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                    {% if material.status == 0 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
+                                {% elif material.status == 1 %}
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active<span>
+                                                </span><span class="ms-1" data-feather="check"
+                                                             style="height:12.8px;width:12.8px;"></span></span>
+                                {% endif %}
                                 </td>
+
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{material.created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{material.created_by}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{material.last_updated_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{material.last_updated_by}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -191,6 +197,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

@@ -3,6 +3,8 @@ from django.db import connection
 import datetime
 import pytz
 
+from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
+
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
 
@@ -35,18 +37,23 @@ def add_product_category(product_cat_obj):
     except Exception as e:
         return {"status": False, "message": str(e)},
 
-# def manage_central_inventory_category():
-#     try:
-#         with connection.cursor() as cursor:
-#             get_product_category_query = f""" SELECT * FROM product_categories """
-#             cursor.execute(get_product_category_query)
-#             stores_data = cursor.fetchall()
-#             return {
-#                 "status": True,
-#                 "product_category": get_own_store(stores_data)
-#             }, 200
-#
-#     except pymysql.Error as e:
-#         return {"status": False, "message": str(e)}, 301
-#     except Exception as e:
-#         return {"status": False, "message": str(e)}, 301
+def get_all_central_inventory_category():
+    try:
+        with connection.cursor() as cursor:
+            get_product_category_query = f""" SELECT pc.* , creator.name, updater.name
+            FROM product_categories AS pc 
+            LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id"""
+            cursor.execute(get_product_category_query)
+            stores_data = cursor.fetchall()
+            print(stores_data)
+
+            return {
+                "status": True,
+                "product_category": get_product_categories(stores_data)
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

@@ -78,21 +78,21 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'add_master_color' %}"
-                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data"
+                          class="row g-3 needs-validation " enctype="multipart/form-data"
                           method="post" novalidate="">
                         {% csrf_token %}
                         <div class="col-md-6">
 
                             <label class="form-label" for="colorCode">Color Code</label>
 
-                            <input class="form-control" id="colorCode" name="colorCode" required="" type="text"
+                            <input class="form-control" id="colorCode" name="color_code" required="" type="text"
                                    value=""/>
                         </div>
                         <div class="col-md-6">
 
                             <label class="form-label" for="color">Color</label>
 
-                            <input class="form-control" id="color" name="color" required=""
+                            <input class="form-control" id="color" name="color_name" required=""
                                    type="text" value=""/>
                         </div>
 
@@ -101,7 +101,7 @@
 
                             <label class="form-label" for="description">Description</label>
 
-                            <textarea class="form-control" id="description" name="description" required
+                            <textarea class="form-control" id="description" name="color_description" required
                                       rows="3"> </textarea>
                         </div>
                         <input required type="hidden" name="created_by"

@@ -78,14 +78,14 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'add_frame_type' %}"
-                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data"
+                          class="row g-3 needs-validation " enctype="multipart/form-data"
                           method="post" novalidate="">
                         {% csrf_token %}
                         <div class="col-md-12">
 
                             <label class="form-label" for="typeName">Frame Type name</label>
 
-                            <input class="form-control" id="typeName" name="typeName" required="" type="text"
+                            <input class="form-control" id="typeName" name="frame_type_name" required="" type="text"
                                    value=""/>
                         </div>
 
@@ -93,7 +93,7 @@
 
                             <label class="form-label" for="description">Description</label>
 
-                            <textarea class="form-control" id="description" name="description" required
+                            <textarea class="form-control" id="description" name="frame_type_description" required
                                       rows="3"> </textarea>
                         </div>
                         <input required type="hidden" name="created_by"

@@ -7,12 +7,14 @@ from rest_framework.reverse import reverse
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller, \
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
-    lab_controller, other_employee_controller, product_category_controller, master_brand_controller
+    lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
+    master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
     sales_executives_model, accountant_model, lab_technician_model, lab_model, other_employee_model, \
-    product_category_model, master_brand_model
+    product_category_model, master_brand_model, master_shape_model, master_frame_type_model, master_color_model, \
+    master_material_model
 
 
 # =================================ADMIN START======================================
@@ -630,6 +632,7 @@ def manageSaleExecutives(request):
                   {"sales_executive_list": response['sales_executive_list']})
 
 
+
 def createSaleExecutives(request):
     if request.method == 'POST':
         form_data = {}
@@ -1002,10 +1005,11 @@ def createAuthenticityCard(request):
 # =================================ADMIN LABS MANAGEMENT======================================
 
 def manageMastersCategory(request):
-    if request.method == 'POST':
-        print(request.POST)
-        # response, status_code = product_category_controller.manage_central_inventory_category()
-    return render(request, 'indolens_admin/masters/manageMastersCategory.html')
+    print(request.POST)
+    response, status_code = master_category_controller.get_all_central_inventory_category()
+    print(response)
+    return render(request, 'indolens_admin/masters/manageMastersCategory.html',
+                  {"product_category": response['product_category']})
 
 
 def addProductCategory(request):
@@ -1013,12 +1017,16 @@ def addProductCategory(request):
         print(request.POST)
         product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
         print(product_cat_obj.category_name)
-        product_category_controller.add_product_category(product_cat_obj)
+        master_category_controller.add_product_category(product_cat_obj)
     return render(request, 'indolens_admin/masters/addProductCategory.html')
 
 
 def manageMastersBrands(request):
-    return render(request, 'indolens_admin/masters/manageMastersBrands.html')
+    print(request.POST)
+    response, status_code = master_brand_controller.get_all_central_inventory_brand()
+    print(response)
+    return render(request, 'indolens_admin/masters/manageMastersBrands.html',
+                  {"product_brand": response["product_brand"]})
 
 
 def addMastersBrands(request):
@@ -1026,48 +1034,68 @@ def addMastersBrands(request):
         print(request.POST)
         master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
         print(master_brand_obj)
-        resp = master_brand_controller.create_master_brand(master_brand_obj)
+        resp = master_brand_controller.add_product_brand(master_brand_obj)
         print(resp)
     return render(request, 'indolens_admin/masters/addMastersBrand.html')
 
 
 def manageMastersShapes(request):
-    return render(request, 'indolens_admin/masters/manageMastersShapes.html')
+    print(request.POST)
+    response, status_code = master_shape_controller.get_all_central_inventory_shapes()
+    return render(request, 'indolens_admin/masters/manageMastersShapes.html',
+                  {"product_shape": response["product_shape"]})
 
 
 def addMastersShapes(request):
     if request.method == 'POST':
         print(request.POST)
+        master_shape_obj = master_shape_model.master_shape_model_from_dict(request.POST)
+        print(master_shape_obj)
+        resp = master_shape_controller.add_frame_shape(master_shape_obj)
+        print(resp)
     return render(request, 'indolens_admin/masters/addMastersShapes.html')
 
 
 def manageMastersFrameType(request):
-    return render(request, 'indolens_admin/masters/manageMastersFrameType.html')
+    response, status_code = master_frame_type_controller.get_all_central_inventory_frame_types()
+    return render(request, 'indolens_admin/masters/manageMastersFrameType.html',
+                  {"frame_type": response["frame_type"]})
 
 
 def addMastersFrameType(request):
     if request.method == 'POST':
         print(request.POST)
+        frame_type_obj = master_frame_type_model.master_frame_type_model_from_dict(request.POST)
+        print(frame_type_obj)
+        resp = master_frame_type_controller.add_frame_type(frame_type_obj)
     return render(request, 'indolens_admin/masters/addMastersFrameType.html')
 
 
 def manageMastersColor(request):
-    return render(request, 'indolens_admin/masters/manageMastersColor.html')
+    response, status_code = master_color_controller.get_all_central_inventory_color()
+    return render(request, 'indolens_admin/masters/manageMastersColor.html',
+                  {"frame_color": response["frame_color"]})
 
 
 def addMastersColor(request):
     if request.method == 'POST':
         print(request.POST)
+        color_obj = master_color_model.master_color_model_from_dict(request.POST)
+        resp = master_color_controller.add_master_color(color_obj)
     return render(request, 'indolens_admin/masters/addMastersColor.html')
 
 
 def manageMastersMaterials(request):
-    return render(request, 'indolens_admin/masters/manageMastersMaterials.html')
+    response, status_code = master_material_controller.get_all_central_inventory_materials()
+    return render(request, 'indolens_admin/masters/manageMastersMaterials.html',
+                  {"frame_material": response["frame_material"]})
 
 
 def addMastersMaterials(request):
     if request.method == 'POST':
         print(request.POST)
+        material_obj = master_material_model.master_material_model_from_dict(request.POST)
+        resp = master_material_controller.add_master_material(material_obj)
     return render(request, 'indolens_admin/masters/addMastersMaterials.html')
 
 
