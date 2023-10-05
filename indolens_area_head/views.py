@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 
 from indolens_admin.admin_controllers import own_store_controller, franchise_store_controller, store_manager_controller, \
-    franchise_owner_controller, marketing_head_controller, sales_executives_controller, \
+    franchise_manager_controller, marketing_head_controller, sales_executives_controller, \
     accountant_controller, lab_technician_controller, other_employee_controller, lab_controller
 
 
@@ -84,14 +84,13 @@ def viewStoreManager(request, mid):
 # =================================ADMIN FRANCHISE OWNERS MANAGEMENT======================================
 
 def manageFranchiseOwners(request):
-    response, status_code = franchise_owner_controller.get_all_franchise_owner()
+    response, status_code = franchise_manager_controller.get_all_franchise_owner()
     return render(request, 'franchiseOwners/manageFranchiseOwners.html',
                   {"franchise_owners": response['franchise_owners']})
 
 
 def viewFranchiseOwners(request, foid):
-    response, status_code = franchise_owner_controller.get_franchise_owner_by_id(foid)
-
+    response, status_code = franchise_manager_controller.get_franchise_owner_by_id(foid)
     return render(request, 'franchiseOwners/viewFranchiseOwner.html',
                   {"franchise_owner": response['franchise_owner']})
 

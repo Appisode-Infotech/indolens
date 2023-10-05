@@ -31,8 +31,6 @@ def create_store_manager(sub_admin, files):
             # Execute the query using your cursor
             cursor.execute(insert_store_manager_query)
 
-            # Execute the query using your cursor
-            cursor.execute(insert_store_manager_query)
             mid = cursor.lastrowid
             return {
                        "status": True,

@@ -633,7 +633,6 @@ def manageSaleExecutives(request):
                   {"sales_executive_list": ""})
 
 
-
 def createSaleExecutives(request):
     if request.method == 'POST':
         form_data = {}
@@ -668,11 +667,10 @@ def createSaleExecutives(request):
         # Combine the file data with the original form data
         for key, value in file_data.items():
             form_data[key] = value
-
-        print(form_data)
         file_data = FileData(form_data)
         sales_executives_obj = sales_executives_model.sales_executives_model_from_dict(request.POST)
-        resp = sales_executives_controller.create_sales_executives(sales_executives_obj, file_data)
+        resp = sales_executives_controller.create_own_sales_executives(sales_executives_obj, file_data)
+        # resp = sales_executives_controller.create_sales_executives(sales_executives_obj, file_data)
         return redirect('manage_sales_executives')
     else:
         return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html')

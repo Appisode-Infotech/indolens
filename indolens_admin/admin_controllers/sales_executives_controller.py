@@ -11,19 +11,20 @@ ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
 
 
-def create_sales_executives(sales_executives, files):
+def create_own_sales_executives(sales_executives, files):
     try:
         with connection.cursor() as cursor:
             insert_sales_executives_query = f"""
-                INSERT INTO sales_executive (
-                    name, email, phone, password, profile_pic, 
-                    address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on
+                INSERT INTO own_store_employees (
+                   name, email, phone, password, profile_pic, 
+                    address, document_1_type, document_1_url, 
+                    document_2_type, document_2_url, status, created_by, created_on, 
+                    last_updated_by, last_updated_on, role
                 ) VALUES (
                     '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{sales_executives.password}',
                     '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
-                    '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}'
+                    '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
+                    '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3
                 )
             """
 
@@ -32,10 +33,43 @@ def create_sales_executives(sales_executives, files):
             seid = cursor.lastrowid
 
             return {
-                       "status": True,
-                       "message": "Sales Executives added",
-                       "seid": seid
-                   }, 200
+                "status": True,
+                "message": "Sales Executives added",
+                "seid": seid
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def create_franchise_sales_executives(sales_executives, files):
+    try:
+        with connection.cursor() as cursor:
+            insert_sales_executives_query = f"""
+                INSERT INTO franchise_store_employees (
+                   name, email, phone, password, profile_pic, 
+                    address, document_1_type, document_1_url, 
+                    document_2_type, document_2_url, status, created_by, created_on, 
+                    last_updated_by, last_updated_on, role
+                ) VALUES (
+                    '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{sales_executives.password}',
+                    '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
+                    '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
+                    '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3
+                )
+            """
+
+            # Execute the query using your cursor
+            cursor.execute(insert_sales_executives_query)
+            seid = cursor.lastrowid
+
+            return {
+                "status": True,
+                "message": "Sales Executives added",
+                "seid": seid
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -59,9 +93,9 @@ def get_all_sales_executive():
             print(sales_executive)
 
             return {
-                       "status": True,
-                       "sales_executive_list": get_sales_executives(sales_executive)
-                   }, 200
+                "status": True,
+                "sales_executive_list": get_sales_executives(sales_executive)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -86,9 +120,9 @@ def get_sales_executive_by_id(seid):
             print(sales_executive)
 
             return {
-                       "status": True,
-                       "sales_executive": get_sales_executives(sales_executive)
-                   }, 200
+                "status": True,
+                "sales_executive": get_sales_executives(sales_executive)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -111,9 +145,9 @@ def enable_disable_sales_executive(seid, status):
             cursor.execute(update_marketing_head_query)
 
             return {
-                       "status": True,
-                       "message": "Marketing  Head updated"
-                   }, 200
+                "status": True,
+                "message": "Marketing  Head updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
