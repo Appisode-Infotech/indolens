@@ -17,5 +17,3 @@ class FileData:
                 if doc:
                     documents.append(doc)
         return documents
-
-

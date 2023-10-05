@@ -65,6 +65,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -83,7 +84,8 @@
             <h2 class="mb-4">Edit Store Manager </h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_franchise_owner' owner.franchise_owner_id %}" class="row g-3 needs-validation needs-password-validation" method="post" novalidate="">
+                    <form action="{% url 'edit_franchise_owner' owner.franchise_owner_id %}"
+                          class="row g-3 needs-validation needs-password-validation" method="post" novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
@@ -154,25 +156,25 @@
                             <select aria-label="Default select example" class="form-select" id="document1Type"
                                     name="document1Type">
                                 {% if owner.document_1_type == "Aadhar" %}
-                                <option value="Aadhar" selected>Aadhar</option>
+                                <option selected value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                                 {% elif owner.document_1_type == "Driving Licence" %}
                                 <option value="Aadhar">Aadhar</option>
-                                <option value="Driving Licence" selected>Driving Licence</option>
+                                <option selected value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                                 {% elif owner.document_1_type == "Voter ID" %}
                                 <option value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
-                                <option value="Ration Card" selected>Ration Card</option>
+                                <option selected value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                                 {% elif owner.document_1_type == "Ration Card" %}
                                 <option value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
-                                <option value="Voter Id" selected>Voter Id</option>
+                                <option selected value="Voter Id">Voter Id</option>
                                 {% endif %}
                             </select>
                         </div>
@@ -190,8 +192,8 @@
 
                             <select aria-label="Default select example" class="form-select" id="document2Type"
                                     name="document2Type">
-                                <option >Open this select menu</option>
-                                <option value="Pan Card1" selected>Pan Card</option>
+                                <option>Open this select menu</option>
+                                <option selected value="Pan Card1">Pan Card</option>
                             </select>
                         </div>
                         <div class="mb-3">
@@ -202,11 +204,11 @@
                             <input class="form-control" id="document2" multiple="multiple" name="document2"
                                    type="file"/>
                         </div>
-                        <input required type="hidden" name="last_updated_by"
+                        <input name="last_updated_by" required type="hidden"
                                value="{{ request.session.id }}">
-                        <input required type="hidden" name="franchise_store_id"
+                        <input name="franchise_store_id" required type="hidden"
                                value="{{ owner.franchise_store_id }}">
-                        <input required type="hidden" name="franchise_owner_id"
+                        <input name="franchise_owner_id" required type="hidden"
                                value="{{ owner.franchise_owner_id }}">
 
                         <div class="col-12">

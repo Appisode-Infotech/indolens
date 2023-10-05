@@ -1,7 +1,8 @@
-import pymysql
-from django.db import connection
 import datetime
+
+import pymysql
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.own_store_resp_model import get_own_store
 
@@ -28,9 +29,9 @@ def create_own_store(store_obj):
 
             cursor.execute(create_own_store_query)
             return {
-                "status": True,
-                "message": "own store added"
-            }, 200
+                       "status": True,
+                       "message": "own store added"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -45,9 +46,9 @@ def get_all_own_stores():
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
-                "status": True,
-                "own_stores": get_own_store(stores_data)
-            }, 200
+                       "status": True,
+                       "own_stores": get_own_store(stores_data)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -62,9 +63,9 @@ def get_own_store_by_id(sid):
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
-                "status": True,
-                "own_stores": get_own_store(stores_data)
-            }, 200
+                       "status": True,
+                       "own_stores": get_own_store(stores_data)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -100,9 +101,9 @@ def edit_own_store_by_id(store_obj):
             connection.commit()  # Commit the transaction after executing the update query
 
             return {
-                "status": True,
-                "message": "Own store updated"
-            }, 200
+                       "status": True,
+                       "message": "Own store updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -125,9 +126,9 @@ def enable_disable_own_store(sid, status):
             cursor.execute(update_sub_admin_query)
 
             return {
-                "status": True,
-                "message": "Own Store updated"
-            }, 200
+                       "status": True,
+                       "message": "Own Store updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

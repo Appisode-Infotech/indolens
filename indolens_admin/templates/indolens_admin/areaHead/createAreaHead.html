@@ -59,6 +59,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -76,7 +77,9 @@
             <h2 class="mb-4">Create a Area Head</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form  action="{% url 'create_area_head' %}" class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data" method="post" novalidate="">
+                    <form action="{% url 'create_area_head' %}"
+                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data"
+                          method="post" novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
@@ -129,7 +132,8 @@
 
                             <label class="form-label" for="confirmPassword">Confirm Password</label>
 
-                            <input class="form-control" id="confirmPassword" name="confirmPassword" required="" type="text"
+                            <input class="form-control" id="confirmPassword" name="confirmPassword" required=""
+                                   type="text"
                                    value=""/>
                             <div class="invalid-feedback">Please provide a valid Password.</div>
                         </div>
@@ -157,7 +161,8 @@
                             <label class="form-label" for="document1">Document 1 Upload (Can choose
                                 multiple)</label>
 
-                            <input class="form-control" id="document1" multiple="multiple" name="document1" type="file"/>
+                            <input class="form-control" id="document1" multiple="multiple" name="document1"
+                                   type="file"/>
                         </div>
 
                         <div class="mb-3">
@@ -173,15 +178,16 @@
                             <label class="form-label" for="document2">Document 2 Upload (Can choose
                                 multiple)</label>
 
-                            <input class="form-control" id="document2" multiple="multiple" name="document2" type="file"/>
+                            <input class="form-control" id="document2" multiple="multiple" name="document2"
+                                   type="file"/>
                         </div>
 
-                        <input required type="hidden" name="created_by"
+                        <input name="created_by" required type="hidden"
 
-                                                           value="{{ request.session.id }}">
-                        <input required type="hidden" name="last_updated_by"
+                               value="{{ request.session.id }}">
+                        <input name="last_updated_by" required type="hidden"
 
-                                                           value="{{ request.session.id }}">
+                               value="{{ request.session.id }}">
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>
                         </div>

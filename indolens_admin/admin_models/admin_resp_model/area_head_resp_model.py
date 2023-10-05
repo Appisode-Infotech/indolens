@@ -1,5 +1,6 @@
-from datetime import datetime
 import json
+from datetime import datetime
+
 
 class AreaHead:
     def __init__(self, values):
@@ -22,7 +23,8 @@ class AreaHead:
         self.document_2_url = json.loads(document_2_urls) if document_2_urls else []
 
         # Create a list of id_name_pair tuples by pairing elements from assigned_stores and store_name lists
-        self.id_name_pair = [(str(assigned_store), store_name) for assigned_store, store_name in zip(self.assigned_stores, self.store_name)]
+        self.id_name_pair = [(str(assigned_store), store_name) for assigned_store, store_name in
+                             zip(self.assigned_stores, self.store_name)]
 
     def to_dict(self):
         return {
@@ -42,12 +44,14 @@ class AreaHead:
             'created_by': self.created_by,
             'created_on': self.created_on.strftime('%Y-%m-%d') if isinstance(self.created_on, datetime) else None,
             'last_updated_by': self.last_updated_by,
-            'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on, datetime) else None,
+            'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on,
+                                                                                                datetime) else None,
             'store_name': self.store_name,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name,
             'id_name_pair': self.id_name_pair  # Include the id_name_pair field in the dictionary
         }
+
 
 def get_area_heads(response):
     area_head_list = []

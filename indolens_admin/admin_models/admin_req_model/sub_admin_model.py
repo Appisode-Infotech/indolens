@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -65,7 +64,8 @@ class SubAdminModel:
         document_2_type = from_union([from_str, from_none], obj.get("document2Type"))
         created_by = from_union([from_str, from_none], obj.get("created_by"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
-        return SubAdminModel(admin_id, full_name, email, phone, password, confirm_password, complete_address, document_1_type, document_2_type, created_by, last_updated_by)
+        return SubAdminModel(admin_id, full_name, email, phone, password, confirm_password, complete_address,
+                             document_1_type, document_2_type, created_by, last_updated_by)
 
     def to_dict(self) -> dict:
         result: dict = {}

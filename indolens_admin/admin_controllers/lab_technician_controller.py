@@ -1,9 +1,9 @@
+import datetime
 import json
 
 import pymysql
-from django.db import connection
-import datetime
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.lab_technician_resp_model import get_lab_technicians
 
@@ -31,9 +31,9 @@ def create_lab_technician(lab_technician, files):
             cursor.execute(insert_marketing_head_query)
 
             return {
-                "status": True,
-                "message": "Lab Technician added",
-            }, 200
+                       "status": True,
+                       "message": "Lab Technician added",
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -56,9 +56,9 @@ def get_all_lab_technician():
             lab_technician = cursor.fetchall()
 
             return {
-                "status": True,
-                "lab_technician_list": get_lab_technicians(lab_technician)
-            }, 200
+                       "status": True,
+                       "lab_technician_list": get_lab_technicians(lab_technician)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -81,9 +81,9 @@ def get_lab_technician_by_id(ltid):
             cursor.execute(get_lab_technician_query)
             lab_technician = cursor.fetchall()
             return {
-                "status": True,
-                "lab_technician": get_lab_technicians(lab_technician)
-            }, 200
+                       "status": True,
+                       "lab_technician": get_lab_technicians(lab_technician)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -106,12 +106,11 @@ def enable_disable_lab_technician(ltid, status):
             cursor.execute(update_lab_technician_query)
 
             return {
-                "status": True,
-                "message": "Lab Technician   updated"
-            }, 200
+                       "status": True,
+                       "message": "Lab Technician   updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-

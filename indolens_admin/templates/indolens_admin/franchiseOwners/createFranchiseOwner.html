@@ -59,6 +59,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -76,7 +77,8 @@
             <h2 class="mb-4">Create a Franchise Owners</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form  action="{% url 'create_franchise_owner' %}" class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data"
+                    <form action="{% url 'create_franchise_owner' %}"
+                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data"
                           method="post" novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
@@ -133,7 +135,8 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="document1Type">Document 1 Type</label>
-                            <select aria-label="Default select example" class="form-select" id="document1Type" name="document1Type"
+                            <select aria-label="Default select example" class="form-select" id="document1Type"
+                                    name="document1Type"
                                     required>
                                 <option selected="">Open this select menu</option>
                                 <option value="Aadhar">Aadhar</option>
@@ -150,7 +153,8 @@
 
                         <div class="mb-3">
                             <label class="form-label" for="document2Type">Document 2 Type</label>
-                            <select aria-label="Default select example" class="form-select" id="document2Type" name="document2Type"
+                            <select aria-label="Default select example" class="form-select" id="document2Type"
+                                    name="document2Type"
                                     required>
                                 <option selected="">Open this select menu</option>
                                 <option value="Pan Card">Pan Card</option>
@@ -161,10 +165,10 @@
                             <input class="form-control" id="document2" multiple="multiple" name="document2" required
                                    type="file"/>
                         </div>
-                        <input required type="hidden" name="created_by"
-                                                           value="{{ request.session.id }}">
-                        <input required type="hidden" name="last_updated_by"
-                                                           value="{{ request.session.id }}">
+                        <input name="created_by" required type="hidden"
+                               value="{{ request.session.id }}">
+                        <input name="last_updated_by" required type="hidden"
+                               value="{{ request.session.id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>

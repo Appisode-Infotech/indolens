@@ -1,5 +1,7 @@
-django
+django~=4.2.4
 django-cors-headers
 mysqlclient
-pymysql
-djangorestframework
+pymysql~=1.1.0
+djangorestframework~=3.14.0
+bcrypt
+pytz

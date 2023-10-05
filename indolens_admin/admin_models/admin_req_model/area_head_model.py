@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -60,14 +59,20 @@ class AreaHeadModel:
         complete_address = from_union([from_str, from_none], obj.get("completeAddress"))
         document1_type = from_union([from_str, from_none], obj.get("document1Type"))
         document2_type = from_union([from_str, from_none], obj.get("document2Type"))
-        return AreaHeadModel(created_by, last_updated_by, full_name, email, phone, password, confirm_password, complete_address, document1_type, document2_type)
+        return AreaHeadModel(created_by, last_updated_by, full_name, email, phone, password, confirm_password,
+                             complete_address, document1_type, document2_type)
 
     def to_dict(self) -> dict:
         result: dict = {}
         if self.created_by is not None:
-            result["created_by"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)), lambda x: from_str((lambda x: str((lambda x: is_type(int, x))(x)))(x))], self.created_by)
+            result["created_by"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)),
+                                               lambda x: from_str((lambda x: str((lambda x: is_type(int, x))(x)))(x))],
+                                              self.created_by)
         if self.last_updated_by is not None:
-            result["last_updated_by"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)), lambda x: from_str((lambda x: str((lambda x: is_type(int, x))(x)))(x))], self.last_updated_by)
+            result["last_updated_by"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)),
+                                                    lambda x: from_str(
+                                                        (lambda x: str((lambda x: is_type(int, x))(x)))(x))],
+                                                   self.last_updated_by)
         if self.full_name is not None:
             result["fullName"] = from_union([from_str, from_none], self.full_name)
         if self.email is not None:

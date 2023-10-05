@@ -1,9 +1,9 @@
+import datetime
 import json
 
 import pymysql
-from django.db import connection
-import datetime
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.sub_admin_resp_model import get_sub_admin
 
@@ -35,10 +35,10 @@ def create_sub_admin(sub_admin, files):
             said = cursor.lastrowid
 
             return {
-                "status": True,
-                "message": "sub admin added",
-                "said": said
-            }, 200
+                       "status": True,
+                       "message": "sub admin added",
+                       "said": said
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -57,9 +57,9 @@ def get_all_sub_admin():
             cursor.execute(get_all_sub_admin_query)
             sub_admins = cursor.fetchall()
             return {
-                "status": True,
-                "sub_admins": get_sub_admin(sub_admins)
-            }, 200
+                       "status": True,
+                       "sub_admins": get_sub_admin(sub_admins)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -78,9 +78,9 @@ def get_sub_admin_by_id(said):
             cursor.execute(get_all_sub_admin_query)
             sub_admins = cursor.fetchall()
             return {
-                "status": True,
-                "sub_admin": get_sub_admin(sub_admins)
-            }, 200
+                       "status": True,
+                       "sub_admin": get_sub_admin(sub_admins)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -115,9 +115,9 @@ def edit_sub_admin(sub_admin):
             cursor.execute(update_admin_query)
 
             return {
-                "status": True,
-                "message": "sub admin updated"
-            }, 200
+                       "status": True,
+                       "message": "sub admin updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -140,9 +140,9 @@ def enable_disable_sub_admin(said, status):
             cursor.execute(update_sub_admin_query)
 
             return {
-                "status": True,
-                "message": "Sub Admin updated"
-            }, 200
+                       "status": True,
+                       "message": "Sub Admin updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

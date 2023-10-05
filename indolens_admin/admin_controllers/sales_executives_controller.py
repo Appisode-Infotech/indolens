@@ -1,11 +1,10 @@
+import datetime
 import json
 
 import pymysql
-from django.db import connection
-import datetime
 import pytz
+from django.db import connection
 
-from indolens_admin.admin_models.admin_resp_model.marketing_head_resp_model import get_marketing_heads
 from indolens_admin.admin_models.admin_resp_model.sales_executive_resp_model import get_sales_executives
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -33,16 +32,15 @@ def create_sales_executives(sales_executives, files):
             seid = cursor.lastrowid
 
             return {
-                "status": True,
-                "message": "Sales Executives added",
-                "seid": seid
-            }, 200
+                       "status": True,
+                       "message": "Sales Executives added",
+                       "seid": seid
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-
 
 
 def get_all_sales_executive():
@@ -61,9 +59,9 @@ def get_all_sales_executive():
             print(sales_executive)
 
             return {
-                "status": True,
-                "sales_executive_list": get_sales_executives(sales_executive)
-            }, 200
+                       "status": True,
+                       "sales_executive_list": get_sales_executives(sales_executive)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -88,9 +86,9 @@ def get_sales_executive_by_id(seid):
             print(sales_executive)
 
             return {
-                "status": True,
-                "sales_executive": get_sales_executives(sales_executive)
-            }, 200
+                       "status": True,
+                       "sales_executive": get_sales_executives(sales_executive)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -113,9 +111,9 @@ def enable_disable_sales_executive(seid, status):
             cursor.execute(update_marketing_head_query)
 
             return {
-                "status": True,
-                "message": "Marketing  Head updated"
-            }, 200
+                       "status": True,
+                       "message": "Marketing  Head updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

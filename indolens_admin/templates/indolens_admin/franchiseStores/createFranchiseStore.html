@@ -11,6 +11,7 @@
         width: 100%;
         height: 400px; /* Adjust the height as needed */
     }
+
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -63,6 +64,7 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
     </script>
 </head>
 
@@ -80,7 +82,7 @@
             <h2 class="mb-4">Create a Franchise Store</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form class="row g-3" action="{% url 'create_franchise_store' %}" method="post" novalidate="">
+                    <form action="{% url 'create_franchise_store' %}" class="row g-3" method="post" novalidate="">
                         {% csrf_token %}
                         <div class="col-md-6">
 
@@ -151,16 +153,16 @@
                                    required type="text">
                         </div>
                         <div class="col-sm-12">
-                            <input class="form-control" id="store_lat_lng" placeholder="Co Ordinates"
-                                   readonly name="storeLatLng" required type="text">
+                            <input class="form-control" id="store_lat_lng" name="storeLatLng"
+                                   placeholder="Co Ordinates" readonly required type="text">
                         </div>
                         <div class="col-12" id="map"></div>
-                        <input required type="hidden" name="created_by"
+                        <input name="created_by" required type="hidden"
 
-                                                           value="{{ request.session.id }}">
-                        <input required type="hidden" name="last_updated_by"
+                               value="{{ request.session.id }}">
+                        <input name="last_updated_by" required type="hidden"
 
-                                                           value="{{ request.session.id }}">
+                               value="{{ request.session.id }}">
 
                         <div class="col-12">
 
@@ -279,6 +281,7 @@
                 store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
             });
         }
+
 
 
 

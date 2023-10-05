@@ -5960,6 +5960,8 @@
       let count = 0;
       let showEvent = null;
 
+
+
       forms.forEach(form => {
         form.addEventListener(events.SUBMIT, e => {
           e.preventDefault();
@@ -6023,7 +6025,11 @@
               }
             }
             // card footer remove at last step
-            if (count > tabToggleButtonEl.length - 2) {
+            console.log(count);
+            if(count==3){
+                          nextButton.classList.add('d-none');
+            }
+            if (count > tabToggleButtonEl.length - 1) {
               wizardFooter.classList.add('d-none');
             } else {
               wizardFooter.classList.remove('d-none');
@@ -6040,10 +6046,35 @@
     });
   };
 
+
+const addImagePreview = () => {
+  const profilePicInput = document.getElementById('profilePic');
+  const previewImage = document.getElementById('previewImage');
+
+  if (profilePicInput && previewImage) {
+    profilePicInput.addEventListener('change', () => {
+      if (profilePicInput.files.length > 0) {
+        const selectedFile = profilePicInput.files[0];
+        const reader = new FileReader();
+
+        reader.onload = (e) => {
+          previewImage.src = e.target.result;
+        };
+
+        reader.readAsDataURL(selectedFile);
+      } else {
+        // If no file is selected, reset the preview image to a default source
+        previewImage.src = "/static/img/team/avatar.png"; // Replace with your default image source
+      }
+    });
+  }
+};
+
   /* eslint-disable import/no-extraneous-dependencies */
 
   window.initMap = initMap;
   docReady(detectorInit);
+  docReady(addImagePreview);
   docReady(simplebarInit);
   docReady(toastInit);
   docReady(tooltipInit);

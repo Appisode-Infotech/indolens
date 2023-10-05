@@ -1,0 +1,739 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens admin - All Orders</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!-- Stylesheets -->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar_area_head.html' %}
+
+        <div class="content">
+
+            <div class="mb-9">
+                <div class="row g-3 mb-4">
+                    <div class="col-auto">
+                        <h2 class="mb-0">All Orders</h2>
+                    </div>
+                </div>
+                <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
+                    <li class="nav-item"><a aria-current="page" class="nav-link active" href="#">All <span
+                            class="text-700 fw-semi-bold">(68817)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Pending <span
+                            class="text-700 fw-semi-bold">(6)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Received <span
+                            class="text-700 fw-semi-bold">(17)</span></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Processing<span class="text-700 fw-semi-bold">(6,810)</span></a>
+                    <li class="nav-item"><a class="nav-link" href="#">Ready<span
+                            class="text-700 fw-semi-bold">(6,810)</span></a>
+                    <li class="nav-item"><a class="nav-link" href="#">Delivered<span class="text-700 fw-semi-bold">(6,810)</span></a>
+                    </li>
+                    <li class="nav-item"><a class="nav-link" href="#">Refunded<span
+                            class="text-700 fw-semi-bold">(8)</span></a></li>
+                    <li class="nav-item"><a class="nav-link" href="#">Cancelled<span
+                            class="text-700 fw-semi-bold">(2)</span></a></li>
+                </ul>
+                <div data-list='{"valueNames":["order","total","customer","payment_status","fulfilment_status","delivery_type","date"],"page":10,"pagination":true}'
+                     id="orderTable">
+                    <div class="mb-4">
+                        <div class="row g-3">
+                            <div class="col-auto">
+                                <div class="search-box">
+                                    <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
+                                        <input aria-label="Search" class="form-control search-input search"
+                                               placeholder="Search orders" type="search"/>
+                                        <span class="fas fa-search search-box-icon"></span>
+
+                                    </form>
+                                </div>
+                            </div>
+                            <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                                <div class="btn-group position-static" role="group">
+
+
+                                    <button class="btn btn-link text-900 me-4 px-0 ms-4"><span
+                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                        <div class="table-responsive scrollbar mx-n1 px-1">
+                            <table class="table table-sm fs--1 mb-0">
+                                <thead>
+                                <tr>
+                                    <th class="white-space-nowrap fs--1 align-middle ps-0" style="width:26px;">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </th>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
+                                        style="width:5%;">ORDER ID
+                                    </th>
+                                    <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                        style="width:6%;">TOTAL
+                                    </th>
+                                    <th class="sort align-middle ps-8" data-sort="customer" scope="col"
+                                        style="width:28%; min-width: 250px;">CUSTOMER
+                                    </th>
+                                    <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
+                                        style="width:10%;">PAYMENT STATUS
+                                    </th>
+                                    <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
+                                        scope="col" style="width:12%; min-width: 200px;">ORDER
+                                        STATUS
+                                    </th>
+                                    <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
+                                        style="width:30%;">DELIVERY TYPE
+                                    </th>
+                                    <th class="sort align-middle text-end pe-0" data-sort="date" scope="col">DATE</th>
+                                </tr>
+                                </thead>
+                                <tbody class="list" id="order-table-body">
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="{% url 'order_details_area_head' %}">#2453</a>
+                                    </td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹87</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8">
+                                        <a class="d-flex align-items-center"
+                                           href="{% url 'customer_details_area_head' %}">
+                                            <div class="avatar avatar-m">
+                                                <div class="avatar-name rounded-circle"><span>M</span></div>
+                                            </div>
+                                            <h6 class="mb-0 ms-3 text-900">Manjunath</h6>
+                                        </a>
+                                    </td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Complete</span><span class="ms-1"
+                                                                                         data-feather="check"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">Cancelled</span><span class="ms-1" data-feather="x"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Cash on delivery
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Dec
+                                        12, 12:56 PM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2452</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹7264</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m">
+                                            <div class="avatar-name rounded-circle"><span>M</span></div>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Milind Mikuja</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">Cancelled</span><span class="ms-1" data-feather="x"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-info"><span
+                                                class="badge-label">Ready to pickup</span><span class="ms-1"
+                                                                                                data-feather="info"
+                                                                                                style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Free shipping
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Dec 9,
+                                        2:28PM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2451</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹375</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/35.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Stanly Drinkwater</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                                class="badge-label">Pending</span><span class="ms-1"
+                                                                                        data-feather="clock"
+                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Completed</span><span class="ms-1"
+                                                                                          data-feather="check"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Local pickup
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Dec 4,
+                                        12:56 PM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2450</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹657</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/57.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Josef Stravinsky</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">Cancelled</span><span class="ms-1" data-feather="x"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                                class="badge-label">Partially Fulfiled</span><span class="ms-1"
+                                                                                                   data-feather="clock"
+                                                                                                   style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Standard shipping
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Dec 1,
+                                        4:07 AM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2449</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹9562</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/58.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Igor Borvibson</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">Failed</span><span class="ms-1" data-feather="x"
+                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Partially Fulfiled</span><span class="ms-1"
+                                                                                                   data-feather="check"
+                                                                                                   style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Express
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Nov
+                                        28, 7:28 PM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2448</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹46</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/59.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Katerina Karenin</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Paid</span><span class="ms-1" data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">Unfulfiled</span><span class="ms-1" data-feather="x"
+                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Local delivery
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Nov
+                                        24, 10:16 AM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2447</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹953</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m">
+                                            <div class="avatar-name rounded-circle"><span>R</span></div>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Roy Anderson</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                                class="badge-label">Pending</span><span class="ms-1"
+                                                                                        data-feather="clock"
+                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Fulfiled</span><span class="ms-1"
+                                                                                         data-feather="check"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Cash on delivery
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Nov
+                                        18, 5:43 PM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2446</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹12</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/31.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Martina scorcese</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                                class="badge-label">Pending</span><span class="ms-1"
+                                                                                        data-feather="clock"
+                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Fulfiled</span><span class="ms-1"
+                                                                                         data-feather="check"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Standard shipping
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Nov
+                                        18, 2:09 AM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2445</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹3927</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/33.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Luis Bunuel</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Paid</span><span class="ms-1" data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">Canceled</span><span class="ms-1" data-feather="x"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Cash on delivery
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Nov
+                                        16, 3:22 PM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2444</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹5937</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/34.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Jean Renoir</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Paid</span><span class="ms-1" data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">Ready to pickup</span><span class="ms-1"
+                                                                                                data-feather="info"
+                                                                                                style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Local pickup
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Nov
+                                        09, 8:49 AM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2443</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹124</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/29.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Ricky Antony</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">Failed</span><span class="ms-1" data-feather="x"
+                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">Unfulfiled</span><span class="ms-1" data-feather="x"
+                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Cash on delivery
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Nov
+                                        05, 4:35 PM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2442</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹542</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/3.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Emma Watson</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                                class="badge-label">Pending</span><span class="ms-1"
+                                                                                        data-feather="clock"
+                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Fulfiled</span><span class="ms-1"
+                                                                                         data-feather="check"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Standard shipping
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Nov
+                                        05, 12:00 PM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2441</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹1480</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle avatar-placeholder"
+                                                                          src="../../../assets/img/team/avatar.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Jennifer Schramm</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Paid</span><span class="ms-1" data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-info"><span
+                                                class="badge-label">Ready to pickup</span><span class="ms-1"
+                                                                                                data-feather="info"
+                                                                                                style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Local delivery
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Nov
+                                        02, 2:00 AM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2440</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹80</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/25.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Michael Jenkins</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">Cancelled</span><span class="ms-1" data-feather="x"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">Unfulfiled</span><span class="ms-1" data-feather="x"
+                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Free shipping
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Oct
+                                        30, 4:25 PM
+                                    </td>
+                                </tr>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                    <td class="fs--1 align-middle px-0 py-3">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="#!">#2439</a></td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹999</td>
+                                    <td class="customer align-middle white-space-nowrap ps-8"><a
+                                            class="d-flex align-items-center" href="#!">
+                                        <div class="avatar avatar-m"><img alt=""
+                                                                          class="rounded-circle"
+                                                                          src="../../../assets/img/team/32.png"/>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">Raymond Mims</h6>
+                                    </a></td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                                class="badge-label">Pending</span><span class="ms-1"
+                                                                                        data-feather="clock"
+                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">Fulfiled</span><span class="ms-1"
+                                                                                         data-feather="check"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        Cash on delivery
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Oct
+                                        28, 3:00 PM
+                                    </td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                            <div class="col-auto d-flex">
+                                <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                   data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
+                                                                          href="#!">View all<span
+                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                    class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                            </div>
+                            <div class="col-auto d-flex">
+                                <button class="page-link" data-list-pagination="prev"><span
+                                        class="fas fa-chevron-left"></span></button>
+                                <ul class="mb-0 pagination"></ul>
+                                <button class="page-link pe-0" data-list-pagination="next"><span
+                                        class="fas fa-chevron-right"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'footer.html' %}
+
+        </div>
+    </div>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+
+</body>
+
+</html>

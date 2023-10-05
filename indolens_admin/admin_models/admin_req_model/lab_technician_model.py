@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -74,7 +73,9 @@ class LabTechnicianModel:
         created_on = from_union([from_str, from_none], obj.get("created_on"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
         last_updated_on = from_union([from_str, from_none], obj.get("last_updated_on"))
-        return LabTechnicianModel(lab_technician_id, name, email, phone, password, profile_pic, assigned_lab_id, address, document_1_type, document_1_url, document_2_type, document_2_url, status, created_by, created_on, last_updated_by, last_updated_on)
+        return LabTechnicianModel(lab_technician_id, name, email, phone, password, profile_pic, assigned_lab_id,
+                                  address, document_1_type, document_1_url, document_2_type, document_2_url, status,
+                                  created_by, created_on, last_updated_by, last_updated_on)
 
     def to_dict(self) -> dict:
         result: dict = {}

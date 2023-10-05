@@ -1,12 +1,11 @@
+import datetime
 import json
 
 import pymysql
-from django.db import connection
-import datetime
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.area_head_resp_model import get_area_heads
-from indolens_admin.admin_models.admin_resp_model.franchise_owner_resp_model import get_franchise_owners
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
@@ -33,10 +32,10 @@ def create_area_head(area_head, files):
             ahid = cursor.lastrowid
 
             return {
-                "status": True,
-                "message": "Area Head added",
-                "ahid": ahid
-            }, 200
+                       "status": True,
+                       "message": "Area Head added",
+                       "ahid": ahid
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -60,9 +59,9 @@ def get_all_area_head():
             area_heads = cursor.fetchall()
 
             return {
-                "status": True,
-                "area_heads_list": get_area_heads(area_heads)
-            }, 200
+                       "status": True,
+                       "area_heads_list": get_area_heads(area_heads)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -88,9 +87,9 @@ def get_area_head_by_id(ahid):
             print(area_heads)
 
             return {
-                "status": True,
-                "area_head": get_area_heads(area_heads)
-            }, 200
+                       "status": True,
+                       "area_head": get_area_heads(area_heads)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -108,12 +107,11 @@ def enable_disable_area_head(ahid, status):
             cursor.execute(set_area_head_query)
 
             return {
-                "status": True,
-                "message": "Updated"
-            }, 200
+                       "status": True,
+                       "message": "Updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-

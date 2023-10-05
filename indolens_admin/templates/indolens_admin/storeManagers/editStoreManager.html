@@ -65,6 +65,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -83,7 +84,8 @@
             <h2 class="mb-4">Edit Store Manager</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_store_manager' manager.store_manager_id %}" class="row g-3 needs-validation needs-password-validation" method="post" novalidate="">
+                    <form action="{% url 'edit_store_manager' manager.store_manager_id %}"
+                          class="row g-3 needs-validation needs-password-validation" method="post" novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
@@ -136,7 +138,8 @@
 
                             <label class="form-label" for="confirmPassword">Confirm Password</label>
 
-                            <input class="form-control" id="confirmPassword" name="confirmPassword" required="" type="text"
+                            <input class="form-control" id="confirmPassword" name="confirmPassword" required=""
+                                   type="text"
                                    value="{{manager.password}}"/>
                             <div class="invalid-feedback">Please provide a valid Password.</div>
                         </div>
@@ -153,25 +156,25 @@
                             <label class="form-label" for="document1">Document 1 Type</label>
                             <select aria-label="Default select example" class="form-select" name="document1Type">
                                 {% if manager.document_1_type == "Aadhar" %}
-                                <option value="Aadhar" selected>Aadhar</option>
+                                <option selected value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                                 {% elif manager.document_1_type == "Driving Licence" %}
                                 <option value="Aadhar">Aadhar</option>
-                                <option value="Driving Licence" selected>Driving Licence</option>
+                                <option selected value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                                 {% elif manager.document_1_type == "Voter ID" %}
                                 <option value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
-                                <option value="Ration Card" selected>Ration Card</option>
+                                <option selected value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                                 {% elif manager.document_1_type == "Ration Card" %}
                                 <option value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
-                                <option value="Voter Id" selected>Voter Id</option>
+                                <option selected value="Voter Id">Voter Id</option>
                                 {% endif %}
                             </select>
                         </div>
@@ -180,8 +183,8 @@
                             <label class="form-label" for="document1">Document 1 Upload (Can choose
                                 multiple)</label>
 
-                            <input class="form-control" id="document1" name="document1" multiple="multiple" type="file"
-                            value="{{manager.document_1_url}}"/>
+                            <input class="form-control" id="document1" multiple="multiple" name="document1" type="file"
+                                   value="{{manager.document_1_url}}"/>
                         </div>
 
                         <div class="mb-3">
@@ -198,11 +201,11 @@
                                 multiple)</label>
 
                             <input class="form-control" id="document2" multiple="multiple" name="document2" type="file"
-                            value="{{manager.document_2_url}}"/>
+                                   value="{{manager.document_2_url}}"/>
                         </div>
-                        <input required type="hidden" name="last_updated_by"
+                        <input name="last_updated_by" required type="hidden"
                                value="{{ request.session.id }}">
-                        <input required type="hidden" name="store_manager_id"
+                        <input name="store_manager_id" required type="hidden"
                                value="{{ manager.store_manager_id }}">
 
                         <div class="col-12">

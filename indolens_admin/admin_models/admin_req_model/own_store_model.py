@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -73,12 +72,17 @@ class OwnStoreModel:
         status = from_union([from_int, from_none], obj.get("status"))
         created_by = from_union([from_str, from_none], obj.get("created_by"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
-        return OwnStoreModel(store_zip_code, store_id, store_name, store_display_name, store_phone, store_gstin, store_email, store_city, store_state, store_lat_lng, complete_address, status, created_by, last_updated_by)
+        return OwnStoreModel(store_zip_code, store_id, store_name, store_display_name, store_phone, store_gstin,
+                             store_email, store_city, store_state, store_lat_lng, complete_address, status, created_by,
+                             last_updated_by)
 
     def to_dict(self) -> dict:
         result: dict = {}
         if self.store_zip_code is not None:
-            result["storeZipCode"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)), lambda x: from_str((lambda x: str((lambda x: is_type(int, x))(x)))(x))], self.store_zip_code)
+            result["storeZipCode"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)),
+                                                 lambda x: from_str(
+                                                     (lambda x: str((lambda x: is_type(int, x))(x)))(x))],
+                                                self.store_zip_code)
         if self.store_id is not None:
             result["store_id"] = from_union([from_int, from_none], self.store_id)
         if self.store_name is not None:

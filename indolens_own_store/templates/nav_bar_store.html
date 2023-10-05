@@ -1,0 +1,379 @@
+{% load static %}
+
+<nav class="navbar navbar-vertical navbar-expand-lg">
+    <script>
+            var navbarStyle = localStorage.getItem("phoenixNavbarStyle");
+            if (navbarStyle && navbarStyle !== 'transparent') {
+              document.querySelector('body').classList.add(`navbar-${navbarStyle}`);
+            }
+
+    </script>
+    <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+        <!-- scrollbar removed-->
+        <div class="navbar-vertical-content">
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                <!--                dashboard nav items-->
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'own_store_dashboard' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'own_store_dashboard' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="monitor"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Dashboard</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">TRANSACTIONS
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'own_store_make_sale' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'own_store_make_sale' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="dollar-sign"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Make Sale</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'all_expenses_store' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'all_expenses_store' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="file-text"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Expenses</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <!--                inventory nav items-->
+
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">Inventory
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-controls="central_inventory_management"
+                                                     aria-expanded="false" asd="index"
+                                                     class="nav-link dropdown-indicator label-1"
+                                                     data-bs-toggle="collapse" href="#store_inventory"
+                                                     role="button">
+                        <div class="d-flex align-items-center">
+                            <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                            <span class="nav-link-icon"><span data-feather="archive"></span></span><span
+                                class="nav-link-text">Store Inventory</span>
+                        </div>
+                    </a>
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent {% if 'manage_store_out_of_stock' in request.path or 'manage_store_inventory_products' in request.path or 'move_stocks_store' in request.path %}show{% endif %}"
+                                data-bs-parent="#navbarVerticalCollapse"
+                                id="store_inventory">
+                                <li class="collapsed-nav-item-title d-none">Central Inventory
+                                </li>
+
+                                <li class="nav-item"><a aria-expanded="false"
+                                                        asd="index"
+                                                        class="nav-link {% if 'manage_store_inventory_products' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'manage_store_inventory_products' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">Products</span>
+                                    </div>
+                                </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item"><a aria-expanded="false"
+                                                        asd="index"
+                                                        class="nav-link {% if 'manage_store_out_of_stock' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'manage_store_out_of_stock' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">Out Of Stock</span>
+                                    </div>
+                                </a>
+                                </li>
+
+
+                                <li class="nav-item"><a aria-expanded="false"
+                                                        asd="index"
+                                                        class="nav-link {% if 'move_stocks_store' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'move_stocks_store' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">Stock Movement</span>
+                                    </div>
+                                </a>
+                                    <!-- more inner pages-->
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="nav-item-wrapper"><a aria-controls="stock_requests"
+                                                     aria-expanded="false" asd="index"
+                                                     class="nav-link dropdown-indicator label-1"
+                                                     data-bs-toggle="collapse" href="#stock_requests"
+                                                     role="button">
+                        <div class="d-flex align-items-center">
+                            <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
+                            <span class="nav-link-icon"><span data-feather="box"></span></span><span
+                                class="nav-link-text">Stock Requests</span>
+                        </div>
+                    </a>
+                        <div class="parent-wrapper label-1">
+                            <ul class="nav collapse parent {% if 'all_stock_store_requests' in request.path or 'create_request_store' in request.path or 'pending_store_stock_requests' in request.path or 'completed_store_stock_requests' in request.path or 'rejected_store_stock_requests' in request.path %}show{% endif %}"
+                                data-bs-parent="#navbarVerticalCollapse"
+                                id="stock_requests">
+                                <li class="collapsed-nav-item-title d-none">Stock Requests
+                                </li>
+
+                                <li class="nav-item"><a aria-expanded="false" asd="index"
+                                                        class="nav-link {% if 'create_request_store' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'create_request_store' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">Create Request</span>
+                                    </div>
+                                </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item"><a aria-expanded="false" asd="index"
+                                                        class="nav-link {% if 'all_stock_store_requests' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'all_stock_store_requests' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">All Requests</span>
+                                    </div>
+                                </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item"><a aria-expanded="false" asd="index"
+                                                        class="nav-link {% if 'pending_store_stock_requests' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'pending_store_stock_requests' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">Pending Requests</span>
+                                    </div>
+                                </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+                                <li class="nav-item"><a aria-expanded="false" asd="index"
+                                                        class="nav-link {% if 'completed_store_stock_requests' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'completed_store_stock_requests' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">Completed Requests</span>
+                                    </div>
+                                </a>
+                                    <!-- more inner pages-->
+                                </li>
+                                <li class="nav-item"><a aria-expanded="false" asd="index"
+                                                        class="nav-link {% if 'rejected_store_stock_requests' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'rejected_store_stock_requests' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">Rejected Requests</span>
+                                    </div>
+                                </a>
+                                    <!-- more inner pages-->
+                                </li>
+
+
+                            </ul>
+                        </div>
+                    </div>
+                </li>
+
+                <!--                orders management nav item-->
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">ORDERS
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'all_store_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'all_store_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="shopping-bag"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">All Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'pending_store_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'pending_store_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Pending Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'received_store_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'received_store_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="check-circle"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Received Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'processing_store_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'processing_store_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="activity"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Processing Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'ready_store_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'ready_store_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Ready Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'delivered_store_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'delivered_store_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="check"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Delivered Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'cancelled_store_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'cancelled_store_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="x-circle"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Cancelled Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'refunded_store_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'refunded_store_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="refresh-cw"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Refunded Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">CUSTOMERS
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'view_store_customers' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'view_store_customers' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="users"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">View Customers</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+
+                <!--                Employee management nav item-->
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">Employees
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'manage_store_employees' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'manage_store_employees' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="user"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Employees</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+    </div>
+
+    <div class="navbar-vertical-footer">
+        <button class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 text-start white-space-nowrap">
+            <span class="uil uil-left-arrow-to-left fs-0"></span><span
+                class="uil uil-arrow-from-right fs-0"></span><span class="navbar-vertical-footer-text ms-2">Collapsed View</span>
+        </button>
+    </div>
+</nav>
+{% include 'top_bar_store.html' %}
+

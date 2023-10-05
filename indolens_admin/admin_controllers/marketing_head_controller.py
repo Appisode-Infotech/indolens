@@ -1,9 +1,9 @@
+import datetime
 import json
 
 import pymysql
-from django.db import connection
-import datetime
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.marketing_head_resp_model import get_marketing_heads
 
@@ -32,19 +32,15 @@ def create_marketing_head(marketing_head, files):
             mhid = cursor.lastrowid
 
             return {
-                "status": True,
-                "message": "Marketing Head added",
-                "mhid": mhid
-            }, 200
+                       "status": True,
+                       "message": "Marketing Head added",
+                       "mhid": mhid
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-
-
-def marketing_heads_list(marketing_heads):
-    pass
 
 
 def get_all_marketing_head():
@@ -63,9 +59,9 @@ def get_all_marketing_head():
             print(marketing_head)
 
             return {
-                "status": True,
-                "marketing_heads_list": get_marketing_heads(marketing_head)
-            }, 200
+                       "status": True,
+                       "marketing_heads_list": get_marketing_heads(marketing_head)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -90,9 +86,9 @@ def get_marketing_head_by_id(mhid):
             print(marketing_head)
 
             return {
-                "status": True,
-                "marketing_head": get_marketing_heads(marketing_head)
-            }, 200
+                       "status": True,
+                       "marketing_head": get_marketing_heads(marketing_head)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -115,9 +111,9 @@ def enable_disable_marketing_head(mhid, status):
             cursor.execute(update_marketing_head_query)
 
             return {
-                "status": True,
-                "message": "Marketing  Head updated"
-            }, 200
+                       "status": True,
+                       "message": "Marketing  Head updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

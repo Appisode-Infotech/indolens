@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -70,7 +69,9 @@ class AdminAuthModel:
         status = from_union([from_int, from_none], obj.get("status"))
         created_by = from_union([from_int, from_none], obj.get("created_by"))
         last_updated_by = from_union([from_int, from_none], obj.get("last_updated_by"))
-        return AdminAuthModel(admin_id, name, email, phone, password, sales_executive, profile_pic, address, document_1__type, document_1__url, document_2__type, document_2__url, status, created_by, last_updated_by)
+        return AdminAuthModel(admin_id, name, email, phone, password, sales_executive, profile_pic, address,
+                              document_1__type, document_1__url, document_2__type, document_2__url, status, created_by,
+                              last_updated_by)
 
     def to_dict(self) -> dict:
         result: dict = {}

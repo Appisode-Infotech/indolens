@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
 
-
 T = TypeVar("T")
 
 
@@ -77,12 +76,16 @@ class LabModel:
         lab_state = from_union([from_str, from_none], obj.get("labState"))
         complete_address = from_union([from_str, from_none], obj.get("completeAddress"))
         lab_lat_lng = from_union([from_str, from_none], obj.get("lab_lat_lng"))
-        return LabModel(lab_zip_code, lab_id, status, created_by, last_updated_by, created_on, last_updated_on, lab_name, lab_display_name, lab_phone, lab_gstin, lab_email, lab_city, lab_state, complete_address, lab_lat_lng)
+        return LabModel(lab_zip_code, lab_id, status, created_by, last_updated_by, created_on, last_updated_on,
+                        lab_name, lab_display_name, lab_phone, lab_gstin, lab_email, lab_city, lab_state,
+                        complete_address, lab_lat_lng)
 
     def to_dict(self) -> dict:
         result: dict = {}
         if self.lab_zip_code is not None:
-            result["labZipCode"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)), lambda x: from_str((lambda x: str((lambda x: is_type(int, x))(x)))(x))], self.lab_zip_code)
+            result["labZipCode"] = from_union([lambda x: from_none((lambda x: is_type(type(None), x))(x)),
+                                               lambda x: from_str((lambda x: str((lambda x: is_type(int, x))(x)))(x))],
+                                              self.lab_zip_code)
         if self.lab_id is not None:
             result["labId"] = from_union([from_int, from_none], self.lab_id)
         if self.status is not None:

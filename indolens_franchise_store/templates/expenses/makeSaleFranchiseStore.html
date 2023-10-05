@@ -1,0 +1,748 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Phoenix</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendors/prism/prism-okaidia.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar_franchise.html' %}
+
+        <div class="content">
+
+            <div class="col-12 col-xxl-6">
+                <div class="card shadow-none border border-300 my-4" data-component-card="data-component-card">
+                    <div class="card-header p-4 border-bottom border-300 bg-soft">
+                        <div class="row g-3 justify-content-between align-items-center">
+                            <div class="col-12 col-md">
+                                <h4 class="text-900 mb-0" data-anchor="data-anchor">Create sale</h4>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="p-4">
+                            <div class="card theme-wizard mb-5" data-theme-wizard="data-theme-wizard">
+                                <div class="card-header bg-100 pt-3 pb-2 border-bottom-0">
+                                    <ul class="nav justify-content-between nav-wizard">
+                                        <li class="nav-item"><a class="nav-link active fw-semi-bold"
+                                                                data-bs-toggle="tab"
+                                                                data-wizard-step="1" href="#bootstrap-wizard-validation-tab1">
+                                            <div class="text-center d-inline-block"><span
+                                                    class="nav-item-circle-parent"><span class="nav-item-circle">            <span
+                                                    class="fas fa-shopping-cart"></span></span></span></span><span
+                                                    class="d-none d-md-block mt-1 fs--1">Products</span></div>
+                                        </a></li>
+                                        <li class="nav-item"><a class="nav-link fw-semi-bold"
+                                                                data-bs-toggle="tab"
+                                                                data-wizard-step="2" href="#bootstrap-wizard-validation-tab2">
+                                            <div class="text-center d-inline-block"><span
+                                                    class="nav-item-circle-parent"><span class="nav-item-circle"><span
+                                                    class="fas fa-user"></span></span></span><span
+                                                    class="d-none d-md-block mt-1 fs--1">Customer details</span></div>
+                                        </a></li>
+                                        <li class="nav-item"><a class="nav-link fw-semi-bold"
+                                                                data-bs-toggle="tab"
+                                                                data-wizard-step="3" href="#bootstrap-wizard-validation-tab3">
+                                            <div class="text-center d-inline-block"><span
+                                                    class="nav-item-circle-parent"><span class="nav-item-circle"><span
+                                                    class="fas fa-file-alt"></span></span></span><span
+                                                    class="d-none d-md-block mt-1 fs--1">Billing Details</span></div>
+                                        </a></li>
+                                        <li class="nav-item"><a class="nav-link fw-semi-bold"
+                                                                data-bs-toggle="tab"
+                                                                data-wizard-step="4" href="#bootstrap-wizard-validation-tab4">
+                                            <div class="text-center d-inline-block"><span
+                                                    class="nav-item-circle-parent"><span class="nav-item-circle"><span
+                                                    class="fas fa-eye"></span></span></span><span
+                                                    class="d-none d-md-block mt-1 fs--1">Review</span></div>
+                                        </a></li>
+                                    </ul>
+                                </div>
+                                <div class="card-body pt-4 pb-0">
+                                    <div class="tab-content">
+                                        <div aria-labelledby="bootstrap-wizard-validation-tab1" class="tab-pane active"
+                                             id="bootstrap-wizard-validation-tab1"
+                                             role="tabpanel">
+                                            <form class="needs-validation" data-wizard-form="1"
+                                                  id="wizardValidationForm1" novalidate="novalidate">
+
+                                                <div id="product_widgets">
+                                                    <div class="product_widget card-header bg-100 mb-4"
+                                                         id="product_widget">
+                                                        <div class="bg-200 mb-4">
+                                                            <h5 align="center" class="p-3">Product 1</h5>
+                                                        </div>
+                                                        <div class="row g-3 mb-3">
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Select Category</h5>
+                                                                <select class="form-select" data-choices="data-choices"
+                                                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                        name="category">
+                                                                    <option value="">Select category</option>
+                                                                    <option>8660225160</option>
+                                                                    <option>9538806282</option>
+                                                                    <option>1234567890</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3 ">Select Brand</h5>
+                                                                <select class="form-select" data-choices="data-choices"
+                                                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                        name="brand">
+                                                                    <option value="">Select brand</option>
+                                                                    <option>8660225160</option>
+                                                                    <option>9538806282</option>
+                                                                    <option>1234567890</option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row g-3 mb-3">
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Select Product</h5>
+                                                                <select class="form-select" data-choices="data-choices"
+                                                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                        name="product">
+                                                                    <option value="">Select product</option>
+                                                                    <option>8660225160</option>
+                                                                    <option>9538806282</option>
+                                                                    <option>1234567890</option>
+                                                                </select>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3 ">Product SKU</h5>
+                                                                <input class="form-control" name="sku" placeholder="Product SKU"
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row g-3 mb-3">
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Available quantity</h5>
+                                                                <input class="form-control" name="available_qty"
+                                                                       placeholder="Available quantity"
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3 ">Purchase quantity</h5>
+                                                                <input class="form-control" name="purchase_qty"
+                                                                       placeholder="Purchase quantity"
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="row g-3 mb-3">
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Unit Price</h5>
+                                                                <input class="form-control" name="unit_price"
+                                                                       placeholder="Unit Price"
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3 ">Product Total</h5>
+                                                                <input class="form-control" name="product_total"
+                                                                       placeholder="Product Total"
+                                                                       required="required"
+                                                                       type="text" value="abc"/>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+
+                                                </div>
+                                                <div class="row g-3 mb-3 justify-content-between">
+
+                                                    <button class="col-auto btn btn-danger px-6 px-sm-6" onclick="removeProduct(this)"
+                                                            type="button">Remove Product<span
+                                                            class="fas fa-trash ms-1"
+                                                            data-fa-transform="shrink-3"></span></button>
+                                                    <button class="col-auto btn btn-primary px-6 px-sm-6 mr-4"
+                                                            onclick="addProduct()"
+                                                            type="button">Add Product<span
+                                                            class="fas fa-plus ms-1"
+                                                            data-fa-transform="shrink-3"></span></button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div aria-labelledby="bootstrap-wizard-validation-tab2" class="tab-pane"
+                                             id="bootstrap-wizard-validation-tab2"
+                                             role="tabpanel">
+                                            <form class="needs-validation" data-wizard-form="2"
+                                                  id="wizardValidationForm2" novalidate="novalidate">
+                                                <div class="row g-3 mb-3">
+                                                    <div class="col-9">
+                                                        <h4 class="mb-3">Customer Phone</h4>
+                                                        <select class="form-select" data-choices="data-choices"
+                                                                data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                id="organizerSingle"
+                                                                name="customer_phone">
+                                                            <option value="">Enter Phone</option>
+                                                            <option>8660225160</option>
+                                                            <option>9538806282</option>
+                                                            <option>1234567890</option>
+                                                        </select>
+                                                    </div>
+                                                    <div class="col-auto">
+                                                        <h5 class="mb-3">Customer not found?</h5>
+                                                        <a class="btn btn-primary px-5"
+                                                           href=""><i
+                                                                class="fa-solid fa-plus me-2"></i>Add Customer</a></div>
+                                                </div>
+
+                                                <div class="row g-3 mb-3">
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Customer Name</h5>
+                                                        <input class="form-control" name="customr_name" placeholder="Customer Name"
+                                                               required="required"
+                                                               type="text" value="abc"/>
+                                                    </div>
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3 ">Customer Age</h5>
+                                                        <input class="form-control" name="customer_age" placeholder="Customer Age"
+                                                               required="required"
+                                                               type="number" value="12"/>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 mb-3">
+                                                    <div class="mb-2 col-6">
+                                                        <h5 class="mb-3 ">Gender</h5>
+                                                        <select class="form-select" id="bootstrap-wizard-validation-gender"
+                                                                name="customer_gender"
+                                                                required="required">
+                                                            <option value="">Select customer gender</option>
+                                                            <option value="Male">Male</option>
+                                                            <option value="Female">Female</option>
+                                                            <option value="Other">Other</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3 ">Customer email</h5>
+                                                        <input class="form-control" name="customer_email" placeholder="Customer email"
+                                                               required="required"
+                                                               type="email" value="dan@gmail.com"/>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row g-3 mb-3">
+                                                    <div class="mb-2 col-6">
+                                                        <h5 class="mb-3 ">Language</h5>
+                                                        <select class="form-select" data-dz-name="customer_language"
+                                                                name="language"
+                                                                required="required">
+                                                            <option value="">Select customer language</option>
+                                                            <option value="Male">English</option>
+                                                            <option value="Female">Kannada</option>
+                                                            <option value="Other">Hindi</option>
+                                                            <option value="Other">Tamil</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                    <div class="mb-2 col-6">
+                                                        <h5 class="mb-3 ">City</h5>
+                                                        <select class="form-select" name="customer_city"
+                                                                required="required">
+                                                            <option value="">Select city</option>
+                                                            <option value="Male">Bangalore</option>
+                                                            <option value="Female">Tumkur</option>
+                                                            <option value="Other">Mandya</option>
+                                                            <option value="Other">Mysore</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                </div>
+                                                <div class="row g-3 mb-3">
+                                                    <div class="mb-2">
+                                                        <label class="form-label"
+                                                               for="bootstrap-wizard-validation-wizard-address">Address</label>
+                                                        <textarea class="form-control" id="bootstrap-wizard-validation-wizard-address" name="customer_address"
+                                                                  required="required"
+                                                                  rows="3"></textarea>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                </div>
+
+
+                                            </form>
+                                        </div>
+                                        <div aria-labelledby="bootstrap-wizard-validation-tab3" class="tab-pane"
+                                             id="bootstrap-wizard-validation-tab3"
+                                             role="tabpanel">
+                                            <form class="mb-2 needs-validation" data-wizard-form="3"
+                                                  id="wizardValidationForm3" novalidate="novalidate">
+
+                                                <div class="row g-3 mb-3">
+                                                    <div class="mb-2 col-6">
+                                                        <h5 class="mb-3 ">Sale Date</h5>
+                                                        <input class="form-control datetimepicker" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
+                                                               id="datepicker"
+                                                               name="sale_date"
+                                                               placeholder="dd/mm/yyyy"
+                                                               type="text"/>
+
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                    <div class="mb-2 col-6">
+                                                        <h5 class="mb-3 ">Order Placed By</h5>
+                                                        <select class="form-select" data-choices="data-choices"
+                                                                data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                name="sales_person">
+                                                            <option value="">Select employee</option>
+                                                            <option>Smitha</option>
+                                                            <option>Avinash</option>
+                                                            <option>Jithin</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="row g-3 mb-3">
+                                                    <div class="mb-2 col-6">
+                                                        <h5 class="mb-3 ">Est Delivery Date</h5>
+                                                        <input class="form-control datetimepicker" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
+                                                               id="datepicker2"
+                                                               name="delivery_date"
+                                                               placeholder="dd/mm/yyyy"
+                                                               type="text"/>
+
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                    <div class="mb-2 col-6">
+                                                        <h5 class="mb-3 ">Choose lab</h5>
+                                                        <select class="form-select" data-choices="data-choices"
+                                                                data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                name="lab">
+                                                            <option value="">Select employee</option>
+                                                            <option>Ind-Lab1</option>
+                                                            <option>Ind-Lab2</option>
+                                                            <option>Ind-Lab3</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                </div>
+
+                                            </form>
+                                        </div>
+                                        <div aria-labelledby="bootstrap-wizard-validation-tab4" class="tab-pane"
+                                             id="bootstrap-wizard-validation-tab4"
+                                             role="tabpanel">
+                                            <div class="row flex-center pb-8 pt-4 gx-3 gy-4">
+
+                                                <div class="px-0">
+                                                    <div class="table-responsive scrollbar">
+                                                        <table class="table fs--1 text-900 mb-0">
+                                                            <thead class="bg-200">
+                                                            <tr>
+                                                                <th scope="col" style="width: 24px;"></th>
+                                                                <th scope="col" style="min-width: 60px;">SL NO.</th>
+                                                                <th scope="col" style="min-width: 200px;">Products</th>
+                                                                <th class="ps-5" scope="col" style="min-width: 150px;">
+                                                                    Color
+                                                                </th>
+                                                                <th scope="col" style="width: 60px;">Size</th>
+                                                                <th class="text-end" scope="col" style="width: 80px;">
+                                                                    Quantity
+                                                                </th>
+                                                                <th class="text-end" scope="col" style="width: 100px;">
+                                                                    Price
+                                                                </th>
+                                                                <th class="text-end" scope="col" style="width: 24px;">
+                                                                    GST
+                                                                </th>
+                                                                <th class="text-center" scope="col"
+                                                                    style="min-width: 60px;">Total
+                                                                </th>
+                                                                <th scope="col" style="width: 24px;"></th>
+                                                            </tr>
+                                                            </thead>
+                                                            <tbody>
+                                                            <tr>
+                                                                <td class="border-0"></td>
+                                                                <td class="align-middle">1</td>
+                                                                <td class="align-middle">
+                                                                    <p class="line-clamp-1 mb-0 fw-semi-bold">Indolens
+                                                                        spects - L1</p>
+                                                                </td>
+                                                                <td class="align-middle ps-5">Glossy black</td>
+                                                                <td class="align-middle text-700 fw-semi-bold">XL</td>
+                                                                <td class="align-middle text-end text-1000 fw-semi-bold">
+                                                                    2
+                                                                </td>
+                                                                <td class="align-middle text-end fw-semi-bold">₹299</td>
+                                                                <td class="align-middle text-end">2.5%</td>
+                                                                <td class="align-middle text-center fw-semi-bold">₹398
+                                                                </td>
+                                                                <td class="border-0"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="border-0"></td>
+                                                                <td class="align-middle">2</td>
+                                                                <td class="align-middle">
+                                                                    <p class="line-clamp-1 mb-0 fw-semi-bold">Indolens
+                                                                        spects - L1</p>
+                                                                </td>
+                                                                <td class="align-middle ps-5">Black</td>
+                                                                <td class="align-middle text-700 fw-semi-bold">Pro</td>
+                                                                <td class="align-middle text-end text-1000 fw-semi-bold">
+                                                                    1
+                                                                </td>
+                                                                <td class="align-middle text-end fw-semi-bold">₹199</td>
+                                                                <td class="align-middle text-end">2.75%</td>
+                                                                <td class="align-middle text-center fw-semi-bold">₹398
+                                                                </td>
+                                                                <td class="border-0"></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="border-0"></td>
+                                                                <td class="align-middle border-0">1</td>
+                                                                <td class="align-middle border-0">
+                                                                    <p class="line-clamp-1 mb-0 fw-semi-bold">Indolens
+                                                                        spects - L1</p>
+                                                                </td>
+                                                                <td class="align-middle ps-5 border-0">White</td>
+                                                                <td class="align-middle text-700 fw-semi-bold border-0">
+                                                                    Regular
+                                                                </td>
+                                                                <td class="align-middle text-end text-1000 fw-semi-bold border-0">
+                                                                    1
+                                                                </td>
+                                                                <td class="align-middle text-end fw-semi-bold border-0">
+                                                                    ₹185
+                                                                </td>
+                                                                <td class="align-middle text-end border-0">3.5%</td>
+                                                                <td class="align-middle text-center fw-semi-bold">₹398
+                                                                </td>
+                                                                <td class="border-0"></td>
+                                                            </tr>
+                                                            <tr class="bg-200">
+                                                                <td class="border-0"></td>
+                                                                <td class="align-middle fw-bold">Subtotal</td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="align-middle text-center fw-bold">₹398
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="border-0"></td>
+                                                                <td class="align-middle fw-bold">Shipping</td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="align-middle text-center fw-bold">₹398
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="border-0"></td>
+                                                                <td class="align-middle fw-bold">Discount</td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="border-0"></td>
+                                                                <td class="align-middle text-center fw-bold">₹398
+                                                                <td></td>
+                                                            </tr>
+                                                            <tr class="bg-200">
+                                                                <td class="align-middle ps-4 fw-bold text-1500"
+                                                                    colspan="2"><h5>Grand Total</h5>
+                                                                </td>
+                                                                <td class="align-middle fw-bold text-1500" colspan="6">
+                                                                    <h5>Three Hundred and Ninenty Eight USD</h5>
+                                                                </td>
+                                                                <td class="align-middle text-center fw-bold"><h5>
+                                                                    ₹398</h5>
+                                                                <td></td>
+                                                            </tr>
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+
+                                                </div>
+                                                <div class="bg-200 mb-4 col-12 col-sm-auto p-4">
+                                                    <div class="text-center text-sm-start">
+                                                        <h5 class="mb-3">You are all set!</h5>
+                                                        <p class="text-1100 fs--1"><b>Confirm</b> The order by clicking
+                                                            the button below
+                                                            anywhere</p><a class="btn btn-primary px-6 btn-start-over">Confirm
+                                                        order</a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="card-footer border-top-0" data-wizard-footer="data-wizard-footer">
+                                    <div class="d-flex pager wizard list-inline mb-0">
+                                        <button class="d-none btn btn-link ps-0" data-wizard-prev-btn="data-wizard-prev-btn"
+                                                type="button"><span
+                                                class="fas fa-chevron-left me-1" data-fa-transform="shrink-3"></span>Previous
+                                        </button>
+                                        <div class="flex-1 text-end">
+                                            <button class="btn btn-primary px-6 px-sm-6" data-wizard-next-btn="data-wizard-next-btn"
+                                                    type="submit">Next<span
+                                                    class="fas fa-chevron-right ms-1"
+                                                    data-fa-transform="shrink-3"> </span></button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'footer.html' %}
+
+        </div>
+    </div>
+    <script>
+        var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
+        var navbarTop = document.querySelector('.navbar-top');
+        if (navbarTopStyle === 'darker') {
+          navbarTop.classList.add('navbar-darker');
+        }
+
+        var navbarVerticalStyle = localStorage.getItem('phoenixNavbarVerticalStyle');
+        var navbarVertical = document.querySelector('.navbar-vertical');
+        if (navbarVerticalStyle === 'darker') {
+          navbarVertical.classList.add('navbar-darker');
+        }
+
+
+
+
+
+    </script>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
+<script src="{% static 'vendors/prism/prism.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script>
+    let productCounter = 1;
+    const removeButton = document.querySelector('.btn-danger');
+    removeButton.style.display = 'none';
+
+    function addProduct() {
+        // Clone the product_widget element
+        const productWidgets = document.getElementById('product_widgets');
+        const productWidget = productWidgets.querySelector('.product_widget:last-child');
+        const clonedWidget = productWidget.cloneNode(true);
+
+        // Clear input values in the cloned widget
+        const inputs = clonedWidget.querySelectorAll('input');
+        for (const input of inputs) {
+            input.value = '';
+        }
+
+        // Increment the product counter and update the label
+        productCounter++;
+        const productLabel = clonedWidget.querySelector('h5');
+        productLabel.textContent = `Product ${productCounter}`;
+
+        // Append the cloned widget after the last product_widget
+        productWidgets.appendChild(clonedWidget);
+        updateRemoveButtonVisibility();
+
+    }
+
+    function removeProduct() {
+        // Find the container for product widgets
+        const productWidgets = document.getElementById('product_widgets');
+
+        // Find all product widgets excluding the first one
+        const productWidgetCount = productWidgets.querySelectorAll('.product_widget').length;
+
+        // Only remove if there's more than one product widget
+        if (productWidgetCount > 1) {
+            // Find and remove the last child (last added widget)
+            const lastChild = productWidgets.lastElementChild;
+            if (lastChild) {
+                lastChild.remove();
+            }
+
+            // Decrement the product counter
+            productCounter--;
+        }
+        updateRemoveButtonVisibility();
+
+    }
+
+    function updateRemoveButtonVisibility() {
+        // Find the "Remove Product" button
+        const removeButton = document.querySelector('.btn-danger');
+
+        // Find all product widgets excluding the first one
+        const productWidgets = document.getElementById('product_widgets');
+        const productWidgetCount = productWidgets.querySelectorAll('.product_widget').length;
+
+        // Show or hide the button based on the number of widgets
+        if (productWidgetCount > 1) {
+            removeButton.style.display = 'block';
+        } else {
+            removeButton.style.display = 'none';
+        }
+    }
+
+
+
+</script>
+<script>
+        // Add an event listener to the "Start Over" button
+        document.querySelector('.btn-start-over').addEventListener('click', function () {
+            // Gather data from the first form (tab 1)
+            var formData1 = formDataToObject(document.querySelector('#wizardValidationForm1'));
+
+            // Gather data from the second form (tab 2)
+            var formData2 = formDataToObject(document.querySelector('#wizardValidationForm2'));
+
+            // Gather data from the third form (tab 3)
+            var formData3 = formDataToObject(document.querySelector('#wizardValidationForm3'));
+
+            // Combine all form data into a single object
+            var allFormData = {
+                form1: formData1,
+                form2: formData2,
+                form3: formData3
+            };
+
+            // Display the collected data in the console
+            console.log(allFormData);
+
+            // Send the collected data to the server using AJAX
+            fetch('/your-server-endpoint', {
+                method: 'POST',
+                body: JSON.stringify(allFormData),
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(response => {
+                if (response.ok) {
+                    // Handle success
+                    alert('Data submitted successfully');
+                    // You can also redirect to a different page here if needed
+                } else {
+                    // Handle errors
+                    alert('Failed to submit data');
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('An error occurred');
+            });
+        });
+
+        // Function to convert FormData to a JavaScript object
+        function formDataToObject(form) {
+            var object = {};
+            var formData = new FormData(form);
+            formData.forEach(function (value, key) {
+                object[key] = value;
+            });
+            return object;
+        }
+
+
+
+</script>
+
+
+</body>
+
+</html>

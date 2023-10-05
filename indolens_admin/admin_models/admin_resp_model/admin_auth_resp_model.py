@@ -1,5 +1,6 @@
 from datetime import datetime
 
+
 class AdminUser:
     def __init__(self, values):
         self.admin_id = values[0]
@@ -38,12 +39,12 @@ class AdminUser:
             'created_by': self.created_by,
             'created_on': self.created_on,
             'last_updated_by': self.last_updated_by,
-            'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on, datetime) else None
+            'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on,
+                                                                                                datetime) else None
         }
+
 
 def get_admin_user(response):
     values = response
     admin_user = AdminUser(values)
     return admin_user.to_dict()
-
-
