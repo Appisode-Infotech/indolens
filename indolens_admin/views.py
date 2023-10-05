@@ -5,7 +5,7 @@ import time
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
-    sub_admin_controller, store_manager_controller, franchise_owner_controller, area_head_controller, \
+    sub_admin_controller, store_manager_controller, franchise_manager_controller, area_head_controller, \
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller
@@ -366,7 +366,8 @@ def enableDisableStoreManager(request, mid, status):
 # =================================ADMIN FRANCHISE OWNERS MANAGEMENT======================================
 
 def manageFranchiseOwners(request):
-    response, status_code = franchise_owner_controller.get_all_franchise_owner()
+    response, status_code = franchise_manager_controller.get_all_franchise_owner()
+    print(response)
     return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
                   {"franchise_owners": response['franchise_owners']})
 
@@ -409,7 +410,7 @@ def createFranchiseOwners(request):
         file_data = FileData(form_data)
 
         franchise_owner_obj = franchise_owner_model.franchise_owner_model_from_dict(request.POST)
-        response, status_code = franchise_owner_controller.create_franchise_owner(franchise_owner_obj, file_data)
+        response, status_code = franchise_manager_controller.create_franchise_owner(franchise_owner_obj, file_data)
         url = reverse('view_franchise_owner', kwargs={'foid': response['foid']})
         return redirect(url)
 
@@ -441,25 +442,25 @@ def editFranchiseOwners(request, foid):
                         destination.write(chunk)
 
         franchise_owner = franchise_owner_model.franchise_owner_model_from_dict(form_data)
-        response, status_code = franchise_owner_controller.edit_franchise_owner(franchise_owner)
+        response, status_code = franchise_manager_controller.edit_franchise_owner(franchise_owner)
         url = reverse('view_franchise_owner', kwargs={'foid': franchise_owner.franchise_owner_id})
         return redirect(url)
 
     else:
-        response, status_code = franchise_owner_controller.get_franchise_owner_by_id(foid)
+        response, status_code = franchise_manager_controller.get_franchise_owner_by_id(foid)
         return render(request, 'indolens_admin/franchiseOwners/editFranchiseOwner.html',
                       {"franchise_owner": response['franchise_owner']})
 
 
 def enableDisableFranchiseOwner(request, foid, status):
-    response = franchise_owner_controller.enable_disable_franchise_owner(foid, status)
+    response = franchise_manager_controller.enable_disable_franchise_owner(foid, status)
     print(response)
     return redirect('manage_franchise_owners')
 
 
 def viewFranchiseOwners(request, foid):
-    response, status_code = franchise_owner_controller.get_franchise_owner_by_id(foid)
-
+    response, status_code = franchise_manager_controller.get_franchise_owner_by_id(foid)
+    print(response)
     return render(request, 'indolens_admin/franchiseOwners/viewFranchiseOwner.html',
                   {"franchise_owner": response['franchise_owner']})
 
@@ -629,7 +630,7 @@ def manageSaleExecutives(request):
     response, status_code = sales_executives_controller.get_all_sales_executive()
     print(response)
     return render(request, 'indolens_admin/salesExecutive/manageSaleExecutives.html',
-                  {"sales_executive_list": response['sales_executive_list']})
+                  {"sales_executive_list": ""})
 
 
 
@@ -951,6 +952,7 @@ def viewCustomerDetails(request):
 
 def manageLabs(request):
     response, status_code = lab_controller.get_all_labs()
+    print(response)
     return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
 
 
@@ -1020,6 +1022,10 @@ def addProductCategory(request):
         master_category_controller.add_product_category(product_cat_obj)
     return render(request, 'indolens_admin/masters/addProductCategory.html')
 
+def enableDisableProductCategory(request, cid, status):
+    master_category_controller.enable_disable_product_category(cid, status)
+    return redirect('manage_central_inventory_category')
+
 
 def manageMastersBrands(request):
     print(request.POST)
@@ -1038,6 +1044,11 @@ def addMastersBrands(request):
         print(resp)
     return render(request, 'indolens_admin/masters/addMastersBrand.html')
 
+def enableDisableMastersBrands(request, bid, status):
+    master_brand_controller.enable_disable_product_brand(bid, status)
+    return redirect('manage_central_inventory_brands')
+
+
 
 def manageMastersShapes(request):
     print(request.POST)
@@ -1055,6 +1066,10 @@ def addMastersShapes(request):
         print(resp)
     return render(request, 'indolens_admin/masters/addMastersShapes.html')
 
+def enableDisableMastersShapes(request, sid, status):
+    master_shape_controller.enable_disable_frame_shape(sid, status)
+    return redirect('manage_central_inventory_shapes')
+
 
 def manageMastersFrameType(request):
     response, status_code = master_frame_type_controller.get_all_central_inventory_frame_types()
@@ -1070,6 +1085,10 @@ def addMastersFrameType(request):
         resp = master_frame_type_controller.add_frame_type(frame_type_obj)
     return render(request, 'indolens_admin/masters/addMastersFrameType.html')
 
+def enableDisableMastersFrameType(request,tid, status):
+    master_frame_type_controller.enable_disable_frame_type(tid, status)
+    return redirect('manage_central_inventory_frame_types')
+
 
 def manageMastersColor(request):
     response, status_code = master_color_controller.get_all_central_inventory_color()
@@ -1084,6 +1103,10 @@ def addMastersColor(request):
         resp = master_color_controller.add_master_color(color_obj)
     return render(request, 'indolens_admin/masters/addMastersColor.html')
 
+def enableDisableMastersColor(request, mcid, status):
+    master_color_controller.enable_disable_master_color(mcid, status)
+    return redirect('manage_central_inventory_color')
+
 
 def manageMastersMaterials(request):
     response, status_code = master_material_controller.get_all_central_inventory_materials()
@@ -1097,6 +1120,10 @@ def addMastersMaterials(request):
         material_obj = master_material_model.master_material_model_from_dict(request.POST)
         resp = master_material_controller.add_master_material(material_obj)
     return render(request, 'indolens_admin/masters/addMastersMaterials.html')
+
+def enableDisableMastersMaterials(request, mid, status):
+    master_material_controller.enable_disable_master_material(mid, status)
+    return redirect('manage_central_inventory_materials')
 
 
 def manageMastersUnits(request):

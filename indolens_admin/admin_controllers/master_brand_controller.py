@@ -58,3 +58,21 @@ def get_all_central_inventory_brand():
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+def enable_disable_product_brand(bid, status):
+    try:
+        with connection.cursor() as cursor:
+            set_product_brand_query = f"""
+            UPDATE brands SET status = '{status}' WHERE brand_id = '{bid}';
+            """
+            cursor.execute(set_product_brand_query)
+
+            return {
+                "status": True,
+                "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

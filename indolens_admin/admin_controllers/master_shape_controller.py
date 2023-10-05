@@ -59,3 +59,21 @@ def get_all_central_inventory_shapes():
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+def enable_disable_frame_shape(sid, status):
+    try:
+        with connection.cursor() as cursor:
+            set_frame_shape_query = f"""
+            UPDATE frame_shapes SET status = '{status}' WHERE shape_id = '{sid}';
+            """
+            cursor.execute(set_frame_shape_query)
+
+            return {
+                "status": True,
+                "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

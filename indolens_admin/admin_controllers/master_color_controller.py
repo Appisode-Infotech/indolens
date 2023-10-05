@@ -59,3 +59,21 @@ def get_all_central_inventory_color():
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+def enable_disable_master_color(mcid, status):
+    try:
+        with connection.cursor() as cursor:
+            set_color_query = f"""
+            UPDATE product_colors SET status = '{status}' WHERE color_id = '{mcid}';
+            """
+            cursor.execute(set_color_query)
+
+            return {
+                "status": True,
+                "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

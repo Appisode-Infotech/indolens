@@ -59,3 +59,21 @@ def get_all_central_inventory_frame_types():
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+def enable_disable_frame_type(tid, status):
+    try:
+        with connection.cursor() as cursor:
+            set_frame_type_query = f"""
+            UPDATE frame_types SET status = '{status}' WHERE frame_id = '{tid}';
+            """
+            cursor.execute(set_frame_type_query)
+
+            return {
+                "status": True,
+                "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

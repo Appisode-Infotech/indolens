@@ -15,16 +15,16 @@ def create_store_manager(sub_admin, files):
     try:
         with connection.cursor() as cursor:
             insert_store_manager_query = f"""
-                INSERT INTO store_manager (
+                INSERT INTO own_store_employees (
                     name, email, phone, password, profile_pic, 
                     assigned_store_id, address, document_1_type, document_1_url, 
                     document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on
+                    last_updated_by, last_updated_on, role
                 ) VALUES (
                     '{sub_admin.name}', '{sub_admin.email}', '{sub_admin.phone}', '{sub_admin.password}', '{files.profile_pic}', 
                     '{sub_admin.assigned_store_id}', '{sub_admin.address}', '{sub_admin.document_1_type}', '{json.dumps(files.document1)}', 
                     '{sub_admin.document_2_type}', '{json.dumps(files.document2)}', 1, '{sub_admin.created_by}', '{today}', 
-                    '{sub_admin.last_updated_by}', '{today}'
+                    '{sub_admin.last_updated_by}', '{today}', 1
                 )
             """
 
@@ -49,10 +49,11 @@ def create_store_manager(sub_admin, files):
 def get_all_store_manager():
     try:
         with connection.cursor() as cursor:
-            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM store_manager AS sm
+            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id """
+                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
+                                            WHERE sm.role = 1 """
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {
@@ -69,7 +70,7 @@ def get_all_store_manager():
 def get_store_manager_by_id(mid):
     try:
         with connection.cursor() as cursor:
-            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM store_manager AS sm
+            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id 
@@ -91,7 +92,7 @@ def enable_disable_store_manager(mid, status):
     try:
         with connection.cursor() as cursor:
             update_store_manager_query = f"""
-                UPDATE store_manager
+                UPDATE own_store_employees
                 SET
                     status = {status}
                 WHERE

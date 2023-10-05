@@ -15,15 +15,15 @@ def create_franchise_owner(franchise_owner, files):
     try:
         with connection.cursor() as cursor:
             insert_franchise_owner_query = f"""
-                INSERT INTO franchise_owner (
+                INSERT INTO franchise_store_employees (
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on
+                    status, created_by, created_on, last_updated_by, last_updated_on, role
                 ) VALUES (
                     '{franchise_owner.full_name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{franchise_owner.password}',
                     '{files.profile_pic}', '{franchise_owner.complete_address}', '{franchise_owner.document_1_type}', 
                     '{json.dumps(files.document1)}', '{franchise_owner.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{franchise_owner.created_by}', '{today}', '{franchise_owner.last_updated_by}', '{today}'
+                    1, '{franchise_owner.created_by}', '{today}', '{franchise_owner.last_updated_by}', '{today}', 1
                 )
             """
 
@@ -47,10 +47,11 @@ def get_all_franchise_owner():
     try:
         with connection.cursor() as cursor:
             get_all_franchise_owner_query = f""" SELECT a.*, os.store_name, creator.name, updater.name 
-                                            FROM franchise_owner AS a
-                                            LEFT JOIN franchise_store AS os ON a.franchise_store_id = os.store_id
+                                            FROM franchise_store_employees AS a
+                                            LEFT JOIN franchise_store AS os ON a.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id """
+                                            LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id 
+                                            WHERE a.role = 1 """
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {
@@ -68,11 +69,11 @@ def get_franchise_owner_by_id(foid):
     try:
         with connection.cursor() as cursor:
             get_all_franchise_owner_query = f""" SELECT a.*, os.store_name, creator.name, updater.name 
-                                            FROM franchise_owner AS a
-                                            LEFT JOIN franchise_store AS os ON a.franchise_store_id = os.store_id
+                                            FROM franchise_store_employees AS a
+                                            LEFT JOIN franchise_store AS os ON a.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id
-                                             WHERE franchise_owner_id = '{foid}'"""
+                                             WHERE a.store_manager_id = '{foid}'"""
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {
@@ -90,11 +91,11 @@ def enable_disable_franchise_owner(foid, status):
     try:
         with connection.cursor() as cursor:
             update_franchise_owners_query = f"""
-                UPDATE franchise_owner
+                UPDATE franchise_store_employees
                 SET
                     status = {status}
                 WHERE
-                    franchise_owner_id = {foid}
+                    store_manager_id = {foid}
             """
 
             # Execute the update query using your cursor

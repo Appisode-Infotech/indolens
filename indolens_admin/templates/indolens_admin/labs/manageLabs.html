@@ -145,9 +145,17 @@
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_active_jobs'  %}">{{lab_list|length}}</a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
-                                        class="text-decoration-none fw-bold fs-0"
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    {% if lab.lab_technician_name != None %}
+                                    <a class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_lab_technician' lab.lab_id %}">{{lab.lab_technician_name}}</a>
+                                        {{manager.store_name}}</a>
+                                    {% else %}
+                                        <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
+
+                                </td>
                                 </td>
 
                                 <!--                                <td class="align-middle white-space-nowrap text-end statuses"><span-->

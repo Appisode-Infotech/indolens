@@ -57,3 +57,22 @@ def get_all_central_inventory_category():
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def enable_disable_product_category(cid, status):
+    try:
+        with connection.cursor() as cursor:
+            set_product_category_query = f"""
+            UPDATE product_categories SET status = '{status}' WHERE category_id = '{cid}';
+            """
+            cursor.execute(set_product_category_query)
+
+            return {
+                "status": True,
+                "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

@@ -58,3 +58,21 @@ def get_all_central_inventory_materials():
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+def enable_disable_master_material(mid, status):
+    try:
+        with connection.cursor() as cursor:
+            set_material_query = f"""
+            UPDATE product_materials SET status = '{status}' WHERE material_id = '{mid}';
+            """
+            cursor.execute(set_material_query)
+
+            return {
+                "status": True,
+                "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
