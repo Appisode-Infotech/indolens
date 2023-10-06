@@ -4,7 +4,7 @@ from .views import *
 
 urlpatterns = [
     # start
-    path('', index, name='index'),
+    path('', home, name='index'),
     # auth
     path('login/', login, name='login'),
     path('admin_logout/', adminLogout, name='admin_logout'),
@@ -98,18 +98,31 @@ urlpatterns = [
     path('manage_marketing_head/enable_disable_marketing_head/?marketingHeadId=<int:mhid>/?status=<int:status>',
          enableDisableMarketingHead, name='enable_disable_marketing_head'),
     # manage optimetry
-    path('manage_optimetry/', manageOptimetry, name='manage_optimetry'),
-    path('manage_optimetry/create_optimetry/', createOptimetry, name='create_optimetry'),
-    path('manage_optimetry/edit_optimetry/', editOptimetry, name='edit_optimetry'),
-    path('manage_optimetry/view_optimetry/', viewOptimetry, name='view_optimetry'),
+    path('manage_store_optimetry/', manageOptimetry, name='manage_store_optimetry'),
+    path('manage_store_optimetry/create_optimetry/', createOptimetry, name='create_optimetry'),
+    path('manage_store_optimetry/edit_optimetry/', editOptimetry, name='edit_optimetry'),
+    path('manage_store_optimetry/view_optimetry/', viewOptimetry, name='view_optimetry'),
+    # manage franchise optimetry
+    path('manage_franchise_optimetry/', manageFranchiseOptimetry, name='manage_franchise_optimetry'),
+    path('manage_franchise_optimetry/create_optimetry/', createFranchiseOptimetry, name='create_franchise_optimetry'),
+    path('manage_franchise_optimetry/edit_optimetry/', editFranchiseOptimetry, name='edit_franchise_optimetry'),
+    path('manage_franchise_optimetry/view_optimetry/', viewFranchiseOptimetry, name='view_franchise_optimetry'),
     # manage sales executive
-    path('manage_sales_executives/', manageSaleExecutives, name='manage_sales_executives'),
-    path('manage_sales_executives/create_sales_executives/', createSaleExecutives, name='create_sales_executives'),
-    path('manage_sales_executives/edit_sales_executives/', editSaleExecutives, name='edit_sales_executives'),
-    path('manage_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seid>/?status=<int:status>',
+    path('manage_store_sales_executives/', manageSaleExecutives, name='manage_store_sales_executives'),
+    path('manage_store_sales_executives/create_sales_executives/', createSaleExecutives, name='create_sales_executives'),
+    path('manage_store_sales_executives/edit_sales_executives/', editSaleExecutives, name='edit_sales_executives'),
+    path('manage_store_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seid>/?status=<int:status>',
          enableDisableSaleExecutives, name='enable_disable_sales_executive'),
     path('manage_sales_executives/view_sales_executives/?salesExecutiveId=<int:seid>', viewSaleExecutives,
          name='view_sales_executives'),
+    # manage franchise sales executive
+    path('manage_franchise_sales_executives/', manageFranchiseSaleExecutives, name='manage_franchise_sales_executives'),
+    path('manage_franchise_sales_executives/create_sales_executives/', createFranchiseSaleExecutives, name='create_franchise_sales_executives'),
+    path('manage_franchise_sales_executives/edit_sales_executives/', editFranchiseSaleExecutives, name='edit_franchise_sales_executives'),
+    path('manage_franchise_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seid>/?status=<int:status>',
+         enableDisableFranchiseSaleExecutives, name='enable_disable_franchise_sales_executive'),
+    path('manage_franchise_sales_executives/view_sales_executives/?salesExecutiveId=<int:seid>', viewFranchiseSaleExecutives,
+         name='view_franchise_sales_executives'),
     # manage accountant
     path('manage_accountant/', manageAccountant, name='manage_accountant'),
     path('manage_accountant/create_accountant/', createAccountant, name='create_accountant'),
@@ -127,15 +140,24 @@ urlpatterns = [
     path('manage_lab_technician/enable_disable_lab_technician/?labTechnicianId=<int:ltid>/?status=<int:status>',
          enableDisableLabTechnician, name='enable_disable_lab_technician'),
 
-    # housekeeping
-    path('manage_other_employees/', manageOtherEmployees, name='manage_other_employees'),
-    path('manage_other_employees/create_other_employees/', createOtherEmployees, name='create_other_employees'),
-    path('manage_other_employees/edit_other_employees/?empId=<int:empid>', editOtherEmployees,
+    # Own store other employees
+    path('manage_store_other_employees/', manageOtherEmployees, name='manage_store_other_employees'),
+    path('manage_store_other_employees/create_other_employees/', createOtherEmployees, name='create_other_employees'),
+    path('manage_store_other_employees/edit_other_employees/?empId=<int:empid>', editOtherEmployees,
          name='edit_other_employees'),
-    path('manage_other_employees/view_other_employees/empId=<int:empid>', viewOtherEmployees,
+    path('manage_store_other_employees/view_other_employees/empId=<int:empid>', viewOtherEmployees,
          name='view_other_employees'),
-    path('manage_other_employees/enable_disable_other_employees/empId=<int:empid>/?status=<int:status>',
+    path('manage_store_other_employees/enable_disable_other_employees/empId=<int:empid>/?status=<int:status>',
          enableDisableOtherEmployees, name='enable_disable_other_employees'),
+    # Franchise other employees
+    path('manage_franchise_other_employees/', manageFranchiseOtherEmployees, name='manage_franchise_other_employees'),
+    path('manage_franchise_other_employees/create_other_employees/', createFranchiseOtherEmployees, name='create_franchise_other_employees'),
+    path('manage_franchise_other_employees/edit_other_employees/?empId=<int:empid>', editFranchiseOtherEmployees,
+         name='edit_franchise_other_employees'),
+    path('manage_franchise_other_employees/view_other_employees/empId=<int:empid>', viewFranchiseOtherEmployees,
+         name='view_franchise_other_employees'),
+    path('manage_franchise_other_employees/enable_disable_other_employees/empId=<int:empid>/?status=<int:status>',
+         enableDisableFranchiseOtherEmployees, name='enable_disable_franchise_other_employees'),
     # orders management
     path('all_orders/', viewAllOrders, name='all_orders'),
     path('pending_orders/', viewPendingOrders, name='pending_orders'),

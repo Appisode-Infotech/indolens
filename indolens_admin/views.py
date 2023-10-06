@@ -1,7 +1,7 @@
-from django.shortcuts import render, redirect
-from django.core.files.storage import default_storage
 import time
 
+from django.core.files.storage import default_storage
+from django.shortcuts import render, redirect
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
@@ -9,16 +9,16 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller
-from indolens_admin.admin_models.admin_req_model.files_model import FileData
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
     sales_executives_model, accountant_model, lab_technician_model, lab_model, other_employee_model, \
     product_category_model, master_brand_model, master_shape_model, master_frame_type_model, master_color_model, \
     master_material_model
+from indolens_admin.admin_models.admin_req_model.files_model import FileData
 
 
 # =================================ADMIN START======================================
-def index(request):
+def home(request):
     return redirect('login')
 
 
@@ -132,6 +132,7 @@ def enableDisableOwnStore(request, sid, status):
     print(response)
     return redirect('manage_own_stores')
 
+
 def manageFranchiseStores(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_all_franchise_stores()
@@ -182,6 +183,7 @@ def createFranchiseStore(request):
         return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html')
     else:
         return redirect('login')
+
 
 def enableDisableFranchiseStore(request, fid, status):
     response = franchise_store_controller.enable_disable_franchise_store(fid, status)
@@ -357,8 +359,8 @@ def editStoreManager(request, mid):
                   {"store_manager": response['store_manager']})
 
 
-def enableDisableStoreManager(request, mid, status):
-    response = store_manager_controller.enable_disable_store_manager(mid, status)
+def enableDisableStoreManager(request, mId, status):
+    response = store_manager_controller.enable_disable_store_manager(mId, status)
     print(response)
     return redirect('manage_store_managers')
 
@@ -452,14 +454,14 @@ def editFranchiseOwners(request, foid):
                       {"franchise_owner": response['franchise_owner']})
 
 
-def enableDisableFranchiseOwner(request, foid, status):
-    response = franchise_manager_controller.enable_disable_franchise_owner(foid, status)
+def enableDisableFranchiseOwner(request, foId, status):
+    response = franchise_manager_controller.enable_disable_franchise_owner(foId, status)
     print(response)
     return redirect('manage_franchise_owners')
 
 
-def viewFranchiseOwners(request, foid):
-    response, status_code = franchise_manager_controller.get_franchise_owner_by_id(foid)
+def viewFranchiseOwners(request, foId):
+    response, status_code = franchise_manager_controller.get_franchise_owner_by_id(foId)
     print(response)
     return render(request, 'indolens_admin/franchiseOwners/viewFranchiseOwner.html',
                   {"franchise_owner": response['franchise_owner']})
@@ -524,8 +526,8 @@ def editAreaHead(request):
     return render(request, 'indolens_admin/areaHead/editAreaHead.html')
 
 
-def enableDisableAreaHead(request, ahid, status):
-    area_head_controller.enable_disable_area_head(ahid, status)
+def enableDisableAreaHead(request, ahId, status):
+    area_head_controller.enable_disable_area_head(ahId, status)
     return redirect('manage_area_head')
 
 
@@ -604,7 +606,7 @@ def enableDisableMarketingHead(request, mhid, status):
     return redirect('manage_marketing_head')
 
 
-# =================================ADMIN OPTIMETRY MANAGEMENT======================================
+# =================================ADMIN OWN STORE OPTIMETRY MANAGEMENT======================================
 
 
 def manageOptimetry(request):
@@ -623,7 +625,30 @@ def viewOptimetry(request):
     return render(request, 'indolens_admin/optimetry/viewOptimetry.html')
 
 
-# =================================ADMIN OPTIMETRY MANAGEMENT======================================
+# =================================ADMIN OWN STORE OPTIMETRY MANAGEMENT======================================
+
+
+# =================================ADMIN FRANCHISE STORE OPTIMETRY MANAGEMENT======================================
+
+
+def manageFranchiseOptimetry(request):
+    return render(request, 'indolens_admin/franchiseOptimetry/manageOptimetry.html')
+
+
+def createFranchiseOptimetry(request):
+    return render(request, 'indolens_admin/franchiseOptimetry/createOptimetry.html')
+
+
+def editFranchiseOptimetry(request):
+    return render(request, 'indolens_admin/franchiseOptimetry/editOptimetry.html')
+
+
+def viewFranchiseOptimetry(request):
+    return render(request, 'indolens_admin/franchiseOptimetry/viewOptimetry.html')
+
+
+# =================================ADMIN FRANCHISE STORE OPTIMETRY MANAGEMENT======================================
+# =================================ADMIN OWN STORE SALES EXECUTIVE MANAGEMENT======================================
 
 
 def manageSaleExecutives(request):
@@ -687,10 +712,82 @@ def viewSaleExecutives(request, seid):
                   {"sales_executive": response['sales_executive']})
 
 
-def enableDisableSaleExecutives(request, seid, status):
-    sales_executives_controller.enable_disable_sales_executive(seid, status)
+def enableDisableSaleExecutives(request, seId, status):
+    sales_executives_controller.enable_disable_sales_executive(seId, status)
     return redirect('manage_marketing_head')
 
+
+# =================================ADMIN OWN STORE SALES EXECUTIVE MANAGEMENT======================================
+# =================================ADMIN FRANCHISE STORE SALES EXECUTIVE MANAGEMENT====================================
+
+
+def manageFranchiseSaleExecutives(request):
+    response, status_code = sales_executives_controller.get_all_sales_executive()
+    print(response)
+    return render(request, 'indolens_admin/franchiseSalesExecutive/manageSaleExecutives.html',
+                  {"sales_executive_list": ""})
+
+
+def createFranchiseSaleExecutives(request):
+    if request.method == 'POST':
+        form_data = {}
+        file_data = {}
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+            file_list = []
+
+            for index, file_obj in enumerate(file_objs):
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+        file_data = FileData(form_data)
+        sales_executives_obj = sales_executives_model.sales_executives_model_from_dict(request.POST)
+        resp = sales_executives_controller.create_own_sales_executives(sales_executives_obj, file_data)
+        # resp = sales_executives_controller.create_sales_executives(sales_executives_obj, file_data)
+        return redirect('manage_sales_executives')
+    else:
+        return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html')
+
+
+def editFranchiseSaleExecutives(request):
+    return render(request, 'indolens_admin/franchiseSalesExecutive/editSaleExecutives.html')
+
+
+def viewFranchiseSaleExecutives(request, seid):
+    response, status_code = sales_executives_controller.get_sales_executive_by_id(seid)
+    print(response)
+    return render(request, 'indolens_admin/franchiseSalesExecutive/viewSaleExecutives.html',
+                  {"sales_executive": response['sales_executive']})
+
+
+def enableDisableFranchiseSaleExecutives(request, seId, status):
+    sales_executives_controller.enable_disable_sales_executive(seId, status)
+    return redirect('manage_marketing_head')
+
+
+# =================================ADMIN OWN STORE SALES EXECUTIVE MANAGEMENT======================================
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
@@ -881,7 +978,7 @@ def createOtherEmployees(request):
         resp, status_code = other_employee_controller.create_other_employee(other_emp_obj, file_data)
         return redirect('manage_other_employees')
     else:
-        return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html',)
+        return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html', )
 
 
 def editOtherEmployees(request):
@@ -893,7 +990,74 @@ def viewOtherEmployees(request, empid):
     return render(request, 'indolens_admin/otherEmployees/viewOtherEmployees.html',
                   {"other_employee": response['other_employee']})
 
+
 def enableDisableOtherEmployees(request, empid, status):
+    other_employee_controller.enable_disable_other_employees(empid, status)
+    return redirect('manage_other_employees')
+
+
+# FRANCHISE OTHER EMPLOYEES
+def manageFranchiseOtherEmployees(request):
+    response, status_code = other_employee_controller.get_all_other_emp()
+    print(response)
+    return render(request, 'indolens_admin/franchiseOtherEmployees/manageOtherEmployees.html',
+                  {"other_employee_list": response['other_emp_list']})
+
+
+def createFranchiseOtherEmployees(request):
+    if request.method == 'POST':
+        form_data = {}
+        file_data = {}
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+        }
+
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+            file_list = []
+
+            for index, file_obj in enumerate(file_objs):
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        file_data = FileData(form_data)
+        other_emp_obj = other_employee_model.other_employee_model_from_dict(request.POST)
+        resp, status_code = other_employee_controller.create_other_employee(other_emp_obj, file_data)
+        return redirect('manage_other_employees')
+    else:
+        return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html', )
+
+
+def editFranchiseOtherEmployees(request):
+    return render(request, 'indolens_admin/franchiseOtherEmployees/editOtherEmployees.html')
+
+
+def viewFranchiseOtherEmployees(request, empid):
+    response, status_code = other_employee_controller.get_other_emp_by_id(empid)
+    return render(request, 'indolens_admin/franchiseOtherEmployees/viewOtherEmployees.html',
+                  {"other_employee": response['other_employee']})
+
+
+def enableDisableFranchiseOtherEmployees(request, empid, status):
     other_employee_controller.enable_disable_other_employees(empid, status)
     return redirect('manage_other_employees')
 
@@ -977,8 +1141,8 @@ def viewLab(request, labid):
                   {"lab_data": response['lab_data']})
 
 
-def enableDisableLab(request, labid, status):
-    lab_controller.enable_disable_lab(labid, status)
+def enableDisableLab(request, labId, status):
+    lab_controller.enable_disable_lab(labId, status)
     return redirect('manage_labs')
 
 
@@ -1020,6 +1184,7 @@ def addProductCategory(request):
         master_category_controller.add_product_category(product_cat_obj)
     return render(request, 'indolens_admin/masters/addProductCategory.html')
 
+
 def enableDisableProductCategory(request, cid, status):
     master_category_controller.enable_disable_product_category(cid, status)
     return redirect('manage_central_inventory_category')
@@ -1042,10 +1207,10 @@ def addMastersBrands(request):
         print(resp)
     return render(request, 'indolens_admin/masters/addMastersBrand.html')
 
+
 def enableDisableMastersBrands(request, bid, status):
     master_brand_controller.enable_disable_product_brand(bid, status)
     return redirect('manage_central_inventory_brands')
-
 
 
 def manageMastersShapes(request):
@@ -1063,6 +1228,7 @@ def addMastersShapes(request):
         resp = master_shape_controller.add_frame_shape(master_shape_obj)
         print(resp)
     return render(request, 'indolens_admin/masters/addMastersShapes.html')
+
 
 def enableDisableMastersShapes(request, sid, status):
     master_shape_controller.enable_disable_frame_shape(sid, status)
@@ -1083,7 +1249,8 @@ def addMastersFrameType(request):
         resp = master_frame_type_controller.add_frame_type(frame_type_obj)
     return render(request, 'indolens_admin/masters/addMastersFrameType.html')
 
-def enableDisableMastersFrameType(request,tid, status):
+
+def enableDisableMastersFrameType(request, tid, status):
     master_frame_type_controller.enable_disable_frame_type(tid, status)
     return redirect('manage_central_inventory_frame_types')
 
@@ -1101,8 +1268,9 @@ def addMastersColor(request):
         resp = master_color_controller.add_master_color(color_obj)
     return render(request, 'indolens_admin/masters/addMastersColor.html')
 
-def enableDisableMastersColor(request, mcid, status):
-    master_color_controller.enable_disable_master_color(mcid, status)
+
+def enableDisableMastersColor(request, mcId, status):
+    master_color_controller.enable_disable_master_color(mcId, status)
     return redirect('manage_central_inventory_color')
 
 
@@ -1118,6 +1286,7 @@ def addMastersMaterials(request):
         material_obj = master_material_model.master_material_model_from_dict(request.POST)
         resp = master_material_controller.add_master_material(material_obj)
     return render(request, 'indolens_admin/masters/addMastersMaterials.html')
+
 
 def enableDisableMastersMaterials(request, mid, status):
     master_material_controller.enable_disable_master_material(mid, status)
