@@ -612,7 +612,48 @@ def manageOptimetry(request):
 
 
 def createOptimetry(request):
-    return render(request, 'indolens_admin/optimetry/createOptimetry.html')
+    if request.method == 'POST':
+        print(request.POST)
+        print(request.FILES)
+        form_data = {}
+        file_data = {}
+        file_label_mapping = {
+            'profilePic': 'profile_pic',
+            'document1': 'documents',
+            'document2': 'documents',
+            'certificates': 'certificates',
+        }
+
+        for file_key, file_objs in request.FILES.lists():
+            label = file_label_mapping.get(file_key, 'unknown')
+            subdirectory = f"{label}/"
+            file_list = []
+
+            for index, file_obj in enumerate(file_objs):
+                file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                form_data_key = f"doc"
+                file_dict = {form_data_key: file_name}
+
+                with default_storage.open(file_name, 'wb+') as destination:
+                    for chunk in file_obj.chunks():
+                        destination.write(chunk)
+
+                file_list.append(file_dict)
+
+            if len(file_list) == 1:
+                file_data[file_key] = file_list[0]
+            else:
+                file_data[file_key] = file_list
+
+        # Combine the file data with the original form data
+        for key, value in file_data.items():
+            form_data[key] = value
+
+        file_data = FileData(form_data)
+        print(form_data)
+        return redirect('manage_optimetry')
+    else:
+        return render(request, 'indolens_admin/optimetry/createOptimetry.html')
 
 
 def editOptimetry(request):
