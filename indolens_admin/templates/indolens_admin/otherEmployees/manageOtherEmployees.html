@@ -163,7 +163,7 @@
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_other_employees' emp.other_employee_id %}">
+                                        href="{% url 'view_other_employees' emp.employee_id %}">
                                     {{emp.name}}
 
                                 </a>
@@ -221,7 +221,7 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_other_employees' emp.other_employee_id %}">View</a>
+                                                                                             href="{% url 'view_other_employees' emp.employee_id %}">View</a>
                                             <a class="dropdown-item" href="{% url 'edit_other_employees' 1 %}">Update/Change
                                                 Password</a>
                                             <a class="dropdown-item" href="{% url 'edit_other_employees' 1 %}">Allocate
@@ -230,11 +230,11 @@
                                             <div class="dropdown-divider"></div>
                                             {% if emp.status == 0 %}
                                             <a class="dropdown-item text-success"
-                                               href="{% url 'enable_disable_other_employees' emp.other_employee_id 1 %}">Make
+                                               href="{% url 'enable_disable_other_employees' emp.employee_id 1 %}">Make
                                                 Active</a>
                                             {% elif emp.status == 1 %}
                                             <a class="dropdown-item text-danger"
-                                               href="{% url 'enable_disable_other_employees' emp.other_employee_id 0 %}">Make
+                                               href="{% url 'enable_disable_other_employees' emp.employee_id 0 %}">Make
                                                 Inactive</a>
                                             {% endif %}
                                         </div>

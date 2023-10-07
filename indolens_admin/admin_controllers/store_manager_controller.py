@@ -5,7 +5,7 @@ import pymysql
 import pytz
 from django.db import connection
 
-from indolens_admin.admin_models.admin_resp_model.store_manager_resp_model import get_store_managers
+from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
@@ -56,7 +56,7 @@ def get_all_store_manager():
             store_managers = cursor.fetchall()
             return {
                        "status": True,
-                       "store_managers": get_store_managers(store_managers)
+                       "store_managers": get_own_store_employees(store_managers)
                    }, 200
 
     except pymysql.Error as e:
@@ -72,12 +72,12 @@ def get_store_manager_by_id(mid):
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id 
-                                            WHERE sm.store_manager_id = '{mid}'"""
+                                            WHERE sm.employee_id = '{mid}'"""
             cursor.execute(get_store_manager_query)
             store_manager = cursor.fetchall()
             return {
                        "status": True,
-                       "store_manager": get_store_managers(store_manager)
+                       "store_manager": get_own_store_employees(store_manager)
                    }, 200
 
     except pymysql.Error as e:
@@ -94,7 +94,7 @@ def enable_disable_store_manager(mid, status):
                 SET
                     status = {status}
                 WHERE
-                    store_manager_id = {mid}
+                    employee_id = {mid}
             """
 
             # Execute the update query using your cursor

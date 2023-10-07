@@ -8,12 +8,13 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     sub_admin_controller, store_manager_controller, franchise_manager_controller, area_head_controller, \
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
-    master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller
+    master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
+    optimetry_controller
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
-    sub_admin_model, store_manager_model, franchise_owner_model, area_head_model, marketing_head_model, \
-    sales_executives_model, accountant_model, lab_technician_model, lab_model, other_employee_model, \
+    sub_admin_model, area_head_model, marketing_head_model, \
+    accountant_model, lab_technician_model, lab_model, \
     product_category_model, master_brand_model, master_shape_model, master_frame_type_model, master_color_model, \
-    master_material_model
+    master_material_model, store_employee_model
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
 
 
@@ -284,6 +285,8 @@ def enableDisableSubAdmin(request, said, status):
 def manageStoreManagers(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_all_store_manager()
+        print(response)
+
         return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
                       {"store_managers": response['store_managers']})
     else:
@@ -328,7 +331,7 @@ def createStoreManager(request):
 
             file_data = FileData(form_data)
 
-            store_manager = store_manager_model.store_manager_model_from_dict(request.POST)
+            store_manager = store_employee_model.store_employee_model_from_dict(request.POST)
             response, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
             url = reverse('view_store_manager', kwargs={'mid': response['mid']})
             return redirect(url)
@@ -351,7 +354,7 @@ def viewStoreManager(request, mid):
 def editStoreManager(request, mid):
     if request.method == 'POST':
         print(request.POST)
-        store_manager = store_manager_model.store_manager_model_from_dict(request.POST)
+        store_manager = store_employee_model.store_employee_model_from_dict(request.POST)
         print(store_manager)
 
     response, status_code = store_manager_controller.get_store_manager_by_id(mid)
@@ -411,7 +414,7 @@ def createFranchiseOwners(request):
 
         file_data = FileData(form_data)
 
-        franchise_owner_obj = franchise_owner_model.franchise_owner_model_from_dict(request.POST)
+        franchise_owner_obj = store_employee_model.store_employee_model_from_dict(request.POST)
         response, status_code = franchise_manager_controller.create_franchise_owner(franchise_owner_obj, file_data)
         url = reverse('view_franchise_owner', kwargs={'foid': response['foid']})
         return redirect(url)
@@ -443,9 +446,9 @@ def editFranchiseOwners(request, foid):
                     for chunk in file_obj.chunks():
                         destination.write(chunk)
 
-        franchise_owner = franchise_owner_model.franchise_owner_model_from_dict(form_data)
+        franchise_owner = store_employee_model.store_employee_model_from_dict(form_data)
         response, status_code = franchise_manager_controller.edit_franchise_owner(franchise_owner)
-        url = reverse('view_franchise_owner', kwargs={'foid': franchise_owner.franchise_owner_id})
+        url = reverse('view_franchise_owner', kwargs={'foid': franchise_owner.employee_id})
         return redirect(url)
 
     else:
@@ -610,13 +613,14 @@ def enableDisableMarketingHead(request, mhid, status):
 
 
 def manageOptimetry(request):
-    return render(request, 'indolens_admin/optimetry/manageOptimetry.html')
+    response, status_code = optimetry_controller.get_all_optimetry()
+    print(response)
+    return render(request, 'indolens_admin/optimetry/manageOptimetry.html',
+                  {"optimetry_list": response['optimetry_list']})
 
 
 def createOptimetry(request):
     if request.method == 'POST':
-        print(request.POST)
-        print(request.FILES)
         form_data = {}
         file_data = {}
         file_label_mapping = {
@@ -652,8 +656,10 @@ def createOptimetry(request):
             form_data[key] = value
 
         file_data = FileData(form_data)
-        print(form_data)
-        return redirect('manage_optimetry')
+        optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
+        response, status_code = optimetry_controller.create_optimetry(optimetry_obj, file_data)
+        url = reverse('view_optimetry', kwargs={'opid': response['opid']})
+        return redirect(url)
     else:
         return render(request, 'indolens_admin/optimetry/createOptimetry.html')
 
@@ -662,8 +668,15 @@ def editOptimetry(request):
     return render(request, 'indolens_admin/optimetry/editOptimetry.html')
 
 
-def viewOptimetry(request):
-    return render(request, 'indolens_admin/optimetry/viewOptimetry.html')
+def viewOptimetry(request, opid):
+    response, status_code = optimetry_controller.get_optimetry_by_id(opid)
+    print(response)
+    return render(request, 'indolens_admin/optimetry/viewOptimetry.html',
+                  {"optimetry": response['optimetry']})
+
+def enableDisableOptimetry(request, opid, status):
+    optimetry_controller.enable_disable_optimetry(opid, status)
+    return redirect('manage_store_optimetry')
 
 
 # =================================ADMIN OWN STORE OPTIMETRY MANAGEMENT======================================
@@ -673,7 +686,10 @@ def viewOptimetry(request):
 
 
 def manageFranchiseOptimetry(request):
-    return render(request, 'indolens_admin/franchiseOptimetry/manageOptimetry.html')
+    response, status_code = optimetry_controller.get_all_franchise_optimetry()
+    print(response)
+    return render(request, 'indolens_admin/franchiseOptimetry/manageOptimetry.html',
+                  {"optimetry_list":response['optimetry_list']})
 
 
 def createFranchiseOptimetry(request):
@@ -693,10 +709,9 @@ def viewFranchiseOptimetry(request):
 
 
 def manageSaleExecutives(request):
-    response, status_code = sales_executives_controller.get_all_sales_executive()
-    print(response)
+    response, status_code = sales_executives_controller.get_all_own_sales_executive()
     return render(request, 'indolens_admin/salesExecutive/manageSaleExecutives.html',
-                  {"sales_executive_list": ""})
+                  {"sales_executive_list": response['sales_executive_list']})
 
 
 def createSaleExecutives(request):
@@ -734,10 +749,10 @@ def createSaleExecutives(request):
         for key, value in file_data.items():
             form_data[key] = value
         file_data = FileData(form_data)
-        sales_executives_obj = sales_executives_model.sales_executives_model_from_dict(request.POST)
+        sales_executives_obj = store_employee_model.store_employee_model_from_dict(request.POST)
         resp = sales_executives_controller.create_own_sales_executives(sales_executives_obj, file_data)
         # resp = sales_executives_controller.create_sales_executives(sales_executives_obj, file_data)
-        return redirect('manage_sales_executives')
+        return redirect('manage_store_sales_executives')
     else:
         return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html')
 
@@ -746,16 +761,15 @@ def editSaleExecutives(request):
     return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html')
 
 
-def viewSaleExecutives(request, seid):
-    response, status_code = sales_executives_controller.get_sales_executive_by_id(seid)
-    print(response)
+def viewSaleExecutives(request, seId):
+    response, status_code = sales_executives_controller.get_own_sales_executive_by_id(seId)
     return render(request, 'indolens_admin/salesExecutive/viewSaleExecutives.html',
                   {"sales_executive": response['sales_executive']})
 
 
 def enableDisableSaleExecutives(request, seId, status):
     sales_executives_controller.enable_disable_sales_executive(seId, status)
-    return redirect('manage_marketing_head')
+    return redirect('manage_store_sales_executives')
 
 
 # =================================ADMIN OWN STORE SALES EXECUTIVE MANAGEMENT======================================
@@ -763,10 +777,9 @@ def enableDisableSaleExecutives(request, seId, status):
 
 
 def manageFranchiseSaleExecutives(request):
-    response, status_code = sales_executives_controller.get_all_sales_executive()
-    print(response)
+    response, status_code = sales_executives_controller.get_all_franchise_sales_executive()
     return render(request, 'indolens_admin/franchiseSalesExecutive/manageSaleExecutives.html',
-                  {"sales_executive_list": ""})
+                  {"franchise_sales_executive_list": response['franchise_sales_executive_list']})
 
 
 def createFranchiseSaleExecutives(request):
@@ -804,9 +817,9 @@ def createFranchiseSaleExecutives(request):
         for key, value in file_data.items():
             form_data[key] = value
         file_data = FileData(form_data)
-        sales_executives_obj = sales_executives_model.sales_executives_model_from_dict(request.POST)
-        resp = sales_executives_controller.create_own_sales_executives(sales_executives_obj, file_data)
-        # resp = sales_executives_controller.create_sales_executives(sales_executives_obj, file_data)
+        sales_executives_obj = store_employee_model.store_employee_model_from_dict(request.POST)
+        resp = sales_executives_controller.create_franchise_sales_executives(sales_executives_obj, file_data)
+        print(resp)
         return redirect('manage_sales_executives')
     else:
         return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html')
@@ -816,16 +829,16 @@ def editFranchiseSaleExecutives(request):
     return render(request, 'indolens_admin/franchiseSalesExecutive/editSaleExecutives.html')
 
 
-def viewFranchiseSaleExecutives(request, seid):
-    response, status_code = sales_executives_controller.get_sales_executive_by_id(seid)
+def viewFranchiseSaleExecutives(request, seId):
+    response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(seId)
     print(response)
     return render(request, 'indolens_admin/franchiseSalesExecutive/viewSaleExecutives.html',
-                  {"sales_executive": response['sales_executive']})
+                  {"franchise_sales_executive": response['franchise_sales_executive']})
 
 
 def enableDisableFranchiseSaleExecutives(request, seId, status):
-    sales_executives_controller.enable_disable_sales_executive(seId, status)
-    return redirect('manage_marketing_head')
+    sales_executives_controller.enable_disable_franchise_sales_executive(seId, status)
+    return redirect('manage_franchise_sales_executives')
 
 
 # =================================ADMIN OWN STORE SALES EXECUTIVE MANAGEMENT======================================
@@ -974,7 +987,6 @@ def enableDisableLabTechnician(request, ltid, status):
 
 def manageOtherEmployees(request):
     response, status_code = other_employee_controller.get_all_other_emp()
-    print(response)
     return render(request, 'indolens_admin/otherEmployees/manageOtherEmployees.html',
                   {"other_employee_list": response['other_emp_list']})
 
@@ -1015,14 +1027,14 @@ def createOtherEmployees(request):
             form_data[key] = value
 
         file_data = FileData(form_data)
-        other_emp_obj = other_employee_model.other_employee_model_from_dict(request.POST)
+        other_emp_obj = store_employee_model.store_employee_model_from_dict(request.POST)
         resp, status_code = other_employee_controller.create_other_employee(other_emp_obj, file_data)
-        return redirect('manage_other_employees')
+        return redirect('manage_store_other_employees')
     else:
         return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html', )
 
 
-def editOtherEmployees(request):
+def editOtherEmployees(request, empid):
     return render(request, 'indolens_admin/otherEmployees/editOtherEmployees.html')
 
 
@@ -1034,13 +1046,12 @@ def viewOtherEmployees(request, empid):
 
 def enableDisableOtherEmployees(request, empid, status):
     other_employee_controller.enable_disable_other_employees(empid, status)
-    return redirect('manage_other_employees')
+    return redirect('manage_store_other_employees')
 
 
 # FRANCHISE OTHER EMPLOYEES
 def manageFranchiseOtherEmployees(request):
-    response, status_code = other_employee_controller.get_all_other_emp()
-    print(response)
+    response, status_code = other_employee_controller.get_all_franchise_other_emp()
     return render(request, 'indolens_admin/franchiseOtherEmployees/manageOtherEmployees.html',
                   {"other_employee_list": response['other_emp_list']})
 
@@ -1081,9 +1092,9 @@ def createFranchiseOtherEmployees(request):
             form_data[key] = value
 
         file_data = FileData(form_data)
-        other_emp_obj = other_employee_model.other_employee_model_from_dict(request.POST)
-        resp, status_code = other_employee_controller.create_other_employee(other_emp_obj, file_data)
-        return redirect('manage_other_employees')
+        other_emp_obj = store_employee_model.store_employee_model_from_dict(request.POST)
+        resp, status_code = other_employee_controller.create_franchise_other_employee(other_emp_obj, file_data)
+        return redirect('manage_franchise_other_employees')
     else:
         return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html', )
 
@@ -1093,14 +1104,14 @@ def editFranchiseOtherEmployees(request):
 
 
 def viewFranchiseOtherEmployees(request, empid):
-    response, status_code = other_employee_controller.get_other_emp_by_id(empid)
+    response, status_code = other_employee_controller.get_franchise_other_emp_by_id(empid)
     return render(request, 'indolens_admin/franchiseOtherEmployees/viewOtherEmployees.html',
                   {"other_employee": response['other_employee']})
 
 
 def enableDisableFranchiseOtherEmployees(request, empid, status):
-    other_employee_controller.enable_disable_other_employees(empid, status)
-    return redirect('manage_other_employees')
+    other_employee_controller.enable_disable_franchise_other_employees(empid, status)
+    return redirect('manage_franchise_other_employees')
 
 
 # =================================ADMIN ORDERS MANAGEMENT======================================
