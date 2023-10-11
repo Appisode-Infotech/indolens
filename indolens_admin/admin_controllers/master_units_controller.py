@@ -1,0 +1,80 @@
+import datetime
+import json
+
+import pymysql
+import pytz
+from django.db import connection
+
+from indolens_admin.admin_models.admin_resp_model.master_units_resp_model import get_master_units
+
+ist = pytz.timezone('Asia/Kolkata')
+today = datetime.datetime.now(ist)
+
+
+def add_masters_units(data):
+    try:
+        with connection.cursor() as cursor:
+            insert_master_units_query = f"""
+                INSERT INTO units (
+                    unit_name,  status, created_on, created_by,  last_updated_on,
+                    last_updated_by
+                ) VALUES (
+                    '{data['unit_name']}', 0,  '{today}','{data['created_by']}',  '{today}', '{data['created_by']}'
+                )
+            """
+
+            # Execute the query using your cursor
+            cursor.execute(insert_master_units_query)
+            uid = cursor.lastrowid
+
+            return {
+                "status": True,
+                "message": "Units added",
+                "uid": uid
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_all_units():
+    try:
+        with connection.cursor() as cursor:
+            get_units_query = f""" SELECT u.*, creator.name, updater.name 
+                                           FROM units AS u
+                                            LEFT JOIN admin AS creator ON u.created_by = creator.admin_id
+                                            LEFT JOIN admin AS updater ON u.last_updated_by = updater.admin_id
+                                             """
+            cursor.execute(get_units_query)
+            master_units = cursor.fetchall()
+            print(master_units)
+            return {
+                       "status": True,
+                       "units_list": get_master_units(master_units)
+
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def enable_disable_master_units(uid, status):
+    try:
+        with connection.cursor() as cursor:
+            set_units_query = f"""
+            UPDATE units SET status = '{status}' WHERE unit_id = '{uid}';
+            """
+            cursor.execute(set_units_query)
+
+            return {
+                "status": True,
+                "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

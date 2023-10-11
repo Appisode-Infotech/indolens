@@ -63,6 +63,9 @@ urlpatterns = [
     path('manage_central_inventory_materials/add_master_material/', addMastersMaterials, name='add_master_material'),
     path('manage_central_inventory_materials/enable_disable_master_material/colorId=<int:mid>/status=<int:status>', enableDisableMastersMaterials, name='enable_disable_master_material'),
     path('manage_central_inventory_units/', manageMastersUnits, name='manage_central_inventory_units'),
+    path('manage_central_inventory_units/add_Master_units', addMastersUnits, name='add_Master_units'),
+    path('manage_central_inventory_units/enable_disable_master_units/unitsId=<int:unitid>/status=<int:status>',
+         enableDisableMastersUnits, name='enable_disable_master_units'),
     # customers
     path('view_customers/', viewAllCustomers, name='view_customers'),
     path('view_customers/customer_details/', viewCustomerDetails, name='customer_details'),
