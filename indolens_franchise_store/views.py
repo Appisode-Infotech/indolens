@@ -12,7 +12,7 @@ def index(request):
 def login(request):
     if request.method == 'POST':
         return redirect('franchise_store_dashboard')
-    return render(request, 'auth/sign_in.html')
+    return render(request, 'auth/franchise_sign_in.html')
 
 
 def forgotPassword(request):
@@ -29,7 +29,7 @@ def franchiseOwnerLogout(request):
 
 # ================================= FRANCHISE STORE DASHBOARD ======================================
 def dashboard(request):
-    return render(request, 'dashboard.html')
+    return render(request, 'franchise_dashboard.html')
 
 
 # ================================= FRANCHISE STORE ORDER MANAGEMENT ======================================

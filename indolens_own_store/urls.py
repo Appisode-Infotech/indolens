@@ -6,7 +6,7 @@ urlpatterns = [
     # start
     path('', index, name='own_store_index'),
     # auth
-    path('login/', login, name='own_store_login'),
+    path('own_store_login/', login, name='own_store_login'),
     path('forgot_password/', forgotPassword, name='own_store_forgot_password'),
     path('reset_password/', resetPassword, name='own_store_reset_password'),
     path('store_manager_logout/', storeManagerLogout, name='store_manager_logout'),

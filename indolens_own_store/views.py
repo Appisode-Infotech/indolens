@@ -12,15 +12,15 @@ def index(request):
 def login(request):
     if request.method == 'POST':
         return redirect('own_store_dashboard')
-    return render(request, 'auth/sign_in.html')
+    return render(request, 'auth/own_store_sign_in.html')
 
 
 def forgotPassword(request):
-    return render(request, 'auth/forgot_password.html')
+    return render(request, 'auth/own_store_forgot_password.html')
 
 
 def resetPassword(request):
-    return render(request, 'auth/reset_password.html')
+    return render(request, 'auth/own_store_reset_password.html')
 
 
 def storeManagerLogout(request):
