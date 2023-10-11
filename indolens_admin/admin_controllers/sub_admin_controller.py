@@ -27,10 +27,6 @@ def create_sub_admin(sub_admin, files):
                 )
             """
 
-            # Execute the query using your cursor
-            cursor.execute(insert_admin_query)
-
-            # Execute the query using your cursor
             cursor.execute(insert_admin_query)
             said = cursor.lastrowid
 

@@ -35,7 +35,7 @@ def create_optimetry(optimetry_obj, files):
             return {
                 "status": True,
                 "message": "Employee added",
-                "seid": empid
+                "empid": empid
             }, 200
 
     except pymysql.Error as e:
@@ -124,6 +124,27 @@ def get_optimetry_by_id(opid):
     try:
         with connection.cursor() as cursor:
             get_optimetry_query = f""" SELECT op.*, os.store_name, creator.name, updater.name FROM own_store_employees AS op
+                                            LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
+                                            LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
+                                            LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id 
+                                            WHERE op.employee_id = '{opid}'"""
+            cursor.execute(get_optimetry_query)
+            optimetry = cursor.fetchall()
+            return {
+                       "status": True,
+                       "optimetry": get_own_store_employees(optimetry)
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_franchise_optimetry_by_id(opid):
+    try:
+        with connection.cursor() as cursor:
+            get_optimetry_query = f""" SELECT op.*, os.store_name, creator.name, updater.name FROM franchise_store_employees AS op
                                             LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id 
