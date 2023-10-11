@@ -167,6 +167,8 @@
                             <input class="form-control" id="document1" multiple="multiple" name="document1"
                                    type="file"/>
                         </div>
+                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
+
 
                         <div class="mb-3">
                             <label class="form-label" for="document2_type">Document 2 Type</label>
@@ -185,6 +187,7 @@
                             <input class="form-control" id="document2" multiple="multiple" name="document2"
                                    type="file"/>
                         </div>
+                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="document2Previews"></div>
                         <div class="mb-3">
 
                             <label class="form-label" for="certificates">Certificates Upload (Can choose
@@ -214,6 +217,7 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
+<script src="{% static 'js/file-upload-preview.js' %}"></script>
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>

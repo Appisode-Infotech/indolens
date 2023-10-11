@@ -164,6 +164,7 @@
                             <input class="form-control" id="document1" multiple="multiple" name="document1"
                                    type="file"/>
                         </div>
+                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
 
                         <div class="mb-3">
                             <label class="form-label" for="document1">Document 2 Type</label>
@@ -173,6 +174,7 @@
                                 <option value="Pan Card">Pan Card</option>
                             </select>
                         </div>
+
                         <div class="mb-3">
 
                             <label class="form-label" for="document2">Document 2 Upload (Can choose
@@ -181,6 +183,7 @@
                             <input class="form-control" id="document2" multiple="multiple" name="document2"
                                    type="file"/>
                         </div>
+                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="document2Previews"></div>
 
                         <input name="created_by" required type="hidden"
 
@@ -208,6 +211,7 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
+<script src="{% static 'js/file-upload-preview.js' %}"></script>
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
