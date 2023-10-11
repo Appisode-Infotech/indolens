@@ -5439,7 +5439,7 @@
   /*                                    Toast                                   */
   /* -------------------------------------------------------------------------- */
 
-  const simplebarInit = () => {
+  const simpleBarInit = () => {
     const scrollEl = Array.from(document.querySelectorAll('.scrollbar-overlay'));
 
     scrollEl.forEach(el => {
@@ -5855,7 +5855,7 @@
   };
 
   /* -------------------------------------------------------------------------- */
-  /*                                    TODO Offacanvas                                   */
+  /*                                    TODO Offcanvas                                   */
   /* -------------------------------------------------------------------------- */
 
   const todoOffcanvasInit = () => {
@@ -6075,7 +6075,7 @@ const addImagePreview = () => {
   window.initMap = initMap;
   docReady(detectorInit);
   docReady(addImagePreview);
-  docReady(simplebarInit);
+  docReady(simpleBarInit);
   docReady(toastInit);
   docReady(tooltipInit);
   docReady(featherIconsInit);

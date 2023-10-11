@@ -143,7 +143,7 @@
                             <tbody class="list" id="project-list-table-body">
                             <tr class="position-static">
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
-                                        class="text-decoration-none fw-bold fs-0" href="{% url 'view_own_store' %}">Indolens
+                                        class="text-decoration-none fw-bold fs-0" href="{% url 'view_own_store' 1 %}">Indolens
                                     - 01</a>
                                 </td>
 
@@ -185,12 +185,7 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_own_store' %}">View</a>
-                                            <!--                                            <a class="dropdown-item"-->
-                                            <!--                                               href="{% url 'edit_own_store' %}">Edit</a>-->
-                                            <!--                                            <a class="dropdown-item"-->
-                                            <!--                                               href="{% url 'view_own_store' %}">Allocate Manager</a>-->
-                                            <!--                                            &lt;!&ndash;                                            <a class="dropdown-item" href="#!">Export</a>&ndash;&gt;-->
+                                                                                             href="{% url 'view_own_store' 1 %}">View</a>
 
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item text-success" href="#!">Accept</a>
