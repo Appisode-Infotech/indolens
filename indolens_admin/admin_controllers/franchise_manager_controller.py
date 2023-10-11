@@ -19,9 +19,9 @@ def create_franchise_owner(franchise_owner, files):
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
                     status, created_by, created_on, last_updated_by, last_updated_on, role
-                ) VALUES (
-                    '{franchise_owner.full_name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{franchise_owner.password}',
-                    '{files.profile_pic}', '{franchise_owner.complete_address}', '{franchise_owner.document_1_type}', 
+                ) VALUES (  
+                    '{franchise_owner.name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{franchise_owner.password}',
+                    '{files.profile_pic}', '{franchise_owner.address}', '{franchise_owner.document_1_type}', 
                     '{json.dumps(files.document1)}', '{franchise_owner.document_2_type}', '{json.dumps(files.document2)}', 
                     1, '{franchise_owner.created_by}', '{today}', '{franchise_owner.last_updated_by}', '{today}', 1
                 )
@@ -73,7 +73,7 @@ def get_franchise_owner_by_id(foid):
                                             LEFT JOIN franchise_store AS os ON a.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id
-                                             WHERE a.store_manager_id = '{foid}'"""
+                                             WHERE a.employee_id = '{foid}'"""
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {
@@ -95,7 +95,7 @@ def enable_disable_franchise_owner(foid, status):
                 SET
                     status = {status}
                 WHERE
-                    store_manager_id = {foid}
+                    employee_id = {foid}
             """
 
             # Execute the update query using your cursor

@@ -36,7 +36,7 @@ def create_other_employee(other_emp, files):
             return {
                 "status": True,
                 "message": "Employee added",
-                "seid": empid
+                "empid": empid
             }, 200
 
     except pymysql.Error as e:

@@ -13,7 +13,6 @@
     <title>Indolens admin - Manage Lab Technicians</title>
 
     {% load static %}
-
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
@@ -152,9 +151,9 @@
                             {% for lab_technician in lab_technician_list%}
                             <tr class="position-static">
                                 <td>
-                                    <div class="avatar avatar-m"><img alt=""
-                                                                      class="rounded-circle"
-                                                                      src="{% static 'img/team/32.png' %}"/>
+                                    <a href="{{MEDIA_URL}}{{lab_technician.profile_pic}}" target="_blank"></a>
+                                    <div class="avatar avatar-m">
+                                        <img alt="" class="rounded-circle" src=" {{MEDIA_URL}}{{lab_technician.profile_pic}}"/>
                                     </div>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
@@ -184,7 +183,8 @@
                                         {{lab_technician.lab_name}}
                                     </a>
                                     {% else %}
-                                    Not Assigned
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                     {% endif %}
                                 </td>
 
