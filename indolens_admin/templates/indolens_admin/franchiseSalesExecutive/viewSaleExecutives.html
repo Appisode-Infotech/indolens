@@ -80,7 +80,7 @@
     <div class="container-fluid px-0">
 
         {% include 'nav_bar.html' %}
-        {% for sales_executive in sales_executive %}
+        {% for sales_executive in franchise_sales_executive %}
 
         <div class="content">
 
@@ -92,7 +92,7 @@
                     <div class="col-auto">
                         <div class="row g-3">
                             <div class="col-auto">
-                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_sales_executives' %}">
+                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_franchise_sales_executives' %}">
                                     <span class="fas fa-refresh me-2"></span> Update
                                 </a>
 
@@ -119,7 +119,7 @@
                                                 <p class="text-800">Joined on {{sales_executive.created_on}}
                                                 <p>
                                                 <p class="text-800">Manager - <a
-                                                        href="{%url 'view_own_store' sales_executive.assigned_store_id %}">
+                                                        href="{%url 'view_franchise_store' sales_executive.assigned_store_id %}">
                                                     {{sales_executive.store_name}}
                                                 </a></p>
 

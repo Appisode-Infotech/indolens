@@ -55,13 +55,6 @@
         var userLinkRTL = document.getElementById('user-style-rtl');
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
-      }
-
-
-
-
-
-
     </script>
 </head>
 
@@ -97,8 +90,52 @@
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
                                 </div>
-                                <div class="col-auto"><a class="btn btn-primary px-5"><i
-                                        class="fa-solid fa-plus me-2"></i>Add a Unit</a></div>
+                                <div class="col-auto">
+                                    <button type="button" data-bs-toggle="modal" data-bs-target="#addUnit"
+                                            class="btn btn-primary px-5"><i
+                                            class="fa-solid fa-plus me-2"></i>Add a Unit
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="addUnit" tabindex="-1" aria-labelledby="addUnitModalLabel"
+                         aria-hidden="true">
+                        <div class="modal-dialog modal-dialog-centered ">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="addUnitModalLabel">Add new unit</h5>
+                                    <button class="btn p-1" type="button" data-bs-dismiss="modal" aria-label="Close">
+                                        <span class="fas fa-times fs--1"></span></button>
+                                </div>
+                                <form action=""
+                                      class="row g-3 needs-validation ps-4 pe-4" enctype="multipart/form-data"
+                                      method="post" novalidate="">
+                                    {% csrf_token %}
+                                    <div class="col-md-12">
+
+                                        <label class="form-label" for="unitName">Unit name</label>
+
+                                        <input class="form-control" id="unitName" name="unit_name" required=""
+                                               type="text"
+                                               value=""/>
+                                        <div class="invalid-feedback">Please provide a valid unit.</div>
+
+                                    </div>
+
+
+                                    <input required type="hidden" name="created_by"
+
+                                           value="{{ request.session.id }}">
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary" type="submit">Submit</button>
+                                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
+                                            Cancel
+                                        </button>
+                                    </div>
+
+                                </form>
+
                             </div>
                         </div>
                     </div>
@@ -213,6 +250,11 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
+
+
+
 
 
 

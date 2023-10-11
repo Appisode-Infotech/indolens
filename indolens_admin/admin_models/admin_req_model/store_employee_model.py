@@ -1,5 +1,5 @@
-from dataclasses import dataclass
 from typing import Optional, Any, TypeVar, Type, cast
+
 
 T = TypeVar("T")
 
@@ -33,54 +33,73 @@ def to_class(c: Type[T], x: Any) -> dict:
     return cast(Any, x).to_dict()
 
 
-@dataclass
-class OtherEmployeeModel:
-    sales_executive_id: Optional[int] = None
-    name: Optional[str] = None
-    email: Optional[str] = None
-    phone: Optional[str] = None
-    password: Optional[str] = None
-    profile_pic: Optional[str] = None
-    assigned_store_id: Optional[int] = None
-    address: Optional[str] = None
-    document_1_type: Optional[str] = None
-    document_1_url: Optional[str] = None
-    document_2_type: Optional[str] = None
-    document_2_url: Optional[str] = None
-    status: Optional[int] = None
-    created_by: Optional[int] = None
-    created_on: Optional[str] = None
-    last_updated_by: Optional[int] = None
-    last_updated_on: Optional[str] = None
+class StoreEmployee:
+    employee_id: Optional[int]
+    name: Optional[str]
+    email: Optional[str]
+    phone: Optional[str]
+    password: Optional[str]
+    profile_pic: Optional[str]
+    assigned_store_id: Optional[int]
+    address: Optional[str]
+    document_1_type: Optional[str]
+    document_1_url: Optional[str]
+    document_2_type: Optional[str]
+    document_2_url: Optional[str]
+    status: Optional[int]
+    role: Optional[int]
+    created_by: Optional[int]
+    created_on: Optional[str]
+    last_updated_by: Optional[int]
+    last_updated_on: Optional[str]
+
+    def __init__(self, employee_id: Optional[int], name: Optional[str], email: Optional[str], phone: Optional[str], password: Optional[str], profile_pic: Optional[str], assigned_store_id: Optional[int], address: Optional[str], document_1_type: Optional[str], document_1_url: Optional[str], document_2_type: Optional[str], document_2_url: Optional[str], status: Optional[int], role: Optional[int], created_by: Optional[int], created_on: Optional[str], last_updated_by: Optional[int], last_updated_on: Optional[str]) -> None:
+        self.employee_id = employee_id
+        self.name = name
+        self.email = email
+        self.phone = phone
+        self.password = password
+        self.profile_pic = profile_pic
+        self.assigned_store_id = assigned_store_id
+        self.address = address
+        self.document_1_type = document_1_type
+        self.document_1_url = document_1_url
+        self.document_2_type = document_2_type
+        self.document_2_url = document_2_url
+        self.status = status
+        self.role = role
+        self.created_by = created_by
+        self.created_on = created_on
+        self.last_updated_by = last_updated_by
+        self.last_updated_on = last_updated_on
 
     @staticmethod
-    def from_dict(obj: Any) -> 'OtherEmployeeModel':
+    def from_dict(obj: Any) -> 'StoreEmployee':
         assert isinstance(obj, dict)
-        sales_executive_id = from_union([from_int, from_none], obj.get("sales_executive_id"))
+        employee_id = from_union([from_int, from_none], obj.get("employee_id"))
         name = from_union([from_str, from_none], obj.get("name"))
         email = from_union([from_str, from_none], obj.get("email"))
         phone = from_union([from_str, from_none], obj.get("phone"))
         password = from_union([from_str, from_none], obj.get("password"))
         profile_pic = from_union([from_str, from_none], obj.get("profile_pic"))
-        assigned_store_id = from_union([from_int, from_none], obj.get("assigned_store_id"))
+        assigned_store_id = from_union([from_str, from_none], obj.get("assigned_store_id"))
         address = from_union([from_str, from_none], obj.get("address"))
         document_1_type = from_union([from_str, from_none], obj.get("document_1_type"))
         document_1_url = from_union([from_str, from_none], obj.get("document_1_url"))
         document_2_type = from_union([from_str, from_none], obj.get("document_2_type"))
         document_2_url = from_union([from_str, from_none], obj.get("document_2_url"))
-        status = from_union([from_str, from_none], obj.get("status"))
+        status = from_union([from_int, from_none], obj.get("status"))
+        role = from_union([from_int, from_none], obj.get("role"))
         created_by = from_union([from_str, from_none], obj.get("created_by"))
         created_on = from_union([from_str, from_none], obj.get("created_on"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
         last_updated_on = from_union([from_str, from_none], obj.get("last_updated_on"))
-        return OtherEmployeeModel(sales_executive_id, name, email, phone, password, profile_pic, assigned_store_id,
-                                  address, document_1_type, document_1_url, document_2_type, document_2_url, status,
-                                  created_by, created_on, last_updated_by, last_updated_on)
+        return StoreEmployee(employee_id, name, email, phone, password, profile_pic, assigned_store_id, address, document_1_type, document_1_url, document_2_type, document_2_url, status, role, created_by, created_on, last_updated_by, last_updated_on)
 
     def to_dict(self) -> dict:
         result: dict = {}
-        if self.sales_executive_id is not None:
-            result["sales_executive_id"] = from_union([from_int, from_none], self.sales_executive_id)
+        if self.employee_id is not None:
+            result["employee_id"] = from_union([from_int, from_none], self.employee_id)
         if self.name is not None:
             result["name"] = from_union([from_str, from_none], self.name)
         if self.email is not None:
@@ -105,6 +124,8 @@ class OtherEmployeeModel:
             result["document_2_url"] = from_union([from_str, from_none], self.document_2_url)
         if self.status is not None:
             result["status"] = from_union([from_int, from_none], self.status)
+        if self.role is not None:
+            result["role"] = from_union([from_int, from_none], self.role)
         if self.created_by is not None:
             result["created_by"] = from_union([from_int, from_none], self.created_by)
         if self.created_on is not None:
@@ -116,9 +137,9 @@ class OtherEmployeeModel:
         return result
 
 
-def other_employee_model_from_dict(s: Any) -> OtherEmployeeModel:
-    return OtherEmployeeModel.from_dict(s)
+def store_employee_from_dict(s: Any) -> StoreEmployee:
+    return StoreEmployee.from_dict(s)
 
 
-def other_employee_model_to_dict(x: OtherEmployeeModel) -> Any:
-    return to_class(OtherEmployeeModel, x)
+def store_employee_to_dict(x: StoreEmployee) -> Any:
+    return to_class(StoreEmployee, x)

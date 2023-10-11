@@ -157,7 +157,7 @@
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_store_manager' manager.store_manager_id %}">
+                                        href="{% url 'view_store_manager' manager.employee_id %}">
                                     {{manager.name}}
                                 </a>
                                 </td>
@@ -214,9 +214,9 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_store_manager' manager.store_manager_id %}">View</a>
+                                                                                             href="{% url 'view_store_manager' manager.employee_id %}">View</a>
                                             <a class="dropdown-item"
-                                               href="{% url 'edit_store_manager' manager.store_manager_id %}">Update/Change
+                                               href="{% url 'edit_store_manager' manager.employee_id %}">Update/Change
                                                 Password</a>
                                             <a class="dropdown-item" href="{% url 'edit_area_head' %}">Allocate
                                                 Store</a>
@@ -224,11 +224,11 @@
                                             <div class="dropdown-divider"></div>
                                             {% if manager.status == 0 %}
                                             <a class="dropdown-item text-success"
-                                               href="{% url 'enable_disable_store_manager' manager.store_manager_id 1 %}">Make
+                                               href="{% url 'enable_disable_store_manager' manager.employee_id 1 %}">Make
                                                 Active</a>
                                             {% elif manager.status == 1 %}
                                             <a class="dropdown-item text-danger"
-                                               href="{% url 'enable_disable_store_manager' manager.store_manager_id 0 %}">Make
+                                               href="{% url 'enable_disable_store_manager' manager.employee_id 0 %}">Make
                                                 Inactive</a>
                                             {% endif %}
                                         </div>

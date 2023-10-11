@@ -170,9 +170,15 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <a class="text-decoration-none fw-semi-bold fs-0" href="{%url 'view_own_store' 1%}">
-                                        {{owner.store_name}}
+                                    {% if owner.assigned_store_id|length != 0 %}
+                                    <a class="text-decoration-none fw-semi-bold fs-0"
+                                       href="{%url 'view_franchise_store' 2%}">
+                                        {{owner.assigned_store_id}}
                                     </a>
+                                    {% else %}
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end statuses">
@@ -211,7 +217,7 @@
                                             <a class="dropdown-item"
                                                href="{% url 'edit_franchise_owner' owner.franchise_owner_id %}">Update/Change
                                                 Password</a>
-                                            <a class="dropdown-item" href="{% url 'edit_area_head' %}">Allocate
+                                            <a class="dropdown-item" href="">Allocate
                                                 Store</a>
 
                                             <div class="dropdown-divider"></div>

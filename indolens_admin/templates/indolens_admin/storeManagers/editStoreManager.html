@@ -84,7 +84,7 @@
             <h2 class="mb-4">Edit Store Manager</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_store_manager' manager.store_manager_id %}"
+                    <form action="{% url 'edit_store_manager' manager.employee_id %}"
                           class="row g-3 needs-validation needs-password-validation" method="post" novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
@@ -205,8 +205,8 @@
                         </div>
                         <input name="last_updated_by" required type="hidden"
                                value="{{ request.session.id }}">
-                        <input name="store_manager_id" required type="hidden"
-                               value="{{ manager.store_manager_id }}">
+                        <input name="employee_id" required type="hidden"
+                               value="{{ manager.employee_id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>

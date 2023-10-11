@@ -97,7 +97,7 @@
 
                         <div class="col-md-6">
                             <label class="form-label" for="fullName">Name</label>
-                            <input class="form-control" id="fullName" name="fullName" required type="text" value=""/>
+                            <input class="form-control" id="fullName" name="name" required type="text" value=""/>
                             <div class="invalid-feedback">Please provide a valid Name.</div>
                         </div>
                         <div class="col-md-6">
@@ -129,14 +129,14 @@
 
                         <div class="col-12">
                             <label class="form-label" for="completeAddress">Complete Address</label>
-                            <textarea class="form-control" id="completeAddress" name="completeAddress" required
+                            <textarea class="form-control" id="completeAddress" name="address" required
                                       rows="3"></textarea>
                             <div class="invalid-feedback">Please provide a valid address.</div>
                         </div>
                         <div class="mb-3">
                             <label class="form-label" for="document1Type">Document 1 Type</label>
                             <select aria-label="Default select example" class="form-select" id="document1Type"
-                                    name="document1Type"
+                                    name="document_1_type"
                                     required>
                                 <option selected="">Open this select menu</option>
                                 <option value="Aadhar">Aadhar</option>
@@ -150,11 +150,12 @@
                             <input class="form-control" id="document1" multiple="multiple" name="document1" required
                                    type="file"/>
                         </div>
+                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
 
                         <div class="mb-3">
                             <label class="form-label" for="document2Type">Document 2 Type</label>
                             <select aria-label="Default select example" class="form-select" id="document2Type"
-                                    name="document2Type"
+                                    name="document_2_type"
                                     required>
                                 <option selected="">Open this select menu</option>
                                 <option value="Pan Card">Pan Card</option>
@@ -165,6 +166,7 @@
                             <input class="form-control" id="document2" multiple="multiple" name="document2" required
                                    type="file"/>
                         </div>
+                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="document2Previews"></div>
                         <input name="created_by" required type="hidden"
                                value="{{ request.session.id }}">
                         <input name="last_updated_by" required type="hidden"
@@ -189,6 +191,7 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
+<script src="{% static 'js/file-upload-preview.js' %}"></script>
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>

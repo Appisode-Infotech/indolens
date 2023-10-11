@@ -1,6 +1,10 @@
 from django.urls import path
 
 from .views import *
+from django.conf.urls.static import static
+from django.urls import path, include
+
+from indolens import settings
 
 urlpatterns = [
     # start
@@ -42,16 +46,22 @@ urlpatterns = [
     # masters management
     path('manage_central_inventory_category/', manageMastersCategory, name='manage_central_inventory_category'),
     path('manage_central_inventory_category/add_product_category/', addProductCategory, name='add_product_category'),
+    path('manage_central_inventory_category/enable_disable_product_category/categoryId=<int:cid>/status=<int:status>', enableDisableProductCategory, name='enable_disable_product_category'),
     path('manage_central_inventory_brands/', manageMastersBrands, name='manage_central_inventory_brands'),
     path('manage_central_inventory_brands/add_product_brand/', addMastersBrands, name='add_product_brand'),
+    path('manage_central_inventory_brands/enable_disable_product_brand/brandId=<int:bid>/status=<int:status>', enableDisableMastersBrands, name='enable_disable_product_brand'),
     path('manage_central_inventory_shapes/', manageMastersShapes, name='manage_central_inventory_shapes'),
     path('manage_central_inventory_shapes/add_frame_shape/', addMastersShapes, name='add_frame_shape'),
+    path('manage_central_inventory_shapes/enable_disable_frame_shape/shapeId=<int:sid>/status=<int:status>', enableDisableMastersShapes, name='enable_disable_frame_shape'),
     path('manage_central_inventory_frame_types/', manageMastersFrameType, name='manage_central_inventory_frame_types'),
     path('manage_central_inventory_frame_types/add_frame_type/', addMastersFrameType, name='add_frame_type'),
+    path('manage_central_inventory_frame_types/enable_disable_frame_type/frameId=<int:ftid>/status=<int:status>', enableDisableMastersFrameType, name='enable_disable_frame_type'),
     path('manage_central_inventory_color/', manageMastersColor, name='manage_central_inventory_color'),
     path('manage_central_inventory_color/add_master_color/', addMastersColor, name='add_master_color'),
+    path('manage_central_inventory_color/enable_disable_master_color/colorId=<int:mcId>/status=<int:status>', enableDisableMastersColor, name='enable_disable_master_color'),
     path('manage_central_inventory_materials/', manageMastersMaterials, name='manage_central_inventory_materials'),
     path('manage_central_inventory_materials/add_master_material/', addMastersMaterials, name='add_master_material'),
+    path('manage_central_inventory_materials/enable_disable_master_material/colorId=<int:mid>/status=<int:status>', enableDisableMastersMaterials, name='enable_disable_master_material'),
     path('manage_central_inventory_units/', manageMastersUnits, name='manage_central_inventory_units'),
     # customers
     path('view_customers/', viewAllCustomers, name='view_customers'),
@@ -72,6 +82,7 @@ urlpatterns = [
     path('manage_store_managers/view_store_manager/?managerId=<int:mid>', viewStoreManager, name='view_store_manager'),
     path('manage_store_managers/enable_disable_store_manager/?managerId=<int:mid>/status=<int:status>',
          enableDisableStoreManager, name='enable_disable_store_manager'),
+
     # store franchise owners
     path('manage_franchise_owners/', manageFranchiseOwners, name='manage_franchise_owners'),
     path('manage_franchise_owners/create_franchise_owner/', createFranchiseOwners, name='create_franchise_owner'),
@@ -81,6 +92,7 @@ urlpatterns = [
          name='view_franchise_owner'),
     path('manage_franchise_owners/enable_disable_franchise_owner/?franchiseOwnerId=<int:foid>/status=<int:status>',
          enableDisableFranchiseOwner, name='enable_disable_franchise_owner'),
+
     # area heads
     path('manage_area_head/', manageAreaHead, name='manage_area_head'),
     path('manage_area_head/create_area_head/', createAreaHead, name='create_area_head'),
@@ -97,31 +109,41 @@ urlpatterns = [
          name='view_marketing_head'),
     path('manage_marketing_head/enable_disable_marketing_head/?marketingHeadId=<int:mhid>/?status=<int:status>',
          enableDisableMarketingHead, name='enable_disable_marketing_head'),
+
+
     # manage optimetry
     path('manage_store_optimetry/', manageOptimetry, name='manage_store_optimetry'),
     path('manage_store_optimetry/create_optimetry/', createOptimetry, name='create_optimetry'),
     path('manage_store_optimetry/edit_optimetry/', editOptimetry, name='edit_optimetry'),
-    path('manage_store_optimetry/view_optimetry/', viewOptimetry, name='view_optimetry'),
+    path('manage_store_optimetry/view_optimetry/?optimetryId=<int:opid>', viewOptimetry, name='view_optimetry'),
+    path('manage_store_optimetry/enable_disable_optimetry/?optimetryId=<int:opid>/?status=<int:status>',
+         enableDisableOptimetry, name='enable_disable_optimetry'),
+
+
     # manage franchise optimetry
     path('manage_franchise_optimetry/', manageFranchiseOptimetry, name='manage_franchise_optimetry'),
     path('manage_franchise_optimetry/create_optimetry/', createFranchiseOptimetry, name='create_franchise_optimetry'),
     path('manage_franchise_optimetry/edit_optimetry/', editFranchiseOptimetry, name='edit_franchise_optimetry'),
-    path('manage_franchise_optimetry/view_optimetry/', viewFranchiseOptimetry, name='view_franchise_optimetry'),
+    path('manage_franchise_optimetry/view_optimetry/?optimetryId=<int:opid>', viewFranchiseOptimetry, name='view_franchise_optimetry'),
+
+
     # manage sales executive
     path('manage_store_sales_executives/', manageSaleExecutives, name='manage_store_sales_executives'),
     path('manage_store_sales_executives/create_sales_executives/', createSaleExecutives, name='create_sales_executives'),
     path('manage_store_sales_executives/edit_sales_executives/', editSaleExecutives, name='edit_sales_executives'),
-    path('manage_store_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seid>/?status=<int:status>',
+    path('manage_store_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seId>/?status=<int:status>',
          enableDisableSaleExecutives, name='enable_disable_sales_executive'),
-    path('manage_sales_executives/view_sales_executives/?salesExecutiveId=<int:seid>', viewSaleExecutives,
+    path('manage_store_sales_executives/view_sales_executives/?salesExecutiveId=<int:seId>', viewSaleExecutives,
          name='view_sales_executives'),
+
+
     # manage franchise sales executive
     path('manage_franchise_sales_executives/', manageFranchiseSaleExecutives, name='manage_franchise_sales_executives'),
     path('manage_franchise_sales_executives/create_sales_executives/', createFranchiseSaleExecutives, name='create_franchise_sales_executives'),
     path('manage_franchise_sales_executives/edit_sales_executives/', editFranchiseSaleExecutives, name='edit_franchise_sales_executives'),
-    path('manage_franchise_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seid>/?status=<int:status>',
+    path('manage_franchise_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seId>/?status=<int:status>',
          enableDisableFranchiseSaleExecutives, name='enable_disable_franchise_sales_executive'),
-    path('manage_franchise_sales_executives/view_sales_executives/?salesExecutiveId=<int:seid>', viewFranchiseSaleExecutives,
+    path('manage_franchise_sales_executives/view_sales_executives/?salesExecutiveId=<int:seId>', viewFranchiseSaleExecutives,
          name='view_franchise_sales_executives'),
     # manage accountant
     path('manage_accountant/', manageAccountant, name='manage_accountant'),
@@ -149,6 +171,8 @@ urlpatterns = [
          name='view_other_employees'),
     path('manage_store_other_employees/enable_disable_other_employees/empId=<int:empid>/?status=<int:status>',
          enableDisableOtherEmployees, name='enable_disable_other_employees'),
+
+
     # Franchise other employees
     path('manage_franchise_other_employees/', manageFranchiseOtherEmployees, name='manage_franchise_other_employees'),
     path('manage_franchise_other_employees/create_other_employees/', createFranchiseOtherEmployees, name='create_franchise_other_employees'),
@@ -187,3 +211,4 @@ urlpatterns = [
     path('all_notifications/', viewOwnStore, name='all_notifications'),
     path('manage_memberships/', viewOwnStore, name='manage_memberships'),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
