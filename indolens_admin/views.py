@@ -9,7 +9,7 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
-    optimetry_controller
+    optimetry_controller, master_units_controller
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
     accountant_model, lab_technician_model, lab_model, \
@@ -676,6 +676,7 @@ def viewOptimetry(request, opid):
     return render(request, 'indolens_admin/optimetry/viewOptimetry.html',
                   {"optimetry": response['optimetry']})
 
+
 def enableDisableOptimetry(request, opid, status):
     optimetry_controller.enable_disable_optimetry(opid, status)
     return redirect('manage_store_optimetry')
@@ -862,7 +863,8 @@ def createFranchiseSaleExecutives(request):
             form_data[key] = value
         file_data = FileData(form_data)
         sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
-        response, status_code = sales_executives_controller.create_franchise_sales_executives(sales_executives_obj, file_data)
+        response, status_code = sales_executives_controller.create_franchise_sales_executives(sales_executives_obj,
+                                                                                              file_data)
         url = reverse('view_franchise_sales_executives', kwargs={'foid': response['foid']})
         return redirect(url)
     else:
@@ -1391,7 +1393,23 @@ def enableDisableMastersMaterials(request, mid, status):
 
 
 def manageMastersUnits(request):
-    return render(request, 'indolens_admin/masters/manageMastersUnits.html')
+    response, status_code = master_units_controller.get_all_units()
+    print(response)
+    return render(request, 'indolens_admin/masters/manageMastersUnits.html',
+                  {"units_list": response['units_list']})
+
+
+def addMastersUnits(request):
+    if request.method == 'POST':
+        data = request.POST
+        print(data)
+        resp = master_units_controller.add_masters_units(data)
+        print(resp)
+    return redirect('manage_central_inventory_units')
+
+def enableDisableMastersUnits(request, unitid, status):
+    master_units_controller.enable_disable_master_units(unitid, status)
+    return redirect('manage_central_inventory_units')
 
 
 # =================================ADMIN STORE MANAGEMENT======================================
