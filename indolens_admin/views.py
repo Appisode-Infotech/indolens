@@ -342,22 +342,22 @@ def createStoreManager(request):
         return redirect('login')
 
 
-def viewStoreManager(request, mid):
+def viewStoreManager(request, mId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = store_manager_controller.get_store_manager_by_id(mid)
+        response, status_code = store_manager_controller.get_store_manager_by_id(mId)
         return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
                       {"store_manager": response['store_manager']})
     else:
         return redirect('login')
 
 
-def editStoreManager(request, mid):
+def editStoreManager(request, mId):
     if request.method == 'POST':
         print(request.POST)
         store_manager = store_employee_model.store_employee_from_dict(request.POST)
         print(store_manager)
 
-    response, status_code = store_manager_controller.get_store_manager_by_id(mid)
+    response, status_code = store_manager_controller.get_store_manager_by_id(mId)
     return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
                   {"store_manager": response['store_manager']})
 
