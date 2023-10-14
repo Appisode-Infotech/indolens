@@ -85,7 +85,7 @@
                                 <div class="search-box me-3">
                                     <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
                                         <input aria-label="Search" class="form-control search-input search"
-                                               placeholder="Search projects" type="search"/>
+                                               placeholder="Search sub admins" type="search"/>
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
                                 </div>
@@ -161,7 +161,7 @@
 
                                 <td class="align-middle white-space-nowrap text-end status">
                                     {% if sub_admin.status == 0 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
                                 {% elif sub_admin.status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
@@ -331,8 +331,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
-
 </script>
 
 </body>
