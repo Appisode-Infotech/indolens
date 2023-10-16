@@ -73,44 +73,44 @@ urlpatterns = [
     # sub admins
     path('manage_sub_admins/', manageSubAdmins, name='manage_sub_admins'),
     path('manage_sub_admins/create_sub_admin/', createSubAdmin, name='create_sub_admin'),
-    path('manage_sub_admins/edit_sub_admin/?subAdminId=<int:said>', editSubAdmin, name='edit_sub_admin'),
-    path('manage_sub_admins/view_sub_admin/?subAdminId=<int:said>', viewSubAdmin, name='view_sub_admin'),
-    path('manage_sub_admins/enable_disable_sub_admin/?subAdminId=<int:said>/status=<int:status>', enableDisableSubAdmin,
+    path('manage_sub_admins/edit_sub_admin/?subAdminId=<int:subAdminId>', editSubAdmin, name='edit_sub_admin'),
+    path('manage_sub_admins/view_sub_admin/?subAdminId=<int:subAdminId>', viewSubAdmin, name='view_sub_admin'),
+    path('manage_sub_admins/enable_disable_sub_admin/?subAdminId=<int:subAdminId>/status=<int:status>', enableDisableSubAdmin,
          name='enable_disable_sub_admin'),
 
     # store managers
     path('manage_store_managers/', manageStoreManagers, name='manage_store_managers'),
     path('manage_store_managers/create_store_manager/', createStoreManager, name='create_store_manager'),
-    path('manage_store_managers/edit_store_manager/managerId=<int:mId>', editStoreManager, name='edit_store_manager'),
-    path('manage_store_managers/view_store_manager/managerId=<int:mId>', viewStoreManager, name='view_store_manager'),
-    path('manage_store_managers/enable_disable_store_manager/managerId=<int:mId>/status=<int:status>',
+    path('manage_store_managers/edit_store_manager/managerId=<int:storeManagerId>', editStoreManager, name='edit_store_manager'),
+    path('manage_store_managers/view_store_manager/managerId=<int:storeManagerId>', viewStoreManager, name='view_store_manager'),
+    path('manage_store_managers/enable_disable_store_manager/managerId=<int:storeManagerId>/status=<int:status>',
          enableDisableStoreManager, name='enable_disable_store_manager'),
 
     # store franchise owners
     path('manage_franchise_owners/', manageFranchiseOwners, name='manage_franchise_owners'),
     path('manage_franchise_owners/create_franchise_owner/', createFranchiseOwners, name='create_franchise_owner'),
-    path('manage_franchise_owners/edit_franchise_owner/?franchiseOwnerId=<int:foid>', editFranchiseOwners,
+    path('manage_franchise_owners/edit_franchise_owner/?franchiseOwnerId=<int:franchiseOwnersId>', editFranchiseOwners,
          name='edit_franchise_owner'),
-    path('manage_franchise_owners/view_franchise_owner/?franchiseOwnerId=<int:foid>', viewFranchiseOwners,
+    path('manage_franchise_owners/view_franchise_owner/?franchiseOwnerId=<int:franchiseOwnersId>', viewFranchiseOwners,
          name='view_franchise_owner'),
-    path('manage_franchise_owners/enable_disable_franchise_owner/?franchiseOwnerId=<int:foid>/status=<int:status>',
+    path('manage_franchise_owners/enable_disable_franchise_owner/?franchiseOwnerId=<int:franchiseOwnersId>/status=<int:status>',
          enableDisableFranchiseOwner, name='enable_disable_franchise_owner'),
 
     # area heads
     path('manage_area_head/', manageAreaHead, name='manage_area_head'),
     path('manage_area_head/create_area_head/', createAreaHead, name='create_area_head'),
     path('manage_area_head/edit_area_head/', editAreaHead, name='edit_area_head'),
-    path('manage_area_head/view_area_head/?areaHeadId=<int:ahid>', viewAreaHead, name='view_area_head'),
-    path('manage_area_head/enable_disable_area_head/?areaHeadId=<int:ahid>/?status=<int:status>', enableDisableAreaHead,
+    path('manage_area_head/view_area_head/?areaHeadId=<int:areaHeadId>', viewAreaHead, name='view_area_head'),
+    path('manage_area_head/enable_disable_area_head/?areaHeadId=<int:areaHeadId>/?status=<int:status>', enableDisableAreaHead,
          name='enable_disable_area_head'),
     # marketing head
     path('manage_marketing_head/', manageMarketingHead, name='manage_marketing_head'),
     path('manage_marketing_head/create_marketing_head/', createMarketingHead, name='create_marketing_head'),
-    path('manage_marketing_head/edit_marketing_head/?marketingHeadId=<int:mhid>', editMarketingHead,
+    path('manage_marketing_head/edit_marketing_head/?marketingHeadId=<int:marketingHeadId>', editMarketingHead,
          name='edit_marketing_head'),
-    path('manage_marketing_head/view_marketing_head/?marketingHeadId=<int:mhid>', viewMarketingHead,
+    path('manage_marketing_head/view_marketing_head/?marketingHeadId=<int:marketingHeadId>', viewMarketingHead,
          name='view_marketing_head'),
-    path('manage_marketing_head/enable_disable_marketing_head/?marketingHeadId=<int:mhid>/?status=<int:status>',
+    path('manage_marketing_head/enable_disable_marketing_head/?marketingHeadId=<int:marketingHeadId>/?status=<int:status>',
          enableDisableMarketingHead, name='enable_disable_marketing_head'),
 
 
@@ -118,8 +118,8 @@ urlpatterns = [
     path('manage_store_optimetry/', manageOptimetry, name='manage_store_optimetry'),
     path('manage_store_optimetry/create_optimetry/', createOptimetry, name='create_optimetry'),
     path('manage_store_optimetry/edit_optimetry/', editOptimetry, name='edit_optimetry'),
-    path('manage_store_optimetry/view_optimetry/?optimetryId=<int:opid>', viewOptimetry, name='view_optimetry'),
-    path('manage_store_optimetry/enable_disable_optimetry/?optimetryId=<int:opid>/?status=<int:status>',
+    path('manage_store_optimetry/view_optimetry/?optimetryId=<int:ownOptimetryId>', viewOptimetry, name='view_optimetry'),
+    path('manage_store_optimetry/enable_disable_optimetry/?optimetryId=<int:ownOptimetryId>/?status=<int:status>',
          enableDisableOptimetry, name='enable_disable_optimetry'),
 
 
@@ -127,16 +127,16 @@ urlpatterns = [
     path('manage_franchise_optimetry/', manageFranchiseOptimetry, name='manage_franchise_optimetry'),
     path('manage_franchise_optimetry/create_optimetry/', createFranchiseOptimetry, name='create_franchise_optimetry'),
     path('manage_franchise_optimetry/edit_optimetry/', editFranchiseOptimetry, name='edit_franchise_optimetry'),
-    path('manage_franchise_optimetry/view_optimetry/?optimetryId=<int:opid>', viewFranchiseOptimetry, name='view_franchise_optimetry'),
+    path('manage_franchise_optimetry/view_optimetry/?optimetryId=<int:franchiseOptimetryId>', viewFranchiseOptimetry, name='view_franchise_optimetry'),
 
 
     # manage sales executive
     path('manage_store_sales_executives/', manageSaleExecutives, name='manage_store_sales_executives'),
     path('manage_store_sales_executives/create_sales_executives/', createSaleExecutives, name='create_sales_executives'),
     path('manage_store_sales_executives/edit_sales_executives/', editSaleExecutives, name='edit_sales_executives'),
-    path('manage_store_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seId>/?status=<int:status>',
+    path('manage_store_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seownSaleExecutivesIdId>/?status=<int:status>',
          enableDisableSaleExecutives, name='enable_disable_sales_executive'),
-    path('manage_store_sales_executives/view_sales_executives/?salesExecutiveId=<int:seId>', viewSaleExecutives,
+    path('manage_store_sales_executives/view_sales_executives/?salesExecutiveId=<int:ownSaleExecutivesId>', viewSaleExecutives,
          name='view_sales_executives'),
 
 
@@ -144,9 +144,9 @@ urlpatterns = [
     path('manage_franchise_sales_executives/', manageFranchiseSaleExecutives, name='manage_franchise_sales_executives'),
     path('manage_franchise_sales_executives/create_sales_executives/', createFranchiseSaleExecutives, name='create_franchise_sales_executives'),
     path('manage_franchise_sales_executives/edit_sales_executives/', editFranchiseSaleExecutives, name='edit_franchise_sales_executives'),
-    path('manage_franchise_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:seId>/?status=<int:status>',
+    path('manage_franchise_sales_executives/enable_disable_sales_executive/?saleExecutivesId=<int:franchiseSaleExecutivesId>/?status=<int:status>',
          enableDisableFranchiseSaleExecutives, name='enable_disable_franchise_sales_executive'),
-    path('manage_franchise_sales_executives/view_sales_executives/?salesExecutiveId=<int:seId>', viewFranchiseSaleExecutives,
+    path('manage_franchise_sales_executives/view_sales_executives/?salesExecutiveId=<int:franchiseSaleExecutivesId>', viewFranchiseSaleExecutives,
          name='view_franchise_sales_executives'),
     # manage accountant
     path('manage_accountant/', manageAccountant, name='manage_accountant'),

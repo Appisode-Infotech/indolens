@@ -252,30 +252,30 @@ def createSubAdmin(request):
         return redirect('login')
 
 
-def editSubAdmin(request, said):
+def editSubAdmin(request, subAdminId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
             response, status_code = sub_admin_controller.edit_sub_admin(sub_admin)
             return redirect('manageSubAdmins')
         else:
-            response, status_code = sub_admin_controller.get_sub_admin_by_id(said)
+            response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
             return render(request, 'indolens_admin/subAdmin/editSubAdmin.html', {"sub_admin": response['sub_admin']})
 
     else:
         return redirect('login')
 
 
-def viewSubAdmin(request, said):
+def viewSubAdmin(request, subAdminId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = sub_admin_controller.get_sub_admin_by_id(said)
+        response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
         return render(request, 'indolens_admin/subAdmin/viewSubAdmin.html', {"sub_admin": response['sub_admin']})
     else:
         return redirect('login')
 
 
-def enableDisableSubAdmin(request, said, status):
-    response = sub_admin_controller.enable_disable_sub_admin(said, status)
+def enableDisableSubAdmin(request, subAdminId, status):
+    response = sub_admin_controller.enable_disable_sub_admin(subAdminId, status)
     print(response)
     return redirect('manage_sub_admins')
 
@@ -342,28 +342,28 @@ def createStoreManager(request):
         return redirect('login')
 
 
-def viewStoreManager(request, mId):
+def viewStoreManager(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = store_manager_controller.get_store_manager_by_id(mId)
+        response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
         return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
                       {"store_manager": response['store_manager']})
     else:
         return redirect('login')
 
 
-def editStoreManager(request, mId):
+def editStoreManager(request, storeManagerId):
     if request.method == 'POST':
         print(request.POST)
         store_manager = store_employee_model.store_employee_from_dict(request.POST)
         print(store_manager)
 
-    response, status_code = store_manager_controller.get_store_manager_by_id(mId)
+    response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
     return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
                   {"store_manager": response['store_manager']})
 
 
-def enableDisableStoreManager(request, mId, status):
-    response = store_manager_controller.enable_disable_store_manager(mId, status)
+def enableDisableStoreManager(request, storeManagerId, status):
+    response = store_manager_controller.enable_disable_store_manager(storeManagerId, status)
     print(response)
     return redirect('manage_store_managers')
 
@@ -424,7 +424,7 @@ def createFranchiseOwners(request):
         return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html')
 
 
-def editFranchiseOwners(request, foid):
+def editFranchiseOwners(request, franchiseOwnersId):
     if request.method == 'POST':
         form_data = request.POST
         file_label_mapping = {
@@ -453,19 +453,19 @@ def editFranchiseOwners(request, foid):
         return redirect(url)
 
     else:
-        response, status_code = franchise_manager_controller.get_franchise_owner_by_id(foid)
+        response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
         return render(request, 'indolens_admin/franchiseOwners/editFranchiseOwner.html',
                       {"franchise_owner": response['franchise_owner']})
 
 
-def enableDisableFranchiseOwner(request, foid, status):
-    response = franchise_manager_controller.enable_disable_franchise_owner(foid, status)
+def enableDisableFranchiseOwner(request, franchiseOwnersId, status):
+    response = franchise_manager_controller.enable_disable_franchise_owner(franchiseOwnersId, status)
     print(response)
     return redirect('manage_franchise_owners')
 
 
-def viewFranchiseOwners(request, foid):
-    response, status_code = franchise_manager_controller.get_franchise_owner_by_id(foid)
+def viewFranchiseOwners(request, franchiseOwnersId):
+    response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
     print(response)
     return render(request, 'indolens_admin/franchiseOwners/viewFranchiseOwner.html',
                   {"franchise_owner": response['franchise_owner']})
@@ -530,13 +530,13 @@ def editAreaHead(request):
     return render(request, 'indolens_admin/areaHead/editAreaHead.html')
 
 
-def enableDisableAreaHead(request, ahId, status):
-    area_head_controller.enable_disable_area_head(ahId, status)
+def enableDisableAreaHead(request, areaHeadId, status):
+    area_head_controller.enable_disable_area_head(areaHeadId, status)
     return redirect('manage_area_head')
 
 
-def viewAreaHead(request, ahid):
-    response, status_code = area_head_controller.get_area_head_by_id(ahid)
+def viewAreaHead(request, areaHeadId):
+    response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
     return render(request, 'indolens_admin/areaHead/viewAreaHead.html',
                   {"area_head": response['area_head']})
 
@@ -593,21 +593,21 @@ def createMarketingHead(request):
         return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html')
 
 
-def editMarketingHead(request, mhid):
-    response, status_code = marketing_head_controller.get_marketing_head_by_id(mhid)
+def editMarketingHead(request, marketingHeadId):
+    response, status_code = marketing_head_controller.get_marketing_head_by_id(marketingHeadId)
     return render(request, 'indolens_admin/marketingHeads/editMarketingHead.html',
                   {"marketing_head": response['marketing_head']})
 
 
-def viewMarketingHead(request, mhid):
-    response, status_code = marketing_head_controller.get_marketing_head_by_id(mhid)
+def viewMarketingHead(request, marketingHeadId):
+    response, status_code = marketing_head_controller.get_marketing_head_by_id(marketingHeadId)
     print(response)
     return render(request, 'indolens_admin/marketingHeads/viewMarketingHead.html',
                   {"marketing_head": response['marketing_head']})
 
 
-def enableDisableMarketingHead(request, mhid, status):
-    marketing_head_controller.enable_disable_marketing_head(mhid, status)
+def enableDisableMarketingHead(request, marketingHeadId, status):
+    marketing_head_controller.enable_disable_marketing_head(marketingHeadId, status)
     return redirect('manage_marketing_head')
 
 
@@ -670,15 +670,15 @@ def editOptimetry(request):
     return render(request, 'indolens_admin/optimetry/editOptimetry.html')
 
 
-def viewOptimetry(request, opid):
-    response, status_code = optimetry_controller.get_optimetry_by_id(opid)
+def viewOptimetry(request, ownOptimetryId):
+    response, status_code = optimetry_controller.get_optimetry_by_id(ownOptimetryId)
     print(response)
     return render(request, 'indolens_admin/optimetry/viewOptimetry.html',
                   {"optimetry": response['optimetry']})
 
 
-def enableDisableOptimetry(request, opid, status):
-    optimetry_controller.enable_disable_optimetry(opid, status)
+def enableDisableOptimetry(request, ownOptimetryId, status):
+    optimetry_controller.enable_disable_optimetry(ownOptimetryId, status)
     return redirect('manage_store_optimetry')
 
 
@@ -743,8 +743,8 @@ def editFranchiseOptimetry(request):
     return render(request, 'indolens_admin/franchiseOptimetry/editOptimetry.html')
 
 
-def viewFranchiseOptimetry(request, opid):
-    response, status_code = optimetry_controller.get_franchise_optimetry_by_id(opid)
+def viewFranchiseOptimetry(request, franchiseOptimetryId):
+    response, status_code = optimetry_controller.get_franchise_optimetry_by_id(franchiseOptimetryId)
     print(response['optimetry'])
     return render(request, 'indolens_admin/franchiseOptimetry/viewOptimetry.html', {"optimetry": response['optimetry']})
 
@@ -806,14 +806,14 @@ def editSaleExecutives(request):
     return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html')
 
 
-def viewSaleExecutives(request, seId):
-    response, status_code = sales_executives_controller.get_own_sales_executive_by_id(seId)
+def viewSaleExecutives(request, ownSaleExecutivesId):
+    response, status_code = sales_executives_controller.get_own_sales_executive_by_id(ownSaleExecutivesId)
     return render(request, 'indolens_admin/salesExecutive/viewSaleExecutives.html',
                   {"sales_executive": response['sales_executive']})
 
 
-def enableDisableSaleExecutives(request, seId, status):
-    sales_executives_controller.enable_disable_sales_executive(seId, status)
+def enableDisableSaleExecutives(request, ownSaleExecutivesId, status):
+    sales_executives_controller.enable_disable_sales_executive(ownSaleExecutivesId, status)
     return redirect('manage_store_sales_executives')
 
 
@@ -875,15 +875,15 @@ def editFranchiseSaleExecutives(request):
     return render(request, 'indolens_admin/franchiseSalesExecutive/editSaleExecutives.html')
 
 
-def viewFranchiseSaleExecutives(request, seId):
-    response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(seId)
+def viewFranchiseSaleExecutives(request, franchiseSaleExecutivesId):
+    response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(franchiseSaleExecutivesId)
     print(response)
     return render(request, 'indolens_admin/franchiseSalesExecutive/viewSaleExecutives.html',
                   {"franchise_sales_executive": response['franchise_sales_executive']})
 
 
-def enableDisableFranchiseSaleExecutives(request, seId, status):
-    sales_executives_controller.enable_disable_franchise_sales_executive(seId, status)
+def enableDisableFranchiseSaleExecutives(request, franchiseSaleExecutivesId, status):
+    sales_executives_controller.enable_disable_franchise_sales_executive(franchiseSaleExecutivesId, status)
     return redirect('manage_franchise_sales_executives')
 
 
