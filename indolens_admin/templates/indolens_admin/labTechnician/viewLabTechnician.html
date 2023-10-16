@@ -66,6 +66,16 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
     </script>
 </head>
 
@@ -108,7 +118,8 @@
                                         <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
                                             <div class="col-12 col-sm-auto mb-sm-2">
                                                 <div class="avatar avatar-5xl">
-                                                    <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{lab_technician.profile_pic}}"/>
+                                                    <img alt="" class="rounded-circle"
+                                                         src="{{MEDIA_URL}}{{lab_technician.profile_pic}}"/>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
@@ -117,23 +128,45 @@
 
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-between-center border-top border-dashed border-300 pt-4">
-                                            <div>
-                                                <h6><a>Document 1</a></h6>
-                                                {% for doc in lab_technician.document_1_url %}
-                                                <a href="{{MEDIA_URL}}{{ doc }}" target="_blank">
-                                                    <img alt="image" src="{{ MEDIA_URL }}{{ doc }}" width="100" height="100"/>
-                                                </a>
-                                                {% endfor %}
+                                        <div class="border-top border-dashed border-300 pt-4">
+
+                                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                <h6>{{ lab_technician.document_1_type }}</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <!-- Add a container for horizontal alignment -->
+                                                    {% for doc in lab_technician.document_1_url %}
+                                                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                        <div class="border border-300 p-2 rounded-2 me-2">
+                                                            <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
+                                                                <img class="rounded-2 dz-image" width="100px"
+                                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                                     alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h6><a>Document 2</a></h6>
-                                                {% for doc in lab_technician.document_2_url %}
-                                                <a href="{{MEDIA_URL}}{{ doc }}" target="_blank">
-                                                    <img alt="image" src="{{MEDIA_URL}}{{ doc }}" width="100" height="100"/>
-                                                </a>
-                                                {% endfor %}
+
+
+                                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
+                                                <h6>{{ lab_technician.document_2_type }}</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <!-- Add a container for horizontal alignment -->
+                                                    {% for doc in lab_technician.document_2_url %}
+                                                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                        <div class="border border-300 p-2 rounded-2 me-2">
+                                                            <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
+                                                                <img class="rounded-2 dz-image" width="100px"
+                                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                                     alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
                                             </div>
+
                                         </div>
                                     </div>
                                 </div>
@@ -154,95 +187,6 @@
                                         </div>
                                         <h5 class="text-800">Phone</h5><a class="text-800"
                                                                           href="tel:{{lab_technician.phone}}">{{lab_technician.phone}}</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="mb-9">
-                        <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
-                             id="projectSummary">
-
-                            <div class="row g-3 justify-content-between align-items-end mb-4">
-
-                                <div class="col-12 col-sm-auto">
-                                    <div class="d-flex align-items-center mb-4">
-                                        <div class="search-box me-3">
-                                            <form class="position-relative" data-bs-display="static"
-                                                  data-bs-toggle="search">
-                                                <input aria-label="Search" class="form-control search-input search"
-                                                       placeholder="Search logs" type="search"/>
-                                                <span class="fas fa-search search-box-icon"></span>
-
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive scrollbar">
-                                        <table class="table fs--1 mb-0 border-top border-200">
-                                            <thead>
-                                            <tr>
-                                                <th class="sort white-space-nowrap align-middle ps-0"
-                                                    data-sort="projectName"
-                                                    scope="col" style="width:30%;">OPERATOR
-                                                </th>
-                                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col"
-                                                    style="width:10%;">OPERATION
-                                                </th>
-                                                <th class="sort align-middle ps-3" data-sort="start" scope="col"
-                                                    style="width:10%;">OPERATED
-                                                </th>
-                                                <th class="sort align-middle ps-3" data-sort="deadline" scope="col"
-                                                    style="width:15%;">DATE
-                                                </th>
-                                                <th class="sort align-middle ps-3" data-sort="task" scope="col"
-                                                    style="width:12%;">STATUS
-                                                </th>
-                                                <th class="sort align-middle text-end" scope="col"
-                                                    style="width:10%;"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="list" id="project-list-table-body">
-                                            <tr class="position-static">
-                                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
-                                                    <a class="text-decoration-none fw-semi-bold fs-0" href="#">John
-                                                        Doe</a></td>
-                                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                                        class="badge badge-phoenix fs--2 badge-phoenix-success">UPDATED</span>
-                                                </td>
-                                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                                    <a class="text-decoration-none fw-semi-bold fs-0" href="">Brown Full
-                                                        Rim Aviator Eyeglasses</a>
-                                                </td>
-                                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                                    <p class="mb-0 fs--1 text-900">Nov 17, 2023</p>
-                                                </td>
-
-                                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                                        class="badge badge-phoenix fs--2 badge-phoenix-success">completed</span>
-                                                </td>
-
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
-                                        <div class="d-flex">
-                                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
-                                               data-list-info="data-list-info"></p><a class="fw-semi-bold"
-                                                                                      data-list-view="*"
-                                                                                      href="#!">View all<span
-                                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
-                                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View
-                                            Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                                        </div>
-                                        <div class="d-flex">
-                                            <button class="page-link" data-list-pagination="prev"><span
-                                                    class="fas fa-chevron-left"></span></button>
-                                            <ul class="mb-0 pagination"></ul>
-                                            <button class="page-link pe-0" data-list-pagination="next"><span
-                                                    class="fas fa-chevron-right"></span></button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
