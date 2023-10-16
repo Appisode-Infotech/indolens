@@ -52,8 +52,9 @@ class StoreEmployee:
     created_on: Optional[str]
     last_updated_by: Optional[int]
     last_updated_on: Optional[str]
+    certificates: Optional[str]
 
-    def __init__(self, employee_id: Optional[int], name: Optional[str], email: Optional[str], phone: Optional[str], password: Optional[str], profile_pic: Optional[str], assigned_store_id: Optional[int], address: Optional[str], document_1_type: Optional[str], document_1_url: Optional[str], document_2_type: Optional[str], document_2_url: Optional[str], status: Optional[int], role: Optional[int], created_by: Optional[int], created_on: Optional[str], last_updated_by: Optional[int], last_updated_on: Optional[str]) -> None:
+    def __init__(self, employee_id: Optional[int], name: Optional[str], email: Optional[str], phone: Optional[str], password: Optional[str], profile_pic: Optional[str], assigned_store_id: Optional[int], address: Optional[str], document_1_type: Optional[str], document_1_url: Optional[str], document_2_type: Optional[str], document_2_url: Optional[str], status: Optional[int], role: Optional[int], created_by: Optional[int], created_on: Optional[str], last_updated_by: Optional[int], last_updated_on: Optional[str], certificates: Optional[str]) -> None:
         self.employee_id = employee_id
         self.name = name
         self.email = email
@@ -72,6 +73,7 @@ class StoreEmployee:
         self.created_on = created_on
         self.last_updated_by = last_updated_by
         self.last_updated_on = last_updated_on
+        self.certificates = certificates
 
     @staticmethod
     def from_dict(obj: Any) -> 'StoreEmployee':
@@ -94,7 +96,8 @@ class StoreEmployee:
         created_on = from_union([from_str, from_none], obj.get("created_on"))
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
         last_updated_on = from_union([from_str, from_none], obj.get("last_updated_on"))
-        return StoreEmployee(employee_id, name, email, phone, password, profile_pic, assigned_store_id, address, document_1_type, document_1_url, document_2_type, document_2_url, status, role, created_by, created_on, last_updated_by, last_updated_on)
+        certificates = from_union([from_str, from_none], obj.get("certificates"))
+        return StoreEmployee(employee_id, name, email, phone, password, profile_pic, assigned_store_id, address, document_1_type, document_1_url, document_2_type, document_2_url, status, role, created_by, created_on, last_updated_by, last_updated_on, certificates)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -134,6 +137,8 @@ class StoreEmployee:
             result["last_updated_by"] = from_union([from_int, from_none], self.last_updated_by)
         if self.last_updated_on is not None:
             result["last_updated_on"] = from_union([from_str, from_none], self.last_updated_on)
+        if self.certificates is not None:
+            result["certificates"] = from_union([from_str, from_none], self.certificates)
         return result
 
 
