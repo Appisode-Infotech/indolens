@@ -151,10 +151,11 @@
                             {% for opti in optimetry_list %}
                             <tr class="position-static">
                                 <td>
-                                    <div class="avatar avatar-m"><img alt=""
-                                                                      class="rounded-circle"
-                                                                      src="{% static 'img/team/32.png' %}"/>
+                                    <a href="{{MEDIA_URL}}{{opti.profile_pic}}" target="_blank">
+                                    <div class="avatar avatar-m">
+                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{opti.profile_pic}}"/>
                                     </div>
+                                        </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
                                         class="text-decoration-none fw-bold fs-0" href="{% url 'view_franchise_optimetry' opti.employee_id %}">{{opti.name}}</a>

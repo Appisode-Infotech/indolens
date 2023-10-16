@@ -7,7 +7,7 @@ class FranchiseOwner:
             self.franchise_owner_id, self.name, self.email, self.phone, self.password,
             self.profile_pic, self.franchise_store_id, self.address, self.document_1_type,
             self.document_1_url, self.document_2_type, self.document_2_url, self.status, self.role,
-            self.created_by, self.created_on, self.last_updated_by, self.last_updated_on, self.store_name,
+            self.created_by, self.created_on, self.last_updated_by, self.certificates, self.last_updated_on, self.store_name,
             self.creator_name, self.updater_name
         ) = values
 
@@ -32,6 +32,7 @@ class FranchiseOwner:
             'last_updated_by': self.last_updated_by,
             'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on,
                                                                                                 datetime) else None,
+            'certificates': self.certificates,
             'store_name': self.store_name,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name

@@ -144,10 +144,11 @@
                             {% for sales_executive in sales_executive_list%}
                             <tr class="position-static">
                                 <td>
-                                    <div class="avatar avatar-m"><img alt=""
-                                                                      class="rounded-circle"
-                                                                      src="{% static 'img/team/32.png' %}"/>
+                                    <a href="{{MEDIA_URL}}{{sales_executive.profile_pic}}" target="_blank">
+                                    <div class="avatar avatar-m">
+                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{sales_executive.profile_pic}}"/>
                                     </div>
+                                        </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"

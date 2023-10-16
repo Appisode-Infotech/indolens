@@ -109,9 +109,8 @@
                                     <div class="card-body d-flex flex-column justify-content-between pb-3">
                                         <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
                                             <div class="col-12 col-sm-auto mb-sm-2">
-                                                <div class="avatar avatar-5xl"><img alt=""
-                                                                                    class="rounded-circle"
-                                                                                    src="{% static 'img/team/15.png' %}"/>
+                                                <div class="avatar avatar-5xl">
+                                                    <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{manager.profile_pic}}"/>
                                                 </div>
 
                                             </div>

@@ -449,7 +449,6 @@ def createFranchiseOwners(request):
 
             franchise_owner_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = franchise_manager_controller.create_franchise_owner(franchise_owner_obj, file_data)
-            print(response)
             url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': response['foid']})
             return redirect(url)
 
@@ -490,6 +489,7 @@ def editFranchiseOwners(request, franchiseOwnersId):
 
         else:
             response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
+            print(response)
             return render(request, 'indolens_admin/franchiseOwners/editFranchiseOwner.html',
                           {"franchise_owner": response['franchise_owner']})
     else:
