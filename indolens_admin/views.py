@@ -9,7 +9,7 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
-    optimetry_controller, master_units_controller
+    optimetry_controller, master_units_controller, central_inventory_controller
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
     accountant_model, lab_technician_model, lab_model, \
@@ -1407,6 +1407,7 @@ def addMastersUnits(request):
         print(resp)
     return redirect('manage_central_inventory_units')
 
+
 def enableDisableMastersUnits(request, unitid, status):
     master_units_controller.enable_disable_master_units(unitid, status)
     return redirect('manage_central_inventory_units')
@@ -1420,7 +1421,9 @@ def manageCentralInventoryProducts(request):
 
 
 def centralInventoryAddProducts(request):
-    return render(request, 'indolens_admin/centralInventory/centralInventoryAddProducts.html')
+    response, status_code = central_inventory_controller.get_all_active_types()
+    print(response)
+    return render(request, 'indolens_admin/centralInventory/centralInventoryAddProducts.html', response)
 
 
 def manageCentralInventoryOutOfStock(request):
