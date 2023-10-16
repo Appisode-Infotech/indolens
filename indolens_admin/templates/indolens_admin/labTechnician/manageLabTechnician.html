@@ -143,10 +143,11 @@
                             {% for lab_technician in lab_technician_list%}
                             <tr class="position-static">
                                 <td>
-                                    <a href="{{MEDIA_URL}}{{lab_technician.profile_pic}}" target="_blank"></a>
+                                    <a href="{{MEDIA_URL}}{{lab_technician.profile_pic}}" target="_blank">
                                     <div class="avatar avatar-m">
                                         <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{lab_technician.profile_pic}}"/>
                                     </div>
+                                        </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"

@@ -7,13 +7,14 @@ class OwnStoreEmployee:
             self.employee_id, self.name, self.email, self.phone, self.password,
             self.profile_pic, self.assigned_store_id, self.address, self.document_1_type,
             document_1_url, self.document_2_type, document_2_url, self.status,
-            self.role, self.created_by, self.created_on, self.last_updated_by, self.last_updated_on,
+            self.role, self.created_by, self.created_on, self.last_updated_by, self.last_updated_on, certificates,
             self.store_name, self.creator_name, self.updater_name
         ) = values
 
         # Parse document URLs from JSON strings to lists
         self.document_1_url = json.loads(document_1_url) if document_1_url else []
         self.document_2_url = json.loads(document_2_url) if document_2_url else []
+        self.certificates = json.loads(certificates) if certificates else []
 
     def to_dict(self):
         return {
@@ -35,6 +36,7 @@ class OwnStoreEmployee:
             'created_on': self.created_on.strftime('%Y-%m-%d') if isinstance(self.created_on, datetime) else None,
             'last_updated_by': self.last_updated_by,
             'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on, datetime) else None,
+            'certificates': self.certificates,
             'store_name': self.store_name,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name,
