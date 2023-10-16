@@ -97,12 +97,12 @@ def get_area_head_by_id(ahid):
         return {"status": False, "message": str(e)}, 301
 
 
-def enable_disable_area_head(ahid, status):
+def enable_disable_area_head(ahId, status):
     # update table set status= '{status}' where area_head_id = '{ahid}'
     try:
         with connection.cursor() as cursor:
             set_area_head_query = f"""
-            UPDATE area_head SET status = '{status}' WHERE area_head_id = '{ahid}';
+            UPDATE area_head SET status = '{status}' WHERE area_head_id = '{ahId}';
             """
             cursor.execute(set_area_head_query)
 
