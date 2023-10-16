@@ -88,15 +88,15 @@ def manageOwnStores(request):
         return redirect('login')
 
 
-def viewOwnStore(request, sid):
+def viewOwnStore(request, ownStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = own_store_controller.get_own_store_by_id(sid)
+        response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
         return render(request, 'indolens_admin/ownStore/ownStore.html', {"store_data": response['own_stores']})
     else:
         return redirect('login')
 
 
-def editOwnStore(request, sid):
+def editOwnStore(request, ownStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             store_obj = own_store_model.own_store_model_from_dict(request.POST)
@@ -107,9 +107,9 @@ def editOwnStore(request, sid):
                 return redirect('manage_own_stores')
 
         else:
-            response, status_code = own_store_controller.get_own_store_by_id(sid)
+            response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
             return render(request, 'indolens_admin/ownStore/editOwnStore.html',
-                          {"store_data": response['own_stores'], "id": sid})
+                          {"store_data": response['own_stores'], "id": ownStoreId})
     else:
         return redirect('login')
 
@@ -128,8 +128,8 @@ def createOwnStore(request):
         return redirect('login')
 
 
-def enableDisableOwnStore(request, sid, status):
-    response = own_store_controller.enable_disable_own_store(sid, status)
+def enableDisableOwnStore(request, ownStoreId, status):
+    response = own_store_controller.enable_disable_own_store(ownStoreId, status)
     print(response)
     return redirect('manage_own_stores')
 
@@ -143,16 +143,16 @@ def manageFranchiseStores(request):
         return redirect('login')
 
 
-def viewFranchiseStore(request, fid):
+def viewFranchiseStore(request, franchiseStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = franchise_store_controller.get_franchise_store_by_id(fid)
+        response, status_code = franchise_store_controller.get_franchise_store_by_id(franchiseStoreId)
         return render(request, 'indolens_admin/franchiseStores/franchiseStore.html',
                       {"franchise_store": response['franchise_store']})
     else:
         return redirect('login')
 
 
-def editFranchiseStore(request, fid):
+def editFranchiseStore(request, franchiseStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             franchise_obj = franchise_store_model.franchise_store_model_from_dict(request.POST)
@@ -163,9 +163,9 @@ def editFranchiseStore(request, fid):
                 return redirect('manage_Franchise_stores')
 
         else:
-            response, status_code = franchise_store_controller.get_franchise_store_by_id(fid)
+            response, status_code = franchise_store_controller.get_franchise_store_by_id(franchiseStoreId)
             return render(request, 'indolens_admin/franchiseStores/editFranchiseStore.html',
-                          {"franchise_store": response['franchise_store'], "id": fid})
+                          {"franchise_store": response['franchise_store'], "id": franchiseStoreId})
     else:
         return redirect('login')
 
@@ -186,8 +186,8 @@ def createFranchiseStore(request):
         return redirect('login')
 
 
-def enableDisableFranchiseStore(request, fid, status):
-    response = franchise_store_controller.enable_disable_franchise_store(fid, status)
+def enableDisableFranchiseStore(request, franchiseStoreId, status):
+    response = franchise_store_controller.enable_disable_franchise_store(franchiseStoreId, status)
     print(response)
     return redirect('manage_Franchise_stores')
 
@@ -943,18 +943,18 @@ def createAccountant(request):
         return render(request, 'indolens_admin/accountant/createAccountant.html')
 
 
-def editAccountant(request, aid):
+def editAccountant(request, accountantId):
     return render(request, 'indolens_admin/accountant/editAccountant.html')
 
 
-def viewAccountant(request, aid):
-    response, status_code = accountant_controller.get_accountant_by_id(aid)
+def viewAccountant(request, accountantId):
+    response, status_code = accountant_controller.get_accountant_by_id(accountantId)
     return render(request, 'indolens_admin/accountant/viewAccountant.html',
                   {"accountant": response['accountant']})
 
 
-def enableDisableAccountant(request, aid, status):
-    accountant_controller.enable_disable_accountant(aid, status)
+def enableDisableAccountant(request, accountantId, status):
+    accountant_controller.enable_disable_accountant(accountantId, status)
     return redirect('manage_accountant')
 
 
@@ -1011,20 +1011,20 @@ def createLabTechnician(request):
         return render(request, 'indolens_admin/labTechnician/createLabTechnician.html')
 
 
-def editLabTechnician(request, ltid):
-    response, status_code = lab_technician_controller.get_lab_technician_by_id(ltid)
+def editLabTechnician(request, labTechnicianId):
+    response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
     return render(request, 'indolens_admin/labTechnician/editLabTechnician.html',
                   {"lab_technician": response['lab_technician']})
 
 
-def viewLabTechnician(request, ltid):
-    response, status_code = lab_technician_controller.get_lab_technician_by_id(ltid)
+def viewLabTechnician(request, labTechnicianId):
+    response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
     return render(request, 'indolens_admin/labTechnician/viewLabTechnician.html',
                   {"lab_technician": response['lab_technician']})
 
 
-def enableDisableLabTechnician(request, ltid, status):
-    lab_technician_controller.enable_disable_lab_technician(ltid, status)
+def enableDisableLabTechnician(request, labTechnicianId, status):
+    lab_technician_controller.enable_disable_lab_technician(labTechnicianId, status)
     return redirect('manage_lab_technician')
 
 
@@ -1080,18 +1080,18 @@ def createOtherEmployees(request):
         return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html', )
 
 
-def editOtherEmployees(request, empid):
+def editOtherEmployees(request, ownEmployeeId):
     return render(request, 'indolens_admin/otherEmployees/editOtherEmployees.html')
 
 
-def viewOtherEmployees(request, empid):
-    response, status_code = other_employee_controller.get_other_emp_by_id(empid)
+def viewOtherEmployees(request, ownEmployeeId):
+    response, status_code = other_employee_controller.get_other_emp_by_id(ownEmployeeId)
     return render(request, 'indolens_admin/otherEmployees/viewOtherEmployees.html',
                   {"other_employee": response['other_employee']})
 
 
-def enableDisableOtherEmployees(request, empid, status):
-    other_employee_controller.enable_disable_other_employees(empid, status)
+def enableDisableOtherEmployees(request, ownEmployeeId, status):
+    other_employee_controller.enable_disable_other_employees(ownEmployeeId, status)
     return redirect('manage_store_other_employees')
 
 
@@ -1150,14 +1150,14 @@ def editFranchiseOtherEmployees(request):
     return render(request, 'indolens_admin/franchiseOtherEmployees/editOtherEmployees.html')
 
 
-def viewFranchiseOtherEmployees(request, empid):
-    response, status_code = other_employee_controller.get_franchise_other_emp_by_id(empid)
+def viewFranchiseOtherEmployees(request, franchiseEmployeeId):
+    response, status_code = other_employee_controller.get_franchise_other_emp_by_id(franchiseEmployeeId)
     return render(request, 'indolens_admin/franchiseOtherEmployees/viewOtherEmployees.html',
                   {"other_employee": response['other_employee']})
 
 
-def enableDisableFranchiseOtherEmployees(request, empid, status):
-    other_employee_controller.enable_disable_franchise_other_employees(empid, status)
+def enableDisableFranchiseOtherEmployees(request, franchiseEmployeeId, status):
+    other_employee_controller.enable_disable_franchise_other_employees(franchiseEmployeeId, status)
     return redirect('manage_franchise_other_employees')
 
 
@@ -1224,18 +1224,18 @@ def createLab(request):
     return render(request, 'indolens_admin/labs/createLab.html')
 
 
-def editLab(request, labid):
+def editLab(request, labId):
     if request.method == 'POST':
         lab_obj = lab_model.lab_model_from_dict(request.POST)
         lab_controller.edit_lab_by_id(lab_obj)
         return redirect('manage_labs')
     else:
-        response, status_code = lab_controller.get_lab_by_id(labid)
+        response, status_code = lab_controller.get_lab_by_id(labId)
         return render(request, 'indolens_admin/labs/editLab.html', {"lab_data": response['lab_data']})
 
 
-def viewLab(request, labid):
-    response, status_code = lab_controller.get_lab_by_id(labid)
+def viewLab(request, labId):
+    response, status_code = lab_controller.get_lab_by_id(labId)
     return render(request, 'indolens_admin/labs/viewLab.html',
                   {"lab_data": response['lab_data']})
 
@@ -1284,8 +1284,8 @@ def addProductCategory(request):
     return render(request, 'indolens_admin/masters/addProductCategory.html')
 
 
-def enableDisableProductCategory(request, cid, status):
-    master_category_controller.enable_disable_product_category(cid, status)
+def enableDisableProductCategory(request, categoryId, status):
+    master_category_controller.enable_disable_product_category(categoryId, status)
     return redirect('manage_central_inventory_category')
 
 
@@ -1307,8 +1307,8 @@ def addMastersBrands(request):
     return render(request, 'indolens_admin/masters/addMastersBrand.html')
 
 
-def enableDisableMastersBrands(request, bid, status):
-    master_brand_controller.enable_disable_product_brand(bid, status)
+def enableDisableMastersBrands(request, brandId, status):
+    master_brand_controller.enable_disable_product_brand(brandId, status)
     return redirect('manage_central_inventory_brands')
 
 
@@ -1329,8 +1329,8 @@ def addMastersShapes(request):
     return render(request, 'indolens_admin/masters/addMastersShapes.html')
 
 
-def enableDisableMastersShapes(request, sid, status):
-    master_shape_controller.enable_disable_frame_shape(sid, status)
+def enableDisableMastersShapes(request, shapeId, status):
+    master_shape_controller.enable_disable_frame_shape(shapeId, status)
     return redirect('manage_central_inventory_shapes')
 
 
@@ -1349,8 +1349,8 @@ def addMastersFrameType(request):
     return render(request, 'indolens_admin/masters/addMastersFrameType.html')
 
 
-def enableDisableMastersFrameType(request, ftid, status):
-    master_frame_type_controller.enable_disable_frame_type(ftid, status)
+def enableDisableMastersFrameType(request, frametypeId, status):
+    master_frame_type_controller.enable_disable_frame_type(frametypeId, status)
     return redirect('manage_central_inventory_frame_types')
 
 
@@ -1368,8 +1368,8 @@ def addMastersColor(request):
     return render(request, 'indolens_admin/masters/addMastersColor.html')
 
 
-def enableDisableMastersColor(request, mcId, status):
-    master_color_controller.enable_disable_master_color(mcId, status)
+def enableDisableMastersColor(request, colorId, status):
+    master_color_controller.enable_disable_master_color(colorId, status)
     return redirect('manage_central_inventory_color')
 
 
@@ -1387,8 +1387,8 @@ def addMastersMaterials(request):
     return render(request, 'indolens_admin/masters/addMastersMaterials.html')
 
 
-def enableDisableMastersMaterials(request, mid, status):
-    master_material_controller.enable_disable_master_material(mid, status)
+def enableDisableMastersMaterials(request, materialId, status):
+    master_material_controller.enable_disable_master_material(materialId, status)
     return redirect('manage_central_inventory_materials')
 
 
@@ -1407,8 +1407,8 @@ def addMastersUnits(request):
         print(resp)
     return redirect('manage_central_inventory_units')
 
-def enableDisableMastersUnits(request, unitid, status):
-    master_units_controller.enable_disable_master_units(unitid, status)
+def enableDisableMastersUnits(request, unitId, status):
+    master_units_controller.enable_disable_master_units(unitId, status)
     return redirect('manage_central_inventory_units')
 
 
