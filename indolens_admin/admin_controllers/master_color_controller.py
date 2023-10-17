@@ -1,7 +1,8 @@
-import pymysql
-from django.db import connection
 import datetime
+
+import pymysql
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.master_color_resp_model import get_product_colors
 
@@ -28,9 +29,9 @@ def add_master_color(color_obj):
 
             cursor.execute(create_color_query)
             return {
-                "status": True,
-                "message": "Frame Color added"
-            }, 200
+                       "status": True,
+                       "message": "Frame Color added"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -51,14 +52,15 @@ def get_all_central_inventory_color():
             print(frame_color_data)
 
             return {
-                "status": True,
-                "frame_color": get_product_colors(frame_color_data)
-            }, 200
+                       "status": True,
+                       "frame_color": get_product_colors(frame_color_data)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def enable_disable_master_color(mcid, status):
     try:
@@ -69,9 +71,9 @@ def enable_disable_master_color(mcid, status):
             cursor.execute(set_color_query)
 
             return {
-                "status": True,
-                "message": "Updated"
-            }, 200
+                       "status": True,
+                       "message": "Updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
