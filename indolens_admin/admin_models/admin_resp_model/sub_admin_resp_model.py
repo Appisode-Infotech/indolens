@@ -1,3 +1,4 @@
+import json
 from datetime import datetime
 
 
@@ -5,11 +6,15 @@ class User:
     def __init__(self, values):
         (
             self.admin_id, self.name, self.email, self.phone, self.password, self.role,
-            self.profile_pic, self.address, self.document_1_type, self.document_1_url,
-            self.document_2_type, self.document_2_url, self.status, self.created_by,
+            self.profile_pic, self.address, self.document_1_type, document_1_url,
+            self.document_2_type, document_2_url, self.status, self.created_by,
             self.created_on, self.last_updated_by, self.last_updated_on, self.creator_name,
             self.updater_name
         ) = values
+
+        # Parse document URLs from JSON strings to lists
+        self.document_1_url = json.loads(document_1_url) if document_1_url else []
+        self.document_2_url = json.loads(document_2_url) if document_2_url else []
 
     def to_dict(self):
         return {

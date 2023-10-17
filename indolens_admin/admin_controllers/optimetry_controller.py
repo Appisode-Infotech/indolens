@@ -24,7 +24,7 @@ def create_optimetry(optimetry_obj, files):
                     '{optimetry_obj.name}', '{optimetry_obj.email}', '{optimetry_obj.phone}', '{optimetry_obj.password}',
                     '{files.profile_pic}', '{optimetry_obj.address}', '{optimetry_obj.document_1_type}', 
                     '{json.dumps(files.document1)}', '{optimetry_obj.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, '{json.dumps(files.certificates)}
+                    0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, '{json.dumps(files.certificates)}'
                 )
             """
 

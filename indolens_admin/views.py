@@ -734,6 +734,7 @@ def createOptimetry(request):
             file_data = FileData(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.create_optimetry(optimetry_obj, file_data)
+            print(response)
             url = reverse('view_optimetry', kwargs={'ownOptimetryId': response['empid']})
             return redirect(url)
         else:

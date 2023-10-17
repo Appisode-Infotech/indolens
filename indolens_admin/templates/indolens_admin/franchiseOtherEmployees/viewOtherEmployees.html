@@ -126,22 +126,45 @@
 
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-between-center border-top border-dashed border-300 pt-4">
-                                            <div>
-                                                <h6><a>Document 1</a></h6>
-                                                {% for doc in emp.document_1_url %}
-                                                <a href="{{MEDIA_URL}}{{ doc }}" target="_blank">
-                                                    <img alt="image" src="{{MEDIA_URL}}{{ doc }}"/>
-                                                </a>
-                                                {% endfor %}
+                                        <div class="border-top border-dashed border-300 pt-4">
+
+                                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                <h6>{{ emp.document_1_type }}</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <!-- Add a container for horizontal alignment -->
+                                                    {% for doc in emp.document_1_url %}
+                                                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                        <div class="border border-300 p-2 rounded-2 me-2">
+                                                            <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
+                                                                <img class="rounded-2 dz-image" width="100px"
+                                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h6><a>Document 2</a></h6>
-                                                {% for doc in emp.document_2_url %}
-                                                <a href="{{MEDIA_URL}}{{ doc }}" target="_blank">
-                                                    <img alt="image" src="{{MEDIA_URL}}{{ doc }}"/>
-                                                </a>
-                                                {% endfor %}
+
+
+                                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
+                                                <h6>{{ emp.document_2_type }}</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <!-- Add a container for horizontal alignment -->
+                                                    {% for doc in emp.document_2_url %}
+                                                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                        <div class="border border-300 p-2 rounded-2 me-2">
+                                                            <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
+                                                                <img class="rounded-2 dz-image" width="100px"
+                                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
