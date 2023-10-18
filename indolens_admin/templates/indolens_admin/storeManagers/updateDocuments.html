@@ -57,9 +57,6 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
-
-
-
     </script>
 </head>
 
@@ -119,9 +116,15 @@
                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                             </a>
                                         </div>
-                                        <button class="btn btn-soft-danger me-1 mb-1" type="button">
+                                        <a data-bs-toggle="modal"
+                                           data-bs-target="#delete_document"
+                                           data-employee-id="{{ manager.employee_id }}"
+                                           data-employee-name="{{ manager.name }}"
+                                           data-document-preview="{{ MEDIA_URL }}{{ doc }}"
+                                           data-action-type="delete"
+                                           class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
-                                        </button>
+                                        </a>
                                     </div>
                                     {% endfor %}
                                 </div>
@@ -162,9 +165,15 @@
                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                             </a>
                                         </div>
-                                        <button class="btn btn-soft-danger me-1 mb-1" type="button">
+                                        <a data-bs-toggle="modal"
+                                           data-bs-target="#delete_document"
+                                           data-employee-id="{{ manager.employee_id }}"
+                                           data-employee-name="{{ manager.name }}"
+                                           data-document-preview="{{ MEDIA_URL }}{{ doc }}"
+                                           data-action-type="delete"
+                                           class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
-                                        </button>
+                                        </a>
                                     </div>
                                     {% endfor %}
                                 </div>
@@ -187,6 +196,29 @@
                         </div>
                     </form>
 
+                </div>
+                <div class="modal fade" id="delete_document" tabindex="-1"
+                     aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary">
+                                <h5 class="modal-title text-white" id="staticBackdropLabel"></h5>
+                                <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    <span class="fas fa-times fs--1 text-white"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p class="text-700 lh-lg mb-0"></p>
+                            </div>
+                            <div class="modal-footer">
+                                <a class="btn btn-primary modal-submit" type="button">Confirm</a>
+                                <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
+                                    Cancel
+                                </button>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
             {% include 'footer.html' %}
@@ -217,6 +249,31 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'vendors/dropzone/dropzone.min.js' %}"></script>
 <script src="{% static 'js/file-upload-preview.js' %}"></script>
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var enableDisableButtons = document.querySelectorAll('[data-bs-target="#delete_document"]');
+    var modal = document.getElementById('delete_document');
+    var modalTitle = modal.querySelector('.modal-title');
+    var modalContent = modal.querySelector('.modal-body');
+    var modalSubmit = modal.querySelector('.modal-submit');
+
+    enableDisableButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            var storeId = event.currentTarget.getAttribute('data-employee-id');
+            var storeName = event.currentTarget.getAttribute('data-employee-name');
+            var actionUrl = event.currentTarget.getAttribute('data-document-preview');
+            var actionType = event.currentTarget.getAttribute('data-action-type');
+
+            modalTitle.textContent = "Delete - Document?";
+            modalContent.innerHTML = `Are you sure you want to ${actionType} Document ?<br><strong>${actionUrl}</strong> for ${storeName}`;
+            modalSubmit.href = actionUrl;
+            console.log({{store_manager | safe}});
+        });
+    });
+});
+</script>
 
 </body>
 
