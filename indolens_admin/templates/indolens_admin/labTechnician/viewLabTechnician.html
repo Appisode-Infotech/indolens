@@ -130,16 +130,13 @@
                                                 <h3>{{lab_technician.name}}</h3>
                                                 <p class="text-800">Joined on {{lab_technician.created_on}}</p>
                                                 {% if lab_technician.lab_name|length != 0 %}
-                                                Assigned Labs -
+                                                <p class="text-800"> Lab -
                                                 <a class="text-decoration-none fw-semi-bold fs-0"
                                                    href="{% url 'view_lab' lab_technician.assigned_lab_id %}">
                                                     {{lab_technician.lab_name}}
-                                                </a>
+                                                </a></p>
                                                 {% else %}
-                                                Assigned Labs -
-                                                <span
-                                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">
-                                                    UNASSIGNED</span>
+                                                <p class="text-800">Assigned Labs - UNASSIGNED</p>
                                                 {% endif %}
                                             </div>
                                         </div>

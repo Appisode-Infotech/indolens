@@ -96,6 +96,7 @@
                             <label class="form-label" for="profilePic">Upload profile pic</label>
                             <input accept="image/*" class="form-control" id="profilePic" name="profilePic" required=""
                                    type="file"/>
+                            <div class="invalid-feedback">Profile pic is mandatory</div>
                         </div>
                         <div class="col-md-6">
 
@@ -103,7 +104,7 @@
 
                             <input class="form-control" id="name" name="name" required="" type="text"
                                    value=""/>
-                            <div class="invalid-feedback">Please provide a valid Name.</div>
+                           <div class="invalid-feedback">Name is mandatory</div>
                         </div>
                         <div class="col-md-6">
 
@@ -111,7 +112,7 @@
 
                             <input class="form-control" id="email" name="email" required=""
                                    type="text" value=""/>
-                            <div class="invalid-feedback">Please provide a valid store display name.</div>
+                            <div class="invalid-feedback">Email is mandatory</div>
                         </div>
 
                         <div class="col-md-6">
@@ -120,7 +121,7 @@
 
                             <input class="form-control" id="phone" name="phone" required="" type="text"
                                    value=""/>
-                            <div class="invalid-feedback">Please provide a valid phone number.</div>
+                            <div class="invalid-feedback">Phone is mandatory</div>
                         </div>
                         <div class="col-md-6">
 
@@ -128,7 +129,7 @@
 
                             <input class="form-control" id="password" name="password" required="" type="text"
                                    value=""/>
-                            <div class="invalid-feedback">Please provide a valid Password.</div>
+                            <div class="invalid-feedback">Password is mandatory</div>
                         </div>
 
                         <div class="col-md-12">
@@ -138,26 +139,29 @@
                             <input class="form-control" id="confirmPassword" name="confirmPassword" required=""
                                    type="text"
                                    value=""/>
-                            <div class="invalid-feedback">Please provide a valid Password.</div>
+                            <div class="invalid-feedback">Passwords should match.</div>
                         </div>
 
                         <div class="col-12">
 
                             <label class="form-label" for="address">Complete Address</label>
 
-                            <textarea class="form-control" id="address" name="address" required
-                                      rows="3"> </textarea>
-                            <div class="invalid-feedback">Please provide a valid address.</div>
+                            <textarea class="form-control" id="address" name="address" rows="3" required></textarea>
+
+                            <div class="invalid-feedback">Address is mandatory</div>
                         </div>
+
                         <div class="mb-3">
                             <label class="form-label" for="document1">Document 1 Type</label>
-                            <select aria-label="Default select example" class="form-select" name="document_1_type">
-                                <option selected="">Open this select menu</option>
+                            <select aria-label="Default select example" class="form-select" id="document1_Type"
+                                    name="document_1_type" required>
+                                <option selected value="">Open this select menu</option>
                                 <option value="Aadhar">Aadhar</option>
                                 <option value="Driving Licence">Driving Licence</option>
                                 <option value="Ration Card">Ration Card</option>
                                 <option value="Voter Id">Voter Id</option>
                             </select>
+                            <div class="invalid-feedback">Document Type is mandatory</div>
                         </div>
                         <div class="mb-3">
 
@@ -165,7 +169,8 @@
                                 multiple)</label>
 
                             <input class="form-control" id="document1" multiple="multiple" name="document1"
-                                   type="file"/>
+                                   type="file" required/>
+                            <div class="invalid-feedback">Document is mandatory</div>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
 
@@ -174,10 +179,11 @@
                             <label class="form-label" for="document2_type">Document 2 Type</label>
 
                             <select aria-label="Default select example" class="form-select" id="document2_type"
-                                    name="document_2_type">
-                                <option selected="">Open this select menu</option>
+                                    name="document_2_type" required>
+                                <option selected value="">Open this select menu</option>
                                 <option value="Pan Card">Pan Card</option>
                             </select>
+                            <div class="invalid-feedback">Document Type is mandatory</div>
                         </div>
                         <div class="mb-3">
 
@@ -185,7 +191,8 @@
                                 multiple)</label>
 
                             <input class="form-control" id="document2" multiple="multiple" name="document2"
-                                   type="file"/>
+                                   type="file" required/>
+                            <div class="invalid-feedback">Document is mandatory</div>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="document2Previews"></div>
                         <div class="mb-3">
@@ -194,7 +201,8 @@
                                 multiple)</label>
 
                             <input class="form-control" multiple="multiple" name="certificates" id="certificates"
-                                                       type="file"/>
+                                                       type="file" required/>
+                            <div class="invalid-feedback">Certificate is mandatory</div>
                         </div>
 
 

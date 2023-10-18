@@ -116,11 +116,17 @@
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3>{{sales_executive.name}}</h3>
                                                 <p class="text-800">Joined on {{sales_executive.created_on}}
-                                                <p>
-                                                <p class="text-800">Manager - <a
+                                                </p>
+
+                                                {% if sales_executive.assigned_store_id != 0 %}
+                                                <p class="text-800">Store - <a
                                                         href="{%url 'view_own_store' sales_executive.assigned_store_id %}">
                                                     {{sales_executive.store_name}}
                                                 </a></p>
+                                                {% else %}
+                                                <p class="text-800"> Store - UNASSIGNED</p>
+
+                                                {% endif %}
 
                                             </div>
                                         </div>
