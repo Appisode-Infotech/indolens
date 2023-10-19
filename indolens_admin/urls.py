@@ -100,9 +100,10 @@ urlpatterns = [
     # area heads
     path('manage_area_head/', manageAreaHead, name='manage_area_head'),
     path('manage_area_head/create_area_head/', createAreaHead, name='create_area_head'),
-    path('manage_area_head/edit_area_head/', editAreaHead, name='edit_area_head'),
-    path('manage_area_head/view_area_head/?areaHeadId=<int:areaHeadId>', viewAreaHead, name='view_area_head'),
-    path('manage_area_head/enable_disable_area_head/?areaHeadId=<int:areaHeadId>/?status=<int:status>', enableDisableAreaHead,
+    path('manage_area_head/edit_area_head/areaHeadId=<int:areaHeadId>', editAreaHead, name='edit_area_head'),
+    path('manage_store_managers/update_area_head_documents/optimetryId=<int:storeManagerId>', updateStoreManagerDocuments, name='update_area_head_documents'),
+    path('manage_area_head/view_area_head/areaHeadId=<int:areaHeadId>', viewAreaHead, name='view_area_head'),
+    path('manage_area_head/enable_disable_area_head/areaHeadId=<int:areaHeadId>/status=<int:status>', enableDisableAreaHead,
          name='enable_disable_area_head'),
     # marketing head
     path('manage_marketing_head/', manageMarketingHead, name='manage_marketing_head'),
@@ -222,6 +223,10 @@ urlpatterns = [
     # assign/un assign optimetry
     path('assign_optimetry_own_store/', assignOptimetryOwnStore, name='assign_optimetry_own_store'),
     path('un_assign_optimetry_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignOptimetryOwnStore, name='un_assign_optimetry_own_store'),
+
+    # assign/un area head
+    path('assign_area_head_own_store/', assignAreaHeadOwnStore, name='assign_area_head_own_store'),
+    path('un_assign_area_head_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignAreaHeadOwnStore, name='un_assign_area_head_own_store'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

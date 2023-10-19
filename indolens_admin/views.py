@@ -531,8 +531,10 @@ def viewFranchiseOwners(request, franchiseOwnersId):
 def manageAreaHead(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_all_area_head()
+        available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
-                      {"area_heads_list": response['area_heads_list']})
+                      {"area_heads_list": response['area_heads_list'],
+                       "available_stores": available_stores_response['available_stores']})
     else:
         return redirect('login')
 
@@ -1734,3 +1736,15 @@ def assignOptimetryOwnStore(request):
 def unAssignOptimetryOwnStore(request, empId, storeId):
     response, status_code = store_manager_controller.unAssignStore(empId, storeId)
     return redirect('manage_store_optimetry')
+
+def assignAreaHeadOwnStore(request):
+    if request.method == 'POST':
+        print(request.POST)
+        print(request.POST['store_id'])
+        response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
+        return redirect('manage_area_head')
+
+
+def unAssignAreaHeadOwnStore(request, empId, storeId):
+    response, status_code = store_manager_controller.unAssignStore(empId, storeId)
+    return redirect('manage_area_head')
