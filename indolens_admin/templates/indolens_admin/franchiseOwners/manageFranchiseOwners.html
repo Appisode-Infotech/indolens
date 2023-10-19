@@ -171,10 +171,10 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    {% if owner.assigned_store_id|length != 0 %}
+                                    {% if owner.franchise_store_id != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
-                                       href="{%url 'view_franchise_store' 2%}">
-                                        {{owner.assigned_store_id}}
+                                       href="{%url 'view_franchise_store' owner.franchise_store_id %}">
+                                        {{owner.store_name}}
                                     </a>
                                     {% else %}
                                     <span

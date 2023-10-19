@@ -104,7 +104,7 @@ def get_all_franchise_optimetry():
         with connection.cursor() as cursor:
             get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS op
-                                            LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
+                                            LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id
                                             WHERE op.role = 2 """
@@ -147,7 +147,7 @@ def get_franchise_optimetry_by_id(opid):
     try:
         with connection.cursor() as cursor:
             get_optimetry_query = f""" SELECT op.*, os.store_name, creator.name, updater.name FROM franchise_store_employees AS op
-                                            LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
+                                            LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id 
                                             WHERE op.employee_id = '{opid}'"""

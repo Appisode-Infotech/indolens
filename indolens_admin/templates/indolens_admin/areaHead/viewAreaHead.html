@@ -115,7 +115,17 @@
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3>{{area_head.name}}</h3>
                                                 <p class="text-800">Joined on {{area_head.created_on}}</p>
-
+                                                <p class="text-800">Assigned Stores:</p>
+                                                {% if area_head.id_name_pair|length != 0 %}
+                                                {% for id, name in area_head.id_name_pair %}
+                                                <a class="text-decoration-none fw-semi-bold fs-0"
+                                                   href="{% url 'view_own_store' id %}">
+                                                    {{name}}
+                                                </a><br>
+                                                {% endfor %}
+                                                {% else %}
+                                                <p class="text-800">UNASSIGNED</p>
+                                                {% endif %}
                                             </div>
                                         </div>
                                         <div class="border-top border-dashed border-300 pt-4">

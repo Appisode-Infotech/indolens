@@ -103,7 +103,7 @@ def get_all_franchise_sales_executive():
         with connection.cursor() as cursor:
             get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS sm
-                                            LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
+                                            LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
                                             WHERE sm.role = 3 """
@@ -146,7 +146,7 @@ def get_franchise_sales_executive_by_id(seId):
         with connection.cursor() as cursor:
             get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS sm
-                                            LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
+                                            LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id 
                                             WHERE sm.employee_id = '{seId}'"""

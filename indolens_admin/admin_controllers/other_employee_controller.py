@@ -105,7 +105,7 @@ def get_all_franchise_other_emp():
         with connection.cursor() as cursor:
             get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS op
-                                            LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
+                                            LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id
                                             WHERE op.role = 4 """
@@ -148,7 +148,7 @@ def get_franchise_other_emp_by_id(empid):
         with connection.cursor() as cursor:
             get_store_manager_query = f""" SELECT foe.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS foe
-                                            LEFT JOIN own_store AS os ON foe.assigned_store_id = os.store_id
+                                            LEFT JOIN franchise_store AS os ON foe.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON foe.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON foe.last_updated_by = updater.admin_id 
                                             WHERE foe.employee_id = '{empid}'"""
