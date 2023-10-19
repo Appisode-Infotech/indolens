@@ -88,6 +88,7 @@
 
                             <input class="form-control" id="categoryName" name="category_name" required="" type="text"
                                    value=""/>
+                            <div class="invalid-feedback">Category Name is mandatory.</div>
                         </div>
                         <div class="col-md-6">
 
@@ -95,6 +96,7 @@
 
                             <input class="form-control" id="productPrefix" name="category_prefix" required=""
                                    type="text" value=""/>
+                            <div class="invalid-feedback">Product Prefix is mandatory.</div>
                         </div>
 
 
@@ -103,7 +105,8 @@
                             <label class="form-label" for="description">Description</label>
 
                             <textarea class="form-control" id="description" name="category_description" required
-                                      rows="3"> </textarea>
+                                      rows="3"></textarea>
+                            <div class="invalid-feedback">Description is mandatory.</div>
                         </div>
                         <input required type="hidden" name="created_by"
                                value="{{ request.session.id }}">

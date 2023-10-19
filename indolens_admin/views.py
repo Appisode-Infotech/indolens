@@ -119,6 +119,7 @@ def createOwnStore(request):
         if request.method == 'POST':
             store_obj = own_store_model.own_store_model_from_dict(request.POST)
             response, status_code = own_store_controller.create_own_store(store_obj)
+            print(response)
             if status_code != 200:
                 return render(request, 'indolens_admin/ownStore/createOwnStore.html', {"message": response['message']})
             else:
@@ -1457,7 +1458,9 @@ def addProductCategory(request):
             product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
             print(product_cat_obj.category_name)
             master_category_controller.add_product_category(product_cat_obj)
-        return redirect('manage_central_inventory_category')
+            return redirect('manage_central_inventory_category')
+        else:
+            return render(request, 'indolens_admin/masters/addProductCategory.html')
     else:
         return redirect('login')
 
@@ -1489,7 +1492,9 @@ def addMastersBrands(request):
             print(master_brand_obj)
             resp = master_brand_controller.add_product_brand(master_brand_obj)
             print(resp)
-        return redirect('manage_central_inventory_brands')
+            return redirect('manage_central_inventory_brands')
+        else:
+            return render(request, 'indolens_admin/masters/addMastersBrand.html')
     else:
         return redirect('login')
 
@@ -1520,7 +1525,9 @@ def addMastersShapes(request):
             print(master_shape_obj)
             resp = master_shape_controller.add_frame_shape(master_shape_obj)
             print(resp)
-        return redirect('manage_central_inventory_shapes')
+            return redirect('manage_central_inventory_shapes')
+        else:
+            return render(request, 'indolens_admin/masters/addMastersShapes.html')
     else:
         return redirect('login')
 
@@ -1548,7 +1555,9 @@ def addMastersFrameType(request):
             frame_type_obj = master_frame_type_model.master_frame_type_model_from_dict(request.POST)
             print(frame_type_obj)
             resp = master_frame_type_controller.add_frame_type(frame_type_obj)
-        return redirect('manage_central_inventory_frame_types')
+            return redirect('manage_central_inventory_frame_types')
+        else:
+            return render(request, 'indolens_admin/masters/addMastersFrameType.html')
     else:
         return redirect('login')
 
@@ -1576,7 +1585,9 @@ def addMastersColor(request):
             print(request.POST)
             color_obj = master_color_model.master_color_model_from_dict(request.POST)
             resp = master_color_controller.add_master_color(color_obj)
-        return redirect('manage_central_inventory_color')
+            return redirect('manage_central_inventory_color')
+        else:
+            return render(request, 'indolens_admin/masters/addMastersColor.html')
     else:
         return redirect('login')
 
@@ -1604,7 +1615,9 @@ def addMastersMaterials(request):
             print(request.POST)
             material_obj = master_material_model.master_material_model_from_dict(request.POST)
             resp = master_material_controller.add_master_material(material_obj)
-        return redirect('manage_central_inventory_materials')
+            return redirect('manage_central_inventory_materials')
+        else:
+            return render(request, 'indolens_admin/masters/addMastersMaterials.html')
     else:
         return redirect('login')
 
