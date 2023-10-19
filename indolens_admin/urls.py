@@ -214,5 +214,8 @@ urlpatterns = [
     path('view_product_details/', viewOwnStore, name='view_product_details'),
     path('all_notifications/', viewOwnStore, name='all_notifications'),
     path('manage_memberships/', viewOwnStore, name='manage_memberships'),
+    # assign employees
+    path('assign_employee_own_store/', assignEmployeeToOwnStore, name='assign_employee_own_store'),
+    path('un_assign_employee_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignEmployeeToOwnStore, name='un_assign_employee_own_store'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

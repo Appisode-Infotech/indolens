@@ -302,10 +302,10 @@ def manageStoreManagers(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
             response, status_code = store_manager_controller.get_all_store_manager()
-            print(response)
-
+            available_stores_response, available_stores_status_code = own_store_controller.get_unassigned_active_own_store_for_manager()
             return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
-                          {"store_managers": response['store_managers']})
+                          {"store_managers": response['store_managers'],
+                           "available_stores": available_stores_response['available_stores']})
         else:
             return redirect('login')
     else:
@@ -1710,3 +1710,17 @@ def viewCompletedStockRequests(request):
 
 def viewRejectedStockRequests(request):
     return render(request, 'indolens_admin/stockRequests/viewrejectedStockRequests.html')
+
+
+def assignEmployeeToOwnStore(request):
+    if request.method == 'POST':
+        print(request.POST)
+        print(request.POST['emp_id'])
+        print(request.POST['store_id'])
+        response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
+        return redirect('manage_store_managers')
+
+
+def unAssignEmployeeToOwnStore(request, empId, storeId):
+    response, status_code = store_manager_controller.unAssignStore(empId,storeId)
+    return redirect('manage_store_managers')

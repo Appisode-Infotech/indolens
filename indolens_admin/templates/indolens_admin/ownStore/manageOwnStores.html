@@ -119,7 +119,7 @@
                                     DISPLAY NAME
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="storeAdmin" scope="col">
-                                    STORE ADMIN
+                                    STORE MANAGER
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="date" scope="col">
                                     CREATED DATE
@@ -145,9 +145,9 @@
                                     <p class="mb-0 fs--1 text-900">{{store.store_display_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end storeAdmin "><span
+                                <td class="align-middle white-space-nowrap storeAdmin "><span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span></td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 date">
+                                <td class="align-middle white-space-nowrap date ps-3 py-4 date">
                                     <p class="mb-0 fs--1 text-900">{{store.created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4 city">
@@ -172,8 +172,7 @@
                                                                                              href="{% url 'view_own_store' store.store_id %}">View</a>
                                             <a class="dropdown-item"
                                                href="{% url 'edit_own_store' store.store_id %}">Edit</a>
-                                            <a class="dropdown-item"
-                                               href="{% url 'view_own_store' store.store_id %}">Allocate Manager</a>
+
                                             <div class="dropdown-divider"></div>
                                             {% if store.status == 0 %}
                                             <a class="dropdown-item text-success"
