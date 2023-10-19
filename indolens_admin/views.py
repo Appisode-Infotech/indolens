@@ -268,12 +268,14 @@ def editSubAdmin(request, subAdminId):
                 return redirect('manageSubAdmins')
             else:
                 response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
-                return render(request, 'indolens_admin/subAdmin/editSubAdmin.html', {"sub_admin": response['sub_admin']})
+                return render(request, 'indolens_admin/subAdmin/editSubAdmin.html',
+                              {"sub_admin": response['sub_admin']})
 
         else:
             return redirect('login')
     else:
         return redirect('login')
+
 
 def viewSubAdmin(request, subAdminId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -384,6 +386,15 @@ def editStoreManager(request, storeManagerId):
 
         response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
         return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
+                      {"store_manager": response['store_manager']})
+    else:
+        return redirect('login')
+
+
+def updateStoreManagerDocuments(request, storeManagerId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
+        return render(request, 'indolens_admin/storeManagers/updateDocuments.html',
                       {"store_manager": response['store_manager']})
     else:
         return redirect('login')
@@ -664,6 +675,7 @@ def editMarketingHead(request, marketingHeadId):
     else:
         return redirect('login')
 
+
 def viewMarketingHead(request, marketingHeadId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = marketing_head_controller.get_marketing_head_by_id(marketingHeadId)
@@ -836,7 +848,8 @@ def editFranchiseOptimetry(request):
 def viewFranchiseOptimetry(request, franchiseOptimetryId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_franchise_optimetry_by_id(franchiseOptimetryId)
-        return render(request, 'indolens_admin/franchiseOptimetry/viewOptimetry.html', {"optimetry": response['optimetry']})
+        return render(request, 'indolens_admin/franchiseOptimetry/viewOptimetry.html',
+                      {"optimetry": response['optimetry']})
     else:
         return redirect('login')
 
@@ -890,7 +903,8 @@ def createSaleExecutives(request):
                 form_data[key] = value
             file_data = FileData(form_data)
             sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
-            response, status_code = sales_executives_controller.create_own_sales_executives(sales_executives_obj, file_data)
+            response, status_code = sales_executives_controller.create_own_sales_executives(sales_executives_obj,
+                                                                                            file_data)
             url = reverse('view_sales_executives', kwargs={'ownSaleExecutivesId': response['seId']})
             return redirect(url)
         else:
@@ -984,12 +998,14 @@ def editFranchiseSaleExecutives(request):
 
 def viewFranchiseSaleExecutives(request, franchiseSaleExecutivesId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(franchiseSaleExecutivesId)
+        response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(
+            franchiseSaleExecutivesId)
         print(response)
         return render(request, 'indolens_admin/franchiseSalesExecutive/viewSaleExecutives.html',
                       {"franchise_sales_executive": response['franchise_sales_executive']})
     else:
         return redirect('login')
+
 
 def enableDisableFranchiseSaleExecutives(request, franchiseSaleExecutivesId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -1157,12 +1173,14 @@ def viewLabTechnician(request, labTechnicianId):
     else:
         return redirect('login')
 
+
 def enableDisableLabTechnician(request, labTechnicianId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         lab_technician_controller.enable_disable_lab_technician(labTechnicianId, status)
         return redirect('manage_lab_technician')
     else:
         return redirect('login')
+
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
@@ -1251,6 +1269,7 @@ def manageFranchiseOtherEmployees(request):
                       {"other_employee_list": response['other_emp_list']})
     else:
         return redirect('login')
+
 
 def createFranchiseOtherEmployees(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -1538,6 +1557,7 @@ def enableDisableMastersShapes(request, shapeId, status):
         return redirect('manage_central_inventory_shapes')
     else:
         return redirect('login')
+
 
 def manageMastersFrameType(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:

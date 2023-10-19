@@ -91,11 +91,11 @@
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
                                                                 data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
-                                                                src="/static/img/team/avatar.png"/></div>
+                                                                src="{{MEDIA_URL}}{{manager.profile_pic}}"/></div>
                         </div>
 
                         <div class="col-md-12">
-                            <label class="form-label" for="profilePic">Upload profile pic</label>
+                            <label class="form-label" for="profilePic">Change profile pic</label>
                             <input accept="image/*" class="form-control" id="profilePic" name="profilePic" required
                                    type="file" value="{{manager.profile_pic}}"/>
                         </div>
@@ -151,57 +151,6 @@
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
                                       rows="3">{{manager.address}} </textarea>
                             <div class="invalid-feedback">Please provide a valid address.</div>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="document1">Document 1 Type</label>
-                            <select aria-label="Default select example" class="form-select" name="document1Type">
-                                {% if manager.document_1_type == "Aadhar" %}
-                                <option selected value="Aadhar">Aadhar</option>
-                                <option value="Driving Licence">Driving Licence</option>
-                                <option value="Ration Card">Ration Card</option>
-                                <option value="Voter Id">Voter Id</option>
-                                {% elif manager.document_1_type == "Driving Licence" %}
-                                <option value="Aadhar">Aadhar</option>
-                                <option selected value="Driving Licence">Driving Licence</option>
-                                <option value="Ration Card">Ration Card</option>
-                                <option value="Voter Id">Voter Id</option>
-                                {% elif manager.document_1_type == "Voter ID" %}
-                                <option value="Aadhar">Aadhar</option>
-                                <option value="Driving Licence">Driving Licence</option>
-                                <option selected value="Ration Card">Ration Card</option>
-                                <option value="Voter Id">Voter Id</option>
-                                {% elif manager.document_1_type == "Ration Card" %}
-                                <option value="Aadhar">Aadhar</option>
-                                <option value="Driving Licence">Driving Licence</option>
-                                <option value="Ration Card">Ration Card</option>
-                                <option selected value="Voter Id">Voter Id</option>
-                                {% endif %}
-                            </select>
-                        </div>
-                        <div class="mb-3">
-
-                            <label class="form-label" for="document1">Document 1 Upload (Can choose
-                                multiple)</label>
-
-                            <input class="form-control" id="document1" multiple="multiple" name="document1" type="file"
-                                   value="{{manager.document_1_url}}"/>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label" for="document1">Document 2 Type</label>
-
-                            <select aria-label="Default select example" class="form-select" name="document2Type">
-                                <option selected="">Open this select menu</option>
-                                <option value="1">Pan Card</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-
-                            <label class="form-label" for="document2">Document 2 Upload (Can choose
-                                multiple)</label>
-
-                            <input class="form-control" id="document2" multiple="multiple" name="document2" type="file"
-                                   value="{{manager.document_2_url}}"/>
                         </div>
                         <input name="last_updated_by" required type="hidden"
                                value="{{ request.session.id }}">

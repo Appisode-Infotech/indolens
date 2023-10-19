@@ -82,6 +82,7 @@ urlpatterns = [
     path('manage_store_managers/', manageStoreManagers, name='manage_store_managers'),
     path('manage_store_managers/create_store_manager/', createStoreManager, name='create_store_manager'),
     path('manage_store_managers/edit_store_manager/managerId=<int:storeManagerId>', editStoreManager, name='edit_store_manager'),
+    path('manage_store_managers/update_store_manager_documents/managerId=<int:storeManagerId>', updateStoreManagerDocuments, name='update_store_manager_documents'),
     path('manage_store_managers/view_store_manager/managerId=<int:storeManagerId>', viewStoreManager, name='view_store_manager'),
     path('manage_store_managers/enable_disable_store_manager/managerId=<int:storeManagerId>/status=<int:status>',
          enableDisableStoreManager, name='enable_disable_store_manager'),
