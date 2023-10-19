@@ -700,8 +700,10 @@ def manageOptimetry(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_all_optimetry()
         print(response)
+        available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         return render(request, 'indolens_admin/optimetry/manageOptimetry.html',
-                      {"optimetry_list": response['optimetry_list']})
+                      {"optimetry_list": response['optimetry_list'],
+                       "available_stores": available_stores_response['available_stores']})
     else:
         return redirect('login')
 
@@ -1712,15 +1714,23 @@ def viewRejectedStockRequests(request):
     return render(request, 'indolens_admin/stockRequests/viewrejectedStockRequests.html')
 
 
-def assignEmployeeToOwnStore(request):
+def assignManagerOwnStore(request):
     if request.method == 'POST':
-        print(request.POST)
-        print(request.POST['emp_id'])
-        print(request.POST['store_id'])
         response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
         return redirect('manage_store_managers')
 
 
-def unAssignEmployeeToOwnStore(request, empId, storeId):
-    response, status_code = store_manager_controller.unAssignStore(empId,storeId)
+def unAssignManagerOwnStore(request, empId, storeId):
+    response, status_code = store_manager_controller.unAssignStore(empId, storeId)
     return redirect('manage_store_managers')
+
+
+def assignOptimetryOwnStore(request):
+    if request.method == 'POST':
+        response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
+        return redirect('manage_store_optimetry')
+
+
+def unAssignOptimetryOwnStore(request, empId, storeId):
+    response, status_code = store_manager_controller.unAssignStore(empId, storeId)
+    return redirect('manage_store_optimetry')

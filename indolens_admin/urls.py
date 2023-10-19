@@ -118,7 +118,8 @@ urlpatterns = [
     # manage optimetry
     path('manage_store_optimetry/', manageOptimetry, name='manage_store_optimetry'),
     path('manage_store_optimetry/create_optimetry/', createOptimetry, name='create_optimetry'),
-    path('manage_store_optimetry/edit_optimetry/', editOptimetry, name='edit_optimetry'),
+    path('manage_store_optimetry/edit_optimetry/optimetryId=<int:ownOptimetryId>', editOptimetry, name='edit_optimetry'),
+    path('manage_store_managers/update_optimetry_documents/optimetryId=<int:storeManagerId>', updateStoreManagerDocuments, name='update_optimetry_documents'),
     path('manage_store_optimetry/view_optimetry/?optimetryId=<int:ownOptimetryId>', viewOptimetry, name='view_optimetry'),
     path('manage_store_optimetry/enable_disable_optimetry/?optimetryId=<int:ownOptimetryId>/?status=<int:status>',
          enableDisableOptimetry, name='enable_disable_optimetry'),
@@ -214,8 +215,13 @@ urlpatterns = [
     path('view_product_details/', viewOwnStore, name='view_product_details'),
     path('all_notifications/', viewOwnStore, name='all_notifications'),
     path('manage_memberships/', viewOwnStore, name='manage_memberships'),
-    # assign employees
-    path('assign_employee_own_store/', assignEmployeeToOwnStore, name='assign_employee_own_store'),
-    path('un_assign_employee_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignEmployeeToOwnStore, name='un_assign_employee_own_store'),
+    # assign/un assign manager
+    path('assign_manager_own_store/', assignManagerOwnStore, name='assign_manager_own_store'),
+    path('un_assign_manager_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignManagerOwnStore, name='un_assign_manager_own_store'),
+
+    # assign/un assign optimetry
+    path('assign_optimetry_own_store/', assignOptimetryOwnStore, name='assign_optimetry_own_store'),
+    path('un_assign_optimetry_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignOptimetryOwnStore, name='un_assign_optimetry_own_store'),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
