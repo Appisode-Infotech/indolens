@@ -197,10 +197,18 @@
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
                                                                                              href="{% url 'view_accountant' accountant.accountant_id %}">View</a>
-                                            <a class="dropdown-item" href="{% url 'edit_accountant' %}">Update/Change
-                                                Password</a>
-                                            <a class="dropdown-item" href="{% url 'edit_accountant'  %}">Allocate
+
+                                            <a class="dropdown-item" href="{% url 'edit_accountant'  accountant.accountant_id %}">Allocate
                                                 Store</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'edit_store_manager' manager.employee_id %}">Update
+                                                Profile</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'update_store_manager_documents' manager.employee_id %}">Update
+                                                Documents</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'edit_store_manager' manager.employee_id %}">Send password
+                                                reset link</a>
 
                                             <div class="dropdown-divider"></div>
 

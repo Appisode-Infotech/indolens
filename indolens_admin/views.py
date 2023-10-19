@@ -279,11 +279,8 @@ def editSubAdmin(request, subAdminId):
 
 def viewSubAdmin(request, subAdminId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-            response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
-            return render(request, 'indolens_admin/subAdmin/viewSubAdmin.html', {"sub_admin": response['sub_admin']})
-        else:
-            return redirect('login')
+        response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
+        return render(request, 'indolens_admin/subAdmin/viewSubAdmin.html', {"sub_admin": response['sub_admin']})
     else:
         return redirect('login')
 
@@ -293,6 +290,14 @@ def enableDisableSubAdmin(request, subAdminId, status):
         response = sub_admin_controller.enable_disable_sub_admin(subAdminId, status)
         print(response)
         return redirect('manage_sub_admins')
+    else:
+        return redirect('login')
+
+def updateSubAdminDocuments(request, subAdminId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
+        return render(request, 'indolens_admin/subAdmin/updateDocuments.html',
+                      {"sub_admin": response['sub_admin']})
     else:
         return redirect('login')
 
@@ -367,12 +372,9 @@ def createStoreManager(request):
 
 def viewStoreManager(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-            response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
-            return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
-                          {"store_manager": response['store_manager']})
-        else:
-            return redirect('login')
+        response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
+        return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
+                      {"store_manager": response['store_manager']})
     else:
         return redirect('login')
 
@@ -525,6 +527,14 @@ def viewFranchiseOwners(request, franchiseOwnersId):
                       {"franchise_owner": response['franchise_owner']})
     else:
         return redirect('login')
+def updateFranchiseOwnersDocuments(request, franchiseOwnersId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
+        print(response)
+        return render(request, 'indolens_admin/franchiseOwners/updateDocuments.html',
+                      {"franchise_owner": response['franchise_owner']})
+    else:
+        return redirect('login')
 
 
 # =================================ADMIN AREA HEADS MANAGEMENT======================================
@@ -588,7 +598,7 @@ def createAreaHead(request):
         return redirect('login')
 
 
-def editAreaHead(request):
+def editAreaHead(request, areaHeadId):
     return render(request, 'indolens_admin/areaHead/editAreaHead.html')
 
 
@@ -604,6 +614,14 @@ def viewAreaHead(request, areaHeadId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
         return render(request, 'indolens_admin/areaHead/viewAreaHead.html',
+                      {"area_head": response['area_head']})
+    else:
+        return redirect('login')
+
+def UpdateAreaHeadDocuments(request, areaHeadId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
+        return render(request, 'indolens_admin/areaHead/updateDocuments.html',
                       {"area_head": response['area_head']})
     else:
         return redirect('login')
@@ -756,7 +774,7 @@ def createOptimetry(request):
         return redirect('login')
 
 
-def editOptimetry(request):
+def editOptimetry(request, ownOptimetryId):
     return render(request, 'indolens_admin/optimetry/editOptimetry.html')
 
 
@@ -841,7 +859,7 @@ def createFranchiseOptimetry(request):
     return redirect('login')
 
 
-def editFranchiseOptimetry(request):
+def editFranchiseOptimetry(request, franchiseOptimetryId):
     return render(request, 'indolens_admin/franchiseOptimetry/editOptimetry.html')
 
 
@@ -912,7 +930,7 @@ def createSaleExecutives(request):
     return redirect('login')
 
 
-def editSaleExecutives(request):
+def editSaleExecutives(request, ownSaleExecutivesId):
     return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html')
 
 
@@ -992,7 +1010,7 @@ def createFranchiseSaleExecutives(request):
     return redirect('login')
 
 
-def editFranchiseSaleExecutives(request):
+def editFranchiseSaleExecutives(request, franchiseSaleExecutivesId):
     return render(request, 'indolens_admin/franchiseSalesExecutive/editSaleExecutives.html')
 
 
@@ -1022,6 +1040,7 @@ def enableDisableFranchiseSaleExecutives(request, franchiseSaleExecutivesId, sta
 def manageAccountant(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = accountant_controller.get_all_accountant()
+        print(response)
         return render(request, 'indolens_admin/accountant/manageAccountant.html',
                       {"accountant_list": response['accountant_list']})
     else:
@@ -1318,7 +1337,7 @@ def createFranchiseOtherEmployees(request):
         return redirect('login')
 
 
-def editFranchiseOtherEmployees(request):
+def editFranchiseOtherEmployees(request, franchiseEmployeeId):
     return render(request, 'indolens_admin/franchiseOtherEmployees/editOtherEmployees.html')
 
 
