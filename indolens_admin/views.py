@@ -14,7 +14,7 @@ from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_st
     sub_admin_model, area_head_model, marketing_head_model, \
     accountant_model, lab_technician_model, lab_model, \
     product_category_model, master_brand_model, master_shape_model, master_frame_type_model, master_color_model, \
-    master_material_model, store_employee_model, central_inventory_products_model
+    master_material_model, store_employee_model
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
 
 
@@ -260,22 +260,29 @@ def createSubAdmin(request):
 
 def editSubAdmin(request, subAdminId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        if request.method == 'POST':
-            sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
-            response, status_code = sub_admin_controller.edit_sub_admin(sub_admin)
-            return redirect('manageSubAdmins')
+        if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+            if request.method == 'POST':
+                sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
+                response, status_code = sub_admin_controller.edit_sub_admin(sub_admin)
+                return redirect('manageSubAdmins')
+            else:
+                response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
+                return render(request, 'indolens_admin/subAdmin/editSubAdmin.html',
+                              {"sub_admin": response['sub_admin']})
+
         else:
-            response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
-            return render(request, 'indolens_admin/subAdmin/editSubAdmin.html',
-                          {"sub_admin": response['sub_admin']})
+            return redirect('login')
     else:
         return redirect('login')
 
 
 def viewSubAdmin(request, subAdminId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
-        return render(request, 'indolens_admin/subAdmin/viewSubAdmin.html', {"sub_admin": response['sub_admin']})
+        if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+            response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
+            return render(request, 'indolens_admin/subAdmin/viewSubAdmin.html', {"sub_admin": response['sub_admin']})
+        else:
+            return redirect('login')
     else:
         return redirect('login')
 
@@ -289,22 +296,10 @@ def enableDisableSubAdmin(request, subAdminId, status):
         return redirect('login')
 
 
-def updateSubAdminDocuments(request, subAdminId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
-        return render(request, 'indolens_admin/subAdmin/updateDocuments.html',
-                      {"sub_admin": response['sub_admin']})
-    else:
-        return redirect('login')
-
-
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
 def manageStoreManagers(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = store_manager_controller.get_all_store_manager()
-        return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
-                      {"store_managers": response['store_managers']})
         if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
             response, status_code = store_manager_controller.get_all_store_manager()
             available_stores_response, available_stores_status_code = own_store_controller.get_unassigned_active_own_store_for_manager()
@@ -319,58 +314,64 @@ def manageStoreManagers(request):
 
 def createStoreManager(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        if request.method == 'POST':
-            form_data = {}
-            file_data = {}
-            file_label_mapping = {
-                'profilePic': 'profile_pic',
-                'document1': 'documents',
-                'document2': 'documents',
-            }
+        if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+            if request.method == 'POST':
+                form_data = {}
+                file_data = {}
+                file_label_mapping = {
+                    'profilePic': 'profile_pic',
+                    'document1': 'documents',
+                    'document2': 'documents',
+                }
 
-            for file_key, file_objs in request.FILES.lists():
-                label = file_label_mapping.get(file_key, 'unknown')
-                subdirectory = f"{label}/"
-                file_list = []
+                for file_key, file_objs in request.FILES.lists():
+                    label = file_label_mapping.get(file_key, 'unknown')
+                    subdirectory = f"{label}/"
+                    file_list = []
 
-                for index, file_obj in enumerate(file_objs):
-                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
-                    form_data_key = f"doc"
-                    file_dict = {form_data_key: file_name}
+                    for index, file_obj in enumerate(file_objs):
+                        file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                        form_data_key = f"doc"
+                        file_dict = {form_data_key: file_name}
 
-                    with default_storage.open(file_name, 'wb+') as destination:
-                        for chunk in file_obj.chunks():
-                            destination.write(chunk)
+                        with default_storage.open(file_name, 'wb+') as destination:
+                            for chunk in file_obj.chunks():
+                                destination.write(chunk)
 
-                    file_list.append(file_dict)
+                        file_list.append(file_dict)
 
-                if len(file_list) == 1:
-                    file_data[file_key] = file_list[0]
-                else:
-                    file_data[file_key] = file_list
+                    if len(file_list) == 1:
+                        file_data[file_key] = file_list[0]
+                    else:
+                        file_data[file_key] = file_list
 
-            # Combine the file data with the original form data
-            for key, value in file_data.items():
-                form_data[key] = value
+                # Combine the file data with the original form data
+                for key, value in file_data.items():
+                    form_data[key] = value
 
-            file_data = FileData(form_data)
+                file_data = FileData(form_data)
 
-            store_manager = store_employee_model.store_employee_from_dict(request.POST)
-            response, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
-            url = reverse('view_store_manager', kwargs={'storeManagerId': response['mid']})
-            return redirect(url)
+                store_manager = store_employee_model.store_employee_from_dict(request.POST)
+                response, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
+                url = reverse('view_store_manager', kwargs={'storeManagerId': response['mid']})
+                return redirect(url)
 
+            else:
+                return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
         else:
-            return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
+            return redirect('login')
     else:
         return redirect('login')
 
 
 def viewStoreManager(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
-        return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
-                      {"store_manager": response['store_manager']})
+        if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+            response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
+            return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
+                          {"store_manager": response['store_manager']})
+        else:
+            return redirect('login')
     else:
         return redirect('login')
 
@@ -378,47 +379,13 @@ def viewStoreManager(request, storeManagerId):
 def editStoreManager(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            form_data = {}
-            file_data = {}
-            file_label_mapping = {
-                'profilePic': 'profile_pic'
-            }
-
-            for file_key, file_objs in request.FILES.lists():
-                label = file_label_mapping.get(file_key, 'unknown')
-                subdirectory = f"{label}/"
-                file_list = []
-
-                for index, file_obj in enumerate(file_objs):
-                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
-                    form_data_key = f"doc"
-                    file_dict = {form_data_key: file_name}
-
-                    with default_storage.open(file_name, 'wb+') as destination:
-                        for chunk in file_obj.chunks():
-                            destination.write(chunk)
-
-                    file_list.append(file_dict)
-
-                if len(file_list) == 1:
-                    file_data[file_key] = file_list[0]
-                else:
-                    file_data[file_key] = file_list
-
-            # Combine the file data with the original form data
-            for key, value in file_data.items():
-                form_data[key] = value
-
-            file_data = FileData(form_data)
+            print(request.POST)
             store_manager = store_employee_model.store_employee_from_dict(request.POST)
-            response = store_manager_controller.update_store_manager(store_manager, file_data)
-            url = reverse('view_store_manager', kwargs={'storeManagerId': storeManagerId})
-            return redirect(url)
+            print(store_manager)
 
-        else:
-            response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
-            return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
-                          {"store_manager": response['store_manager']})
+        response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
+        return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
+                      {"store_manager": response['store_manager']})
     else:
         return redirect('login')
 
@@ -435,6 +402,7 @@ def updateStoreManagerDocuments(request, storeManagerId):
 def enableDisableStoreManager(request, storeManagerId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response = store_manager_controller.enable_disable_store_manager(storeManagerId, status)
+        print(response)
         return redirect('manage_store_managers')
     else:
         return redirect('login')
@@ -445,6 +413,7 @@ def enableDisableStoreManager(request, storeManagerId, status):
 def manageFranchiseOwners(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_all_franchise_owner()
+        print(response)
         return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
                       {"franchise_owners": response['franchise_owners']})
     else:
@@ -557,25 +526,13 @@ def viewFranchiseOwners(request, franchiseOwnersId):
         return redirect('login')
 
 
-def updateFranchiseOwnersDocuments(request, franchiseOwnersId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
-        print(response)
-        return render(request, 'indolens_admin/franchiseOwners/updateDocuments.html',
-                      {"franchise_owner": response['franchise_owner']})
-    else:
-        return redirect('login')
-
-
 # =================================ADMIN AREA HEADS MANAGEMENT======================================
 
 def manageAreaHead(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_all_area_head()
-        available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
-                      {"area_heads_list": response['area_heads_list'],
-                       "available_stores": available_stores_response['available_stores']})
+                      {"area_heads_list": response['area_heads_list']})
     else:
         return redirect('login')
 
@@ -630,7 +587,7 @@ def createAreaHead(request):
         return redirect('login')
 
 
-def editAreaHead(request, areaHeadId):
+def editAreaHead(request):
     return render(request, 'indolens_admin/areaHead/editAreaHead.html')
 
 
@@ -646,15 +603,6 @@ def viewAreaHead(request, areaHeadId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
         return render(request, 'indolens_admin/areaHead/viewAreaHead.html',
-                      {"area_head": response['area_head']})
-    else:
-        return redirect('login')
-
-
-def UpdateAreaHeadDocuments(request, areaHeadId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
-        return render(request, 'indolens_admin/areaHead/updateDocuments.html',
                       {"area_head": response['area_head']})
     else:
         return redirect('login')
@@ -737,16 +685,6 @@ def viewMarketingHead(request, marketingHeadId):
         return redirect('login')
 
 
-def updateMarketingHeadDocuments(request, marketingHeadId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = marketing_head_controller.get_marketing_head_by_id(marketingHeadId)
-        print(response)
-        return render(request, 'indolens_admin/marketingHeads/updateDocuments.html',
-                      {"marketing_head": response['marketing_head']})
-    else:
-        return redirect('login')
-
-
 def enableDisableMarketingHead(request, marketingHeadId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         marketing_head_controller.enable_disable_marketing_head(marketingHeadId, status)
@@ -819,66 +757,15 @@ def createOptimetry(request):
         return redirect('login')
 
 
-def editOptimetry(request, ownOptimetryId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        if request.method == 'POST':
-            form_data = {}
-            file_data = {}
-            file_label_mapping = {
-                'profilePic': 'profile_pic'
-            }
-
-            for file_key, file_objs in request.FILES.lists():
-                label = file_label_mapping.get(file_key, 'unknown')
-                subdirectory = f"{label}/"
-                file_list = []
-
-                for index, file_obj in enumerate(file_objs):
-                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
-                    form_data_key = f"doc"
-                    file_dict = {form_data_key: file_name}
-
-                    with default_storage.open(file_name, 'wb+') as destination:
-                        for chunk in file_obj.chunks():
-                            destination.write(chunk)
-
-                    file_list.append(file_dict)
-
-                if len(file_list) == 1:
-                    file_data[file_key] = file_list[0]
-                else:
-                    file_data[file_key] = file_list
-
-            # Combine the file data with the original form data
-            for key, value in file_data.items():
-                form_data[key] = value
-
-            file_data = FileData(form_data)
-            optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
-            response, status_code = optimetry_controller.update_optimetry(optimetry_obj, file_data)
-            url = reverse('view_optimetry', kwargs={'ownOptimetryId': ownOptimetryId})
-            return redirect(url)
-        else:
-            response, status_code = optimetry_controller.get_optimetry_by_id(ownOptimetryId)
-            return render(request, 'indolens_admin/optimetry/editOptimetry.html', {"optimetry": response['optimetry']})
-    else:
-        return redirect('login')
+def editOptimetry(request):
+    return render(request, 'indolens_admin/optimetry/editOptimetry.html')
 
 
 def viewOptimetry(request, ownOptimetryId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_optimetry_by_id(ownOptimetryId)
-        return render(request, 'indolens_admin/optimetry/viewOptimetry.html',
-                      {"optimetry": response['optimetry']})
-    else:
-        return redirect('login')
-
-
-def updateOptimetryDocuments(request, ownOptimetryId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = optimetry_controller.get_optimetry_by_id(ownOptimetryId)
         print(response)
-        return render(request, 'indolens_admin/optimetry/updateDocuments.html',
+        return render(request, 'indolens_admin/optimetry/viewOptimetry.html',
                       {"optimetry": response['optimetry']})
     else:
         return redirect('login')
@@ -955,7 +842,7 @@ def createFranchiseOptimetry(request):
     return redirect('login')
 
 
-def editFranchiseOptimetry(request, franchiseOptimetryId):
+def editFranchiseOptimetry(request):
     return render(request, 'indolens_admin/franchiseOptimetry/editOptimetry.html')
 
 
@@ -963,15 +850,6 @@ def viewFranchiseOptimetry(request, franchiseOptimetryId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_franchise_optimetry_by_id(franchiseOptimetryId)
         return render(request, 'indolens_admin/franchiseOptimetry/viewOptimetry.html',
-                      {"optimetry": response['optimetry']})
-    else:
-        return redirect('login')
-
-
-def updateFranchiseOptimetryDocuments(request, franchiseOptimetryId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = optimetry_controller.get_franchise_optimetry_by_id(franchiseOptimetryId)
-        return render(request, 'indolens_admin/franchiseOptimetry/updateDocuments.html',
                       {"optimetry": response['optimetry']})
     else:
         return redirect('login')
@@ -1035,68 +913,14 @@ def createSaleExecutives(request):
     return redirect('login')
 
 
-def editSaleExecutives(request, ownSaleExecutivesId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        if request.method == 'POST':
-            form_data = {}
-            file_data = {}
-            file_label_mapping = {
-                'profilePic': 'profile_pic'
-            }
-
-            for file_key, file_objs in request.FILES.lists():
-                label = file_label_mapping.get(file_key, 'unknown')
-                subdirectory = f"{label}/"
-                file_list = []
-
-                for index, file_obj in enumerate(file_objs):
-                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
-                    form_data_key = f"doc"
-                    file_dict = {form_data_key: file_name}
-
-                    with default_storage.open(file_name, 'wb+') as destination:
-                        for chunk in file_obj.chunks():
-                            destination.write(chunk)
-
-                    file_list.append(file_dict)
-
-                if len(file_list) == 1:
-                    file_data[file_key] = file_list[0]
-                else:
-                    file_data[file_key] = file_list
-
-            # Combine the file data with the original form data
-            for key, value in file_data.items():
-                form_data[key] = value
-
-            file_data = FileData(form_data)
-            sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
-            response, status_code = sales_executives_controller.update_own_sales_executives(sales_executives_obj,
-                                                                                            file_data)
-            url = reverse('view_sales_executives', kwargs={'ownSaleExecutivesId': ownSaleExecutivesId})
-            return redirect(url)
-        else:
-            response, status_code = sales_executives_controller.get_own_sales_executive_by_id(ownSaleExecutivesId)
-            print(response)
-            return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html',
-                          {"sales_executive": response['sales_executive']})
-    else:
-        return redirect('login')
+def editSaleExecutives(request):
+    return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html')
 
 
 def viewSaleExecutives(request, ownSaleExecutivesId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sales_executives_controller.get_own_sales_executive_by_id(ownSaleExecutivesId)
         return render(request, 'indolens_admin/salesExecutive/viewSaleExecutives.html',
-                      {"sales_executive": response['sales_executive']})
-    else:
-        return redirect('login')
-
-
-def updateSaleExecutivesDocuments(request, ownSaleExecutivesId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = sales_executives_controller.get_own_sales_executive_by_id(ownSaleExecutivesId)
-        return render(request, 'indolens_admin/salesExecutive/updateDocuments.html',
                       {"sales_executive": response['sales_executive']})
     else:
         return redirect('login')
@@ -1169,7 +993,7 @@ def createFranchiseSaleExecutives(request):
     return redirect('login')
 
 
-def editFranchiseSaleExecutives(request, franchiseSaleExecutivesId):
+def editFranchiseSaleExecutives(request):
     return render(request, 'indolens_admin/franchiseSalesExecutive/editSaleExecutives.html')
 
 
@@ -1179,17 +1003,6 @@ def viewFranchiseSaleExecutives(request, franchiseSaleExecutivesId):
             franchiseSaleExecutivesId)
         print(response)
         return render(request, 'indolens_admin/franchiseSalesExecutive/viewSaleExecutives.html',
-                      {"franchise_sales_executive": response['franchise_sales_executive']})
-    else:
-        return redirect('login')
-
-
-def updateFranchiseSaleExecutivesDocuments(request, franchiseSaleExecutivesId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(
-            franchiseSaleExecutivesId)
-        print(response)
-        return render(request, 'indolens_admin/franchiseSalesExecutive/updateDocuments.html',
                       {"franchise_sales_executive": response['franchise_sales_executive']})
     else:
         return redirect('login')
@@ -1272,15 +1085,6 @@ def viewAccountant(request, accountantId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = accountant_controller.get_accountant_by_id(accountantId)
         return render(request, 'indolens_admin/accountant/viewAccountant.html',
-                      {"accountant": response['accountant']})
-    else:
-        return redirect('login')
-
-
-def updateAccountantDocuments(request, accountantId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = accountant_controller.get_accountant_by_id(accountantId)
-        return render(request, 'indolens_admin/accountant/updateDocuments.html',
                       {"accountant": response['accountant']})
     else:
         return redirect('login')
@@ -1371,15 +1175,6 @@ def viewLabTechnician(request, labTechnicianId):
         return redirect('login')
 
 
-def updateLabTechnicianDocuments(request, labTechnicianId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
-        return render(request, 'indolens_admin/labTechnician/updateDocuments.html',
-                      {"lab_technician": response['lab_technician']})
-    else:
-        return redirect('login')
-
-
 def enableDisableLabTechnician(request, labTechnicianId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         lab_technician_controller.enable_disable_lab_technician(labTechnicianId, status)
@@ -1447,69 +1242,13 @@ def createOtherEmployees(request):
 
 
 def editOtherEmployees(request, ownEmployeeId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        if request.method == 'POST':
-            print(request.POST)
-            form_data = {}
-            file_data = {}
-            file_label_mapping = {
-                'profilePic': 'profile_pic'
-            }
-
-            for file_key, file_objs in request.FILES.lists():
-                label = file_label_mapping.get(file_key, 'unknown')
-                subdirectory = f"{label}/"
-                file_list = []
-
-                for index, file_obj in enumerate(file_objs):
-                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
-                    form_data_key = f"doc"
-                    file_dict = {form_data_key: file_name}
-
-                    with default_storage.open(file_name, 'wb+') as destination:
-                        for chunk in file_obj.chunks():
-                            destination.write(chunk)
-
-                    file_list.append(file_dict)
-
-                if len(file_list) == 1:
-                    file_data[file_key] = file_list[0]
-                else:
-                    file_data[file_key] = file_list
-
-            # Combine the file data with the original form data
-            for key, value in file_data.items():
-                form_data[key] = value
-
-            file_data = FileData(form_data)
-            other_emp_obj = store_employee_model.store_employee_from_dict(request.POST)
-            response, status_code = other_employee_controller.update_other_employee(other_emp_obj, file_data)
-            url = reverse('view_other_employees', kwargs={'ownEmployeeId': ownEmployeeId})
-            return redirect(url)
-
-        else:
-            response, status_code = other_employee_controller.get_other_emp_by_id(ownEmployeeId)
-            print(response)
-            return render(request, 'indolens_admin/otherEmployees/editOtherEmployees.html',
-                          {"other_employee": response['other_employee']})
-    else:
-        return redirect('login')
-
+    return render(request, 'indolens_admin/otherEmployees/editOtherEmployees.html')
 
 
 def viewOtherEmployees(request, ownEmployeeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_other_emp_by_id(ownEmployeeId)
         return render(request, 'indolens_admin/otherEmployees/viewOtherEmployees.html',
-                      {"other_employee": response['other_employee']})
-    else:
-        return redirect('login')
-
-
-def updateOtherEmployeesDocuments(request, ownEmployeeId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = other_employee_controller.get_other_emp_by_id(ownEmployeeId)
-        return render(request, 'indolens_admin/otherEmployees/updateDocuments.html',
                       {"other_employee": response['other_employee']})
     else:
         return redirect('login')
@@ -1580,7 +1319,7 @@ def createFranchiseOtherEmployees(request):
         return redirect('login')
 
 
-def editFranchiseOtherEmployees(request, franchiseEmployeeId):
+def editFranchiseOtherEmployees(request):
     return render(request, 'indolens_admin/franchiseOtherEmployees/editOtherEmployees.html')
 
 
@@ -1588,15 +1327,6 @@ def viewFranchiseOtherEmployees(request, franchiseEmployeeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_franchise_other_emp_by_id(franchiseEmployeeId)
         return render(request, 'indolens_admin/franchiseOtherEmployees/viewOtherEmployees.html',
-                      {"other_employee": response['other_employee']})
-    else:
-        return redirect('login')
-
-
-def updateFranchiseOtherEmployeesDocuments(request, franchiseEmployeeId):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = other_employee_controller.get_franchise_other_emp_by_id(franchiseEmployeeId)
-        return render(request, 'indolens_admin/franchiseOtherEmployees/updateDocuments.html',
                       {"other_employee": response['other_employee']})
     else:
         return redirect('login')
@@ -1748,9 +1478,7 @@ def addProductCategory(request):
             product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
             print(product_cat_obj.category_name)
             master_category_controller.add_product_category(product_cat_obj)
-            return redirect('manage_central_inventory_category')
-        else:
-            return render(request, 'indolens_admin/masters/addProductCategory.html')
+        return redirect('manage_central_inventory_category')
     else:
         return redirect('login')
 
@@ -1782,9 +1510,7 @@ def addMastersBrands(request):
             print(master_brand_obj)
             resp = master_brand_controller.add_product_brand(master_brand_obj)
             print(resp)
-            return redirect('manage_central_inventory_brands')
-        else:
-            return render(request, 'indolens_admin/masters/addMastersBrand.html')
+        return redirect('manage_central_inventory_brands')
     else:
         return redirect('login')
 
@@ -1815,9 +1541,7 @@ def addMastersShapes(request):
             print(master_shape_obj)
             resp = master_shape_controller.add_frame_shape(master_shape_obj)
             print(resp)
-            return redirect('manage_central_inventory_shapes')
-        else:
-            return render(request, 'indolens_admin/masters/addMastersShapes.html')
+        return redirect('manage_central_inventory_shapes')
     else:
         return redirect('login')
 
@@ -1846,9 +1570,7 @@ def addMastersFrameType(request):
             frame_type_obj = master_frame_type_model.master_frame_type_model_from_dict(request.POST)
             print(frame_type_obj)
             resp = master_frame_type_controller.add_frame_type(frame_type_obj)
-            return redirect('manage_central_inventory_frame_types')
-        else:
-            return render(request, 'indolens_admin/masters/addMastersFrameType.html')
+        return redirect('manage_central_inventory_frame_types')
     else:
         return redirect('login')
 
@@ -1876,9 +1598,7 @@ def addMastersColor(request):
             print(request.POST)
             color_obj = master_color_model.master_color_model_from_dict(request.POST)
             resp = master_color_controller.add_master_color(color_obj)
-            return redirect('manage_central_inventory_color')
-        else:
-            return render(request, 'indolens_admin/masters/addMastersColor.html')
+        return redirect('manage_central_inventory_color')
     else:
         return redirect('login')
 
@@ -1906,9 +1626,7 @@ def addMastersMaterials(request):
             print(request.POST)
             material_obj = master_material_model.master_material_model_from_dict(request.POST)
             resp = master_material_controller.add_master_material(material_obj)
-            return redirect('manage_central_inventory_materials')
-        else:
-            return render(request, 'indolens_admin/masters/addMastersMaterials.html')
+        return redirect('manage_central_inventory_materials')
     else:
         return redirect('login')
 
@@ -1955,55 +1673,12 @@ def enableDisableMastersUnits(request, unitId, status):
 
 
 def manageCentralInventoryProducts(request):
-    response, status_code = central_inventory_controller.get_all_central_inventory_products()
-    return render(request, 'indolens_admin/centralInventory/manageCentralInventoryProducts.html',
-                  {"product_list": response['product_list']})
+    return render(request, 'indolens_admin/centralInventory/manageCentralInventoryProducts.html')
 
 
 def centralInventoryAddProducts(request):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        if request.method == 'POST':
-            form_data = {}
-            file_data = {}
-            file_label_mapping = {
-                'productImages': 'products'
-            }
-
-            for file_key, file_objs in request.FILES.lists():
-                label = file_label_mapping.get(file_key, 'unknown')
-                subdirectory = f"{label}/"
-                file_list = []
-
-                for index, file_obj in enumerate(file_objs):
-                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
-                    form_data_key = f"prod_img"
-                    file_dict = {form_data_key: file_name}
-
-                    with default_storage.open(file_name, 'wb+') as destination:
-                        for chunk in file_obj.chunks():
-                            destination.write(chunk)
-
-                    file_list.append(file_dict)
-
-                if len(file_list) == 1:
-                    file_data[file_key] = file_list[0]
-                else:
-                    file_data[file_key] = file_list
-
-            # Combine the file data with the original form data
-            for key, value in file_data.items():
-                form_data[key] = value
-
-            file_data = FileData(form_data)
-            product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
-            response, status_code = central_inventory_controller.add_central_inventory_products(product_obj, file_data)
-            return redirect('manage_central_inventory_products')
-        else:
-            response, status_code = central_inventory_controller.get_all_active_types()
-            return render(request, 'indolens_admin/centralInventory/centralInventoryAddProducts.html', response)
-
-    else:
-        return redirect('login')
+    response, status_code = central_inventory_controller.get_all_active_types()
+    return render(request, 'indolens_admin/centralInventory/centralInventoryAddProducts.html', response)
 
 
 def manageCentralInventoryOutOfStock(request):
@@ -2059,15 +1734,3 @@ def assignOptimetryOwnStore(request):
 def unAssignOptimetryOwnStore(request, empId, storeId):
     response, status_code = store_manager_controller.unAssignStore(empId, storeId)
     return redirect('manage_store_optimetry')
-
-def assignAreaHeadOwnStore(request):
-    if request.method == 'POST':
-        print(request.POST)
-        print(request.POST['store_id'])
-        response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
-        return redirect('manage_area_head')
-
-
-def unAssignAreaHeadOwnStore(request, empId, storeId):
-    response, status_code = store_manager_controller.unAssignStore(empId, storeId)
-    return redirect('manage_area_head')
