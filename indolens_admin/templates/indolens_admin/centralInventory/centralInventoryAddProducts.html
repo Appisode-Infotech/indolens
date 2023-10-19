@@ -72,7 +72,8 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
         <div class="content">
-            <form class="mb-9 needs-validation" method="post" novalidate="novalidate">
+            <form action="{% url 'add_products' %}"  class="mb-9 needs-validation" method="post" novalidate="novalidate"
+            enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row g-3 flex-between-end mb-5">
                     <div class="col-auto">
@@ -151,10 +152,10 @@
                                         <div class="row g-3">
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                    <h5 class="mb-0 text-1000">Category</h5><a class="fw-bold fs--1"
-                                                                                               href="{% url 'add_product_category' %}">Add
-                                                    new
-                                                    category</a>
+                                                    <h5 class="mb-0 text-1000">Category</h5>
+                                                    <a class="fw-bold fs--1"  href="{% url 'add_product_category' %}">
+                                                        Add new category</a>
+
                                                 </div>
                                                 <select id="categorySelect" name="categoryId" required
                                                         aria-label="category" class="form-select mb-3"
@@ -261,7 +262,8 @@
                                                     <select name="colorId" required class="form-select">
                                                         <option value="">Select Color</option>
                                                         {% for color in colors %}
-                                                        <option value="color.color_id">{{color.color_name}} -
+                                                        <option value="{{color.color_id}}">
+                                                            {{color.color_name}} -
                                                             {{color.color_code}}
                                                         </option>
                                                         {% endfor %}
