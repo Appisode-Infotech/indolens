@@ -78,77 +78,89 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
+        {% for other_employee in other_employee %}
         <div class="content">
 
             <h2 class="mb-4">Edit Employee</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="/admin/lol" class="row g-3 needs-validation needs-password-validation" method="post"
+                    <form action="{% url 'edit_other_employees' other_employee.employee_id %}"
+                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data" method="post"
                           novalidate="">
+                        {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
                                                                 data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
-                                                                src="/static/img/team/avatar.png"/></div>
+                                                                src="{{MEDIA_URL}}{{other_employee.profile_pic}}"/></div>
                         </div>
 
                         <div class="col-md-12">
                             <label class="form-label" for="profilePic">Upload profile pic</label>
-                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic" required
+                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic"
                                    type="file"/>
+                            <div class="invalid-feedback">Profile pic is mandatory.</div>
                         </div>
 
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeName">Name</label>
+                            <label class="form-label" for="name">Name</label>
 
-                            <input class="form-control" id="storeName" name="storeName" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Please provide a valid Name.</div>
+                            <input class="form-control" id="name" name="name" required="" type="text"
+                                   value="{{other_employee.name}}"/>
+                            <div class="invalid-feedback">Name is mandatory.</div>
+
                         </div>
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeDisplayName">Email</label>
+                            <label class="form-label" for="email">Email</label>
 
-                            <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
-                                   type="text" value=""/>
-                            <div class="invalid-feedback">Please provide a valid store display name.</div>
+                            <input class="form-control" id="email" name="email" required=""
+                                   type="text" value="{{other_employee.email}}"/>
+                            <div class="invalid-feedback">Email is mandatory.</div>
                         </div>
 
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storePhone">Phone</label>
+                            <label class="form-label" for="phone">Phone</label>
 
-                            <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Please provide a valid phone number.</div>
+                            <input class="form-control" id="phone" name="phone" required="" type="text"
+                                   value="{{other_employee.phone}}"/>
+                            <div class="invalid-feedback">Phone is mandatory.</div>
                         </div>
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeGSTIN">Password</label>
+                            <label class="form-label" for="password">Password</label>
 
-                            <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Please provide a valid Password.</div>
+                            <input class="form-control" id="password" name="password" required="" type="text"
+                                   value="{{other_employee.password}}"/>
+                            <div class="invalid-feedback">Password is mandatory.</div>
                         </div>
 
                         <div class="col-md-12">
 
-                            <label class="form-label" for="storeGSTIN">Confirm Password</label>
+                            <label class="form-label" for="confirmPassword">Confirm Password</label>
 
-                            <input class="form-control" id="confirmPassword" name="storeGSTIN" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Please provide a valid Password.</div>
+                            <input class="form-control" id="confirmPassword" name="confirmPassword" required=""
+                                   type="text"
+                                   value="{{other_employee.password}}"/>
+                            <div class="invalid-feedback">Passwords should match.</div>
                         </div>
 
                         <div class="col-12">
 
-                            <label class="form-label" for="completeAddress">Complete Address</label>
+                            <label class="form-label" for="address">Complete Address</label>
+                            <textarea class="form-control" id="address" name="address" rows="3" required>
+                                {{other_employee.address}}
+                            </textarea>
 
-                            <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3"> </textarea>
-                            <div class="invalid-feedback">Please provide a valid address.</div>
+                            <div class="invalid-feedback">Address is mandatory</div>
+
                         </div>
+                        <input name="employee_id" required type="hidden"
+                               value="{{ other_employee.employee_id }}">
+                        <input name="last_updated_by" required type="hidden"
+                               value="{{ request.session.id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -159,6 +171,7 @@
             {% include 'footer.html' %}
 
         </div>
+        {% endfor %}
     </div>
 </main>
 <!-- ===============================================-->

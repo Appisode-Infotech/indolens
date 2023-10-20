@@ -841,12 +841,8 @@ def editOptimetry(request, ownOptimetryId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(request.POST)
-            print(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
-            print(optimetry_obj.name)
             response, status_code = optimetry_controller.update_optimetry(optimetry_obj, file_data)
-            print(response)
             url = reverse('view_optimetry', kwargs={'ownOptimetryId': ownOptimetryId})
             return redirect(url)
         else:
@@ -1027,7 +1023,52 @@ def createSaleExecutives(request):
 
 
 def editSaleExecutives(request, ownSaleExecutivesId):
-    return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html')
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
+            response, status_code = sales_executives_controller.update_own_sales_executives(sales_executives_obj,
+                                                                                            file_data)
+            url = reverse('view_sales_executives', kwargs={'ownSaleExecutivesId': ownSaleExecutivesId})
+            return redirect(url)
+        else:
+            response, status_code = sales_executives_controller.get_own_sales_executive_by_id(ownSaleExecutivesId)
+            print(response)
+            return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html',
+                          {"sales_executive": response['sales_executive']})
+    else:
+        return redirect('login')
 
 
 def viewSaleExecutives(request, ownSaleExecutivesId):
@@ -1394,7 +1435,54 @@ def createOtherEmployees(request):
 
 
 def editOtherEmployees(request, ownEmployeeId):
-    return render(request, 'indolens_admin/otherEmployees/editOtherEmployees.html')
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            print(request.POST)
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            other_emp_obj = store_employee_model.store_employee_from_dict(request.POST)
+            response, status_code = other_employee_controller.update_other_employee(other_emp_obj, file_data)
+            url = reverse('view_other_employees', kwargs={'ownEmployeeId': ownEmployeeId})
+            return redirect(url)
+
+        else:
+            response, status_code = other_employee_controller.get_other_emp_by_id(ownEmployeeId)
+            print(response)
+            return render(request, 'indolens_admin/otherEmployees/editOtherEmployees.html',
+                          {"other_employee": response['other_employee']})
+    else:
+        return redirect('login')
+
 
 
 def viewOtherEmployees(request, ownEmployeeId):

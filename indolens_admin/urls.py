@@ -186,13 +186,13 @@ urlpatterns = [
     # Own store other employees
     path('manage_store_other_employees/', manageOtherEmployees, name='manage_store_other_employees'),
     path('manage_store_other_employees/create_other_employees/', createOtherEmployees, name='create_other_employees'),
-    path('manage_store_other_employees/edit_other_employees/empId=<int:ownEmployeeId>', editOtherEmployees,
+    path('manage_store_other_employees/edit_other_employees/ownEmployeeId=<int:ownEmployeeId>', editOtherEmployees,
          name='edit_other_employees'),
-    path('manage_store_other_employees/update_other_employees_documents/empId=<int:ownEmployeeId>',
+    path('manage_store_other_employees/update_other_employees_documents/ownEmployeeId=<int:ownEmployeeId>',
          updateOtherEmployeesDocuments, name='update_other_employees_documents'),
-    path('manage_store_other_employees/view_other_employees/empId=<int:ownEmployeeId>', viewOtherEmployees,
+    path('manage_store_other_employees/view_other_employees/ownEmployeeId=<int:ownEmployeeId>', viewOtherEmployees,
          name='view_other_employees'),
-    path('manage_store_other_employees/enable_disable_other_employees/empId=<int:ownEmployeeId>/status=<int:status>',
+    path('manage_store_other_employees/enable_disable_other_employees/ownEmployeeId=<int:ownEmployeeId>/status=<int:status>',
          enableDisableOtherEmployees, name='enable_disable_other_employees'),
 
 
