@@ -1,9 +1,11 @@
 import datetime
+import json
 
 import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_models.admin_resp_model.central_inventory_product_resp_model import get_products
 from indolens_admin.admin_models.admin_resp_model.master_brand_resp_model import get_brands
 from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
 from indolens_admin.admin_models.admin_resp_model.master_color_resp_model import get_product_colors
@@ -77,15 +79,74 @@ def get_all_active_types():
             cursor.execute(get_units_query)
             master_units = get_master_units(cursor.fetchall())
             return {
-                       "status": True,
-                       "product_categories": product_categories,
-                       "product_brands": product_brands,
-                       "product_materials": product_materials,
-                       "frame_types": frame_types,
-                       "frame_shapes": frame_shapes,
-                       "colors": colors,
-                       "master_units": master_units,
-                   }, 200
+                "status": True,
+                "product_categories": product_categories,
+                "product_brands": product_brands,
+                "product_materials": product_materials,
+                "frame_types": frame_types,
+                "frame_shapes": frame_shapes,
+                "colors": colors,
+                "master_units": master_units,
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def add_central_inventory_products(product_obj, file):
+    try:
+        with connection.cursor() as cursor:
+            add_product_query = f""" INSERT INTO central_inventory 
+                                                (product_name, product_description, product_images, 
+                                                category_id, brand_id, material_id, frame_type_id, frame_shape_id, 
+                                                color_id, unit_id, origin, cost_price, sale_price, model_number, hsn, 
+                                                created_on, created_by, last_updated_on, last_updated_by, 
+                                                product_quantity, product_gst) 
+                                                VALUES ('{product_obj.product_title}','{product_obj.product_description}',
+                                                '{json.dumps(file.product_img)}','{product_obj.category_id}',
+                                                '{product_obj.brand_id}','{product_obj.material_id}',
+                                                '{product_obj.frame_type_id}','{product_obj.frame_shape_id}',
+                                                '{product_obj.color_id}','{product_obj.unit_id}','{product_obj.origin}',
+                                                '{product_obj.cost_price}','{product_obj.sale_price}', 
+                                                '{product_obj.model_number}', '{product_obj.hsn_number}',
+                                                '{today}','{product_obj.created_by}','{today}',
+                                                '{product_obj.last_updated_by}', '{product_obj.product_quantity}', 
+                                                '{product_obj.product_gstin}') """
+
+            cursor.execute(add_product_query)
+            productId = cursor.lastrowid
+            return {
+                "status": True,
+                "productId": productId
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def get_all_central_inventory_products():
+    try:
+        with connection.cursor() as cursor:
+            get_all_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
+                                    FROM central_inventory As ci
+                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id"""
+
+            cursor.execute(get_all_product_query)
+            product_list = cursor.fetchall()
+            return {
+                "status": True,
+                "product_list": get_products(product_list)
+            }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:

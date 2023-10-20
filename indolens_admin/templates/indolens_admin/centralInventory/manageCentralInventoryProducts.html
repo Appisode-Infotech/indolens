@@ -177,7 +177,7 @@
                                 </thead>
                                 <tbody class="list" id="products-table-body">
 
-                                {% for product in product_categories %}
+                                {% for product in product_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                     <td class="fs--1 align-middle">
                                         <div class="form-check mb-0 fs-0">
@@ -185,35 +185,31 @@
                                         </div>
                                     </td>
                                     <td class="align-middle white-space-nowrap py-0">
-                                        <div class="border rounded-2"><img alt=""
-                                                                           src="{% static 'img/products/1.png' %}"
-                                                                           width="53"/>
-                                        </div>
-                                    </td>
-                                    <td class="align-middle white-space-nowrap py-0">
-                                    <a href="{{MEDIA_URL}}{{product.productImages}}" target="_blank">
+                                        {% for img in product.product_images %}
+                                    <a href="{{MEDIA_URL}}{{product.product_images}}" target="_blank">
                                     <div class="avatar avatar-m">
-                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{product.productImages}}"/>
+                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{img}}"/>
                                     </div>
                                         </a>
+                                        {% endfor %}
                                 </td>
                                     <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{product.productTitle}}</a></td>
-                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                        ₹{{product.costPrice}}
+                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{product.product_name}}</a></td>
+                                    <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                        ₹{{product.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        Category name
+                                        {{product.category_name}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        Brand name
+                                        {{product.brand_name}}
                                     </td>
 
-                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                        25
+                                    <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                        {{product.product_quantity}}
                                     </td>
-                                    <td class="time align-middle white-space-nowrap text-600 ps-4">Nov 12, 10:45
-                                        PM
+                                    <td class="time align-middle white-space-nowrap text-600 ps-4">
+                                        {{product.created_on}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
                                         <div class="position-relative">

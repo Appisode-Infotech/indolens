@@ -4,6 +4,7 @@ class FileData:
         self.document1 = self.parse_documents(data.get('document1', {}))
         self.document2 = self.parse_documents(data.get('document2', {}))
         self.certificates = self.parse_certificates(data.get('certificates', {}))
+        self.product_img = self.parse_product_images(data.get('productImages', {}))
 
     def parse_documents(self, doc_data):
         documents = []
@@ -32,3 +33,19 @@ class FileData:
                 if cert:
                     certificates.append(cert)
         return certificates
+
+    def parse_product_images(self, image_data):
+        product_images = []
+
+        if image_data:
+            if isinstance(image_data, list):
+                for image_item in image_data:
+                    image_url = image_item.get('prod_img', None)
+                    if image_url:
+                        product_images.append(image_url)
+            else:
+                image_url = image_data.get('prod_img', None)
+                if image_url:
+                    product_images.append(image_url)
+
+        return product_images

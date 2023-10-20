@@ -78,13 +78,16 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
+        {% for optimetry in optimetry %}
         <div class="content">
 
             <h2 class="mb-4">Edit Optimetry</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="/admin/lol" class="row g-3 needs-validation needs-password-validation" method="post"
-                          novalidate="">
+                    <form action="{% url 'edit_optimetry' optimetry.employee_id %}"
+                          class="row g-3 needs-validation needs-password-validation"
+                          enctype="multipart/form-data" method="post" novalidate="">
+                        {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
@@ -94,60 +97,66 @@
 
                         <div class="col-md-12">
                             <label class="form-label" for="profilePic">Upload profile pic</label>
-                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic" required
+                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic"
                                    type="file"/>
+                            <div class="invalid-feedback">Profile pic is mandatory</div>
                         </div>
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeName">Name</label>
+                            <label class="form-label" for="name">Name</label>
 
-                            <input class="form-control" id="storeName" name="storeName" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Please provide a valid Name.</div>
+                            <input class="form-control" id="name" name="name" required="" type="text"
+                                   value="{{optimetry.name}}"/>
+                           <div class="invalid-feedback">Name is mandatory</div>
                         </div>
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeDisplayName">Email</label>
+                            <label class="form-label" for="email">Email</label>
 
-                            <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
-                                   type="text" value=""/>
-                            <div class="invalid-feedback">Please provide a valid store display name.</div>
+                            <input class="form-control" id="email" name="email" required=""
+                                   type="text" value="{{optimetry.email}}"/>
+                            <div class="invalid-feedback">Email is mandatory</div>
                         </div>
 
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storePhone">Phone</label>
+                            <label class="form-label" for="phone">Phone</label>
 
-                            <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Please provide a valid phone number.</div>
+                            <input class="form-control" id="phone" name="phone" required="" type="text"
+                                   value="{{optimetry.phone}}"/>
+                            <div class="invalid-feedback">Phone is mandatory</div>
                         </div>
                         <div class="col-md-6">
 
-                            <label class="form-label" for="storeGSTIN">Password</label>
+                            <label class="form-label" for="password">Password</label>
 
-                            <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Please provide a valid Password.</div>
+                            <input class="form-control" id="password" name="password" required="" type="text"
+                                   value="{{optimetry.password}}"/>
+                            <div class="invalid-feedback">Password is mandatory</div>
                         </div>
 
                         <div class="col-md-12">
 
-                            <label class="form-label" for="storeGSTIN">Confirm Password</label>
+                            <label class="form-label" for="confirmPassword">Confirm Password</label>
 
-                            <input class="form-control" id="confirmPassword" name="storeGSTIN" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Please provide a valid Password.</div>
+                            <input class="form-control" id="confirmPassword" name="confirmPassword" required=""
+                                   type="text"
+                                   value="{{optimetry.password}}"/>
+                            <div class="invalid-feedback">Passwords should match.</div>
                         </div>
 
                         <div class="col-12">
 
-                            <label class="form-label" for="completeAddress">Complete Address</label>
+                            <label class="form-label" for="address">Complete Address</label>
 
-                            <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3"> </textarea>
-                            <div class="invalid-feedback">Please provide a valid address.</div>
+                            <textarea class="form-control" id="address" name="address" rows="3" required>{{optimetry.address}}</textarea>
+
+                            <div class="invalid-feedback">Address is mandatory</div>
                         </div>
+                        <input name="last_updated_by" required type="hidden"
+                               value="{{ request.session.id }}">
+                        <input name="employee_id" required type="hidden"
+                               value="{{ optimetry.employee_id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -156,7 +165,7 @@
                 </div>
             </div>
             {% include 'footer.html' %}
-
+            {% endfor %}
         </div>
     </div>
 </main>

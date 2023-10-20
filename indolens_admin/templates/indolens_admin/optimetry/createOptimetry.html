@@ -205,6 +205,13 @@
                             <div class="invalid-feedback">Certificate is mandatory</div>
                         </div>
 
+                        <input name="created_by" required type="hidden"
+
+                               value="{{ request.session.id }}">
+                        <input name="last_updated_by" required type="hidden"
+
+                               value="{{ request.session.id }}">
+
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>

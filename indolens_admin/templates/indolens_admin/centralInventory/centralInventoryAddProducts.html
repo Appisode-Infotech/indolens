@@ -59,6 +59,7 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
     </script>
 </head>
 
@@ -72,8 +73,8 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
         <div class="content">
-            <form action="{% url 'add_products' %}"  class="mb-9 needs-validation" method="post" novalidate="novalidate"
-            enctype="multipart/form-data">
+            <form action="{% url 'add_products' %}" class="mb-9 needs-validation" method="post" novalidate="novalidate"
+                  enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row g-3 flex-between-end mb-5">
                     <div class="col-auto">
@@ -81,7 +82,7 @@
                         <h5 class="text-700 fw-semi-bold">Add products to your central inventory</h5>
                     </div>
                     <div class="col-auto">
-<!--                        <button class="btn btn-phoenix-secondary me-2 mb-2 mb-sm-0">Discard</button>-->
+                        <!--                        <button class="btn btn-phoenix-secondary me-2 mb-2 mb-sm-0">Discard</button>-->
                         <!--                                                <button class="btn btn-phoenix-primary me-2 mb-2 mb-sm-0">Save draft</button>-->
                         <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Publish product</button>
                     </div>
@@ -111,6 +112,18 @@
                             <div class="invalid-feedback">Please upload at least one picture.</div>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">Quantity</h5>
+                                <input name="productQuantity" class="form-control" placeholder="Quantity" type="text" required/>
+                                <div class="invalid-feedback">Please provide valid cost price.</div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">GSTIN</h5>
+                                <input name="productGSTIN" class="form-control" placeholder="%" type="text" required/>
+                                <div class="invalid-feedback">Please provide valid sale price.</div>
+                            </div>
+                        </div>
 
                         <h4 class="mb-3">Pricing</h4>
                         <div class="row g-3 mb-3">
@@ -153,7 +166,7 @@
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="mb-0 text-1000">Category</h5>
-                                                    <a class="fw-bold fs--1"  href="{% url 'add_product_category' %}">
+                                                    <a class="fw-bold fs--1" href="{% url 'add_product_category' %}">
                                                         Add new category</a>
 
                                                 </div>
@@ -189,8 +202,7 @@
                                             <div id="only_frame_options" class="d-none">
                                                 <div class="col-12 col-sm-6 col-xl-12">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Material</h5><a class="fw-bold fs--1"
-                                                                                              href="{% url 'add_master_material' %}">Add
+                                                        <h5 class="text-1000">Material</h5><a class="fw-bold fs--1" href="{% url 'add_master_material' %}">Add
                                                         new material</a>
                                                     </div>
                                                     <select name="materialId" required class="form-select mb-3">
@@ -290,13 +302,19 @@
                                                 </div>
                                                 <select name="origin" required aria-label="origin" class="form-select">
                                                     <option value="">Select Origin</option>
-                                                    <option value="men-cloth">Indian</option>
-                                                    <option value="women-cloth">Foreign</option>
-                                                    <option value="women-cloth">Domestic</option>
+                                                    <option value="Indian">Indian</option>
+                                                    <option value="Foreign">Foreign</option>
+                                                    <option value="Domestic">Domestic</option>
                                                 </select>
                                                 <div class="invalid-feedback">Please select origin.</div>
 
                                             </div>
+                                            <input name="created_by" required type="hidden"
+
+                                                   value="{{ request.session.id }}">
+                                            <input name="last_updated_by" required type="hidden"
+
+                                                   value="{{ request.session.id }}">
 
 
                                         </div>
@@ -323,6 +341,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -359,6 +378,7 @@
                 divToToggle.classList.add("d-none");
             }
         }
+
 </script>
 </body>
 
