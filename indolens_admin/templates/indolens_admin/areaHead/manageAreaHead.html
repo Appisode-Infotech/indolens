@@ -41,6 +41,7 @@
     <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet" type="text/css">
 
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -56,6 +57,10 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
+
+
+
     </script>
 </head>
 
@@ -119,20 +124,20 @@
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="createdDate" scope="col"
-                                    style="width:10%;">
-                                    CREATED AT
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="createdBy" scope="col" style="width:15%;">
-                                    CREATED BY
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="updatedDate" scope="col"
-                                    style="width:5%;">UPDATED ON
-                                </th>
+                                <!--                                <th class="sort align-middle ps-3" data-sort="createdDate" scope="col"-->
+                                <!--                                    style="width:10%;">-->
+                                <!--                                    CREATED AT-->
+                                <!--                                </th>-->
+                                <!--                                <th class="sort align-middle ps-3" data-sort="createdBy" scope="col" style="width:15%;">-->
+                                <!--                                    CREATED BY-->
+                                <!--                                </th>-->
+                                <!--                                <th class="sort align-middle ps-3" data-sort="updatedDate" scope="col"-->
+                                <!--                                    style="width:5%;">UPDATED ON-->
+                                <!--                                </th>-->
 
-                                <th class="sort align-middle ps-3" data-sort="updatedBy" scope="col"
-                                    style="width:5%;">UPDATED BY
-                                </th>
+                                <!--                                <th class="sort align-middle ps-3" data-sort="updatedBy" scope="col"-->
+                                <!--                                    style="width:5%;">UPDATED BY-->
+                                <!--                                </th>-->
 
                                 <th class="sort align-middle ps-3" data-sort="address" scope="col"
                                     style="width:5%;">ADDRESS
@@ -147,10 +152,11 @@
                             <tr class="position-static">
                                 <td>
                                     <a href="{{MEDIA_URL}}{{lab_technician.profile_pic}}" target="_blank">
-                                    <div class="avatar avatar-m">
-                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{area_head.profile_pic}}"/>
-                                    </div>
-                                        </a>
+                                        <div class="avatar avatar-m">
+                                            <img alt="" class="rounded-circle"
+                                                 src="{{MEDIA_URL}}{{area_head.profile_pic}}"/>
+                                        </div>
+                                    </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
@@ -165,7 +171,6 @@
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 email">
                                     <p class="mb-0 fs--1 text-900">{{area_head.email}}</p>
                                 </td>
-
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 stores">
                                     {% if area_head.id_name_pair|length != 0 %}
                                     {% for id, name in area_head.id_name_pair %}
@@ -187,21 +192,22 @@
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 createdDate">
-                                    <p class="mb-0 fs--1 text-900">{{area_head.created_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4 createdBy">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{area_head.creator_name}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 updatedDate">
-                                    <p class="mb-0 fs--1 text-900">{{area_head.last_updated_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4 updatedBy">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{area_head.updater_name}}</p>
-                                </td>
+                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 createdDate">-->
+                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{area_head.created_on}}</p>-->
+                                <!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 createdBy">-->
+                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{area_head.creator_name}}</p>-->
+                                <!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 updatedDate">-->
+                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{area_head.last_updated_on}}</p>-->
+                                <!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 updatedBy">-->
+                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{area_head.updater_name}}</p>-->
+                                <!--                                </td>-->
                                 <td class="align-middle white-space-nowrap task ps-3 py-4 address">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{area_head.address}}</p>
                                 </td>
+
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -211,20 +217,42 @@
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_area_head' area_head.area_head_id %}">View</a>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a
+                                                class="dropdown-item">View</a>
+                                            {% if area_head.status == 1 %}
                                             <a class="dropdown-item"
-                                               href="{% url 'edit_area_head' %}">Update/Change
-                                                Password</a>
+                                               type="button"
+                                               data-bs-role="Area Head"
+                                               data-bs-toggle="modal"
+                                               data-bs-active-list="{{area_head.id_name_pair}}"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ area_head.area_head_id }}"
+                                               data-employee-name="{{ area_head.name }}"
+                                               data-action-type="allocate">
+                                                Manage store allocation
+                                            </a>
+
+                                            <a class="dropdown-item"
+                                               href="{% url 'edit_store_manager' area_head.area_head_id %}">Send
+                                                password
+                                                reset link</a>
+                                            {% endif %}
+
+                                            <a class="dropdown-item"
+                                               href="{% url 'edit_area_head' area_head.area_head_id %}">Update
+                                                Profile</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'update_area_head_documents' area_head.area_head_id %}">Update
+                                                Documents</a>
+
                                             <div class="dropdown-divider"></div>
-
-
                                             {% if area_head.status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
+                                               data-bs-role="Area Head"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable"
-                                               data-employee-id="{{ area_head.admin_id }}"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ area_head.area_head_id }}"
                                                data-employee-name="{{ area_head.name }}"
                                                data-action-type="enable"
                                                data-action-url="{% url 'enable_disable_area_head' area_head.area_head_id 1 %}">
@@ -234,9 +262,10 @@
                                             {% elif area_head.status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
+                                               data-bs-role="Area Head"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable"
-                                               data-employee-id="{{ area_head.admin_id }}"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ area_head.area_head_id }}"
                                                data-employee-name="{{ area_head.name }}"
                                                data-action-type="disable"
                                                data-action-url="{% url 'enable_disable_area_head' area_head.area_head_id 0 %}">
@@ -250,22 +279,43 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="modal fade" id="enable_disable" tabindex="-1"
+                        <div class="modal fade" id="operations_modal" tabindex="-1"
                              aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
-                                        <h5 class="modal-title text-white" id="staticBackdropLabel"></h5>
+                                        <h5 class="modal-title text-white" id="modal_title"></h5>
                                         <button class="btn p-1" type="button" data-bs-dismiss="modal"
                                                 aria-label="Close">
                                             <span class="fas fa-times fs--1 text-white"></span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <p class="text-700 lh-lg mb-0"></p>
+                                    <div class="modal-body" id="modal_content">
+                                        <!-- Form for Allocate Store -->
+                                        <form class="row g-3 needs-validation allocate-store-form" method="post"
+                                              action="{% url 'assign_area_head_own_store' %}" novalidate="novalidate">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="emp_id" id="emp_id">
+                                            <h5 class="mb-3">Select Store (Only active and unallocated stores appear
+                                                here)</h5>
+
+                                            <select class="form-select" data-choices="data-choices" multiple="multiple"
+                                                    data-options='{"removeItemButton":true,"placeholder":true}'
+                                                    name="store_id"
+                                                    required="required">
+                                                <option value="">Select a store</option>
+                                            </select>
+
+                                            <div class="custom-error" style="color: red;"></div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary modal-submit" type="submit">Submit
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-primary modal-submit" type="button">Confirm</a>
+                                    <div id="footer_div" class="modal-footer">
+                                        <a class="btn btn-primary modal-submit" type="button"
+                                           id="modal_submit">Confirm</a>
                                         <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
                                             Cancel
                                         </button>
@@ -308,8 +358,6 @@
           navbarVertical.classList.add('navbar-darker');
         }
 
-
-
     </script>
 </main>
 <!-- ===============================================-->
@@ -330,26 +378,52 @@
 <script src="{% static 'vendors/list.js/list.min.js' %}"></script>
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    var enableDisableButtons = document.querySelectorAll('[data-bs-target="#enable_disable"]');
-    var modal = document.getElementById('enable_disable');
-    var modalTitle = modal.querySelector('.modal-title');
-    var modalContent = modal.querySelector('.modal-body');
-    var modalSubmit = modal.querySelector('.modal-submit');
+    var operationsButtons = document.querySelectorAll('[data-bs-target="#operations_modal"]');
+    var modal = document.getElementById('operations_modal');
+    var modalTitle = document.getElementById('modal_title');
+    var modalContent = document.getElementById('modal_content');
+    var modalSubmit = document.getElementById('modal_submit');
+    var modalForm = document.querySelector('.allocate-store-form'); // Select the existing form
 
-    enableDisableButtons.forEach(function (button) {
+    operationsButtons.forEach(function (button) {
         button.addEventListener('click', function (event) {
-            var storeId = event.currentTarget.getAttribute('data-employee-id');
-            var storeName = event.currentTarget.getAttribute('data-employee-name');
+            var empId = event.currentTarget.getAttribute('data-employee-id');
+            var empName = event.currentTarget.getAttribute('data-employee-name');
             var actionType = event.currentTarget.getAttribute('data-action-type');
             var actionUrl = event.currentTarget.getAttribute('data-action-url');
+            var role = event.currentTarget.getAttribute('data-bs-role');
 
-            modalTitle.textContent = actionType === "enable" ? "Enable Area Head - " + storeName : "Disable Area Head - " + storeName;
-            modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${storeName}</strong> (ID: ${storeId})`;
-            modalSubmit.href = actionUrl;
+            if (actionType === 'enable' || actionType === 'disable') {
+                modalTitle.textContent = actionType === "enable" ? "Enable " +role+" - " + empName : "Disable " +role+ "- " + empName;
+                modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})`;
+                modalSubmit.href = actionUrl;
+                // Hide the form for non-"Allocate" actions
+                modalForm.style.display = 'none';
+            } else if (actionType === 'allocate') {
+                document.getElementById('footer_div').style.display = 'none';
+                modalTitle.textContent = "Allocate store for - " + empName;
+                document.getElementById('emp_id').value = empId;
+                modalSubmit.href = actionUrl;
+                // Show the form for "Allocate" action
+                modalForm.style.display = 'block';
+            } else if (actionType === 'unallocate') {
+                modalTitle.textContent = "Unallocate Store - " + empName;
+                modalContent.innerHTML = `Are you sure you want to unallocate the store <br><strong>${event.currentTarget.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong> (ID: ${empId})?`;
+                modalSubmit.href = actionUrl;
+                // Hide the form for "Unallocate" action
+                modalForm.style.display = 'none';
+            }
+
+             // Use data-bs-toggle and data-bs-target attributes to trigger the modal
+            var targetModal = event.currentTarget.getAttribute('data-bs-target');
+            var backdrop = event.currentTarget.getAttribute('data-bs-backdrop');
+            modal.setAttribute('data-bs-target', targetModal);
+            modal.setAttribute('data-bs-backdrop', backdrop);
         });
     });
 });

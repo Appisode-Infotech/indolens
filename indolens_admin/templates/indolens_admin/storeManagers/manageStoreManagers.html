@@ -36,6 +36,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
           rel="stylesheet">
     <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
     <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
     <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
@@ -57,12 +58,11 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
+
     </script>
 </head>
 
-
 <body>
-
 <!-- ===============================================-->
 <!--    Main Content-->
 <!-- ===============================================-->
@@ -78,7 +78,8 @@
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Store Managers<span class="fw-normal text-700 ms-3">(2)</span></h2>
+                            <h2 class="mb-0">Store Managers<span class="fw-normal text-700 ms-3">({{store_managers|length}})</span>
+                            </h2>
                         </div>
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -119,20 +120,20 @@
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="createdDate" scope="col"
-                                    style="width:10%;">
-                                    CREATED AT
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="cretedBy" scope="col" style="width:15%;">
-                                    CREATED BY
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="updatedDate" scope="col"
-                                    style="width:5%;">UPDATED ON
-                                </th>
+                                <!--                                <th class="sort align-middle ps-3" data-sort="createdDate" scope="col"-->
+                                <!--                                    style="width:10%;">-->
+                                <!--                                    CREATED AT-->
+                                <!--                                </th>-->
+                                <!--                                <th class="sort align-middle ps-3" data-sort="cretedBy" scope="col" style="width:15%;">-->
+                                <!--                                    CREATED BY-->
+                                <!--                                </th>-->
+                                <!--                                <th class="sort align-middle ps-3" data-sort="updatedDate" scope="col"-->
+                                <!--                                    style="width:5%;">UPDATED ON-->
+                                <!--                                </th>-->
 
-                                <th class="sort align-middle ps-3" data-sort="updatedBy" scope="col"
-                                    style="width:5%;">UPDATED BY
-                                </th>
+                                <!--                                <th class="sort align-middle ps-3" data-sort="updatedBy" scope="col"-->
+                                <!--                                    style="width:5%;">UPDATED BY-->
+                                <!--                                </th>-->
 
                                 <th class="sort align-middle ps-3" data-sort="address" scope="col"
                                     style="width:5%;">ADDRESS
@@ -182,23 +183,23 @@
 
                                 <td class="align-middle white-space-nowrap text-end status">
                                     {% if manager.status == 0 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
-                                {% elif manager.status == 1 %}
-                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
-                                {% endif %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
+                                    {% elif manager.status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                    {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 createdDate">
-                                    <p class="mb-0 fs--1 text-900">{{manager.created_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4 cretedBy">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{manager.creator_name}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 updatedDate">
-                                    <p class="mb-0 fs--1 text-900">{{manager.last_updated_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4 updatedBy">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{manager.updater_name}}</p>
-                                </td>
+                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 createdDate">-->
+                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{manager.created_on}}</p>-->
+                                <!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 cretedBy">-->
+                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{manager.creator_name}}</p>-->
+                                <!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 updatedDate">-->
+                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{manager.last_updated_on}}</p>-->
+                                <!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 updatedBy">-->
+                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{manager.updater_name}}</p>-->
+                                <!--                                </td>-->
                                 <td class="align-middle white-space-nowrap task ps-3 py-4 address">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{manager.address}}</p>
                                 </td>
@@ -215,6 +216,39 @@
                                                                                              href="{% url 'view_store_manager' manager.employee_id %}">View</a>
                                             <a class="dropdown-item" >Allocate
                                                 Store</a>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a
+                                                class="dropdown-item">View</a>
+                                            {% if manager.status == 1 %}
+                                            {% if manager.assigned_store_id == 0 %}
+                                            <a class="dropdown-item"
+                                               type="button"
+                                               data-bs-role="Manager"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ manager.employee_id }}"
+                                               data-employee-name="{{ manager.name }}"
+                                               data-action-type="allocate">
+                                                Allocate Store
+                                            </a>
+                                            {% else %}
+                                            <a class="dropdown-item"
+                                               type="button"
+                                               data-bs-role="Manager"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ manager.employee_id }}"
+                                               data-employee-name="{{ manager.name }}"
+                                               data-store-name="{{manager.store_name}}"
+                                               data-action-type="unallocate"
+                                               data-action-url="{% url 'un_assign_manager_own_store' manager.employee_id manager.assigned_store_id %}">
+                                                Un allocate Store
+                                            </a>
+                                            {% endif %}
+
+                                            <a class="dropdown-item"
+                                               href="{% url 'edit_store_manager' manager.employee_id %}">Send password
+                                                reset link</a>
+                                            {% endif %}
 
                                             <a class="dropdown-item"
                                                href="{% url 'edit_store_manager' manager.employee_id %}">Update
@@ -222,16 +256,14 @@
                                             <a class="dropdown-item"
                                                href="{% url 'update_store_manager_documents' manager.employee_id %}">Update
                                                 Documents</a>
-                                            <a class="dropdown-item"
-                                               href="{% url 'edit_store_manager' manager.employee_id %}">Send password
-                                                reset link</a>
 
                                             <div class="dropdown-divider"></div>
                                             {% if manager.status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
+                                               data-bs-role="Manager"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable_store_manager"
+                                               data-bs-target="#operations_modal"
                                                data-employee-id="{{ manager.employee_id }}"
                                                data-employee-name="{{ manager.name }}"
                                                data-action-type="enable"
@@ -242,8 +274,9 @@
                                             {% elif manager.status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
+                                               data-bs-role="Manager"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable_store_manager"
+                                               data-bs-target="#operations_modal"
                                                data-employee-id="{{ manager.employee_id }}"
                                                data-employee-name="{{ manager.name }}"
                                                data-action-type="disable"
@@ -253,27 +286,49 @@
                                             {% endif %}
                                         </div>
                                     </div>
+                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="modal fade" id="enable_disable_store_manager" tabindex="-1"
+                        <div class="modal fade" id="operations_modal" tabindex="-1"
                              aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
-                                        <h5 class="modal-title text-white" id="staticBackdropLabel"></h5>
+                                        <h5 class="modal-title text-white" id="modal_title"></h5>
                                         <button class="btn p-1" type="button" data-bs-dismiss="modal"
                                                 aria-label="Close">
                                             <span class="fas fa-times fs--1 text-white"></span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <p class="text-700 lh-lg mb-0"></p>
+                                    <div class="modal-body" id="modal_content">
+                                        <!-- Form for Allocate Store -->
+                                        <form class="row g-3 needs-validation allocate-store-form" method="post"
+                                              action="{% url 'assign_manager_own_store' %}" novalidate="novalidate">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="emp_id" id="emp_id">
+                                            <h5 class="mb-3">Select Store (Only active and unallocated stores appear
+                                                here)</h5>
+                                            <select class="form-select" data-choices="data-choices"
+                                                    data-options='{"placeholder":true}' name="store_id"
+                                                    required="required">
+                                                <option value="">Select a store</option>
+                                                {% for store in available_stores %}
+                                                <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <div class="custom-error" style="color: red;"></div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary modal-submit" type="submit">Submit
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-primary modal-submit" type="button">Confirm</a>
+                                    <div id="footer_div" class="modal-footer">
+                                        <a class="btn btn-primary modal-submit" type="button"
+                                           id="modal_submit">Confirm</a>
                                         <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
                                             Cancel
                                         </button>
@@ -316,6 +371,7 @@
           navbarVertical.classList.add('navbar-darker');
         }
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -336,27 +392,51 @@
 <script src="{% static 'vendors/list.js/list.min.js' %}"></script>
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
-
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    var enableDisableButtons = document.querySelectorAll('[data-bs-target="#enable_disable_store_manager"]');
-    var modal = document.getElementById('enable_disable_store_manager');
-    var modalTitle = modal.querySelector('.modal-title');
-    var modalContent = modal.querySelector('.modal-body');
-    var modalSubmit = modal.querySelector('.modal-submit');
+    var operationsButtons = document.querySelectorAll('[data-bs-target="#operations_modal"]');
+    var modal = document.getElementById('operations_modal');
+    var modalTitle = document.getElementById('modal_title');
+    var modalContent = document.getElementById('modal_content');
+    var modalSubmit = document.getElementById('modal_submit');
+    var modalForm = document.querySelector('.allocate-store-form'); // Select the existing form
 
-    enableDisableButtons.forEach(function (button) {
+    operationsButtons.forEach(function (button) {
         button.addEventListener('click', function (event) {
-            var storeId = event.currentTarget.getAttribute('data-employee-id');
-            var storeName = event.currentTarget.getAttribute('data-employee-name');
+            var empId = event.currentTarget.getAttribute('data-employee-id');
+            var empName = event.currentTarget.getAttribute('data-employee-name');
             var actionType = event.currentTarget.getAttribute('data-action-type');
             var actionUrl = event.currentTarget.getAttribute('data-action-url');
+            var role = event.currentTarget.getAttribute('data-bs-role');
 
-            modalTitle.textContent = actionType === "enable" ? "Enable Manager - " + storeName : "Disable Manager - " + storeName;
-            modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${storeName}</strong> (ID: ${storeId})`;
-            modalSubmit.href = actionUrl;
+            if (actionType === 'enable' || actionType === 'disable') {
+                modalTitle.textContent = actionType === "enable" ? "Enable " +role+" - " + empName : "Disable " +role+ "- " + empName;
+                modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})`;
+                modalSubmit.href = actionUrl;
+                // Hide the form for non-"Allocate" actions
+                modalForm.style.display = 'none';
+            } else if (actionType === 'allocate') {
+                document.getElementById('footer_div').style.display = 'none';
+                modalTitle.textContent = "Allocate store for - " + empName;
+                document.getElementById('emp_id').value = empId;
+                modalSubmit.href = actionUrl;
+                // Show the form for "Allocate" action
+                modalForm.style.display = 'block';
+            } else if (actionType === 'unallocate') {
+                modalTitle.textContent = "Unallocate Store - " + empName;
+                modalContent.innerHTML = `Are you sure you want to unallocate the store <br><strong>${event.currentTarget.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong> (ID: ${empId})?`;
+                modalSubmit.href = actionUrl;
+                // Hide the form for "Unallocate" action
+                modalForm.style.display = 'none';
+            }
+
+             // Use data-bs-toggle and data-bs-target attributes to trigger the modal
+            var targetModal = event.currentTarget.getAttribute('data-bs-target');
+            var backdrop = event.currentTarget.getAttribute('data-bs-backdrop');
+            modal.setAttribute('data-bs-target', targetModal);
+            modal.setAttribute('data-bs-backdrop', backdrop);
         });
     });
 });
