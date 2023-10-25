@@ -44,6 +44,35 @@ def create_optimetry(optimetry_obj, files):
         return {"status": False, "message": str(e)}, 301
 
 
+def update_optimetry(optimetry_obj, files):
+    try:
+        with connection.cursor() as cursor:
+            update_optimetry_obj_query = f"""
+                                UPDATE own_store_employees
+                                SET 
+                                    name = '{optimetry_obj.name}',
+                                    email = '{optimetry_obj.email}',
+                                    phone = '{optimetry_obj.phone}',
+                                    password = '{optimetry_obj.password}',
+                                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                                    address = '{optimetry_obj.address}',
+                                    last_updated_by = '{optimetry_obj.last_updated_by}',
+                                    last_updated_on = '{today}'
+                                WHERE employee_id = {optimetry_obj.employee_id}
+                            """
+            cursor.execute(update_optimetry_obj_query)
+
+            return {
+                "status": True,
+                "message": "Employee updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
 def create_franchise_optimetry(optimetry_obj, files):
     print(optimetry_obj.certificates)
     try:
@@ -89,9 +118,9 @@ def get_all_optimetry():
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {
-                       "status": True,
-                       "optimetry_list": get_own_store_employees(store_managers)
-                   }, 200
+                "status": True,
+                "optimetry_list": get_own_store_employees(store_managers)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -112,9 +141,9 @@ def get_all_franchise_optimetry():
             franchise_optimetry = cursor.fetchall()
             print(get_own_store_employees(franchise_optimetry))
             return {
-                       "status": True,
-                       "optimetry_list": get_own_store_employees(franchise_optimetry)
-                   }, 200
+                "status": True,
+                "optimetry_list": get_own_store_employees(franchise_optimetry)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -133,9 +162,9 @@ def get_optimetry_by_id(opid):
             cursor.execute(get_optimetry_query)
             optimetry = cursor.fetchall()
             return {
-                       "status": True,
-                       "optimetry": get_own_store_employees(optimetry)
-                   }, 200
+                "status": True,
+                "optimetry": get_own_store_employees(optimetry)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -154,9 +183,9 @@ def get_franchise_optimetry_by_id(opid):
             cursor.execute(get_optimetry_query)
             optimetry = cursor.fetchall()
             return {
-                       "status": True,
-                       "optimetry": get_own_store_employees(optimetry)
-                   }, 200
+                "status": True,
+                "optimetry": get_own_store_employees(optimetry)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -179,12 +208,11 @@ def enable_disable_optimetry(opid, status):
             cursor.execute(update_optimetry_query)
 
             return {
-                       "status": True,
-                       "message": "Optimetry updated"
-                   }, 200
+                "status": True,
+                "message": "Optimetry updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-

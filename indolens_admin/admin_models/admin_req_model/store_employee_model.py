@@ -78,7 +78,7 @@ class StoreEmployee:
     @staticmethod
     def from_dict(obj: Any) -> 'StoreEmployee':
         assert isinstance(obj, dict)
-        employee_id = from_union([from_int, from_none], obj.get("employee_id"))
+        employee_id = from_union([from_str, from_none], obj.get("employee_id"))
         name = from_union([from_str, from_none], obj.get("name"))
         email = from_union([from_str, from_none], obj.get("email"))
         phone = from_union([from_str, from_none], obj.get("phone"))

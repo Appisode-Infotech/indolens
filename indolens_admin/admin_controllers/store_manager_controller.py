@@ -11,7 +11,7 @@ ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
 
 
-def create_store_manager(sub_admin, files):
+def create_store_manager(store_manager, files):
     try:
         with connection.cursor() as cursor:
             insert_store_manager_query = f"""
@@ -21,10 +21,10 @@ def create_store_manager(sub_admin, files):
                     document_2_type, document_2_url, status, created_by, created_on, 
                     last_updated_by, last_updated_on, role
                 ) VALUES (
-                    '{sub_admin.name}', '{sub_admin.email}', '{sub_admin.phone}', '{sub_admin.password}', '{files.profile_pic}', 
-                    '{sub_admin.assigned_store_id}', '{sub_admin.address}', '{sub_admin.document_1_type}', '{json.dumps(files.document1)}', 
-                    '{sub_admin.document_2_type}', '{json.dumps(files.document2)}', 1, '{sub_admin.created_by}', '{today}', 
-                    '{sub_admin.last_updated_by}', '{today}', 1
+                    '{store_manager.name}', '{store_manager.email}', '{store_manager.phone}', '{store_manager.password}', '{files.profile_pic}', 
+                    '{store_manager.assigned_store_id}', '{store_manager.address}', '{store_manager.document_1_type}', '{json.dumps(files.document1)}', 
+                    '{store_manager.document_2_type}', '{json.dumps(files.document2)}', 1, '{store_manager.created_by}', '{today}', 
+                    '{store_manager.last_updated_by}', '{today}', 1
                 )
             """
 
@@ -33,15 +33,44 @@ def create_store_manager(sub_admin, files):
 
             mid = cursor.lastrowid
             return {
-                       "status": True,
-                       "message": "sub admin added",
-                       "mid": mid
-                   }, 200
+                "status": True,
+                "message": "sub admin added",
+                "mid": mid
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+def update_store_manager(store_manager, files):
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE own_store_employees
+                SET
+                    name = '{store_manager.name}',
+                    email = '{store_manager.email}',
+                    phone = '{store_manager.phone}',
+                    password = '{store_manager.password}',
+                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    assigned_store_id = '{store_manager.assigned_store_id}',
+                    address = '{store_manager.address}',
+                    last_updated_by = '{store_manager.last_updated_by}',
+                    last_updated_on = '{today}'
+                WHERE employee_id = {store_manager.employee_id} 
+            """
+            cursor.execute(update_store_manager_query)
+            return {
+                "status": True,
+                "message": "store manager updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 
 def get_all_store_manager():
@@ -55,9 +84,9 @@ def get_all_store_manager():
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {
-                       "status": True,
-                       "store_managers": get_own_store_employees(store_managers)
-                   }, 200
+                "status": True,
+                "store_managers": get_own_store_employees(store_managers)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -76,9 +105,9 @@ def get_store_manager_by_id(mid):
             cursor.execute(get_store_manager_query)
             store_manager = cursor.fetchall()
             return {
-                       "status": True,
-                       "store_manager": get_own_store_employees(store_manager)
-                   }, 200
+                "status": True,
+                "store_manager": get_own_store_employees(store_manager)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -101,9 +130,9 @@ def enable_disable_store_manager(mid, status):
             cursor.execute(update_store_manager_query)
 
             return {
-                       "status": True,
-                       "message": "Store Manager updated"
-                   }, 200
+                "status": True,
+                "message": "Store Manager updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

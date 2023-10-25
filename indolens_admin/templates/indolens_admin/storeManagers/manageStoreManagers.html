@@ -212,6 +212,10 @@
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
+                                                                                             href="{% url 'view_store_manager' manager.employee_id %}">View</a>
+                                            <a class="dropdown-item" >Allocate
+                                                Store</a>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
                                                 class="dropdown-item">View</a>
                                             {% if manager.status == 1 %}
@@ -281,6 +285,7 @@
                                             </a>
                                             {% endif %}
                                         </div>
+                                    </div>
                                     </div>
                                 </td>
                             </tr>

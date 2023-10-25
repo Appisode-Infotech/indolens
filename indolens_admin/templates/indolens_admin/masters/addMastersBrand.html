@@ -89,6 +89,7 @@
 
                             <input class="form-control" id="brandName" name="brand_name" required="" type="text"
                                    value=""/>
+                            <div class="invalid-feedback">Brand name is mandatory.</div>
                         </div>
                         <div class="col-md-6">
 
@@ -99,6 +100,7 @@
                                 <option value="1">Value1</option>
                                 <option value="2">Value2</option>
                             </select>
+                            <div class="invalid-feedback">Category is mandatory.</div>
                         </div>
 
 
@@ -107,7 +109,8 @@
                             <label class="form-label" for="description">Description</label>
 
                             <textarea class="form-control" id="description" name="brand_description" required
-                                      rows="3"> </textarea>
+                                      rows="3"></textarea>
+                            <div class="invalid-feedback">Description is mandatory.</div>
                         </div>
                         <input required type="hidden" name="created_by"
 

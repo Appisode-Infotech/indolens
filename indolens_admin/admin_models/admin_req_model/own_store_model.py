@@ -58,7 +58,7 @@ class OwnStoreModel:
     @staticmethod
     def from_dict(obj: Any) -> 'OwnStoreModel':
         assert isinstance(obj, dict)
-        store_zip_code = from_union([from_none, lambda x: int(from_str(x))], obj.get("storeZipCode"))
+        store_zip_code = from_union([from_str, from_none], obj.get("storeZipCode"))
         store_id = from_union([from_str, from_none], obj.get("store_id"))
         store_name = from_union([from_str, from_none], obj.get("storeName"))
         store_display_name = from_union([from_str, from_none], obj.get("storeDisplayName"))

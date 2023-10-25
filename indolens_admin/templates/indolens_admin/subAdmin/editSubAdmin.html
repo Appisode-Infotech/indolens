@@ -153,59 +153,6 @@
                                       rows="3"> {{admin.address}}</textarea>
                             <div class="invalid-feedback">Please provide a valid address.</div>
                         </div>
-                        <div class="mb-3">
-                            <label class="form-label" for="document1Type">Document 1 Type</label>
-                            <select aria-label="Default select example" class="form-select" id="document1Type"
-                                    name="document1Type">
-                                {% if admin.document_1_type == "Aadhar" %}
-                                <option selected value="Aadhar">Aadhar</option>
-                                <option value="Driving Licence">Driving Licence</option>
-                                <option value="Ration Card">Ration Card</option>
-                                <option value="Voter Id">Voter Id</option>
-                                {% elif admin.document_1_type == "Driving Licence" %}
-                                <option value="Aadhar">Aadhar</option>
-                                <option selected value="Driving Licence">Driving Licence</option>
-                                <option value="Ration Card">Ration Card</option>
-                                <option value="Voter Id">Voter Id</option>
-                                {% elif admin.document_1_type == "Voter ID" %}
-                                <option value="Aadhar">Aadhar</option>
-                                <option value="Driving Licence">Driving Licence</option>
-                                <option selected value="Ration Card">Ration Card</option>
-                                <option value="Voter Id">Voter Id</option>
-                                {% elif admin.document_1_type == "Voter Id" %}
-                                <option value="Aadhar">Aadhar</option>
-                                <option value="Driving Licence">Driving Licence</option>
-                                <option value="Ration Card">Ration Card</option>
-                                <option selected value="Voter Id">Voter Id</option>
-                                {% endif %}
-                            </select>
-                        </div>
-                        <div class="mb-3">
-
-                            <label class="form-label" for="document1">Document 1 Upload (Can choose
-                                multiple)</label>
-
-                            <input class="form-control" id="document1" multiple="multiple" name="document1"
-                                   type="file"/>
-                        </div>
-
-                        <div class="mb-3">
-                            <label class="form-label" for="document2Type">Document 2 Type</label>
-
-                            <select aria-label="Default select example" class="form-select" id="document2Type"
-                                    name="document2Type">
-                                <option>Open this select menu</option>
-                                <option selected value="1">Pan Card</option>
-                            </select>
-                        </div>
-                        <div class="mb-3">
-
-                            <label class="form-label" for="document2">Document 2 Upload (Can choose
-                                multiple)</label>
-
-                            <input class="form-control" id="document2" multiple="multiple" name="document2"
-                                   type="file"/>
-                        </div>
                         <input name="last_updated_by" required type="hidden"
                                value="{{ request.session.id }}">
                         <input name="admin_id" required type="hidden"
