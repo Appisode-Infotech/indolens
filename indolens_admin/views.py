@@ -1460,11 +1460,52 @@ def createLabTechnician(request):
 
 def editLabTechnician(request, labTechnicianId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
-        return render(request, 'indolens_admin/labTechnician/editLabTechnician.html',
-                      {"lab_technician": response['lab_technician']})
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            lab_tech_obj = lab_technician_model.lab_technician_model_from_dict(request.POST)
+            response, status_code = lab_technician_controller.edit_lab_technician(lab_tech_obj,
+                                                                                            file_data)
+            url = reverse('view_lab_technician', kwargs={'labTechnicianId': labTechnicianId})
+            return redirect(url)
+        else:
+            response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
+            print(response)
+            return render(request, 'indolens_admin/labTechnician/editLabTechnician.html',
+                          {"lab_technician": response['lab_technician']})
     else:
         return redirect('login')
+
 
 
 def viewLabTechnician(request, labTechnicianId):
