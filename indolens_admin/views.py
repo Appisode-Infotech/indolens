@@ -491,7 +491,7 @@ def createFranchiseOwners(request):
 
             franchise_owner_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = franchise_manager_controller.create_franchise_owner(franchise_owner_obj, file_data)
-            url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': response['foid']})
+            url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': response['franchiseOwnersId']})
             return redirect(url)
 
         else:
@@ -503,35 +503,49 @@ def createFranchiseOwners(request):
 def editFranchiseOwners(request, franchiseOwnersId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            form_data = request.POST
+            form_data = {}
+            file_data = {}
             file_label_mapping = {
-                'profilePic': 'profile_pic',
-                'document1': 'documents',
-                'document2': 'documents',
+                'profilePic': 'profile_pic'
             }
+
             for file_key, file_objs in request.FILES.lists():
                 label = file_label_mapping.get(file_key, 'unknown')
                 subdirectory = f"{label}/"
+                file_list = []
 
-                for file_obj in file_objs:
+                for index, file_obj in enumerate(file_objs):
                     file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
-                    form_data_key = f"{file_key}"
-
-                    form_data = form_data.copy()
-                    form_data[form_data_key] = file_name
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
 
                     with default_storage.open(file_name, 'wb+') as destination:
                         for chunk in file_obj.chunks():
                             destination.write(chunk)
 
-            franchise_owner = store_employee_model.store_employee_from_dict(form_data)
-            response, status_code = franchise_manager_controller.edit_franchise_owner(franchise_owner)
-            url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': franchise_owner.employee_id})
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+
+            franchise_owner = store_employee_model.store_employee_from_dict(request.POST)
+            print(request.POST)
+            print(str(franchise_owner))
+            response, status_code = franchise_manager_controller.edit_franchise_owner(franchise_owner, file_data)
+            print(response)
+            url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': franchiseOwnersId})
             return redirect(url)
 
         else:
             response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
-            print(response)
             return render(request, 'indolens_admin/franchiseOwners/editFranchiseOwner.html',
                           {"franchise_owner": response['franchise_owner']})
     else:
@@ -541,7 +555,6 @@ def editFranchiseOwners(request, franchiseOwnersId):
 def enableDisableFranchiseOwner(request, franchiseOwnersId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response = franchise_manager_controller.enable_disable_franchise_owner(franchiseOwnersId, status)
-        print(response)
         return redirect('manage_franchise_owners')
     else:
         return redirect('login')
@@ -550,7 +563,6 @@ def enableDisableFranchiseOwner(request, franchiseOwnersId, status):
 def viewFranchiseOwners(request, franchiseOwnersId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
-        print(response)
         return render(request, 'indolens_admin/franchiseOwners/viewFranchiseOwner.html',
                       {"franchise_owner": response['franchise_owner']})
     else:
@@ -560,7 +572,6 @@ def viewFranchiseOwners(request, franchiseOwnersId):
 def updateFranchiseOwnersDocuments(request, franchiseOwnersId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
-        print(response)
         return render(request, 'indolens_admin/franchiseOwners/updateDocuments.html',
                       {"franchise_owner": response['franchise_owner']})
     else:
@@ -621,7 +632,7 @@ def createAreaHead(request):
             area_head = area_head_model.area_head_model_from_dict(request.POST)
             response, status_code = area_head_controller.create_area_head(area_head, file_data)
 
-            url = reverse('view_area_head', kwargs={'areaHeadId': response['ahid']})
+            url = reverse('view_area_head', kwargs={'areaHeadId': response['areaHeadId']})
             return redirect(url)
 
         else:
@@ -710,7 +721,7 @@ def createMarketingHead(request):
             file_data = FileData(form_data)
             marketing_head_obj = marketing_head_model.marketing_head_model_from_dict(request.POST)
             response, status_code = marketing_head_controller.create_marketing_head(marketing_head_obj, file_data)
-            url = reverse('view_marketing_head', kwargs={'marketingHeadId': response['mhid']})
+            url = reverse('view_marketing_head', kwargs={'marketingHeadId': response['marketingHeadId']})
             return redirect(url)
         else:
             return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html')
@@ -956,7 +967,50 @@ def createFranchiseOptimetry(request):
 
 
 def editFranchiseOptimetry(request, franchiseOptimetryId):
-    return render(request, 'indolens_admin/franchiseOptimetry/editOptimetry.html')
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == "POST":
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
+            response, status_code = optimetry_controller.edit_franchise_optimetry(optimetry_obj, file_data)
+            url = reverse('view_franchise_optimetry', kwargs={'franchiseOptimetryId': franchiseOptimetryId})
+            return redirect(url)
+        else:
+            response, status_code = optimetry_controller.get_franchise_optimetry_by_id(franchiseOptimetryId)
+            return render(request, 'indolens_admin/franchiseOptimetry/editOptimetry.html',
+                          {"optimetry": response['optimetry']})
+    else:
+        return redirect('login')
 
 
 def viewFranchiseOptimetry(request, franchiseOptimetryId):
@@ -973,6 +1027,14 @@ def updateFranchiseOptimetryDocuments(request, franchiseOptimetryId):
         response, status_code = optimetry_controller.get_franchise_optimetry_by_id(franchiseOptimetryId)
         return render(request, 'indolens_admin/franchiseOptimetry/updateDocuments.html',
                       {"optimetry": response['optimetry']})
+    else:
+        return redirect('login')
+
+
+def enableDisableFranchiseOptimetry(request, franchiseOptimetryId, status):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        optimetry_controller.enable_disable_franchise_optimetry(franchiseOptimetryId, status)
+        return redirect('manage_franchise_optimetry')
     else:
         return redirect('login')
 
@@ -1170,14 +1232,58 @@ def createFranchiseSaleExecutives(request):
 
 
 def editFranchiseSaleExecutives(request, franchiseSaleExecutivesId):
-    return render(request, 'indolens_admin/franchiseSalesExecutive/editSaleExecutives.html')
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
+            response, status_code = sales_executives_controller.update_franchise_sales_executives(sales_executives_obj,
+                                                                                            file_data)
+            url = reverse('view_franchise_sales_executives', kwargs={'franchiseSaleExecutivesId': franchiseSaleExecutivesId})
+            return redirect(url)
+        else:
+            response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(
+                franchiseSaleExecutivesId)
+            return render(request, 'indolens_admin/franchiseSalesExecutive/editSaleExecutives.html',
+                          {"franchise_sales_executive": response['franchise_sales_executive']})
+    else:
+        return redirect('login')
 
 
 def viewFranchiseSaleExecutives(request, franchiseSaleExecutivesId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(
             franchiseSaleExecutivesId)
-        print(response)
         return render(request, 'indolens_admin/franchiseSalesExecutive/viewSaleExecutives.html',
                       {"franchise_sales_executive": response['franchise_sales_executive']})
     else:
@@ -1188,7 +1294,6 @@ def updateFranchiseSaleExecutivesDocuments(request, franchiseSaleExecutivesId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(
             franchiseSaleExecutivesId)
-        print(response)
         return render(request, 'indolens_admin/franchiseSalesExecutive/updateDocuments.html',
                       {"franchise_sales_executive": response['franchise_sales_executive']})
     else:
@@ -1449,7 +1554,6 @@ def createOtherEmployees(request):
 def editOtherEmployees(request, ownEmployeeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
             form_data = {}
             file_data = {}
             file_label_mapping = {
@@ -1494,7 +1598,6 @@ def editOtherEmployees(request, ownEmployeeId):
                           {"other_employee": response['other_employee']})
     else:
         return redirect('login')
-
 
 
 def viewOtherEmployees(request, ownEmployeeId):
@@ -1581,7 +1684,50 @@ def createFranchiseOtherEmployees(request):
 
 
 def editFranchiseOtherEmployees(request, franchiseEmployeeId):
-    return render(request, 'indolens_admin/franchiseOtherEmployees/editOtherEmployees.html')
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            other_emp_obj = store_employee_model.store_employee_from_dict(request.POST)
+            response, status_code = other_employee_controller.update_franchise_other_employee(other_emp_obj, file_data)
+            url = reverse('view_franchise_other_employees', kwargs={'franchiseEmployeeId': franchiseEmployeeId})
+            return redirect(url)
+        else:
+            response, status_code = other_employee_controller.get_franchise_other_emp_by_id(franchiseEmployeeId)
+            return render(request, 'indolens_admin/franchiseOtherEmployees/editOtherEmployees.html',
+                          {"other_employee": response['other_employee']})
+    else:
+        return redirect('login')
 
 
 def viewFranchiseOtherEmployees(request, franchiseEmployeeId):
@@ -2059,6 +2205,7 @@ def assignOptimetryOwnStore(request):
 def unAssignOptimetryOwnStore(request, empId, storeId):
     response, status_code = store_manager_controller.unAssignStore(empId, storeId)
     return redirect('manage_store_optimetry')
+
 
 def assignAreaHeadOwnStore(request):
     if request.method == 'POST':

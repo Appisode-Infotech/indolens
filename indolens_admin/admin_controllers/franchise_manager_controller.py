@@ -32,10 +32,10 @@ def create_franchise_owner(franchise_owner, files):
             foid = cursor.lastrowid
 
             return {
-                       "status": True,
-                       "message": "franchise owner added",
-                       "foid": foid
-                   }, 200
+                "status": True,
+                "message": "franchise owner added",
+                "foid": foid
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -55,9 +55,9 @@ def get_all_franchise_owner():
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {
-                       "status": True,
-                       "franchise_owners": get_franchise_owners(franchise_owners)
-                   }, 200
+                "status": True,
+                "franchise_owners": get_franchise_owners(franchise_owners)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -77,9 +77,9 @@ def get_franchise_owner_by_id(foid):
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {
-                       "status": True,
-                       "franchise_owner": get_franchise_owners(franchise_owners)
-                   }, 200
+                "status": True,
+                "franchise_owner": get_franchise_owners(franchise_owners)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -102,9 +102,9 @@ def enable_disable_franchise_owner(foid, status):
             cursor.execute(update_franchise_owners_query)
 
             return {
-                       "status": True,
-                       "message": "franchise owner updated"
-                   }, 200
+                "status": True,
+                "message": "franchise owner updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -112,36 +112,30 @@ def enable_disable_franchise_owner(foid, status):
         return {"status": False, "message": str(e)}, 301
 
 
-def edit_franchise_owner(franchise_owner):
+def edit_franchise_owner(franchise_owner, files):
     try:
         with connection.cursor() as cursor:
             update_franchise_owners_query = f"""
-                UPDATE franchise_owner
-                SET
-                    name = '{franchise_owner.full_name}',
+                UPDATE franchise_store_employees
+                SET 
+                    name = '{franchise_owner.name}',
                     email = '{franchise_owner.email}',
                     phone = '{franchise_owner.phone}',
                     password = '{franchise_owner.password}',
-                    profile_pic = '{franchise_owner.profile_pic}',
-                    address = '{franchise_owner.complete_address}',
-                    document_1_type = '{franchise_owner.document_1_type}',
-                    document_1_url = '{franchise_owner.document1}',
-                    document_2_type = '{franchise_owner.document_2_type}',
-                    document_2_url = '{franchise_owner.document2}',
-                    status = 1,
+                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    address = '{franchise_owner.address}',
                     last_updated_by = '{franchise_owner.last_updated_by}',
                     last_updated_on = '{today}'
-                WHERE
-                    franchise_owner_id = {franchise_owner.franchise_owner_id}
+                WHERE employee_id = {franchise_owner.employee_id}
             """
 
             # Execute the update query using your cursor
             cursor.execute(update_franchise_owners_query)
 
             return {
-                       "status": True,
-                       "message": "franchise owner updated"
-                   }, 200
+                "status": True,
+                "message": "franchise owner updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

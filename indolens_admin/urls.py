@@ -134,11 +134,13 @@ urlpatterns = [
 
     # manage franchise optimetry
     path('manage_franchise_optimetry/', manageFranchiseOptimetry, name='manage_franchise_optimetry'),
-    path('manage_franchise_optimetry/create_optimetry/', createFranchiseOptimetry, name='create_franchise_optimetry'),
-    path('manage_franchise_optimetry/edit_optimetry/optimetryId=<int:franchiseOptimetryId>', editFranchiseOptimetry, name='edit_franchise_optimetry'),
+    path('manage_franchise_optimetry/create_franchise_optimetry/', createFranchiseOptimetry, name='create_franchise_optimetry'),
+    path('manage_franchise_optimetry/edit_franchise_optimetry/optimetryId=<int:franchiseOptimetryId>', editFranchiseOptimetry, name='edit_franchise_optimetry'),
     path('manage_franchise_optimetry/update_optimetry_documents/optimetryId=<int:franchiseOptimetryId>',
          updateFranchiseOptimetryDocuments, name='update_optimetry_documents'),
-    path('manage_franchise_optimetry/view_optimetry/optimetryId=<int:franchiseOptimetryId>', viewFranchiseOptimetry, name='view_franchise_optimetry'),
+    path('manage_franchise_optimetry/view_franchise_optimetry/optimetryId=<int:franchiseOptimetryId>', viewFranchiseOptimetry, name='view_franchise_optimetry'),
+    path('manage_franchise_optimetry/enable_disable_franchise_optimetry/optimetryId=<int:franchiseOptimetryId>/status=<int:status>',
+         enableDisableFranchiseOptimetry, name='enable_disable_franchise_optimetry'),
 
 
     # manage sales executive
@@ -147,7 +149,7 @@ urlpatterns = [
     path('manage_store_sales_executives/edit_sales_executives/salesExecutiveId=<int:ownSaleExecutivesId>', editSaleExecutives, name='edit_sales_executives'),
     path('manage_store_sales_executives/update_sales_executives_documents/salesExecutiveId=<int:ownSaleExecutivesId>',
          updateSaleExecutivesDocuments, name='update_sales_executives_documents'),
-    path('manage_store_sales_executives/enable_disable_sales_executive/saleExecutivesId=<int:seownSaleExecutivesIdId>/status=<int:status>',
+    path('manage_store_sales_executives/enable_disable_sales_executive/saleExecutivesId=<int:ownSaleExecutivesId>/status=<int:status>',
          enableDisableSaleExecutives, name='enable_disable_sales_executive'),
     path('manage_store_sales_executives/view_sales_executives/salesExecutiveId=<int:ownSaleExecutivesId>', viewSaleExecutives,
          name='view_sales_executives'),

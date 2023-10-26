@@ -75,6 +75,38 @@ def update_own_sales_executives(sales_executives, files):
         return {"status": False, "message": str(e)}, 301
 
 
+def update_franchise_sales_executives(sales_executives, files):
+    try:
+        with connection.cursor() as cursor:
+            update_sales_executives_query = f"""
+                UPDATE franchise_store_employees
+                SET 
+                    name = '{sales_executives.name}',
+                    email = '{sales_executives.email}',
+                    phone = '{sales_executives.phone}',
+                    password = '{sales_executives.password}',
+                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    address = '{sales_executives.address}',
+                    last_updated_by = '{sales_executives.last_updated_by}',
+                    last_updated_on = '{today}'
+                WHERE employee_id = {sales_executives.employee_id}
+            """
+
+            # Execute the update query using your cursor
+            cursor.execute(update_sales_executives_query)
+
+            return {
+                "status": True,
+                "message": "Sales Executives updated",
+                "seId": sales_executives.id
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
 def create_franchise_sales_executives(sales_executives, files):
     try:
         with connection.cursor() as cursor:
