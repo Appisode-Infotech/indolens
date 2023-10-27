@@ -214,8 +214,17 @@
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
                                                                                              href="{% url 'view_store_manager' manager.employee_id %}">View</a>
-                                            <a class="dropdown-item" >Allocate
+                                            <a class="dropdown-item" href="{% url 'edit_store_manager'  manager.employee_id %}">Allocate
                                                 Store</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'edit_store_manager' manager.employee_id  %}">Update
+                                                Profile</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'update_store_manager_documents' manager.employee_id  %}">Update
+                                                Documents</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'edit_store_manager' manager.employee_id  %}">Send password
+                                                reset link</a>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
                                                 class="dropdown-item">View</a>
                                             {% if manager.status == 1 %}
