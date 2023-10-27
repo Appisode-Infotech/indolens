@@ -121,7 +121,6 @@ def edit_franchise_owner(franchise_owner, files):
                     name = '{franchise_owner.name}',
                     email = '{franchise_owner.email}',
                     phone = '{franchise_owner.phone}',
-                    password = '{franchise_owner.password}',
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{franchise_owner.address}',
                     last_updated_by = '{franchise_owner.last_updated_by}',

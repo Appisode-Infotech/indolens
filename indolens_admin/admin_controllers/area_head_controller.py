@@ -96,6 +96,33 @@ def get_area_head_by_id(ahid):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def edit_area_head(area_head, files):
+    try:
+        with connection.cursor() as cursor:
+            update_area_head_query = f"""
+                                UPDATE area_head
+                                SET 
+                                    name = '{area_head.full_name}',
+                                    email = '{area_head.email}',
+                                    phone = '{area_head.phone}',
+                                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                                    address = '{area_head.complete_address}',
+                                    last_updated_by = '{area_head.last_updated_by}',
+                                    last_updated_on = '{today}'
+                                WHERE area_head_id = {area_head.area_head_id}
+                            """
+            cursor.execute(update_area_head_query)
+
+            return {
+                "status": True,
+                "message": "Area Head updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def enable_disable_area_head(ahId, status):
     # update table set status= '{status}' where area_head_id = '{ahid}'

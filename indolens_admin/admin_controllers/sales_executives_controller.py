@@ -52,7 +52,6 @@ def update_own_sales_executives(sales_executives, files):
                     name = '{sales_executives.name}',
                     email = '{sales_executives.email}',
                     phone = '{sales_executives.phone}',
-                    password = '{sales_executives.password}',
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{sales_executives.address}',
                     last_updated_by = '{sales_executives.last_updated_by}',
@@ -84,7 +83,6 @@ def update_franchise_sales_executives(sales_executives, files):
                     name = '{sales_executives.name}',
                     email = '{sales_executives.email}',
                     phone = '{sales_executives.phone}',
-                    password = '{sales_executives.password}',
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{sales_executives.address}',
                     last_updated_by = '{sales_executives.last_updated_by}',

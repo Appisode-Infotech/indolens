@@ -32,7 +32,7 @@ def login(request):
         if request.method == 'POST':
             admin_obj = admin_auth_model.admin_auth_model_from_dict(request.POST)
             response, status_code = admin_auth_controller.login(admin_obj)
-            print(response)
+            
             if response['status']:
                 request.session.update({
                     'is_admin_logged_in': True,
@@ -131,7 +131,7 @@ def createOwnStore(request):
 def enableDisableOwnStore(request, ownStoreId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response = own_store_controller.enable_disable_own_store(ownStoreId, status)
-        print(response)
+        
         return redirect('manage_own_stores')
     else:
         return redirect('login')
@@ -192,7 +192,6 @@ def createFranchiseStore(request):
 def enableDisableFranchiseStore(request, franchiseStoreId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response = franchise_store_controller.enable_disable_franchise_store(franchiseStoreId, status)
-        print(response)
         return redirect('manage_Franchise_stores')
     else:
         return redirect('login')
@@ -283,7 +282,6 @@ def viewSubAdmin(request, subAdminId):
 def enableDisableSubAdmin(request, subAdminId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response = sub_admin_controller.enable_disable_sub_admin(subAdminId, status)
-        print(response)
         return redirect('manage_sub_admins')
     else:
         return redirect('login')
@@ -535,12 +533,8 @@ def editFranchiseOwners(request, franchiseOwnersId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-
             franchise_owner = store_employee_model.store_employee_from_dict(request.POST)
-            print(request.POST)
-            print(str(franchise_owner))
             response, status_code = franchise_manager_controller.edit_franchise_owner(franchise_owner, file_data)
-            print(response)
             url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': franchiseOwnersId})
             return redirect(url)
 
@@ -642,7 +636,52 @@ def createAreaHead(request):
 
 
 def editAreaHead(request, areaHeadId):
-    return render(request, 'indolens_admin/areaHead/editAreaHead.html')
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+
+            area_head = area_head_model.area_head_model_from_dict(request.POST)
+            response, status_code = area_head_controller.edit_area_head(area_head, file_data)
+            url = reverse('view_area_head', kwargs={'areaHeadId': areaHeadId})
+            return redirect(url)
+
+        else:
+            response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
+            return render(request, 'indolens_admin/areaHead/editAreaHead.html',
+                          {"area_head": response['area_head']})
+    else:
+        return redirect('login')
 
 
 def enableDisableAreaHead(request, areaHeadId, status):
@@ -731,17 +770,57 @@ def createMarketingHead(request):
 
 def editMarketingHead(request, marketingHeadId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = marketing_head_controller.get_marketing_head_by_id(marketingHeadId)
-        return render(request, 'indolens_admin/marketingHeads/editMarketingHead.html',
-                      {"marketing_head": response['marketing_head']})
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            marketing_head_obj = marketing_head_model.marketing_head_model_from_dict(request.POST)
+            response, status_code = marketing_head_controller.edit_marketing_head(marketing_head_obj, file_data)
+            
+            url = reverse('view_marketing_head', kwargs={'marketingHeadId': marketingHeadId})
+            return redirect(url)
+        else:
+            response, status_code = marketing_head_controller.get_marketing_head_by_id(marketingHeadId)
+            return render(request, 'indolens_admin/marketingHeads/editMarketingHead.html',
+                          {"marketing_head": response['marketing_head']})
     else:
         return redirect('login')
+
+
 
 
 def viewMarketingHead(request, marketingHeadId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = marketing_head_controller.get_marketing_head_by_id(marketingHeadId)
-        print(response)
         return render(request, 'indolens_admin/marketingHeads/viewMarketingHead.html',
                       {"marketing_head": response['marketing_head']})
     else:
@@ -751,7 +830,7 @@ def viewMarketingHead(request, marketingHeadId):
 def updateMarketingHeadDocuments(request, marketingHeadId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = marketing_head_controller.get_marketing_head_by_id(marketingHeadId)
-        print(response)
+        
         return render(request, 'indolens_admin/marketingHeads/updateDocuments.html',
                       {"marketing_head": response['marketing_head']})
     else:
@@ -772,7 +851,7 @@ def enableDisableMarketingHead(request, marketingHeadId, status):
 def manageOptimetry(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_all_optimetry()
-        print(response)
+        
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         return render(request, 'indolens_admin/optimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
@@ -821,7 +900,7 @@ def createOptimetry(request):
             file_data = FileData(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.create_optimetry(optimetry_obj, file_data)
-            print(response)
+            
             url = reverse('view_optimetry', kwargs={'ownOptimetryId': response['empid']})
             return redirect(url)
         else:
@@ -888,7 +967,7 @@ def viewOptimetry(request, ownOptimetryId):
 def updateOptimetryDocuments(request, ownOptimetryId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_optimetry_by_id(ownOptimetryId)
-        print(response)
+        
         return render(request, 'indolens_admin/optimetry/updateDocuments.html',
                       {"optimetry": response['optimetry']})
     else:
@@ -912,7 +991,7 @@ def enableDisableOptimetry(request, ownOptimetryId, status):
 def manageFranchiseOptimetry(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_all_franchise_optimetry()
-        print(response)
+        
         return render(request, 'indolens_admin/franchiseOptimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list']})
     else:
@@ -1139,7 +1218,7 @@ def editSaleExecutives(request, ownSaleExecutivesId):
             return redirect(url)
         else:
             response, status_code = sales_executives_controller.get_own_sales_executive_by_id(ownSaleExecutivesId)
-            print(response)
+            
             return render(request, 'indolens_admin/salesExecutive/editSaleExecutives.html',
                           {"sales_executive": response['sales_executive']})
     else:
@@ -1370,7 +1449,52 @@ def createAccountant(request):
 
 
 def editAccountant(request, accountantId):
-    return render(request, 'indolens_admin/accountant/editAccountant.html')
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            accountant_obj = accountant_model.accountant_model_from_dict(request.POST)
+            response, status_code = accountant_controller.edit_accountant(accountant_obj, file_data)
+
+            url = reverse('view_accountant', kwargs={'accountantId': accountantId})
+            return redirect(url)
+        else:
+            response, status_code = accountant_controller.get_accountant_by_id(accountantId)
+            
+            return render(request, 'indolens_admin/accountant/editAccountant.html',
+                          {"accountant": response['accountant']})
+    else:
+        return redirect('login')
 
 
 def viewAccountant(request, accountantId):
@@ -1500,7 +1624,7 @@ def editLabTechnician(request, labTechnicianId):
             return redirect(url)
         else:
             response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
-            print(response)
+            
             return render(request, 'indolens_admin/labTechnician/editLabTechnician.html',
                           {"lab_technician": response['lab_technician']})
     else:
@@ -1634,7 +1758,7 @@ def editOtherEmployees(request, ownEmployeeId):
 
         else:
             response, status_code = other_employee_controller.get_other_emp_by_id(ownEmployeeId)
-            print(response)
+            
             return render(request, 'indolens_admin/otherEmployees/editOtherEmployees.html',
                           {"other_employee": response['other_employee']})
     else:
@@ -1850,7 +1974,7 @@ def viewCustomerDetails(request):
 def manageLabs(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_controller.get_all_labs()
-        print(response)
+        
         return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
     else:
         return redirect('login')
@@ -1919,9 +2043,9 @@ def createAuthenticityCard(request):
 
 def manageMastersCategory(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        print(request.POST)
+        
         response, status_code = master_category_controller.get_all_central_inventory_category()
-        print(response)
+        
         return render(request, 'indolens_admin/masters/manageMastersCategory.html',
                       {"product_category": response['product_category']})
     else:
@@ -1931,9 +2055,7 @@ def manageMastersCategory(request):
 def addProductCategory(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
             product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
-            print(product_cat_obj.category_name)
             master_category_controller.add_product_category(product_cat_obj)
             return redirect('manage_central_inventory_category')
         else:
@@ -1952,9 +2074,9 @@ def enableDisableProductCategory(request, categoryId, status):
 
 def manageMastersBrands(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        print(request.POST)
+        
         response, status_code = master_brand_controller.get_all_central_inventory_brand()
-        print(response)
+        
         return render(request, 'indolens_admin/masters/manageMastersBrands.html',
                       {"product_brand": response["product_brand"]})
     else:
@@ -1964,11 +2086,10 @@ def manageMastersBrands(request):
 def addMastersBrands(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
+            
             master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
-            print(master_brand_obj)
             resp = master_brand_controller.add_product_brand(master_brand_obj)
-            print(resp)
+            
             return redirect('manage_central_inventory_brands')
         else:
             return render(request, 'indolens_admin/masters/addMastersBrand.html')
@@ -1986,7 +2107,7 @@ def enableDisableMastersBrands(request, brandId, status):
 
 def manageMastersShapes(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        print(request.POST)
+        
         response, status_code = master_shape_controller.get_all_central_inventory_shapes()
         return render(request, 'indolens_admin/masters/manageMastersShapes.html',
                       {"product_shape": response["product_shape"]})
@@ -1997,11 +2118,10 @@ def manageMastersShapes(request):
 def addMastersShapes(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
+            
             master_shape_obj = master_shape_model.master_shape_model_from_dict(request.POST)
-            print(master_shape_obj)
             resp = master_shape_controller.add_frame_shape(master_shape_obj)
-            print(resp)
+            
             return redirect('manage_central_inventory_shapes')
         else:
             return render(request, 'indolens_admin/masters/addMastersShapes.html')
@@ -2029,9 +2149,8 @@ def manageMastersFrameType(request):
 def addMastersFrameType(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
+            
             frame_type_obj = master_frame_type_model.master_frame_type_model_from_dict(request.POST)
-            print(frame_type_obj)
             resp = master_frame_type_controller.add_frame_type(frame_type_obj)
             return redirect('manage_central_inventory_frame_types')
         else:
@@ -2060,7 +2179,7 @@ def manageMastersColor(request):
 def addMastersColor(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
+            
             color_obj = master_color_model.master_color_model_from_dict(request.POST)
             resp = master_color_controller.add_master_color(color_obj)
             return redirect('manage_central_inventory_color')
@@ -2090,7 +2209,7 @@ def manageMastersMaterials(request):
 def addMastersMaterials(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
+            
             material_obj = master_material_model.master_material_model_from_dict(request.POST)
             resp = master_material_controller.add_master_material(material_obj)
             return redirect('manage_central_inventory_materials')
@@ -2111,7 +2230,7 @@ def enableDisableMastersMaterials(request, materialId, status):
 def manageMastersUnits(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_units_controller.get_all_units()
-        print(response)
+        
         return render(request, 'indolens_admin/masters/manageMastersUnits.html',
                       {"units_list": response['units_list']})
     else:
@@ -2122,9 +2241,8 @@ def addMastersUnits(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             data = request.POST
-            print(data)
             resp = master_units_controller.add_masters_units(data)
-            print(resp)
+            
         return redirect('manage_central_inventory_units')
     else:
         return redirect('login')
@@ -2250,8 +2368,6 @@ def unAssignOptimetryOwnStore(request, empId, storeId):
 
 def assignAreaHeadOwnStore(request):
     if request.method == 'POST':
-        print(request.POST)
-        print(request.POST['store_id'])
         response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
         return redirect('manage_area_head')
 

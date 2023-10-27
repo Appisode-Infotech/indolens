@@ -92,6 +92,33 @@ def get_accountant_by_id(aid):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def edit_accountant(accountant_obj, files):
+    try:
+        with connection.cursor() as cursor:
+            update_accountant_obj_query = f"""
+                                UPDATE accountant
+                                SET 
+                                    name = '{accountant_obj.name}',
+                                    email = '{accountant_obj.email}',
+                                    phone = '{accountant_obj.phone}',
+                                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                                    address = '{accountant_obj.address}',
+                                    last_updated_by = '{accountant_obj.last_updated_by}',
+                                    last_updated_on = '{today}'
+                                WHERE accountant_id = {accountant_obj.accountant_id}
+                            """
+            cursor.execute(update_accountant_obj_query)
+
+            return {
+                "status": True,
+                "message": "Accountant updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def enable_disable_accountant(aid, status):
     try:

@@ -56,7 +56,7 @@ class LabTechnicianModel:
     @staticmethod
     def from_dict(obj: Any) -> 'LabTechnicianModel':
         assert isinstance(obj, dict)
-        lab_technician_id = from_union([from_int, from_none], obj.get("lab_technician_id"))
+        lab_technician_id = from_union([from_str, from_none], obj.get("lab_technician_id"))
         name = from_union([from_str, from_none], obj.get("name"))
         email = from_union([from_str, from_none], obj.get("email"))
         phone = from_union([from_str, from_none], obj.get("phone"))

@@ -53,7 +53,6 @@ def update_optimetry(optimetry_obj, files):
                                     name = '{optimetry_obj.name}',
                                     email = '{optimetry_obj.email}',
                                     phone = '{optimetry_obj.phone}',
-                                    password = '{optimetry_obj.password}',
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{optimetry_obj.address}',
                                     last_updated_by = '{optimetry_obj.last_updated_by}',
@@ -226,7 +225,6 @@ def edit_franchise_optimetry(optimetry_obj, files):
                                     name = '{optimetry_obj.name}',
                                     email = '{optimetry_obj.email}',
                                     phone = '{optimetry_obj.phone}',
-                                    password = '{optimetry_obj.password}',
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{optimetry_obj.address}',
                                     last_updated_by = '{optimetry_obj.last_updated_by}',

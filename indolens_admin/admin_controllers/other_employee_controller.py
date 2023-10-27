@@ -54,7 +54,6 @@ def update_other_employee(other_emp, files):
                     name = '{other_emp.name}',
                     email = '{other_emp.email}',
                     phone = '{other_emp.phone}',
-                    password = '{other_emp.password}',
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{other_emp.address}',
                     last_updated_by = '{other_emp.last_updated_by}',
@@ -86,7 +85,6 @@ def update_franchise_other_employee(other_emp, files):
                     name = '{other_emp.name}',
                     email = '{other_emp.email}',
                     phone = '{other_emp.phone}',
-                    password = '{other_emp.password}',
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{other_emp.address}',
                     last_updated_by = '{other_emp.last_updated_by}',

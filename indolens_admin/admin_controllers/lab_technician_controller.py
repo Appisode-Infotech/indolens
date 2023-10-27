@@ -100,7 +100,6 @@ def edit_lab_technician(lab_tech_obj, files):
                                     name = '{lab_tech_obj.name}',
                                     email = '{lab_tech_obj.email}',
                                     phone = '{lab_tech_obj.phone}',
-                                    password = '{lab_tech_obj.password}',
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{lab_tech_obj.address}',
                                     last_updated_by = '{lab_tech_obj.last_updated_by}',
