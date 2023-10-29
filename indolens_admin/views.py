@@ -3,6 +3,7 @@ import time
 from django.core.files.storage import default_storage
 from django.shortcuts import render, redirect
 from rest_framework.reverse import reverse
+from django.http import JsonResponse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_manager_controller, area_head_controller, \
@@ -296,6 +297,16 @@ def updateSubAdminDocuments(request, subAdminId):
         return redirect('login')
 
 
+def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'admin', 'admin_id', subAdminId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
+
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
 def manageStoreManagers(request):
@@ -423,10 +434,6 @@ def editStoreManager(request, storeManagerId):
 
 def updateStoreManagerDocuments(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        resp = delete_documents_controller.delete_document('documents/documents_1696493530_greeting_card.jpg',
-                                                           'document_2_url', 'own_store_employees', 'employee_id',
-                                                           storeManagerId)
-        print(resp)
         response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
         return render(request, 'indolens_admin/storeManagers/updateDocuments.html',
                       {"store_manager": response['store_manager']})
@@ -436,11 +443,10 @@ def updateStoreManagerDocuments(request, storeManagerId):
 
 def deleteStoreManagerDocuments(request, storeManagerId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        resp = delete_documents_controller.delete_document(documentURL, document_Type, 'own_store_employees',
-                                                           'employee_id', storeManagerId)
-        response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
-        return render(request, 'indolens_admin/storeManagers/updateDocuments.html',
-                      {"store_manager": response['store_manager']})
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'own_store_employees',
+                                                                            'employee_id', storeManagerId)
+        return JsonResponse(response)
     else:
         return redirect('login')
 
@@ -587,6 +593,17 @@ def updateFranchiseOwnersDocuments(request, franchiseOwnersId):
         return redirect('login')
 
 
+def deleteFranchiseOwnersDocuments(request, franchiseOwnersId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'franchise_store_employees',
+                                                                            'employee_id', franchiseOwnersId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
+
 # =================================ADMIN AREA HEADS MANAGEMENT======================================
 
 def manageAreaHead(request):
@@ -721,6 +738,15 @@ def UpdateAreaHeadDocuments(request, areaHeadId):
         response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
         return render(request, 'indolens_admin/areaHead/updateDocuments.html',
                       {"area_head": response['area_head']})
+    else:
+        return redirect('login')
+
+
+def deleteAreaHeadDocuments(request, subAdminId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'area_head', 'area_head_id', subAdminId)
+        return JsonResponse(response)
     else:
         return redirect('login')
 
@@ -987,6 +1013,16 @@ def updateOptimetryDocuments(request, ownOptimetryId):
         return redirect('login')
 
 
+def deleteOptimetryDocuments(request, ownOptimetryId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'own_store_employees',
+                                                                            'employee_id', ownOptimetryId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
 def enableDisableOptimetry(request, ownOptimetryId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         optimetry_controller.enable_disable_optimetry(ownOptimetryId, status)
@@ -1123,12 +1159,23 @@ def updateFranchiseOptimetryDocuments(request, franchiseOptimetryId):
         return redirect('login')
 
 
+def deleteFranchiseOptimetryDocuments(request, franchiseOptimetryId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'franchise_store_employees',
+                                                                            'employee_id', franchiseOptimetryId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
 def enableDisableFranchiseOptimetry(request, franchiseOptimetryId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         optimetry_controller.enable_disable_franchise_optimetry(franchiseOptimetryId, status)
         return redirect('manage_franchise_optimetry')
     else:
         return redirect('login')
+
+
 
 
 # =================================ADMIN FRANCHISE STORE OPTIMETRY MANAGEMENT======================================
@@ -1255,6 +1302,15 @@ def updateSaleExecutivesDocuments(request, ownSaleExecutivesId):
     else:
         return redirect('login')
 
+
+def deleteSaleExecutivesDocuments(request, ownSaleExecutivesId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'own_store_employees',
+                                                                            'employee_id', ownSaleExecutivesId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
 
 def enableDisableSaleExecutives(request, ownSaleExecutivesId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -1389,6 +1445,16 @@ def updateFranchiseSaleExecutivesDocuments(request, franchiseSaleExecutivesId):
             franchiseSaleExecutivesId)
         return render(request, 'indolens_admin/franchiseSalesExecutive/updateDocuments.html',
                       {"franchise_sales_executive": response['franchise_sales_executive']})
+    else:
+        return redirect('login')
+
+
+def deleteFranchiseSaleExecutivesDocuments(request, franchiseSaleExecutivesId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'franchise_store_employees',
+                                                                            'employee_id', franchiseSaleExecutivesId)
+        return JsonResponse(response)
     else:
         return redirect('login')
 
@@ -1529,6 +1595,14 @@ def updateAccountantDocuments(request, accountantId):
         return redirect('login')
 
 
+def deleteAccountantDocuments(request, accountantId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'accountant', 'accountant_id', accountantId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
 def enableDisableAccountant(request, accountantId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         accountant_controller.enable_disable_accountant(accountantId, status)
@@ -1659,6 +1733,15 @@ def updateLabTechnicianDocuments(request, labTechnicianId):
         response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
         return render(request, 'indolens_admin/labTechnician/updateDocuments.html',
                       {"lab_technician": response['lab_technician']})
+    else:
+        return redirect('login')
+
+
+def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'labTechnicianId', 'labTechnicianId', labTechnicianId)
+        return JsonResponse(response)
     else:
         return redirect('login')
 
@@ -1796,6 +1879,16 @@ def updateOtherEmployeesDocuments(request, ownEmployeeId):
         return redirect('login')
 
 
+def deleteOtherEmployeesDocuments(request, ownEmployeeId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'own_store_employees',
+                                                                            'employee_id', ownEmployeeId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
 def enableDisableOtherEmployees(request, ownEmployeeId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         other_employee_controller.enable_disable_other_employees(ownEmployeeId, status)
@@ -1922,6 +2015,16 @@ def updateFranchiseOtherEmployeesDocuments(request, franchiseEmployeeId):
         response, status_code = other_employee_controller.get_franchise_other_emp_by_id(franchiseEmployeeId)
         return render(request, 'indolens_admin/franchiseOtherEmployees/updateDocuments.html',
                       {"other_employee": response['other_employee']})
+    else:
+        return redirect('login')
+
+
+def deleteFranchiseOtherEmployeesDocuments(request, franchiseSaleExecutivesId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'franchise_store_employees',
+                                                                            'employee_id', franchiseSaleExecutivesId)
+        return JsonResponse(response)
     else:
         return redirect('login')
 
@@ -2325,7 +2428,9 @@ def centralInventoryAddProducts(request):
 
 
 def manageCentralInventoryOutOfStock(request):
-    return render(request, 'indolens_admin/centralInventory/manageCentralInventoryOutOfStock.html')
+    response, status_code = central_inventory_controller.get_all_out_of_stock_products(15)
+    return render(request, 'indolens_admin/centralInventory/manageCentralInventoryOutOfStock.html',
+                  {"stocks_list": response['stocks_list']})
 
 
 def manageMoveStocks(request):
