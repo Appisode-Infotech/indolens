@@ -12,10 +12,6 @@
         height: 400px; /* Adjust the height as needed */
     }
 
-
-
-
-
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -69,9 +65,6 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
-
-
-
     </script>
 </head>
 
@@ -89,7 +82,8 @@
             <h2 class="mb-4">Edit Own Store</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_own_store' store.store_id %}" class="row g-3 " method="post"
+                    <form action="{% url 'edit_own_store' store.store_id %}" class="row g-3 needs-validation"
+                          method="post"
                           novalidate="">
                         {% csrf_token %}
                         <div class="col-md-6">
@@ -98,6 +92,8 @@
 
                             <input class="form-control" id="storeName" name="storeName" required="" type="text"
                                    value="{{store.store_name}}"/>
+                            <div class="invalid-feedback">Enter valid store name.</div>
+
                         </div>
                         <div class="col-md-6">
 
@@ -105,6 +101,8 @@
 
                             <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
                                    type="text" value="{{store.store_display_name}}"/>
+                                                        <div class="invalid-feedback">Enter valid store display name.</div>
+
                         </div>
 
                         <div class="col-md-4">
@@ -113,6 +111,8 @@
 
                             <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
                                    value="{{store.store_phone}}"/>
+                                                        <div class="invalid-feedback">Enter valid phone number.</div>
+
                         </div>
                         <div class="col-md-4">
 
@@ -120,6 +120,8 @@
 
                             <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
                                    value="{{store.store_gst}}"/>
+                                                        <div class="invalid-feedback">Enter valid store GSTIN.</div>
+
                         </div>
 
                         <div class="col-md-4">
@@ -128,6 +130,8 @@
 
                             <input class="form-control" id="storeEmail" name="storeEmail" required="" type="text"
                                    value="{{store.store_email}}"/>
+                                                        <div class="invalid-feedback">Enter valid email.</div>
+
                         </div>
 
                         <div class="col-md-4">
@@ -136,6 +140,8 @@
 
                             <input class="form-control" id="storeCity" name="storeCity" required="" type="text"
                                    value="{{store.store_city}}"/>
+                                                        <div class="invalid-feedback">City is mandatory.</div>
+
                         </div>
                         <div class="col-md-4">
 
@@ -143,6 +149,8 @@
 
                             <input class="form-control" id="storeState" name="storeState" required="" type="text"
                                    value="{{store.store_state}}"/>
+                                                        <div class="invalid-feedback">State is mandatory.</div>
+
                         </div>
                         <div class="col-md-4">
 
@@ -150,17 +158,21 @@
 
                             <input class="form-control" id="storeZipCode" name="storeZipCode" required="" type="text"
                                    value="{{store.store_zip}}"/>
+                                                        <div class="invalid-feedback">Zip code is mandatory.</div>
+
                         </div>
                         <div class="col-12">
 
                             <label class="form-label" for="completeAddress">Complete Address</label>
 
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3"> {{store.store_address}}</textarea>
+                                      rows="3">{{store.store_address}}</textarea>
+                                                        <div class="invalid-feedback">Address is mandatory.</div>
+
                         </div>
                         <div class="col-sm-12">
                             <input class="form-control" id="searchInput" placeholder="Search for a location"
-                                   required type="text">
+                                   type="text">
                         </div>
                         <div class="col-sm-12">
                             <input class="form-control" id="store_lat_lng" name="storeLatLng" placeholder="Co Ordinates"
@@ -293,6 +305,7 @@
                 store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
             });
         }
+
 
 
 

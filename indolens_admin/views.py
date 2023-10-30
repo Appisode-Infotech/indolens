@@ -1,9 +1,9 @@
 import time
 
 from django.core.files.storage import default_storage
+from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from rest_framework.reverse import reverse
-from django.http import JsonResponse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
     sub_admin_controller, store_manager_controller, franchise_manager_controller, area_head_controller, \
@@ -306,22 +306,15 @@ def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
         return redirect('login')
 
 
-
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
 def manageStoreManagers(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_all_store_manager()
+        available_stores_response, available_stores_status_code = own_store_controller.get_unassigned_active_own_store_for_manager()
         return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
-                      {"store_managers": response['store_managers']})
-        if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-            response, status_code = store_manager_controller.get_all_store_manager()
-            available_stores_response, available_stores_status_code = own_store_controller.get_unassigned_active_own_store_for_manager()
-            return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
-                          {"store_managers": response['store_managers'],
-                           "available_stores": available_stores_response['available_stores']})
-        else:
-            return redirect('login')
+                      {"store_managers": response['store_managers'],
+                       "available_stores": available_stores_response['available_stores']})
     else:
         return redirect('login')
 
@@ -601,7 +594,6 @@ def deleteFranchiseOwnersDocuments(request, franchiseOwnersId, documentURL, docu
         return JsonResponse(response)
     else:
         return redirect('login')
-
 
 
 # =================================ADMIN AREA HEADS MANAGEMENT======================================
@@ -1168,14 +1160,13 @@ def deleteFranchiseOptimetryDocuments(request, franchiseOptimetryId, documentURL
     else:
         return redirect('login')
 
+
 def enableDisableFranchiseOptimetry(request, franchiseOptimetryId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         optimetry_controller.enable_disable_franchise_optimetry(franchiseOptimetryId, status)
         return redirect('manage_franchise_optimetry')
     else:
         return redirect('login')
-
-
 
 
 # =================================ADMIN FRANCHISE STORE OPTIMETRY MANAGEMENT======================================
@@ -1311,6 +1302,7 @@ def deleteSaleExecutivesDocuments(request, ownSaleExecutivesId, documentURL, doc
         return JsonResponse(response)
     else:
         return redirect('login')
+
 
 def enableDisableSaleExecutives(request, ownSaleExecutivesId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -1603,6 +1595,7 @@ def deleteAccountantDocuments(request, accountantId, documentURL, document_Type)
     else:
         return redirect('login')
 
+
 def enableDisableAccountant(request, accountantId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         accountant_controller.enable_disable_accountant(accountantId, status)
@@ -1740,7 +1733,8 @@ def updateLabTechnicianDocuments(request, labTechnicianId):
 def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'labTechnicianId', 'labTechnicianId', labTechnicianId)
+                                                                            'labTechnicianId', 'labTechnicianId',
+                                                                            labTechnicianId)
         return JsonResponse(response)
     else:
         return redirect('login')
