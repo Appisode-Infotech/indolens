@@ -2428,7 +2428,7 @@ def centralInventoryAddProducts(request):
 
 
 def manageCentralInventoryOutOfStock(request):
-    response, status_code = central_inventory_controller.get_all_out_of_stock_products(15)
+    response, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
     return render(request, 'indolens_admin/centralInventory/manageCentralInventoryOutOfStock.html',
                   {"stocks_list": response['stocks_list']})
 
@@ -2447,7 +2447,9 @@ def manageMoveAStock(request):
 
 
 def viewAllStockRequests(request):
-    return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html')
+    response, status_code = central_inventory_controller.get_all_stock_requests('%')
+    return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
+                  {"stocks_request_list": response['stocks_request_list']})
 
 
 def viewPendingStockRequests(request):
