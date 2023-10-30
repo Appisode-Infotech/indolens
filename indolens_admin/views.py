@@ -2156,7 +2156,7 @@ def manageMastersCategory(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
 
         response, status_code = master_category_controller.get_all_central_inventory_category()
-
+        print(len(response['product_category']))
         return render(request, 'indolens_admin/masters/manageMastersCategory.html',
                       {"product_category": response['product_category']})
     else:
