@@ -252,3 +252,34 @@ def get_all_stock_requests(status):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def change_stock_request_status(requestId, status):
+    try:
+        with connection.cursor() as cursor:
+            update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}' 
+            WHERE request_products_id = '{requestId}' """
+            cursor.execute(update_stock_request_query)
+
+            fetch_quantity_query = f"""SELECT product_quantity FROM request_products 
+            WHERE request_products_id = '{requestId}'"""
+            cursor.execute(fetch_quantity_query)
+            quantity = cursor.fetchone()[0]
+
+            update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {quantity} 
+                                            WHERE product_id = {requestId}"""
+            cursor.execute(update_central_Inventory)
+
+            # plus the quantuty
+            update_store_Inventory = f"""UPDATE store_inventory SET product_quantity = product_quantity + {quantity} 
+                                            WHERE store_inventory_id  = {requestId} """
+            cursor.execute(update_store_Inventory)
+
+            return {
+                "status": True,
+                "message": "Status Changed"
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

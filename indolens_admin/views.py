@@ -2371,9 +2371,12 @@ def enableDisableMastersUnits(request, unitId, status):
 
 
 def manageCentralInventoryProducts(request):
-    response, status_code = central_inventory_controller.get_all_central_inventory_products()
-    return render(request, 'indolens_admin/centralInventory/manageCentralInventoryProducts.html',
-                  {"product_list": response['product_list']})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.get_all_central_inventory_products()
+        return render(request, 'indolens_admin/centralInventory/manageCentralInventoryProducts.html',
+                      {"product_list": response['product_list']})
+    else:
+        return redirect('login')
 
 
 def centralInventoryAddProducts(request):
@@ -2423,15 +2426,21 @@ def centralInventoryAddProducts(request):
 
 
 def manageCentralInventoryOutOfStock(request):
-    response, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
-    return render(request, 'indolens_admin/centralInventory/manageCentralInventoryOutOfStock.html',
-                  {"stocks_list": response['stocks_list']})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
+        return render(request, 'indolens_admin/centralInventory/manageCentralInventoryOutOfStock.html',
+                      {"stocks_list": response['stocks_list']})
+    else:
+        return redirect('login')
 
 
 def manageMoveStocks(request):
-    response, status_code = own_store_controller.get_all_own_stores()
-    return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html',
-                  {"own_store_list": response['own_stores']})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = own_store_controller.get_all_own_stores()
+        return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html',
+                      {"own_store_list": response['own_stores']})
+    else:
+        return redirect('login')
 
 
 def manageMoveAStock(request):
@@ -2442,27 +2451,47 @@ def manageMoveAStock(request):
 
 
 def viewAllStockRequests(request):
-    response, status_code = central_inventory_controller.get_all_stock_requests('%')
-    return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
-                  {"stocks_request_list": response['stocks_request_list']})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.get_all_stock_requests('%')
+        return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
+                      {"stocks_request_list": response['stocks_request_list']})
+    else:
+        return redirect('login')
 
 
 def viewPendingStockRequests(request):
-    response, status_code = central_inventory_controller.get_all_stock_requests('1')
-    return render(request, 'indolens_admin/stockRequests/viewPendingStockRequests.html',
-                  {"stocks_request_list": response['stocks_request_list']})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.get_all_stock_requests('1')
+        return render(request, 'indolens_admin/stockRequests/viewPendingStockRequests.html',
+                      {"stocks_request_list": response['stocks_request_list']})
+    else:
+        return redirect('login')
 
 
 def viewCompletedStockRequests(request):
-    response, status_code = central_inventory_controller.get_all_stock_requests('2')
-    return render(request, 'indolens_admin/stockRequests/viewCompletedStockRequests.html',
-                  {"stocks_request_list": response['stocks_request_list']})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.get_all_stock_requests('2')
+        return render(request, 'indolens_admin/stockRequests/viewCompletedStockRequests.html',
+                      {"stocks_request_list": response['stocks_request_list']})
+    else:
+        return redirect('login')
 
 
 def viewRejectedStockRequests(request):
-    response, status_code = central_inventory_controller.get_all_stock_requests('3')
-    return render(request, 'indolens_admin/stockRequests/viewrejectedStockRequests.html',
-                  {"stocks_request_list": response['stocks_request_list']})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.get_all_stock_requests('3')
+        return render(request, 'indolens_admin/stockRequests/viewrejectedStockRequests.html',
+                      {"stocks_request_list": response['stocks_request_list']})
+    else:
+        return redirect('login')
+
+
+def changeStockRequestStatus(request, requestId, status):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.change_stock_request_status(requestId, status)
+        return redirect('all_stock_requests')
+    else:
+        return redirect('login')
 
 
 def assignManagerOwnStore(request):
