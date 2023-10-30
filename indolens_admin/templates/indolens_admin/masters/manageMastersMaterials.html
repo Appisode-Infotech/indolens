@@ -63,6 +63,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -124,7 +125,7 @@
                                     STATUS
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    CREATED AT
+                                    CREATED ON
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="deadline" scope="col" style="width:15%;">
                                     CREATED BY
@@ -192,14 +193,28 @@
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2">
 
-                                            <div class="dropdown-divider"></div>
+<!--                                            <div class="dropdown-divider"></div>-->
                                             {% if material.status == 0 %}
                                             <a class="dropdown-item text-success"
-                                               href="{% url 'enable_disable_master_material' material.material_id 1 %}">Make
+                                               type="button"
+                                               data-bs-role="Material"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ material.material_id }}"
+                                               data-employee-name="{{ material.material_name }}"
+                                               data-action-type="enable"
+                                               data-action-url="{% url 'enable_disable_master_material' material.material_id 1 %}">Make
                                                 Active</a>
                                             {% elif material.status == 1 %}
                                             <a class="dropdown-item text-danger"
-                                               href="{% url 'enable_disable_master_material' material.material_id 0 %}">Make
+                                               type="button"
+                                               data-bs-role="Material"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ material.material_id }}"
+                                               data-employee-name="{{ material.material_name }}"
+                                               data-action-type="disable"
+                                               data-action-url="{% url 'enable_disable_master_material' material.material_id 0 %}">Make
                                                 Inactive</a>
                                             {% endif %}
                                         </div>
@@ -209,6 +224,8 @@
                             {% endfor %}
                             </tbody>
                         </table>
+                        {% include 'modal_warning.html' %}
+
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
                         <div class="d-flex">
@@ -254,6 +271,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -275,6 +293,7 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
 
 </body>
 
