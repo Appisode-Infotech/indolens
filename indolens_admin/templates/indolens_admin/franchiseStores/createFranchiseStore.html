@@ -65,6 +65,7 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
+
     </script>
 </head>
 
@@ -82,7 +83,8 @@
             <h2 class="mb-4">Create a Franchise Store</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'create_franchise_store' %}" class="row g-3" method="post" novalidate="">
+                    <form action="{% url 'create_franchise_store' %}" class="row g-3 needs-validation" method="post"
+                          novalidate="">
                         {% csrf_token %}
                         <div class="col-md-6">
 
@@ -90,8 +92,7 @@
 
                             <input class="form-control" id="storeName" name="storeName" required="" type="text"
                                    value=""/>
-                            <div class="invalid-feedback">Store Name is mandatory.</div>
-
+                            <div class="invalid-feedback">Enter valid store name.</div>
                         </div>
                         <div class="col-md-6">
 
@@ -99,33 +100,33 @@
 
                             <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
                                    type="text" value=""/>
-                            <div class="invalid-feedback">Store Display Name is mandatory.</div>
+                            <div class="invalid-feedback">Enter valid store display name.</div>
                         </div>
 
                         <div class="col-md-4">
 
                             <label class="form-label" for="storePhone">Store Phone</label>
 
-                            <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Store Phone is mandatory.</div>
+                            <input class="form-control" id="storePhone" name="storePhone" required="" type="number"
+                                   value="" max="9999999999" min="1111111111"/>
+                            <div class="invalid-feedback">Enter valid phone number.</div>
                         </div>
                         <div class="col-md-4">
 
                             <label class="form-label" for="storeGSTIN">Store GSTIN</label>
 
                             <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
-                                   value=""/>
-                            <div class="invalid-feedback">Store GSTIN is mandatory.</div>
+                                   value="" maxlength="15" minlength="15"/>
+                            <div class="invalid-feedback">Enter valid store GSTIN.</div>
                         </div>
 
                         <div class="col-md-4">
 
                             <label class="form-label" for="storeEmail">Store Email</label>
 
-                            <input class="form-control" id="storeEmail" name="storeEmail" required="" type="text"
+                            <input class="form-control" id="storeEmail" name="storeEmail" required="" type="email"
                                    value=""/>
-                            <div class="invalid-feedback">Store Email is mandatory.</div>
+                            <div class="invalid-feedback">Enter valid email.</div>
                         </div>
 
                         <div class="col-md-4">
@@ -165,6 +166,7 @@
                         <div class="col-sm-12">
                             <input class="form-control" id="store_lat_lng" name="storeLatLng"
                                    placeholder="Co Ordinates" readonly required type="text">
+                            <div class="invalid-feedback">Co ordinates are required, please select location.</div>
                         </div>
                         <div class="col-12" id="map"></div>
                         <input name="created_by" required type="hidden"
@@ -291,6 +293,7 @@
                 store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
             });
         }
+
 
 
 

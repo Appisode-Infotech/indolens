@@ -11,12 +11,6 @@
         width: 100%;
         height: 400px; /* Adjust the height as needed */
     }
-
-
-
-
-
-
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -101,7 +95,7 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'edit_franchise_store' id %}"
-                          class="row g-3 needs-validation needs-password-validation" method="post" novalidate="">
+                          class="row g-3 needs-validation" method="post" novalidate="">
                         {% csrf_token %}
                         <div class="col-md-6">
 

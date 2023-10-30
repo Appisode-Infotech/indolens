@@ -171,9 +171,6 @@
                                                                                              href="{% url 'view_franchise_store' store.store_id %}">View</a>
                                             <a class="dropdown-item"
                                                href="{% url 'edit_franchise_store' store.store_id %}">Edit</a>
-                                            <a class="dropdown-item"
-                                               href="{% url 'view_own_store' store.store_id %}">Allocate Owner</a>
-                                            <!--                                            <a class="dropdown-item" href="#!">Export</a>-->
                                             <div class="dropdown-divider"></div>
                                             {% if store.status == 0 %}
                                             <a class="dropdown-item text-success"
