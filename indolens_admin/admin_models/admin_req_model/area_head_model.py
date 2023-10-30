@@ -45,6 +45,7 @@ class AreaHeadModel:
     complete_address: Optional[str] = None
     document1_type: Optional[str] = None
     document2_type: Optional[str] = None
+    area_head_id: Optional[str] = None
 
     @staticmethod
     def from_dict(obj: Any) -> 'AreaHeadModel':
@@ -59,8 +60,9 @@ class AreaHeadModel:
         complete_address = from_union([from_str, from_none], obj.get("completeAddress"))
         document1_type = from_union([from_str, from_none], obj.get("document1Type"))
         document2_type = from_union([from_str, from_none], obj.get("document2Type"))
+        area_head_id = from_union([from_str, from_none], obj.get("area_head_id"))
         return AreaHeadModel(created_by, last_updated_by, full_name, email, phone, password, confirm_password,
-                             complete_address, document1_type, document2_type)
+                             complete_address, document1_type, document2_type, area_head_id)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -89,6 +91,8 @@ class AreaHeadModel:
             result["document1Type"] = from_union([from_str, from_none], self.document1_type)
         if self.document2_type is not None:
             result["document2Type"] = from_union([from_str, from_none], self.document2_type)
+        if self.area_head_id is not None:
+            result["area_head_id"] = from_union([from_str, from_none], self.area_head_id)
         return result
 
 

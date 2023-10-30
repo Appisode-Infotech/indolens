@@ -95,6 +95,33 @@ def get_marketing_head_by_id(mhid):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def edit_marketing_head(marketing_head_obj, files):
+    try:
+        with connection.cursor() as cursor:
+            update_marketing_head_obj_query = f"""
+                                UPDATE marketing_head
+                                SET 
+                                    name = '{marketing_head_obj.fullName}',
+                                    email = '{marketing_head_obj.email}',
+                                    phone = '{marketing_head_obj.phone}',
+                                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                                    address = '{marketing_head_obj.completeAddress}',
+                                    last_updated_by = '{marketing_head_obj.last_updated_by}',
+                                    last_updated_on = '{today}'
+                                WHERE marketing_head_id = {marketing_head_obj.marketing_head_id}
+                            """
+            cursor.execute(update_marketing_head_obj_query)
+
+            return {
+                "status": True,
+                "message": "Marketing Head updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def enable_disable_marketing_head(mhid, status):
     try:

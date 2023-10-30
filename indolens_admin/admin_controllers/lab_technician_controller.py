@@ -91,6 +91,32 @@ def get_lab_technician_by_id(ltid):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+def edit_lab_technician(lab_tech_obj, files):
+    try:
+        with connection.cursor() as cursor:
+            update_lab_tech_obj_query = f"""
+                                UPDATE lab_technician
+                                SET 
+                                    name = '{lab_tech_obj.name}',
+                                    email = '{lab_tech_obj.email}',
+                                    phone = '{lab_tech_obj.phone}',
+                                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                                    address = '{lab_tech_obj.address}',
+                                    last_updated_by = '{lab_tech_obj.last_updated_by}',
+                                    last_updated_on = '{today}'
+                                WHERE lab_technician_id = {lab_tech_obj.lab_technician_id}
+                            """
+            cursor.execute(update_lab_tech_obj_query)
+
+            return {
+                "status": True,
+                "message": "Lab Technician updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
 
 
 def enable_disable_lab_technician(ltid, status):

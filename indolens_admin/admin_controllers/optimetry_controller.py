@@ -53,7 +53,6 @@ def update_optimetry(optimetry_obj, files):
                                     name = '{optimetry_obj.name}',
                                     email = '{optimetry_obj.email}',
                                     phone = '{optimetry_obj.phone}',
-                                    password = '{optimetry_obj.password}',
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{optimetry_obj.address}',
                                     last_updated_by = '{optimetry_obj.last_updated_by}',
@@ -65,6 +64,30 @@ def update_optimetry(optimetry_obj, files):
             return {
                 "status": True,
                 "message": "Employee updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def enable_disable_optimetry(opid, status):
+    try:
+        with connection.cursor() as cursor:
+            update_optimetry_query = f"""
+                UPDATE own_store_employees
+                SET
+                    status = {status}
+                WHERE
+                    employee_id = {opid}
+            """
+
+            # Execute the update query using your cursor
+            cursor.execute(update_optimetry_query)
+
+            return {
+                "status": True,
+                "message": "Optimetry updated"
             }, 200
 
     except pymysql.Error as e:
@@ -193,15 +216,43 @@ def get_franchise_optimetry_by_id(opid):
         return {"status": False, "message": str(e)}, 301
 
 
-def enable_disable_optimetry(opid, status):
+def edit_franchise_optimetry(optimetry_obj, files):
+    try:
+        with connection.cursor() as cursor:
+            update_optimetry_obj_query = f"""
+                                UPDATE franchise_store_employees
+                                SET 
+                                    name = '{optimetry_obj.name}',
+                                    email = '{optimetry_obj.email}',
+                                    phone = '{optimetry_obj.phone}',
+                                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                                    address = '{optimetry_obj.address}',
+                                    last_updated_by = '{optimetry_obj.last_updated_by}',
+                                    last_updated_on = '{today}'
+                                WHERE employee_id = {optimetry_obj.employee_id}
+                            """
+            cursor.execute(update_optimetry_obj_query)
+
+            return {
+                "status": True,
+                "message": "Franchise Optimetry updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def enable_disable_franchise_optimetry(franchiseOptimetryId, status):
     try:
         with connection.cursor() as cursor:
             update_optimetry_query = f"""
-                UPDATE own_store_employees
+                UPDATE franchise_store_employees
                 SET
                     status = {status}
                 WHERE
-                    employee_id = {opid}
+                    employee_id = {franchiseOptimetryId}
             """
 
             # Execute the update query using your cursor
@@ -209,7 +260,7 @@ def enable_disable_optimetry(opid, status):
 
             return {
                 "status": True,
-                "message": "Optimetry updated"
+                "message": "Franchise Optimetry updated"
             }, 200
 
     except pymysql.Error as e:

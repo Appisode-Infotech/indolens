@@ -83,16 +83,18 @@
         {% for lab_technician in lab_technician%}
         <div class="content">
 
-            <h2 class="mb-4">Create a Lab Technician</h2>
+            <h2 class="mb-4">Edit Lab Technician</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="/admin/lol" class="row g-3 needs-validation needs-password-validation" method="post"
+                    <form action="{% url 'edit_lab_technician' lab_technician.lab_technician_id %}" class="row g-3
+                    needs-validation needs-password-validation" method="post" enctype="multipart/form-data"
                           novalidate="">
+                        {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
                                                                 data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
-                                                                src="/static/img/team/avatar.png"/></div>
+                                                                src="{{MEDIA_URL}}{{lab_technician.profile_pic}}"/></div>
                         </div>
 
                         <div class="col-md-12">
@@ -107,7 +109,7 @@
 
                             <input class="form-control" id="name" name="name" required="" type="text"
                                    value="{{lab_technician.name}}"/>
-                            <div class="invalid-feedback">Please provide a valid Name.</div>
+                            <div class="invalid-feedback">Name is mandatory.</div>
                         </div>
                         <div class="col-md-6">
 
@@ -115,7 +117,7 @@
 
                             <input class="form-control" id="email" name="email" required=""
                                    type="text" value="{{lab_technician.email}}"/>
-                            <div class="invalid-feedback">Please provide a valid store display name.</div>
+                            <div class="invalid-feedback">Email is mandatory.</div>
                         </div>
 
                         <div class="col-md-6">
@@ -124,26 +126,9 @@
 
                             <input class="form-control" id="phone" name="phone" required="" type="text"
                                    value="{{lab_technician.phone}}"/>
-                            <div class="invalid-feedback">Please provide a valid phone number.</div>
-                        </div>
-                        <div class="col-md-6">
-
-                            <label class="form-label" for="password">Password</label>
-
-                            <input class="form-control" id="password" name="password" required="" type="text"
-                                   value="{{lab_technician.password}}"/>
-                            <div class="invalid-feedback">Please provide a valid Password.</div>
+                            <div class="invalid-feedback">Phone Number is mandatory..</div>
                         </div>
 
-                        <div class="col-md-12">
-
-                            <label class="form-label" for="confirmPassword">Confirm Password</label>
-
-                            <input class="form-control" id="confirmPassword" name="confirmPassword" required=""
-                                   type="text"
-                                   value="{{lab_technician.password}}"/>
-                            <div class="invalid-feedback">Please provide a valid Password.</div>
-                        </div>
 
                         <div class="col-12">
 
@@ -151,9 +136,13 @@
 
                             <textarea class="form-control" id="address" name="address" required
                                       rows="3"> {{lab_technician.address}}</textarea>
-                            <div class="invalid-feedback">Please provide a valid address.</div>
+                            <div class="invalid-feedback">Address is mandatory.</div>
                         </div>
 
+
+                        <input name="lab_technician_id" required type="hidden"
+
+                               value="{{ lab_technician.lab_technician_id }}">
                         <input name="last_updated_by" required type="hidden"
 
                                value="{{ request.session.id }}">
@@ -164,9 +153,10 @@
                 </div>
             </div>
             {% include 'footer.html' %}
+            {% endfor %}
 
         </div>
-        {% endfor %}
+
     </div>
 </main>
 <!-- ===============================================-->

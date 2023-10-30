@@ -43,6 +43,8 @@ def create_other_employee(other_emp, files):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
 def update_other_employee(other_emp, files):
     try:
         with connection.cursor() as cursor:
@@ -52,7 +54,6 @@ def update_other_employee(other_emp, files):
                     name = '{other_emp.name}',
                     email = '{other_emp.email}',
                     phone = '{other_emp.phone}',
-                    password = '{other_emp.password}',
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{other_emp.address}',
                     last_updated_by = '{other_emp.last_updated_by}',
@@ -60,6 +61,36 @@ def update_other_employee(other_emp, files):
                 WHERE employee_id = {other_emp.employee_id}
             """
 
+            # Execute the update query using your cursor
+            cursor.execute(update_other_emp_query)
+
+            return {
+                "status": True,
+                "message": "Employee updated",
+                "empid": other_emp.id
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def update_franchise_other_employee(other_emp, files):
+    try:
+        with connection.cursor() as cursor:
+            update_other_emp_query = f"""
+                UPDATE franchise_store_employees
+                SET 
+                    name = '{other_emp.name}',
+                    email = '{other_emp.email}',
+                    phone = '{other_emp.phone}',
+                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    address = '{other_emp.address}',
+                    last_updated_by = '{other_emp.last_updated_by}',
+                    last_updated_on = '{today}'
+                WHERE employee_id = {other_emp.employee_id}
+            """
             # Execute the update query using your cursor
             cursor.execute(update_other_emp_query)
 
@@ -172,6 +203,7 @@ def get_other_emp_by_id(empid):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def get_franchise_other_emp_by_id(empid):
     try:

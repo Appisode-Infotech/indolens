@@ -56,7 +56,7 @@ class MarketingHeadModel:
     @staticmethod
     def from_dict(obj: Any) -> 'MarketingHeadModel':
         assert isinstance(obj, dict)
-        marketing_head_id = from_union([from_int, from_none], obj.get("marketing_head_id"))
+        marketing_head_id = from_union([from_str, from_none], obj.get("marketing_head_id"))
         fullName = from_union([from_str, from_none], obj.get("fullName"))
         email = from_union([from_str, from_none], obj.get("email"))
         phone = from_union([from_str, from_none], obj.get("phone"))

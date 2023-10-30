@@ -185,16 +185,14 @@
                                         </div>
                                     </td>
                                     <td class="align-middle white-space-nowrap py-0">
-                                        {% for img in product.product_images %}
-                                    <a href="{{MEDIA_URL}}{{product.product_images}}" target="_blank">
-                                    <div class="avatar avatar-m">
-                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{img}}"/>
-                                    </div>
+                                        <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
+                                            <div class="avatar avatar-m">
+                                                <img alt="" class="rounded-circle" src="{{ MEDIA_URL }}{{ product.product_images.0 }}"/>
+                                            </div>
                                         </a>
-                                        {% endfor %}
-                                </td>
+                                    </td>
                                     <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{product.product_name}}</a></td>
+                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{product.product_name}} </a></td>
                                     <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         ₹{{product.sale_price}}
                                     </td>

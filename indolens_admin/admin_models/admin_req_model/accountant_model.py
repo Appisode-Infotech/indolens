@@ -60,7 +60,7 @@ class AccountantModel:
     @staticmethod
     def from_dict(obj: Any) -> 'AccountantModel':
         assert isinstance(obj, dict)
-        accountant_id = from_union([from_int, from_none], obj.get("accountant_id"))
+        accountant_id = from_union([from_str, from_none], obj.get("accountant_id"))
         name = from_union([from_str, from_none], obj.get("name"))
         email = from_union([from_str, from_none], obj.get("email"))
         phone = from_union([from_str, from_none], obj.get("phone"))
