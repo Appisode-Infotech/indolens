@@ -42,7 +42,11 @@ def create_own_store(store_obj):
 def get_all_own_stores():
     try:
         with connection.cursor() as cursor:
-            get_own_stores_query = f""" SELECT * FROM own_store """
+            get_own_stores_query = """
+                                    SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name
+                                    FROM own_store
+                                    LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1
+                                    """
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {

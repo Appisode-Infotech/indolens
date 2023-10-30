@@ -5,7 +5,8 @@ from datetime import datetime
 class Product:
     def __init__(self, values):
         (
-            self.store_inventory_id, self.store_id, self.store_type, self.store_product_id, self.store_product_quantity,
+            self.request_products_id, self.store_id, self.store_type, self.request_product_id,
+            self.request_product_quantity, self.request_status, self.delivery_status, self.is_requested,
             self.store_product_created_on, self.store_product_created_by, self.store_product_last_updated_on,
             self.store_product_last_updated_by,
             self.product_id, self.product_name, self.product_description, self.product_images,
@@ -22,15 +23,18 @@ class Product:
 
     def to_dict(self):
         return {
-            'store_inventory_id': self.store_inventory_id,
+            'request_products_id': self.request_products_id,
             'store_id': self.store_id,
             'store_type': self.store_type,
-            'store_product_id': self.store_product_id,
-            'store_product_quantity': self.store_product_quantity,
-            'store_product_created_on': self.store_product_created_on,
-            'store_product_created_by': self.store_product_created_by,
-            'store_product_last_updated_on': self.store_product_last_updated_on,
-            'store_product_last_updated_by': self.store_product_last_updated_by,
+            'request_product_id': self.request_product_id,
+            'request_product_quantity': self.request_product_quantity,
+            'request_status': self.request_status,
+            'delivery_status': self.delivery_status,
+            'is_requested': self.is_requested,
+            'request_product_created_on': self.store_product_created_on,
+            'request_product_created_by': self.store_product_created_by,
+            'request_product_last_updated_on': self.store_product_last_updated_on,
+            'request_product_last_updated_by': self.store_product_last_updated_by,
 
             'product_id': self.product_id,
             'product_name': self.product_name,
@@ -68,7 +72,7 @@ class Product:
         }
 
 
-def get_store_stocks(response):
+def get_request_product_list(response):
     product_list = []
     for values in response:
         product = Product(values)
