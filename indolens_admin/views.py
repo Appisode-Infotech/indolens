@@ -2186,7 +2186,7 @@ def manageMastersBrands(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
 
         response, status_code = master_brand_controller.get_all_central_inventory_brand()
-
+        print(response)
         return render(request, 'indolens_admin/masters/manageMastersBrands.html',
                       {"product_brand": response["product_brand"]})
     else:
