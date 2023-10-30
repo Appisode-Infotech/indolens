@@ -7,6 +7,8 @@ document.addEventListener('DOMContentLoaded', () => {
   viewButtons.forEach((button) => {
     button.addEventListener('click', (event) => {
       const categoryInfo = event.currentTarget.getAttribute('data-category-info');
+      console.log(categoryInfo);
+      console.log(typeof categoryInfo);
       const parsedCategoryInfo = JSON.parse(categoryInfo.replace(/'/g, '"'));
 
       viewCategoryID.innerHTML = '';

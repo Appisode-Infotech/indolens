@@ -67,6 +67,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -151,14 +152,13 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive scrollbar">
+                    <div class="table-responsive scrollbar col-10">
                         <table class="table fs--1 mb-0 border-top border-200">
                             <thead>
                             <tr>
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:30%;">ID
+                                    scope="col" style="width:10%;">ID
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
                                     UNIT NAME
@@ -166,28 +166,26 @@
                                 <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
                                     STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    CREATED ON
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="deadline" scope="col" style="width:15%;">
-                                    CREATED BY
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">UPDATED ON
-                                </th>
+<!--                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">-->
+<!--                                    CREATED ON-->
+<!--                                </th>-->
+<!--                                <th class="sort align-middle ps-3" data-sort="deadline" scope="col" style="width:15%;">-->
+<!--                                    CREATED BY-->
+<!--                                </th>-->
+<!--                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"-->
+<!--                                    style="width:5%;">UPDATED ON-->
+<!--                                </th>-->
 
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">UPDATED BY
-                                </th>
+<!--                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"-->
+<!--                                    style="width:5%;">UPDATED BY-->
+<!--                                </th>-->
 
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
+                                <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
                             {% for units in units_list %}
                             <tr class="position-static">
-                                <td>
-                                </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
                                     <p class="mb-0 fs--1 text-900">{{units.unit_id}}</p>
@@ -199,25 +197,25 @@
 
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
                                     {% if units.status == 0 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
                                 {% elif units.status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active<span>
                                                 </span><span class="ms-1" data-feather="check"
                                                              style="height:12.8px;width:12.8px;"></span></span>
                                 {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{units.created_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{units.creator_name}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{units.last_updated_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{units.updater_name}}</p>
-                                </td>
+<!--                                <td class="align-middle white-space-nowrap task ps-3 py-4">-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{units.created_on}}</p>-->
+<!--                                </td>-->
+<!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{units.creator_name}}</p>-->
+<!--                                </td>-->
+<!--                                <td class="align-middle white-space-nowrap task ps-3 py-4">-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{units.last_updated_on}}</p>-->
+<!--                                </td>-->
+<!--                                <td class="align-middle white-space-nowrap task ps-3 py-4">-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{units.updater_name}}</p>-->
+<!--                                </td>-->
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -228,7 +226,10 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2">
-<!--                                            <div class="dropdown-divider"></div>-->
+                                            <a class="dropdown-item view-button" data-bs-toggle="modalView"
+                                               data-category-info="{{ units | safe }}">View</a>
+                                            <a class="dropdown-item">Update</a>
+                                            <div class="dropdown-divider"></div>
                                             {% if units.status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
@@ -259,7 +260,6 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        {% include 'modal_warning.html' %}
 
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
@@ -279,6 +279,8 @@
                         </div>
                     </div>
                 </div>
+                    {% include 'modal_warning.html' %}
+                {% include 'modal_master_view.html' %}
             </div>
             {% include 'footer.html' %}
         </div>
@@ -295,6 +297,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
     </script>
 </main>
@@ -318,6 +321,7 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
+<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 
 </body>
 
