@@ -42,7 +42,11 @@ def create_franchise_store(franchise_obj):
 def get_all_franchise_stores():
     try:
         with connection.cursor() as cursor:
-            get_own_stores_query = f""" SELECT * FROM franchise_store """
+            get_own_stores_query = f""" SELECT franchise_store.*, franchise_store_employees.name, 
+                                        franchise_store_employees.employee_id FROM franchise_store
+                                        LEFT JOIN franchise_store_employees ON 
+                                        franchise_store.store_id = franchise_store_employees.assigned_store_id AND 
+                                        franchise_store_employees.role = 1"""
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
