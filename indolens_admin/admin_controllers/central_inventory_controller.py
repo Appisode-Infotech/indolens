@@ -239,7 +239,8 @@ def get_all_stock_requests(status):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
                                     LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
-                                    LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2"""
+                                    LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
+                                    WHERE rp.request_status LIKE '{status}'"""
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()

@@ -2448,15 +2448,21 @@ def viewAllStockRequests(request):
 
 
 def viewPendingStockRequests(request):
-    return render(request, 'indolens_admin/stockRequests/viewPendingStockRequests.html')
+    response, status_code = central_inventory_controller.get_all_stock_requests('1')
+    return render(request, 'indolens_admin/stockRequests/viewPendingStockRequests.html',
+                  {"stocks_request_list": response['stocks_request_list']})
 
 
 def viewCompletedStockRequests(request):
-    return render(request, 'indolens_admin/stockRequests/viewCompletedStockRequests.html')
+    response, status_code = central_inventory_controller.get_all_stock_requests('2')
+    return render(request, 'indolens_admin/stockRequests/viewCompletedStockRequests.html',
+                  {"stocks_request_list": response['stocks_request_list']})
 
 
 def viewRejectedStockRequests(request):
-    return render(request, 'indolens_admin/stockRequests/viewrejectedStockRequests.html')
+    response, status_code = central_inventory_controller.get_all_stock_requests('3')
+    return render(request, 'indolens_admin/stockRequests/viewrejectedStockRequests.html',
+                  {"stocks_request_list": response['stocks_request_list']})
 
 
 def assignManagerOwnStore(request):
