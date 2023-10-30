@@ -144,8 +144,17 @@
                                     <p class="mb-0 fs--1 text-900">{{store.store_display_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end storeAdmin"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span></td>
+
+                                <td class="align-middle white-space-nowrap storeAdmin ">
+                                    {% if store.owner_name != None %}
+                                    <a
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_franchise_owner' store.employee_id %}">{{store.owner_name}}</a>
+                                    {% else %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
+                                    </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 date py-4">
                                     <p class="mb-0 fs--1 text-900">{{store.created_on}}</p>
                                 </td>

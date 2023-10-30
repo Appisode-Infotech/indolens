@@ -7,7 +7,7 @@ class Store:
             self.store_id, self.store_name, self.store_display_name, self.store_phone, self.store_gst,
             self.store_email, self.store_city, self.store_state, self.store_zip, self.store_lat, self.store_lng,
             self.store_address, self.status, self.created_by, self.created_on, self.last_updated_by,
-            self.last_updated_on
+            self.last_updated_on, self.owner_name, self.employee_id
         ) = values
 
     def to_dict(self):
@@ -30,7 +30,9 @@ class Store:
                                                                                       datetime) else None,
             'last_updated_by': self.last_updated_by,
             'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on,
-                                                                                                datetime) else None
+                                                                                                datetime) else None,
+            'owner_name': self.owner_name,
+            'employee_id': self.employee_id,
         }
 
 
