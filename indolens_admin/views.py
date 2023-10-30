@@ -2419,6 +2419,7 @@ def centralInventoryAddProducts(request):
             return redirect('manage_central_inventory_products')
         else:
             response, status_code = central_inventory_controller.get_all_active_types()
+            print(response)
             return render(request, 'indolens_admin/centralInventory/centralInventoryAddProducts.html', response)
 
     else:
