@@ -40,11 +40,11 @@ def add_product_brand(brand_obj):
 def get_all_central_inventory_brand():
     try:
         with connection.cursor() as cursor:
-            get_product_brand_query = f""" SELECT br.* , creator.name, updater.name, category.category_name
+            get_product_brand_query = f""" SELECT br.* , creator.name, updater.name
             FROM brands AS br 
             LEFT JOIN admin AS creator ON br.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON br.last_updated_by = updater.admin_id
-            LEFT JOIN product_categories AS category ON br.category_id = category.category_id"""
+            """
             cursor.execute(get_product_brand_query)
             brand_data = cursor.fetchall()
             print(brand_data)
