@@ -40,6 +40,12 @@ def login(store_ob):
                     "message": "You Account is locked, please contact you Admin",
                     "store": None
                 }, 301
+            elif admin_data[0][7] == 0:
+                return {
+                    "status": False,
+                    "message": "You Account is not assigned to any store, please contact you Admin",
+                    "store": None
+                }, 301
             else:
                 return {
                     "status": True,
