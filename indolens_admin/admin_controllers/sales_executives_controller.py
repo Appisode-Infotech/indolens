@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import bcrypt
 import pymysql
 import pytz
 from django.db import connection
@@ -13,6 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_own_sales_executives(sales_executives, files):
     try:
+        hashed_password = bcrypt.hashpw(sales_executives.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_sales_executives_query = f"""
                 INSERT INTO own_store_employees (
@@ -21,7 +23,7 @@ def create_own_sales_executives(sales_executives, files):
                     document_2_type, document_2_url, status, created_by, created_on, 
                     last_updated_by, last_updated_on, role
                 ) VALUES (
-                    '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{sales_executives.password}',
+                    '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
                     '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3
@@ -107,6 +109,7 @@ def update_franchise_sales_executives(sales_executives, files):
 
 def create_franchise_sales_executives(sales_executives, files):
     try:
+        hashed_password = bcrypt.hashpw(sales_executives.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_sales_executives_query = f"""
                 INSERT INTO franchise_store_employees (
@@ -115,7 +118,7 @@ def create_franchise_sales_executives(sales_executives, files):
                     document_2_type, document_2_url, status, created_by, created_on, 
                     last_updated_by, last_updated_on, role
                 ) VALUES (
-                    '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{sales_executives.password}',
+                    '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
                     '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3

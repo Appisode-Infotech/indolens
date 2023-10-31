@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import bcrypt
 import pymysql
 import pytz
 from django.db import connection
@@ -13,6 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_area_head(area_head, files):
     try:
+        hashed_password = bcrypt.hashpw(area_head.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_area_head_query = f"""
                 INSERT INTO area_head (
@@ -20,7 +22,7 @@ def create_area_head(area_head, files):
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
                     status, created_by, created_on, last_updated_by, last_updated_on
                 ) VALUES (
-                    '{area_head.full_name}', '{area_head.email}', '{area_head.phone}', '{area_head.password}',
+                    '{area_head.full_name}', '{area_head.email}', '{area_head.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{area_head.complete_address}', '{area_head.document1_type}', 
                     '{json.dumps(files.document1)}', '{area_head.document2_type}', '{json.dumps(files.document2)}', 
                     1, '{area_head.created_by}', '{today}', '{area_head.last_updated_by}', '{today}'

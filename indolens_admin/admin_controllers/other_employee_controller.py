@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import bcrypt
 import pymysql
 import pytz
 from django.db import connection
@@ -14,6 +15,7 @@ today = datetime.datetime.now(ist)
 
 def create_other_employee(other_emp, files):
     try:
+        hashed_password = bcrypt.hashpw(other_emp.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_other_emp_query = f"""
                 INSERT INTO own_store_employees (
@@ -22,7 +24,7 @@ def create_other_employee(other_emp, files):
                     document_2_type, document_2_url, status, created_by, created_on, 
                     last_updated_by, last_updated_on, role
                 ) VALUES (
-                    '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{other_emp.password}',
+                    '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{other_emp.address}', '{other_emp.document_1_type}', 
                     '{json.dumps(files.document1)}', '{other_emp.document_2_type}', '{json.dumps(files.document2)}', 
                     0, '{other_emp.created_by}', '{today}', '{other_emp.last_updated_by}', '{today}', 4
@@ -108,6 +110,7 @@ def update_franchise_other_employee(other_emp, files):
 
 def create_franchise_other_employee(other_emp, files):
     try:
+        hashed_password = bcrypt.hashpw(other_emp.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_other_emp_query = f"""
                 INSERT INTO franchise_store_employees (
@@ -116,7 +119,7 @@ def create_franchise_other_employee(other_emp, files):
                     document_2_type, document_2_url, status, created_by, created_on, 
                     last_updated_by, last_updated_on, role
                 ) VALUES (
-                    '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{other_emp.password}',
+                    '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{other_emp.address}', '{other_emp.document_1_type}', 
                     '{json.dumps(files.document1)}', '{other_emp.document_2_type}', '{json.dumps(files.document2)}', 
                     0, '{other_emp.created_by}', '{today}', '{other_emp.last_updated_by}', '{today}', 4

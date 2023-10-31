@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import bcrypt
 import pymysql
 import pytz
 from django.db import connection
@@ -13,6 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_marketing_head(marketing_head, files):
     try:
+        hashed_password = bcrypt.hashpw(marketing_head.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_marketing_head_query = f"""
                 INSERT INTO marketing_head (
@@ -20,7 +22,7 @@ def create_marketing_head(marketing_head, files):
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
                     status, created_by, created_on, last_updated_by, last_updated_on
                 ) VALUES (
-                    '{marketing_head.fullName}', '{marketing_head.email}', '{marketing_head.phone}', '{marketing_head.password}',
+                    '{marketing_head.fullName}', '{marketing_head.email}', '{marketing_head.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{marketing_head.completeAddress}', '{marketing_head.document_1_type}', 
                     '{json.dumps(files.document1)}', '{marketing_head.document_2_type}', '{json.dumps(files.document2)}', 
                     1, '{marketing_head.created_by}', '{today}', '{marketing_head.last_updated_by}', '{today}'

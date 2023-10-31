@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import bcrypt
 import pymysql
 import pytz
 from django.db import connection
@@ -13,6 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_optimetry(optimetry_obj, files):
     try:
+        hashed_password = bcrypt.hashpw(optimetry_obj.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_optimetry_obj_query = f"""
                 INSERT INTO own_store_employees (
@@ -21,7 +23,7 @@ def create_optimetry(optimetry_obj, files):
                     document_2_type, document_2_url, status, created_by, created_on, 
                     last_updated_by, last_updated_on, role, certificates
                 ) VALUES (
-                    '{optimetry_obj.name}', '{optimetry_obj.email}', '{optimetry_obj.phone}', '{optimetry_obj.password}',
+                    '{optimetry_obj.name}', '{optimetry_obj.email}', '{optimetry_obj.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{optimetry_obj.address}', '{optimetry_obj.document_1_type}', 
                     '{json.dumps(files.document1)}', '{optimetry_obj.document_2_type}', '{json.dumps(files.document2)}', 
                     0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, '{json.dumps(files.certificates)}'
@@ -97,8 +99,8 @@ def enable_disable_optimetry(opid, status):
 
 
 def create_franchise_optimetry(optimetry_obj, files):
-    print(optimetry_obj.certificates)
     try:
+        hashed_password = bcrypt.hashpw(optimetry_obj.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_optimetry_obj_query = f"""
                 INSERT INTO franchise_store_employees (
@@ -107,7 +109,7 @@ def create_franchise_optimetry(optimetry_obj, files):
                     document_2_type, document_2_url, status, created_by, created_on, 
                     last_updated_by, last_updated_on, role, certificates
                 ) VALUES (
-                    '{optimetry_obj.name}', '{optimetry_obj.email}', '{optimetry_obj.phone}', '{optimetry_obj.password}',
+                    '{optimetry_obj.name}', '{optimetry_obj.email}', '{optimetry_obj.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{optimetry_obj.address}', '{optimetry_obj.document_1_type}', 
                     '{json.dumps(files.document1)}', '{optimetry_obj.document_2_type}', '{json.dumps(files.document2)}', 
                     0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, '{json.dumps(files.certificates)}'
