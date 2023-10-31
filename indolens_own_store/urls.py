@@ -1,6 +1,8 @@
 from django.urls import path
 
 from .views import *
+from indolens import settings
+from django.conf.urls.static import static
 
 urlpatterns = [
     # start
@@ -43,3 +45,5 @@ urlpatterns = [
     path('own_store_make_sale/', makeSaleOwnStore, name='own_store_make_sale'),
     path('all_expenses_store/', allExpenseStore, name='all_expenses_store'),
 ]
+urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

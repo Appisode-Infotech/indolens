@@ -61,6 +61,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -137,39 +138,45 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="products-table-body">
+
+                            {% for product in product_list %}
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                 <td class="fs--1 align-middle">
                                     <div class="form-check mb-0 fs-0">
                                         <input class="form-check-input" type="checkbox"/>
                                     </div>
                                 </td>
+                                <td class="fs--1 align-middle">
+                                </td>
                                 <td class="align-middle white-space-nowrap py-0">
-                                    <div class="border rounded-2"><img alt=""
-                                                                       src="{% static 'img/products/1.png' %}"
-                                                                       width="53"/>
-                                    </div>
+                                    <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
+                                        <div class="avatar avatar-m">
+                                            <img alt="" class="rounded-circle"
+                                                 src="{{ MEDIA_URL }}{{ product.product_images.0 }}"/>
+                                        </div>
+                                    </a>
                                 </td>
                                 <td class="product align-middle ps-4"><a
-                                        class="fw-semi-bold line-clamp-3 mb-0" href="#!">Indolens - Metallic
-                                    frame 2x2 frame fro kids</a></td>
-                                <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                    ₹3,900
+                                        class="fw-semi-bold line-clamp-3 mb-0"
+                                        href="#!">{{product.product_name}} </a></td>
+                                <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                    ₹{{product.sale_price}}
                                 </td>
                                 <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                    Category name
+                                    {{product.category_name}}
                                 </td>
                                 <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                    Brand name
-                                </td>
-                                <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                    <a>Nelamangala store</a>
+                                    {{product.brand_name}}
                                 </td>
 
-                                <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                    25
+                                <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                    {{product.store_quantity}}
                                 </td>
-                                <td class="time align-middle white-space-nowrap text-600 ps-4">Nov 12, 10:45
-                                    PM
+                                <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                </td>
+                                <td class="time align-middle white-space-nowrap text-600 ps-4">
+                                    {{product.created_on}}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -186,6 +193,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -200,16 +208,17 @@
                                             type="button"><span class="fas fa-times fs--1"></span></button>
                                 </div>
                                 <div class="p-4 code-to-copy">
-                                    <form action='/' class="row g-3 needs-validation" method='POST'
+                                    <form action="{% url 'create_request_store' %}" class="row g-3 needs-validation" method='POST'
                                           novalidate="">
+                                        {% csrf_token %}
                                         <div class="col-12">
 
                                             <label class="form-label" for="validationCustom01">Product
                                                 ID</label>
 
-                                            <input class="form-control" disabled id="validationCustom01"
-                                                   required=""
-                                                   type="text" value="112"/>
+                                            <input class="form-control" readonly id="validationCustom01"
+                                                   required="" name="product_id"
+                                                   type="text" value="1"/>
                                             <div class="invalid-feedback">Enter valid Product Id!</div>
                                         </div>
 
@@ -219,7 +228,7 @@
                                                 Quantity</label>
 
                                             <input class="form-control" id="expense_reason" maxlength="256"
-                                                   required=""
+                                                   required="" name="product_quantity"
                                                    type="number" value=""/>
                                             <div class="invalid-feedback">Enter valid quantity!</div>
                                         </div>
@@ -275,6 +284,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
 
@@ -368,6 +378,7 @@
     }
 
 
+
 </script>
 <script>
         // Add an event listener to the "Start Over" button
@@ -424,6 +435,7 @@
             });
             return object;
         }
+
 
 
 </script>

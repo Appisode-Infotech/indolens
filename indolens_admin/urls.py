@@ -43,7 +43,7 @@ urlpatterns = [
     path('pending_stock_requests/', viewPendingStockRequests, name='pending_stock_requests'),
     path('completed_stock_requests/', viewCompletedStockRequests, name='completed_stock_requests'),
     path('rejected_stock_requests/', viewRejectedStockRequests, name='rejected_stock_requests'),
-    path('change_stock_request_status/', changeStockRequestStatus, name='change_stock_request_status'),
+    path('change_stock_request_status/requestId=<int:requestId>/status=<int:status>', changeStockRequestStatus, name='change_stock_request_status'),
     # masters management
     path('manage_central_inventory_category/', manageMastersCategory, name='manage_central_inventory_category'),
     path('manage_central_inventory_category/add_product_category/', addProductCategory, name='add_product_category'),

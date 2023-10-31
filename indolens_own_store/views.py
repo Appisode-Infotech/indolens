@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 
-from indolens_own_store.own_store_controller import own_store_auth_controller
+from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model
 
 
@@ -16,17 +16,17 @@ def login(request):
     if request.method == 'POST':
         store_obj = own_store_employee_model.store_employee_from_dict(request.POST)
         response, status_code = own_store_auth_controller.login(store_obj)
-        print(response)
         if response['status']:
-            request.session.update({
-                'is_admin_logged_in': True,
-                'id': response['store'].employee_id,
-                'name': response['store'].name,
-                'email': response['store'].email,
-                'store_name': response['store'].store_name,
-                'assigned_store_id': response['store'].assigned_store_id,
-                'profile_pic': response['store'].profile_pic,
-            })
+            for data in response['store']:
+                request.session.update({
+                    'is_store_logged_in': True,
+                    'id': data['employee_id'],
+                    'name': data['name'],
+                    'email': data['email'],
+                    'store_name': data['store_name'],
+                    'assigned_store_id': data['assigned_store_id'],
+                    'profile_pic': data['profile_pic'],
+                })
             return redirect('own_store_dashboard')
         else:
             return render(request, 'auth/own_store_sign_in.html', {"message": response['message']})
@@ -109,33 +109,57 @@ def viewStoreCustomerDetails(request):
 # ================================= OWN STORE STOCK REQUESTS MANAGEMENT ======================================
 
 def createStockRequestStore(request):
-    return render(request, 'stockRequests/createStockRequestStore.html')
+    if request.method == 'POST':
+        response = store_inventory_controller.create_store_stock_request(request.POST,
+                                                                         request.session.get('assigned_store_id'),
+                                                                         request.session.get('id'))
+        response, status_code = store_inventory_controller.get_all_central_inventory_products()
+        return render(request, 'stockRequests/createStockRequestStore.html', {"product_list": response['product_list']})
+    else:
+        response, status_code = store_inventory_controller.get_all_central_inventory_products()
+        return render(request, 'stockRequests/createStockRequestStore.html', {"product_list": response['product_list']})
 
 
 def viewAllStockRequestsStore(request):
-    return render(request, 'stockRequests/viewAllStockRequestsStore.html')
+    response, status_code = store_inventory_controller.view_all_store_stock_request(
+        request.session.get('assigned_store_id'), '%')
+    return render(request, 'stockRequests/viewAllStockRequestsStore.html',
+                  {"stocks_request_list": response['stocks_request_list']})
 
 
 def viewPendingStockRequestsStore(request):
-    return render(request, 'stockRequests/viewPendingStockRequestsStore.html')
+    response, status_code = store_inventory_controller.view_all_store_stock_request(
+        request.session.get('assigned_store_id'), '0')
+    return render(request, 'stockRequests/viewPendingStockRequestsStore.html',
+                  {"stocks_request_list": response['stocks_request_list']})
 
 
 def viewCompletedStockRequestsStore(request):
-    return render(request, 'stockRequests/viewCompletedStockRequestsStore.html')
+    response, status_code = store_inventory_controller.view_all_store_stock_request(
+        request.session.get('assigned_store_id'), '1')
+    return render(request, 'stockRequests/viewCompletedStockRequestsStore.html',
+                  {"stocks_request_list": response['stocks_request_list']})
 
 
 def viewRejectedStockRequestsStore(request):
-    return render(request, 'stockRequests/viewRejectedStockRequestsStore.html')
+    response, status_code = store_inventory_controller.view_all_store_stock_request(
+        request.session.get('assigned_store_id'), '2')
+    return render(request, 'stockRequests/viewRejectedStockRequestsStore.html',
+                  {"stocks_request_list": response['stocks_request_list']})
 
 
 # ================================= OWN STORE INVENTORY MANAGEMENT ======================================
 
 def storeInventoryProducts(request):
-    return render(request, 'inventory/storeInventoryProducts.html')
+    response, status_code = store_inventory_controller.get_all_products_for_store(
+        request.session.get('assigned_store_id'))
+    return render(request, 'inventory/storeInventoryProducts.html', {"stocks_list": response['stocks_list']})
 
 
 def inventoryOutOfStock(request):
-    return render(request, 'inventory/inventoryOutOfStock.html')
+    response, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15, request.session.get(
+        'assigned_store_id'))
+    return render(request, 'inventory/inventoryOutOfStock.html', {"stocks_list": response['stocks_list']})
 
 
 def moveStocksStore(request):

@@ -2,6 +2,8 @@ import datetime
 import json
 import string
 import random
+
+import bcrypt
 import pymysql
 import pytz
 import requests
@@ -153,8 +155,9 @@ def check_link_validity(code):
 
 def update_admin_password(password, email):
     try:
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
-            login_query = f"""UPDATE admin SET password = '{password}' WHERE email = '{email}'"""
+            login_query = f"""UPDATE admin SET password = '{hashed_password}' WHERE email = '{email}'"""
             cursor.execute(login_query)
             admin_data = cursor.fetchone()
 

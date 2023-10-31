@@ -140,40 +140,54 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
+                            {% for stock in stocks_request_list %}
                             <tr class="position-static">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
-                                        class="text-decoration-none fw-bold fs-0" href="">Indolens
-                                    - 01</a>
+                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
+                                    <a
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start py-4">
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
                                 </td>
 
-                                <td class="product align-middle"><a
-                                        class="fw-semi-bold line-clamp-3 mb-0" href="#!">Indolens - Metallic
-                                    frame 2x2 frame fro kids</a></td>
+                                <td class="product align-middle">
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">FR00025</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.product_id}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">45</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">₹5,000</p>
+                                    <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
+                                </td>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if stock.request_status == 0 %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">PENDING</span>
+                                    {% elif stock.request_status == 1 %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
+                                    {% else %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
+                                    {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">Pending</span></td>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>
+                                </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -199,6 +213,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
