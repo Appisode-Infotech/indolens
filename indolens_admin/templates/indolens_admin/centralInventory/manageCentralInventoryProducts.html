@@ -110,12 +110,12 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown"
                                                 type="button">All<span class="fas fa-angle-down ms-2"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#sort-all">All</a></li>
+                                            <li><a class="dropdown-item" href="">All</a></li>
                                             <li>
                                                 <hr class="dropdown-divider"/>
                                             </li>
-                                            <li><a class="dropdown-item text-success" href="#sort-active">Active Only</a></li>
-                                            <li><a class="dropdown-item text-danger" href="#sort-inactive">Inactive Only</a></li>
+                                            <li><a class="dropdown-item text-success" href="">Active Only</a></li>
+                                            <li><a class="dropdown-item text-danger" href="">Inactive Only</a></li>
 
                                         </ul>
                                     </div>
@@ -171,7 +171,7 @@
 
                                 {% for product in product_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
-                                    data-category="{{ product.category_name }}" data-status="{{ product.status }}">
+                                    data-category="{{ product.category_name }}">
                                     <td class="fs--1 align-middle">
                                     </td>
                                     <td class="align-middle white-space-nowrap py-0">
