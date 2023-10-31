@@ -5,6 +5,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers.master_category_controller import get_all_central_inventory_category
 from indolens_admin.admin_models.admin_resp_model.central_inventory_product_resp_model import get_products
 from indolens_admin.admin_models.admin_resp_model.master_brand_resp_model import get_brands
 from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
@@ -147,7 +148,8 @@ def get_all_central_inventory_products():
             product_list = cursor.fetchall()
             return {
                        "status": True,
-                       "product_list": get_products(product_list)
+                       "product_list": get_products(product_list),
+                       "categoriesList": get_all_central_inventory_category()[0]['product_category']
                    }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

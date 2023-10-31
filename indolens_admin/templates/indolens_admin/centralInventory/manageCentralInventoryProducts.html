@@ -62,6 +62,11 @@
 
 
 
+
+
+
+
+
     </script>
 </head>
 
@@ -85,14 +90,12 @@
                 </div>
 
                 <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                    <li class="nav-item"><a aria-current="page" class="nav-link active" href="#">All <span
-                            class="text-700 fw-semi-bold">(68817)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Frames <span
-                            class="text-700 fw-semi-bold">(70348)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Lens <span
-                            class="text-700 fw-semi-bold">(17)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Accessories<span
-                            class="text-700 fw-semi-bold">(810)</span></a></li>
+                    <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#all">All</a></li>
+                    {% for category in categories_List %}
+                    <li class="nav-item">
+                        <a class="nav-link filter" href="#{{ category.category_name }}">{{ category.category_name }}</a>
+                    </li>
+                    {% endfor %}
                 </ul>
                 <div data-list='{"valueNames":["product","price","category","tags","vendor","time"],"page":10,"pagination":true}'
                      id="products">
@@ -109,26 +112,7 @@
                                 </div>
                             </div>
                             <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
-                                <div class="btn-group position-static" role="group">
-                                    <div class="btn-group position-static text-nowrap">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-phoenix-secondary px-7 flex-shrink-0"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown"
-                                                type="button">
-                                            Category<span class="fas fa-angle-down ms-2"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                            <li>
-                                                <hr class="dropdown-divider"/>
-                                            </li>
-                                            <li><a class="dropdown-item" href="#">Separated link</a></li>
-                                        </ul>
-                                    </div>
-                                </div>
+
                             </div>
                             <div class="col-auto"><a class="btn btn-primary px-5"
                                                      href="{% url 'add_products' %}"><i
@@ -147,12 +131,9 @@
                                 <tr>
                                     <th class="white-space-nowrap fs--1 align-middle"
                                         style="max-width:20px; width:18px;">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
                                     </th>
                                     <th class="sort white-space-nowrap align-middle fs--2" scope="col"
-                                        style="width:70px;"></th>
+                                        style="width:70px;">IMAGE</th>
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                         scope="col" style="width:350px;">PRODUCT NAME
                                     </th>
@@ -178,21 +159,21 @@
                                 <tbody class="list" id="products-table-body">
 
                                 {% for product in product_list %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                    data-category="{{ product.category_name }}">
                                     <td class="fs--1 align-middle">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
                                     </td>
                                     <td class="align-middle white-space-nowrap py-0">
                                         <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
                                             <div class="avatar avatar-m">
-                                                <img alt="" class="rounded-circle" src="{{ MEDIA_URL }}{{ product.product_images.0 }}"/>
+                                                <img alt="" class="rounded-circle"
+                                                     src="{{ MEDIA_URL }}{{ product.product_images.0 }}"/>
                                             </div>
                                         </a>
                                     </td>
                                     <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{product.product_name}} </a></td>
+                                            class="fw-semi-bold line-clamp-3 mb-0"
+                                            href="#!">{{product.product_name}} </a></td>
                                     <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         ₹{{product.sale_price}}
                                     </td>
@@ -275,12 +256,6 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
-
-
-
-
-
-
     </script>
 </main>
 <!-- ===============================================-->
@@ -301,6 +276,57 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+$(document).ready(function() {
+    // Get the current URL hash
+    var currentHash = window.location.hash;
+
+    // Remove the '#' character from the hash
+    currentHash = currentHash.substring(1);
+
+    // Check if the current hash is empty, and if so, set it to "all"
+    if (currentHash === "") {
+        currentHash = "all";
+        // Update the URL with the new hash
+        window.location.hash = currentHash;
+    }
+
+    // Loop through each nav link and check if its href matches the current hash
+    var navLinks = document.querySelectorAll(".nav-link.filter");
+    var isCategorySelected = false; // Flag to check if any category is selected
+
+    navLinks.forEach(function (link) {
+        if (link.getAttribute("href") === "#" + currentHash) {
+            link.classList.add("active");
+            isCategorySelected = true; // Set the flag to true if a category is selected
+        } else {
+            link.classList.remove("active");
+        }
+    });
+
+    // Handle category links click event
+    $('ul.nav-links a').click(function() {
+        var selectedCategory = $(this).attr('href').substring(1); // Get the category name
+        console.log(selectedCategory);
+
+        // Show all rows
+        $('table tbody tr').show();
+
+        // If not "All" category, hide rows that don't match the selected category
+        if (selectedCategory !== "all") {
+            $('table tbody tr').not('[data-category="' + selectedCategory + '"]').hide();
+        }
+
+        // Highlight the clicked link and remove active class from others
+        $('ul.nav-links a').removeClass('active');
+        $(this).addClass('active');
+    });
+});
+</script>
+
+
 
 </body>
 
