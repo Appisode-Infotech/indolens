@@ -13,7 +13,7 @@ urlpatterns = [
     path('login/', login, name='login'),
     path('admin_logout/', adminLogout, name='admin_logout'),
     path('forgot_password/', forgotPassword, name='forgot_password'),
-    path('reset_password/', resetPassword, name='reset_password'),
+    path('reset_password/code=<str:code>', resetPassword, name='reset_password'),
     # Dashboard
     path('dashboard/', dashboard, name='dashboard'),
     # own store management

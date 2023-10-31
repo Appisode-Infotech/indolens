@@ -110,7 +110,10 @@ def get_active_own_stores():
 def get_own_store_by_id(sid):
     try:
         with connection.cursor() as cursor:
-            get_own_stores_query = f""" SELECT * FROM own_store WHERE store_id = '{sid}'"""
+            get_own_stores_query = f""" SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name
+                                    FROM own_store
+                                    LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1 
+                                    WHERE own_store.store_id = '{sid}'"""
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
