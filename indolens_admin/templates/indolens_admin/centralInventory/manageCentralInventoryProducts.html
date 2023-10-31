@@ -56,17 +56,6 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -90,10 +79,10 @@
                 </div>
 
                 <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                    <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#all">All</a></li>
+                    <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a></li>
                     {% for category in categories_List %}
                     <li class="nav-item">
-                        <a class="nav-link filter" href="#{{ category.category_name }}">{{ category.category_name }}</a>
+                        <a class="nav-link filter" href="#filter-{{ category.category_name }}">{{ category.category_name }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -112,7 +101,25 @@
                                 </div>
                             </div>
                             <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                                <div class="btn-group position-static" role="group">
+                                    <div class="btn-group position-static text-nowrap">
+                                        <button id="sortStatus" aria-expanded="false"
+                                                aria-haspopup="true"
+                                                class="btn btn-phoenix-secondary px-7 flex-shrink-0"
+                                                data-boundary="window"
+                                                data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                type="button">All<span class="fas fa-angle-down ms-2"></span></button>
+                                        <ul class="dropdown-menu">
+                                            <li><a class="dropdown-item" href="#sort-all">All</a></li>
+                                            <li>
+                                                <hr class="dropdown-divider"/>
+                                            </li>
+                                            <li><a class="dropdown-item text-success" href="#sort-active">Active Only</a></li>
+                                            <li><a class="dropdown-item text-danger" href="#sort-inactive">Inactive Only</a></li>
 
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
                             <div class="col-auto"><a class="btn btn-primary px-5"
                                                      href="{% url 'add_products' %}"><i
@@ -133,7 +140,8 @@
                                         style="max-width:20px; width:18px;">
                                     </th>
                                     <th class="sort white-space-nowrap align-middle fs--2" scope="col"
-                                        style="width:70px;">IMAGE</th>
+                                        style="width:70px;">IMAGE
+                                    </th>
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                         scope="col" style="width:350px;">PRODUCT NAME
                                     </th>
@@ -149,6 +157,9 @@
 
                                     <th class="sort align-middle ps-3" data-sort="tags" scope="col"
                                         style="width:250px;">IN STOCK
+                                    </th>
+                                    <th class="sort align-middle ps-3" data-sort="tags" scope="col"
+                                        style="width:250px;">STATUS
                                     </th>
                                     <th class="sort align-middle ps-4" data-sort="time" scope="col"
                                         style="width:50px;">PUBLISHED ON
@@ -187,18 +198,13 @@
                                     <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         {{product.product_quantity}}
                                     </td>
+                                    <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                    </td>
                                     <td class="time align-middle white-space-nowrap text-600 ps-4">
                                         {{product.created_on}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
-                                        <div class="position-relative">
-                                            <div class="hover-actions">
-                                                <button class="btn btn-sm btn-phoenix-secondary me-1 fs--2">
-                                                    <span class="fas fa-check"></span></button>
-                                                <button class="btn btn-sm btn-phoenix-secondary fs--2"><span
-                                                        class="fas fa-trash"></span></button>
-                                            </div>
-                                        </div>
                                         <div class="font-sans-serif btn-reveal-trigger position-static">
                                             <button aria-expanded="false"
                                                     aria-haspopup="true"
@@ -276,58 +282,41 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
-
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-$(document).ready(function() {
-    // Get the current URL hash
-    var currentHash = window.location.hash;
+    $(document).ready(function() {
+        updateCategoryDisplay();
+        $('ul.nav-links a').click(function() {
+            var selectedCategory = $(this).attr('href').substring(8); // Get the category name after '#filter-'
+            var $tableRows = $('table tbody tr');
+            if (selectedCategory !== "all") {
+                $tableRows.hide().filter('[data-category="' + selectedCategory + '"]').show();
+            } else {
+                $tableRows.show();
+            }
+            $('ul.nav-links a').removeClass('active');
+            $(this).addClass('active');
+            updateDataListInfo();
+        });
+        function updateDataListInfo() {
+            var $visibleRows = $('table tbody tr:visible');
+            var totalRows = $visibleRows.length;
+            var startIndex = Math.min(totalRows, 1);
+            var endIndex = Math.min(totalRows, totalRows);
+            $('[data-list-info]').text(startIndex + ' to ' + endIndex + ' Items of ' + totalRows);
+        }
+        function updateCategoryDisplay() {
+            var currentHash = window.location.hash.substring(8) || "all"; // Get the category name after '#filter-'
+            $('.nav-link.filter[href="#filter-' + currentHash + '"]').addClass("active");
+            var $tableRows = $('table tbody tr');
+            if (currentHash !== "all") {
+                $tableRows.hide().filter('[data-category="' + currentHash + '"]').show();
+            }
 
-    // Remove the '#' character from the hash
-    currentHash = currentHash.substring(1);
-
-    // Check if the current hash is empty, and if so, set it to "all"
-    if (currentHash === "") {
-        currentHash = "all";
-        // Update the URL with the new hash
-        window.location.hash = currentHash;
-    }
-
-    // Loop through each nav link and check if its href matches the current hash
-    var navLinks = document.querySelectorAll(".nav-link.filter");
-    var isCategorySelected = false; // Flag to check if any category is selected
-
-    navLinks.forEach(function (link) {
-        if (link.getAttribute("href") === "#" + currentHash) {
-            link.classList.add("active");
-            isCategorySelected = true; // Set the flag to true if a category is selected
-        } else {
-            link.classList.remove("active");
+            // Call the function to update data-list-info
+            updateDataListInfo();
         }
     });
-
-    // Handle category links click event
-    $('ul.nav-links a').click(function() {
-        var selectedCategory = $(this).attr('href').substring(1); // Get the category name
-        console.log(selectedCategory);
-
-        // Show all rows
-        $('table tbody tr').show();
-
-        // If not "All" category, hide rows that don't match the selected category
-        if (selectedCategory !== "all") {
-            $('table tbody tr').not('[data-category="' + selectedCategory + '"]').hide();
-        }
-
-        // Highlight the clicked link and remove active class from others
-        $('ul.nav-links a').removeClass('active');
-        $(this).addClass('active');
-    });
-});
 </script>
-
-
-
 </body>
-
 </html>
