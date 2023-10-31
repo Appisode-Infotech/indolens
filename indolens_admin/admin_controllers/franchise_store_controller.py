@@ -63,7 +63,11 @@ def get_all_franchise_stores():
 def get_franchise_store_by_id(fid):
     try:
         with connection.cursor() as cursor:
-            get_own_stores_query = f""" SELECT * FROM franchise_store WHERE store_id = '{fid}'"""
+            get_own_stores_query = f""" SELECT franchise_store.*, franchise_store_employees.name, 
+                                        franchise_store_employees.employee_id FROM franchise_store
+                                        LEFT JOIN franchise_store_employees ON 
+                                        franchise_store.store_id = franchise_store_employees.assigned_store_id AND 
+                                        franchise_store_employees.role = 1 WHERE franchise_store.store_id = '{fid}'"""
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
