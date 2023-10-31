@@ -1,7 +1,8 @@
-import pymysql
-from django.db import connection
 import datetime
+
+import pymysql
 import pytz
+from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
 
@@ -28,14 +29,15 @@ def add_product_category(product_cat_obj):
 
             cursor.execute(create_category_query)
             return {
-                "status": True,
-                "message": "Product category added"
-            }, 200
+                       "status": True,
+                       "message": "Product category added"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)},
+
 
 def get_all_central_inventory_category():
     try:
@@ -49,9 +51,9 @@ def get_all_central_inventory_category():
             print(stores_data)
 
             return {
-                "status": True,
-                "product_category": get_product_categories(stores_data)
-            }, 200
+                       "status": True,
+                       "product_category": get_product_categories(stores_data)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -68,9 +70,9 @@ def enable_disable_product_category(cid, status):
             cursor.execute(set_product_category_query)
 
             return {
-                "status": True,
-                "message": "Updated"
-            }, 200
+                       "status": True,
+                       "message": "Updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

@@ -2386,7 +2386,9 @@ def manageCentralInventoryProducts(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_central_inventory_products()
         return render(request, 'indolens_admin/centralInventory/manageCentralInventoryProducts.html',
-                      {"product_list": response['product_list']})
+                      {"product_list": response['product_list']
+                          , "categories_List": response['categoriesList']
+                       })
     else:
         return redirect('login')
 
