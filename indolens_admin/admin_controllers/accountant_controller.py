@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import bcrypt
 import pymysql
 import pytz
 from django.db import connection
@@ -13,6 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_accountant(accountant, files):
     try:
+        hashed_password = bcrypt.hashpw(accountant.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_accountant_query = f"""
                 INSERT INTO accountant (
@@ -20,7 +22,7 @@ def create_accountant(accountant, files):
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
                     status, created_by, created_on, last_updated_by, last_updated_on
                 ) VALUES (
-                    '{accountant.name}', '{accountant.email}', '{accountant.phone}', '{accountant.password}',
+                    '{accountant.name}', '{accountant.email}', '{accountant.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{accountant.address}', '{accountant.document_1_type}', 
                     '{json.dumps(files.document1)}', '{accountant.document_2_type}', '{json.dumps(files.document2)}', 
                     1, '{accountant.created_by}', '{today}', '{accountant.last_updated_by}', '{today}'

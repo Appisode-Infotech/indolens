@@ -1,5 +1,8 @@
 from django.shortcuts import redirect, render
 
+from indolens_own_store.own_store_controller import own_store_auth_controller
+from indolens_own_store.own_store_model.request_model import own_store_employee_model
+
 
 # =================================ADMIN START======================================
 
@@ -11,7 +14,22 @@ def index(request):
 
 def login(request):
     if request.method == 'POST':
-        return redirect('own_store_dashboard')
+        store_obj = own_store_employee_model.store_employee_from_dict(request.POST)
+        response, status_code = own_store_auth_controller.login(store_obj)
+        print(response)
+        if response['status']:
+            request.session.update({
+                'is_admin_logged_in': True,
+                'id': response['store'].employee_id,
+                'name': response['store'].name,
+                'email': response['store'].email,
+                'store_name': response['store'].store_name,
+                'assigned_store_id': response['store'].assigned_store_id,
+                'profile_pic': response['store'].profile_pic,
+            })
+            return redirect('own_store_dashboard')
+        else:
+            return render(request, 'auth/own_store_sign_in.html', {"message": response['message']})
     return render(request, 'auth/own_store_sign_in.html')
 
 

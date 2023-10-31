@@ -59,14 +59,22 @@ def adminLogout(request):
 
 def forgotPassword(request):
     if request.method == 'POST':
-        print(request.POST['email'])
-        admin_auth_controller.forgot_password(request.POST['email'])
-        return render(request, 'indolens_admin/auth/forgot_password.html')
+        response, status_code = admin_auth_controller.forgot_password(request.POST['email'])
+        return render(request, 'indolens_admin/auth/forgot_password.html', {"message": response['message']})
     else:
         return render(request, 'indolens_admin/auth/forgot_password.html')
 
+
 def resetPassword(request, code):
-    return render(request, 'indolens_admin/auth/reset_password.html')
+    if request.method == 'POST':
+        print(request.POST)
+        admin_auth_controller.update_admin_password(request.POST['password'], request.POST['email'])
+        return render(request, 'indolens_admin/auth/reset_password.html', {"code": code})
+    else:
+        response, status_code = admin_auth_controller.check_link_validity(code)
+
+        return render(request, 'indolens_admin/auth/reset_password.html',
+                      {"code": code, "message": response['message'], "email": response['email']})
 
 
 # =================================ADMIN DASH======================================
