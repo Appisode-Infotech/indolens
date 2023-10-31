@@ -56,18 +56,6 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -80,9 +68,7 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-
         <div class="content">
-
             <div class="mb-9">
                 <div data-list='{"valueNames":["storeName","displayName","storeAdmin","date","city","status","action"],"page":6,"pagination":true}'
                      id="ownStoresList">
@@ -92,19 +78,48 @@
                         </div>
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
+                        <div class="mb-1">
+                            <div class="row g-3">
+                                <div class="col-auto">
+                                    <div class="search-box">
+                                        <form class="position-relative" data-bs-display="static"
+                                              data-bs-toggle="search">
+                                            <input aria-label="Search" class="form-control search-input search"
+                                                   placeholder="Search" type="search"/>
+                                            <span class="fas fa-search search-box-icon"></span>
+                                        </form>
+                                    </div>
+                                </div>
+                                <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                                    <div class="btn-group position-static" role="group">
+                                        <div class="btn-group position-static text-nowrap">
+                                            <button id="sortStatus" aria-expanded="false"
+                                                    aria-haspopup="true"
+                                                    class="btn btn-phoenix-secondary px-7 flex-shrink-0"
+                                                    data-boundary="window"
+                                                    data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                    type="button">All<span class="fas fa-angle-down ms-2"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="">All</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider"/>
+                                                </li>
+                                                <li><a class="dropdown-item text-success" href="">Active Only</a></li>
+                                                <li><a class="dropdown-item text-danger" href="">Inactive Only</a></li>
 
-                        <div class="col-12 col-sm-auto">
-                            <div class="d-flex align-items-center">
-                                <div class="search-box me-3">
-                                    <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
-                                        <input aria-label="Search" class="form-control search-input search"
-                                               placeholder="Search Store" type="search"/>
-                                        <span class="fas fa-search search-box-icon"></span>
-                                    </form>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
                                 <div class="col-auto"><a class="btn btn-primary px-5"
                                                          href="{% url 'create_own_store' %}"><i
                                         class="fa-solid fa-plus me-2"></i>Add Own Store</a></div>
+                                <div class="col-auto">
+                                    <button id= "btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -148,13 +163,13 @@
                                 <td class="align-middle white-space-nowrap storeAdmin ">
                                     {% if store.manager_name != None %}
                                     <a
-                                        class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_store_manager' store.employee_id %}">{{store.manager_name}}</a>
+                                            class="text-decoration-none fw-bold fs-0"
+                                            href="{% url 'view_store_manager' store.employee_id %}">{{store.manager_name}}</a>
                                     {% else %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                     {% endif %}
-                                    </td>
+                                </td>
                                 <td class="align-middle white-space-nowrap date ps-3 py-4 date">
                                     <p class="mb-0 fs--1 text-900">{{store.created_on}}</p>
                                 </td>
@@ -273,6 +288,11 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
+
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -294,6 +314,7 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
