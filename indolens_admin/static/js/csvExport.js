@@ -5,41 +5,50 @@ class csvExport {
     if (!header && this.rows[0].querySelectorAll("th").length) {
       this.rows.shift();
     }
-    // console.log(this.rows);
-    // console.log(this._longestRow());
   }
 
-  exportCsv() {
-    const lines = [];
-    const ncols = this._longestRow();
-    for (const row of this.rows) {
-      let line = "";
-      for (let i = 0; i < ncols; i++) {
-        if (row.children[i] !== undefined) {
-          line += csvExport.safeData(row.children[i]);
-        }
-        line += i !== ncols - 1 ? "," : "";
+exportCsv() {
+  const lines = [];
+  const ncols = this._longestRow();
+  for (const row of this.rows) {
+    let line = "";
+    // Iterate through one less column by using `ncols - 1`
+    for (let i = 0; i < ncols - 1; i++) {
+      if (row.children[i] !== undefined) {
+        line += csvExport.safeData(row.children[i]);
       }
-      lines.push(line);
+      line += i !== ncols - 2 ? "," : "";
     }
-    //console.log(lines);
-    return lines.join("\n");
+    lines.push(line);
   }
+  return lines.join("\n");
+}
+
+
   _longestRow() {
-    return this.rows.reduce((length, row) => (row.childElementCount > length ? row.childElementCount : length), 0);
+    let maxCols = 0;
+    for (const row of this.rows) {
+      const rowCols = row.querySelectorAll("th, td").length;
+      if (rowCols > maxCols) {
+        maxCols = rowCols;
+      }
+    }
+    return maxCols;
   }
-  static safeData(td) {
-    let data = td.textContent;
-    //Replace all double quote to two double quotes
-    data = data.replace(/"/g, `""`);
-    //Replace , and \n to double quotes
-    data = /[",\n"]/.test(data) ? `"${data}"` : data;
-    return data;
-  }
+
+static safeData(td) {
+  let data = td.textContent;
+  // Trim leading and trailing spaces
+  data = data.trim();
+  data = data.replace(/"/g, `""`);
+  data = /[",\n"]/.test(data) ? `"${data}"` : data;
+  return data;
+}
+
 }
 
 const btnExport = document.querySelector("#btnExport");
-const tableElement = document.querySelector("#table");
+const tableElement = document.querySelector(".table"); // Use the class selector here
 
 btnExport.addEventListener("click", () => {
   const obj = new csvExport(tableElement);
