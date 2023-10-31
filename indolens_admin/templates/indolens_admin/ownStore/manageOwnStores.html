@@ -116,7 +116,7 @@
                                                          href="{% url 'create_own_store' %}"><i
                                         class="fa-solid fa-plus me-2"></i>Add Own Store</a></div>
                                 <div class="col-auto">
-                                    <button class="btn btn-link text-900 me-4 px-0"><span
+                                    <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
                                             class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                     </button>
                                 </div>
@@ -124,7 +124,7 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table id="table" class="table fs--1 mb-0 border-top border-200">
                             <thead>
                             <tr>
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="storeName"
@@ -314,6 +314,7 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
@@ -336,11 +337,6 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
-
-
-
-
-
 
 </script>
 </body>
