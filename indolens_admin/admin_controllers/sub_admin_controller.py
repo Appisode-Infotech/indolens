@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import bcrypt
 import pymysql
 import pytz
 from django.db import connection
@@ -13,6 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_sub_admin(sub_admin, files):
     try:
+        hashed_password = bcrypt.hashpw(sub_admin.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_admin_query = f"""
                 INSERT INTO admin (
@@ -20,7 +22,7 @@ def create_sub_admin(sub_admin, files):
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
                     status, created_by, created_on, last_updated_by, last_updated_on
                 ) VALUES (
-                    '{sub_admin.full_name}', '{sub_admin.email}', '{sub_admin.phone}', '{sub_admin.password}', 2, 
+                    '{sub_admin.full_name}', '{sub_admin.email}', '{sub_admin.phone}', '{hashed_password}', 2, 
                     '{files.profile_pic}', '{sub_admin.complete_address}', '{sub_admin.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sub_admin.document_2_type}', '{json.dumps(files.document2)}', 
                     1, '{sub_admin.created_by}', '{today}', '{sub_admin.last_updated_by}', '{today}'

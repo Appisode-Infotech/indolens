@@ -1,6 +1,7 @@
 import datetime
 import json
 
+import bcrypt
 import pymysql
 import pytz
 from django.db import connection
@@ -13,6 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_franchise_owner(franchise_owner, files):
     try:
+        hashed_password = bcrypt.hashpw(franchise_owner.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_franchise_owner_query = f"""
                 INSERT INTO franchise_store_employees (
@@ -20,7 +22,7 @@ def create_franchise_owner(franchise_owner, files):
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
                     status, created_by, created_on, last_updated_by, last_updated_on, role
                 ) VALUES (  
-                    '{franchise_owner.name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{franchise_owner.password}',
+                    '{franchise_owner.name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{franchise_owner.address}', '{franchise_owner.document_1_type}', 
                     '{json.dumps(files.document1)}', '{franchise_owner.document_2_type}', '{json.dumps(files.document2)}', 
                     1, '{franchise_owner.created_by}', '{today}', '{franchise_owner.last_updated_by}', '{today}', 1

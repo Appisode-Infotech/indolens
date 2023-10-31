@@ -1,5 +1,7 @@
 import datetime
 import json
+import bcrypt
+
 
 import pymysql
 import pytz
@@ -13,6 +15,7 @@ today = datetime.datetime.now(ist)
 
 def create_store_manager(store_manager, files):
     try:
+        hashed_password = bcrypt.hashpw(store_manager.password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
             insert_store_manager_query = f"""
                 INSERT INTO own_store_employees (
@@ -21,10 +24,11 @@ def create_store_manager(store_manager, files):
                     document_2_type, document_2_url, status, created_by, created_on, 
                     last_updated_by, last_updated_on, role
                 ) VALUES (
-                    '{store_manager.name}', '{store_manager.email}', '{store_manager.phone}', '{store_manager.password}', '{files.profile_pic}', 
-                    '{store_manager.assigned_store_id}', '{store_manager.address}', '{store_manager.document_1_type}', '{json.dumps(files.document1)}', 
-                    '{store_manager.document_2_type}', '{json.dumps(files.document2)}', 1, '{store_manager.created_by}', '{today}', 
-                    '{store_manager.last_updated_by}', '{today}', 1
+                    '{store_manager.name}', '{store_manager.email}', '{store_manager.phone}', '{hashed_password}', 
+                    '{files.profile_pic}', '{store_manager.assigned_store_id}', '{store_manager.address}', 
+                    '{store_manager.document_1_type}', '{json.dumps(files.document1)}', 
+                    '{store_manager.document_2_type}', '{json.dumps(files.document2)}', 1, '{store_manager.created_by}', 
+                    '{today}', '{store_manager.last_updated_by}', '{today}', 1
                 )
             """
 
