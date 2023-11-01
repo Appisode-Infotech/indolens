@@ -108,14 +108,14 @@
                                                 class="btn btn-phoenix-secondary px-7 flex-shrink-0"
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown"
-                                                type="button">All<span class="fas fa-angle-down ms-2"></span></button>
+                                                type="button">{{status}}<span class="fas fa-angle-down ms-2"></span></button>
                                         <ul class="dropdown-menu">
                                             <li><a class="dropdown-item" href="">All</a></li>
                                             <li>
                                                 <hr class="dropdown-divider"/>
                                             </li>
-                                            <li><a class="dropdown-item text-success" href="">Active Only</a></li>
-                                            <li><a class="dropdown-item text-danger" href="">Inactive Only</a></li>
+                                            <li><a class="dropdown-item text-success" href="{% url 'manage_central_inventory_products' 'Active' %}">Active Only</a></li>
+                                            <li><a class="dropdown-item text-danger" href="{% url 'manage_central_inventory_products' 'Inactive' %}">Inactive Only</a></li>
 
                                         </ul>
                                     </div>

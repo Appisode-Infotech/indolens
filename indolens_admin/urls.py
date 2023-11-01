@@ -34,7 +34,7 @@ urlpatterns = [
          enableDisableFranchiseStore, name='enable_disable_franchise_store'),
     # inventory management
     path('manage_out_of_stock/', manageCentralInventoryOutOfStock, name='manage_out_of_stock'),
-    path('manage_central_inventory_products/', manageCentralInventoryProducts,
+    path('manage_central_inventory_products/<str:status>', manageCentralInventoryProducts,
          name='manage_central_inventory_products'),
     path('manage_central_inventory_products/add_products/', centralInventoryAddProducts, name='add_products'),
     path('manageMoveStocks/', manageMoveStocks, name='manageMoveStocks'),

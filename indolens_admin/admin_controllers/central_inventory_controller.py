@@ -128,8 +128,14 @@ def add_central_inventory_products(product_obj, file):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_central_inventory_products():
+def get_all_central_inventory_products(status):
     try:
+        status_conditions = {
+            "All": "LIKE '%'",
+            "Active": "= 1",
+            "Inactive": "= 0"
+        }
+        status_condition = status_conditions[status]
         with connection.cursor() as cursor:
             get_all_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
@@ -143,6 +149,7 @@ def get_all_central_inventory_products():
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id"""
+                                    #  WHERE ci.status {status_condition}
 
             cursor.execute(get_all_product_query)
             product_list = cursor.fetchall()
