@@ -123,14 +123,15 @@
                                                 type="button"><span class="fas fa-times fs--1"></span></button>
                                     </div>
                                     <div class="p-4 code-to-copy">
-                                        <form action='/' class="row g-3 needs-validation" method='POST' novalidate="">
+                                        <form action="{% url 'create_lab' %}" class="row g-3 needs-validation" method='POST' novalidate="">
+                                            {% csrf_token %}
                                             <div class="col-12">
 
                                                 <label class="form-label" for="validationCustom01">Expense
                                                     amount</label>
 
                                                 <input class="form-control" id="validationCustom01" required=""
-                                                       type="text" value=""/>
+                                                       type="text" value="" name="expense_amount"/>
                                                 <div class="invalid-feedback">Enter valid amount!</div>
                                             </div>
 
@@ -139,7 +140,7 @@
                                                 <label class="form-label" for="expense_reason">Expense Reason</label>
 
                                                 <input class="form-control" id="expense_reason" maxlength="256"
-                                                       required=""
+                                                       required="" name="expense_reason"
                                                        type="text" value=""/>
                                                 <div class="invalid-feedback">Enter valid Reason!</div>
                                             </div>
@@ -147,7 +148,7 @@
                                                 <label class="form-label" for="expense_reason">Expense Date</label>
 
                                                 <input class="form-control datetimepicker" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}' id="datepicker"
-                                                       placeholder="dd/mm/yyyy"
+                                                       placeholder="dd/mm/yyyy" name="expense_date"
                                                        type="text"/>
 
                                             </div>

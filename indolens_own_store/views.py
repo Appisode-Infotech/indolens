@@ -169,7 +169,11 @@ def moveStocksStore(request):
 # ================================= SALES AND EXPENSES ======================================
 
 def allExpenseStore(request):
-    return render(request, 'expenses/allExpenseStore.html')
+    if request.method == 'POST':
+        print(request.POST)
+        return render(request, 'expenses/allExpenseStore.html')
+    else:
+        return render(request, 'expenses/allExpenseStore.html')
 
 
 def makeSaleOwnStore(request):
