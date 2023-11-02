@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
 
-from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller
-from indolens_own_store.own_store_model.request_model import own_store_employee_model
+from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
+    expense_controller
+from indolens_own_store.own_store_model.request_model import own_store_employee_model, expense_model
 
 
 # =================================ADMIN START======================================
@@ -171,8 +172,11 @@ def moveStocksStore(request):
 def allExpenseStore(request):
     if request.method == 'POST':
         print(request.POST)
+        expense_obj = expense_model.expense_model_from_dict(request.POST)
+        expense_controller.create_store_expense(expense_obj)
         return render(request, 'expenses/allExpenseStore.html')
     else:
+        expense_controller.get_all_store_expense()
         return render(request, 'expenses/allExpenseStore.html')
 
 
