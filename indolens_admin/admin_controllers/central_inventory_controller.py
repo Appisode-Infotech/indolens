@@ -268,43 +268,60 @@ def get_all_stock_requests(status):
 def change_stock_request_status(requestId, status, updator):
     try:
         with connection.cursor() as cursor:
-            update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}' 
-            WHERE request_products_id = '{requestId}' """
-            cursor.execute(update_stock_request_query)
-
-            fetch_product_query = f"""SELECT * FROM request_products 
-            WHERE request_products_id = '{requestId}'"""
-            cursor.execute(fetch_product_query)
+            fetch_req_product_query = f"""SELECT * FROM request_products 
+                        WHERE request_products_id = '{requestId}'"""
+            cursor.execute(fetch_req_product_query)
             product_details = cursor.fetchone()
             quantity = product_details[4]
 
-            if status == 1:
-                update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {quantity} 
-                                                WHERE product_id = {requestId}"""
-                cursor.execute(update_central_Inventory)
-                print("central_inventory updated")
+            fetch_inventory_product_query = f"""SELECT product_quantity FROM central_inventory 
+                        WHERE product_id = {requestId} """
+            cursor.execute(fetch_inventory_product_query)
+            product_details = cursor.fetchone()
+            available_quantity = product_details[4]
 
-                # update_store_Inventory = f"""UPDATE store_inventory SET product_quantity = product_quantity + {quantity}
-                #                                 WHERE store_inventory_id  = {requestId} """
+            if available_quantity > quantity:
+                update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}' 
+                WHERE request_products_id = '{requestId}' """
+                cursor.execute(update_stock_request_query)
 
-                update_store_Inventory = f"""INSERT INTO store_inventory 
-                                           (store_id, store_type, product_id, product_quantity, created_on, 
-                                           created_by, last_updated_on, last_updated_by) 
-                                           VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                                           ON DUPLICATE KEY UPDATE
-                                           product_quantity = product_quantity + {quantity}, 
-                                           last_updated_on = '{today}', 
-                                           last_updated_by = {updator}"""
+                # fetch_product_query = f"""SELECT * FROM request_products
+                # WHERE request_products_id = '{requestId}'"""
+                # cursor.execute(fetch_product_query)
+                # product_details = cursor.fetchone()
+                # quantity = product_details[4]
 
-                cursor.execute(update_store_Inventory, (product_details[1], product_details[2], product_details[3],
-                                                        product_details[4], today, updator, today, updator))
+                if status == 1:
+                    update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {quantity} 
+                                                    WHERE product_id = {requestId}"""
+                    cursor.execute(update_central_Inventory)
+                    print("central_inventory updated")
 
-                print("store_inventory updated")
 
-            return {
-                "status": True,
-                "message": "Status Changed"
-            }, 200
+                    update_store_Inventory = f"""INSERT INTO store_inventory 
+                                               (store_id, store_type, product_id, product_quantity, created_on, 
+                                               created_by, last_updated_on, last_updated_by) 
+                                               VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                                               ON DUPLICATE KEY UPDATE
+                                               product_quantity = product_quantity + {quantity}, 
+                                               last_updated_on = '{today}', 
+                                               last_updated_by = {updator}"""
+
+                    cursor.execute(update_store_Inventory, (product_details[1], product_details[2], product_details[3],
+                                                            product_details[4], today, updator, today, updator))
+
+                    print("store_inventory updated")
+
+                return {
+                    "status": True,
+                    "message": "Status Changed"
+                }, 200
+            else:
+                return {
+                    "status": False,
+                    "message": "Quantity Unavailable"
+                }, 200
+
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:

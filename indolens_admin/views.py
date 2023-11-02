@@ -2506,7 +2506,6 @@ def changeStockRequestStatus(request, requestId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.change_stock_request_status(requestId, status,
                                                                                          request.session.get('id'))
-        print(response)
         return redirect('all_stock_requests')
     else:
         return redirect('login')
