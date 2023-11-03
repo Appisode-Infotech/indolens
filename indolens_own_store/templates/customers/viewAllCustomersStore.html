@@ -73,6 +73,7 @@
 
         <div class="content">
 
+
             <div class="mb-9">
                 <div class="row g-2 mb-4">
                     <div class="col-auto">
@@ -139,6 +140,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="list" id="customers-table-body">
+                                {% for customer in store_customers_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                     <td class="fs--1 align-middle ps-0 py-3">
                                         <div class="form-check mb-0 fs-0">
@@ -147,17 +149,16 @@
                                     </td>
                                     <td class="customer align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
-                                            href="{% url 'view_store_customer_details' %}">
+                                            href="{% url 'view_store_customer_details'  %}">
                                         <div class="avatar avatar-m">
                                             <div class="avatar-name rounded-circle"><span>R</span></div>
                                         </div>
-                                        <p class="mb-0 ms-3 text-1100 fw-bold">Roy Anderson</p>
+                                        <p class="mb-0 ms-3 text-1100 fw-bold">{{customer.name}}</p>
                                     </a></td>
-                                    <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold"
-                                                                                              href="mailto:andersonroy@netflix.chill">andersonroy@netflix.chill</a>
+                                    <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold">{{customer.email}}</a>
                                     </td>
                                     <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-1000">
-                                        Kannada
+                                        {{customer.language}}
                                     </td>
                                     <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
                                         52
@@ -165,13 +166,14 @@
                                     <td class="total-spent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
                                         ₹ 12509
                                     </td>
-                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">Vancouver</td>
+                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.city}}</td>
                                     <td class="last-seen align-middle white-space-nowrap text-700 text-end">4 days ago
                                     </td>
                                     <td class="last-order align-middle white-space-nowrap text-700 text-end">Nov 18,
                                         5:43 PM
                                     </td>
                                 </tr>
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

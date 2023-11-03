@@ -16,7 +16,7 @@ urlpatterns = [
     path('own_store_dashboard/', dashboard, name='own_store_dashboard'),
     # manage store Employee
     path('manage_store_employees/', manageStoreEmployees, name='manage_store_employees'),
-    path('manage_store_employees/view_employee/', viewEmployees, name='view_employee'),
+    path('manage_store_employees/view_employee/employeeId=<int:employeeId>', viewEmployees, name='view_employee'),
     # Manage customers
     path('view_store_customers/', viewStoreCustomers, name='view_store_customers'),
     path('view_store_customers/view_store_customer_details/', viewStoreCustomerDetails,

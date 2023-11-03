@@ -3,8 +3,6 @@ import pymysql
 import pytz
 from django.db import connection
 
-from indolens_admin.admin_models.admin_req_model import admin_auth_model
-from indolens_admin.admin_models.admin_resp_model.admin_auth_resp_model import get_admin_user
 from indolens_own_store.own_store_model.response_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -21,7 +19,6 @@ def login(store_ob):
                                 WHERE ose.email = '{store_ob.email}'"""
             cursor.execute(login_query)
             admin_data = cursor.fetchall()
-            print(admin_data)
             if admin_data is None:
                 return {
                     "status": False,

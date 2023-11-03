@@ -71,6 +71,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -155,8 +156,13 @@
                                                        id="datepicker"
                                                        placeholder="dd/mm/yyyy" name="expense_date" type="text"
                                                        disabled/>
-
                                             </div>
+                                            <input name="created_by" required type="hidden"
+                                                   value="{{ request.session.id }}">
+                                            <input name="store_id" required type="hidden"
+                                                   value="{{ request.session.assigned_store_id }}">
+                                            <input name="store_type" required type="hidden"
+                                                   value="{{ request.session.store_type }}">
 
 
                                             <div class="modal-footer">
@@ -194,33 +200,34 @@
                                 </th>
 
                                 <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">STATUS
+                                    style="width:5%;">CREATED BY
                                 </th>
 
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
+                            {% for expense in stor_expense_list %}
                             <tr class="position-static">
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
-                                    <h5>01</h5>
+                                    <h5>{{expense.store_expense_id}}</h5>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start py-4">
-                                    <p class="mb-0 fs--1 text-900">Lunch Cost</p>
+                                    <p class="mb-0 fs--1 text-900">{{expense.expense_reason}}</p>
                                 </td>
 
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">₹5,000</p>
+                                    <p class="mb-0 fs--1 text-900">₹{{expense.expense_amount}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{expense.created_on}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">DONE</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">{{expense.creator_name}}</span>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -240,6 +247,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -278,6 +286,7 @@
         }
 
 
+
     </script>
     <script>
         const currentDate = new Date();
@@ -289,6 +298,7 @@
 
         const expenseDateInput = document.getElementById("datepicker");
         expenseDateInput.value = formattedDate;
+
 
 
     </script>

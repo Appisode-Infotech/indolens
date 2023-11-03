@@ -104,7 +104,7 @@
                         <table class="table fs--1 mb-0 border-top border-200">
                             <thead>
                             <tr>
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
+                                <th class="sort align-middle text-end" scope="col" style="width:30%;"></th>
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
                                     scope="col" style="width:30%;">NAME
@@ -144,48 +144,62 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
+                            {% for employee in store_employee_list %}
                             <tr class="position-static">
                                 <td>
-                                    <div class="avatar avatar-m"><img alt=""
-                                                                      class="rounded-circle"
-                                                                      src="{% static 'img/team/32.png' %}"/>
+                                    <a href="{{MEDIA_URL}}{{employee.profile_pic}}" target="_blank">
+                                    <div class="avatar avatar-m">
+                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{employee.profile_pic}}"/>
                                     </div>
+                                        </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_employee' %}">Santhosh
-                                    Kumar</a>
+                                        href="{% url 'view_employee' employee.employee_id %}">
+                                    {{employee.name}}
+                                </a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">8660225160</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">devsandy12@gmail.com</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.email}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">Manager</p>
-                                </td>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if employee.role == 1 %}
+                                    <p class="mb-0 fs--1 text-900">Store Manager</p>
 
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
+                                {% elif employee.role == 2 %}
+                                    <p class="mb-0 fs--1 text-900">Optimetry</p>
+                                {% elif employee.role == 3 %}
+                                    <p class="mb-0 fs--1 text-900">Sales Executive</p>
+                                {% elif employee.role == 4 %}
+                                    <p class="mb-0 fs--1 text-900">House Keeping</p>
+                                {% endif %}
+
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if employee.status == 0 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
+                                {% elif employee.status == 1 %}
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                {% endif %}
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.creator_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.last_updated_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.updater_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">#31, first cross ,madanayakanahalli,
-                                        bangalore</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -197,11 +211,12 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_employee' %}">View</a>
+                                                                                             href="{% url 'view_employee' employee.employee_id %}">View</a>
                                         </div>
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>

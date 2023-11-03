@@ -80,6 +80,7 @@
         {% include 'nav_bar_store.html' %}
 
         <div class="content">
+            {% for employee in store_employee %}
 
             <div class="mb-9">
                 <div class="row align-items-center justify-content-between g-3 mb-4">
@@ -102,23 +103,52 @@
 
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
-                                                <h3>John Doe</h3>
-                                                <p class="text-800">Joined 3 months ago</p>
-                                                <p class="text-800">Manager - <a href="">indolens
-                                                    store 1</a></p>
+                                                <h3>{{employee.name}}</h3>
+                                                <p class="text-800">Joined {{employee.created_on}}</p>
+                                                <p class="text-800">Manager - <a href="">
+                                                    {{employee.store_name}}</a></p>
 
                                             </div>
                                         </div>
-                                        <div class="d-flex flex-between-center border-top border-dashed border-300 pt-4">
-                                            <div>
-                                                <h6><a>Document 1</a></h6>
-                                                <a href="">john_Aadhar_front.pdf</a><br>
-                                                <a href="">john_Aadhar_back.pdf</a>
+                                        <div class="border-top border-dashed border-300 pt-4">
+
+                                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                <h6>{{ employee.document_1_type }}</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <!-- Add a container for horizontal alignment -->
+                                                    {% for doc in employee.document_1_url %}
+                                                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                        <div class="border border-300 p-2 rounded-2 me-2">
+                                                            <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
+                                                                <img class="rounded-2 dz-image" width="100px"
+                                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
                                             </div>
-                                            <div>
-                                                <h6><a>Document 2</a></h6>
-                                                <a href="">john_pan_front.pdf</a><br>
-                                                <a href="">john_pan_back.pdf</a>
+
+
+                                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
+                                                <h6>{{ employee.document_2_type }}</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <!-- Add a container for horizontal alignment -->
+                                                    {% for doc in employee.document_2_url %}
+                                                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                        <div class="border border-300 p-2 rounded-2 me-2">
+                                                            <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
+                                                                <img class="rounded-2 dz-image" width="100px"
+                                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
@@ -133,12 +163,12 @@
                                                     class="fas fa-pen fs-0 ms-3 text-500"></span></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
-                                        <p class="text-800">Shatinon Mekalan<br/>Vancouver, British Columbia<br/>Canada
+                                        <p class="text-800">{{employee.address}}
                                         </p>
                                         <div class="mb-3">
-                                            <h5 class="text-800">Email</h5><a href="mailto:shatinon@jeemail.com">shatinon@jeemail.com</a>
+                                            <h5 class="text-800">Email</h5><a href="mailto:shatinon@jeemail.com">{{employee.email}}</a>
                                         </div>
-                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:+1234567890">+1234567890</a>
+                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:+1234567890">{{employee.phone}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -148,95 +178,14 @@
                         <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
                              id="projectSummary">
 
-                            <div class="row g-3 justify-content-between align-items-end mb-4">
 
-                                <div class="col-12 col-sm-auto">
-                                    <div class="d-flex align-items-center mb-4">
-                                        <div class="search-box me-3">
-                                            <form class="position-relative" data-bs-display="static"
-                                                  data-bs-toggle="search">
-                                                <input aria-label="Search" class="form-control search-input search"
-                                                       placeholder="Search logs" type="search"/>
-                                                <span class="fas fa-search search-box-icon"></span>
-
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="table-responsive scrollbar">
-                                        <table class="table fs--1 mb-0 border-top border-200">
-                                            <thead>
-                                            <tr>
-                                                <th class="sort white-space-nowrap align-middle ps-0"
-                                                    data-sort="projectName"
-                                                    scope="col" style="width:30%;">OPERATOR
-                                                </th>
-                                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col"
-                                                    style="width:10%;">OPERATION
-                                                </th>
-                                                <th class="sort align-middle ps-3" data-sort="start" scope="col"
-                                                    style="width:10%;">OPERATED
-                                                </th>
-                                                <th class="sort align-middle ps-3" data-sort="deadline" scope="col"
-                                                    style="width:15%;">DATE
-                                                </th>
-                                                <th class="sort align-middle ps-3" data-sort="task" scope="col"
-                                                    style="width:12%;">STATUS
-                                                </th>
-                                                <th class="sort align-middle text-end" scope="col"
-                                                    style="width:10%;"></th>
-                                            </tr>
-                                            </thead>
-                                            <tbody class="list" id="project-list-table-body">
-                                            <tr class="position-static">
-                                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
-                                                    <a class="text-decoration-none fw-semi-bold fs-0" href="#">John
-                                                        Doe</a></td>
-                                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                                        class="badge badge-phoenix fs--2 badge-phoenix-success">UPDATED</span>
-                                                </td>
-                                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                                    <a class="text-decoration-none fw-semi-bold fs-0" href="">Brown Full
-                                                        Rim Aviator Eyeglasses</a>
-                                                </td>
-                                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                                    <p class="mb-0 fs--1 text-900">Nov 17, 2023</p>
-                                                </td>
-
-                                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                                        class="badge badge-phoenix fs--2 badge-phoenix-success">completed</span>
-                                                </td>
-
-                                            </tr>
-
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
-                                        <div class="d-flex">
-                                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
-                                               data-list-info="data-list-info"></p><a class="fw-semi-bold"
-                                                                                      data-list-view="*"
-                                                                                      href="#!">View all<span
-                                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
-                                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View
-                                            Less<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                                        </div>
-                                        <div class="d-flex">
-                                            <button class="page-link" data-list-pagination="prev"><span
-                                                    class="fas fa-chevron-left"></span></button>
-                                            <ul class="mb-0 pagination"></ul>
-                                            <button class="page-link pe-0" data-list-pagination="next"><span
-                                                    class="fas fa-chevron-right"></span></button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     {% include 'footer.html' %}
 
                 </div>
             </div>
+            {% endfor %}
         </div>
     </div>
 </main>
