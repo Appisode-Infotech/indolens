@@ -39,14 +39,21 @@ def create_franchise_store(franchise_obj):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_franchise_stores():
+def get_all_franchise_stores(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_own_stores_query = f""" SELECT franchise_store.*, franchise_store_employees.name, 
                                         franchise_store_employees.employee_id FROM franchise_store
                                         LEFT JOIN franchise_store_employees ON 
                                         franchise_store.store_id = franchise_store_employees.assigned_store_id AND 
-                                        franchise_store_employees.role = 1"""
+                                        franchise_store_employees.role = 1
+                                        WHERE franchise_store.status {status_condition}"""
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {

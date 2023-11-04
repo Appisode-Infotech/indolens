@@ -18,14 +18,14 @@ urlpatterns = [
     path('dashboard/', dashboard, name='dashboard'),
     # own store management
     path('create_own_store/', createOwnStore, name='create_own_store'),
-    path('manage_own_stores/', manageOwnStores, name='manage_own_stores'),
+    path('manage_own_stores/status=<str:status>', manageOwnStores, name='manage_own_stores'),
     path('manage_own_stores/view_own_store/storeId=<int:ownStoreId>', viewOwnStore, name='view_own_store'),
     path('manage_own_stores/edit_own_store/storeId=<int:ownStoreId>', editOwnStore, name='edit_own_store'),
     path('manage_own_stores/enable_disable_own_store/storeId=<int:ownStoreId>/status=<int:status>', enableDisableOwnStore,
          name='enable_disable_own_store'),
     # franchise store management
     path('create_franchise_store/', createFranchiseStore, name='create_franchise_store'),
-    path('manage_Franchise_stores/', manageFranchiseStores, name='manage_Franchise_stores'),
+    path('manage_Franchise_stores/status=<str:status>', manageFranchiseStores, name='manage_Franchise_stores'),
     path('manage_Franchise_stores/view_franchise_store/storeId=<int:franchiseStoreId>', viewFranchiseStore,
          name='view_franchise_store'),
     path('manage_Franchise_stores/edit_franchise_store/storeId=<int:franchiseStoreId>', editFranchiseStore,
