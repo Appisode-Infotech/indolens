@@ -82,6 +82,13 @@
             <div class="mb-9">
                 <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
                      id="projectSummary">
+                    {% if message %}
+                        <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
+                            <strong>{{message}}</strong>
+
+                            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+                        </div>
+                        {% endif %}
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
                             <h2 class="mb-0">Pending Stock requests<span class="fw-normal text-700 ms-3">(6)</span></h2>
@@ -187,8 +194,17 @@
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
                                     <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">{{stock.request_status}}</span>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if stock.request_status == 0 %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">PENDING</span>
+                                    {% elif stock.request_status == 1 %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
+                                    {% else %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
+                                    {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end statuses"><span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>
@@ -202,13 +218,12 @@
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_own_store' 1%}">View</a>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item">View</a>
 
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-success" href="#!">Accept</a>
+                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'Pending' stock.request_products_id 1 %}">Accept</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="#!">Reject</a>
+                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'Pending' stock.request_products_id 2 %}">Reject</a>
                                         </div>
                                     </div>
                                 </td>

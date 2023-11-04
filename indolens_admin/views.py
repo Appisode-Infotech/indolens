@@ -2387,7 +2387,7 @@ def manageCentralInventoryProducts(request, status):
         response, status_code = central_inventory_controller.get_all_central_inventory_products(status)
         return render(request, 'indolens_admin/centralInventory/manageCentralInventoryProducts.html',
                       {"product_list": response['product_list'], "categories_List": response['categoriesList'],
-                       "status": status })
+                       "status": status})
     else:
         return redirect('login')
 
@@ -2467,7 +2467,6 @@ def manageMoveAStock(request):
 def viewAllStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_stock_requests('%')
-        print(response)
         return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -2476,7 +2475,7 @@ def viewAllStockRequests(request):
 
 def viewPendingStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = central_inventory_controller.get_all_stock_requests('1')
+        response, status_code = central_inventory_controller.get_all_stock_requests('0')
         return render(request, 'indolens_admin/stockRequests/viewPendingStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -2485,7 +2484,7 @@ def viewPendingStockRequests(request):
 
 def viewCompletedStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = central_inventory_controller.get_all_stock_requests('2')
+        response, status_code = central_inventory_controller.get_all_stock_requests('1')
         return render(request, 'indolens_admin/stockRequests/viewCompletedStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -2494,18 +2493,37 @@ def viewCompletedStockRequests(request):
 
 def viewRejectedStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = central_inventory_controller.get_all_stock_requests('3')
+        response, status_code = central_inventory_controller.get_all_stock_requests('2')
         return render(request, 'indolens_admin/stockRequests/viewrejectedStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
         return redirect('login')
 
 
-def changeStockRequestStatus(request, requestId, status):
+def changeStockRequestStatus(request, route, requestId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        print(status)
         response, status_code = central_inventory_controller.change_stock_request_status(requestId, status,
                                                                                          request.session.get('id'))
-        return redirect('all_stock_requests')
+        print(response)
+
+        if route == 'All':
+            if response['status']:
+                return redirect('all_stock_requests')
+            else:
+                request_list, status_code = central_inventory_controller.get_all_stock_requests('%')
+                return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
+                              {"stocks_request_list": request_list['stocks_request_list'],
+                               "message": response['message']})
+        else:
+            if response['status']:
+                return redirect('pending_stock_requests')
+            else:
+                request_list, status_code = central_inventory_controller.get_all_stock_requests('0')
+                return render(request, 'indolens_admin/stockRequests/viewPendingStockRequests.html',
+                              {"stocks_request_list": request_list['stocks_request_list'],
+                               "message": response['message']})
+
     else:
         return redirect('login')
 
