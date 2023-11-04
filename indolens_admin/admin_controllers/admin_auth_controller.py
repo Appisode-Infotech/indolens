@@ -35,18 +35,20 @@ def login(admin_obj):
                     "message": "Invalid admin email",
                     "admin": None
                 }, 301
-            elif admin_data[4] != admin_obj.password:
-                return {
-                    "status": False,
-                    "message": "Invalid admin password",
-                    "admin": None
-                }, 301
-            else:
+
+            elif bcrypt.checkpw(admin_obj.password.encode('utf-8'), admin_data[4]):
                 return {
                     "status": True,
                     "message": "admin login successfull",
                     "admin": admin_auth_model.admin_auth_model_from_dict(get_admin_user(admin_data))
                 }, 200
+            else:
+                return {
+                    "status": False,
+                    "message": "Invalid admin password",
+                    "admin": None
+                }, 301
+
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:

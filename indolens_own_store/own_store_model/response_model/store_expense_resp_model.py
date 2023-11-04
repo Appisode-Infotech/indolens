@@ -14,7 +14,7 @@ class StoreExpense:
             'store_type': self.store_type,
             'expense_amount': self.expense_amount,
             'expense_reason': self.expense_reason,
-            'expense_date': self.expense_date.strftime('%Y-%m-%d') if isinstance(self.expense_date, datetime) else None,
+            'expense_date': self.expense_date.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.expense_date, datetime) else None,
             'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on, datetime) else None,
             'created_by': self.created_by,
             'creator_name': self.creator_name,

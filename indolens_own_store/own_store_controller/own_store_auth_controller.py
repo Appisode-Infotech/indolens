@@ -1,4 +1,6 @@
 import datetime
+
+import bcrypt
 import pymysql
 import pytz
 from django.db import connection
@@ -25,12 +27,6 @@ def login(store_ob):
                     "message": "Invalid user email",
                     "store": None
                 }, 301
-            elif admin_data[0][4] != store_ob.password:
-                return {
-                    "status": False,
-                    "message": "Invalid user password",
-                    "store": None
-                }, 301
             elif admin_data[0][13] == 0:
                 return {
                     "status": False,
@@ -43,12 +39,19 @@ def login(store_ob):
                     "message": "You Account is not assigned to any store, please contact you Admin",
                     "store": None
                 }, 301
-            else:
+            elif bcrypt.checkpw(store_ob.password.encode('utf-8'), admin_data[0][4]):
                 return {
                     "status": True,
                     "message": "user login successfull",
                     "store": get_own_store_employees(admin_data)
                 }, 200
+            else:
+                return {
+                    "status": False,
+                    "message": "Invalid user password",
+                    "store": None
+                }, 301
+
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:

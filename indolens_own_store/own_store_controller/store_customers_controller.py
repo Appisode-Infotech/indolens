@@ -23,10 +23,31 @@ def get_all_store_customers(store_id):
                                             WHERE c.created_by_store_id = {store_id} """
             cursor.execute(get_store_customers_query)
             store_customers = cursor.fetchall()
-            print(store_customers)
             return {
                 "status": True,
                 "store_customers_list": get_store_customers(store_customers)
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_customers_by_id(customer_id):
+    try:
+        with connection.cursor() as cursor:
+            get_store_customers_query = f""" SELECT c.*, os.store_name, creator.name, updater.name 
+                                            FROM customers AS c
+                                            LEFT JOIN own_store AS os ON c.created_by_store_id = os.store_id
+                                            LEFT JOIN own_store_employees AS creator ON c.created_by_employee_id = creator.employee_id
+                                            LEFT JOIN own_store_employees AS updater ON c.updated_by_employee_id = updater.employee_id
+                                            WHERE c.customer_id = {customer_id} """
+            cursor.execute(get_store_customers_query)
+            store_customers = cursor.fetchall()
+            return {
+                "status": True,
+                "customers": get_store_customers(store_customers)
             }, 200
 
     except pymysql.Error as e:

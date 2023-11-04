@@ -5,14 +5,11 @@ class StoreCustomer:
     def __init__(self, values):
         (
             self.customer_id, self.name, self.gender, self.age, self.phone, self.email,
-            self.language, self.address, self.created_by_employee_id, self.created_by_store_id,
-            self.created_by_store_type, created_on, self.updated_by_employee_id, self.updated_by_store_id,
-            self.updated_by_store_type, updated_on, self.store_name, self.creator_name, self.updater_name
+            self.language, self.city, self.address, self.created_by_employee_id, self.created_by_store_id,
+            self.created_by_store_type, self.created_on, self.updated_by_employee_id, self.updated_by_store_id,
+            self.updated_by_store_type, self.updated_on, self.store_name, self.creator_name, self.updater_name
         ) = values
 
-        # Parse created_on and updated_on fields to datetime
-        self.created_on = datetime.strptime(created_on, '%Y-%m-%d %H:%M:%S') if created_on else None
-        self.updated_on = datetime.strptime(updated_on, '%Y-%m-%d %H:%M:%S') if updated_on else None
 
     def to_dict(self):
         return {
@@ -23,11 +20,12 @@ class StoreCustomer:
             'phone': self.phone,
             'email': self.email,
             'language': self.language,
+            'city': self.city,
             'address': self.address,
             'created_by_employee_id': self.created_by_employee_id,
             'created_by_store_id': self.created_by_store_id,
             'created_by_store_type': self.created_by_store_type,
-            'created_on': self.created_on.strftime('%Y-%m-%d') if self.created_on else None,
+            'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if self.created_on else None,
             'updated_by_employee_id': self.updated_by_employee_id,
             'updated_by_store_id': self.updated_by_store_id,
             'updated_by_store_type': self.updated_by_store_type,

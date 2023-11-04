@@ -131,9 +131,6 @@
                                     <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
                                         CITY
                                     </th>
-                                    <th class="sort align-middle text-end" data-sort="last-seen" scope="col"
-                                        style="width:15%;">LAST ORDERED
-                                    </th>
                                     <th class="sort align-middle text-end pe-0" data-sort="last-order" scope="col"
                                         style="width:10%;min-width: 150px;">LAST ORDER
                                     </th>
@@ -149,11 +146,11 @@
                                     </td>
                                     <td class="customer align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
-                                            href="{% url 'view_store_customer_details'  %}">
+                                            href="{% url 'view_store_customer_details' customer.customer_id %}">
                                         <div class="avatar avatar-m">
-                                            <div class="avatar-name rounded-circle"><span>R</span></div>
+                                            <div class="avatar-name rounded-circle"><span class="first-letter"></span></div>
                                         </div>
-                                        <p class="mb-0 ms-3 text-1100 fw-bold">{{customer.name}}</p>
+                                        <p class="mb-0 ms-3 text-1100 fw-bold name">{{customer.name}}</p>
                                     </a></td>
                                     <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold">{{customer.email}}</a>
                                     </td>
@@ -167,8 +164,6 @@
                                         ₹ 12509
                                     </td>
                                     <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.city}}</td>
-                                    <td class="last-seen align-middle white-space-nowrap text-700 text-end">4 days ago
-                                    </td>
                                     <td class="last-order align-middle white-space-nowrap text-700 text-end">Nov 18,
                                         5:43 PM
                                     </td>
@@ -211,6 +206,19 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var nameElements = document.querySelectorAll(".name");
+    nameElements.forEach(function (nameElement) {
+        var customerName = nameElement.textContent;
+        var firstLetter = customerName[0].toUpperCase();
+        var firstLetterElement = nameElement.previousElementSibling.querySelector(".first-letter");
+        if (firstLetterElement) {
+            firstLetterElement.textContent = firstLetter;
+        }
+    });
+});
+</script>
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
