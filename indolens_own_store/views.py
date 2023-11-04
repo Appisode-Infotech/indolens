@@ -4,7 +4,7 @@ from indolens_admin.admin_controllers import area_head_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
-    store_expense_model
+    store_expense_model, store_create_stock_request_model
 
 
 # =================================ADMIN START======================================
@@ -34,7 +34,8 @@ def login(request):
             return redirect('own_store_dashboard')
         else:
             return render(request, 'auth/own_store_sign_in.html', {"message": response['message']})
-    return render(request, 'auth/own_store_sign_in.html')
+    else:
+        return render(request, 'auth/own_store_sign_in.html')
 
 
 def forgotPassword(request):
@@ -170,12 +171,11 @@ def viewStoreCustomerDetails(request, customerId):
 def createStockRequestStore(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
-            response = store_inventory_controller.create_store_stock_request(request.POST,
-                                                                             request.session.get('assigned_store_id'),
-                                                                             request.session.get('id'))
-            response, status_code = store_inventory_controller.get_all_central_inventory_products()
+            stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
+            response = store_inventory_controller.create_store_stock_request(stock_obj)
+            products, status_code = store_inventory_controller.get_all_central_inventory_products()
             return render(request, 'stockRequests/createStockRequestStore.html',
-                          {"product_list": response['product_list']})
+                          {"product_list": products['product_list']})
         else:
             response, status_code = store_inventory_controller.get_all_central_inventory_products()
             return render(request, 'stockRequests/createStockRequestStore.html',
@@ -263,7 +263,6 @@ def allExpenseStore(request):
         else:
             response, status_code = expense_controller.get_all_store_expense(request.session.get('assigned_store_id'),
                                                                              request.session.get('store_type'))
-            print(response)
             return render(request, 'expenses/allExpenseStore.html',
                           {"stor_expense_list": response['stor_expense_list']})
     else:

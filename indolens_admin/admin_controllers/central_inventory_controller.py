@@ -237,7 +237,8 @@ def get_all_stock_requests(status):
                                     CASE
                                         WHEN rp.store_type = 1 THEN os.store_name
                                         ELSE fstore.store_name
-                                    END AS store_name
+                                    END AS store_name,
+                                    from_store.store_name
                                     FROM request_products As rp
                                     LEFT JOIN central_inventory AS ci ON ci.product_id = rp.product_id
                                     LEFT JOIN admin AS creator ON rp.created_by = creator.admin_id
@@ -250,6 +251,7 @@ def get_all_stock_requests(status):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
                                     LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
+                                    LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
                                     LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
                                     WHERE rp.request_status LIKE '{status}'"""
 

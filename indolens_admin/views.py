@@ -83,7 +83,7 @@ def resetPassword(request, code):
 def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
-        franchise_store, status_code = franchise_store_controller.get_all_franchise_stores()
+        franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
         return render(request, 'indolens_admin/dashboard.html',
                       {"own_store_list": own_stores['own_stores'],
                        "franchise_store_list": franchise_store['franchise_store']})

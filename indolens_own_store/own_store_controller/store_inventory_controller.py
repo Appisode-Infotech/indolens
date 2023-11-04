@@ -106,7 +106,7 @@ def get_all_central_inventory_products():
         return {"status": False, "message": str(e)}, 301
 
 
-def create_store_stock_request(stock, store_id, requestor_id):
+def create_store_stock_request(stock_obj):
     try:
         with connection.cursor() as cursor:
             stock_req_query = """INSERT INTO request_products ( 
@@ -116,15 +116,17 @@ def create_store_stock_request(stock, store_id, requestor_id):
                                product_quantity, 
                                request_status, 
                                delivery_status, 
-                               is_requested, 
+                               is_requested,
+                               request_to_store_id,
+                               payment_status,
                                created_on, 
                                created_by, 
                                last_updated_on, 
                                last_updated_by
-                           ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                           ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
-            cursor.execute(stock_req_query, (store_id, 1, stock['product_id'], stock['product_quantity'], 0, 0, 1,
-                                             today, requestor_id, today, requestor_id))
+            cursor.execute(stock_req_query, (stock_obj.request_from_store_id, 1, stock_obj.product_id, stock_obj.product_quantity, 0, 0, 1,
+                                             stock_obj.request_to_store_id, 0, today, stock_obj.created_by, today, stock_obj.created_by))
             return {
                 "status": True,
                 "message": "success"
@@ -158,6 +160,7 @@ def view_all_store_stock_request(store_id, status):
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
+            print(product_list)
             return {
                 "status": True,
                 "stocks_request_list": get_request_product_list(product_list)

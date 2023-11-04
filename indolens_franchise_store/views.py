@@ -1,5 +1,8 @@
 from django.shortcuts import redirect, render
 
+from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller
+from indolens_franchise_store.franchise_store_model.franchise_store_req_model import franchise_store_employee_model
+
 
 # =================================ADMIN START======================================
 
@@ -11,8 +14,27 @@ def index(request):
 
 def login(request):
     if request.method == 'POST':
-        return redirect('franchise_store_dashboard')
-    return render(request, 'auth/franchise_sign_in.html')
+        store_obj = franchise_store_employee_model.store_employee_from_dict(request.POST)
+        response, status_code = franchise_store_auth_controller.login(store_obj)
+        if response['status']:
+            for data in response['store']:
+                request.session.update({
+                    'is_franchise_store_logged_in': True,
+                    'id': data['employee_id'],
+                    'name': data['name'],
+                    'email': data['email'],
+                    'store_name': data['store_name'],
+                    'store_type': '2',
+                    'assigned_store_id': data['assigned_store_id'],
+                    'profile_pic': data['profile_pic'],
+                })
+            return redirect('franchise_store_dashboard')
+        else:
+            return render(request, 'auth/franchise_sign_in.html', {"message": response['message']})
+    else:
+        return render(request, 'auth/franchise_sign_in.html')
+
+
 
 
 def forgotPassword(request):
@@ -24,12 +46,19 @@ def resetPassword(request):
 
 
 def franchiseOwnerLogout(request):
-    return redirect('franchise_store_login')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        request.session.clear()
+        return redirect('franchise_store_login')
+    else:
+        return redirect('franchise_store_login')
 
 
 # ================================= FRANCHISE STORE DASHBOARD ======================================
 def dashboard(request):
-    return render(request, 'franchise_dashboard.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        return render(request, 'franchise_dashboard.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 # ================================= FRANCHISE STORE ORDER MANAGEMENT ======================================

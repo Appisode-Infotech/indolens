@@ -264,7 +264,7 @@
                                 </th>
 
                                 <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">DELIVERY STATUS
+                                    style="width:5%;">DELIVERED FROM
                                 </th>
 
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
@@ -321,8 +321,12 @@
                                     <p class="mb-0 fs--1 text-900">SELF</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if stock.sender_store != None %}
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
+                                    {% endif %}
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
