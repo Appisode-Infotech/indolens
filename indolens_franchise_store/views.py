@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 
-from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller
+from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
+    franchise_store_customers_controller
 from indolens_franchise_store.franchise_store_model.franchise_store_req_model import franchise_store_employee_model
 
 
@@ -35,8 +36,6 @@ def login(request):
         return render(request, 'auth/franchise_sign_in.html')
 
 
-
-
 def forgotPassword(request):
     return render(request, 'auth/franchise_store_forgot_password.html')
 
@@ -46,7 +45,8 @@ def resetPassword(request):
 
 
 def franchiseOwnerLogout(request):
-    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
         request.session.clear()
         return redirect('franchise_store_login')
     else:
@@ -55,7 +55,8 @@ def franchiseOwnerLogout(request):
 
 # ================================= FRANCHISE STORE DASHBOARD ======================================
 def dashboard(request):
-    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
         return render(request, 'franchise_dashboard.html')
     else:
         return redirect('franchise_store_login')
@@ -101,11 +102,16 @@ def orderDetailsFranchise(request):
 # ================================= FRANCHISE STORE CUSTIOMER MANAGEMENT ======================================
 
 def viewAllCustomersFranchise(request):
-    return render(request, 'customers/viewAllCustomersFranchise.html')
+    response, status_code = franchise_store_customers_controller.get_all_franchise_store_customers(
+        request.session.get('assigned_store_id'))
+    return render(request, 'customers/viewAllCustomersFranchise.html',
+                  {"store_customers_list": response['store_customers_list']})
 
 
-def viewCustomerDetailsFranchise(request):
-    return render(request, 'customers/viewCustomerDetailsFranchise.html')
+def viewCustomerDetailsFranchise(request, customerId):
+    response, status_code = franchise_store_customers_controller.get_customers_by_id(customerId)
+    print(response)
+    return render(request, 'customers/viewCustomerDetailsFranchise.html', {"customers": response['customers']})
 
 
 # ================================= FRANCHISE STORE STOCK REQUESTS MANAGEMENT ======================================
