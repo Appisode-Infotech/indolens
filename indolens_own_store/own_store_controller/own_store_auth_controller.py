@@ -39,7 +39,7 @@ def login(store_ob):
                     "message": "You Account is not assigned to any store, please contact you Admin",
                     "store": None
                 }, 301
-            elif bcrypt.checkpw(store_ob.password.encode('utf-8'), admin_data[0][4]):
+            elif bcrypt.checkpw(store_ob.password.encode('utf-8'), admin_data[0][4].encode('utf-8')):
                 return {
                     "status": True,
                     "message": "user login successfull",

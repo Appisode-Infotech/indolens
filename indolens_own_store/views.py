@@ -45,8 +45,12 @@ def resetPassword(request):
     return render(request, 'auth/own_store_reset_password.html')
 
 
-def storeManagerLogout(request):
-    return redirect('own_store_login')
+def storeEmployeeLogout(request):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        request.session.clear()
+        return redirect('own_store_login')
+    else:
+        return redirect('own_store_login')
 
 
 # ================================= OWN STORE DASHBOARD ======================================

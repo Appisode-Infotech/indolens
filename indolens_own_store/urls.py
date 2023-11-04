@@ -11,7 +11,7 @@ urlpatterns = [
     path('own_store_login/', login, name='own_store_login'),
     path('forgot_password/', forgotPassword, name='own_store_forgot_password'),
     path('reset_password/', resetPassword, name='own_store_reset_password'),
-    path('store_manager_logout/', storeManagerLogout, name='store_manager_logout'),
+    path('store_employee_logout/', storeEmployeeLogout, name='store_employee_logout'),
     # Dashboard
     path('own_store_dashboard/', dashboard, name='own_store_dashboard'),
     # manage store Employee

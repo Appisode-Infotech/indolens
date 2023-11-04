@@ -36,7 +36,7 @@ def login(admin_obj):
                     "admin": None
                 }, 301
 
-            elif bcrypt.checkpw(admin_obj.password.encode('utf-8'), admin_data[4]):
+            elif bcrypt.checkpw(admin_obj.password.encode('utf-8'), admin_data[4].encode('utf-8')):
                 return {
                     "status": True,
                     "message": "admin login successfull",
