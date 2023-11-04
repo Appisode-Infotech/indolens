@@ -10,7 +10,8 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
-    optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller
+    optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
+    customers_controller
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
     accountant_model, lab_technician_model, lab_model, \
@@ -2085,11 +2086,14 @@ def viewOrderDetails(request):
 # =================================ADMIN CUSTOMERS MANAGEMENT======================================
 
 def viewAllCustomers(request):
-    return render(request, 'indolens_admin/customers/viewAllCustomers.html')
+    response, status_code = customers_controller.get_all_stores_customers()
+    return render(request, 'indolens_admin/customers/viewAllCustomers.html',
+                  {"customers_list": response['customers_list']})
 
 
-def viewCustomerDetails(request):
-    return render(request, 'indolens_admin/customers/viewCustomerDetails.html')
+def viewCustomerDetails(request, customerId):
+    response, status_code = customers_controller.get_customers_by_id(customerId)
+    return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer']})
 
 
 # =================================ADMIN LABS MANAGEMENT======================================

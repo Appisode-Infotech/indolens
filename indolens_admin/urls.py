@@ -69,7 +69,7 @@ urlpatterns = [
          enableDisableMastersUnits, name='enable_disable_master_units'),
     # customers
     path('view_customers/', viewAllCustomers, name='view_customers'),
-    path('view_customers/customer_details/', viewCustomerDetails, name='customer_details'),
+    path('view_customers/customer_details/customerId=<int:customerId>', viewCustomerDetails, name='customer_details'),
     # indolens staff
     # sub admins
     path('manage_sub_admins/', manageSubAdmins, name='manage_sub_admins'),
