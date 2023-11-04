@@ -188,8 +188,17 @@
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
                                     <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">{{stock.request_status}}</span>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if stock.request_status == 0 %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">PENDING</span>
+                                    {% elif stock.request_status == 1 %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
+                                    {% else %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
+                                    {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end statuses"><span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>

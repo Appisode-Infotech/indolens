@@ -110,7 +110,7 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown"
                                                 type="button">{{status}}<span class="fas fa-angle-down ms-2"></span></button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="">All</a></li>
+                                            <li><a class="dropdown-item" href="{% url 'manage_central_inventory_products' 'All' %}">All</a></li>
                                             <li>
                                                 <hr class="dropdown-divider"/>
                                             </li>
@@ -199,7 +199,11 @@
                                         {{product.product_quantity}}
                                     </td>
                                     <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                        {% if product.status == 1 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                        {% else %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger">Inactive</span>
+                                        {% endif %}
                                     </td>
                                     <td class="time align-middle white-space-nowrap text-600 ps-4">
                                         {{product.created_on}}
