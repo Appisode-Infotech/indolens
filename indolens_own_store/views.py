@@ -39,7 +39,12 @@ def login(request):
 
 
 def forgotPassword(request):
-    return render(request, 'auth/own_store_forgot_password.html')
+    if request.method == 'POST':
+        print(request.POST)
+        response, status_code = own_store_auth_controller.forgot_password(request.POST['email'])
+        return render(request, 'auth/own_store_forgot_password.html', {"message": response['message']})
+    else:
+        return render(request, 'auth/own_store_forgot_password.html')
 
 
 def resetPassword(request):

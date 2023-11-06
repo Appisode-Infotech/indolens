@@ -163,6 +163,9 @@ def update_admin_password(password, email):
             cursor.execute(login_query)
             admin_data = cursor.fetchone()
 
+            login_query = f"""UPDATE reset_password_id SET status = 1 WHERE email = '{email}'"""
+            cursor.execute(login_query)
+
             return {
                 "status": True,
                 "message": "admin login successfull",
