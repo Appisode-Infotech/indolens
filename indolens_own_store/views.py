@@ -47,8 +47,17 @@ def forgotPassword(request):
         return render(request, 'auth/own_store_forgot_password.html')
 
 
-def resetPassword(request):
-    return render(request, 'auth/own_store_reset_password.html')
+def resetPassword(request, code):
+    if request.method == 'POST':
+        print(request.POST)
+        response, status_code = own_store_auth_controller.update_store_employee_password(request.POST['password'], request.POST['email'])
+        print(response)
+        return render(request, 'auth/own_store_reset_password.html', {"code": code})
+    else:
+        response, status_code = own_store_auth_controller.check_link_validity(code)
+        return render(request, 'auth/own_store_reset_password.html',
+                      {"code": code, "message": response['message'], "email": response['email']})
+
 
 
 def storeEmployeeLogout(request):

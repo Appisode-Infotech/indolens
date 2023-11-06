@@ -126,3 +126,64 @@ def forgot_password(email):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
+def check_link_validity(code):
+    try:
+        with connection.cursor() as cursor:
+            check_link_validity_query = f""" SELECT status, created_on, email FROM reset_password WHERE code = '{code}'
+                                                ORDER BY reset_password_id DESC LIMIT 1"""
+            cursor.execute(check_link_validity_query)
+            link_validity = cursor.fetchone()
+
+            if link_validity is None:
+                return {
+                    "status": True,
+                    "message": "Invalid link to reset Password",
+                    "email": ""
+                }, 200
+
+            else:
+                email = link_validity[2]
+                query_datetime = ist.localize(link_validity[1])
+                current_datetime = datetime.datetime.now(ist)
+                time_difference = current_datetime - query_datetime
+                time_difference_mins = time_difference.total_seconds() / 60
+
+                if link_validity is not None and (link_validity[0] == 1 or time_difference_mins > 15):
+                    return {
+                        "status": True,
+                        "message": "Password reset link has been expired",
+                        "email": ""
+                    }, 200
+                elif link_validity is not None and link_validity[0] == 0 and time_difference_mins < 15:
+                    return {
+                        "status": True,
+                        "message": "",
+                        "email": email
+                    }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e), "email": ""}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e), "email": ""}, 301
+
+
+def update_store_employee_password(password, email):
+    try:
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+        with connection.cursor() as cursor:
+            login_query = f"""UPDATE own_store_employees SET password = %s WHERE email = '{email}'"""
+            cursor.execute(login_query, (hashed_password,))
+
+            login_query = f"""UPDATE reset_password SET status = 1 WHERE email = '{email}'"""
+            cursor.execute(login_query)
+
+            return {
+                "status": True,
+                "message": "Password change was successfully. Please login in now"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
