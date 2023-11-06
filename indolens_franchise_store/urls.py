@@ -14,7 +14,7 @@ urlpatterns = [
     path('franchise_store_dashboard/', dashboard, name='franchise_store_dashboard'),
     # Manage customers
     path('view_franchise_store_customers/', viewAllCustomersFranchise, name='view_franchise_store_customers'),
-    path('view_franchise_store_customers/view_franchise_store_customer_details/', viewCustomerDetailsFranchise,
+    path('view_franchise_store_customers/view_franchise_store_customer_details/customerId=<int:customerId>', viewCustomerDetailsFranchise,
          name='view_franchise_store_customer_details'),
     # orders management
     path('all_franchise_store_orders/', allFranchiseOrders, name='all_franchise_store_orders'),

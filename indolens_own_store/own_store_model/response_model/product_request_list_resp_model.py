@@ -7,12 +7,13 @@ class Product:
         (
             self.request_products_id, self.store_id, self.store_type, self.request_product_id,
             self.request_product_quantity, self.request_status, self.delivery_status, self.is_requested,
+            self.request_to_store_id, self.payment_status,
             self.store_product_created_on, self.store_product_created_by, self.store_product_last_updated_on,
             self.store_product_last_updated_by,
             self.product_id, self.product_name, self.product_description, self.product_images,
             self.category_id, self.brand_id, self.material_id, self.frame_type_id, self.frame_shape_id,
             self.color_id, self.unit_id, self.origin, self.cost_price, self.sale_price, self.model_number,
-            self.hsn, self.product_quantity, self.product_gst, self.created_on, self.created_by, self.last_updated_on,
+            self.hsn, self.product_quantity, self.product_gst, self.status, self.discount, self.created_on, self.created_by, self.last_updated_on,
             self.last_updated_by, self.creator_name, self.updater_name, self.category_name, self.material_name,
             self.frame_type_name, self.shape_name, self.color_name, self.unit_name, self.brand_name, self.store_name
 
@@ -31,6 +32,8 @@ class Product:
             'request_status': self.request_status,
             'delivery_status': self.delivery_status,
             'is_requested': self.is_requested,
+            'request_to_store_id': self.request_to_store_id,
+            'payment_status': self.payment_status,
             'request_product_created_on': self.store_product_created_on,
             'request_product_created_by': self.store_product_created_by,
             'request_product_last_updated_on': self.store_product_last_updated_on,
@@ -54,6 +57,8 @@ class Product:
             'hsn': self.hsn,
             'product_quantity': self.product_quantity,
             'product_gst': self.product_gst,
+            'status': self.status,
+            'discount': self.discount,
             'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on, datetime) else None,
             'created_by': self.created_by,
             'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on,

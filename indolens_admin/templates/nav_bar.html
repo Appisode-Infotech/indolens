@@ -80,7 +80,7 @@
                                                         asd="index"
                                                         class="nav-link {% if 'manage_own_stores' in request.path %}active{% endif %}"
                                                         data-bs-toggle=""
-                                                        href="{% url 'manage_own_stores' %}">
+                                                        href="{% url 'manage_own_stores' 'All' %}">
                                     <div class="d-flex align-items-center"><span
                                             class="nav-link-text">Manage own stores</span>
                                     </div>
@@ -122,7 +122,7 @@
                                                         asd="index"
                                                         class="nav-link {% if 'manage_Franchise_stores' in request.path %}active{% endif %}"
                                                         data-bs-toggle=""
-                                                        href="{% url 'manage_Franchise_stores' %}">
+                                                        href="{% url 'manage_Franchise_stores' 'All' %}">
                                     <div class="d-flex align-items-center"><span
                                             class="nav-link-text">Manage Franchise stores</span>
                                     </div>

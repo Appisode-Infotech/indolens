@@ -123,14 +123,16 @@
                                                 type="button"><span class="fas fa-times fs--1"></span></button>
                                     </div>
                                     <div class="p-4 code-to-copy">
-                                        <form action='/' class="row g-3 needs-validation" method='POST' novalidate="">
+                                        <form action="{% url 'all_expenses_franchise_store' %}" class="row g-3 needs-validation"
+                                              method='POST' novalidate="">
+                                            {% csrf_token %}
                                             <div class="col-12">
 
                                                 <label class="form-label" for="validationCustom01">Expense
                                                     amount</label>
 
                                                 <input class="form-control" id="validationCustom01" required=""
-                                                       type="text" value=""/>
+                                                       type="text" value="" name="expense_amount"/>
                                                 <div class="invalid-feedback">Enter valid amount!</div>
                                             </div>
 
@@ -139,18 +141,25 @@
                                                 <label class="form-label" for="expense_reason">Expense Reason</label>
 
                                                 <input class="form-control" id="expense_reason" maxlength="256"
-                                                       required=""
+                                                       required="" name="expense_reason"
                                                        type="text" value=""/>
                                                 <div class="invalid-feedback">Enter valid Reason!</div>
                                             </div>
                                             <div class="col-12">
                                                 <label class="form-label" for="expense_reason">Expense Date</label>
 
-                                                <input class="form-control datetimepicker" data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}' id="datepicker"
-                                                       placeholder="dd/mm/yyyy"
-                                                       type="text"/>
-
+                                                <input class="form-control datetimepicker"
+                                                       data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
+                                                       id="datepicker"
+                                                       placeholder="dd/mm/yyyy" name="expense_date" type="text"
+                                                       disabled/>
                                             </div>
+                                            <input name="created_by" required type="hidden"
+                                                   value="{{ request.session.id }}">
+                                            <input name="store_id" required type="hidden"
+                                                   value="{{ request.session.assigned_store_id }}">
+                                            <input name="store_type" required type="hidden"
+                                                   value="{{ request.session.store_type }}">
 
 
                                             <div class="modal-footer">
@@ -188,33 +197,34 @@
                                 </th>
 
                                 <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">STATUS
+                                    style="width:5%;">CREATED BY
                                 </th>
 
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
+                            {% for expense in stor_expense_list %}
                             <tr class="position-static">
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
-                                    <h5>01</h5>
+                                    <h5>{{expense.store_expense_id}}</h5>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start py-4">
-                                    <p class="mb-0 fs--1 text-900">Lunch Cost</p>
+                                    <p class="mb-0 fs--1 text-900">{{expense.expense_reason}}</p>
                                 </td>
 
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">₹5,000</p>
+                                    <p class="mb-0 fs--1 text-900">₹{{expense.expense_amount}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{expense.created_on}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">DONE</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">{{expense.creator_name}}</span>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -234,6 +244,7 @@
                                     </div>
                                 </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -271,14 +282,17 @@
           navbarVertical.classList.add('navbar-darker');
         }
 
+    </script>
+    <script>
+        const currentDate = new Date();
+        const day = String(currentDate.getDate()).padStart(2, '0');
+        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
+        const year = currentDate.getFullYear();
 
+        const formattedDate = `${day}/${month}/${year}`;
 
-
-
-
-
-
-
+        const expenseDateInput = document.getElementById("datepicker");
+        expenseDateInput.value = formattedDate;
 
 
 

@@ -175,6 +175,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="list" id="products-table-body">
+                                {% for stock in stocks_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                     <td class="fs--1 align-middle">
                                         <div class="form-check mb-0 fs-0">
@@ -182,29 +183,30 @@
                                         </div>
                                     </td>
                                     <td class="align-middle white-space-nowrap py-0">
-                                        <div class="border rounded-2"><img alt=""
-                                                                           src="{% static 'img/products/1.png' %}"
-                                                                           width="53"/>
+                                        <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
+                                        <div class="avatar avatar-m">
+                                            <img alt="" class="rounded-circle"
+                                                 src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
                                         </div>
+                                    </a>
                                     </td>
                                     <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!">Indolens - Metallic
-                                        frame 2x2 frame fro kids</a></td>
+                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!"> {{stock.product_name}}</a></td>
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                        ₹3,900
+                                        {{stock.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        Category name
+                                        {{stock.category_name}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        Brand name
+                                        {{stock.brand_name}}
                                     </td>
 
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                        25
+                                        {{stock.store_product_quantity}}
                                     </td>
-                                    <td class="time align-middle white-space-nowrap text-600 ps-4">Nov 12, 10:45
-                                        PM
+                                    <td class="time align-middle white-space-nowrap text-600 ps-4">
+                                        {{stock.store_product_created_on}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
                                         <div class="position-relative">
@@ -232,7 +234,7 @@
                                         </div>
                                     </td>
                                 </tr>
-
+                                {% endfor %}
                                 </tbody>
                             </table>
                         </div>

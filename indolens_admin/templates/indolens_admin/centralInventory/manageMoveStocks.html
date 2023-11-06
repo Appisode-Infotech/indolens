@@ -253,50 +253,80 @@
                                     PRICE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                    REQUESTED DATE
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
                                     MOVED DATE
                                 </th>
 
                                 <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">STATUS
+                                    style="width:5%;">MOVEMENT TYPE
+                                </th>
+
+                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                    style="width:5%;">DELIVERED FROM
                                 </th>
 
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
-                            {% for store in own_store_list %}
+                            {% for stock in moved_stocks %}
                             <tr class="position-static">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
+                                    {% if stock.store_type == 1 %}
+                                    <a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_own_store' store.store_id %}">Indolens
-                                    - 01</a>
+                                        href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
+                                    {% else %}
+                                    <a
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
+                                    {% endif %}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start py-4">
+                                    {% if stock.store_type == 1 %}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
+                                    {% endif %}
                                 </td>
 
-                                <td class="product align-middle"><a
-                                        class="fw-semi-bold line-clamp-3 mb-0" href="#!">Indolens - Metallic
-                                    frame 2x2 frame fro kids</a></td>
+                                <td class="product align-middle">
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">FR00025</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">45</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.product_id}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">₹5,000</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
+                                </td>
+
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>
+                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
+                                </td>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if stock.is_requested == 1 %}
+                                    <p class="mb-0 fs--1 text-900">REQUESTED</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">SELF</p>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if stock.sender_store != None %}
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
+                                    {% endif %}
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -307,9 +337,12 @@
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_own_store' store.store_id %}">View</a>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item">View</a>
 
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>
                                         </div>
                                     </div>
                                 </td>

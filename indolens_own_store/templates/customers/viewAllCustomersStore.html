@@ -58,6 +58,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -148,7 +149,8 @@
                                             class="d-flex align-items-center"
                                             href="{% url 'view_store_customer_details' customer.customer_id %}">
                                         <div class="avatar avatar-m">
-                                            <div class="avatar-name rounded-circle"><span class="first-letter"></span></div>
+                                            <div class="avatar-name rounded-circle"><span class="first-letter"></span>
+                                            </div>
                                         </div>
                                         <p class="mb-0 ms-3 text-1100 fw-bold name">{{customer.name}}</p>
                                     </a></td>
@@ -163,7 +165,8 @@
                                     <td class="total-spent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
                                         ₹ 12509
                                     </td>
-                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.city}}</td>
+                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.city}}
+                                    </td>
                                     <td class="last-order align-middle white-space-nowrap text-700 text-end">Nov 18,
                                         5:43 PM
                                     </td>
@@ -218,6 +221,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 </script>
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>

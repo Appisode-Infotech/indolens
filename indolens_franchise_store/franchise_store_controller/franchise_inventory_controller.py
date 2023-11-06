@@ -3,16 +3,16 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_franchise_store.franchise_store_model.franchise_store_resp_model.franchise_store_inventory_product_resp_model import \
+    get_franchise_store_inventory_stocks
 from indolens_own_store.own_store_model.response_model.central_inventory_product_resp_model import get_products
 from indolens_own_store.own_store_model.response_model.product_request_list_resp_model import get_request_product_list
-from indolens_own_store.own_store_model.response_model.store_inventory_product_resp_model import \
-    get_store_inventory_stocks
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
 
 
-def get_all_out_of_stock_products_for_store(quantity, store_id):
+def get_all_out_of_stock_products_for_franchise_store(quantity, store_id):
     try:
         with connection.cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
@@ -30,13 +30,13 @@ def get_all_out_of_stock_products_for_store(quantity, store_id):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
                                     LEFT JOIN own_store AS os ON os.store_id = '{store_id}'
-                                    WHERE si.product_quantity <= {quantity} AND si.store_id = '{store_id}' AND si.store_type = 1 """
+                                    WHERE si.product_quantity <= {quantity} AND si.store_id = '{store_id}' AND si.store_type = 2 """
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
             return {
                 "status": True,
-                "stocks_list": get_store_inventory_stocks(product_list)
+                "stocks_list": get_franchise_store_inventory_stocks(product_list)
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -44,7 +44,7 @@ def get_all_out_of_stock_products_for_store(quantity, store_id):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_products_for_store(store_id):
+def get_all_products_for_franchise_store(store_id):
     try:
         with connection.cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
@@ -62,13 +62,13 @@ def get_all_products_for_store(store_id):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
                                     LEFT JOIN own_store AS os ON os.store_id = '{store_id}' 
-                                    WHERE si.store_id = {store_id}  AND si.store_type = 1 """
+                                    WHERE si.store_id = {store_id} AND si.store_type = 2 """
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
             return {
                 "status": True,
-                "stocks_list": get_store_inventory_stocks(product_list)
+                "stocks_list": get_franchise_store_inventory_stocks(product_list)
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -91,7 +91,7 @@ def get_all_central_inventory_products():
                                     LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                                    LEFT JOIN store_inventory AS si ON ci.product_id = si.product_id AND si.store_type = 1
+                                    LEFT JOIN store_inventory AS si ON ci.product_id = si.product_id AND si.store_type = 2 
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id """
 
             cursor.execute(get_all_product_query)
@@ -125,9 +125,8 @@ def create_store_stock_request(stock_obj):
                                last_updated_by
                            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
-            cursor.execute(stock_req_query, (
-            stock_obj.request_from_store_id, 1, stock_obj.product_id, stock_obj.product_quantity, 0, 0, 1,
-            stock_obj.request_to_store_id, 0, today, stock_obj.created_by, today, stock_obj.created_by))
+            cursor.execute(stock_req_query, (stock_obj.request_from_store_id, 2, stock_obj.product_id, stock_obj.product_quantity, 0, 0, 1,
+                                             stock_obj.request_to_store_id, 0, today, stock_obj.created_by, today, stock_obj.created_by))
             return {
                 "status": True,
                 "message": "success"
@@ -157,11 +156,10 @@ def view_all_store_stock_request(store_id, status):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
                                     LEFT JOIN own_store os ON os.store_id = {store_id}
-                                    WHERE rp.store_id = {store_id} AND rp.request_status LIKE '{status}' AND rp.store_type = 1 """
+                                    WHERE rp.store_id = {store_id} AND rp.request_status LIKE '{status}' AND rp.store_type = 2 """
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
-            print(product_list)
             return {
                 "status": True,
                 "stocks_request_list": get_request_product_list(product_list)

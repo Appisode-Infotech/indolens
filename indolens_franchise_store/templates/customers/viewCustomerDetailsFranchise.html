@@ -75,6 +75,7 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar_franchise.html' %}
+        {% for customer in customers %}
 
         <div class="content">
 
@@ -103,26 +104,18 @@
                                         <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
                                             <div class="col-12 col-sm-auto mb-sm-2">
                                                 <div class="avatar avatar-5xl">
-                                                    <img alt=""
-                                                         class="rounded-circle"
-                                                         src="{% static 'img/team/15.png' %}"/>
+                                                    <span class="rounded-circle avatar-initial first-letter"></span>
                                                 </div>
-
                                             </div>
+
                                             <div class="col-12 col-sm-auto flex-1">
-                                                <h3>Ansolo Lazinatov</h3>
-                                                <p class="text-800">Joined 3 months ago</p>
-                                                <div><a class="me-2" href="#!"><span
-                                                        class="fab fa-linkedin-in text-400 hover-primary"></span></a><a
-                                                        class="me-2" href="#!"><span
-                                                        class="fab fa-facebook text-400 hover-primary"></span></a><a
-                                                        href="#!"><span
-                                                        class="fab fa-twitter text-400 hover-primary"></span></a></div>
+                                                <h3 class="name">{{ customer.name }}</h3>
+                                                <p class="text-800">Joined on {{ customer.created_on }}</p>
                                             </div>
                                         </div>
+
                                         <div class="d-flex flex-between-center border-top border-dashed border-300 pt-4">
                                             <h4>Gold Member</h4>
-                                            <h6>Since 19 - sept - 2023</h6>
                                             <button aria-expanded="false"
                                                     aria-haspopup="true"
                                                     class="btn btn-phoenix-secondary px-7 flex-shrink-0"
@@ -143,12 +136,15 @@
                                                     class="fas fa-pen fs-0 ms-3 text-500"></span></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
-                                        <p class="text-800">Shatinon Mekalan<br/>Vancouver, British Columbia<br/>Canada
+                                        <p class="text-800">{{customer.address}}
                                         </p>
                                         <div class="mb-3">
-                                            <h5 class="text-800">Email</h5><a href="mailto:shatinon@jeemail.com">shatinon@jeemail.com</a>
+                                            <h5 class="text-800">Email</h5><a href="mailto:shatinon@jeemail.com">
+                                            {{customer.email}}
+                                        </a>
                                         </div>
-                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:+1234567890">+1234567890</a>
+                                        <h5 class="text-800">Phone</h5><a class="text-800"
+                                                                          href="tel:{{customer.phone}}">{{customer.phone}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -301,6 +297,7 @@
             {% include 'footer.html' %}
 
         </div>
+        {% endfor %}
     </div>
 
 </main>
@@ -312,6 +309,18 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var avatarInitials = document.querySelectorAll(".avatar-initial");
+    var customerNames = document.querySelectorAll(".name");
+
+    avatarInitials.forEach(function (avatar, index) {
+        var customerName = customerNames[index].textContent.trim();
+        var firstLetter = customerName[0].toUpperCase();
+        avatar.textContent = firstLetter;
+    });
+});
+</script>
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>

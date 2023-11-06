@@ -10,7 +10,8 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     marketing_head_controller, sales_executives_controller, accountant_controller, lab_technician_controller, \
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
-    optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller
+    optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
+    customers_controller, stores_inventory_controller
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
     accountant_model, lab_technician_model, lab_model, \
@@ -81,8 +82,8 @@ def resetPassword(request, code):
 
 def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        own_stores, status_code = own_store_controller.get_all_own_stores()
-        franchise_store, status_code = franchise_store_controller.get_all_franchise_stores()
+        own_stores, status_code = own_store_controller.get_all_own_stores('All')
+        franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
         return render(request, 'indolens_admin/dashboard.html',
                       {"own_store_list": own_stores['own_stores'],
                        "franchise_store_list": franchise_store['franchise_store']})
@@ -92,11 +93,11 @@ def dashboard(request):
 
 # =================================ADMIN STORE MANAGEMENT======================================
 
-def manageOwnStores(request):
+def manageOwnStores(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = own_store_controller.get_all_own_stores()
+        response, status_code = own_store_controller.get_all_own_stores(status)
         return render(request, 'indolens_admin/ownStore/manageOwnStores.html',
-                      {"own_store_list": response['own_stores']})
+                      {"own_store_list": response['own_stores'], "status": status})
     else:
         return redirect('login')
 
@@ -104,7 +105,12 @@ def manageOwnStores(request):
 def viewOwnStore(request, ownStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
-        return render(request, 'indolens_admin/ownStore/ownStore.html', {"store_data": response['own_stores']})
+        products_list, status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
+        store_stats, status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
+        return render(request, 'indolens_admin/ownStore/ownStore.html',
+                      {"store_data": response['own_stores'], "products_list": products_list['products_list'],
+                       "total_employee_count": store_stats['total_employee_count'],
+                       "total_customer_count": store_stats['total_customer_count']})
     else:
         return redirect('login')
 
@@ -150,12 +156,12 @@ def enableDisableOwnStore(request, ownStoreId, status):
         return redirect('login')
 
 
-def manageFranchiseStores(request):
+def manageFranchiseStores(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = franchise_store_controller.get_all_franchise_stores()
+        response, status_code = franchise_store_controller.get_all_franchise_stores(status)
         print(response)
         return render(request, 'indolens_admin/franchiseStores/manageFranchiseStores.html',
-                      {"franchise_store_list": response['franchise_store']})
+                      {"franchise_store_list": response['franchise_store'], "status": status})
     else:
         return redirect('login')
 
@@ -2085,11 +2091,14 @@ def viewOrderDetails(request):
 # =================================ADMIN CUSTOMERS MANAGEMENT======================================
 
 def viewAllCustomers(request):
-    return render(request, 'indolens_admin/customers/viewAllCustomers.html')
+    response, status_code = customers_controller.get_all_stores_customers()
+    return render(request, 'indolens_admin/customers/viewAllCustomers.html',
+                  {"customers_list": response['customers_list']})
 
 
-def viewCustomerDetails(request):
-    return render(request, 'indolens_admin/customers/viewCustomerDetails.html')
+def viewCustomerDetails(request, customerId):
+    response, status_code = customers_controller.get_customers_by_id(customerId)
+    return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer']})
 
 
 # =================================ADMIN LABS MANAGEMENT======================================
@@ -2450,9 +2459,11 @@ def manageCentralInventoryOutOfStock(request):
 
 def manageMoveStocks(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = own_store_controller.get_all_own_stores()
+        moved_stocks, status_code = central_inventory_controller.get_all_stock_requests('1')
+        print(moved_stocks)
+        response, status_code = own_store_controller.get_all_own_stores('Active')
         return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html',
-                      {"own_store_list": response['own_stores']})
+                      {"own_store_list": response['own_stores'], "moved_stocks": moved_stocks['stocks_request_list']})
     else:
         return redirect('login')
 
