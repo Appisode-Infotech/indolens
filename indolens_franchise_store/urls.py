@@ -8,7 +8,7 @@ urlpatterns = [
     # auth
     path('login/', login, name='franchise_store_login'),
     path('franchise_store_forgot_password/', forgotPassword, name='franchise_store_forgot_password'),
-    path('franchise_store_reset_password/', resetPassword, name='franchise_store_reset_password'),
+    path('franchise_store_reset_password/code=<str:code>', resetPassword, name='franchise_store_reset_password'),
     path('franchise_owner_logout/', franchiseOwnerLogout, name='franchise_owner_logout'),
     # Dashboard
     path('franchise_store_dashboard/', dashboard, name='franchise_store_dashboard'),
