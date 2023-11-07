@@ -2468,7 +2468,6 @@ def manageMoveStocks(request):
             return redirect('manageMoveStocks')
         else:
             moved_stocks, status_code = central_inventory_controller.get_all_stock_requests('1')
-            print(moved_stocks)
             response, status_code = own_store_controller.get_all_own_stores('Active')
             return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html',
                           {"own_store_list": response['own_stores'],
