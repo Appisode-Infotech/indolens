@@ -84,16 +84,17 @@
                     </div>
                 </div>
 
+
+
                 <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                    <li class="nav-item"><a aria-current="page" class="nav-link active" href="#">All <span
-                            class="text-700 fw-semi-bold">(68817)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Frames <span
-                            class="text-700 fw-semi-bold">(70348)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Lens <span
-                            class="text-700 fw-semi-bold">(17)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Accessories<span
-                            class="text-700 fw-semi-bold">(810)</span></a></li>
+                    <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a></li>
+                    {% for category in categories_list %}
+                    <li class="nav-item">
+                        <a class="nav-link filter" href="#filter-{{ category.category_name }}">{{ category.category_name }}</a>
+                    </li>
+                    {% endfor %}
                 </ul>
+
                 <div data-list='{"valueNames":["product","price","category","tags","vendor","time"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
@@ -112,22 +113,22 @@
                             <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
                                 <div class="btn-group position-static" role="group">
                                     <div class="btn-group position-static text-nowrap">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-phoenix-secondary px-7 flex-shrink-0"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown"
-                                                type="button">
-                                            Category<span class="fas fa-angle-down ms-2"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                            <li>
-                                                <hr class="dropdown-divider"/>
-                                            </li>
-                                            <li><a class="dropdown-item" href="#">Separated link</a></li>
-                                        </ul>
+<!--                                        <button aria-expanded="false"-->
+<!--                                                aria-haspopup="true"-->
+<!--                                                class="btn btn-phoenix-secondary px-7 flex-shrink-0"-->
+<!--                                                data-boundary="window"-->
+<!--                                                data-bs-reference="parent" data-bs-toggle="dropdown"-->
+<!--                                                type="button">-->
+<!--                                            Category<span class="fas fa-angle-down ms-2"></span></button>-->
+<!--                                        <ul class="dropdown-menu">-->
+<!--                                            <li><a class="dropdown-item" href="#">Action</a></li>-->
+<!--                                            <li><a class="dropdown-item" href="#">Another action</a></li>-->
+<!--                                            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
+<!--                                            <li>-->
+<!--                                                <hr class="dropdown-divider"/>-->
+<!--                                            </li>-->
+<!--                                            <li><a class="dropdown-item" href="#">Separated link</a></li>-->
+<!--                                        </ul>-->
                                     </div>
                                 </div>
                             </div>
@@ -144,12 +145,6 @@
                             <table class="table fs--1 mb-0">
                                 <thead>
                                 <tr>
-                                    <th class="white-space-nowrap fs--1 align-middle"
-                                        style="max-width:20px; width:18px;">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
-                                    </th>
                                     <th class="sort white-space-nowrap align-middle fs--2" scope="col"
                                         style="width:70px;"></th>
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
@@ -176,12 +171,7 @@
                                 </thead>
                                 <tbody class="list" id="products-table-body">
                                 {% for product in stocks_list %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                    <td class="fs--1 align-middle">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
-                                    </td>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"  data-category="{{ product.category_name }}">
                                     <td class="align-middle white-space-nowrap py-0">
                                         <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
                                             <div class="avatar avatar-m">
@@ -210,14 +200,6 @@
                                         {{product.created_on}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
-                                        <div class="position-relative">
-                                            <div class="hover-actions">
-                                                <button class="btn btn-sm btn-phoenix-secondary me-1 fs--2">
-                                                    <span class="fas fa-check"></span></button>
-                                                <button class="btn btn-sm btn-phoenix-secondary fs--2"><span
-                                                        class="fas fa-trash"></span></button>
-                                            </div>
-                                        </div>
                                         <div class="font-sans-serif btn-reveal-trigger position-static">
                                             <button aria-expanded="false"
                                                     aria-haspopup="true"
@@ -227,10 +209,9 @@
                                                     class="fas fa-ellipsis-h fs--2"></span></button>
                                             <div class="dropdown-menu dropdown-menu-end py-2"><a
                                                     class="dropdown-item" href="#!">Restock</a><a
-                                                    class="dropdown-item" href="#!">View</a><a
-                                                    class="dropdown-item" href="#!">Export</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                                    class="dropdown-item" href="#!">View</a>
+<!--                                                <div class="dropdown-divider"></div>-->
+<!--                                                <a class="dropdown-item text-danger" href="#!">Remove</a>-->
                                             </div>
                                         </div>
                                     </td>
@@ -300,9 +281,10 @@
 <script src="{% static 'vendors/list.js/list.min.js' %}"></script>
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/csvExport.js' %}"></script>
-
+<script src="{% static 'js/filter.js' %}"></script>
 </body>
 
 </html>

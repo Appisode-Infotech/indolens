@@ -57,20 +57,6 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -83,8 +69,6 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-
-
         <div class="content">
 
             <div class="mb-9">
@@ -120,8 +104,153 @@
                                     </button>
                                 </div>
 
-                                <!--                        Add expense Modal-->
-                                <div aria-hidden="true" aria-labelledby="verticallyCenteredModalLabel"
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="table-responsive scrollbar">
+                        <table class="table fs--1 mb-0 border-top border-200">
+                            <thead>
+                            <tr>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                    scope="col" style="width:30%;">STORE NAME
+                                </th>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                    scope="col" style="width:30%;">STORE TYPE
+                                </th>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                    scope="col" style="width:30%;">PRODUCT NAME
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                    CATEGORY
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                    QUANTITY
+                                </th>
+
+                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                    PRICE
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                    REQUESTED DATE
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                    MOVED DATE
+                                </th>
+
+                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                    style="width:5%;">MOVEMENT TYPE
+                                </th>
+
+                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                    style="width:5%;">DELIVERED FROM
+                                </th>
+
+                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
+                            </tr>
+                            </thead>
+                            <tbody class="list" id="project-list-table-body">
+                            {% for stock in moved_stocks %}
+                            <tr class="position-static">
+                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
+                                    {% if stock.store_type == 1 %}
+                                    <a
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
+                                    {% else %}
+                                    <a
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
+                                    {% endif %}
+                                </td>
+
+                                <td class="align-middle white-space-nowrap start py-4">
+                                    {% if stock.store_type == 1 %}
+                                    <p class="mb-0 fs--1 text-900">OWN STORE</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
+                                    {% endif %}
+                                </td>
+
+                                <td class="product align-middle">
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
+
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">{{stock.category_name}}</p>
+                                </td>
+
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
+                                </td>
+
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
+                                </td>
+
+                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
+                                </td>
+                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
+                                </td>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if stock.is_requested == 1 %}
+                                    <p class="mb-0 fs--1 text-900">REQUESTED</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">SELF</p>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if stock.sender_store != None %}
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</a>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
+                                    {% endif %}
+                                </td>
+
+                                <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                    <div class="font-sans-serif btn-reveal-trigger position-static">
+                                        <button aria-expanded="false"
+                                                aria-haspopup="true"
+                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                data-boundary="window"
+                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
+                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item">View</a>
+
+<!--                                            <div class="dropdown-divider"></div>-->
+<!--                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>-->
+<!--                                            <div class="dropdown-divider"></div>-->
+<!--                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>-->
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
+                        <div class="d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
+                            all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                        </div>
+                        <div class="d-flex">
+                            <button class="page-link" data-list-pagination="prev"><span
+                                    class="fas fa-chevron-left"></span></button>
+                            <ul class="mb-0 pagination"></ul>
+                            <button class="page-link pe-0" data-list-pagination="next"><span
+                                    class="fas fa-chevron-right"></span></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'footer.html' %}
+        </div>
+        <div aria-hidden="true" aria-labelledby="verticallyCenteredModalLabel"
                                      class="modal fade"
                                      id="verticallyCentered" tabindex="-1">
                                     <div class="modal-dialog modal-dialog-centered">
@@ -199,17 +328,6 @@
                                                         <div class="invalid-feedback">Enter any comments!</div>
                                                     </div>
 
-                                                    <div class="col-12">
-                                                        <label class="form-label" for="expense_reason">Movement
-                                                            Date</label>
-
-                                                        <input class="form-control datetimepicker"
-                                                               data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
-                                                               id="datepicker"
-                                                               placeholder="dd/mm/yyyy" name="movement_date" type="text"
-                                                               disabled/>
-                                                    </div>
-
                                                     <input name="created_by" required type="hidden"
                                                            value="{{ request.session.id }}">
 
@@ -226,152 +344,8 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
-                            <thead>
-                            <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:30%;">STORE NAME
-                                </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:30%;">STORE TYPE
-                                </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:30%;">PRODUCT NAME
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    PRODUCT ID
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
-                                    QUANTITY
-                                </th>
-
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
-                                    PRICE
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    REQUESTED DATE
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    MOVED DATE
-                                </th>
-
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">MOVEMENT TYPE
-                                </th>
-
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">DELIVERED FROM
-                                </th>
-
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
-                            </tr>
-                            </thead>
-                            <tbody class="list" id="project-list-table-body">
-                            {% for stock in moved_stocks %}
-                            <tr class="position-static">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
-                                    {% if stock.store_type == 1 %}
-                                    <a
-                                        class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
-                                    {% else %}
-                                    <a
-                                        class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
-                                    {% endif %}
-                                </td>
-
-                                <td class="align-middle white-space-nowrap start py-4">
-                                    {% if stock.store_type == 1 %}
-                                    <p class="mb-0 fs--1 text-900">OWN STORE</p>
-                                    {% else %}
-                                    <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
-                                    {% endif %}
-                                </td>
-
-                                <td class="product align-middle">
-                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
-
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{stock.product_id}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-end statuses">
-                                    {% if stock.is_requested == 1 %}
-                                    <p class="mb-0 fs--1 text-900">REQUESTED</p>
-                                    {% else %}
-                                    <p class="mb-0 fs--1 text-900">SELF</p>
-                                    {% endif %}
-                                </td>
-                                <td class="align-middle white-space-nowrap text-end statuses">
-                                    {% if stock.sender_store != None %}
-                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</p>
-                                    {% else %}
-                                    <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
-                                    {% endif %}
-                                </td>
-
-                                <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                    <div class="font-sans-serif btn-reveal-trigger position-static">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
-                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item">View</a>
-
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
-                        <div class="d-flex">
-                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
-                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
-                            all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
-                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
-                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                        </div>
-                        <div class="d-flex">
-                            <button class="page-link" data-list-pagination="prev"><span
-                                    class="fas fa-chevron-left"></span></button>
-                            <ul class="mb-0 pagination"></ul>
-                            <button class="page-link pe-0" data-list-pagination="next"><span
-                                    class="fas fa-chevron-right"></span></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% include 'footer.html' %}
-        </div>
     </div>
+
     <script>
         var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
         var navbarTop = document.querySelector('.navbar-top');
@@ -384,20 +358,6 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </main>
 <!-- ===============================================-->
@@ -460,7 +420,6 @@ $(document).ready(function() {
     // Trigger the change event to handle the initial state
     $('#storeType').trigger('change');
 });
-
 </script>
 
 </body>
