@@ -2460,7 +2460,7 @@ def manageCentralInventoryOutOfStock(request):
 
 
 def manageMoveStocks(request):
-    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             # stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
             # response = store_inventory_controller.create_store_stock_request(stock_obj)
@@ -2474,7 +2474,7 @@ def manageMoveStocks(request):
                           {"own_store_list": response['own_stores'],
                            "moved_stocks": moved_stocks['stocks_request_list']})
     else:
-        return redirect('own_store_login')
+        return redirect('login')
 
 
 def manageMoveAStock(request):
