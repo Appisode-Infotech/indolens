@@ -68,12 +68,11 @@ def forgotPassword(request):
 
 def resetPassword(request, code):
     if request.method == 'POST':
-        print(request.POST)
-        admin_auth_controller.update_admin_password(request.POST['password'], request.POST['email'])
-        return render(request, 'indolens_admin/auth/reset_password.html', {"code": code})
+        response, status_code = admin_auth_controller.update_admin_password(request.POST['password'], request.POST['email'])
+        return render(request, 'indolens_admin/auth/reset_password.html',
+                      {"code": code, "message": response['message']})
     else:
         response, status_code = admin_auth_controller.check_link_validity(code)
-
         return render(request, 'indolens_admin/auth/reset_password.html',
                       {"code": code, "message": response['message'], "email": response['email']})
 

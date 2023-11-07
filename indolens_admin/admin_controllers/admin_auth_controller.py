@@ -159,13 +159,16 @@ def update_admin_password(password, email):
     try:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
-            login_query = f"""UPDATE admin SET password = '{hashed_password}' WHERE email = '{email}'"""
-            cursor.execute(login_query)
+            login_query = f"""UPDATE admin SET password = %s WHERE email = '{email}'"""
+            cursor.execute(login_query, (hashed_password,))
             admin_data = cursor.fetchone()
+
+            login_query = f"""UPDATE reset_password SET status = 1 WHERE email = '{email}'"""
+            cursor.execute(login_query)
 
             return {
                 "status": True,
-                "message": "admin login successfull",
+                "message": "Password change was successfully. Please login in now",
                 "admin": admin_auth_model.admin_auth_model_from_dict(get_admin_user(admin_data))
             }, 200
 
