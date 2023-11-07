@@ -81,15 +81,15 @@ def get_all_active_types():
             cursor.execute(get_units_query)
             master_units = get_master_units(cursor.fetchall())
             return {
-                "status": True,
-                "product_categories": product_categories,
-                "product_brands": product_brands,
-                "product_materials": product_materials,
-                "frame_types": frame_types,
-                "frame_shapes": frame_shapes,
-                "colors": colors,
-                "master_units": master_units,
-            }, 200
+                       "status": True,
+                       "product_categories": product_categories,
+                       "product_brands": product_brands,
+                       "product_materials": product_materials,
+                       "frame_types": frame_types,
+                       "frame_shapes": frame_shapes,
+                       "colors": colors,
+                       "master_units": master_units,
+                   }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
@@ -119,9 +119,9 @@ def add_central_inventory_products(product_obj, file):
             cursor.execute(add_product_query)
             productId = cursor.lastrowid
             return {
-                "status": True,
-                "productId": productId
-            }, 200
+                       "status": True,
+                       "productId": productId
+                   }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
@@ -154,10 +154,10 @@ def get_all_central_inventory_products(status):
             cursor.execute(get_all_product_query)
             product_list = cursor.fetchall()
             return {
-                "status": True,
-                "product_list": get_products(product_list),
-                "categoriesList": get_all_central_inventory_category()[0]['product_category']
-            }, 200
+                       "status": True,
+                       "product_list": get_products(product_list),
+                       "categoriesList": get_all_central_inventory_category()[0]['product_category']
+                   }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
@@ -184,9 +184,10 @@ def get_all_out_of_stock_central_inventory_products(quantity):
             cursor.execute(get_all_product_query)
             stocks_list = cursor.fetchall()
             return {
-                "status": True,
-                "stocks_list": get_products(stocks_list)
-            }, 200
+                       "status": True,
+                       "stocks_list": get_products(stocks_list),
+                       "categories_list": get_all_central_inventory_category()[0]['product_category']
+                   }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
@@ -220,9 +221,9 @@ def get_all_out_of_stock_products_for_store(quantity):
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
             return {
-                "status": True,
-                "stocks_list": get_store_stocks(product_list)
-            }, 200
+                       "status": True,
+                       "stocks_list": get_store_stocks(product_list)
+                   }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
@@ -258,9 +259,9 @@ def get_all_stock_requests(status):
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
             return {
-                "status": True,
-                "stocks_request_list": get_request_product_list(product_list)
-            }, 200
+                       "status": True,
+                       "stocks_request_list": get_request_product_list(product_list)
+                   }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
@@ -304,23 +305,23 @@ def change_stock_request_status(requestId, status, updator):
                                                             product_details[4], today, updator, today, updator))
 
                     return {
-                        "status": True,
-                        "message": "Status Changed"
-                    }, 200
+                               "status": True,
+                               "message": "Status Changed"
+                           }, 200
 
                 else:
                     return {
-                        "status": False,
-                        "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in inventory"
-                    }, 200
+                               "status": False,
+                               "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in inventory"
+                           }, 200
             else:
                 update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}' 
                                     WHERE request_products_id = '{requestId}' """
                 cursor.execute(update_stock_request_query)
                 return {
-                    "status": True,
-                    "message": "Status Changed"
-                }, 200
+                           "status": True,
+                           "message": "Status Changed"
+                       }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

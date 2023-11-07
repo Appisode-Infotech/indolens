@@ -2454,7 +2454,7 @@ def manageCentralInventoryOutOfStock(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
         return render(request, 'indolens_admin/centralInventory/manageCentralInventoryOutOfStock.html',
-                      {"stocks_list": response['stocks_list']})
+                      {"stocks_list": response['stocks_list'], "categories_list": response['categories_list']})
     else:
         return redirect('login')
 
