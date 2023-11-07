@@ -161,7 +161,6 @@ def enableDisableOwnStore(request, ownStoreId, status, route):
 def manageFranchiseStores(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_all_franchise_stores(status)
-        print(response)
         return render(request, 'indolens_admin/franchiseStores/manageFranchiseStores.html',
                       {"franchise_store_list": response['franchise_store'], "status": status})
     else:

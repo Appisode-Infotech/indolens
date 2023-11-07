@@ -13,10 +13,10 @@ urlpatterns = [
     # Dashboard
     path('dashboard/', dashboard, name='dashboard_area_head'),
     # own store management
-    path('manage_own_stores/', manageOwnStores, name='manage_own_stores_area_head'),
-    path('manage_own_stores/view_own_store/', viewOwnStore, name='view_own_store_area_head'),
+    path('manage_own_stores/status=<str:status>', manageOwnStores, name='manage_own_stores_area_head'),
+    path('manage_own_stores/view_own_store/ownStoreId=<int:ownStoreId>', viewOwnStore, name='view_own_store_area_head'),
     # franchise store management
-    path('manage_Franchise_stores/', manageFranchiseStores, name='manage_Franchise_stores_area_head'),
+    path('manage_Franchise_stores/status=<str:status>', manageFranchiseStores, name='manage_Franchise_stores_area_head'),
     path('manage_Franchise_stores/view_franchise_store/?storeId=<int:fid>', viewFranchiseStore,
          name='view_franchise_store_area_head'),
     # inventory management

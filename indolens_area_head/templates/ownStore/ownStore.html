@@ -63,7 +63,7 @@
 
 
 
-    
+
 
 
     </script>
@@ -77,7 +77,8 @@
 <!-- ===============================================-->
 <main class="main" id="top">
     <div class="container-fluid px-0">
-        {% include 'nav_bar_area_head.html' %}
+        {% include 'nav_bar.html' %}
+        {% for store in store_data %}
         <div class="content">
             <div class="row gy-3 mb-6 justify-content-between">
                 <div class="col-md-9 col-auto">
@@ -114,7 +115,7 @@
                                     class="fs-4 lh-1 uil uil-users-alt text-success-500"></span>
                                 <div class="ms-2">
                                     <div class="d-flex align-items-end">
-                                        <h2 class="mb-0 me-2">12</h2><span
+                                        <h2 class="mb-0 me-2">{{total_employee_count}}</h2><span
                                             class="fs-1 fw-semi-bold text-900">Members</span>
                                     </div>
                                     <p class="text-800 fs--1 mb-0">Working hard</p>
@@ -126,7 +127,7 @@
                                     class="fs-4 lh-1 uil uil-invoice text-warning-500"></span>
                                 <div class="ms-2">
                                     <div class="d-flex align-items-end">
-                                        <h2 class="mb-0 me-2">23</h2><span
+                                        <h2 class="mb-0 me-2">{{total_customer_count}}</h2><span
                                             class="fs-1 fw-semi-bold text-900">Customers</span>
                                     </div>
                                     <p class="text-800 fs--1 mb-0">Served till now</p>
@@ -262,7 +263,7 @@
                                     </div>
                                 </div>
                                 <div class="col-auto">
-                                    <button class="btn btn-link text-900 me-4 px-0"><span
+                                    <button id= "btnExport" class="btn btn-link text-900 me-4 px-0"><span
                                             class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                     </button>
                                 </div>
@@ -304,6 +305,7 @@
                                     </tr>
                                     </thead>
                                     <tbody class="list" id="products-table-body">
+                                    {% for products in products_list %}
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="fs--1 align-middle">
                                             <div class="form-check mb-0 fs-0">
@@ -317,23 +319,24 @@
                                             </div>
                                         </td>
                                         <td class="product align-middle ps-4"><a
-                                                class="fw-semi-bold line-clamp-3 mb-0" href="#!">Indolens - Metallic
-                                            frame 2x2 frame fro kids</a></td>
+                                                class="fw-semi-bold line-clamp-3 mb-0" href="#!">
+                                            {{products.product_name}}
+                                        </a></td>
                                         <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                            ₹3,900
+                                            {{products.sale_price}}
                                         </td>
                                         <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                            Category name
+                                            {{products.category_name}}
                                         </td>
                                         <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                            Brand name
+                                            {{products.brand_name}}
                                         </td>
 
                                         <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                            25
+                                            {{products.store_product_quantity}}
                                         </td>
-                                        <td class="time align-middle white-space-nowrap text-600 ps-4">Nov 12, 10:45
-                                            PM
+                                        <td class="time align-middle white-space-nowrap text-600 ps-4">
+                                            {{products.store_product_created_on}}
                                         </td>
                                         <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
                                             <div class="position-relative">
@@ -361,7 +364,7 @@
                                             </div>
                                         </td>
                                     </tr>
-
+                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -552,6 +555,7 @@
                 {% include 'footer.html' %}
             </div>
         </div>
+        {% endfor %}
     </div>
     <script>
         var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
@@ -569,7 +573,7 @@
 
 
 
-    
+
 
 
     </script>
@@ -597,6 +601,7 @@
 <script src="{% static 'vendors/dhtmlx-gantt/dhtmlxgantt.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/projectmanagement-dashboard.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
 
 </body>
 
