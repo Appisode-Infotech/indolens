@@ -3,6 +3,8 @@ from django.shortcuts import render, redirect
 from indolens_admin.admin_controllers import own_store_controller, franchise_store_controller, store_manager_controller, \
     franchise_manager_controller, marketing_head_controller, sales_executives_controller, \
     accountant_controller, lab_technician_controller, other_employee_controller, lab_controller
+from indolens_area_head.area_head_controller import area_head_auth_controller
+from indolens_area_head.area_head_model.area_head_req_models import area_head_auth_model
 
 
 # =================================ADMIN START======================================
@@ -14,7 +16,22 @@ def index(request):
 
 def login(request):
     if request.method == 'POST':
-        return redirect('dashboard_area_head')
+        print(request.POST)
+        area_head_obj = area_head_auth_model.area_head_model_from_dict(request.POST)
+        response, status_code = area_head_auth_controller.login(area_head_obj)
+        print(response)
+        if response['status']:
+            for data in response['area_head']:
+                request.session.update({
+                    'is_area_head_logged_in': True,
+                    'id': data['area_head_id'],
+                    'name': data['name'],
+                    'email': data['email'],
+                    'profile_pic': data['profile_pic'],
+                })
+            return redirect('dashboard_area_head')
+        else:
+            return render(request, 'auth/sign_in.html', {"message": response['message']})
     else:
         return render(request, 'auth/sign_in.html')
 
@@ -35,11 +52,8 @@ def resetPassword(request):
 # =================================ADMIN DASH======================================
 
 def dashboard(request):
-    own_stores, status_code = own_store_controller.get_all_own_stores()
-    franchise_store, status_code = franchise_store_controller.get_all_franchise_stores()
-    return render(request, 'dashboard.html',
-                  {"own_store_list": own_stores['own_stores'],
-                   "franchise_store_list": franchise_store['franchise_store']})
+
+    return render(request, 'dashboard.html')
 
 
 # =================================ADMIN STORE MANAGEMENT======================================

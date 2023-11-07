@@ -36,16 +36,23 @@ def login(admin_obj):
                     "admin": None
                 }, 301
 
-            elif bcrypt.checkpw(admin_obj.password.encode('utf-8'), admin_data[4].encode('utf-8')):
-                return {
-                    "status": True,
-                    "message": "admin login successfull",
-                    "admin": admin_auth_model.admin_auth_model_from_dict(get_admin_user(admin_data))
-                }, 200
-            else:
+            elif admin_obj is not None and admin_data[12] != 0:
+                if bcrypt.checkpw(admin_obj.password.encode('utf-8'), admin_data[4].encode('utf-8')):
+                    return {
+                        "status": True,
+                        "message": "admin login successfull",
+                        "admin": admin_auth_model.admin_auth_model_from_dict(get_admin_user(admin_data))
+                    }, 200
+                else:
+                    return {
+                        "status": False,
+                        "message": "Invalid admin password",
+                        "admin": None
+                    }, 301
+            elif admin_obj is not None and admin_data[12] == 0:
                 return {
                     "status": False,
-                    "message": "Invalid admin password",
+                    "message": "The id has been blocked, please contact super admin",
                     "admin": None
                 }, 301
 
