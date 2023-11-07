@@ -164,6 +164,34 @@ def get_all_central_inventory_products(status):
         return {"status": False, "message": str(e)}, 301
 
 
+def get_central_inventory_product_single(productId):
+    with connection.cursor() as cursor:
+        try:
+            get_all_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+                                            ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
+                                            FROM central_inventory As ci
+                                            LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
+                                            LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
+                                            LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                            LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                            LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                            LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                            LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                            LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                            LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
+                                            WHERE ci.product_id= {productId} """
+            cursor.execute(get_all_product_query)
+            product_list = cursor.fetchall()
+            return {
+                       "status": True,
+                       "product_data": get_products(product_list)[0],
+                   }, 200
+        except pymysql.Error as e:
+            return {"status": False, "message": str(e)}, 301
+        except Exception as e:
+            return {"status": False, "message": str(e)}, 301
+
+
 def get_all_out_of_stock_central_inventory_products(quantity):
     try:
         with connection.cursor() as cursor:
