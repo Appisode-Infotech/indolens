@@ -61,14 +61,16 @@ def adminLogout(request):
 def forgotPassword(request):
     if request.method == 'POST':
         response, status_code = admin_auth_controller.forgot_password(request.POST['email'])
-        return render(request, 'indolens_admin/auth/forgot_password.html', {"message": response['message']})
+        return render(request, 'indolens_admin/auth/forgot_password.html',
+                      {"message": response['message'], "status": response['status']})
     else:
-        return render(request, 'indolens_admin/auth/forgot_password.html')
+        return render(request, 'indolens_admin/auth/forgot_password.html', {"status": False})
 
 
 def resetPassword(request, code):
     if request.method == 'POST':
-        response, status_code = admin_auth_controller.update_admin_password(request.POST['password'], request.POST['email'])
+        response, status_code = admin_auth_controller.update_admin_password(request.POST['password'],
+                                                                            request.POST['email'])
         return render(request, 'indolens_admin/auth/reset_password.html',
                       {"code": code, "message": response['message']})
     else:
@@ -146,11 +148,11 @@ def createOwnStore(request):
         return redirect('login')
 
 
-def enableDisableOwnStore(request, ownStoreId, status):
+def enableDisableOwnStore(request, ownStoreId, status, route):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response = own_store_controller.enable_disable_own_store(ownStoreId, status)
-
-        return redirect('manage_own_stores')
+        url = reverse('manage_own_stores', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -208,10 +210,11 @@ def createFranchiseStore(request):
         return redirect('login')
 
 
-def enableDisableFranchiseStore(request, franchiseStoreId, status):
+def enableDisableFranchiseStore(request, franchiseStoreId, status, route):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response = franchise_store_controller.enable_disable_franchise_store(franchiseStoreId, status)
-        return redirect('manage_Franchise_stores')
+        url = reverse('manage_Franchise_stores', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2457,14 +2460,21 @@ def manageCentralInventoryOutOfStock(request):
 
 
 def manageMoveStocks(request):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        moved_stocks, status_code = central_inventory_controller.get_all_stock_requests('1')
-        print(moved_stocks)
-        response, status_code = own_store_controller.get_all_own_stores('Active')
-        return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html',
-                      {"own_store_list": response['own_stores'], "moved_stocks": moved_stocks['stocks_request_list']})
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        if request.method == 'POST':
+            # stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
+            # response = store_inventory_controller.create_store_stock_request(stock_obj)
+            # products, status_code = store_inventory_controller.get_all_central_inventory_products()
+            return redirect('manageMoveStocks')
+        else:
+            moved_stocks, status_code = central_inventory_controller.get_all_stock_requests('1')
+            print(moved_stocks)
+            response, status_code = own_store_controller.get_all_own_stores('Active')
+            return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html',
+                          {"own_store_list": response['own_stores'],
+                           "moved_stocks": moved_stocks['stocks_request_list']})
     else:
-        return redirect('login')
+        return redirect('own_store_login')
 
 
 def manageMoveAStock(request):

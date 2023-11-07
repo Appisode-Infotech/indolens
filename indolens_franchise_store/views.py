@@ -76,53 +76,97 @@ def dashboard(request):
 
 # ================================= FRANCHISE STORE ORDER MANAGEMENT ======================================
 def allFranchiseOrders(request):
-    return render(request, 'orders/allFranchiseOrders.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'orders/allFranchiseOrders.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 def pendingFranchiseOrders(request):
-    return render(request, 'orders/pendingFranchiseOrders.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'orders/pendingFranchiseOrders.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 def receivedFranchiseOrders(request):
-    return render(request, 'orders/receivedFranchiseOrders.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'orders/receivedFranchiseOrders.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 def processingFranchiseOrders(request):
-    return render(request, 'orders/processingFranchiseOrders.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'orders/processingFranchiseOrders.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 def readyFranchiseOrders(request):
-    return render(request, 'orders/readyFranchiseOrders.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'orders/readyFranchiseOrders.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 def deliveredFranchiseOrders(request):
-    return render(request, 'orders/deliveredFranchiseOrders.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'orders/deliveredFranchiseOrders.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 def cancelledFranchiseOrders(request):
-    return render(request, 'orders/cancelledFranchiseOrders.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'orders/cancelledFranchiseOrders.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 def refundedFranchiseOrders(request):
-    return render(request, 'orders/refundedFranchiseOrders.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'orders/refundedFranchiseOrders.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 def orderDetailsFranchise(request):
-    return render(request, 'orders/orderDetailsFranchise.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'orders/orderDetailsFranchise.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 # ================================= FRANCHISE STORE CUSTIOMER MANAGEMENT ======================================
 
 def viewAllCustomersFranchise(request):
-    response, status_code = franchise_store_customers_controller.get_all_franchise_store_customers(
-        request.session.get('assigned_store_id'))
-    return render(request, 'customers/viewAllCustomersFranchise.html',
-                  {"store_customers_list": response['store_customers_list']})
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        response, status_code = franchise_store_customers_controller.get_all_franchise_store_customers(
+            request.session.get('assigned_store_id'))
+        return render(request, 'customers/viewAllCustomersFranchise.html',
+                      {"store_customers_list": response['store_customers_list']})
+    else:
+        return redirect('franchise_store_login')
 
 
 def viewCustomerDetailsFranchise(request, customerId):
-    response, status_code = franchise_store_customers_controller.get_customers_by_id(customerId)
-    return render(request, 'customers/viewCustomerDetailsFranchise.html', {"customers": response['customers']})
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        response, status_code = franchise_store_customers_controller.get_customers_by_id(customerId)
+        return render(request, 'customers/viewCustomerDetailsFranchise.html', {"customers": response['customers']})
+    else:
+        return redirect('franchise_store_login')
 
 
 # ================================= FRANCHISE STORE STOCK REQUESTS MANAGEMENT ======================================
@@ -214,7 +258,11 @@ def inventoryOutOfStockFranchise(request):
 
 
 def moveStocksFranchise(request):
-    return render(request, 'inventory/moveStocksFranchise.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'inventory/moveStocksFranchise.html')
+    else:
+        return redirect('franchise_store_login')
 
 
 # ================================= SALES AND EXPENSES ======================================
@@ -237,4 +285,8 @@ def allExpenseFranchise(request):
 
 
 def makeSaleFranchiseStore(request):
-    return render(request, 'expenses/makeSaleFranchiseStore.html')
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return render(request, 'expenses/makeSaleFranchiseStore.html')
+    else:
+        return redirect('franchise_store_login')

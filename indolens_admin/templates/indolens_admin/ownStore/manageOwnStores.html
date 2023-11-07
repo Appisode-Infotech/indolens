@@ -205,20 +205,20 @@
                                                data-store-id="{{ store.store_id }}"
                                                data-store-name="{{ store.store_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_own_store' store.store_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_own_store' store.store_id 1 status %}">
                                                 Make Active
                                             </a>
 
                                             {% elif store.status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
-                                               href="{% url 'enable_disable_own_store' store.store_id 1 %}"
+                                               href="{% url 'enable_disable_own_store' store.store_id 1 status%}"
                                                data-bs-toggle="modal"
                                                data-bs-target="#enable_disable_store"
                                                data-store-id="{{ store.store_id }}"
                                                data-store-name="{{ store.store_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_own_store' store.store_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_own_store' store.store_id 0 status %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

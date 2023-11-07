@@ -65,6 +65,7 @@ def forgot_password(email):
             check_email_query = f"""SELECT email,status FROM admin WHERE email = '{email}'"""
             cursor.execute(check_email_query)
             check_email = cursor.fetchone()
+            print(check_email)
 
             if check_email is None:
                 return {

@@ -37,13 +37,15 @@ class StoreCreateStockRequestModel:
     request_to_store_id: Optional[int]
     request_from_store_id: Optional[int]
     created_by: Optional[int]
+    store_type: Optional[int]
 
-    def __init__(self, product_id: Optional[int], product_quantity: Optional[int], request_to_store_id: Optional[int], request_from_store_id: Optional[int], created_by: Optional[int]) -> None:
+    def __init__(self, product_id: Optional[int], product_quantity: Optional[int], request_to_store_id: Optional[int], request_from_store_id: Optional[int], created_by: Optional[int], store_type: Optional[int]) -> None:
         self.product_id = product_id
         self.product_quantity = product_quantity
         self.request_to_store_id = request_to_store_id
         self.request_from_store_id = request_from_store_id
         self.created_by = created_by
+        self.store_type = store_type
 
     @staticmethod
     def from_dict(obj: Any) -> 'StoreCreateStockRequestModel':
@@ -53,7 +55,8 @@ class StoreCreateStockRequestModel:
         request_to_store_id = from_union([from_str, from_none], obj.get("request_to_store_id"))
         request_from_store_id = from_union([from_str, from_none], obj.get("request_from_store_id"))
         created_by = from_union([from_str, from_none], obj.get("created_by"))
-        return StoreCreateStockRequestModel(product_id, product_quantity, request_to_store_id, request_from_store_id, created_by)
+        store_type = from_union([from_str, from_none], obj.get("store_type"))
+        return StoreCreateStockRequestModel(product_id, product_quantity, request_to_store_id, request_from_store_id, created_by, store_type)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -67,6 +70,8 @@ class StoreCreateStockRequestModel:
             result["request_from_store_id"] = from_union([from_int, from_none], self.request_from_store_id)
         if self.created_by is not None:
             result["created_by"] = from_union([from_int, from_none], self.created_by)
+        if self.store_type is not None:
+            result["store_type"] = from_union([from_int, from_none], self.store_type)
         return result
 
 
