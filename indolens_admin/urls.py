@@ -21,7 +21,7 @@ urlpatterns = [
     path('manage_own_stores/status=<str:status>', manageOwnStores, name='manage_own_stores'),
     path('manage_own_stores/view_own_store/storeId=<int:ownStoreId>', viewOwnStore, name='view_own_store'),
     path('manage_own_stores/edit_own_store/storeId=<int:ownStoreId>', editOwnStore, name='edit_own_store'),
-    path('manage_own_stores/enable_disable_own_store/storeId=<int:ownStoreId>/status=<int:status>', enableDisableOwnStore,
+    path('manage_own_stores/enable_disable_own_store/storeId=<int:ownStoreId>/status=<int:status>/route=<str:route>', enableDisableOwnStore,
          name='enable_disable_own_store'),
     # franchise store management
     path('create_franchise_store/', createFranchiseStore, name='create_franchise_store'),
@@ -30,7 +30,7 @@ urlpatterns = [
          name='view_franchise_store'),
     path('manage_Franchise_stores/edit_franchise_store/storeId=<int:franchiseStoreId>', editFranchiseStore,
          name='edit_franchise_store'),
-    path('manage_Franchise_stores/enable_disable_franchise_store/storeId=<int:franchiseStoreId>/status=<int:status>',
+    path('manage_Franchise_stores/enable_disable_franchise_store/storeId=<int:franchiseStoreId>/status=<int:status>/route=<str:route>',
          enableDisableFranchiseStore, name='enable_disable_franchise_store'),
     # inventory management
     path('manage_out_of_stock/', manageCentralInventoryOutOfStock, name='manage_out_of_stock'),

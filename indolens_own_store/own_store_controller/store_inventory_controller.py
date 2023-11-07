@@ -126,8 +126,8 @@ def create_store_stock_request(stock_obj):
                            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
             cursor.execute(stock_req_query, (
-            stock_obj.request_from_store_id, 1, stock_obj.product_id, stock_obj.product_quantity, 0, 0, 1,
-            stock_obj.request_to_store_id, 0, today, stock_obj.created_by, today, stock_obj.created_by))
+                stock_obj.request_from_store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
+                0, 0, 1, stock_obj.request_to_store_id, 0, today, stock_obj.created_by, today, stock_obj.created_by))
             return {
                 "status": True,
                 "message": "success"
