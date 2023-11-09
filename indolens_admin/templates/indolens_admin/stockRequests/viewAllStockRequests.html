@@ -63,6 +63,8 @@
 
 
 
+
+
     </script>
 </head>
 
@@ -82,17 +84,25 @@
                 <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
                      id="projectSummary">
                     {% if message %}
-                        <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
-                            <strong>{{message}}</strong>
+                    <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
+                        <strong>{{message}}</strong>
 
-                            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
-                        </div>
-                        {% endif %}
-                    <div class="row mb-4 gx-6 gy-3 align-items-center">
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+                    </div>
+                    {% endif %}
+                    <div class="row mb-3 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
                             <h2 class="mb-0">All Stock requests<span class="fw-normal text-700 ms-3">(6)</span></h2>
                         </div>
                     </div>
+                    <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a>
+                        </li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-1">Own
+                            Store</a></li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-2">Franchise
+                            Store</a></li>
+                    </ul>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
 
                         <div class="col-12 col-sm-auto">
@@ -106,6 +116,11 @@
                                 </div>
 
                             </div>
+                        </div>
+                        <div class="col-auto">
+                            <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                    class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                            </button>
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
@@ -151,16 +166,17 @@
                             </thead>
                             <tbody class="list" id="project-list-table-body">
                             {% for stock in stocks_request_list %}
-                            <tr class="position-static">
+                            <tr class="position-static"
+                            data-category="{{ stock.store_type }}">
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
                                     {% if stock.store_type == 1 %}
                                     <a
-                                        class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
+                                            class="text-decoration-none fw-bold fs-0"
+                                            href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
                                     {% else %}
                                     <a
-                                        class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
+                                            class="text-decoration-none fw-bold fs-0"
+                                            href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
                                     {% endif %}
                                 </td>
 
@@ -196,13 +212,13 @@
                                 <td class="align-middle white-space-nowrap text-end statuses">
                                     {% if stock.request_status == 0 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">PENDING</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">PENDING</span>
                                     {% elif stock.request_status == 1 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
                                     {% else %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end statuses"><span
@@ -217,12 +233,15 @@
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item">View</a>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a
+                                                class="dropdown-item">View</a>
 
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>
+                                            <a class="dropdown-item text-success"
+                                               href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>
+                                            <a class="dropdown-item text-danger"
+                                               href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>
                                         </div>
                                     </div>
                                 </td>
@@ -265,13 +284,6 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
-
-
-
-
-
-
-
     </script>
 </main>
 <!-- ===============================================-->
@@ -293,6 +305,8 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/filter.js' %}"></script>
 
 </body>
 
