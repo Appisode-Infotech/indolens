@@ -6,4 +6,3 @@ djangorestframework~=3.14.0
 bcrypt
 pytz
 requests
-mysql-python
