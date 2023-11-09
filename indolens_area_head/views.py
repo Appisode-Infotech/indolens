@@ -4,7 +4,8 @@ from indolens_admin.admin_controllers import own_store_controller, franchise_sto
     franchise_manager_controller, marketing_head_controller, sales_executives_controller, \
     accountant_controller, lab_technician_controller, other_employee_controller, lab_controller, \
     stores_inventory_controller, central_inventory_controller
-from indolens_area_head.area_head_controller import area_head_auth_controller, stores_controller
+from indolens_area_head.area_head_controller import area_head_auth_controller, stores_controller, \
+    area_stores_inventory_controller
 from indolens_area_head.area_head_model.area_head_req_models import area_head_auth_model
 from indolens_own_store.own_store_controller import store_inventory_controller
 
@@ -53,15 +54,16 @@ def resetPassword(request):
 # =================================ADMIN DASH======================================
 
 def dashboard(request):
-
     return render(request, 'dashboard.html')
 
 
 # =================================ADMIN STORE MANAGEMENT======================================
 
 def manageOwnStores(request, status):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get('is_area_head_logged_in') is True:
-        response, status_code = stores_controller.get_area_head_own_stores(status, request.session.get('assigned_stores'))
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
+            'is_area_head_logged_in') is True:
+        response, status_code = stores_controller.get_area_head_own_stores(status,
+                                                                           request.session.get('assigned_stores'))
         return render(request, 'ownStore/manageOwnStores.html',
                       {"own_store_list": response['own_stores'], "status": status})
     else:
@@ -69,7 +71,8 @@ def manageOwnStores(request, status):
 
 
 def viewOwnStore(request, ownStoreId):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get('is_area_head_logged_in') is True:
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
+            'is_area_head_logged_in') is True:
         response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
         products_list, status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
         store_stats, status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
@@ -80,6 +83,7 @@ def viewOwnStore(request, ownStoreId):
     else:
         return redirect('login_area_head')
 
+
 def viewFranchiseStore(request, fid):
     response, status_code = franchise_store_controller.get_franchise_store_by_id(fid)
     return render(request, 'franchiseStores/franchiseStore.html',
@@ -87,7 +91,8 @@ def viewFranchiseStore(request, fid):
 
 
 def manageFranchiseStores(request, status):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get('is_area_head_logged_in') is True:
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
+            'is_area_head_logged_in') is True:
         response, status_code = stores_controller.get_area_head_franchise_stores(status)
         return render(request, 'franchiseStores/manageFranchiseStores.html',
                       {"franchise_store_list": response['franchise_store'], "status": status})
@@ -294,11 +299,14 @@ def manageCentralInventoryProducts(request):
 
 
 def manageCentralInventoryOutOfStock(request):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get('is_area_head_logged_in') is True:
-        response, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15,
-                                                                                                   request.session.get(
-                                                                                                       'assigned_stores'))
-        return render(request, 'centralInventory/manageCentralInventoryOutOfStock.html', {"stocks_list": response['stocks_list']})
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
+            'is_area_head_logged_in') is True:
+        response, status_code = area_stores_inventory_controller.get_all_out_of_stock_products_for_stores(15,
+                                                                                                          request.session.get(
+                                                                                                              'assigned_stores'))
+        print(response)
+        return render(request, 'centralInventory/manageCentralInventoryOutOfStock.html',
+                      {"stocks_list": response['stocks_list']})
     else:
         return redirect('login_area_head')
 
