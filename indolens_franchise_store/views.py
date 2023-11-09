@@ -241,6 +241,7 @@ def franchiseInventoryProducts(request):
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_inventory_controller.get_all_products_for_franchise_store(
             request.session.get('assigned_store_id'))
+        print(response)
         return render(request, 'inventory/franchiseInventoryProducts.html', {"stocks_list": response['stocks_list']})
     else:
         return redirect('franchise_store_login')
@@ -278,6 +279,8 @@ def allExpenseFranchise(request):
             response, status_code = franchise_expense_controller.get_all_franchise_store_expense(
                 request.session.get('assigned_store_id'),
                 request.session.get('store_type'))
+            print(response)
+
             return render(request, 'expenses/allExpenseFranchise.html',
                           {"stor_expense_list": response['stor_expense_list']})
     else:

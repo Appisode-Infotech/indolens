@@ -274,6 +274,7 @@ def allExpenseStore(request):
         else:
             response, status_code = expense_controller.get_all_store_expense(request.session.get('assigned_store_id'),
                                                                              request.session.get('store_type'))
+            print(response['stor_expense_list'])
             return render(request, 'expenses/allExpenseStore.html',
                           {"stor_expense_list": response['stor_expense_list']})
     else:

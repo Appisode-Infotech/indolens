@@ -6,7 +6,7 @@ class Product:
     def __init__(self, values):
         (
             self.request_products_id, self.store_id, self.store_type, self.request_product_id,
-            self.request_product_quantity, self.request_status, self.delivery_status, self.is_requested,
+            self.request_product_quantity, self.request_product_unit_cost, self.request_status, self.delivery_status, self.is_requested,
             self.request_to_store_id, self.payment_status,
             self.store_product_created_on, self.store_product_created_by, self.store_product_last_updated_on,
             self.store_product_last_updated_by,
@@ -29,6 +29,7 @@ class Product:
             'store_type': self.store_type,
             'request_product_id': self.request_product_id,
             'request_product_quantity': self.request_product_quantity,
+            'request_product_unit_cost': self.request_product_unit_cost,
             'request_status': self.request_status,
             'delivery_status': self.delivery_status,
             'is_requested': self.is_requested,

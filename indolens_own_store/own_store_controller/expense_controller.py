@@ -32,8 +32,6 @@ def create_store_expense(expense_obj):
 
 
 def get_all_store_expense(store_id, store_type):
-    print(store_id)
-    print(store_type)
     try:
         with connection.cursor() as cursor:
             insert_expense_obj_query = f""" SELECT se.*, creator.name FROM store_expense AS se

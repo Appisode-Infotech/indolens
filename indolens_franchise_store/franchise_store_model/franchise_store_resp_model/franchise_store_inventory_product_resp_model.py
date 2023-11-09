@@ -6,8 +6,8 @@ class Product:
     def __init__(self, values):
         (
             self.store_inventory_id, self.store_id, self.store_type, self.store_product_id, self.store_product_quantity,
-            self.store_product_created_on, self.store_product_created_by, self.store_product_last_updated_on,
-            self.store_product_last_updated_by,
+            self.store_product_created_on, self.store_product_created_by,
+            self.store_product_last_updated_on, self.store_product_last_updated_by,
             self.product_id, self.product_name, self.product_description, self.product_images,
             self.category_id, self.brand_id, self.material_id, self.frame_type_id, self.frame_shape_id,
             self.color_id, self.unit_id, self.origin, self.cost_price, self.sale_price, self.model_number,
