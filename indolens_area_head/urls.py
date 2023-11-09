@@ -9,7 +9,7 @@ urlpatterns = [
     path('login/', login, name='login_area_head'),
     path('logout_area_head/', areaHeadLogout, name='logout_area_head'),
     path('forgot_password/', forgotPassword, name='forgot_password_area_head'),
-    path('reset_password/', resetPassword, name='reset_password_area_head'),
+    path('reset_password/code=<str:code>', resetPassword, name='reset_password_area_head'),
     # Dashboard
     path('dashboard/', dashboard, name='dashboard_area_head'),
     # own store management
@@ -21,7 +21,7 @@ urlpatterns = [
          name='view_franchise_store_area_head'),
     # inventory management
     path('manage_out_of_stock/', manageCentralInventoryOutOfStock, name='manage_out_of_stock_area_head'),
-    path('manage_central_inventory_products/', manageCentralInventoryProducts,
+    path('manage_central_inventory_products/status=<str:status>', manageCentralInventoryProducts,
          name='manage_central_inventory_products_area_head'),
     path('manageMoveStocks/', manageMoveStocks, name='manageMoveStocks_area_head'),
     path('manageMoveStocks/move_a_stock/', manageMoveAStock, name='move_a_stock_area_head'),

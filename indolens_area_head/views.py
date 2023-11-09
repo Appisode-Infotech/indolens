@@ -44,11 +44,25 @@ def areaHeadLogout(request):
 
 
 def forgotPassword(request):
-    return render(request, 'auth/forgot_password.html')
+    if request.method == 'POST':
+        response, status_code = area_head_auth_controller.forgot_password(request.POST['email'])
+        return render(request, 'auth/forgot_password.html',
+                      {"message": response['message'], "status": response['status']})
+    else:
+        return render(request, 'auth/forgot_password.html', {"status": False})
 
 
-def resetPassword(request):
-    return render(request, 'auth/reset_password.html')
+def resetPassword(request, code):
+    if request.method == 'POST':
+        response, status_code = area_head_auth_controller.update_area_head_password(request.POST['password'],
+                                                                            request.POST['email'])
+        return render(request, 'auth/reset_password.html',
+                      {"code": code, "message": response['message']})
+    else:
+        response, status_code = area_head_auth_controller.check_link_validity(code)
+        print(response)
+        return render(request, 'auth/reset_password.html',
+                      {"code": code, "message": response['message'], "email": response['email']})
 
 
 # =================================ADMIN DASH======================================
@@ -294,19 +308,19 @@ def manageAuthenticityCard(request):
 # =================================ADMIN LABS MANAGEMENT======================================
 
 
-def manageCentralInventoryProducts(request):
-    return render(request, 'centralInventory/manageCentralInventoryProducts.html')
+def manageCentralInventoryProducts(request, status):
+    response, status_code = central_inventory_controller.get_all_central_inventory_products(status)
+    return render(request, 'centralInventory/manageCentralInventoryProducts.html',
+                  {"product_list": response['product_list'], "categories_List": response['categoriesList'],
+                   "status": status})
 
 
 def manageCentralInventoryOutOfStock(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        response, status_code = area_stores_inventory_controller.get_all_out_of_stock_products_for_stores(15,
-                                                                                                          request.session.get(
-                                                                                                              'assigned_stores'))
-        print(response)
+        response, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
         return render(request, 'centralInventory/manageCentralInventoryOutOfStock.html',
-                      {"stocks_list": response['stocks_list']})
+                      {"stocks_list": response['stocks_list'], "categories_list": response['categories_list']})
     else:
         return redirect('login_area_head')
 
