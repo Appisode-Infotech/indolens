@@ -2409,6 +2409,12 @@ def centralInventoryUpdateProduct(request, productId):
                   {'product_data': response['product_data'], 'productId': productId})
 
 
+def centralInventoryUpdateProductImages(request, productId):
+    response, status_code = get_central_inventory_product_single(productId)
+    return render(request, 'indolens_admin/centralInventory/updateProductImages.html',
+                  {'product_data': response['product_data'], 'productId': productId})
+
+
 def centralInventoryAddProducts(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':

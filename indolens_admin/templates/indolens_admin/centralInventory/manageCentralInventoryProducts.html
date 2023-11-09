@@ -56,6 +56,9 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
+
+
     </script>
 </head>
 
@@ -108,14 +111,21 @@
                                                 class="btn btn-phoenix-secondary px-7 flex-shrink-0"
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown"
-                                                type="button">{{status}}<span class="fas fa-angle-down ms-2"></span></button>
+                                                type="button">{{status}}<span class="fas fa-angle-down ms-2"></span>
+                                        </button>
                                         <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="{% url 'manage_central_inventory_products' 'All' %}">All</a></li>
+                                            <li><a class="dropdown-item"
+                                                   href="{% url 'manage_central_inventory_products' 'All' %}">All</a>
+                                            </li>
                                             <li>
                                                 <hr class="dropdown-divider"/>
                                             </li>
-                                            <li><a class="dropdown-item text-success" href="{% url 'manage_central_inventory_products' 'Active' %}">Active Only</a></li>
-                                            <li><a class="dropdown-item text-danger" href="{% url 'manage_central_inventory_products' 'Inactive' %}">Inactive Only</a></li>
+                                            <li><a class="dropdown-item text-success"
+                                                   href="{% url 'manage_central_inventory_products' 'Active' %}">Active
+                                                Only</a></li>
+                                            <li><a class="dropdown-item text-danger"
+                                                   href="{% url 'manage_central_inventory_products' 'Inactive' %}">Inactive
+                                                Only</a></li>
 
                                         </ul>
                                     </div>
@@ -125,7 +135,7 @@
                                                      href="{% url 'add_products' %}"><i
                                     class="fa-solid fa-plus me-2"></i>Add Product</a></div>
                             <div class="col-auto">
-                                <button id= "btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
                                         class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                 </button>
                             </div>
@@ -216,14 +226,38 @@
                                                     data-boundary="window" data-bs-reference="parent"
                                                     data-bs-toggle="dropdown" type="button"><span
                                                     class="fas fa-ellipsis-h fs--2"></span></button>
-                                            <div class="dropdown-menu dropdown-menu-end py-2"><a
-                                                    class="dropdown-item" href="#!">Restock</a>
+                                            <div class="dropdown-menu dropdown-menu-end py-2">
                                                 <a class="dropdown-item" href="#!">View</a>
-                                                <a class="dropdown-item" href="{% url 'update_product' product.product_id %}">Update</a>
-<!--                                                <a-->
-<!--                                                    class="dropdown-item" href="#!">Export</a>-->
-<!--                                                <div class="dropdown-divider"></div>-->
-<!--                                                <a class="dropdown-item text-danger" href="#!">Remove</a>-->
+                                                <a class="dropdown-item" href="#!">Restock</a>
+                                                <a class="dropdown-item" href="{% url 'update_product' product.product_id %}">Update Product Info</a>
+                                                <a class="dropdown-item" href="{% url 'update_product_images' product.product_id %}">Update Product Images</a>
+                                                <div class="dropdown-divider"></div>
+
+                                                {% if product.status == 0 %}
+                                                <a class="dropdown-item text-success"
+                                                   type="button"
+                                                   data-bs-role="Product"
+                                                   data-bs-toggle="modal"
+                                                   data-bs-target="#operations_modal"
+                                                   data-employee-id="{{ product.product_id }}"
+                                                   data-employee-name="{{ product.product_name }}"
+                                                   data-action-type="enable"
+                                                   data-action-url="{% url 'enable_disable_product' product.product_id 1 %}">
+                                                    Make Active
+                                                </a>
+                                                {% else %}
+                                                <a class="dropdown-item text-danger"
+                                                   type="button"
+                                                   data-bs-role="Product"
+                                                   data-bs-toggle="modal"
+                                                   data-bs-target="#operations_modal"
+                                                   data-employee-id="{{ product.product_id }}"
+                                                   data-employee-name="{{ product.product_name }}"
+                                                   data-action-type="disable"
+                                                   data-action-url="{% url 'enable_disable_product' product.product_id 0 %}">Make
+                                                    Inactive</a>
+                                                {% endif %}
+                                                <!--                                                <a class="dropdown-item text-danger" href="#!">Remove</a>-->
                                             </div>
                                         </div>
                                     </td>
@@ -252,6 +286,8 @@
                         </div>
                     </div>
                 </div>
+                {% include 'modal_warning.html' %}
+
             </div>
             {% include 'footer.html' %}
         </div>
@@ -268,6 +304,9 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -291,5 +330,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'js/filter.js' %}"></script>
 <script src="{% static 'js/csvExport.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
+
 </body>
 </html>
