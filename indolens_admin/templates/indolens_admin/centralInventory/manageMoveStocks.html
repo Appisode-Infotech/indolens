@@ -57,6 +57,8 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
+
     </script>
 </head>
 
@@ -92,10 +94,10 @@
                                 </div>
 
                                 <div class="col-auto"><a class="btn btn-primary px-5"
-                                                     href="{% url 'add_products' %}"
-                                data-bs-target="#verticallyCentered"
-                                        data-bs-toggle="modal" type="button"><i
-                                    class="fa-solid fa-plus me-2"></i>Move Stock</a></div>
+                                                         href="{% url 'add_products' %}"
+                                                         data-bs-target="#verticallyCentered"
+                                                         data-bs-toggle="modal" type="button"><i
+                                        class="fa-solid fa-plus me-2"></i>Move Stock</a></div>
 
 
                                 <div class="col-auto ms-3">
@@ -155,12 +157,12 @@
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
                                     {% if stock.store_type == 1 %}
                                     <a
-                                        class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
+                                            class="text-decoration-none fw-bold fs-0"
+                                            href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
                                     {% else %}
                                     <a
-                                        class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
+                                            class="text-decoration-none fw-bold fs-0"
+                                            href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
                                     {% endif %}
                                 </td>
 
@@ -202,7 +204,8 @@
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end statuses">
                                     {% if stock.sender_store != None %}
-                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</a>
+                                    <a class="fw-semi-bold line-clamp-3 mb-0"
+                                       href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</a>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
                                     {% endif %}
@@ -216,12 +219,13 @@
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item">View</a>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a
+                                                class="dropdown-item">View</a>
 
-<!--                                            <div class="dropdown-divider"></div>-->
-<!--                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>-->
-<!--                                            <div class="dropdown-divider"></div>-->
-<!--                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>-->
+                                            <!--                                            <div class="dropdown-divider"></div>-->
+                                            <!--                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>-->
+                                            <!--                                            <div class="dropdown-divider"></div>-->
+                                            <!--                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>-->
                                         </div>
                                     </div>
                                 </td>
@@ -251,99 +255,108 @@
             {% include 'footer.html' %}
         </div>
         <div aria-hidden="true" aria-labelledby="verticallyCenteredModalLabel"
-                                     class="modal fade"
-                                     id="verticallyCentered" tabindex="-1">
-                                    <div class="modal-dialog modal-dialog-centered">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="verticallyCenteredModalLabel">Move a
-                                                    product</h5>
-                                                <button aria-label="Close" class="btn p-1" data-bs-dismiss="modal"
-                                                        type="button"><span class="fas fa-times fs--1"></span></button>
-                                            </div>
-                                            <div class="p-4 code-to-copy">
-                                                <form action="{% url 'all_expenses_store' %}"
-                                                      class="row g-3 needs-validation"
-                                                      method='POST' novalidate="">
-                                                    {% csrf_token %}
-                                                    <div class="mb2 col-12">
-                                                        <h5 class="mb-3">Select Product</h5>
-                                                        <select class="form-select" data-choices="data-choices"
-                                                                data-options='{"removeItemButton":true,"placeholder":true}'
-                                                                name="product_id" required="required">
-                                                            <option value="">Select Product</option>
-                                                            <option value="1">8660225160</option>
-                                                            <option value="2">9538806282</option>
-                                                            <option value="3">1234567890</option>
-                                                        </select>
-                                                        <div class="custom-error" style="color: red;"></div>
-                                                    </div>
+             class="modal fade"
+             id="verticallyCentered" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="verticallyCenteredModalLabel">Move a
+                            product</h5>
+                        <button aria-label="Close" class="btn p-1" data-bs-dismiss="modal"
+                                type="button"><span class="fas fa-times fs--1"></span></button>
+                    </div>
+                    <div class="p-4 code-to-copy">
+                        <form action="{% url 'all_expenses_store' %}"
+                              class="row g-3 needs-validation"
+                              method='POST' novalidate="">
+                            {% csrf_token %}
+                            <div class="mb2 col-12">
+                                <h5 class="mb-3">Select Product</h5>
+                                <select class="form-select" data-choices="data-choices"
+                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                        name="product_id" required="required">
+                                    <option value="">Select Product</option>
+                                    <option value="1">8660225160</option>
+                                    <option value="2">9538806282</option>
+                                    <option value="3">1234567890</option>
+                                </select>
+                                <div class="custom-error" style="color: red;"></div>
+                            </div>
 
-                                                    <div class="mb-2 col-12">
-                                                        <h5 class="mb-3 ">Select Store Type</h5>
-                                                        <select class="form-select"
-                                                                id="storeType"
-                                                                name="storeType"
-                                                                required="required">
-                                                            <option value="">Select Store Type</option>
-                                                            <option value="own">Own Store</option>
-                                                            <option value="franchise">Franchise</option>
-                                                        </select>
-                                                        <div class="invalid-feedback">This field is required.</div>
-                                                    </div>
+                            <div class="mb-2 col-12">
+                                <h5 class="mb-3 ">Select Store Type</h5>
+                                <select class="form-select"
+                                        id="storeType"
+                                        name="storeType"
+                                        required="required">
+                                    <option value="">Select Store Type</option>
+                                    <option value="own">Own Store</option>
+                                    <option value="franchise">Franchise</option>
+                                </select>
+                                <div class="invalid-feedback">This field is required.</div>
+                            </div>
 
-                                                    <div class="mb2 col-12" id="ownStoreSelectDiv">
-                                                        <h5 class="mb-3">Select Own Store</h5>
-                                                        <select class="form-select" data-choices="data-choices"
-                                                                data-options='{"removeItemButton":true,"placeholder":true}'
-                                                                name="own_store_id" required="required">
-                                                            <option value="">Choose Store to move</option>
-                                                            <option>8660225160</option>
-                                                            <option>9538806282</option>
-                                                            <option>1234567890</option>
-                                                        </select>
-                                                        <div class="custom-error" style="color: red;"></div>
-                                                    </div>
+                            <div class="mb2 col-12" id="ownStoreSelectDiv">
+                                <h5 class="mb-3">Select Own Store</h5>
+                                <select class="form-select" data-choices="data-choices"
+                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                        name="own_store_id" required="required">
+                                    <option value="">Choose Store to move</option>
+                                    <option>8660225160</option>
+                                    <option>9538806282</option>
+                                    <option>1234567890</option>
+                                </select>
+                                <div class="custom-error" style="color: red;"></div>
+                            </div>
 
-                                                    <div class="mb2 col-12" id="franchiseStoreSelectDiv">
-                                                        <h5 class="mb-3">Select Franchise Store</h5>
-                                                        <select class="form-select" data-choices="data-choices"
-                                                                data-options='{"removeItemButton":true,"placeholder":true}'
-                                                                name="franchise_store_id" required="required">
-                                                            <option value="">Choose Store to move</option>
-                                                            <option>8660225160</option>
-                                                            <option>9538806282</option>
-                                                            <option>1234567890</option>
-                                                        </select>
-                                                        <div class="custom-error" style="color: red;"></div>
-                                                    </div>
+                            <div class="mb2 col-12" id="franchiseStoreSelectDiv">
+                                <h5 class="mb-3">Select Franchise Store</h5>
+                                <select class="form-select" data-choices="data-choices"
+                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                        name="franchise_store_id" required="required">
+                                    <option value="">Choose Store to move</option>
+                                    <option>8660225160</option>
+                                    <option>9538806282</option>
+                                    <option>1234567890</option>
+                                </select>
+                                <div class="custom-error" style="color: red;"></div>
+                            </div>
 
-                                                    <div class="col-12">
+                            <div class="col-12">
 
-                                                        <label class="form-label" for="expense_reason">Comments</label>
+                                <h5 class="mb-3">Quantity</h5>
 
-                                                        <input class="form-control" id="expense_reason" maxlength="256"
-                                                               required="" name="comments"
-                                                               type="text" value=""/>
-                                                        <div class="invalid-feedback">Enter any comments!</div>
-                                                    </div>
+                                <input class="form-control" id="qty" maxlength="256" required name="qty" type="number"
+                                       value="" max="10">
+                                <div class="invalid-feedback">Enter Valid Quantity!</div>
+                            </div>
 
-                                                    <input name="created_by" required type="hidden"
-                                                           value="{{ request.session.id }}">
+                            <div class="col-12">
 
-                                                    <div class="modal-footer">
-                                                        <button class="btn btn-primary" type="submit">Submit</button>
-                                                        <button class="btn btn-outline-primary" data-bs-dismiss="modal"
-                                                                type="button">
-                                                            Cancel
-                                                        </button>
-                                                    </div>
-                                                </form>
-                                            </div>
+                                <h5 class="mb-3">Comments</h5>
 
-                                        </div>
-                                    </div>
-                                </div>
+                                <input class="form-control" id="expense_reason" maxlength="256"
+                                       required="" name="comments"
+                                       type="text" value=""/>
+                                <div class="invalid-feedback">Enter any comments!</div>
+                            </div>
+
+                            <input name="created_by" required type="hidden"
+                                   value="{{ request.session.id }}">
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <button class="btn btn-outline-primary" data-bs-dismiss="modal"
+                                        type="button">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -358,6 +371,8 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -394,6 +409,8 @@
         const expenseDateInput = document.getElementById("datepicker");
         expenseDateInput.value = formattedDate;
 
+
+
 </script>
 
 <script>
@@ -420,6 +437,8 @@ $(document).ready(function() {
     // Trigger the change event to handle the initial state
     $('#storeType').trigger('change');
 });
+
+
 </script>
 
 </body>
