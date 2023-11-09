@@ -108,7 +108,8 @@ def forgot_password(email):
                 else:
                     return {
                         "status": False,
-                        "message": f"Failed to send password reset link to {email}. Please try again or contact your admin."
+                        "message": f"Failed to send password reset link to {email}. Please try again or contact your "
+                                   f"admin. "
                     }, 200
             elif check_email is not None and check_email[1] == 0:
                 return {

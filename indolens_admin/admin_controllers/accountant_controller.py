@@ -94,6 +94,7 @@ def get_accountant_by_id(aid):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def edit_accountant(accountant_obj, files):
     try:
         with connection.cursor() as cursor:
@@ -112,9 +113,9 @@ def edit_accountant(accountant_obj, files):
             cursor.execute(update_accountant_obj_query)
 
             return {
-                "status": True,
-                "message": "Accountant updated"
-            }, 200
+                       "status": True,
+                       "message": "Accountant updated"
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
