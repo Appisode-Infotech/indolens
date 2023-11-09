@@ -211,24 +211,27 @@
                                     {% endif %}
                                 </td>
 
-                                <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                    <div class="font-sans-serif btn-reveal-trigger position-static">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
-                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a
-                                                class="dropdown-item">View</a>
+                                <td></td>
+<!--                                <td class="align-middle text-end white-space-nowrap pe-0 action">-->
+<!--                                    <div class="font-sans-serif btn-reveal-trigger position-static">-->
+<!--                                        <button aria-expanded="false"-->
+<!--                                                aria-haspopup="true"-->
+<!--                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs&#45;&#45;2"-->
+<!--                                                data-boundary="window"-->
+<!--                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">-->
+<!--                                            <span class="fas fa-ellipsis-h fs&#45;&#45;2"></span></button>-->
+<!--                                        <div class="dropdown-menu dropdown-menu-end py-2">-->
+<!--                                            <a class="dropdown-item view-button" data-bs-toggle="modalView"-->
+<!--                                               type="button"-->
+<!--                                               data-category-info="{{ stock }}">View</a>-->
 
-                                            <!--                                            <div class="dropdown-divider"></div>-->
-                                            <!--                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>-->
-                                            <!--                                            <div class="dropdown-divider"></div>-->
-                                            <!--                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>-->
-                                        </div>
-                                    </div>
-                                </td>
+<!--                                            &lt;!&ndash;                                            <div class="dropdown-divider"></div>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                            <div class="dropdown-divider"></div>&ndash;&gt;-->
+<!--                                            &lt;!&ndash;                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>&ndash;&gt;-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </td>-->
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -397,21 +400,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'js/csvExport.js' %}"></script>
-
-<script>
-        const currentDate = new Date();
-        const day = String(currentDate.getDate()).padStart(2, '0');
-        const month = String(currentDate.getMonth() + 1).padStart(2, '0');
-        const year = currentDate.getFullYear();
-
-        const formattedDate = `${day}/${month}/${year}`;
-
-        const expenseDateInput = document.getElementById("datepicker");
-        expenseDateInput.value = formattedDate;
-
-
-
-</script>
+<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 
 <script>
 $(document).ready(function() {

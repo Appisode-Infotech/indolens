@@ -59,6 +59,11 @@
 
 
 
+
+
+
+
+
     </script>
 </head>
 
@@ -226,11 +231,23 @@
                                                     data-boundary="window" data-bs-reference="parent"
                                                     data-bs-toggle="dropdown" type="button"><span
                                                     class="fas fa-ellipsis-h fs--2"></span></button>
+
                                             <div class="dropdown-menu dropdown-menu-end py-2">
                                                 <a class="dropdown-item" href="#!">View</a>
-                                                <a class="dropdown-item" href="#!">Restock</a>
-                                                <a class="dropdown-item" href="{% url 'update_product' product.product_id %}">Update Product Info</a>
-                                                <a class="dropdown-item" href="{% url 'update_product_images' product.product_id %}">Update Product Images</a>
+                                                <a class="dropdown-item" type="button"
+                                                   data-bs-role="Product"
+                                                   data-bs-toggle="modal"
+                                                   data-bs-target="#restock_modal"
+                                                   data-employee-id="{{ product.product_id }}"
+                                                   data-employee-name="{{ product.product_name }}"
+                                                   data-action-type="restock">Restock</a>
+
+                                                <a class="dropdown-item"
+                                                   href="{% url 'update_product' product.product_id %}">Update Product
+                                                    Info</a>
+                                                <a class="dropdown-item"
+                                                   href="{% url 'update_product_images' product.product_id %}">Update
+                                                    Product Images</a>
                                                 <div class="dropdown-divider"></div>
 
                                                 {% if product.status == 0 %}
@@ -288,6 +305,59 @@
                 </div>
                 {% include 'modal_warning.html' %}
 
+                <div class="modal fade" id="restock_modal" tabindex="-1"
+                     aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary">
+                                <h5 class="modal-title text-white" id="modal_title_restock"></h5>
+                                <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    <span class="fas fa-times fs--1 text-white"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body" id="modal_content">
+                                <!-- Form for Allocate Store -->
+                                <form action="/" class="row g-3 needs-validation" method="post" novalidate="">
+                                    <div class="col-12">
+                                        <input class="form-control" id="productId" maxlength="256" required
+                                               name="productId"
+                                               type="text" hidden>
+                                        <div class="invalid-feedback">Enter Valid Product Id!</div>
+                                    </div>
+
+                                    <div class="col-12">
+
+                                        <h5 class="mb-3">Product Name</h5>
+
+                                        <input class="form-control" id="productName" maxlength="256" required
+                                               name="productName"
+                                               type="text">
+                                        <div class="invalid-feedback">Enter Valid Product Name!</div>
+                                    </div>
+                                    <div class="col-12">
+
+                                        <h5 class="mb-3">Quantity</h5>
+
+                                        <input class="form-control" id="productQty" maxlength="256" required
+                                               name="productQty"
+                                               type="number">
+                                        <div class="invalid-feedback">Enter Valid Quantity!</div>
+                                    </div>
+                                    <div id="footer_div" class="modal-footer">
+                                        <button class="btn btn-primary modal-submit" type="submit"
+                                           id="modal_submit">Confirm</button>
+                                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             </div>
             {% include 'footer.html' %}
         </div>
@@ -304,6 +374,11 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
+
+
+
 
 
 
@@ -332,5 +407,32 @@
 <script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    var operationsButtons = document.querySelectorAll('[data-bs-target="#restock_modal"]');
+    var modal = document.getElementById('restock_modal');
+    var modalTitle = document.getElementById('modal_title_restock');
+
+    operationsButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+            var empId = event.currentTarget.getAttribute('data-employee-id');
+            var empName = event.currentTarget.getAttribute('data-employee-name');
+            var actionType = event.currentTarget.getAttribute('data-action-type');
+            var role = event.currentTarget.getAttribute('data-bs-role');
+            document.getElementById('productId').value = empId;
+            document.getElementById('productName').value = empName;
+            modalTitle.textContent = "Restock " + "- " + empName;
+             // Use data-bs-toggle and data-bs-target attributes to trigger the modal
+            var targetModal = event.currentTarget.getAttribute('data-bs-target');
+            var backdrop = event.currentTarget.getAttribute('data-bs-backdrop');
+            modal.setAttribute('data-bs-target', targetModal);
+            modal.setAttribute('data-bs-backdrop', backdrop);
+        });
+    });
+});
+
+
+
+</script>
 </body>
 </html>
