@@ -59,6 +59,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -93,9 +94,33 @@
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
                                 </div>
+
+                                <div class="col-auto scrollbar overflow-hidden-y flex-grow-1 me-4">
+                                    <div class="btn-group position-static" role="group">
+                                        <div class="btn-group position-static text-nowrap">
+                                            <button id="sortStatus" aria-expanded="false"
+                                                    aria-haspopup="true"
+                                                    class="btn btn-phoenix-secondary px-7 flex-shrink-0"
+                                                    data-boundary="window"
+                                                    data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                    type="button">{{status}}<span class="fas fa-angle-down ms-2"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="{% url 'manage_own_stores' 'All' %}">All</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider"/>
+                                                </li>
+                                                <li><a class="dropdown-item text-success" href="{% url 'manage_own_stores' 'Active' %}">Active Only</a></li>
+                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_own_stores' 'Inactive' %}">Inactive Only</a></li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="col-auto"><a class="btn btn-primary px-5"
                                                          href="{% url 'create_store_manager' %}"><i
-                                        class="fa-solid fa-plus me-2"></i>Add a Store Managers</a></div>
+                                        class="fa-solid fa-plus me-2"></i>Add a Store Manager</a></div>
                             </div>
                         </div>
                     </div>
@@ -367,6 +392,7 @@
         }
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -435,6 +461,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
 </script>
 
 </body>
