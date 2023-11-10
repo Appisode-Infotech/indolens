@@ -94,6 +94,14 @@
                             <h2 class="mb-0">Pending Stock requests<span class="fw-normal text-700 ms-3">(6)</span></h2>
                         </div>
                     </div>
+                    <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a>
+                        </li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-1">Own
+                            Store</a></li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-2">Franchise
+                            Store</a></li>
+                    </ul>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
 
                         <div class="col-12 col-sm-auto">
@@ -152,7 +160,8 @@
                             </thead>
                             <tbody class="list" id="project-list-table-body">
                             {% for stock in stocks_request_list %}
-                            <tr class="position-static">
+                            <tr class="position-static"
+                            data-category="{{ stock.store_type }}">
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
                                     {% if stock.store_type == 1 %}
                                     <a
@@ -293,7 +302,8 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/filter.js' %}"></script>
 </body>
 
 </html>
