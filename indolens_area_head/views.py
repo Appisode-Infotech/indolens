@@ -22,6 +22,7 @@ def login(request):
         area_head_obj = area_head_auth_model.area_head_model_from_dict(request.POST)
         response, status_code = area_head_auth_controller.login(area_head_obj)
         if response['status']:
+            request.session.clear()
             for data in response['area_head']:
                 request.session.update({
                     'is_area_head_logged_in': True,

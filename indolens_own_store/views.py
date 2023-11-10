@@ -20,6 +20,7 @@ def login(request):
         store_obj = own_store_employee_model.store_employee_from_dict(request.POST)
         response, status_code = own_store_auth_controller.login(store_obj)
         if response['status']:
+            request.session.clear()
             for data in response['store']:
                 request.session.update({
                     'is_store_logged_in': True,
@@ -78,7 +79,7 @@ def manageStoreEmployees(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_employee_controller.get_all_store_employee(
             request.session.get('assigned_store_id'))
-        return render(request, 'employee/manageEmployees.html',
+        return render(request, 'employee/manageFranchiseEmployees.html',
                       {"store_employee_list": response['store_employee_list']})
     else:
         return redirect('own_store_login')
@@ -87,6 +88,7 @@ def manageStoreEmployees(request):
 def viewEmployees(request, employeeId):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_employee_controller.get_store_employee_by_id(employeeId)
+        print("ownstore view employee")
         return render(request, 'employee/viewEmployee.html', {"store_employee": response['store_employee']})
     else:
         return redirect('own_store_login')

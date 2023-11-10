@@ -178,7 +178,7 @@ def viewAllEmployeFranchise(request):
         response, status_code = franchise_store_employee_controller.get_all_franchise_emp(
             request.session.get('assigned_store_id'))
         print(response)
-        return render(request, 'employee/manageEmployees.html',
+        return render(request, 'employee/manageFranchiseEmployees.html',
                       {"franchise_employee_list": response['franchise_employee_list']})
     else:
         return redirect('franchise_store_login')
