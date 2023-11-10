@@ -245,13 +245,14 @@
                                                         <h4 class="mb-3">Customer Phone</h4>
                                                         <select class="form-select" data-choices="data-choices"
                                                                 data-options='{"removeItemButton":true,"placeholder":true}'
-                                                                id="organizerSingle"
+                                                                id="organizerSingle" required="required"
                                                                 name="customer_phone">
                                                             <option value="">Enter Phone</option>
                                                             <option>8660225160</option>
                                                             <option>9538806282</option>
                                                             <option>1234567890</option>
                                                         </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                                     <div class="col-auto">
                                                         <h5 class="mb-3">Customer not found?</h5>
@@ -266,12 +267,14 @@
                                                         <input class="form-control" name="customr_name" placeholder="Customer Name"
                                                                required="required"
                                                                type="text" value="abc"/>
+                                                        <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                                     <div class="mb2 col-6">
                                                         <h5 class="mb-3 ">Customer Age</h5>
                                                         <input class="form-control" name="customer_age" placeholder="Customer Age"
                                                                required="required"
                                                                type="number" value="12"/>
+                                                        <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                                 </div>
                                                 <div class="row g-3 mb-3">
@@ -292,6 +295,7 @@
                                                         <input class="form-control" name="customer_email" placeholder="Customer email"
                                                                required="required"
                                                                type="email" value="dan@gmail.com"/>
+                                                        <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                                 </div>
 

@@ -1,7 +1,8 @@
 from django.shortcuts import redirect, render
 
 from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
-    franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller
+    franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller, \
+    franchise_store_employee_controller
 from indolens_franchise_store.franchise_store_model.franchise_store_req_model import franchise_store_employee_model, \
     franchise_expense_model, franchise_create_stock_request_model
 
@@ -169,6 +170,32 @@ def viewCustomerDetailsFranchise(request, customerId):
         return redirect('franchise_store_login')
 
 
+# ================================= FRANCHISE STORE EMPLOYEE MANAGEMENT ======================================
+
+def viewAllEmployeFranchise(request):
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        response, status_code = franchise_store_employee_controller.get_all_franchise_emp(
+            request.session.get('assigned_store_id'))
+        print(response)
+        return render(request, 'employee/manageEmployees.html',
+                      {"franchise_employee_list": response['franchise_employee_list']})
+    else:
+        return redirect('franchise_store_login')
+
+
+def viewEmployeeDetailsFranchise(request, employeeId):
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        response, status_code = franchise_store_employee_controller.get_franchise_emp_by_id(
+            request.session.get('assigned_store_id'), employeeId)
+        print(response)
+        return render(request, 'employee/viewEmployee.html',
+                      {"franchise_employee": response['franchise_employee']})
+    else:
+        return redirect('franchise_store_login')
+
+
 # ================================= FRANCHISE STORE STOCK REQUESTS MANAGEMENT ======================================
 
 def createStockRequestFranchise(request):
@@ -279,8 +306,6 @@ def allExpenseFranchise(request):
             response, status_code = franchise_expense_controller.get_all_franchise_store_expense(
                 request.session.get('assigned_store_id'),
                 request.session.get('store_type'))
-            print(response)
-
             return render(request, 'expenses/allExpenseFranchise.html',
                           {"stor_expense_list": response['stor_expense_list']})
     else:

@@ -16,6 +16,10 @@ urlpatterns = [
     path('view_franchise_store_customers/', viewAllCustomersFranchise, name='view_franchise_store_customers'),
     path('view_franchise_store_customers/view_franchise_store_customer_details/customerId=<int:customerId>', viewCustomerDetailsFranchise,
          name='view_franchise_store_customer_details'),
+    # Manage employee
+    path('view_franchise_store_employee/', viewAllEmployeFranchise, name='view_franchise_store_employee'),
+    path('view_franchise_store_employee/view_franchise_store_employee_details/employeeId=<int:employeeId>', viewEmployeeDetailsFranchise,
+         name='view_franchise_store_employee_details'),
     # orders management
     path('all_franchise_store_orders/', allFranchiseOrders, name='all_franchise_store_orders'),
     path('pending_franchise_store_orders/', pendingFranchiseOrders, name='pending_franchise_store_orders'),

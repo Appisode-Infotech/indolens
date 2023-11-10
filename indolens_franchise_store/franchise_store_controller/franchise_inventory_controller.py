@@ -29,7 +29,7 @@ def get_all_out_of_stock_products_for_franchise_store(quantity, store_id):
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                    LEFT JOIN own_store AS os ON os.store_id = '{store_id}'
+                                    LEFT JOIN franchise_store AS os ON os.store_id = '{store_id}'
                                     WHERE si.product_quantity <= {quantity} AND si.store_id = '{store_id}' AND si.store_type = 2 """
 
             cursor.execute(get_all_out_of_stock_product_query)
@@ -61,7 +61,7 @@ def get_all_products_for_franchise_store(store_id):
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                    LEFT JOIN own_store AS os ON os.store_id = '{store_id}' 
+                                    LEFT JOIN franchise_store AS os ON os.store_id = '{store_id}' 
                                     WHERE si.store_id = {store_id} AND si.store_type = 2 """
 
             cursor.execute(get_all_out_of_stock_product_query)
@@ -155,7 +155,7 @@ def view_all_store_stock_request(store_id, status):
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
-                                    LEFT JOIN own_store os ON os.store_id = {store_id}
+                                    LEFT JOIN franchise_store os ON os.store_id = {store_id}
                                     WHERE rp.store_id = {store_id} AND rp.request_status LIKE '{status}' AND rp.store_type = 2 """
 
             cursor.execute(get_all_out_of_stock_product_query)
