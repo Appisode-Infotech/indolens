@@ -2410,6 +2410,16 @@ def centralInventoryUpdateProduct(request, productId):
                   {'product_data': response['product_data'], 'productId': productId})
 
 
+def centralInventoryUpdateProductStatus(request,filter, productId, status):
+    print("====================================Update Status======================")
+    print(productId)
+    print(status)
+    print(filter)
+    response, status_code = central_inventory_controller.change_product_status(productId, status)
+    url = reverse('manage_central_inventory_products', kwargs={'status': filter})
+    return redirect(url)
+
+
 def centralInventoryUpdateProductImages(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
     return render(request, 'indolens_admin/centralInventory/updateProductImages.html',

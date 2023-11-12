@@ -259,7 +259,7 @@
                                                    data-employee-id="{{ product.product_id }}"
                                                    data-employee-name="{{ product.product_name }}"
                                                    data-action-type="enable"
-                                                   data-action-url="{% url 'enable_disable_product' product.product_id 1 %}">
+                                                   data-action-url="{% url 'enable_disable_product' status product.product_id 1 %}">
                                                     Make Active
                                                 </a>
                                                 {% else %}
@@ -271,7 +271,7 @@
                                                    data-employee-id="{{ product.product_id }}"
                                                    data-employee-name="{{ product.product_name }}"
                                                    data-action-type="disable"
-                                                   data-action-url="{% url 'enable_disable_product' product.product_id 0 %}">Make
+                                                   data-action-url="{% url 'enable_disable_product' status product.product_id 0 %}">Make
                                                     Inactive</a>
                                                 {% endif %}
                                                 <!--                                                <a class="dropdown-item text-danger" href="#!">Remove</a>-->
