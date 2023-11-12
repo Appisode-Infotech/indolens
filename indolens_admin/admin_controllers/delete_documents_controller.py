@@ -32,10 +32,9 @@ def delete_document(documenturl, document_type, table, condition, user_id):
                 "message": "Document Deleted Successfully"
             }
         else:
-            print(f"{file_name} does not exist.")
             return {
                 "status": False,
-                "message": "Document Doesn't Exist"
+                "message": f"{file_name} Document Doesn't Exist"
             }
 
     except pymysql.Error as e:
