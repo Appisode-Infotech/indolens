@@ -37,7 +37,7 @@ urlpatterns = [
     path('manage_central_inventory_products/status=<str:status>', manageCentralInventoryProducts,
          name='manage_central_inventory_products'),
     path('manage_central_inventory_products/add_products/', centralInventoryAddProducts, name='add_products'),
-    path('manage_central_inventory_products/update_product/<str:productId>', centralInventoryUpdateProduct, name='update_product'),
+    path('manage_central_inventory_products/update_product/productId=<str:productId>', centralInventoryUpdateProduct, name='update_product'),
     path('manage_central_inventory_products/update_product_images/<str:productId>', centralInventoryUpdateProductImages, name='update_product_images'),
     path('manage_central_inventory_products/<str:filter>/enable_disable_product/productId=<str:productId>/status=<str:status>', centralInventoryUpdateProductStatus, name='enable_disable_product'),
     path('manageMoveStocks/', manageMoveStocks, name='manageMoveStocks'),

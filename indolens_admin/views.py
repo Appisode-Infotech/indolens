@@ -2405,16 +2405,17 @@ def manageCentralInventoryProducts(request, status):
 
 
 def centralInventoryUpdateProduct(request, productId):
+    if request.method == 'POST':
+        print(request.POST)
+        product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
+        response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId)
     response, status_code = get_central_inventory_product_single(productId)
+    types, status_code = central_inventory_controller.get_all_active_types()
     return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
-                  {'product_data': response['product_data'], 'productId': productId})
+                  {'product_data': response['product_data'], 'productId': productId, "response": types})
 
 
-def centralInventoryUpdateProductStatus(request,filter, productId, status):
-    print("====================================Update Status======================")
-    print(productId)
-    print(status)
-    print(filter)
+def centralInventoryUpdateProductStatus(request, filter, productId, status):
     response, status_code = central_inventory_controller.change_product_status(productId, status)
     url = reverse('manage_central_inventory_products', kwargs={'status': filter})
     return redirect(url)
@@ -2466,7 +2467,6 @@ def centralInventoryAddProducts(request):
             return redirect('manage_central_inventory_products')
         else:
             response, status_code = central_inventory_controller.get_all_active_types()
-            print(response)
             return render(request, 'indolens_admin/centralInventory/centralInventoryAddProducts.html', response)
 
     else:

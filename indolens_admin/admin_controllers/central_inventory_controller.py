@@ -127,6 +127,43 @@ def add_central_inventory_products(product_obj, file):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def update_central_inventory_products(product_obj, productId):
+    try:
+        with connection.cursor() as cursor:
+            update_product_query = f"""
+                UPDATE central_inventory 
+                SET product_name = '{product_obj.product_title}',
+                    product_description = '{product_obj.product_description}',
+                    category_id = '{product_obj.category_id}',
+                    brand_id = '{product_obj.brand_id}',
+                    material_id = '{product_obj.material_id}',
+                    frame_type_id = '{product_obj.frame_type_id}',
+                    frame_shape_id = '{product_obj.frame_shape_id}',
+                    color_id = '{product_obj.color_id}',
+                    unit_id = '{product_obj.unit_id}',
+                    origin = '{product_obj.origin}',
+                    cost_price = '{product_obj.cost_price}',
+                    sale_price = '{product_obj.sale_price}',
+                    model_number = '{product_obj.model_number}',
+                    hsn = '{product_obj.hsn_number}',
+                    last_updated_on = '{today}',
+                    last_updated_by = '{product_obj.last_updated_by}',
+                    product_quantity = '{product_obj.product_quantity}',
+                    product_gst = '{product_obj.product_gstin}'
+                WHERE product_id = '{productId}'
+            """
+
+            cursor.execute(update_product_query)
+            productId = cursor.lastrowid
+            return {
+                "status": True,
+                "productId": productId
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def get_all_central_inventory_products(status):
     try:

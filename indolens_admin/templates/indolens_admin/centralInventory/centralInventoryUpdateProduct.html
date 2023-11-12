@@ -72,7 +72,7 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
         <div class="content">
-            <form action="{% url 'add_products' %}" class="mb-9 needs-validation" method="post" novalidate="novalidate"
+            <form action="{% url 'update_product' product_data.product_id %}" class="mb-9 needs-validation" method="post" novalidate="novalidate"
                   enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row g-3 flex-between-end mb-5">
@@ -102,15 +102,6 @@
                             <div class="invalid-feedback">Please provide a Product description.</div>
 
                         </div>
-<!--                        <h4 class="mb-3">Display images</h4>-->
-<!--                        <div class="mb-3">-->
-<!--                            <h5 class="mb-3">Upload product images(Can choose multiple)</h5>-->
-<!--                            <input required class="form-control" id="document1" multiple="multiple"-->
-<!--                                   name="productImages"-->
-<!--                                   type="file"/>-->
-<!--                            <div class="invalid-feedback">Please upload at least one picture.</div>-->
-<!--                        </div>-->
-<!--                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>-->
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Quantity</h5>
@@ -172,8 +163,8 @@
                                                 <select id="categorySelect" name="categoryId" required
                                                         aria-label="category" class="form-select mb-3"
                                                         onchange="handleCategoryChange()">
-                                                    <option value="">Select category</option>
-                                                    {% for category in product_categories %}
+                                                    <option value="{{product_data.category_id}}">{{product_data.category_name}}</option>
+                                                    {% for category in response.product_categories %}
                                                     <option value="{{category.category_id}}">
                                                         {{category.category_name}}
                                                     </option>
@@ -190,8 +181,8 @@
                                                 </div>
                                                 <select name="brandId" required aria-label="brands"
                                                         class="form-select mb-3">
-                                                    <option value="">Select Brand</option>
-                                                    {% for brand in product_brands %}
+                                                    <option value="{{product_data.brand_id}}">{{product_data.brand_name}}</option>
+                                                    {% for brand in response.product_brands %}
                                                     <option value="{{brand.brand_id}}">{{brand.brand_name}}</option>
                                                     {% endfor %}
                                                 </select>
@@ -205,8 +196,8 @@
                                                         new material</a>
                                                     </div>
                                                     <select name="materialId" required class="form-select mb-3">
-                                                        <option value="">Select Material</option>
-                                                        {% for material in product_materials %}
+                                                        <option value="{{product_data.material_id}}">{{product_data.material_name}}</option>
+                                                        {% for material in response.product_materials %}
                                                         <option value="{{material.material_id}}">
                                                             {{material.material_name}}
                                                         </option>
@@ -223,8 +214,8 @@
                                                         new frame type</a>
                                                     </div>
                                                     <select name="frameTypeId" required class="form-select mb-3">
-                                                        <option value="">Select Frame Type</option>
-                                                        {% for type in frame_types %}
+                                                        <option value="{{product_data.frame_type_id}}">{{product_data.frame_type_name}}</option>
+                                                        {% for type in response.frame_types %}
                                                         <option value="{{type.frame_id}}">{{type.frame_type_name}}
                                                         </option>
                                                         {% endfor %}
@@ -241,8 +232,8 @@
                                                         new Shape</a>
                                                     </div>
                                                     <select name="frameShapeId" required class="form-select mb-3">
-                                                        <option value="">Select frame shape</option>
-                                                        {% for frame_shape in frame_shapes %}
+                                                        <option value="{{product_data.frame_shape_id}}">{{product_data.shape_name}}</option>
+                                                        {% for frame_shape in response.frame_shapes %}
                                                         <option value="{{frame_shape.shape_id}}">
                                                             {{frame_shape.shape_name}}
                                                         </option>
@@ -271,8 +262,8 @@
                                                         new Color</a>
                                                     </div>
                                                     <select name="colorId" required class="form-select">
-                                                        <option value="">Select Color</option>
-                                                        {% for color in colors %}
+                                                        <option value="{{product_data.color_id}}">{{product_data.color_name}}</option>
+                                                        {% for color in response.colors %}
                                                         <option value="{{color.color_id}}">
                                                             {{color.color_name}} -
                                                             {{color.color_code}}
@@ -288,8 +279,8 @@
                                                     <h5 class="text-1000">Unit</h5>
                                                 </div>
                                                 <select name="unitId" required class="form-select">
-                                                    <option value="">Select unit</option>
-                                                    {% for unit in master_units %}
+                                                    <option value="{{product_data.unit_id}}">{{product_data.unit_name}}</option>
+                                                    {% for unit in response.master_units %}
                                                     <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
                                                     {% endfor %}
                                                 </select>
@@ -300,7 +291,7 @@
                                                     <h5 class="mb-0 text-1000">Origin</h5>
                                                 </div>
                                                 <select name="origin" required aria-label="origin" class="form-select">
-                                                    <option value="">Select Origin</option>
+                                                    <option value="{{product_data.origin}}">{{product_data.origin}}</option>
                                                     <option value="Indian">Indian</option>
                                                     <option value="Foreign">Foreign</option>
                                                     <option value="Domestic">Domestic</option>
@@ -367,18 +358,26 @@
 <script src="{% static 'js/file-upload-preview.js' %}"></script>
 
 <script>
-        function handleCategoryChange() {
-            var selectElement = document.getElementById("categorySelect");
-            var divToToggle = document.getElementById("only_frame_options");
-            var selectedValue = selectElement.value;
-             if (selectedValue === "1") {
-                divToToggle.classList.remove("d-none");
-            } else {
-                divToToggle.classList.add("d-none");
-            }
-        }
+    // Function to handle category change
+    function handleCategoryChange() {
+        var selectElement = document.getElementById("categorySelect");
+        var divToToggle = document.getElementById("only_frame_options");
+        var selectedValue = selectElement.value;
 
+        if (selectedValue === "1") {
+            divToToggle.classList.remove("d-none");
+        } else {
+            divToToggle.classList.add("d-none");
+        }
+    }
+
+    // Initial call to handleCategoryChange when the page loads
+    document.addEventListener("DOMContentLoaded", function () {
+        handleCategoryChange();
+    });
 </script>
+
+
 </body>
 
 </html>
