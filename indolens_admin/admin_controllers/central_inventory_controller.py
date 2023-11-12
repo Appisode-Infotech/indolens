@@ -166,6 +166,25 @@ def update_central_inventory_products(product_obj, productId):
         return {"status": False, "message": str(e)}, 301
 
 
+def restock_central_inventory_products(productId, product_quantity):
+    try:
+        with connection.cursor() as cursor:
+            restock_product_query = f"""
+                UPDATE central_inventory 
+                SET product_quantity = product_quantity + {product_quantity}
+                WHERE product_id = '{productId}'
+            """
+
+            cursor.execute(restock_product_query)
+            return {
+                "status": True
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
 def get_all_central_inventory_products(status):
     try:
         status_conditions = {

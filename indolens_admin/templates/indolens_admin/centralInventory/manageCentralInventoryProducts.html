@@ -318,7 +318,8 @@
                             </div>
                             <div class="modal-body" id="modal_content">
                                 <!-- Form for Allocate Store -->
-                                <form action="/" class="row g-3 needs-validation" method="post" novalidate="">
+                                <form action="{% url 'restock_products' status %}" class="row g-3 needs-validation" method="post" novalidate="">
+                                    {% csrf_token %}
                                     <div class="col-12">
                                         <input class="form-control" id="productId" maxlength="256" required
                                                name="productId"

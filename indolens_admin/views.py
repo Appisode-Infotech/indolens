@@ -2405,6 +2405,16 @@ def manageCentralInventoryProducts(request, status):
         return redirect('login')
 
 
+def restockProduct(request, status):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.restock_central_inventory_products(
+            request.POST['productId'], request.POST['productQty'], )
+        url = reverse('manage_central_inventory_products', kwargs={'status': status})
+        return redirect(url)
+    else:
+        return redirect('login')
+
+
 def centralInventoryUpdateProduct(request, productId):
     if request.method == 'POST':
         product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
