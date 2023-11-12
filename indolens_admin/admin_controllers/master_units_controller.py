@@ -49,7 +49,6 @@ def get_all_units():
                                              """
             cursor.execute(get_units_query)
             master_units = cursor.fetchall()
-            print(master_units)
             return {
                        "status": True,
                        "units_list": get_master_units(master_units)

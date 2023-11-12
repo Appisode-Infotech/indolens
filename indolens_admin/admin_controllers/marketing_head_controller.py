@@ -58,7 +58,6 @@ def get_all_marketing_head():
             """
             cursor.execute(get_marketing_head_query)
             marketing_head = cursor.fetchall()
-            print(marketing_head)
 
             return {
                        "status": True,
@@ -85,7 +84,6 @@ def get_marketing_head_by_id(mhid):
             """
             cursor.execute(get_marketing_head_query)
             marketing_head = cursor.fetchall()
-            print(marketing_head)
 
             return {
                        "status": True,

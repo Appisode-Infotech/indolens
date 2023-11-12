@@ -223,11 +223,6 @@
                                             <a class="dropdown-item view-button" data-bs-toggle="modalView"
                                                type="button"
                                                data-category-info="{{ stock }}">View</a>
-
-                                            <!--                                            <div class="dropdown-divider"></div>-->
-                                            <!--                                            <a class="dropdown-item text-success" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 1 %}">Accept</a>-->
-                                            <!--                                            <div class="dropdown-divider"></div>-->
-                                            <!--                                            <a class="dropdown-item text-danger" href="{% url 'change_stock_request_status' 'All' stock.request_products_id 2 %}">Reject</a>-->
                                         </div>
                                     </div>
                                 </td>
@@ -268,7 +263,7 @@
                                 type="button"><span class="fas fa-times fs--1"></span></button>
                     </div>
                     <div class="p-4 code-to-copy">
-                        <form action="{% url 'all_expenses_store' %}"
+                        <form action="{% url 'manageMoveStocks' %}"
                               class="row g-3 needs-validation"
                               method='POST' novalidate="">
                             {% csrf_token %}
@@ -278,9 +273,10 @@
                                         data-options='{"removeItemButton":true,"placeholder":true}'
                                         name="product_id" required="required">
                                     <option value="">Select Product</option>
-                                    <option value="1">8660225160</option>
-                                    <option value="2">9538806282</option>
-                                    <option value="3">1234567890</option>
+
+                                    {% for products in products %}
+                                    <option value="{{products.product_id}}">{{products.product_name}}</option>
+                                    {% endfor %}
                                 </select>
                                 <div class="custom-error" style="color: red;"></div>
                             </div>
@@ -289,11 +285,11 @@
                                 <h5 class="mb-3 ">Select Store Type</h5>
                                 <select class="form-select"
                                         id="storeType"
-                                        name="storeType"
+                                        name="store_type"
                                         required="required">
                                     <option value="">Select Store Type</option>
-                                    <option value="own">Own Store</option>
-                                    <option value="franchise">Franchise</option>
+                                    <option value="1">Own Store</option>
+                                    <option value="2">Franchise</option>
                                 </select>
                                 <div class="invalid-feedback">This field is required.</div>
                             </div>
@@ -302,11 +298,11 @@
                                 <h5 class="mb-3">Select Own Store</h5>
                                 <select class="form-select" data-choices="data-choices"
                                         data-options='{"removeItemButton":true,"placeholder":true}'
-                                        name="own_store_id" required="required">
+                                        name="own_store_id" >
                                     <option value="">Choose Store to move</option>
-                                    <option>8660225160</option>
-                                    <option>9538806282</option>
-                                    <option>1234567890</option>
+                                    {% for store in own_store_list %}
+                                    <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                    {% endfor %}
                                 </select>
                                 <div class="custom-error" style="color: red;"></div>
                             </div>
@@ -315,11 +311,11 @@
                                 <h5 class="mb-3">Select Franchise Store</h5>
                                 <select class="form-select" data-choices="data-choices"
                                         data-options='{"removeItemButton":true,"placeholder":true}'
-                                        name="franchise_store_id" required="required">
+                                        name="franchise_store_id" >
                                     <option value="">Choose Store to move</option>
-                                    <option>8660225160</option>
-                                    <option>9538806282</option>
-                                    <option>1234567890</option>
+                                    {% for store in franchise_store_list %}
+                                    <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                    {% endfor %}
                                 </select>
                                 <div class="custom-error" style="color: red;"></div>
                             </div>
@@ -328,7 +324,7 @@
 
                                 <h5 class="mb-3">Quantity</h5>
 
-                                <input class="form-control" id="qty" maxlength="256" required name="qty" type="number"
+                                <input class="form-control" id="qty" maxlength="256" required name="product_quantity" type="number"
                                        value="" max="10">
                                 <div class="invalid-feedback">Enter Valid Quantity!</div>
                             </div>
@@ -410,10 +406,10 @@ $(document).ready(function() {
     // Add an event handler to the "Select Store Type" select box
     $('#storeType').change(function() {
         var selectedValue = $(this).val();
-        if (selectedValue === 'own') {
+        if (selectedValue === '1') {
             $('#ownStoreSelectDiv').show();
             $('#franchiseStoreSelectDiv').hide();
-        } else if (selectedValue === 'franchise') {
+        } else if (selectedValue === '2') {
             $('#ownStoreSelectDiv').hide();
             $('#franchiseStoreSelectDiv').show();
         } else {

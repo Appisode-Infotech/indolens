@@ -164,7 +164,6 @@ def get_all_franchise_optimetry():
                                             WHERE op.role = 2 """
             cursor.execute(get_store_manager_query)
             franchise_optimetry = cursor.fetchall()
-            print(get_own_store_employees(franchise_optimetry))
             return {
                 "status": True,
                 "optimetry_list": get_own_store_employees(franchise_optimetry)

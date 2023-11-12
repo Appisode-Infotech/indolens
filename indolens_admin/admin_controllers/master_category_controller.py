@@ -48,7 +48,6 @@ def get_all_central_inventory_category():
             LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id"""
             cursor.execute(get_product_category_query)
             stores_data = cursor.fetchall()
-            print(stores_data)
 
             return {
                        "status": True,

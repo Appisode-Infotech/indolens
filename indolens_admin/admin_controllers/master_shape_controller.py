@@ -48,7 +48,6 @@ def get_all_central_inventory_shapes():
             """
             cursor.execute(get_product_shape_query)
             shapes_data = cursor.fetchall()
-            print(shapes_data)
 
             return {
                 "status": True,

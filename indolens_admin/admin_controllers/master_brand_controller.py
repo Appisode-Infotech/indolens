@@ -47,7 +47,6 @@ def get_all_central_inventory_brand():
             """
             cursor.execute(get_product_brand_query)
             brand_data = cursor.fetchall()
-            print(brand_data)
 
             return {
                 "status": True,

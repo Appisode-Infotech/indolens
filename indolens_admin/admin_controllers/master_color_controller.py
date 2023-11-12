@@ -49,7 +49,6 @@ def get_all_central_inventory_color():
             """
             cursor.execute(get_frame_color_query)
             frame_color_data = cursor.fetchall()
-            print(frame_color_data)
 
             return {
                        "status": True,

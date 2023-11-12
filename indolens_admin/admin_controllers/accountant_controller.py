@@ -57,7 +57,6 @@ def get_all_accountant():
             """
             cursor.execute(get_accountant_query)
             accountant = cursor.fetchall()
-            print(accountant)
 
             return {
                        "status": True,

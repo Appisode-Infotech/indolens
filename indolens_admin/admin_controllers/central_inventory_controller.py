@@ -127,6 +127,7 @@ def add_central_inventory_products(product_obj, file):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def update_central_inventory_products(product_obj, productId):
     try:
         with connection.cursor() as cursor:
@@ -406,6 +407,39 @@ def change_product_status(productId, status):
             "message": "updated stock status"
         }
 
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def create_store_stock_request(stock_obj, store_id):
+    try:
+        with connection.cursor() as cursor:
+            stock_req_query = """INSERT INTO request_products ( 
+                               store_id, 
+                               store_type, 
+                               product_id, 
+                               product_quantity, 
+                               request_status, 
+                               delivery_status, 
+                               is_requested,
+                               request_to_store_id,
+                               payment_status,
+                               created_on, 
+                               created_by, 
+                               last_updated_on, 
+                               last_updated_by
+                           ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+
+            cursor.execute(stock_req_query, (
+                store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
+                1, 0, 0, 0, 0, today, stock_obj.created_by, today, stock_obj.created_by))
+            return {
+                "status": True,
+                "message": "success"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

@@ -13,7 +13,6 @@ today = datetime.datetime.now(ist)
 
 
 def get_all_area_stores_customers(assigned_stores):
-    print(assigned_stores)
     try:
         with connection.cursor() as cursor:
             get_store_customers_query = f""" SELECT c.*, os.store_name, creator.name, updater.name 

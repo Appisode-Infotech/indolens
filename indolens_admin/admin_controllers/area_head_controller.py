@@ -86,7 +86,6 @@ def get_area_head_by_id(ahid):
             """
             cursor.execute(get_area_head_query)
             area_heads = cursor.fetchall()
-            print(area_heads)
 
             return {
                        "status": True,

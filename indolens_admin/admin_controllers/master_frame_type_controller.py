@@ -48,7 +48,6 @@ def get_all_central_inventory_frame_types():
             """
             cursor.execute(get_frame_types_query)
             frame_type_data = cursor.fetchall()
-            print(frame_type_data)
 
             return {
                 "status": True,

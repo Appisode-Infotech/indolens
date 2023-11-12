@@ -47,7 +47,6 @@ def get_all_central_inventory_materials():
             """
             cursor.execute(get_material_query)
             material_data = cursor.fetchall()
-            print(material_data)
 
             return {
                 "status": True,
