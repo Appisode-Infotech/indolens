@@ -15,7 +15,7 @@ today = datetime.datetime.now(ist)
 
 def create_store_manager(store_manager, files):
     try:
-        hashed_password = bcrypt.hashpw(store_manager.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(store_manager.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_store_manager_query = f"""
                 INSERT INTO own_store_employees (

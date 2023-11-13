@@ -147,7 +147,8 @@ def createOwnStore(request):
             if status_code != 200:
                 return render(request, 'indolens_admin/ownStore/createOwnStore.html', {"message": response['message']})
             else:
-                return redirect('manage_own_stores')
+                url = reverse('view_own_store', kwargs={'ownStoreId': response['storeId']})
+                return redirect(url)
         return render(request, 'indolens_admin/ownStore/createOwnStore.html')
     else:
         return redirect('login')
@@ -384,6 +385,7 @@ def createStoreManager(request):
 
             store_manager = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
+            print(response)
             url = reverse('view_store_manager', kwargs={'storeManagerId': response['mid']})
             return redirect(url)
 

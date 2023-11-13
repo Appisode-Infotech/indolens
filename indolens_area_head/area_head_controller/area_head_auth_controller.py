@@ -11,7 +11,6 @@ from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.admin_auth_resp_model import get_admin_user
 from indolens_area_head.area_head_model.area_head_resp_models.area_head_resp_model import get_area_heads
-from migrate_db import cursor
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
