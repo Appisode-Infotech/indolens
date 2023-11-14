@@ -66,8 +66,9 @@ class InventoryAddProducts:
     last_updated_by: Optional[int]
     product_quantity: Optional[int]
     product_gstin: Optional[float]
+    discount: Optional[float]
 
-    def __init__(self, product_id: Optional[int], product_title: Optional[str], product_description: Optional[str], product_images: Optional[str], category_id: Optional[int], brand_id: Optional[int], material_id: Optional[int], frame_type_id: Optional[int], frame_shape_id: Optional[int], color_id: Optional[int], unit_id: Optional[int], origin: Optional[str], cost_price: Optional[int], sale_price: Optional[int], model_number: Optional[str], hsn_number: Optional[str], created_on: Optional[str], created_by: Optional[int], last_updated_on: Optional[str], last_updated_by: Optional[int], product_quantity: Optional[int], product_gstin: Optional[float]) -> None:
+    def __init__(self, product_id: Optional[int], product_title: Optional[str], product_description: Optional[str], product_images: Optional[str], category_id: Optional[int], brand_id: Optional[int], material_id: Optional[int], frame_type_id: Optional[int], frame_shape_id: Optional[int], color_id: Optional[int], unit_id: Optional[int], origin: Optional[str], cost_price: Optional[int], sale_price: Optional[int], model_number: Optional[str], hsn_number: Optional[str], created_on: Optional[str], created_by: Optional[int], last_updated_on: Optional[str], last_updated_by: Optional[int], product_quantity: Optional[int], product_gstin: Optional[float], discount: Optional[float]) -> None:
         self.product_id = product_id
         self.product_title = product_title
         self.product_description = product_description
@@ -90,6 +91,7 @@ class InventoryAddProducts:
         self.last_updated_by = last_updated_by
         self.product_quantity = product_quantity
         self.product_gstin = product_gstin
+        self.discount = discount
 
     @staticmethod
     def from_dict(obj: Any) -> 'InventoryAddProducts':
@@ -116,7 +118,8 @@ class InventoryAddProducts:
         last_updated_by = from_union([from_str, from_none], obj.get("last_updated_by"))
         product_quantity = from_union([from_str, from_none], obj.get("productQuantity"))
         product_gstin = from_union([from_str, from_none], obj.get("productGSTIN"))
-        return InventoryAddProducts(product_id, product_title, product_description, product_images, category_id, brand_id, material_id, frame_type_id, frame_shape_id, color_id, unit_id, origin, cost_price, sale_price, model_number, hsn_number, created_on, created_by, last_updated_on, last_updated_by, product_quantity, product_gstin)
+        discount = from_union([from_str, from_none], obj.get("discount"))
+        return InventoryAddProducts(product_id, product_title, product_description, product_images, category_id, brand_id, material_id, frame_type_id, frame_shape_id, color_id, unit_id, origin, cost_price, sale_price, model_number, hsn_number, created_on, created_by, last_updated_on, last_updated_by, product_quantity, product_gstin, discount)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -164,6 +167,8 @@ class InventoryAddProducts:
             result["productQuantity"] = from_union([from_int, from_none], self.product_quantity)
         if self.product_gstin is not None:
             result["productGSTIN"] = from_union([to_float, from_none], self.product_gstin)
+        if self.discount is not None:
+            result["discount"] = from_union([to_float, from_none], self.discount)
         return result
 
 

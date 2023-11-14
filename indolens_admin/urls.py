@@ -116,7 +116,7 @@ urlpatterns = [
          enableDisableStoreManager, name='enable_disable_store_manager'),
 
     # store franchise owners
-    path('manage_franchise_owners/', manageFranchiseOwners, name='manage_franchise_owners'),
+    path('manage_franchise_owners/status=<str:status>', manageFranchiseOwners, name='manage_franchise_owners'),
     path('manage_franchise_owners/create_franchise_owner/', createFranchiseOwners, name='create_franchise_owner'),
     path('manage_franchise_owners/edit_franchise_owner/franchiseOwnerId=<int:franchiseOwnersId>', editFranchiseOwners,
          name='edit_franchise_owner'),
@@ -125,7 +125,7 @@ urlpatterns = [
     path('manage_franchise_owners/view_franchise_owner/franchiseOwnerId=<int:franchiseOwnersId>', viewFranchiseOwners,
          name='view_franchise_owner'),
     path(
-        'manage_franchise_owners/enable_disable_franchise_owner/franchiseOwnerId=<int:franchiseOwnersId>/status=<int:status>',
+        'manage_franchise_owners/enable_disable_franchise_owner/route=<str:route>/franchiseOwnerId=<int:franchiseOwnersId>/status=<int:status>',
         enableDisableFranchiseOwner, name='enable_disable_franchise_owner'),
 
     # area heads
@@ -178,7 +178,7 @@ urlpatterns = [
         enableDisableFranchiseOptimetry, name='enable_disable_franchise_optimetry'),
 
     # manage sales executive
-    path('manage_store_sales_executives/status<str:status>', manageSaleExecutives, name='manage_store_sales_executives'),
+    path('manage_store_sales_executives/status=<str:status>', manageSaleExecutives, name='manage_store_sales_executives'),
     path('manage_store_sales_executives/create_sales_executives/', createSaleExecutives,
          name='create_sales_executives'),
     path('manage_store_sales_executives/edit_sales_executives/salesExecutiveId=<int:ownSaleExecutivesId>',
@@ -294,6 +294,16 @@ urlpatterns = [
     path('assign_optimetry_own_store/route<str:route>', assignOptimetryOwnStore, name='assign_optimetry_own_store'),
     path('un_assign_optimetry_own_store/route<str:route>/empId=<int:empId>/storeId=<int:storeId>', unAssignOptimetryOwnStore,
          name='un_assign_optimetry_own_store'),
+
+    # assign/un assign Own store Sales Executive
+    path('assign_sales_executive_own_store/route=<str:route>', assignSalesExecutiveOwnStore, name='assign_sales_executive_own_store'),
+    path('un_assign_sales_executive_own_store/route=<str:route>/salesExecutiveId=<int:salesExecutiveId>/storeId=<int:storeId>', unAssignSalesExecutiveOwnStore,
+         name='un_assign_sales_executive_own_store'),
+
+    # assign/un assign Own store Housekeeping
+    path('assign_other_employee_own_store/route=<str:route>', assignOtherEmployeeOwnStore, name='assign_other_employee_own_store'),
+    path('un_assign_other_employee_own_store/route=<str:route>/otherEmployeeId=<int:otherEmployeeId>/storeId=<int:storeId>', unAssignOtherEmployeeOwnStore,
+         name='un_assign_other_employee_own_store'),
 
     # assign/un area head
     path('assign_area_head_own_store/', assignAreaHeadOwnStore, name='assign_area_head_own_store'),

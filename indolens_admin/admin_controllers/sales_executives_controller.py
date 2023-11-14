@@ -280,3 +280,53 @@ def enable_disable_franchise_sales_executive(seId, status):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def assign_store_own_store_sales_executive(empId, storeId):
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE own_store_employees
+                SET
+                    assigned_store_id = {storeId}
+                WHERE
+                    employee_id = {empId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_store_manager_query)
+
+            return {
+                       "status": True,
+                       "message": "Store assigned"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def unassign_store_own_store_sales_executive(empId, storeId):
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE own_store_employees
+                SET
+                    assigned_store_id = 0
+                WHERE
+                    employee_id = {empId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_store_manager_query)
+
+            return {
+                       "status": True,
+                       "message": "Store un assigned"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
