@@ -6026,7 +6026,7 @@
             }
             // card footer remove at last step
             console.log(count);
-            if(count==3){
+            if(count==4){
                           nextButton.classList.add('d-none');
             }
             if (count > tabToggleButtonEl.length - 1) {
