@@ -14,7 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_franchise_owner(franchise_owner, files):
     try:
-        hashed_password = bcrypt.hashpw(franchise_owner.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(franchise_owner.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_franchise_owner_query = f"""
                 INSERT INTO franchise_store_employees (
@@ -36,7 +36,7 @@ def create_franchise_owner(franchise_owner, files):
             return {
                 "status": True,
                 "message": "franchise owner added",
-                "foid": foid
+                "franchiseOwnersId": foid
             }, 200
 
     except pymysql.Error as e:
@@ -45,7 +45,13 @@ def create_franchise_owner(franchise_owner, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_franchise_owner():
+def get_all_franchise_owner(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_all_franchise_owner_query = f""" SELECT a.*, os.store_name, creator.name, updater.name 
@@ -53,7 +59,7 @@ def get_all_franchise_owner():
                                             LEFT JOIN franchise_store AS os ON a.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id 
-                                            WHERE a.role = 1 """
+                                            WHERE a.role = 1 AND a.status {status_condition}"""
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {

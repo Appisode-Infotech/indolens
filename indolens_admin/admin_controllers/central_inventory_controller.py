@@ -104,7 +104,7 @@ def add_central_inventory_products(product_obj, file):
                                                 category_id, brand_id, material_id, frame_type_id, frame_shape_id, 
                                                 color_id, unit_id, origin, cost_price, sale_price, model_number, hsn, 
                                                 created_on, created_by, last_updated_on, last_updated_by, 
-                                                product_quantity, product_gst) 
+                                                product_quantity, product_gst, discount) 
                                                 VALUES ('{product_obj.product_title}','{product_obj.product_description}',
                                                 '{json.dumps(file.product_img)}','{product_obj.category_id}',
                                                 '{product_obj.brand_id}','{product_obj.material_id}',
@@ -114,7 +114,7 @@ def add_central_inventory_products(product_obj, file):
                                                 '{product_obj.model_number}', '{product_obj.hsn_number}',
                                                 '{today}','{product_obj.created_by}','{today}',
                                                 '{product_obj.last_updated_by}', '{product_obj.product_quantity}', 
-                                                '{product_obj.product_gstin}') """
+                                                '{product_obj.product_gstin}', {product_obj.discount}) """
 
             cursor.execute(add_product_query)
             productId = cursor.lastrowid
@@ -150,7 +150,8 @@ def update_central_inventory_products(product_obj, productId):
                     last_updated_on = '{today}',
                     last_updated_by = '{product_obj.last_updated_by}',
                     product_quantity = '{product_obj.product_quantity}',
-                    product_gst = '{product_obj.product_gstin}'
+                    product_gst = '{product_obj.product_gstin}',
+                    discount = '{product_obj.discount}'
                 WHERE product_id = '{productId}'
             """
 
@@ -455,6 +456,19 @@ def create_store_stock_request(stock_obj, store_id):
             cursor.execute(stock_req_query, (
                 store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
                 1, 0, 0, 0, 0, today, stock_obj.created_by, today, stock_obj.created_by))
+
+            update_store_Inventory = f"""INSERT INTO store_inventory 
+                                                                               (store_id, store_type, product_id, product_quantity, created_on, 
+                                                                               created_by, last_updated_on, last_updated_by) 
+                                                                               VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                                                                               ON DUPLICATE KEY UPDATE
+                                                                               product_quantity = product_quantity + {stock_obj.product_quantity}, 
+                                                                               last_updated_on = '{today}', 
+                                                                               last_updated_by = {stock_obj.created_by}"""
+
+            cursor.execute(update_store_Inventory, (store_id, stock_obj.store_type, stock_obj.product_id,
+                                                    stock_obj.product_quantity, today, stock_obj.created_by, today, stock_obj.created_by))
+
             return {
                 "status": True,
                 "message": "success"

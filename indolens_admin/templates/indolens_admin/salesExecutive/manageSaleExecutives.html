@@ -241,7 +241,8 @@
                                                data-bs-target="#operations_modal"
                                                data-employee-id="{{ sales_executive.employee_id }}"
                                                data-employee-name="{{ sales_executive.name }}"
-                                               data-action-type="allocate">
+                                               data-action-type="allocate"
+                                               data-action-url="{% url 'assign_sales_executive_own_store' status %}">
                                                 Allocate Store
                                             </a>
                                             {% else %}
@@ -254,7 +255,7 @@
                                                data-employee-name="{{ sales_executive.name }}"
                                                data-store-name="{{sales_executive.store_name}}"
                                                data-action-type="unallocate"
-                                               data-action-url="{% url 'un_assign_optimetry_own_store' sales_executive.employee_id sales_executive.assigned_store_id %}">
+                                               data-action-url="{% url 'un_assign_sales_executive_own_store' status sales_executive.employee_id sales_executive.assigned_store_id %}">
                                                 Un allocate Store
                                             </a>
                                             {% endif %}
@@ -361,7 +362,7 @@
                                     <div class="modal-body" id="modal_content">
                                         <!-- Form for Allocate Store -->
                                         <form class="row g-3 needs-validation allocate-store-form" method="post"
-                                              action="{% url 'assign_manager_own_store' 'All' %}" novalidate="novalidate">
+                                              action="{% url 'assign_sales_executive_own_store' status %}" novalidate="novalidate">
                                             {% csrf_token %}
                                             <input type="hidden" name="emp_id" id="emp_id">
                                             <h5 class="mb-3">Select Store (Only active and unallocated stores appear
