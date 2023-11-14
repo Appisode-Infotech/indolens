@@ -106,12 +106,12 @@
                                                     type="button">{{status}}<span class="fas fa-angle-down ms-2"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{% url 'manage_own_stores' 'All' %}">All</a></li>
+                                                <li><a class="dropdown-item" href="{% url 'manage_store_managers' 'All' %}">All</a></li>
                                                 <li>
                                                     <hr class="dropdown-divider"/>
                                                 </li>
-                                                <li><a class="dropdown-item text-success" href="{% url 'manage_own_stores' 'Active' %}">Active Only</a></li>
-                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_own_stores' 'Inactive' %}">Inactive Only</a></li>
+                                                <li><a class="dropdown-item text-success" href="{% url 'manage_store_managers' 'Active' %}">Active Only</a></li>
+                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_store_managers' 'Inactive' %}">Inactive Only</a></li>
 
                                             </ul>
                                         </div>
@@ -261,7 +261,7 @@
                                                data-employee-name="{{ manager.name }}"
                                                data-store-name="{{manager.store_name}}"
                                                data-action-type="unallocate"
-                                               data-action-url="{% url 'un_assign_manager_own_store' manager.employee_id manager.assigned_store_id %}">
+                                               data-action-url="{% url 'un_assign_manager_own_store' status manager.employee_id manager.assigned_store_id %}">
                                                 Un allocate Store
                                             </a>
                                             {% endif %}
@@ -288,7 +288,7 @@
                                                data-employee-id="{{ manager.employee_id }}"
                                                data-employee-name="{{ manager.name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_store_manager' manager.employee_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_store_manager' status manager.employee_id 1 %}">
                                                 Make Active
                                             </a>
 
@@ -301,7 +301,7 @@
                                                data-employee-id="{{ manager.employee_id }}"
                                                data-employee-name="{{ manager.name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_store_manager' manager.employee_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_store_manager' status manager.employee_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}
@@ -326,7 +326,7 @@
                                     <div class="modal-body" id="modal_content">
                                         <!-- Form for Allocate Store -->
                                         <form class="row g-3 needs-validation allocate-store-form" method="post"
-                                              action="{% url 'assign_manager_own_store' %}" novalidate="novalidate">
+                                              action="{% url 'assign_manager_own_store' status %}" novalidate="novalidate">
                                             {% csrf_token %}
                                             <input type="hidden" name="emp_id" id="emp_id">
                                             <h5 class="mb-3">Select Store (Only active and unallocated stores appear

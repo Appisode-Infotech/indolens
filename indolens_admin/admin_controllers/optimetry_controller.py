@@ -14,7 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_optimetry(optimetry_obj, files):
     try:
-        hashed_password = bcrypt.hashpw(optimetry_obj.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(optimetry_obj.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_optimetry_obj_query = f"""
                 INSERT INTO own_store_employees (
@@ -132,14 +132,20 @@ def create_franchise_optimetry(optimetry_obj, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_optimetry():
+def get_all_optimetry(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name FROM own_store_employees AS op
                                             LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id
-                                            WHERE op.role = 2 """
+                                            WHERE op.role = 2 AND op.status {status_condition} """
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {

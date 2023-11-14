@@ -14,7 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_own_sales_executives(sales_executives, files):
     try:
-        hashed_password = bcrypt.hashpw(sales_executives.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(sales_executives.password.encode('utf-8'), bcrypt.gensalt()).decode('utf_8')
         with connection.cursor() as cursor:
             insert_sales_executives_query = f"""
                 INSERT INTO own_store_employees (
@@ -141,14 +141,20 @@ def create_franchise_sales_executives(sales_executives, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_own_sales_executive():
+def get_all_own_sales_executive(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.role = 3 """
+                                            WHERE sm.role = 3 AND sm.status {status_condition}"""
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {

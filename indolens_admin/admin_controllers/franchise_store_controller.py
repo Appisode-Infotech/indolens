@@ -28,10 +28,12 @@ def create_franchise_store(franchise_obj):
                                                 '{today}', {franchise_obj.last_updated_by}, '{today}')"""
 
             cursor.execute(create_franchise_store_query)
+            storeId = cursor.lastrowid
             return {
-                       "status": True,
-                       "message": "franchise store added"
-                   }, 200
+                "status": True,
+                "message": "franchise store added",
+                "storeId": storeId
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -56,9 +58,9 @@ def get_all_franchise_stores(status):
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
-                       "status": True,
-                       "franchise_store": get_franchise_store(stores_data)
-                   }, 200
+                "status": True,
+                "franchise_store": get_franchise_store(stores_data)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -77,9 +79,9 @@ def get_franchise_store_by_id(fid):
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
-                       "status": True,
-                       "franchise_store": get_franchise_store(stores_data)
-                   }, 200
+                "status": True,
+                "franchise_store": get_franchise_store(stores_data)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -115,9 +117,9 @@ def edit_franchise_store_by_id(franchise_obj):
             connection.commit()  # Commit the transaction after executing the update query
 
             return {
-                       "status": True,
-                       "message": "Own store updated"
-                   }, 200
+                "status": True,
+                "message": "Own store updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -140,9 +142,9 @@ def enable_disable_franchise_store(fid, status):
             cursor.execute(update_franchise_store_query)
 
             return {
-                       "status": True,
-                       "message": "Franchise Store updated"
-                   }, 200
+                "status": True,
+                "message": "Franchise Store updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

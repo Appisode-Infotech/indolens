@@ -102,12 +102,12 @@
                                                     type="button">{{status}}<span class="fas fa-angle-down ms-2"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{% url 'manage_own_stores' 'All' %}">All</a></li>
+                                                <li><a class="dropdown-item" href="{% url 'manage_store_sales_executives' 'All' %}">All</a></li>
                                                 <li>
                                                     <hr class="dropdown-divider"/>
                                                 </li>
-                                                <li><a class="dropdown-item text-success" href="{% url 'manage_own_stores' 'Active' %}">Active Only</a></li>
-                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_own_stores' 'Inactive' %}">Inactive Only</a></li>
+                                                <li><a class="dropdown-item text-success" href="{% url 'manage_store_sales_executives' 'Active' %}">Active Only</a></li>
+                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_store_sales_executives' 'Inactive' %}">Inactive Only</a></li>
 
                                             </ul>
                                         </div>
@@ -282,7 +282,7 @@
                                                data-employee-id="{{ sales_executive.employee_id }}"
                                                data-employee-name="{{ sales_executive.name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_sales_executive' sales_executive.employee_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_sales_executive' status sales_executive.employee_id 1 %}">
                                                 Make Active
                                             </a>
 
@@ -295,7 +295,7 @@
                                                data-employee-id="{{ sales_executive.employee_id }}"
                                                data-employee-name="{{ sales_executive.name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_sales_executive' sales_executive.employee_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_sales_executive' status sales_executive.employee_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

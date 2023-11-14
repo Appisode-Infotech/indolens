@@ -110,12 +110,13 @@
                                                     type="button">{{status}}<span class="fas fa-angle-down ms-2"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{% url 'manage_own_stores' 'All' %}">All</a></li>
+                                                <li><a class="dropdown-item" href="{% url 'manage_store_optimetry' 'All' %}">All</a></li>
                                                 <li>
                                                     <hr class="dropdown-divider"/>
                                                 </li>
-                                                <li><a class="dropdown-item text-success" href="{% url 'manage_own_stores' 'Active' %}">Active Only</a></li>
-                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_own_stores' 'Inactive' %}">Inactive Only</a></li>
+                                                <li><a class="dropdown-item text-success" href="{% url 'manage_store_optimetry' 'Active' %}">Active Only</a></li>
+                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_store_optimetry
+                                                ' 'Inactive' %}">Inactive Only</a></li>
 
                                             </ul>
                                         </div>
@@ -263,7 +264,7 @@
                                                data-employee-name="{{ opti.name }}"
                                                data-store-name="{{opti.store_name}}"
                                                data-action-type="unallocate"
-                                               data-action-url="{% url 'un_assign_optimetry_own_store' opti.employee_id opti.assigned_store_id %}">
+                                               data-action-url="{% url 'un_assign_optimetry_own_store' status opti.employee_id opti.assigned_store_id %}">
                                                 Un allocate Store
                                             </a>
                                             {% endif %}
@@ -291,7 +292,7 @@
                                                data-employee-id="{{ opti.employee_id }}"
                                                data-employee-name="{{ opti.name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_optimetry' opti.employee_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_optimetry' status opti.employee_id 1 %}">
                                                 Make Active
                                             </a>
 
@@ -304,7 +305,7 @@
                                                data-employee-id="{{ opti.employee_id }}"
                                                data-employee-name="{{ opti.name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_optimetry' opti.employee_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_optimetry' status opti.employee_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}
@@ -329,7 +330,7 @@
                                     <div class="modal-body" id="modal_content">
                                         <!-- Form for Allocate Store -->
                                         <form class="row g-3 needs-validation allocate-store-form" method="post"
-                                              action="{% url 'assign_optimetry_own_store' %}" novalidate="novalidate">
+                                              action="{% url 'assign_optimetry_own_store' status %}" novalidate="novalidate">
                                             {% csrf_token %}
                                             <input type="hidden" name="emp_id" id="emp_id">
                                             <h5 class="mb-3">Select Store (Only active and unallocated stores appear

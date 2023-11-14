@@ -129,7 +129,8 @@ def editOwnStore(request, ownStoreId):
             if status_code != 200:
                 return render(request, 'indolens_admin/ownStore/editOwnStore.html', {"message": response['message']})
             else:
-                return redirect('manage_own_stores')
+                url = reverse('view_own_store', kwargs={'ownStoreId': ownStoreId})
+                return redirect(url)
 
         else:
             response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
@@ -189,7 +190,8 @@ def editFranchiseStore(request, franchiseStoreId):
             if status_code != 200:
                 return render(request, 'indolens_admin/ownStore/editOwnStore.html', {"message": response['message']})
             else:
-                return redirect('manage_Franchise_stores')
+                url = reverse('view_franchise_store', kwargs={'franchiseStoreId': franchiseStoreId})
+                return redirect(url)
 
         else:
             response, status_code = franchise_store_controller.get_franchise_store_by_id(franchiseStoreId)
@@ -208,7 +210,8 @@ def createFranchiseStore(request):
                 return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html',
                               {"message": response['message']})
             else:
-                return redirect('manage_Franchise_stores')
+                url = reverse('view_franchise_store', kwargs={'franchiseStoreId': response['storeId']})
+                return redirect(url)
 
         return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html')
     else:
@@ -334,13 +337,13 @@ def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
 
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
-def manageStoreManagers(request):
+def manageStoreManagers(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = store_manager_controller.get_all_store_manager()
+        response, status_code = store_manager_controller.get_all_store_manager(status)
         available_stores_response, available_stores_status_code = own_store_controller.get_unassigned_active_own_store_for_manager()
         return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
                       {"store_managers": response['store_managers'],
-                       "available_stores": available_stores_response['available_stores']})
+                       "available_stores": available_stores_response['available_stores'], "status": status})
     else:
         return redirect('login')
 
@@ -471,10 +474,11 @@ def deleteStoreManagerDocuments(request, storeManagerId, documentURL, document_T
         return redirect('login')
 
 
-def enableDisableStoreManager(request, storeManagerId, status):
+def enableDisableStoreManager(request, route, storeManagerId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response = store_manager_controller.enable_disable_store_manager(storeManagerId, status)
-        return redirect('manage_store_managers')
+        url = reverse('manage_store_managers', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -906,14 +910,14 @@ def enableDisableMarketingHead(request, marketingHeadId, status):
 # =================================ADMIN OWN STORE OPTIMETRY MANAGEMENT======================================
 
 
-def manageOptimetry(request):
+def manageOptimetry(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = optimetry_controller.get_all_optimetry()
+        response, status_code = optimetry_controller.get_all_optimetry(status)
 
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         return render(request, 'indolens_admin/optimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
-                       "available_stores": available_stores_response['available_stores']})
+                       "available_stores": available_stores_response['available_stores'], "status": status})
     else:
         return redirect('login')
 
@@ -958,6 +962,7 @@ def createOptimetry(request):
             file_data = FileData(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.create_optimetry(optimetry_obj, file_data)
+            print(response)
 
             url = reverse('view_optimetry', kwargs={'ownOptimetryId': response['empid']})
             return redirect(url)
@@ -1042,10 +1047,11 @@ def deleteOptimetryDocuments(request, ownOptimetryId, documentURL, document_Type
         return redirect('login')
 
 
-def enableDisableOptimetry(request, ownOptimetryId, status):
+def enableDisableOptimetry(request, route, ownOptimetryId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         optimetry_controller.enable_disable_optimetry(ownOptimetryId, status)
-        return redirect('manage_store_optimetry')
+        url = reverse('manage_store_optimetry', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -1200,11 +1206,11 @@ def enableDisableFranchiseOptimetry(request, franchiseOptimetryId, status):
 # =================================ADMIN OWN STORE SALES EXECUTIVE MANAGEMENT======================================
 
 
-def manageSaleExecutives(request):
+def manageSaleExecutives(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = sales_executives_controller.get_all_own_sales_executive()
+        response, status_code = sales_executives_controller.get_all_own_sales_executive(status)
         return render(request, 'indolens_admin/salesExecutive/manageSaleExecutives.html',
-                      {"sales_executive_list": response['sales_executive_list']})
+                      {"sales_executive_list": response['sales_executive_list'], "status": status})
     return redirect('login')
 
 
@@ -1331,10 +1337,11 @@ def deleteSaleExecutivesDocuments(request, ownSaleExecutivesId, documentURL, doc
         return redirect('login')
 
 
-def enableDisableSaleExecutives(request, ownSaleExecutivesId, status):
+def enableDisableSaleExecutives(request, route, ownSaleExecutivesId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         sales_executives_controller.enable_disable_sales_executive(ownSaleExecutivesId, status)
-        return redirect('manage_store_sales_executives')
+        url = reverse('manage_store_sales_executives', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -1777,11 +1784,11 @@ def enableDisableLabTechnician(request, labTechnicianId, status):
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
-def manageOtherEmployees(request):
+def manageOtherEmployees(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = other_employee_controller.get_all_other_emp()
+        response, status_code = other_employee_controller.get_all_other_emp(status)
         return render(request, 'indolens_admin/otherEmployees/manageOtherEmployees.html',
-                      {"other_employee_list": response['other_emp_list']})
+                      {"other_employee_list": response['other_emp_list'], "status": status})
     else:
         return redirect('login')
 
@@ -1910,10 +1917,11 @@ def deleteOtherEmployeesDocuments(request, ownEmployeeId, documentURL, document_
         return redirect('login')
 
 
-def enableDisableOtherEmployees(request, ownEmployeeId, status):
+def enableDisableOtherEmployees(request, route, ownEmployeeId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         other_employee_controller.enable_disable_other_employees(ownEmployeeId, status)
-        return redirect('manage_store_other_employees')
+        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2585,26 +2593,30 @@ def changeStockRequestStatus(request, route, requestId, status):
         return redirect('login')
 
 
-def assignManagerOwnStore(request):
+def assignManagerOwnStore(request, route):
     if request.method == 'POST':
         response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
-        return redirect('manage_store_managers')
+        url = reverse('manage_store_managers', kwargs={'status': route})
+        return redirect(url)
 
 
-def unAssignManagerOwnStore(request, empId, storeId):
+def unAssignManagerOwnStore(request, route, empId, storeId):
     response, status_code = store_manager_controller.unAssignStore(empId, storeId)
-    return redirect('manage_store_managers')
+    url = reverse('manage_store_managers', kwargs={'status': route})
+    return redirect(url)
 
 
-def assignOptimetryOwnStore(request):
+def assignOptimetryOwnStore(request, route):
     if request.method == 'POST':
         response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
-        return redirect('manage_store_optimetry')
+        url = reverse('manage_store_optimetry', kwargs={'status': route})
+        return redirect(url)
 
 
-def unAssignOptimetryOwnStore(request, empId, storeId):
+def unAssignOptimetryOwnStore(request, route, empId, storeId):
     response, status_code = store_manager_controller.unAssignStore(empId, storeId)
-    return redirect('manage_store_optimetry')
+    url = reverse('manage_store_optimetry', kwargs={'status': route})
+    return redirect(url)
 
 
 def assignAreaHeadOwnStore(request):

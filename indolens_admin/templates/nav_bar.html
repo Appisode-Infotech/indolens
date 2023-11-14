@@ -430,7 +430,7 @@
                                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                                      class="nav-link label-1 {% if 'manage_store_managers' in request.path %}active{% endif %}"
                                                                      data-bs-toggle=""
-                                                                     href="{% url 'manage_store_managers' %}"
+                                                                     href="{% url 'manage_store_managers' 'All' %}"
                                                                      role="button">
                                         <div class="d-flex align-items-center"><span
                                                 class="nav-link-text-wrapper"><span
@@ -444,7 +444,7 @@
                                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                                      class="nav-link label-1 {% if 'manage_store_optimetry' in request.path %}active{% endif %}"
                                                                      data-bs-toggle=""
-                                                                     href="{% url 'manage_store_optimetry' %}"
+                                                                     href="{% url 'manage_store_optimetry' 'All' %}"
                                                                      role="button">
                                         <div class="d-flex align-items-center"><span
                                                 class="nav-link-text-wrapper"><span
@@ -459,7 +459,7 @@
                                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                                      class="nav-link label-1 {% if 'manage_store_sales_executives' in request.path %}active{% endif %}"
                                                                      data-bs-toggle=""
-                                                                     href="{% url 'manage_store_sales_executives' %}"
+                                                                     href="{% url 'manage_store_sales_executives' 'All' %}"
                                                                      role="button">
                                         <div class="d-flex align-items-center"><span
                                                 class="nav-link-text-wrapper"><span
@@ -475,7 +475,7 @@
                                                                      asd="index"
                                                                      class="nav-link label-1 {% if 'manage_store_other_employees' in request.path %}active{% endif %}"
                                                                      data-bs-toggle=""
-                                                                     href="{% url 'manage_store_other_employees' %}"
+                                                                     href="{% url 'manage_store_other_employees' 'All' %}"
                                                                      role="button">
                                         <div class="d-flex align-items-center"><span class="nav-link-text-wrapper"><span
                                                 class="nav-link-text">House Keeping & Others</span></span>

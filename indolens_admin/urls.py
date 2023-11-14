@@ -104,7 +104,7 @@ urlpatterns = [
          name='enable_disable_sub_admin'),
 
     # store managers
-    path('manage_store_managers/', manageStoreManagers, name='manage_store_managers'),
+    path('manage_store_managers/status=<str:status>', manageStoreManagers, name='manage_store_managers'),
     path('manage_store_managers/create_store_manager/', createStoreManager, name='create_store_manager'),
     path('manage_store_managers/edit_store_manager/managerId=<int:storeManagerId>', editStoreManager,
          name='edit_store_manager'),
@@ -112,7 +112,7 @@ urlpatterns = [
          updateStoreManagerDocuments, name='update_store_manager_documents'),
     path('manage_store_managers/view_store_manager/managerId=<int:storeManagerId>', viewStoreManager,
          name='view_store_manager'),
-    path('manage_store_managers/enable_disable_store_manager/managerId=<int:storeManagerId>/status=<int:status>',
+    path('manage_store_managers/enable_disable_store_manager/route=<str:route>/managerId=<int:storeManagerId>/status=<int:status>',
          enableDisableStoreManager, name='enable_disable_store_manager'),
 
     # store franchise owners
@@ -152,7 +152,7 @@ urlpatterns = [
         enableDisableMarketingHead, name='enable_disable_marketing_head'),
 
     # manage optimetry
-    path('manage_store_optimetry/', manageOptimetry, name='manage_store_optimetry'),
+    path('manage_store_optimetry/status=<str:status>', manageOptimetry, name='manage_store_optimetry'),
     path('manage_store_optimetry/create_optimetry/', createOptimetry, name='create_optimetry'),
     path('manage_store_optimetry/edit_optimetry/optimetryId=<int:ownOptimetryId>', editOptimetry,
          name='edit_optimetry'),
@@ -160,7 +160,7 @@ urlpatterns = [
          name='update_optimetry_documents'),
     path('manage_store_optimetry/view_optimetry/optimetryId=<int:ownOptimetryId>', viewOptimetry,
          name='view_optimetry'),
-    path('manage_store_optimetry/enable_disable_optimetry/optimetryId=<int:ownOptimetryId>/status=<int:status>',
+    path('manage_store_optimetry/enable_disable_optimetry/route<str:route>/optimetryId=<int:ownOptimetryId>/status=<int:status>',
          enableDisableOptimetry, name='enable_disable_optimetry'),
 
     # manage franchise optimetry
@@ -178,7 +178,7 @@ urlpatterns = [
         enableDisableFranchiseOptimetry, name='enable_disable_franchise_optimetry'),
 
     # manage sales executive
-    path('manage_store_sales_executives/', manageSaleExecutives, name='manage_store_sales_executives'),
+    path('manage_store_sales_executives/status<str:status>', manageSaleExecutives, name='manage_store_sales_executives'),
     path('manage_store_sales_executives/create_sales_executives/', createSaleExecutives,
          name='create_sales_executives'),
     path('manage_store_sales_executives/edit_sales_executives/salesExecutiveId=<int:ownSaleExecutivesId>',
@@ -186,7 +186,7 @@ urlpatterns = [
     path('manage_store_sales_executives/update_sales_executives_documents/salesExecutiveId=<int:ownSaleExecutivesId>',
          updateSaleExecutivesDocuments, name='update_sales_executives_documents'),
     path(
-        'manage_store_sales_executives/enable_disable_sales_executive/saleExecutivesId=<int:ownSaleExecutivesId>/status=<int:status>',
+        'manage_store_sales_executives/enable_disable_sales_executive/route=<str:route>/saleExecutivesId=<int:ownSaleExecutivesId>/status=<int:status>',
         enableDisableSaleExecutives, name='enable_disable_sales_executive'),
     path('manage_store_sales_executives/view_sales_executives/salesExecutiveId=<int:ownSaleExecutivesId>',
          viewSaleExecutives,
@@ -230,7 +230,7 @@ urlpatterns = [
         enableDisableLabTechnician, name='enable_disable_lab_technician'),
 
     # Own store other employees
-    path('manage_store_other_employees/', manageOtherEmployees, name='manage_store_other_employees'),
+    path('manage_store_other_employees/status=<str:status>', manageOtherEmployees, name='manage_store_other_employees'),
     path('manage_store_other_employees/create_other_employees/', createOtherEmployees, name='create_other_employees'),
     path('manage_store_other_employees/edit_other_employees/ownEmployeeId=<int:ownEmployeeId>', editOtherEmployees,
          name='edit_other_employees'),
@@ -239,7 +239,7 @@ urlpatterns = [
     path('manage_store_other_employees/view_other_employees/ownEmployeeId=<int:ownEmployeeId>', viewOtherEmployees,
          name='view_other_employees'),
     path(
-        'manage_store_other_employees/enable_disable_other_employees/ownEmployeeId=<int:ownEmployeeId>/status=<int:status>',
+        'manage_store_other_employees/enable_disable_other_employees/route=<str:route>/ownEmployeeId=<int:ownEmployeeId>/status=<int:status>',
         enableDisableOtherEmployees, name='enable_disable_other_employees'),
 
     # Franchise other employees
@@ -286,13 +286,13 @@ urlpatterns = [
     path('all_notifications/', viewOwnStore, name='all_notifications'),
     path('manage_memberships/', viewOwnStore, name='manage_memberships'),
     # assign/un assign manager
-    path('assign_manager_own_store/', assignManagerOwnStore, name='assign_manager_own_store'),
-    path('un_assign_manager_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignManagerOwnStore,
+    path('assign_manager_own_store/route<str:route>', assignManagerOwnStore, name='assign_manager_own_store'),
+    path('un_assign_manager_own_store/route<str:route>/empId=<int:empId>/storeId=<int:storeId>', unAssignManagerOwnStore,
          name='un_assign_manager_own_store'),
 
     # assign/un assign optimetry
-    path('assign_optimetry_own_store/', assignOptimetryOwnStore, name='assign_optimetry_own_store'),
-    path('un_assign_optimetry_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignOptimetryOwnStore,
+    path('assign_optimetry_own_store/route<str:route>', assignOptimetryOwnStore, name='assign_optimetry_own_store'),
+    path('un_assign_optimetry_own_store/route<str:route>/empId=<int:empId>/storeId=<int:storeId>', unAssignOptimetryOwnStore,
          name='un_assign_optimetry_own_store'),
 
     # assign/un area head
