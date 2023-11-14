@@ -164,7 +164,7 @@ urlpatterns = [
          enableDisableOptimetry, name='enable_disable_optimetry'),
 
     # manage franchise optimetry
-    path('manage_franchise_optimetry/', manageFranchiseOptimetry, name='manage_franchise_optimetry'),
+    path('manage_franchise_optimetry/status=<str:status>', manageFranchiseOptimetry, name='manage_franchise_optimetry'),
     path('manage_franchise_optimetry/create_franchise_optimetry/', createFranchiseOptimetry,
          name='create_franchise_optimetry'),
     path('manage_franchise_optimetry/edit_franchise_optimetry/optimetryId=<int:franchiseOptimetryId>',
@@ -174,7 +174,7 @@ urlpatterns = [
     path('manage_franchise_optimetry/view_franchise_optimetry/optimetryId=<int:franchiseOptimetryId>',
          viewFranchiseOptimetry, name='view_franchise_optimetry'),
     path(
-        'manage_franchise_optimetry/enable_disable_franchise_optimetry/optimetryId=<int:franchiseOptimetryId>/status=<int:status>',
+        'manage_franchise_optimetry/enable_disable_franchise_optimetry/route=<str:route>/optimetryId=<int:franchiseOptimetryId>/status=<int:status>',
         enableDisableFranchiseOptimetry, name='enable_disable_franchise_optimetry'),
 
     # manage sales executive
@@ -193,7 +193,7 @@ urlpatterns = [
          name='view_sales_executives'),
 
     # manage franchise sales executive
-    path('manage_franchise_sales_executives/', manageFranchiseSaleExecutives, name='manage_franchise_sales_executives'),
+    path('manage_franchise_sales_executives/status=<str:status>', manageFranchiseSaleExecutives, name='manage_franchise_sales_executives'),
     path('manage_franchise_sales_executives/create_sales_executives/', createFranchiseSaleExecutives,
          name='create_franchise_sales_executives'),
     path('manage_franchise_sales_executives/edit_sales_executives/salesExecutiveId=<int:franchiseSaleExecutivesId>',

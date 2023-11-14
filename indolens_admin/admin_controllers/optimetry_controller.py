@@ -100,7 +100,7 @@ def enable_disable_optimetry(opid, status):
 
 def create_franchise_optimetry(optimetry_obj, files):
     try:
-        hashed_password = bcrypt.hashpw(optimetry_obj.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(optimetry_obj.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_optimetry_obj_query = f"""
                 INSERT INTO franchise_store_employees (
@@ -159,7 +159,13 @@ def get_all_optimetry(status):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_franchise_optimetry():
+def get_all_franchise_optimetry(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name 
@@ -167,7 +173,7 @@ def get_all_franchise_optimetry():
                                             LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id
-                                            WHERE op.role = 2 """
+                                            WHERE op.role = 2 AND op.status {status_condition}"""
             cursor.execute(get_store_manager_query)
             franchise_optimetry = cursor.fetchall()
             return {

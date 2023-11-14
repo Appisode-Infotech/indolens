@@ -489,7 +489,7 @@ def manageFranchiseOwners(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_all_franchise_owner(status)
         return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
-                      {"franchise_owners": response['franchise_owners'], "status":status})
+                      {"franchise_owners": response['franchise_owners'], "status": status})
     else:
         return redirect('login')
 
@@ -1063,12 +1063,12 @@ def enableDisableOptimetry(request, route, ownOptimetryId, status):
 # =================================ADMIN FRANCHISE STORE OPTIMETRY MANAGEMENT======================================
 
 
-def manageFranchiseOptimetry(request):
+def manageFranchiseOptimetry(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = optimetry_controller.get_all_franchise_optimetry()
+        response, status_code = optimetry_controller.get_all_franchise_optimetry(status)
 
         return render(request, 'indolens_admin/franchiseOptimetry/manageOptimetry.html',
-                      {"optimetry_list": response['optimetry_list']})
+                      {"optimetry_list": response['optimetry_list'], "status": status})
     else:
         return redirect('login')
 
@@ -1111,6 +1111,7 @@ def createFranchiseOptimetry(request):
                 form_data[key] = value
 
             file_data = FileData(form_data)
+            print(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.create_franchise_optimetry(optimetry_obj, file_data)
             url = reverse('view_franchise_optimetry', kwargs={'franchiseOptimetryId': response['opid']})
@@ -1195,10 +1196,11 @@ def deleteFranchiseOptimetryDocuments(request, franchiseOptimetryId, documentURL
         return redirect('login')
 
 
-def enableDisableFranchiseOptimetry(request, franchiseOptimetryId, status):
+def enableDisableFranchiseOptimetry(request, route, franchiseOptimetryId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         optimetry_controller.enable_disable_franchise_optimetry(franchiseOptimetryId, status)
-        return redirect('manage_franchise_optimetry')
+        url = reverse('manage_franchise_optimetry', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -1353,11 +1355,11 @@ def enableDisableSaleExecutives(request, route, ownSaleExecutivesId, status):
 # =================================ADMIN FRANCHISE STORE SALES EXECUTIVE MANAGEMENT====================================
 
 
-def manageFranchiseSaleExecutives(request):
+def manageFranchiseSaleExecutives(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = sales_executives_controller.get_all_franchise_sales_executive()
+        response, status_code = sales_executives_controller.get_all_franchise_sales_executive(status)
         return render(request, 'indolens_admin/franchiseSalesExecutive/manageSaleExecutives.html',
-                      {"franchise_sales_executive_list": response['franchise_sales_executive_list']})
+                      {"franchise_sales_executive_list": response['franchise_sales_executive_list'], "status": status})
     else:
         return redirect('login')
 
@@ -2625,13 +2627,15 @@ def unAssignOptimetryOwnStore(request, route, empId, storeId):
 def assignSalesExecutiveOwnStore(request, route):
     if request.method == 'POST':
         print("Hello asign")
-        response, status_code = sales_executives_controller.assign_store_own_store_sales_executive(request.POST['emp_id'], request.POST['store_id'])
+        response, status_code = sales_executives_controller.assign_store_own_store_sales_executive(
+            request.POST['emp_id'], request.POST['store_id'])
         url = reverse('manage_store_sales_executives', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignSalesExecutiveOwnStore(request, route, salesExecutiveId, storeId):
-    response, status_code = sales_executives_controller.unassign_store_own_store_sales_executive(salesExecutiveId, storeId)
+    response, status_code = sales_executives_controller.unassign_store_own_store_sales_executive(salesExecutiveId,
+                                                                                                 storeId)
     url = reverse('manage_store_sales_executives', kwargs={'status': route})
     return redirect(url)
 
@@ -2639,7 +2643,9 @@ def unAssignSalesExecutiveOwnStore(request, route, salesExecutiveId, storeId):
 def assignOtherEmployeeOwnStore(request, route):
     if request.method == 'POST':
         print("Hello asign")
-        response, status_code = other_employee_controller.assign_store_own_store_other_employee(request.POST['emp_id'], request.POST['store_id'])
+        response, status_code = other_employee_controller.assign_store_own_store_other_employee(request.POST['emp_id'],
+                                                                                                request.POST[
+                                                                                                    'store_id'])
         url = reverse('manage_store_other_employees', kwargs={'status': route})
         return redirect(url)
 

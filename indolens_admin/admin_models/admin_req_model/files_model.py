@@ -25,11 +25,11 @@ class FileData:
         if cert_data:
             if isinstance(cert_data, list):
                 for cert_item in cert_data:
-                    cert = cert_item.get('cert', None)
+                    cert = cert_item.get('doc', None)
                     if cert:
                         certificates.append(cert)
             else:
-                cert = cert_data.get('cert', None)
+                cert = cert_data.get('doc', None)
                 if cert:
                     certificates.append(cert)
         return certificates
