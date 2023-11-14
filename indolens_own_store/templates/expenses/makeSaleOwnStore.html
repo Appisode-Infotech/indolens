@@ -72,6 +72,12 @@
 
 
 
+
+
+
+
+
+
     </script>
 </head>
 
@@ -86,6 +92,11 @@
         {% include 'nav_bar_store.html' %}
 
         <div class="content">
+            <form>
+                <input name="cartData">
+                <input name="customerData">
+                <input name="billingDetailsData">
+            </form>
             <div class="col-12 col-xxl-6">
                 <div class="card shadow-none border border-300 my-4" data-component-card="data-component-card">
                     <div class="card-header p-4 border-bottom border-300 bg-soft">
@@ -108,25 +119,18 @@
                                                     class="fas fa-shopping-cart"></span></span></span><span
                                                     class="d-none d-md-block mt-1 fs--1">Products</span></div>
                                         </a></li>
+
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
                                                                 href="#bootstrap-wizard-validation-tab2"
                                                                 data-bs-toggle="tab" data-wizard-step="2">
-                                            <div class="text-center d-inline-block"><span
-                                                    class="nav-item-circle-parent"><span class="nav-item-circle"><span
-                                                    class="fas fa-tags"></span></span></span><span
-                                                    class="d-none d-md-block mt-1 fs--1">Offers</span></div>
-                                        </a></li>
-                                        <li class="nav-item"><a class="nav-link fw-semi-bold"
-                                                                href="#bootstrap-wizard-validation-tab3"
-                                                                data-bs-toggle="tab" data-wizard-step="3">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-user"></span></span></span><span
                                                     class="d-none d-md-block mt-1 fs--1">Customer</span></div>
                                         </a></li>
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
-                                                                href="#bootstrap-wizard-validation-tab4"
-                                                                data-bs-toggle="tab" data-wizard-step="4">
+                                                                href="#bootstrap-wizard-validation-tab3"
+                                                                data-bs-toggle="tab" data-wizard-step="3">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-file-invoice-dollar"></span></span></span><span
@@ -134,8 +138,8 @@
                                         </a></li>
 
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
-                                                                href="#bootstrap-wizard-validation-tab5"
-                                                                data-bs-toggle="tab" data-wizard-step="5">
+                                                                href="#bootstrap-wizard-validation-tab4"
+                                                                data-bs-toggle="tab" data-wizard-step="4">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-eye"></span></span></span><span
@@ -143,6 +147,7 @@
                                         </a></li>
                                     </ul>
                                 </div>
+
                                 <div class="card-body pt-4 pb-0">
                                     <div class="tab-content">
                                         <!--                            tab 1-->
@@ -151,102 +156,15 @@
                                              id="bootstrap-wizard-validation-tab1">
                                             <form class="needs-validation" id="wizardValidationForm1"
                                                   novalidate="novalidate" data-wizard-form="1">
-                                                <!--                                                product card starts here -->
-                                                <div class="product_widget card-header bg-100 mb-4">
-                                                    <div class="bg-200 mb-4">
-                                                        <div class="row align-items-center">
-                                                            <div class="col mx-auto">
-                                                                <h5 class="m-3">Product 1</h5>
-                                                            </div>
-                                                            <div class="col text-end">
-                                                                <a type="button" class="m-3">Remove</a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-
-                                                    <div class="mb2 col-12">
-                                                        <h5 class="mb-3">Select Product</h5>
-                                                        <select class="form-select" data-choices="data-choices"
-                                                                data-options='{"removeItemButton":true,"placeholder":true}'
-                                                                name="product" required="required">
-                                                            <option value="">Select product</option>
-                                                            {% for product in stocks_list %}
-                                                            <option value="{{product.product_id}}">
-                                                                {{product.product_name}}
-                                                            </option>
-                                                            {% endfor %}
-                                                        </select>
-                                                        <div class="custom-error" style="color: red;"></div>
-                                                    </div>
-                                                    <div id="product_info" class="row g-3 mb-3 d-none">
-                                                        <div class="mb2 col-4">
-                                                            <h5 class="mb-3 ">Product Category</h5>
-                                                            <input class="form-control" name="product_category"
-                                                                   placeholder="Category"
-                                                                   required="required"
-                                                                   type="text" value=""/>
-                                                            <div class="invalid-feedback">This field is required.
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb2 col-4">
-                                                            <h5 class="mb-3 ">Product Brand</h5>
-                                                            <input class="form-control" name="product_brand"
-                                                                   placeholder="Brand"
-                                                                   required="required"
-                                                                   type="text" value=""/>
-                                                            <div class="invalid-feedback">This field is required.
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb2 col-4">
-                                                            <h5 class="mb-3 ">Product SKU</h5>
-                                                            <input class="form-control" name="product_sku"
-                                                                   placeholder="SKU"
-                                                                   required="required"
-                                                                   type="text" value=""/>
-                                                            <div class="invalid-feedback">This field is required.
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb2 col-6">
-                                                            <h5 class="mb-3 ">Available Quantity</h5>
-                                                            <input class="form-control" name="available_qty"
-                                                                   placeholder="Available Quantity"
-                                                                   required="required"
-                                                                   type="text" value=""/>
-                                                            <div class="invalid-feedback">This field is required.
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb2 col-6">
-                                                            <h5 class="mb-3 ">Unit Price</h5>
-                                                            <input class="form-control" name="unit_price"
-                                                                   placeholder="Unit Price"
-                                                                   required="required"
-                                                                   type="text" value=""/>
-                                                            <div class="invalid-feedback">This field is required.
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb2 col-6">
-                                                            <h5 class="mb-3 ">Purchase Quantity</h5>
-                                                            <input class="form-control" name="purchase_qty"
-                                                                   placeholder="Purchase quantity"
-                                                                   required="required"
-                                                                   type="text" value=""/>
-                                                            <div class="invalid-feedback">This field is required.
-                                                            </div>
-                                                        </div>
-                                                        <div class="mb2 col-6">
-                                                            <h5 class="mb-3 ">Product Total</h5>
-                                                            <input class="form-control" name="purchase_qty"
-                                                                   placeholder="Product Total"
-                                                                   required="required"
-                                                                   type="text" value="0"/>
-                                                            <div class="invalid-feedback">This field is required.
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                <div id="products_container">
+                                                    <!-- product card starts here generated dynamically -->
+                                                    <!-- product card ends here-->
                                                 </div>
-                                                <!--                                                product cardends here-->
+
                                                 <div class="flex-1 text-end">
-                                                    <button class="btn btn-primary px-6 px-sm-6">Add product</button>
+                                                    <a class="btn btn-primary px-6 px-sm-6"
+                                                       onclick="createProductCard()">Add product
+                                                    </a>
                                                 </div>
                                             </form>
                                         </div>
@@ -255,76 +173,7 @@
                                              id="bootstrap-wizard-validation-tab2">
                                             <form class="needs-validation" id="wizardValidationForm2"
                                                   novalidate="novalidate" data-wizard-form="2">
-                                                <div class="row g-4 mb-4" data-dropzone="data-dropzone"
-                                                     data-options='{"maxFiles":1,"data":[{"name":"avatar.png","size":"54kb","url":"../../assets/img/team"}]}'>
-                                                    <div class="fallback">
-                                                        <input type="file" name="file"/>
-                                                    </div>
-                                                    <div class="col-md-auto">
-                                                        <div class="dz-preview dz-preview-single">
-                                                            <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
-                                                                <div class="avatar avatar-4xl"><img
-                                                                        class="rounded-circle avatar-placeholder"
-                                                                        src="../../assets/img/team/avatar.png" alt="..."
-                                                                        data-dz-thumbnail="data-dz-thumbnail"/></div>
-                                                                <div class="dz-progress"><span class="dz-upload"
-                                                                                               data-dz-uploadprogress=""></span>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md">
-                                                        <div class="dz-message dropzone-area px-2 py-3"
-                                                             data-dz-message="data-dz-message">
-                                                            <div class="text-center text-1100">
-                                                                <h5 class="mb-2"><span
-                                                                        class="fa-solid fa-upload me-2"></span>Upload
-                                                                    Profile Picture</h5>
-                                                                <p class="mb-0 fs--1 text-600 lh-sm">Upload a 300x300
-                                                                    jpg image with <br/>a maximum size of 400KB</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label" for="bootstrap-wizard-validation-gender">Gender</label>
-                                                    <select class="form-select" name="gender"
-                                                            id="bootstrap-wizard-validation-gender" required="required">
-                                                        <option value="">Select your gender ...</option>
-                                                        <option value="Male">Male</option>
-                                                        <option value="Female">Female</option>
-                                                        <option value="Other">Other</option>
-                                                    </select>
-                                                    <div class="invalid-feedback">This field is required.</div>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label"
-                                                           for="bootstrap-wizard-validation-wizard-phone">Phone</label>
-                                                    <input class="form-control" type="text" name="phone"
-                                                           placeholder="Phone"
-                                                           id="bootstrap-wizard-validation-wizard-phone"
-                                                           required="required"/>
-                                                    <div class="invalid-feedback">This field is required.</div>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label"
-                                                           for="bootstrap-wizard-validation-wizard-datepicker">Date of
-                                                        Birth</label>
-                                                    <input class="form-control datetimepicker" type="text"
-                                                           placeholder="d/m/y"
-                                                           data-options='{"dateFormat":"d/m/y","disableMobile":true}'
-                                                           required="required"
-                                                           id="bootstrap-wizard-validation-wizard-datepicker"/>
-                                                    <div class="invalid-feedback">This field is required.</div>
-                                                </div>
-                                                <div class="mb-2">
-                                                    <label class="form-label"
-                                                           for="bootstrap-wizard-validation-wizard-address">Address</label>
-                                                    <textarea class="form-control" rows="4"
-                                                              id="bootstrap-wizard-validation-wizard-address"
-                                                              required="required"></textarea>
-                                                    <div class="invalid-feedback">This field is required.</div>
-                                                </div>
+                                                <h1>1</h1>
                                             </form>
                                         </div>
                                         <div class="tab-pane" role="tabpanel"
@@ -332,69 +181,7 @@
                                              id="bootstrap-wizard-validation-tab3">
                                             <form class="mb-2 needs-validation" id="wizardValidationForm3"
                                                   novalidate="novalidate" data-wizard-form="3">
-                                                <div class="row gx-3 gy-2">
-                                                    <div class="col-6">
-                                                        <label class="form-label"
-                                                               for="bootstrap-wizard-validation-card-number">Card
-                                                            Number</label>
-                                                        <input class="form-control" placeholder="XXXX XXXX XXXX XXXX"
-                                                               type="text" required="required"
-                                                               id="bootstrap-wizard-validation-card-number"/>
-                                                        <div class="invalid-feedback">This field is required.</div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <label class="form-label"
-                                                               for="bootstrap-wizard-validation-card-name">Name</label>
-                                                        <input class="form-control" placeholder="John Doe"
-                                                               name="cardName" type="text"
-                                                               id="bootstrap-wizard-validation-card-name"
-                                                               required="required"/>
-                                                        <div class="invalid-feedback">This field is required.</div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <label class="form-label"
-                                                               for="bootstrap-wizard-validation-card-holder-country">Country</label>
-                                                        <select class="form-select" name="customSelectCountry"
-                                                                id="bootstrap-wizard-validation-card-holder-country"
-                                                                required="required">
-                                                            <option value="">Select your country ...</option>
-                                                            <option value="Afghanistan">Afghanistan</option>
-                                                            <option value="Albania">Albania</option>
-                                                            <option value="Algeria">Algeria</option>
-                                                            <option value="Zambia">Zambia</option>
-                                                            <option value="Zimbabwe">Zimbabwe</option>
-                                                        </select>
-                                                        <div class="invalid-feedback">This field is required.</div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <label class="form-label"
-                                                               for="bootstrap-wizard-validation-card-holder-zip-code">Zip</label>
-                                                        <input class="form-control" placeholder="1234" name="zipCode"
-                                                               type="text"
-                                                               id="bootstrap-wizard-validation-card-holder-zip-code"
-                                                               required="required"/>
-                                                        <div class="invalid-feedback">This field is required.</div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <label class="form-label"
-                                                               for="bootstrap-wizard-validation-card-exp-date">Date of
-                                                            Expire</label>
-                                                        <input class="form-control" placeholder="15/2024" name="expDate"
-                                                               type="text"
-                                                               id="bootstrap-wizard-validation-card-exp-date"
-                                                               required="required"/>
-                                                        <div class="invalid-feedback">This field is required.</div>
-                                                    </div>
-                                                    <div class="col-6">
-                                                        <label class="form-label"
-                                                               for="bootstrap-wizard-validation-card-cvv">CVV</label>
-                                                        <input class="form-control" placeholder="123" name="cvv"
-                                                               maxlength="3" pattern="[0-9]{3}" type="number"
-                                                               id="bootstrap-wizard-validation-card-cvv"
-                                                               required="required"/>
-                                                        <div class="invalid-feedback">This field is required.</div>
-                                                    </div>
-                                                </div>
+                                                <h1>2</h1>
                                             </form>
                                         </div>
                                         <div class="tab-pane" role="tabpanel"
@@ -413,32 +200,8 @@
                                                     <div class="text-center text-sm-start">
                                                         <h5 class="mb-3">You are all set!</h5>
                                                         <p class="text-1100 fs--1">Now you can access your account<br/>anytime
-                                                            anywherssse</p><a class="btn btn-primary px-6"
-                                                                              href="../../modules/forms/wizard.html">Start
-                                                        Over</a>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                        <div class="tab-pane" role="tabpanel"
-                                             aria-labelledby="bootstrap-wizard-validation-tab5"
-                                             id="bootstrap-wizard-validation-tab5">
-                                            <div class="row flex-center pb-8 pt-4 gx-3 gy-4">
-                                                <div class="col-12 col-sm-auto">
-                                                    <div class="text-center text-sm-start"><img class="d-dark-none"
-                                                                                                src="../../assets/img/spot-illustrations/34.png"
-                                                                                                alt="" width="220"/><img
-                                                            class="d-light-none"
-                                                            src="../../assets/img/spot-illustrations/dark_34.png" alt=""
-                                                            width="220"/></div>
-                                                </div>
-                                                <div class="col-12 col-sm-auto">
-                                                    <div class="text-center text-sm-start">
-                                                        <h5 class="mb-3">You are all set!</h5>
-                                                        <p class="text-1100 fs--1">Now you can access your account<br/>anytime
-                                                            anywheres</p><a class="btn btn-primary px-6"
-                                                                            href="../../modules/forms/wizard.html">Start
+                                                            anywhere</p><a class="btn btn-primary px-6"
+                                                                           href="../../modules/forms/wizard.html">Start
                                                         Over</a>
                                                     </div>
                                                 </div>
@@ -485,19 +248,6 @@
         }
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </main>
 <!-- ===============================================-->
@@ -520,6 +270,245 @@
 <script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'vendors/prism/prism.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+{# Include the JSON-encoded stocks_list data #}
+{{ stocks_list|json_script:"stocksList" }}
+
+
+<script>
+    let productCardCount = 1;
+    var stocks_list = JSON.parse(document.getElementById('stocksList').textContent);
+    createProductCard();
+    function createProductCard() {
+      // Create a new product card element
+      let productCard = document.createElement("div");
+      productCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
+
+      // Build the product card structure dynamically
+      productCard.innerHTML = `
+         <div class="col text-end">
+              <a type="button" class="text-danger" onclick="removeProductCard(this)">
+                Remove <i class="fas fa-trash"></i>
+              </a>
+         </div>
+        <div class="mb2 col-12">
+          <h5 class="mb-3">Select Product</h5>
+          <select onchange="updateProductFields(this, ${productCardCount})"
+            class="form-select" data-choices="data-choices"
+            data-options='{"removeItemButton":true,"placeholder":true}'
+            name="product" required="required">
+            <option value="">Select product</option>
+            <!-- Populate options dynamically, e.g., from stocks_list -->
+            {% for product in stocks_list %}
+            <option value="{{product.product_id}}">{{product.product_name}}</option>
+            {% endfor %}
+          </select>
+          <div class="custom-error" style="color: red;"></div>
+        </div>
+        <div id="product_info" class="row g-3 mb-3">
+          <div class="mb2 col-4">
+            <h5 class="mb-3">Product Category</h5>
+            <input class="form-control" name="product_category[${productCardCount}]"
+              placeholder="Category"
+              required="required"
+              type="text" value="" readonly/>
+            <div class="invalid-feedback">This field is required.</div>
+          </div>
+          <div class="mb2 col-4">
+            <h5 class="mb-3">Product Brand</h5>
+            <input class="form-control" name="product_brand[${productCardCount}]"
+              placeholder="Brand"
+              required="required"
+              type="text" value="" readonly/>
+            <div class="invalid-feedback">This field is required.</div>
+          </div>
+          <!-- Add the rest of your product card HTML structure here -->
+          <div class="mb2 col-4">
+            <h5 class="mb-3">Product HSN</h5>
+            <input class="form-control" name="product_hsn[${productCardCount}]"
+              placeholder="HSN"
+              required="required"
+              type="text" value="" readonly/>
+            <div class="invalid-feedback">This field is required.</div>
+          </div>
+          <div class="mb2 col-6">
+            <h5 class="mb-3">Available Quantity</h5>
+            <input class="form-control" name="available_qty[${productCardCount}]"
+              placeholder="Available Quantity"
+              required="required"
+              type="text" value="" readonly/>
+            <div class="invalid-feedback">This field is required.</div>
+          </div>
+          <div class="mb2 col-6">
+            <h5 class="mb-3">Unit Price</h5>
+            <input class="form-control" name="unit_price[${productCardCount}]"
+              placeholder="Unit Price"
+              required="required"
+              type="text" value="" readonly/>
+            <div class="invalid-feedback">This field is required.</div>
+          </div>
+          <div class="mb2 col-6">
+            <h5 class="mb-3">Purchase Quantity</h5>
+            <input class="form-control" name="purchase_qty[${productCardCount}]"
+              placeholder="Purchase quantity"
+              required="required"
+              type="number"
+              min="1"
+              type="text" value=""/>
+            <div class="invalid-feedback">This field should be 1 in minimum and should be less than available quantity.</div>
+          </div>
+          <div class="mb2 col-6">
+            <h5 class="mb-3">Product Total</h5>
+            <input class="form-control" name="product_total[${productCardCount}]"
+              placeholder="Product Total"
+              required="required"
+              type="text" value="0" readonly/>
+            <div class="invalid-feedback">This field is required.</div>
+          </div>
+          <div id="discount_check_div[${productCardCount}]" class="form-check" style="display:none">
+                 <input  id="discount_value_field[${productCardCount}]" type="hidden" name="discount_percentage[${productCardCount}]" required="required" readonly/>
+                 <input class="form-check-input" type="checkbox" name="discount_checked[${productCardCount}]" id="bootstrap-wizard-validation-wizard-checkbox" />
+                 <label id="discount_value[${productCardCount}]" class="form-check-label text-900" for="bootstrap-wizard-validation-wizard-checkbox"></label>
+          </div>
+        </div>
+      `;
+
+      // Append the product card to the products container
+      document.querySelector("#products_container").appendChild(productCard);
+
+      // Optionally, you can now initialize any JavaScript plugins for the new card
+      // For example, if you're using Choices.js:
+      let choicesInstance = new Choices(productCard.querySelector("[name='product']"), {
+        // Pass any necessary options for Choices.js
+        removeItemButton: true,
+        placeholder: true,
+      });
+
+      productCardCount++;
+      let jsonData = getFormData();
+      
+    }
+
+    function updateProductFields(selectElement, cardIndex) {
+      // Update duplicated product categories and brands within the same segment
+      let selectedIndex = selectElement.selectedIndex;
+
+      let selectedProduct = stocks_list.find(product => product.product_id == selectElement.value);
+
+      let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
+      let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
+      let productSkuField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
+      let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
+      let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
+      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
+      let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+      let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+      let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
+      let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
+      let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
+      let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+
+
+
+      productCategoryField.value = selectedProduct.category_name;
+      productBrandField.value = selectedProduct.brand_name;
+      productSkuField.value = selectedProduct.hsn;
+      productAvailableQtyField.value = selectedProduct.product_quantity;
+      productUnitPriceField.value = selectedProduct.sale_price;
+      productPurchaseQtyField.value = '';
+      productPurchaseQtyField.max = selectedProduct.product_quantity;
+      productProductTotalField.value = '';
+
+      if(selectedProduct.discount>0){
+          discountCheckDiv.style.display = 'block';
+          discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : '+selectedProduct.discount+'%';
+          discountValueField.value = selectedProduct.discount;
+      }else{
+          discountCheckDiv.style.display = 'none';
+      }
+
+      productPurchaseQtyField.addEventListener('input', function () {
+      let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
+      let productTotal;
+      if (discountCheckbox.checked) {
+        // Apply discount if the checkbox is checked
+        let discountPercentage = parseFloat(discountValueField.value) || 0;
+        let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+        productTotal = purchaseQty * discountedPrice;
+      } else {
+        // No discount, use the original sale price
+        productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+      }
+      productProductTotalField.value = productTotal.toFixed(2);
+      let jsonData = getFormData();
+      
+      });
+
+      discountCheckbox.addEventListener('change', function () {
+            let isChecked = discountCheckbox.checked;
+            if (isChecked) {
+                let discountPercentage = parseFloat(discountValueField.value) || 0;
+                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+                productProductTotalField.value = (discountedPrice*productPurchaseQtyField.value).toFixed(2);
+            } else {
+                productProductTotalField.value = (selectedProduct.sale_price*productPurchaseQtyField.value).toFixed(2);
+                productProductTotalField.innerHTML = '';
+            }
+            let jsonData = getFormData();
+            
+      });
+      let jsonData = getFormData();
+      
+    }
+    function removeProductCard(removeButton) {
+        // Find the parent product card and remove it
+        let productCard = removeButton.closest(".product_widget");
+        if (productCard) {
+            productCard.remove();
+        }
+        let jsonData = getFormData();
+    }
+
+function getFormData() {
+  let formData = [];
+  let cartDataField = document.querySelector(`[name='cartData']`);
+
+  // Iterate through all product cards
+  let productCards = document.querySelectorAll('.product_widget');
+  productCards.forEach((productCard, index) => {
+    let productData = {};
+
+    // Iterate through all form elements within the product card
+    let formElements = productCard.querySelectorAll('input, select');
+    formElements.forEach((element) => {
+      let key = element.name;
+      let value = element.value;
+
+      // Include all elements, including hidden fields, and set discount_checked to "off" if hidden or unchecked
+      if (key !== undefined && key !== null && key !== "") {
+        if (element.type === 'checkbox' && !element.checked) {
+          productData[key] = 'off';
+        } else {
+          productData[key] = value;
+        }
+      }
+    });
+
+    // Add productData to formData array
+    formData.push(productData);
+  });
+
+  // Convert formData array to JSON string
+  let jsonData = JSON.stringify(formData);
+
+  // Set the JSON string as the value of cartDataField
+  cartDataField.value = jsonData;
+
+  return formData;
+}
+
+
+
+</script>
 
 
 </body>

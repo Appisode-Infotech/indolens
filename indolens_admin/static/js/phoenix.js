@@ -6003,37 +6003,33 @@
           });
           item.addEventListener(events.SHOWN, () => {
             count = index;
-            // can't go back tab
-            if (count === tabToggleButtonEl.length - 1) {
-              tabToggleButtonEl.forEach(tab => {
-                tab.setAttribute('data-bs-toggle', 'modal');
-                tab.setAttribute('data-bs-target', '#error-modal');
-              });
-            }
-            // add done class
-            for (let i = 0; i < count; i += 1) {
-              tabToggleButtonEl[i].classList.add('done');
-              if (i > 0) {
-                tabToggleButtonEl[i - 1].classList.add('complete');
-              }
-            }
-            // remove done class
-            for (let j = count; j < tabToggleButtonEl.length; j += 1) {
-              tabToggleButtonEl[j].classList.remove('done');
-              if (j > 0) {
-                tabToggleButtonEl[j - 1].classList.remove('complete');
-              }
-            }
+//            // can't go back tab
+//            if (count === tabToggleButtonEl.length - 1) {
+//              tabToggleButtonEl.forEach(tab => {
+//                tab.setAttribute('data-bs-toggle', 'modal');
+//                tab.setAttribute('data-bs-target', '#error-modal');
+//              });
+//            }
+//            // add done class
+//            for (let i = 0; i < count; i += 1) {
+//              tabToggleButtonEl[i].classList.add('done');
+//              if (i > 0) {
+//                tabToggleButtonEl[i - 1].classList.add('complete');
+//              }
+//            }
+//            // remove done class
+//            for (let j = count; j < tabToggleButtonEl.length; j += 1) {
+//              tabToggleButtonEl[j].classList.remove('done');
+//              if (j > 0) {
+//                tabToggleButtonEl[j - 1].classList.remove('complete');
+//              }
+//            }
             // card footer remove at last step
-            console.log(count);
-            if(count==4){
-                          nextButton.classList.add('d-none');
-            }
-            if (count > tabToggleButtonEl.length - 1) {
-              wizardFooter.classList.add('d-none');
-            } else {
-              wizardFooter.classList.remove('d-none');
-            }
+//            if (count > tabToggleButtonEl.length - 2) {
+//              wizardFooter.classList.add('d-none');
+//            } else {
+//              wizardFooter.classList.remove('d-none');
+//            }
             // prev-button removing
             if (count > 0) {
               prevButton.classList.remove('d-none');
