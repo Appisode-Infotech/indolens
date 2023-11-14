@@ -361,7 +361,7 @@
                                     <div class="modal-body" id="modal_content">
                                         <!-- Form for Allocate Store -->
                                         <form class="row g-3 needs-validation allocate-store-form" method="post"
-                                              action="{% url 'assign_manager_own_store' %}" novalidate="novalidate">
+                                              action="{% url 'assign_manager_own_store' 'All' %}" novalidate="novalidate">
                                             {% csrf_token %}
                                             <input type="hidden" name="emp_id" id="emp_id">
                                             <h5 class="mb-3">Select Store (Only active and unallocated stores appear
