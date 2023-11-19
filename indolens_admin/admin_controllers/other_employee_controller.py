@@ -109,7 +109,7 @@ def update_franchise_other_employee(other_emp, files):
 
 def create_franchise_other_employee(other_emp, files):
     try:
-        hashed_password = bcrypt.hashpw(other_emp.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(other_emp.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_other_emp_query = f"""
                 INSERT INTO franchise_store_employees (
@@ -132,7 +132,7 @@ def create_franchise_other_employee(other_emp, files):
             return {
                 "status": True,
                 "message": "Employee added",
-                "seid": empid
+                "empid": empid
             }, 200
 
     except pymysql.Error as e:
@@ -169,7 +169,13 @@ def get_all_other_emp(status):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_franchise_other_emp():
+def get_all_franchise_other_emp(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name 
@@ -177,7 +183,7 @@ def get_all_franchise_other_emp():
                                             LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id
-                                            WHERE op.role = 4 """
+                                            WHERE op.role = 4 AND op.status {status_condition} """
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {

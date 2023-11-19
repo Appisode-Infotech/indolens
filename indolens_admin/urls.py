@@ -202,7 +202,7 @@ urlpatterns = [
         'manage_franchise_sales_executives/update_sales_executives_documents/salesExecutiveId=<int:franchiseSaleExecutivesId>',
         updateFranchiseSaleExecutivesDocuments, name='update_sales_executives_documents'),
     path(
-        'manage_franchise_sales_executives/enable_disable_sales_executive/saleExecutivesId=<int:franchiseSaleExecutivesId>/status=<int:status>',
+        'manage_franchise_sales_executives/enable_disable_sales_executive/route=<str:route>/saleExecutivesId=<int:franchiseSaleExecutivesId>/status=<int:status>',
         enableDisableFranchiseSaleExecutives, name='enable_disable_franchise_sales_executive'),
     path('manage_franchise_sales_executives/view_sales_executives/salesExecutiveId=<int:franchiseSaleExecutivesId>',
          viewFranchiseSaleExecutives,
@@ -243,7 +243,7 @@ urlpatterns = [
         enableDisableOtherEmployees, name='enable_disable_other_employees'),
 
     # Franchise other employees
-    path('manage_franchise_other_employees/', manageFranchiseOtherEmployees, name='manage_franchise_other_employees'),
+    path('manage_franchise_other_employees/status=<str:status>', manageFranchiseOtherEmployees, name='manage_franchise_other_employees'),
     path('manage_franchise_other_employees/create_other_employees/', createFranchiseOtherEmployees,
          name='create_franchise_other_employees'),
     path('manage_franchise_other_employees/edit_other_employees/otherEmpId=<int:franchiseEmployeeId>',
@@ -255,7 +255,7 @@ urlpatterns = [
          viewFranchiseOtherEmployees,
          name='view_franchise_other_employees'),
     path(
-        'manage_franchise_other_employees/enable_disable_other_employees/otherEmpId=<int:franchiseEmployeeId>/status=<int:status>',
+        'manage_franchise_other_employees/enable_disable_other_employees/route=<str:route>/otherEmpId=<int:franchiseEmployeeId>/status=<int:status>',
         enableDisableFranchiseOtherEmployees, name='enable_disable_franchise_other_employees'),
     # orders management
     path('all_orders/', viewAllOrders, name='all_orders'),

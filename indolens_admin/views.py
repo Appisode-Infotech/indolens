@@ -1403,7 +1403,9 @@ def createFranchiseSaleExecutives(request):
             sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = sales_executives_controller.create_franchise_sales_executives(sales_executives_obj,
                                                                                                   file_data)
-            url = reverse('view_franchise_sales_executives', kwargs={'franchiseSaleExecutivesId': response['foid']})
+            print(response)
+            url = reverse('view_franchise_sales_executives',
+                          kwargs={'franchiseSaleExecutivesId': response['franchiseSaleExecutivesId']})
             return redirect(url)
         else:
             return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html')
@@ -1490,10 +1492,11 @@ def deleteFranchiseSaleExecutivesDocuments(request, franchiseSaleExecutivesId, d
         return redirect('login')
 
 
-def enableDisableFranchiseSaleExecutives(request, franchiseSaleExecutivesId, status):
+def enableDisableFranchiseSaleExecutives(request, route, franchiseSaleExecutivesId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         sales_executives_controller.enable_disable_franchise_sales_executive(franchiseSaleExecutivesId, status)
-        return redirect('manage_franchise_sales_executives')
+        url = reverse('manage_franchise_sales_executives', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -1932,11 +1935,11 @@ def enableDisableOtherEmployees(request, route, ownEmployeeId, status):
 
 
 # FRANCHISE OTHER EMPLOYEES
-def manageFranchiseOtherEmployees(request):
+def manageFranchiseOtherEmployees(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = other_employee_controller.get_all_franchise_other_emp()
+        response, status_code = other_employee_controller.get_all_franchise_other_emp(status)
         return render(request, 'indolens_admin/franchiseOtherEmployees/manageOtherEmployees.html',
-                      {"other_employee_list": response['other_emp_list']})
+                      {"other_employee_list": response['other_emp_list'], "status": status})
     else:
         return redirect('login')
 
@@ -1980,6 +1983,7 @@ def createFranchiseOtherEmployees(request):
             file_data = FileData(form_data)
             other_emp_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = other_employee_controller.create_franchise_other_employee(other_emp_obj, file_data)
+            print(response)
             url = reverse('view_franchise_other_employees', kwargs={'franchiseEmployeeId': response['empid']})
             return redirect(url)
         else:
@@ -2063,10 +2067,11 @@ def deleteFranchiseOtherEmployeesDocuments(request, franchiseSaleExecutivesId, d
         return redirect('login')
 
 
-def enableDisableFranchiseOtherEmployees(request, franchiseEmployeeId, status):
+def enableDisableFranchiseOtherEmployees(request, route, franchiseEmployeeId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         other_employee_controller.enable_disable_franchise_other_employees(franchiseEmployeeId, status)
-        return redirect('manage_franchise_other_employees')
+        url = reverse('manage_franchise_other_employees', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2540,6 +2545,7 @@ def manageMoveAStock(request):
 def viewAllStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_stock_requests('%')
+        print(response)
         return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:

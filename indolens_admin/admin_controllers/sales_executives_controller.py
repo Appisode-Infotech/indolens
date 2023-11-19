@@ -109,7 +109,7 @@ def update_franchise_sales_executives(sales_executives, files):
 
 def create_franchise_sales_executives(sales_executives, files):
     try:
-        hashed_password = bcrypt.hashpw(sales_executives.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(sales_executives.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_sales_executives_query = f"""
                 INSERT INTO franchise_store_employees (
@@ -132,7 +132,7 @@ def create_franchise_sales_executives(sales_executives, files):
             return {
                 "status": True,
                 "message": "Sales Executives added",
-                "seId": seId
+                "franchiseSaleExecutivesId": seId
             }, 200
 
     except pymysql.Error as e:
