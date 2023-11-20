@@ -78,6 +78,22 @@
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </script>
 </head>
 
@@ -91,6 +107,7 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar_store.html' %}
 
+        {{customers_list}}
         <div class="content">
             <form id="saleForm">
                 <input name="cartData">
@@ -173,7 +190,106 @@
                                              id="bootstrap-wizard-validation-tab2">
                                             <form class="needs-validation" id="wizardValidationForm2"
                                                   novalidate="novalidate" data-wizard-form="2">
-                                                <h1>1</h1>
+                                                <div class="card-header bg-100 mb-4">
+                                                    <h5 class="mb-3">Old customer? Choose from Below</h5>
+                                                    <select onchange="updateCustomerFields(this)"
+                                                            class="form-select" data-choices="data-choices"
+                                                            data-options='{"removeItemButton":true,"placeholder":true}'
+                                                            name="product" required="required">
+                                                        <option value="">Select Customer</option>
+                                                        {% for customer in customers_list %}
+                                                        <option value="{{customer.customer_id}}">
+                                                            {{customer.phone}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                    <h5 class="mb-3">New customer? Continue adding them</h5>
+                                                    <div id="product_info" class="row g-3 mb-3">
+                                                        <div class="mb2 col-6">
+                                                            <h5 class="mb-3">Customer Name</h5>
+                                                            <input class="form-control"
+                                                                   name="customer_name"
+                                                                   placeholder="Name"
+                                                                   required="required"
+                                                                   type="text" value=""/>
+                                                            <div class="invalid-feedback">This field is required.</div>
+                                                        </div>
+                                                        <div class="mb2 col-6">
+                                                            <h5 class="mb-3">Customer Email</h5>
+                                                            <input class="form-control"
+                                                                   name="customer_email"
+                                                                   placeholder="Email"
+                                                                   required="required"
+                                                                   type="email" value=""/>
+                                                            <div class="invalid-feedback">This field is required.</div>
+                                                        </div>
+                                                        <div class="mb2 col-6">
+                                                            <h5 class="mb-3">Customer Phone</h5>
+                                                            <input class="form-control"
+                                                                   name="customer_phone"
+                                                                   placeholder="Phone"
+                                                                   required="required"
+                                                                   type="text" value=""/>
+                                                            <div class="invalid-feedback">This field is required.</div>
+                                                        </div>
+                                                        <div class="mb2 col-6">
+                                                            <h5 class="mb-3">Customer Age</h5>
+                                                            <input class="form-control"
+                                                                   name="customer_age"
+                                                                   placeholder="Age"
+                                                                   required="required"
+                                                                   type="text" value=""/>
+                                                            <div class="invalid-feedback">This field is required.</div>
+                                                        </div>
+                                                        <div class="mb2 col-6">
+                                                            <h5 class="mb-3">Gender</h5>
+                                                            <select name="customer_gender" class="form-select"
+                                                                    aria-label="Default select example"
+                                                                    required="required">
+                                                                <option value="" selected>Please select Gender</option>
+                                                                <option value="M">Male</option>
+                                                                <option value="F">Female</option>
+                                                                <option value="Others">Others</option>
+                                                            </select>
+                                                            <div class="invalid-feedback">This field is required.</div>
+                                                        </div>
+                                                        <div class="mb2 col-6">
+                                                            <h5 class="mb-3">City</h5>
+                                                            <input class="form-control"
+                                                                   name="customer_city"
+                                                                   placeholder="City"
+                                                                   required="required"
+                                                                   type="text" value=""/>
+                                                            <div class="invalid-feedback">This field is required.</div>
+                                                        </div>
+                                                        <div class="mb2 col-12">
+                                                            <h5 class="mb-3">Language</h5>
+                                                            <select name="customer_language" class="form-select"
+                                                                    aria-label="Default select example"
+                                                                    required="required">
+                                                                <option value="" selected="selected">Please select
+                                                                    Language
+                                                                </option>
+                                                                <option value="English">English</option>
+                                                                <option value="Kannada">Kannada</option>
+                                                                <option value="Hindi">Hindi</option>
+                                                                <option value="Tamil">Tamil</option>
+                                                                <option value="Telugu">Telugu</option>
+                                                                <option value="Malayalam">Malayalam</option>
+                                                                <option value="Marathi">Marathi</option>
+                                                                <option value="Gujarati">Gujarati</option>
+                                                            </select>
+                                                            <div class="invalid-feedback">This field is required.</div>
+                                                        </div>
+                                                        <div class="mb2 col-12">
+                                                            <h5 class="mb-3">Customer Address</h5>
+                                                            <textarea name="customer_address" class="form-control"
+                                                                      rows="3" required="required"></textarea>
+                                                        </div>
+
+
+                                                    </div>
+                                                </div>
                                             </form>
                                         </div>
                                         <div class="tab-pane" role="tabpanel"
@@ -246,8 +362,6 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
-
-
     </script>
 </main>
 <!-- ===============================================-->
@@ -272,6 +386,10 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 {# Include the JSON-encoded stocks_list data #}
 {{ stocks_list|json_script:"stocksList" }}
+
+
+{# Include the JSON-encoded stocks_list data #}
+{{ customers_list|json_script:"customersList" }}
 
 
 <script>
@@ -506,10 +624,35 @@ function getFormData() {
   return formData;
 }
 
+</script>
+<script>
+    function updateCustomerFields(selectCustomerField){
+    var customers_list = JSON.parse(document.getElementById('customersList').textContent);
+    let selectCustomer = customers_list.find(customer => customer.customer_id == selectCustomerField.value);
+    console.log(selectCustomer);
 
+    var customerNameInput = document.getElementsByName("customer_name")[0];
+    var customerEmailInput = document.getElementsByName("customer_email")[0];
+    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+    var customerAgeInput = document.getElementsByName("customer_age")[0];
+    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+    var customerCityInput = document.getElementsByName("customer_city")[0];
+    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+
+    customerNameInput.value = selectCustomer.name;
+    customerEmailInput.value = selectCustomer.email;
+    customerPhoneInput.value = selectCustomer.phone;
+    customerAgeInput.value = selectCustomer.age;
+    customerGenderSelect.value = selectCustomer.gender;
+    customerCityInput.value = selectCustomer.city;
+    customerLanguageSelect.value = selectCustomer.language;
+    customerAddressTextarea.value = selectCustomer.address;
+
+
+    }
 
 </script>
-
 
 </body>
 

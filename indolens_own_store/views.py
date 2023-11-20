@@ -1,5 +1,6 @@
 from django.shortcuts import redirect, render
 
+from indolens_admin.admin_controllers import customers_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
@@ -286,6 +287,8 @@ def makeSaleOwnStore(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.get_all_products_for_store(
             request.session.get('assigned_store_id'))
-        return render(request, 'expenses/makeSaleOwnStore.html', {"stocks_list": response['stocks_list']})
+        customerResponse, status_code_cust = customers_controller.get_all_stores_customers()
+        return render(request, 'expenses/makeSaleOwnStore.html',
+                      {"stocks_list": response['stocks_list'], 'customers_list': customerResponse['customers_list']})
     else:
         return redirect('own_store_login')
