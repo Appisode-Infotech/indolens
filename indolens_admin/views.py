@@ -229,11 +229,11 @@ def enableDisableFranchiseStore(request, franchiseStoreId, status, route):
 
 # =================================ADMIN SUB ADMIN MANAGEMENT======================================
 
-def manageSubAdmins(request):
+def manageSubAdmins(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = sub_admin_controller.get_all_sub_admin()
+        response, status_code = sub_admin_controller.get_all_sub_admin(status)
         return render(request, 'indolens_admin/subAdmin/manageSubAdmins.html',
-                      {"sub_admin_list": response['sub_admins']})
+                      {"sub_admin_list": response['sub_admins'], "status": status})
     else:
         return redirect('login')
 
@@ -309,10 +309,11 @@ def viewSubAdmin(request, subAdminId):
         return redirect('login')
 
 
-def enableDisableSubAdmin(request, subAdminId, status):
+def enableDisableSubAdmin(request, route, subAdminId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response = sub_admin_controller.enable_disable_sub_admin(subAdminId, status)
-        return redirect('manage_sub_admins')
+        url = reverse('manage_sub_admins', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 

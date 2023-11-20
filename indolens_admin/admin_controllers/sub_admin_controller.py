@@ -14,7 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_sub_admin(sub_admin, files):
     try:
-        hashed_password = bcrypt.hashpw(sub_admin.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(sub_admin.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_admin_query = f"""
                 INSERT INTO admin (
@@ -44,14 +44,20 @@ def create_sub_admin(sub_admin, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_sub_admin():
+def get_all_sub_admin(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_all_sub_admin_query = f""" SELECT a.*, creator.name, updater.name 
                                             FROM admin AS a
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id
-                                            WHERE a.role = 2"""
+                                            WHERE a.role = 2 AND a.status {status_condition}"""
             cursor.execute(get_all_sub_admin_query)
             sub_admins = cursor.fetchall()
             return {
