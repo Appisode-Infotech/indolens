@@ -78,7 +78,7 @@ def manageStoreEmployees(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_employee_controller.get_all_store_employee(
             request.session.get('assigned_store_id'))
-        return render(request, 'employee/manageFranchiseEmployees.html',
+        return render(request, 'employee/manageEmployees.html',
                       {"store_employee_list": response['store_employee_list']})
     else:
         return redirect('own_store_login')
