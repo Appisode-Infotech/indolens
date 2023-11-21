@@ -14,7 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_area_head(area_head, files):
     try:
-        hashed_password = bcrypt.hashpw(area_head.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(area_head.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_area_head_query = f"""
                 INSERT INTO area_head (
@@ -36,7 +36,7 @@ def create_area_head(area_head, files):
             return {
                        "status": True,
                        "message": "Area Head added",
-                       "ahid": ahid
+                       "areaHeadId": ahid
                    }, 200
 
     except pymysql.Error as e:
@@ -45,7 +45,13 @@ def create_area_head(area_head, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_area_head():
+def get_all_area_head(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_area_head_query = f"""
@@ -55,8 +61,7 @@ def get_all_area_head():
             ON FIND_IN_SET(os.store_id, ah.assigned_stores)
             LEFT JOIN admin AS creator ON ah.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON ah.last_updated_by = updater.admin_id
-            GROUP BY ah.area_head_id
-            """
+            WHERE ah.status {status_condition} GROUP BY ah.area_head_id """
             cursor.execute(get_area_head_query)
             area_heads = cursor.fetchall()
 

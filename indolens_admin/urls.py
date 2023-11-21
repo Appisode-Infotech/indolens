@@ -130,13 +130,13 @@ urlpatterns = [
         enableDisableFranchiseOwner, name='enable_disable_franchise_owner'),
 
     # area heads
-    path('manage_area_head/', manageAreaHead, name='manage_area_head'),
+    path('manage_area_head/status=<str:status>', manageAreaHead, name='manage_area_head'),
     path('manage_area_head/create_area_head/', createAreaHead, name='create_area_head'),
     path('manage_area_head/edit_area_head/areaHeadId=<int:areaHeadId>', editAreaHead, name='edit_area_head'),
     path('manage_area_head/update_area_head_documents/areaHeadId=<int:areaHeadId>', UpdateAreaHeadDocuments,
          name='update_area_head_documents'),
     path('manage_area_head/view_area_head/areaHeadId=<int:areaHeadId>', viewAreaHead, name='view_area_head'),
-    path('manage_area_head/enable_disable_area_head/areaHeadId=<int:areaHeadId>/status=<int:status>',
+    path('manage_area_head/enable_disable_area_head/route<str:route>/areaHeadId=<int:areaHeadId>/status=<int:status>',
          enableDisableAreaHead,
          name='enable_disable_area_head'),
     # marketing head

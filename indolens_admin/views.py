@@ -631,13 +631,14 @@ def deleteFranchiseOwnersDocuments(request, franchiseOwnersId, documentURL, docu
 
 # =================================ADMIN AREA HEADS MANAGEMENT======================================
 
-def manageAreaHead(request):
+def manageAreaHead(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = area_head_controller.get_all_area_head()
+        response, status_code = area_head_controller.get_all_area_head(status)
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
                       {"area_heads_list": response['area_heads_list'],
-                       "available_stores": available_stores_response['available_stores']})
+                       "available_stores": available_stores_response['available_stores'],
+                       "status": status})
     else:
         return redirect('login')
 
@@ -741,10 +742,11 @@ def editAreaHead(request, areaHeadId):
         return redirect('login')
 
 
-def enableDisableAreaHead(request, areaHeadId, status):
+def enableDisableAreaHead(request, route, areaHeadId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         area_head_controller.enable_disable_area_head(areaHeadId, status)
-        return redirect('manage_area_head')
+        url = reverse('manage_area_head', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
