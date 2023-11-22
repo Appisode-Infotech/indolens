@@ -44,6 +44,14 @@
     <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+    <style>
+        .hidden {
+            display: none;
+        }
+
+
+
+    </style>
 
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -59,6 +67,7 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
 
 
     </script>
@@ -83,8 +92,6 @@
                         <h5 class="text-700 fw-semi-bold">Add products to your central inventory</h5>
                     </div>
                     <div class="col-auto">
-                        <!--                        <button class="btn btn-phoenix-secondary me-2 mb-2 mb-sm-0">Discard</button>-->
-                        <!--                                                <button class="btn btn-phoenix-primary me-2 mb-2 mb-sm-0">Save draft</button>-->
                         <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Publish product</button>
                     </div>
                 </div>
@@ -113,6 +120,325 @@
                             <div class="invalid-feedback">Please upload at least one picture.</div>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
+
+                        <div class="row g-3 mb-3">
+                            <h5 class="text-1000">Product Type</h5>
+                            <div class="col-12 col-lg-4">
+                                <input class="form-check-input" id="inlineCheckbox1" type="checkbox" name="productType"
+                                       value="lens"/>
+                                <label class="form-check-label" for="inlineCheckbox1">Lens</label>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <input class="form-check-input" id="inlineCheckbox2" type="checkbox" name="productType"
+                                       value="contact_lens"/>
+                                <label class="form-check-label" for="inlineCheckbox2">Contact Lens</label>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <input class="form-check-input" id="inlineCheckbox3" type="checkbox" name="productType"
+                                       value="others" checked="checked"/>
+                                <label class="form-check-label" for="inlineCheckbox3">Others</label>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 pt-3  bg-200 lens-widget d-none">
+
+                            <div class="row mb-3">
+                                <h5 class="text-1000 ">Vision Type</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="visionType1" type="checkbox"
+                                           name="visionType"
+                                           value="single_vision"/>
+                                    <label class="form-check-label" for="visionType1">Single Vision</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="visionType2" type="checkbox"
+                                           name="visionType"
+                                           value="bifocal"/>
+                                    <label class="form-check-label" for="visionType2">Bi-Focal</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="visionType3" type="checkbox"
+                                           name="visionType"
+                                           value="progressive"/>
+                                    <label class="form-check-label" for="visionType3">Progressive</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="visionType4" type="checkbox"
+                                           name="visionType"
+                                           value="rx"/>
+                                    <label class="form-check-label" for="visionType4">Rx</label>
+                                </div>
+                            </div>
+
+
+                            <div class="col-12 col-lg-12" id="normalPowerCard" style="display: none;">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-12 col-lg-3">
+                                        <h5 class="mb-2 text-1000">Index</h5>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected="">Choose Index</option>
+                                            <option value="1.50">1.50</option>
+                                            <option value="1.56">1.56</option>
+                                            <option value="1.59">1.59</option>
+                                            <option value="1.61">1.61</option>
+                                            <option value="1.67">1.67</option>
+                                            <option value="1.74">1.74</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-lg-3">
+                                        <h5 class="mb-2 text-1000">Spherical</h5>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected="">Select Value</option>
+                                            <option value="1">-3.5</option>
+                                            <option value="1">-3.0</option>
+                                            <option value="1">-2.5</option>
+                                            <option value="1">-2.0</option>
+                                            <option value="1">-1.5</option>
+                                            <option value="1">-1.0</option>
+                                            <option value="1">-0.5</option>
+                                            <option value="1">0.0</option>
+                                            <option value="1">0.5</option>
+                                            <option value="1">1.0</option>
+                                            <option value="1">1.5</option>
+                                            <option value="1">2.0</option>
+                                            <option value="1">2.5</option>
+                                            <option value="1">3.0</option>
+                                            <option value="1">3.5</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-lg-3">
+                                        <h5 class="mb-2 text-1000">Cylindrical</h5>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected="">Select Value</option>
+                                            <option value="1">-3.5</option>
+                                            <option value="1">-3.0</option>
+                                            <option value="1">-2.5</option>
+                                            <option value="1">-2.0</option>
+                                            <option value="1">-1.5</option>
+                                            <option value="1">-1.0</option>
+                                            <option value="1">-0.5</option>
+                                            <option value="1">0.0</option>
+                                            <option value="1">0.5</option>
+                                            <option value="1">1.0</option>
+                                            <option value="1">1.5</option>
+                                            <option value="1">2.0</option>
+                                            <option value="1">2.5</option>
+                                            <option value="1">3.0</option>
+                                            <option value="1">3.5</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-12 col-lg-3">
+                                        <h5 class="mb-2 text-1000">Axis</h5>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected="">Select Value</option>
+                                            <option value="1">-3.5</option>
+                                            <option value="1">-3.0</option>
+                                            <option value="1">-2.5</option>
+                                            <option value="1">-2.0</option>
+                                            <option value="1">-1.5</option>
+                                            <option value="1">-1.0</option>
+                                            <option value="1">-0.5</option>
+                                            <option value="1">0.0</option>
+                                            <option value="1">0.5</option>
+                                            <option value="1">1.0</option>
+                                            <option value="1">1.5</option>
+                                            <option value="1">2.0</option>
+                                            <option value="1">2.5</option>
+                                            <option value="1">3.0</option>
+                                            <option value="1">3.5</option>
+                                        </select>
+                                    </div>
+
+                                    <div class="col-12 col-lg-3">
+                                        <h5 class="mb-2 text-1000">Add</h5>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected="">Open this select menu</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-12" id="rxPowerCard" style="display: none;">
+                                <div class="row g-3 mb-3">
+                                    <div class="col-12 col-lg-3">
+                                        <h5 class="mb-2 text-1000">Spherical</h5>
+                                        <input name="sph" class="form-control" type="text"
+                                               placeholder=""/>
+                                    </div>
+                                    <div class="col-12 col-lg-3">
+                                        <h5 class="mb-2 text-1000">Cylindrical</h5>
+                                        <input name="cyl" class="form-control" type="text"
+                                               placeholder=""/>
+                                    </div>
+                                    <div class="col-12 col-lg-3">
+                                        <h5 class="mb-2 text-1000">Axis</h5>
+                                        <input name="cyl" class="form-control" type="text"
+                                               placeholder=""/>
+                                    </div>
+
+                                    <div class="col-12 col-lg-3">
+                                        <h5 class="mb-2 text-1000">Add</h5>
+                                        <select class="form-select" aria-label="Default select example">
+                                            <option selected="">Open this select menu</option>
+                                            <option value="1">One</option>
+                                            <option value="2">Two</option>
+                                            <option value="3">Three</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 pt-3 pb-3 bg-200 d-none contact-lens-widget">
+                            <div class="row mb-3">
+                                <h5 class="text-1000 ">Contact Lens Type</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_type1" type="checkbox"
+                                           name="contact_lens_type"
+                                           value="single_vision"/>
+                                    <label class="form-check-label" for="contact_lens_type1">Soft</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_type2" type="checkbox"
+                                           name="contact_lens_type"
+                                           value="bifocal"/>
+                                    <label class="form-check-label" for="contact_lens_type2">Semi Soft</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_type3" type="checkbox"
+                                           name="contact_lens_type"
+                                           value="progressive"/>
+                                    <label class="form-check-label" for="contact_lens_type3">Hard</label>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <h5 class="text-1000 ">Contact Lens Disposablity</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability1" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="single_vision"/>
+                                    <label class="form-check-label" for="contact_lens_disposability1">Daily</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability2" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="bifocal"/>
+                                    <label class="form-check-label" for="contact_lens_disposability2">1 Month</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability3" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="progressive"/>
+                                    <label class="form-check-label" for="contact_lens_disposability3">3 Month</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability4" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="progressive"/>
+                                    <label class="form-check-label" for="contact_lens_disposability4">6 Month</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability5" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="progressive"/>
+                                    <label class="form-check-label" for="contact_lens_disposability5">Yearly</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected="">Choose Power</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected="">Select Value</option>
+                                        <option value="1">-3.5</option>
+                                        <option value="1">-3.0</option>
+                                        <option value="1">-2.5</option>
+                                        <option value="1">-2.0</option>
+                                        <option value="1">-1.5</option>
+                                        <option value="1">-1.0</option>
+                                        <option value="1">-0.5</option>
+                                        <option value="1">0.0</option>
+                                        <option value="1">0.5</option>
+                                        <option value="1">1.0</option>
+                                        <option value="1">1.5</option>
+                                        <option value="1">2.0</option>
+                                        <option value="1">2.5</option>
+                                        <option value="1">3.0</option>
+                                        <option value="1">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected="">Select Value</option>
+                                        <option value="1">-3.5</option>
+                                        <option value="1">-3.0</option>
+                                        <option value="1">-2.5</option>
+                                        <option value="1">-2.0</option>
+                                        <option value="1">-1.5</option>
+                                        <option value="1">-1.0</option>
+                                        <option value="1">-0.5</option>
+                                        <option value="1">0.0</option>
+                                        <option value="1">0.5</option>
+                                        <option value="1">1.0</option>
+                                        <option value="1">1.5</option>
+                                        <option value="1">2.0</option>
+                                        <option value="1">2.5</option>
+                                        <option value="1">3.0</option>
+                                        <option value="1">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected="">Select Value</option>
+                                        <option value="1">-3.5</option>
+                                        <option value="1">-3.0</option>
+                                        <option value="1">-2.5</option>
+                                        <option value="1">-2.0</option>
+                                        <option value="1">-1.5</option>
+                                        <option value="1">-1.0</option>
+                                        <option value="1">-0.5</option>
+                                        <option value="1">0.0</option>
+                                        <option value="1">0.5</option>
+                                        <option value="1">1.0</option>
+                                        <option value="1">1.5</option>
+                                        <option value="1">2.0</option>
+                                        <option value="1">2.5</option>
+                                        <option value="1">3.0</option>
+                                        <option value="1">3.5</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <select class="form-select" aria-label="Default select example">
+                                        <option selected="">Open this select menu</option>
+                                        <option value="1">One</option>
+                                        <option value="2">Two</option>
+                                        <option value="3">Three</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Quantity</h5>
@@ -133,156 +459,7 @@
                             </div>
                         </div>
 
-<!--                        <h4 class="mb-3">Power Data</h4>-->
 
-<!--                        <div class="row g-3 mb-3">-->
-<!--                            <div class="col-12 col-lg-6">-->
-<!--                                <h5 class="mb-2 text-1000">Does the product include power</h5>-->
-<!--                                <div class="form-check">-->
-<!--                                    <input value="on" class="form-check-input" id="includePower" type="radio"-->
-<!--                                           name="flexRadioDefault">-->
-<!--                                    <label class="form-check-label" for="includePower">Yes</label>-->
-<!--                                </div>-->
-<!--                                <div class="form-check">-->
-<!--                                    <input value="off" class="form-check-input" id="includePower2" type="radio"-->
-<!--                                           name="flexRadioDefault" checked="">-->
-<!--                                    <label class="form-check-label" for="includePower2">No</label>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-12 col-lg-6" id="visionTypeRadios" style="display: none;">-->
-<!--                                <h5 class="mb-2 text-1000">Vision Type</h5>-->
-<!--                                <div class="form-check">-->
-<!--                                    <input value="off" class="form-check-input" id="visionType1" type="radio"-->
-<!--                                           name="visionType">-->
-<!--                                    <label class="form-check-label" for="visionType1">Single Vision</label>-->
-<!--                                </div>-->
-<!--                                <div class="form-check">-->
-<!--                                    <input value="off" class="form-check-input" id="visionType2" type="radio"-->
-<!--                                           name="visionType">-->
-<!--                                    <label class="form-check-label" for="visionType2">Bi-Focal</label>-->
-<!--                                </div>-->
-<!--                                <div class="form-check">-->
-<!--                                    <input value="off" class="form-check-input" id="visionType3" type="radio"-->
-<!--                                           name="visionType">-->
-<!--                                    <label class="form-check-label" for="visionType3">Progressive</label>-->
-<!--                                </div>-->
-<!--                                <div class="form-check">-->
-<!--                                    <input value="on" class="form-check-input" id="visionType4" type="radio"-->
-<!--                                           name="visionType">-->
-<!--                                    <label class="form-check-label" for="visionType4">Rx</label>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="row g-3 mb-3" id="powerCards" style="display: none;">-->
-
-<!--                            <div class="col-12 col-lg-12" id="normalPowerCard">-->
-<!--                                <div class="row g-3 mb-3">-->
-<!--                                    <div class="col-12 col-lg-3">-->
-<!--                                        <h5 class="mb-2 text-1000">Spherical</h5>-->
-<!--                                        <select class="form-select" aria-label="Default select example">-->
-<!--                                            <option selected="">Select Value</option>-->
-<!--                                            <option value="1">-3.5</option>-->
-<!--                                            <option value="1">-3.0</option>-->
-<!--                                            <option value="1">-2.5</option>-->
-<!--                                            <option value="1">-2.0</option>-->
-<!--                                            <option value="1">-1.5</option>-->
-<!--                                            <option value="1">-1.0</option>-->
-<!--                                            <option value="1">-0.5</option>-->
-<!--                                            <option value="1">0.0</option>-->
-<!--                                            <option value="1">0.5</option>-->
-<!--                                            <option value="1">1.0</option>-->
-<!--                                            <option value="1">1.5</option>-->
-<!--                                            <option value="1">2.0</option>-->
-<!--                                            <option value="1">2.5</option>-->
-<!--                                            <option value="1">3.0</option>-->
-<!--                                            <option value="1">3.5</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-12 col-lg-3">-->
-<!--                                        <h5 class="mb-2 text-1000">Cylindrical</h5>-->
-<!--                                        <select class="form-select" aria-label="Default select example">-->
-<!--                                            <option selected="">Select Value</option>-->
-<!--                                            <option value="1">-3.5</option>-->
-<!--                                            <option value="1">-3.0</option>-->
-<!--                                            <option value="1">-2.5</option>-->
-<!--                                            <option value="1">-2.0</option>-->
-<!--                                            <option value="1">-1.5</option>-->
-<!--                                            <option value="1">-1.0</option>-->
-<!--                                            <option value="1">-0.5</option>-->
-<!--                                            <option value="1">0.0</option>-->
-<!--                                            <option value="1">0.5</option>-->
-<!--                                            <option value="1">1.0</option>-->
-<!--                                            <option value="1">1.5</option>-->
-<!--                                            <option value="1">2.0</option>-->
-<!--                                            <option value="1">2.5</option>-->
-<!--                                            <option value="1">3.0</option>-->
-<!--                                            <option value="1">3.5</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-12 col-lg-3">-->
-<!--                                        <h5 class="mb-2 text-1000">Axis</h5>-->
-<!--                                        <select class="form-select" aria-label="Default select example">-->
-<!--                                            <option selected="">Select Value</option>-->
-<!--                                            <option value="1">-3.5</option>-->
-<!--                                            <option value="1">-3.0</option>-->
-<!--                                            <option value="1">-2.5</option>-->
-<!--                                            <option value="1">-2.0</option>-->
-<!--                                            <option value="1">-1.5</option>-->
-<!--                                            <option value="1">-1.0</option>-->
-<!--                                            <option value="1">-0.5</option>-->
-<!--                                            <option value="1">0.0</option>-->
-<!--                                            <option value="1">0.5</option>-->
-<!--                                            <option value="1">1.0</option>-->
-<!--                                            <option value="1">1.5</option>-->
-<!--                                            <option value="1">2.0</option>-->
-<!--                                            <option value="1">2.5</option>-->
-<!--                                            <option value="1">3.0</option>-->
-<!--                                            <option value="1">3.5</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-
-<!--                                    <div class="col-12 col-lg-3">-->
-<!--                                        <h5 class="mb-2 text-1000">Add</h5>-->
-<!--                                        <select class="form-select" aria-label="Default select example">-->
-<!--                                            <option selected="">Open this select menu</option>-->
-<!--                                            <option value="1">One</option>-->
-<!--                                            <option value="2">Two</option>-->
-<!--                                            <option value="3">Three</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-12 col-lg-12" id="rxPowerCard">-->
-<!--                                <div class="row g-3 mb-3">-->
-<!--                                    <div class="col-12 col-lg-3">-->
-<!--                                        <h5 class="mb-2 text-1000">Spherical</h5>-->
-<!--                                        <input name="sph" class="form-control" type="text"-->
-<!--                                               placeholder=""/>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-12 col-lg-3">-->
-<!--                                        <h5 class="mb-2 text-1000">Cylindrical</h5>-->
-<!--                                        <input name="cyl" class="form-control" type="text"-->
-<!--                                               placeholder=""/>-->
-<!--                                    </div>-->
-<!--                                    <div class="col-12 col-lg-3">-->
-<!--                                        <h5 class="mb-2 text-1000">Axis</h5>-->
-<!--                                        <input name="cyl" class="form-control" type="text"-->
-<!--                                               placeholder=""/>-->
-<!--                                    </div>-->
-
-<!--                                    <div class="col-12 col-lg-3">-->
-<!--                                        <h5 class="mb-2 text-1000">Add</h5>-->
-<!--                                        <select class="form-select" aria-label="Default select example">-->
-<!--                                            <option selected="">Open this select menu</option>-->
-<!--                                            <option value="1">One</option>-->
-<!--                                            <option value="2">Two</option>-->
-<!--                                            <option value="3">Three</option>-->
-<!--                                        </select>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
                         <h4 class="mb-3">Pricing</h4>
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-6">
@@ -364,23 +541,24 @@
                                                 <div class="invalid-feedback">Please select a brand.</div>
                                             </div>
 
-                                            <div id="only_frame_options" class="d-none">
-                                                <div class="col-12 col-sm-6 col-xl-12">
-                                                    <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Material</h5><a class="fw-bold fs--1"
-                                                                                              href="{% url 'add_master_material' %}">Add
-                                                        new material</a>
-                                                    </div>
-                                                    <select name="materialId" required class="form-select mb-3">
-                                                        <option value="">Select Material</option>
-                                                        {% for material in product_materials %}
-                                                        <option value="{{material.material_id}}">
-                                                            {{material.material_name}}
-                                                        </option>
-                                                        {% endfor %}
-                                                    </select>
-                                                    <div class="invalid-feedback">Please select material.</div>
+                                            <div class="col-12 col-sm-6 col-xl-12">
+                                                <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                    <h5 class="text-1000">Material</h5><a class="fw-bold fs--1"
+                                                                                          href="{% url 'add_master_material' %}">Add
+                                                    new material</a>
                                                 </div>
+                                                <select name="materialId" required class="form-select mb-3">
+                                                    <option value="">Select Material</option>
+                                                    {% for material in product_materials %}
+                                                    <option value="{{material.material_id}}">
+                                                        {{material.material_name}}
+                                                    </option>
+                                                    {% endfor %}
+                                                </select>
+                                                <div class="invalid-feedback">Please select material.</div>
+                                            </div>
+
+                                            <div id="only_frame_options" class="d-none">
                                                 <div class="col-12 col-sm-6 col-xl-12">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
                                                         <h5 class="text-1000">Frame Type</h5><a class="fw-bold fs--1"
@@ -501,6 +679,7 @@
         }
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -540,34 +719,74 @@
         }
 
 
+
 </script>
-
-
 <script>
     $(document).ready(function () {
-        // Function to show/hide vision type radios and power cards based on the selection
-        $("input[name='flexRadioDefault']").change(function () {
-            if ($(this).val() === "on") {
-                $("#visionTypeRadios").show();
-                $("input[name='visionType']").prop("checked", false);
-            } else {
-                $("#visionTypeRadios").hide();
-                $("#powerCards").hide(); // hide power cards when 'No' is selected
-            }
-        });
+        $('input[name="productType"]').change(function () {
+            // Hide all widgets initially
+            $('.lens-widget, .contact-lens-widget').addClass('d-none');
 
-        // Function to show/hide power cards based on the selection of vision type
-        $("input[name='visionType']").change(function () {
-            if ($(this).val() === "off") {
-                $("#normalPowerCard").show();
-                $("#rxPowerCard").hide();
-            } else {
-                $("#normalPowerCard").hide();
-                $("#rxPowerCard").show();
+            // Uncheck all checkboxes
+            $('input[name="productType"]').prop('checked', false);
+
+            // Check the selected checkbox
+            $(this).prop('checked', true);
+
+            // Show the selected widget based on the checkbox value
+            if ($('#inlineCheckbox1').is(':checked')) {
+                $('.lens-widget').removeClass('d-none');
+            } else if ($('#inlineCheckbox2').is(':checked')) {
+                $('.contact-lens-widget').removeClass('d-none');
+            } else if ($('#inlineCheckbox3').is(':checked')) {
+                // If "Others" is selected, hide both widgets
             }
-            $("#powerCards").show();
         });
     });
+
+
+
+</script>
+<script>
+    // Add an event listener to the checkboxes
+    const visionTypeCheckboxes = document.querySelectorAll('input[name="visionType"]');
+
+    visionTypeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Reset visibility of both power cards
+            document.getElementById('normalPowerCard').style.display = 'none';
+            document.getElementById('rxPowerCard').style.display = 'none';
+
+            // Check which checkbox is selected
+            if (this === visionTypeCheckboxes[0]) {
+                console.log(visionTypeCheckboxes[0]);
+                document.getElementById('normalPowerCard').style.display = 'block';
+            } else if (this === visionTypeCheckboxes[1]) {
+                console.log(visionTypeCheckboxes[1]);
+                document.getElementById('normalPowerCard').style.display = 'block';
+            } else if (this === visionTypeCheckboxes[2]) {
+                console.log(visionTypeCheckboxes[2]);
+                document.getElementById('normalPowerCard').style.display = 'block';
+            } else if (this === visionTypeCheckboxes[3]) {
+                console.log(visionTypeCheckboxes[3]);
+                document.getElementById('rxPowerCard').style.display = 'block';
+            }
+
+            // Uncheck other checkboxes if one is checked
+            visionTypeCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+
+             // Check if no checkbox is checked, hide both power cards
+            if (!visionTypeCheckboxes[0].checked && !visionTypeCheckboxes[1].checked && !visionTypeCheckboxes[2].checked && !visionTypeCheckboxes[3].checked) {
+                document.getElementById('normalPowerCard').style.display = 'none';
+                document.getElementById('rxPowerCard').style.display = 'none';
+            }
+        });
+    });
+
 
 
 </script>
