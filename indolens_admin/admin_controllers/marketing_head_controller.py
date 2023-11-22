@@ -14,7 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_marketing_head(marketing_head, files):
     try:
-        hashed_password = bcrypt.hashpw(marketing_head.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(marketing_head.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_marketing_head_query = f"""
                 INSERT INTO marketing_head (
@@ -36,7 +36,7 @@ def create_marketing_head(marketing_head, files):
             return {
                        "status": True,
                        "message": "Marketing Head added",
-                       "mhid": mhid
+                       "marketingHeadId": mhid
                    }, 200
 
     except pymysql.Error as e:
@@ -45,7 +45,13 @@ def create_marketing_head(marketing_head, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_marketing_head():
+def get_all_marketing_head(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_marketing_head_query = f"""
@@ -54,6 +60,7 @@ def get_all_marketing_head():
             LEFT JOIN area_head AS ah ON mh.assigned_area_head = ah.area_head_id
             LEFT JOIN admin AS creator ON mh.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON mh.last_updated_by = updater.admin_id
+            WHERE mh.status {status_condition}
             GROUP BY mh.marketing_head_id
             """
             cursor.execute(get_marketing_head_query)

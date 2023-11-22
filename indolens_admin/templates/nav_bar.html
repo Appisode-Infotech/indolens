@@ -605,7 +605,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'manage_marketing_head' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'manage_marketing_head' %}"
+                                                     data-bs-toggle="" href="{% url 'manage_marketing_head' 'All' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="target"></span></span><span class="nav-link-text-wrapper"><span
@@ -620,7 +620,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'manage_accountant' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'manage_accountant' %}"
+                                                     data-bs-toggle="" href="{% url 'manage_accountant' 'All' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="dollar-sign"></span></span><span class="nav-link-text-wrapper"><span
@@ -634,7 +634,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'manage_lab_technician' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'manage_lab_technician' %}"
+                                                     data-bs-toggle="" href="{% url 'manage_lab_technician' 'All' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="clipboard"></span></span><span class="nav-link-text-wrapper"><span

@@ -14,7 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_accountant(accountant, files):
     try:
-        hashed_password = bcrypt.hashpw(accountant.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(accountant.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_accountant_query = f"""
                 INSERT INTO accountant (
@@ -45,7 +45,13 @@ def create_accountant(accountant, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_accountant():
+def get_all_accountant(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_accountant_query = f"""
@@ -53,6 +59,7 @@ def get_all_accountant():
             FROM accountant AS ac
             LEFT JOIN admin AS creator ON ac.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON ac.last_updated_by = updater.admin_id
+            WHERE ac.status {status_condition}
             GROUP BY ac.accountant_id
             """
             cursor.execute(get_accountant_query)
