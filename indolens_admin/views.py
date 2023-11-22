@@ -780,11 +780,11 @@ def deleteAreaHeadDocuments(request, subAdminId, documentURL, document_Type):
 
 # =================================ADMIN MARKETING HEADS MANAGEMENT======================================
 
-def manageMarketingHead(request):
+def manageMarketingHead(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = marketing_head_controller.get_all_marketing_head()
+        response, status_code = marketing_head_controller.get_all_marketing_head(status)
         return render(request, 'indolens_admin/marketingHeads/manageMarketingHead.html',
-                      {"marketing_heads_list": response['marketing_heads_list']})
+                      {"marketing_heads_list": response['marketing_heads_list'], "status": status})
     else:
         return redirect('login')
 
@@ -903,10 +903,11 @@ def updateMarketingHeadDocuments(request, marketingHeadId):
         return redirect('login')
 
 
-def enableDisableMarketingHead(request, marketingHeadId, status):
+def enableDisableMarketingHead(request, route, marketingHeadId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         marketing_head_controller.enable_disable_marketing_head(marketingHeadId, status)
-        return redirect('manage_marketing_head')
+        url = reverse('manage_marketing_head', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -1508,11 +1509,11 @@ def enableDisableFranchiseSaleExecutives(request, route, franchiseSaleExecutives
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
-def manageAccountant(request):
+def manageAccountant(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = accountant_controller.get_all_accountant()
+        response, status_code = accountant_controller.get_all_accountant(status)
         return render(request, 'indolens_admin/accountant/manageAccountant.html',
-                      {"accountant_list": response['accountant_list']})
+                      {"accountant_list": response['accountant_list'], "status": status})
     else:
         return redirect('login')
 
@@ -1641,21 +1642,22 @@ def deleteAccountantDocuments(request, accountantId, documentURL, document_Type)
         return redirect('login')
 
 
-def enableDisableAccountant(request, accountantId, status):
+def enableDisableAccountant(request, route, accountantId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         accountant_controller.enable_disable_accountant(accountantId, status)
-        return redirect('manage_accountant')
+        url = reverse('manage_accountant', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
-def manageLabTechnician(request):
+def manageLabTechnician(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = lab_technician_controller.get_all_lab_technician()
+        response, status_code = lab_technician_controller.get_all_lab_technician(status)
         return render(request, 'indolens_admin/labTechnician/manageLabTechnician.html',
-                      {"lab_technician_list": response['lab_technician_list']})
+                      {"lab_technician_list": response['lab_technician_list'], "status": status})
     else:
         return redirect('login')
 
@@ -1785,10 +1787,11 @@ def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document
         return redirect('login')
 
 
-def enableDisableLabTechnician(request, labTechnicianId, status):
+def enableDisableLabTechnician(request, route, labTechnicianId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         lab_technician_controller.enable_disable_lab_technician(labTechnicianId, status)
-        return redirect('manage_lab_technician')
+        url = reverse('manage_lab_technician', kwargs={'status': route})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2135,7 +2138,6 @@ def viewCustomerDetails(request, customerId):
 def manageLabs(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_controller.get_all_labs()
-
         return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
     else:
         return redirect('login')
@@ -2145,8 +2147,11 @@ def createLab(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             lab_obj = lab_model.lab_model_from_dict(request.POST)
-            lab_controller.create_lab(lab_obj)
-        return render(request, 'indolens_admin/labs/createLab.html')
+            response, status_code = lab_controller.create_lab(lab_obj)
+            url = reverse('view_lab', kwargs={'labId': response['labId']})
+            return redirect(url)
+        else:
+            return render(request, 'indolens_admin/labs/createLab.html')
     else:
         return redirect('login')
 

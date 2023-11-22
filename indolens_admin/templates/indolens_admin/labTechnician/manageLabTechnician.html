@@ -88,6 +88,28 @@
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
                                 </div>
+                                <div class="col-auto scrollbar overflow-hidden-y flex-grow-1 me-4">
+                                    <div class="btn-group position-static" role="group">
+                                        <div class="btn-group position-static text-nowrap">
+                                            <button id="sortStatus" aria-expanded="false"
+                                                    aria-haspopup="true"
+                                                    class="btn btn-phoenix-secondary px-7 flex-shrink-0"
+                                                    data-boundary="window"
+                                                    data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                    type="button">{{status}}<span class="fas fa-angle-down ms-2"></span>
+                                            </button>
+                                            <ul class="dropdown-menu">
+                                                <li><a class="dropdown-item" href="{% url 'manage_lab_technician' 'All' %}">All</a></li>
+                                                <li>
+                                                    <hr class="dropdown-divider"/>
+                                                </li>
+                                                <li><a class="dropdown-item text-success" href="{% url 'manage_lab_technician' 'Active' %}">Active Only</a></li>
+                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_lab_technician' 'Inactive' %}">Inactive Only</a></li>
+
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </div>
                                 <div class="col-auto"><a class="btn btn-primary px-5"
                                                          href="{% url 'create_lab_technician' %}"><i
                                         class="fa-solid fa-plus me-2"></i>Add a lab technician</a></div>
@@ -221,7 +243,7 @@
                                                data-employee-id="{{ lab_technician.lab_technician_id }}"
                                                data-employee-name="{{ lab_technician.name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_lab_technician' lab_technician.lab_technician_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_lab_technician' status lab_technician.lab_technician_id 1 %}">
                                                 Make Active
                                             </a>
 
@@ -233,7 +255,7 @@
                                                data-employee-id="{{ lab_technician.admin_id }}"
                                                data-employee-name="{{ lab_technician.name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_lab_technician' lab_technician.lab_technician_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_lab_technician' status lab_technician.lab_technician_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

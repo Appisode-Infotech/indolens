@@ -140,7 +140,7 @@ urlpatterns = [
          enableDisableAreaHead,
          name='enable_disable_area_head'),
     # marketing head
-    path('manage_marketing_head/', manageMarketingHead, name='manage_marketing_head'),
+    path('manage_marketing_head/status=<str:status>', manageMarketingHead, name='manage_marketing_head'),
     path('manage_marketing_head/create_marketing_head/', createMarketingHead, name='create_marketing_head'),
     path('manage_marketing_head/edit_marketing_head/marketingHeadId=<int:marketingHeadId>', editMarketingHead,
          name='edit_marketing_head'),
@@ -149,7 +149,7 @@ urlpatterns = [
     path('manage_marketing_head/view_marketing_head/marketingHeadId=<int:marketingHeadId>', viewMarketingHead,
          name='view_marketing_head'),
     path(
-        'manage_marketing_head/enable_disable_marketing_head/marketingHeadId=<int:marketingHeadId>/status=<int:status>',
+        'manage_marketing_head/enable_disable_marketing_head/route=<str:route>/marketingHeadId=<int:marketingHeadId>/status=<int:status>',
         enableDisableMarketingHead, name='enable_disable_marketing_head'),
 
     # manage optimetry
@@ -212,16 +212,16 @@ urlpatterns = [
          viewFranchiseSaleExecutives,
          name='view_franchise_sales_executives'),
     # manage accountant
-    path('manage_accountant/', manageAccountant, name='manage_accountant'),
+    path('manage_accountant/status=<str:status>', manageAccountant, name='manage_accountant'),
     path('manage_accountant/create_accountant/', createAccountant, name='create_accountant'),
     path('manage_accountant/edit_accountant/accountantId=<int:accountantId>', editAccountant, name='edit_accountant'),
     path('manage_accountant/update_accountant_documents/accountantId=<int:accountantId>', updateAccountantDocuments,
          name='update_accountant_documents'),
     path('manage_accountant/view_accountant/accountantId=<int:accountantId>', viewAccountant, name='view_accountant'),
-    path('manage_accountant/enable_disable_accountant/accountantId=<int:accountantId>/status=<int:status>',
+    path('manage_accountant/enable_disable_accountant/route=<str:route>/accountantId=<int:accountantId>/status=<int:status>',
          enableDisableAccountant, name='enable_disable_accountant'),
     # manage lab tech
-    path('manage_lab_technician/', manageLabTechnician, name='manage_lab_technician'),
+    path('manage_lab_technician/status=<str:status>', manageLabTechnician, name='manage_lab_technician'),
     path('manage_lab_technician/create_lab_technician/', createLabTechnician, name='create_lab_technician'),
     path('manage_lab_technician/edit_lab_technician/labTechnicianId=<int:labTechnicianId>', editLabTechnician,
          name='edit_lab_technician'),
@@ -230,7 +230,7 @@ urlpatterns = [
     path('manage_lab_technician/view_lab_technician/labTechnicianId=<int:labTechnicianId>', viewLabTechnician,
          name='view_lab_technician'),
     path(
-        'manage_lab_technician/enable_disable_lab_technician/labTechnicianId=<int:labTechnicianId>/status=<int:status>',
+        'manage_lab_technician/enable_disable_lab_technician/route=<str:route>/labTechnicianId=<int:labTechnicianId>/status=<int:status>',
         enableDisableLabTechnician, name='enable_disable_lab_technician'),
 
     # Own store other employees

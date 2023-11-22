@@ -14,7 +14,7 @@ today = datetime.datetime.now(ist)
 
 def create_lab_technician(lab_technician, files):
     try:
-        hashed_password = bcrypt.hashpw(lab_technician.password.encode('utf-8'), bcrypt.gensalt())
+        hashed_password = bcrypt.hashpw(lab_technician.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
         with connection.cursor() as cursor:
             insert_marketing_head_query = f"""
                 INSERT INTO lab_technician (
@@ -45,7 +45,13 @@ def create_lab_technician(lab_technician, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_lab_technician():
+def get_all_lab_technician(status):
+    status_conditions = {
+        "All": "LIKE '%'",
+        "Active": "= 1",
+        "Inactive": "= 0"
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
             get_lab_technician_query = f"""
@@ -54,6 +60,7 @@ def get_all_lab_technician():
             LEFT JOIN lab AS l ON lt.assigned_lab_id = l.lab_id
             LEFT JOIN admin AS creator ON lt.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON lt.last_updated_by = updater.admin_id
+            WHERE lt.status {status_condition}
             GROUP BY lt.lab_technician_id
             """
             cursor.execute(get_lab_technician_query)

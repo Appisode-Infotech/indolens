@@ -28,10 +28,12 @@ def create_lab(lab_obj):
                                             '{today}', {lab_obj.last_updated_by}, '{today}')"""
 
             cursor.execute(create_lab_query)
+            lab_id = cursor.lastrowid
             return {
-                       "status": True,
-                       "message": "lab added"
-                   }, 200
+                "status": True,
+                "message": "lab added",
+                "labId": lab_id
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -49,9 +51,9 @@ def get_all_labs():
             cursor.execute(get_lab_query)
             lab_data = cursor.fetchall()
             return {
-                       "status": True,
-                       "lab_list": get_labs(lab_data)
-                   }, 200
+                "status": True,
+                "lab_list": get_labs(lab_data)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -70,9 +72,9 @@ def get_lab_by_id(labid):
             cursor.execute(get_lab_query)
             lab_data = cursor.fetchall()
             return {
-                       "status": True,
-                       "lab_data": get_labs(lab_data)
-                   }, 200
+                "status": True,
+                "lab_data": get_labs(lab_data)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -95,9 +97,9 @@ def enable_disable_lab(labid, status):
             cursor.execute(update_lab_query)
 
             return {
-                       "status": True,
-                       "message": "Lab updated"
-                   }, 200
+                "status": True,
+                "message": "Lab updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -131,9 +133,9 @@ def edit_lab_by_id(lab_obj):
             cursor.execute(update_lab_query)
 
             return {
-                       "status": True,
-                       "message": "Lab updated"
-                   }, 200
+                "status": True,
+                "message": "Lab updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
