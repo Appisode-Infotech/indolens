@@ -96,7 +96,8 @@ def get_all_active_types():
         return {"status": False, "message": str(e)}, 301
 
 
-def add_central_inventory_products(product_obj, file):
+def add_central_inventory_products(product_obj, file, power_attributes):
+    power_attributes_json = json.dumps(power_attributes)
     try:
         with connection.cursor() as cursor:
             add_product_query = f""" INSERT INTO central_inventory 
@@ -104,7 +105,7 @@ def add_central_inventory_products(product_obj, file):
                                                 category_id, brand_id, material_id, frame_type_id, frame_shape_id, 
                                                 color_id, unit_id, origin, cost_price, sale_price, model_number, hsn, 
                                                 created_on, created_by, last_updated_on, last_updated_by, 
-                                                product_quantity, product_gst, discount) 
+                                                product_quantity, product_gst, discount, franchise_sale_price, power_attribute) 
                                                 VALUES ('{product_obj.product_title}','{product_obj.product_description}',
                                                 '{json.dumps(file.product_img)}','{product_obj.category_id}',
                                                 '{product_obj.brand_id}','{product_obj.material_id}',
@@ -114,7 +115,8 @@ def add_central_inventory_products(product_obj, file):
                                                 '{product_obj.model_number}', '{product_obj.hsn_number}',
                                                 '{today}','{product_obj.created_by}','{today}',
                                                 '{product_obj.last_updated_by}', '{product_obj.product_quantity}', 
-                                                '{product_obj.product_gstin}', {product_obj.discount}) """
+                                                '{product_obj.product_gstin}', {product_obj.discount}, 
+                                                {product_obj.franchise_sale_price}, '{power_attributes_json}') """
 
             cursor.execute(add_product_query)
             productId = cursor.lastrowid
@@ -316,6 +318,44 @@ def get_all_out_of_stock_products_for_store(quantity):
         return {"status": False, "message": str(e)}, 301
 
 
+def get_all_moved_stocks_list(status):
+    try:
+        with connection.cursor() as cursor:
+            get_all_out_of_stock_product_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
+                                    pm.material_name, ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
+                                    CASE
+                                        WHEN rp.store_type = 1 THEN os.store_name
+                                        ELSE fstore.store_name
+                                    END AS store_name,
+                                    from_store.store_name
+                                    FROM request_products As rp
+                                    LEFT JOIN central_inventory AS ci ON ci.product_id = rp.product_id
+                                    LEFT JOIN admin AS creator ON rp.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON rp.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
+                                    LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
+                                    LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
+                                    LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
+                                    WHERE rp.request_status LIKE '{status}' """
+
+            cursor.execute(get_all_out_of_stock_product_query)
+            product_list = cursor.fetchall()
+            return {
+                "status": True,
+                "stocks_request_list": get_request_product_list(product_list)
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
 def get_all_stock_requests(status):
     try:
         with connection.cursor() as cursor:
@@ -340,7 +380,7 @@ def get_all_stock_requests(status):
                                     LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
                                     LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
                                     LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
-                                    WHERE rp.request_status LIKE '{status}'"""
+                                    WHERE rp.request_status LIKE '{status}' AND is_requested = 1 """
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
@@ -490,6 +530,7 @@ def change_product_status(productId, status):
 
 
 def create_store_stock_request(stock_obj, store_id):
+    print(stock_obj.comments)
     try:
         with connection.cursor() as cursor:
             stock_req_query = """INSERT INTO request_products ( 
@@ -505,12 +546,13 @@ def create_store_stock_request(stock_obj, store_id):
                                created_on, 
                                created_by, 
                                last_updated_on, 
-                               last_updated_by
-                           ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
+                               last_updated_by,
+                               comment
+                           ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
             cursor.execute(stock_req_query, (
                 store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
-                1, 0, 0, 0, 0, today, stock_obj.created_by, today, stock_obj.created_by))
+                1, 0, 0, 0, 0, today, stock_obj.created_by, today, stock_obj.created_by, stock_obj.comments))
 
             update_store_Inventory = f"""INSERT INTO store_inventory 
                                            (store_id, store_type, product_id, product_quantity, created_on, 

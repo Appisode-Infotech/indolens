@@ -12,7 +12,7 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
-    customers_controller, stores_inventory_controller
+    customers_controller, stores_inventory_controller, lens_power_attribute_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
@@ -2501,8 +2501,11 @@ def centralInventoryAddProducts(request):
 
             file_data = FileData(form_data)
             product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
-            response, status_code = central_inventory_controller.add_central_inventory_products(product_obj, file_data)
+            power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
+            response, status_code = central_inventory_controller.add_central_inventory_products(product_obj, file_data,
+                                                                                                power_attributes)
             url = reverse('manage_central_inventory_products', kwargs={'status': 'All'})
+            return redirect(url)
         else:
             response, status_code = central_inventory_controller.get_all_active_types()
             return render(request, 'indolens_admin/centralInventory/centralInventoryAddProducts.html', response)
@@ -2523,15 +2526,17 @@ def manageCentralInventoryOutOfStock(request):
 def manageMoveStocks(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
+            print(request.POST)
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
             if request.POST['own_store_id'] != '':
                 store_id = request.POST['own_store_id']
             else:
                 store_id = request.POST['franchise_store_id']
             response = central_inventory_controller.create_store_stock_request(stock_obj, store_id)
+            print(response)
             return redirect('manageMoveStocks')
         else:
-            moved_stocks, status_code = central_inventory_controller.get_all_stock_requests('1')
+            moved_stocks, status_code = central_inventory_controller.get_all_moved_stocks_list('1')
             own_store, status_code = own_store_controller.get_all_own_stores('Active')
             franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('Active')
             products, status_code = central_inventory_controller.get_all_central_inventory_products('Active')

@@ -179,7 +179,8 @@ def view_all_store_stock_request(store_id, status):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
                                     LEFT JOIN own_store os ON os.store_id = {store_id}
-                                    WHERE rp.store_id = {store_id} AND rp.request_status LIKE '{status}' AND rp.store_type = 1 """
+                                    WHERE rp.store_id = {store_id} AND rp.request_status LIKE '{status}' 
+                                    AND rp.store_type = 1 """
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()

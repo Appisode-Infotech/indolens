@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 21, 2023 at 08:34 AM
+-- Generation Time: Nov 25, 2023 at 06:58 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -45,6 +45,15 @@ CREATE TABLE `accountant` (
   `last_updated_by` int(11) NOT NULL,
   `last_updated_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `accountant`
+--
+
+INSERT INTO `accountant` (`accountant_id`, `name`, `email`, `phone`, `password`, `profile_pic`, `address`, `document_1_type`, `document_1_url`, `document_2_type`, `document_2_url`, `status`, `created_by`, `created_on`, `last_updated_by`, `last_updated_on`) VALUES
+(1, 'Accountant 1', 'accountant1@test.com', '9126431725', '$2b$12$eSIltnSFJhDZms48tlvVr.HDHX2BfZfOP6ia/rlS0rAR/bWNn2CIi', 'profile_pic/profile_pic_1700635966_accountant.webp', '#B-22, 10th floor, 1st cross, 2nd main, 3rd stage, HSR layout, Bangalore 560024', 'Aadhar', '[\"documents/documents_1700635966_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700635966_pan.jpg\"]', 1, 5, '2023-11-22 12:22:46', 5, '2023-11-22 12:22:46'),
+(2, 'Accountant 2', 'accountant2@test.com', '9126431726', '$2b$12$eSIltnSFJhDZms48tlvVr.HDHX2BfZfOP6ia/rlS0rAR/bWNn2CIi', 'profile_pic/profile_pic_1700635966_accountant.webp', '#B-22, 10th floor, 1st cross, 2nd main, 3rd stage, HSR layout, Bangalore 560024', 'Aadhar', '[\"documents/documents_1700635966_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700635966_pan.jpg\"]', 0, 5, '2023-11-22 12:22:46', 5, '2023-11-22 12:22:46'),
+(3, 'Accountant 3', 'accountant3@test.com', '9126431727', '$2b$12$eSIltnSFJhDZms48tlvVr.HDHX2BfZfOP6ia/rlS0rAR/bWNn2CIi', 'profile_pic/profile_pic_1700635966_accountant.webp', '#B-22, 10th floor, 1st cross, 2nd main, 3rd stage, HSR layout, Bangalore 560024', 'Aadhar', '[\"documents/documents_1700635966_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700635966_pan.jpg\"]', 1, 5, '2023-11-22 12:22:46', 5, '2023-11-22 12:22:46');
 
 -- --------------------------------------------------------
 
@@ -246,6 +255,8 @@ CREATE TABLE `central_inventory` (
   `sale_price` int(11) NOT NULL,
   `model_number` varchar(255) NOT NULL,
   `hsn` varchar(255) NOT NULL,
+  `power_attribute` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`power_attribute`)),
+  `franchise_sale_price` double NOT NULL,
   `product_quantity` int(11) NOT NULL,
   `product_gst` float NOT NULL,
   `status` tinyint(1) NOT NULL,
@@ -260,10 +271,12 @@ CREATE TABLE `central_inventory` (
 -- Dumping data for table `central_inventory`
 --
 
-INSERT INTO `central_inventory` (`product_id`, `product_name`, `product_description`, `product_images`, `category_id`, `brand_id`, `material_id`, `frame_type_id`, `frame_shape_id`, `color_id`, `unit_id`, `origin`, `cost_price`, `sale_price`, `model_number`, `hsn`, `product_quantity`, `product_gst`, `status`, `discount`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 'lens 1', '<p>first lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 1, 1, 1, 1, 1, 1, 2, 'Indian', 550, 900, 'M001', 'HSN001', 100, 18, 1, 50, '2023-11-14 13:00:28', 5, '2023-11-14 13:00:28', 5),
-(2, 'lens 2', '<p>Second lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 1, 1, 3, 2, 2, 2, 1, 'Foreign', 1000, 1500, 'M001', 'HSN001', 250, 18, 1, 0, '2023-11-14 13:00:28', 5, '2023-11-14 13:13:54', 5),
-(3, 'lens 3', '<p>Third lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 1, 1, 2, 3, 3, 3, 2, 'Domestic', 250, 500, 'M001', 'HSN001', 250, 18, 1, 0, '2023-11-14 13:00:28', 5, '2023-11-14 13:13:54', 5);
+INSERT INTO `central_inventory` (`product_id`, `product_name`, `product_description`, `product_images`, `category_id`, `brand_id`, `material_id`, `frame_type_id`, `frame_shape_id`, `color_id`, `unit_id`, `origin`, `cost_price`, `sale_price`, `model_number`, `hsn`, `power_attribute`, `franchise_sale_price`, `product_quantity`, `product_gst`, `status`, `discount`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
+(1, 'lens 1', '<p>first lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 1, 1, 1, 1, 1, 1, 2, 'Indian', 550, 900, 'M001', 'HSN001', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 0, 10, 18, 1, 50, '2023-11-14 13:00:28', 5, '2023-11-14 13:00:28', 5),
+(2, 'lens 2', '<p>Second lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 1, 1, 3, 2, 2, 2, 1, 'Foreign', 1000, 1500, 'M001', 'HSN001', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 0, 145, 18, 1, 0, '2023-11-14 13:00:28', 5, '2023-11-14 13:13:54', 5),
+(3, 'lens 3', '<p>Third lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 1, 1, 2, 3, 3, 3, 2, 'Domestic', 250, 500, 'M001', 'HSN001', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 0, 250, 18, 1, 0, '2023-11-14 13:00:28', 5, '2023-11-14 13:13:54', 5),
+(4, 'test single vision lens', '<p>test single vision lens</p>', '[\"products/products_1700928278_frame01.jpg\"]', 1, 1, 1, 1, 1, 1, 1, 'Indian', 400, 600, 'MDL9876', 'HSN9876', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 500, 100, 9, 0, 10, '2023-11-25 21:34:36', 5, '2023-11-25 21:34:36', 5),
+(5, 'test single vision lens', '<p>test single vision lens</p>', '[\"products/products_1700928380_frame01.jpg\"]', 1, 1, 1, 1, 1, 1, 1, 'Indian', 400, 600, 'MDL9876', 'HSN9876', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 500, 100, 9, 0, 10, '2023-11-25 21:36:17', 5, '2023-11-25 21:36:17', 5);
 
 -- --------------------------------------------------------
 
@@ -360,7 +373,7 @@ CREATE TABLE `django_session` (
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
 ('h769ghhhyh8dv233k9m74cpph1vglxam', '.eJxNjbsOwjAMRX-l8twWshTaCUYGxICYo6gxkaXEqeIghBD_Tko7sNn33McbSLTkmFD76BxaTQxDTg-sgSwMqgY2AWGAs2HjMFUKasBgyBctLJo6ZJTcjjEUtpStoRPb6JGlujy5us7kl188-TXNnlkwIuS4rC9kXZ5SvJNHPdFYfH_f5u_Wquv7fqt23V7fBJM0RxuISXIypayhMXI7sYPPFzEpUU8:1r2o7K:yFDAvtr8UTsJRVAb3QNAwXCD3PEftwhdHHZb8a6NQfw', '2023-11-28 07:45:50.052790'),
-('jd4p49www8vw0v5rkkk3hsvborv6iatf', '.eJxNjT0PgjAQhv8KuRlQGFCYdHQwDsa5aeBsLqHXpldjjPG_WyyD2937vB9vIFESXUA1O2NwUsQwxPDAEmiCoS2BtUUY4KxZGwxFCyWg1TQnzWatPUSUWI_OJpbL1tCJJzcjS3F5cnFdyC-fPfHlF0-TBC1ChtN6JuuyD-5OMypPY_L9fZu_WzVd3_fbZtft1U0wSHWcLDFJDDqVVTQ6rj0b-HwBNCJRVA:1r5KX6:3oYxEHm6xdWc_RyEEumA2-F8fER6WJXMSjBiE_m-yZ0', '2023-12-05 06:46:52.140702'),
+('jd4p49www8vw0v5rkkk3hsvborv6iatf', '.eJxNjbsOwjAMRX-l8twWshTaCUYGxICYo6gxkaXEqeIghBD_Tko7sNn33McbSLTkmFD76BxaTQxDTg-sgSwMqgY2AWGAs2HjMFUKasBgyBctLJo6ZJTcjjEUtpStoRPb6JGlujy5us7kl188-TXNnlkwIuS4rC9kXZ5SvJNHPdFYfH_f5u_Wquv7fqt23V7fBJM0RxuISXIypayhMXI7sYPPFzEpUU8:1r6wYA:jBPnwAtQRdxs2fSOi8cSC_SFqf53yMQ-jrP7oafytj0', '2023-12-09 17:34:38.513401'),
 ('turp8wrxg6w8cxp04xqc6rl2ydlh9m05', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLVUcpLzE1VslLyys_IU3DJT1XSUSooyk_LzEmNL8hMBkog8fSyCtKVagHSfBz5:1r5Jlq:AHsztn2aZH_sj_NXrLsqFzk8KEM3PGg7OGBm0jPH6wM', '2023-12-05 05:58:02.212010');
 
 -- --------------------------------------------------------
@@ -549,6 +562,14 @@ CREATE TABLE `lab` (
   `last_updated_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `lab`
+--
+
+INSERT INTO `lab` (`lab_id`, `lab_name`, `lab_display_name`, `lab_phone`, `lab_gst`, `lab_email`, `lab_city`, `lab_state`, `lab_zip`, `lab_lat`, `lab_lng`, `lab_address`, `status`, `created_by`, `created_on`, `last_updated_by`, `last_updated_on`) VALUES
+(1, 'Indolens lab 1', 'Indolens lab 1', 2147483647, 'GSTIN09876590', 'indolenslab1@test.com', 'Bangalore', 'Karnataka', '560058', 13.0978355, 77.39398600000001, 'indolense lab1, Nelamangala, near nelamangala bus stop, Bangalore 560098', 1, 5, '2023-11-22 12:44:31', 5, '2023-11-22 12:44:31'),
+(2, 'Indolens lab 2', 'Indolens lab 1', 2147483647, 'GSTIN09876590', 'indolenslab2@test.com', 'Bangalore', 'Karnataka', '560058', 12.9662094, 77.5746429, 'Indolens lab2, chickpet, KR Market, Bangalore 560057', 1, 5, '2023-11-22 14:15:38', 5, '2023-11-22 14:15:38');
+
 -- --------------------------------------------------------
 
 --
@@ -575,6 +596,15 @@ CREATE TABLE `lab_technician` (
   `last_updated_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `lab_technician`
+--
+
+INSERT INTO `lab_technician` (`lab_technician_id`, `name`, `email`, `phone`, `password`, `profile_pic`, `assigned_lab_id`, `address`, `document_1_type`, `document_1_url`, `document_2_type`, `document_2_url`, `status`, `created_by`, `created_on`, `last_updated_by`, `last_updated_on`) VALUES
+(1, 'Lab Tech 1', 'labtech1@test.com', '9816254314', '$2b$12$BIWIBfelWp2ojKr0Wg3CTeLqqmaNDp2hihAV5ABUfLUgJ6UR76HYO', 'profile_pic/profile_pic_1700637012_lab_tech.png', 0, '#A-01, ground floor, Shree Krishna Nivas, Hanumantha layout, Brindavana 470023', 'Aadhar', '[\"documents/documents_1700637012_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700637012_pan.jpg\"]', 0, 5, '2023-11-22 12:40:07', 5, '2023-11-22 12:40:07'),
+(2, 'Lab Tech 2', 'labtech2@test.com', '9816254315', '$2b$12$BIWIBfelWp2ojKr0Wg3CTeLqqmaNDp2hihAV5ABUfLUgJ6UR76HYO', 'profile_pic/profile_pic_1700637012_lab_tech.png', 0, '#A-01, ground floor, Shree Krishna Nivas, Hanumantha layout, Brindavana 470023', 'Aadhar', '[\"documents/documents_1700637012_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700637012_pan.jpg\"]', 1, 5, '2023-11-22 12:40:07', 5, '2023-11-22 12:40:07'),
+(3, 'Lab Tech 3', 'labtech3@test.com', '9816254316', '$2b$12$BIWIBfelWp2ojKr0Wg3CTeLqqmaNDp2hihAV5ABUfLUgJ6UR76HYO', 'profile_pic/profile_pic_1700637012_lab_tech.png', 0, '#A-01, ground floor, Shree Krishna Nivas, Hanumantha layout, Brindavana 470023', 'Aadhar', '[\"documents/documents_1700637012_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700637012_pan.jpg\"]', 1, 5, '2023-11-22 12:40:07', 5, '2023-11-22 12:40:07');
+
 -- --------------------------------------------------------
 
 --
@@ -600,6 +630,15 @@ CREATE TABLE `marketing_head` (
   `last_updated_by` int(11) NOT NULL,
   `last_updated_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `marketing_head`
+--
+
+INSERT INTO `marketing_head` (`marketing_head_id`, `name`, `email`, `phone`, `password`, `profile_pic`, `assigned_area_head`, `address`, `document_1_type`, `document_1_url`, `document_2_type`, `document_2_url`, `status`, `created_by`, `created_on`, `last_updated_by`, `last_updated_on`) VALUES
+(1, 'Marketing Head 1', 'marketinghead1@test.com', '9080123748', '$2b$12$JU.7BBGv0LjF98UbbGhXJe324fqFaCOfxyl7aS8oZ2uE8lvHcL4ya', 'profile_pic/profile_pic_1700635284_marketing_head.jpg', NULL, '#A13, 4th floor, E block, golden city, yeshwanthapuram, Bangalore 560058', 'Aadhar', '[\"documents/documents_1700635284_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700635284_pan.jpg\"]', 1, 5, '2023-11-22 12:11:24', 5, '2023-11-22 12:11:24'),
+(2, 'Marketing Head 2', 'marketinghead2@test.com', '9080123749', '$2b$12$JU.7BBGv0LjF98UbbGhXJe324fqFaCOfxyl7aS8oZ2uE8lvHcL4ya', 'profile_pic/profile_pic_1700635284_marketing_head.jpg', NULL, '#A13, 4th floor, E block, golden city, yeshwanthapuram, Bangalore 560058', 'Aadhar', '[\"documents/documents_1700635284_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700635284_pan.jpg\"]', 0, 5, '2023-11-22 12:11:24', 5, '2023-11-22 12:11:24'),
+(3, 'Marketing Head 3', 'marketinghead3@test.com', '9080123750', '$2b$12$JU.7BBGv0LjF98UbbGhXJe324fqFaCOfxyl7aS8oZ2uE8lvHcL4ya', 'profile_pic/profile_pic_1700635284_marketing_head.jpg', NULL, '#A13, 4th floor, E block, golden city, yeshwanthapuram, Bangalore 560058', 'Aadhar', '[\"documents/documents_1700635284_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700635284_pan.jpg\"]', 1, 5, '2023-11-22 12:11:24', 5, '2023-11-22 12:11:24');
 
 -- --------------------------------------------------------
 
@@ -758,8 +797,10 @@ CREATE TABLE `product_categories` (
 --
 
 INSERT INTO `product_categories` (`category_id`, `category_name`, `category_prefix`, `category_description`, `status`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 'Frame ', 'IND', 'Indolens Frame', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
-(2, 'Lens', 'IND', 'Indolens Lens', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5);
+(1, 'Lens', 'IND', 'Indolens Lens', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
+(2, 'Contact Lens', 'IND', 'Indolens Contact Lens', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
+(3, 'Frame', 'IND', 'Indolens Frame ', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
+(4, 'Lens Cover', 'IND', 'Indolens Lens Cover ', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5);
 
 -- --------------------------------------------------------
 
@@ -832,6 +873,7 @@ CREATE TABLE `request_products` (
   `is_requested` tinyint(1) NOT NULL,
   `request_to_store_id` int(11) NOT NULL,
   `payment_status` int(11) NOT NULL,
+  `comment` varchar(255) NOT NULL,
   `created_on` datetime NOT NULL,
   `created_by` int(11) NOT NULL,
   `last_updated_on` datetime NOT NULL,
@@ -842,14 +884,22 @@ CREATE TABLE `request_products` (
 -- Dumping data for table `request_products`
 --
 
-INSERT INTO `request_products` (`request_products_id`, `store_id`, `store_type`, `product_id`, `product_quantity`, `unit_cost`, `request_status`, `delivery_status`, `is_requested`, `request_to_store_id`, `payment_status`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 1, 1, 1, 55, 0, 1, 0, 0, 0, 0, '2023-11-14 13:01:27', 5, '2023-11-14 13:01:27', 5),
-(2, 1, 1, 1, 5, 0, 1, 0, 0, 0, 0, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
-(3, 1, 1, 1, 10, 0, 1, 0, 0, 0, 0, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
-(4, 1, 1, 2, 45, 0, 1, 0, 0, 0, 0, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
-(5, 1, 1, 3, 85, 0, 1, 0, 0, 0, 0, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
-(6, 1, 1, 1, 95, 0, 1, 0, 0, 0, 0, '2023-11-20 13:47:59', 5, '2023-11-20 13:47:59', 5),
-(7, 1, 1, 1, 95, 0, 1, 0, 0, 0, 0, '2023-11-21 12:05:46', 5, '2023-11-21 12:05:46', 5);
+INSERT INTO `request_products` (`request_products_id`, `store_id`, `store_type`, `product_id`, `product_quantity`, `unit_cost`, `request_status`, `delivery_status`, `is_requested`, `request_to_store_id`, `payment_status`, `comment`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
+(1, 1, 1, 1, 55, 0, 1, 0, 0, 0, 0, '', '2023-11-14 13:01:27', 5, '2023-11-14 13:01:27', 5),
+(2, 1, 1, 1, 5, 0, 1, 0, 0, 0, 0, '', '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
+(3, 1, 1, 1, 10, 0, 1, 0, 0, 0, 0, '', '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
+(4, 1, 1, 2, 45, 0, 1, 0, 0, 0, 0, '', '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
+(5, 1, 1, 3, 85, 0, 1, 0, 0, 0, 0, '', '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
+(6, 1, 1, 1, 95, 0, 1, 0, 0, 0, 0, '', '2023-11-20 13:47:59', 5, '2023-11-20 13:47:59', 5),
+(7, 1, 1, 1, 95, 0, 1, 0, 0, 0, 0, '', '2023-11-21 12:05:46', 5, '2023-11-21 12:05:46', 5),
+(8, 3, 1, 1, 90, 0, 1, 0, 0, 0, 0, '', '2023-11-25 22:00:17', 5, '2023-11-25 22:00:17', 5),
+(9, 1, 1, 1, 90, 0, 1, 0, 0, 0, 0, '', '2023-11-25 22:00:17', 5, '2023-11-25 22:00:17', 5),
+(10, 1, 1, 1, 90, 0, 1, 0, 0, 0, 0, '', '2023-11-25 22:44:03', 5, '2023-11-25 22:44:03', 5),
+(11, 1, 1, 1, 90, 0, 1, 0, 0, 0, 0, '', '2023-11-25 22:45:39', 5, '2023-11-25 22:45:39', 5),
+(12, 1, 1, 1, 90, 0, 1, 0, 0, 0, 0, '', '2023-11-25 22:45:39', 5, '2023-11-25 22:45:39', 5),
+(13, 1, 1, 1, 50, 0, 0, 0, 1, 2, 0, '', '2023-11-25 23:09:59', 1, '2023-11-25 23:09:59', 1),
+(14, 2, 1, 2, 50, 0, 1, 0, 0, 0, 0, '', '2023-11-25 23:20:48', 5, '2023-11-25 23:20:48', 5),
+(15, 2, 1, 2, 55, 0, 1, 0, 0, 0, 0, 'test comment section', '2023-11-25 23:26:36', 5, '2023-11-25 23:26:36', 5);
 
 -- --------------------------------------------------------
 
@@ -931,9 +981,11 @@ CREATE TABLE `store_inventory` (
 --
 
 INSERT INTO `store_inventory` (`store_inventory_id`, `store_id`, `store_type`, `product_id`, `product_quantity`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 1, 1, 1, 315, '2023-11-14 13:13:54', 5, '2023-11-21 12:05:46', 5),
-(3, 1, 1, 2, 45, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
-(4, 1, 1, 3, 85, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5);
+(1, 1, 1, 1, 675, '2023-11-14 13:13:54', 5, '2023-11-25 22:45:39', 5),
+(3, 1, 1, 2, 10, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
+(4, 1, 1, 3, 85, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
+(8, 3, 1, 1, 90, '2023-11-25 22:00:17', 5, '2023-11-25 22:00:17', 5),
+(13, 2, 1, 2, 105, '2023-11-25 23:20:48', 5, '2023-11-25 23:26:36', 5);
 
 -- --------------------------------------------------------
 
@@ -1239,7 +1291,7 @@ ALTER TABLE `units`
 -- AUTO_INCREMENT for table `accountant`
 --
 ALTER TABLE `accountant`
-  MODIFY `accountant_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `accountant_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `admin`
@@ -1299,7 +1351,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `central_inventory`
 --
 ALTER TABLE `central_inventory`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -1359,13 +1411,19 @@ ALTER TABLE `franchise_store_employees`
 -- AUTO_INCREMENT for table `lab`
 --
 ALTER TABLE `lab`
-  MODIFY `lab_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `lab_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT for table `lab_technician`
 --
 ALTER TABLE `lab_technician`
-  MODIFY `lab_technician_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `lab_technician_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `marketing_head`
+--
+ALTER TABLE `marketing_head`
+  MODIFY `marketing_head_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `optimetry`
@@ -1395,7 +1453,7 @@ ALTER TABLE `own_store_employees`
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `product_colors`
@@ -1413,7 +1471,7 @@ ALTER TABLE `product_materials`
 -- AUTO_INCREMENT for table `request_products`
 --
 ALTER TABLE `request_products`
-  MODIFY `request_products_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `request_products_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `reset_password`
@@ -1437,7 +1495,7 @@ ALTER TABLE `store_expense`
 -- AUTO_INCREMENT for table `store_inventory`
 --
 ALTER TABLE `store_inventory`
-  MODIFY `store_inventory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `store_inventory_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT for table `store_manager`
