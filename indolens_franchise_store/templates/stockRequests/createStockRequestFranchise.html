@@ -154,10 +154,11 @@
                                                  src="{{ MEDIA_URL }}{{ product.product_images.0 }}"/>
                                         </div>
                                     </a>
+                                    <p>From store: {{product.target_store_id}}</p>
                                 </td>
                                 <td class="product align-middle ps-4"><a
                                         class="fw-semi-bold line-clamp-3 mb-0"
-                                        href="#!">{{product.product_name}} </a></td>
+                                        href="#!">{{product.product_name}}</a></td>
                                 <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                     ₹{{product.sale_price}}
                                 </td>
@@ -230,9 +231,11 @@
                                                    type="number" value=""/>
                                             <div class="invalid-feedback">Enter valid quantity!</div>
                                         </div>
-                                        <input  name="request_to_store_id" type="hidden" value="2"/>
+
+                                        <input  name="request_to_store_id" type="hidden" value="0"/>
                                         <input  name="request_from_store_id" type="hidden" value="{{request.session.assigned_store_id}}"/>
                                         <input  name="created_by" type="hidden" value="{{request.session.id}}"/>
+                                        <input  name="store_type" type="hidden" value="{{request.session.store_type}}"/>
 
                                         <div class="modal-footer">
                                             <button class="btn btn-primary" type="submit">Submit</button>

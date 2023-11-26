@@ -202,10 +202,10 @@ def createStockRequestFranchise(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         if request.method == 'POST':
+            print(request.POST)
             stock_obj = franchise_create_stock_request_model.franchise_create_stock_request_model_from_dict(
                 request.POST)
             response = franchise_inventory_controller.create_store_stock_request(stock_obj)
-            print(response)
             products, status_code = franchise_inventory_controller.get_all_central_inventory_products()
             return render(request, 'stockRequests/createStockRequestFranchise.html',
                           {"product_list": products['product_list']})

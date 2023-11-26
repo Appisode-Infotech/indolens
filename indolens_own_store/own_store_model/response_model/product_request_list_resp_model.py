@@ -7,7 +7,7 @@ class Product:
         (
             self.request_products_id, self.store_id, self.store_type, self.request_product_id,
             self.request_product_quantity, self.request_product_unit_cost, self.request_status, self.delivery_status, self.is_requested,
-            self.request_to_store_id, self.payment_status,
+            self.request_to_store_id, self.payment_status, self.comment,
             self.store_product_created_on, self.store_product_created_by, self.store_product_last_updated_on,
             self.store_product_last_updated_by,
             self.product_id, self.product_name, self.product_description, self.product_images,
@@ -36,6 +36,7 @@ class Product:
             'is_requested': self.is_requested,
             'request_to_store_id': self.request_to_store_id,
             'payment_status': self.payment_status,
+            'comment': self.comment,
             'request_product_created_on': self.store_product_created_on,
             'request_product_created_by': self.store_product_created_by,
             'request_product_last_updated_on': self.store_product_last_updated_on,
