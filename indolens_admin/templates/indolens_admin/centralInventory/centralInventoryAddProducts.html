@@ -51,6 +51,8 @@
 
 
 
+
+
     </style>
 
     <script>
@@ -67,6 +69,8 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
+
 
 
 
@@ -121,24 +125,24 @@
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
 
-                        <div class="row g-3 mb-3">
-                            <h5 class="text-1000">Product Type</h5>
-                            <div class="col-12 col-lg-4">
-                                <input class="form-check-input" id="inlineCheckbox1" type="checkbox" name="productType"
-                                       value="lens"/>
-                                <label class="form-check-label" for="inlineCheckbox1">Lens</label>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <input class="form-check-input" id="inlineCheckbox2" type="checkbox" name="productType"
-                                       value="contact_lens"/>
-                                <label class="form-check-label" for="inlineCheckbox2">Contact Lens</label>
-                            </div>
-                            <div class="col-12 col-lg-4">
-                                <input class="form-check-input" id="inlineCheckbox3" type="checkbox" name="productType"
-                                       value="others" checked="checked"/>
-                                <label class="form-check-label" for="inlineCheckbox3">Others</label>
-                            </div>
-                        </div>
+                        <!--                        <div class="row g-3 mb-3">-->
+                        <!--                            <h5 class="text-1000">Product Type</h5>-->
+                        <!--                            <div class="col-12 col-lg-4">-->
+                        <!--                                <input class="form-check-input" id="inlineCheckbox1" type="checkbox" name="productType"-->
+                        <!--                                       value="lens"/>-->
+                        <!--                                <label class="form-check-label" for="inlineCheckbox1">Lens</label>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="col-12 col-lg-4">-->
+                        <!--                                <input class="form-check-input" id="inlineCheckbox2" type="checkbox" name="productType"-->
+                        <!--                                       value="contact_lens"/>-->
+                        <!--                                <label class="form-check-label" for="inlineCheckbox2">Contact Lens</label>-->
+                        <!--                            </div>-->
+                        <!--                            <div class="col-12 col-lg-4">-->
+                        <!--                                <input class="form-check-input" id="inlineCheckbox3" type="checkbox" name="productType"-->
+                        <!--                                       value="others" checked="checked"/>-->
+                        <!--                                <label class="form-check-label" for="inlineCheckbox3">Others</label>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
 
                         <div class="row mb-3 pt-3  bg-200 lens-widget d-none">
 
@@ -685,6 +689,8 @@
 
 
 
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -718,39 +724,19 @@
             var selectedValue = selectElement.value;
              if (selectedValue === "1") {
                 divToToggle.classList.remove("d-none");
-            } else {
+             }else if(selectedValue === "2"){
+                            $('.contact-lens-widget').addClass('d-none');
+                            $('.lens-widget').removeClass('d-none');
+                            divToToggle.classList.add("d-none");
+             }else if(selectedValue === "3"){
+                                            $('.lens-widget').addClass('d-none');
+                $('.contact-lens-widget').removeClass('d-none');
+
+                            divToToggle.classList.add("d-none");
+             }else {
                 divToToggle.classList.add("d-none");
             }
         }
-
-
-
-</script>
-<script>
-    $(document).ready(function () {
-        $('input[name="productType"]').change(function () {
-            // Hide all widgets initially
-            $('.lens-widget, .contact-lens-widget').addClass('d-none');
-
-            // Uncheck all checkboxes
-            $('input[name="productType"]').prop('checked', false);
-
-            // Check the selected checkbox
-            $(this).prop('checked', true);
-
-            // Show the selected widget based on the checkbox value
-            if ($('#inlineCheckbox1').is(':checked')) {
-                $('.lens-widget').removeClass('d-none');
-            } else if ($('#inlineCheckbox2').is(':checked')) {
-                $('.contact-lens-widget').removeClass('d-none');
-            } else if ($('#inlineCheckbox3').is(':checked')) {
-                // If "Others" is selected, hide both widgets
-            }
-        });
-    });
-
-
-
 </script>
 <script>
     // Add an event listener to the checkboxes
@@ -791,9 +777,6 @@
             }
         });
     });
-
-
-
 </script>
 
 </body>
