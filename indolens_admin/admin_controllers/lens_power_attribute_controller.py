@@ -1,27 +1,5 @@
 def get_power_attribute(data):
-    if data['categoryId'] == '1':
-        if data['visionType'] == 'rx':
-            power_attributes = {
-                'vision_type': data.get('visionType', ''),
-                'index': data.get('index', ''),
-                'sph': data.get('sph', ''),
-                'cyl': data.get('cyl', ''),
-                'axis': data.get('axis', ''),
-                'add': data.get('add', '')
-            }
-        else:
-            power_attributes = {
-                'vision_type': data.get('visionType', ''),
-                'index': data.get('Index', ''),
-                'sph': data.get('Spherical', ''),
-                'cyl': data.get('Cylindrical', ''),
-                'axis': data.get('Axis', ''),
-                'add': data.get('Add', '')
-            }
-        print(power_attributes)
-        return power_attributes
-
-    elif data['categoryId'] == '2':
+    if data['categoryId'] == '3':
         print('this is contact lesn')
         power_attributes = {
             'contact_lens_type': data.get('contact_lens_type', ''),

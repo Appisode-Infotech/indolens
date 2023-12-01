@@ -38,6 +38,31 @@ def add_masters_units(data):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def edit_masters_units(data):
+    try:
+        with connection.cursor() as cursor:
+            update_master_units_query = f"""
+                UPDATE  units SET
+                    unit_name = '{data['unit_name']}',  status = 0, last_updated_on = '{today}',
+                    last_updated_by = '{data['created_by']}'
+                    WHERE unit_id = {data['unit_id']}
+            """
+
+            # Execute the query using your cursor
+            cursor.execute(update_master_units_query)
+            uid = cursor.lastrowid
+
+            return {
+                "status": True,
+                "message": "Units updated",
+                "uid": uid
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def get_all_units():
     try:

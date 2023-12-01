@@ -36,6 +36,28 @@ def add_product_brand(brand_obj):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+def edit_product_brand(brand_obj):
+    try:
+        with connection.cursor() as cursor:
+            update_brand_query = f"""
+                UPDATE  brands SET
+                    brand_id = '{brand_obj.brand_id}', brand_name = '{brand_obj.brand_name}', 
+                    category_id = '{brand_obj.category_id}', brand_description = '{brand_obj.brand_description}', 
+                    status = '{brand_obj.status}', last_updated_on = '{today}', 
+                    last_updated_by = '{brand_obj.last_updated_by}'
+                    WHERE brand_id = {brand_obj.brand_id}
+            """
+
+            cursor.execute(update_brand_query)
+            return {
+                "status": True,
+                "message": "Brand updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
 
 def get_all_central_inventory_brand():
     try:

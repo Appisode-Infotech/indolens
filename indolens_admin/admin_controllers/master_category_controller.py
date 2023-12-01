@@ -39,6 +39,33 @@ def add_product_category(product_cat_obj):
         return {"status": False, "message": str(e)},
 
 
+def edit_product_category(product_cat_obj):
+    try:
+        with connection.cursor() as cursor:
+            update_category_query = f"""
+                UPDATE  product_categories SET 
+                    
+                    category_id = '{product_cat_obj.category_id}', category_name = '{product_cat_obj.category_name}', 
+                    category_prefix = '{product_cat_obj.category_prefix}', 
+                    category_description = '{product_cat_obj.category_description}', 
+                    status = '{product_cat_obj.status}', 
+                    last_updated_on = '{today}' , last_updated_by = '{product_cat_obj.last_updated_by}'
+                    WHERE category_id = {product_cat_obj.category_id}
+                
+            """
+
+            cursor.execute(update_category_query)
+            return {
+                       "status": True,
+                       "message": "Product category updated"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)},
+
+
 def get_all_central_inventory_category():
     try:
         with connection.cursor() as cursor:

@@ -16,7 +16,7 @@ urlpatterns = [
     path('view_franchise_store_customers/', viewAllCustomersFranchise, name='view_franchise_store_customers'),
     path('view_franchise_store_customers/view_franchise_store_customer_details/customerId=<int:customerId>', viewCustomerDetailsFranchise,
          name='view_franchise_store_customer_details'),
-    # Manage employee
+    # Manage ownEmployee
     path('view_franchise_store_employee/', viewAllEmployeFranchise, name='view_franchise_store_employee'),
     path('view_franchise_store_employee/view_franchise_store_employee_details/employeeId=<int:employeeId>', viewEmployeeDetailsFranchise,
          name='view_franchise_store_employee_details'),

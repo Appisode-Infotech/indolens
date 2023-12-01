@@ -37,6 +37,30 @@ def add_frame_shape(shape_obj):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def edit_frame_shape(shape_obj):
+    try:
+        with connection.cursor() as cursor:
+            update_shape_query = f"""
+                UPDATE  frame_shapes SET
+                    shape_id = '{shape_obj.shape_id}', shape_name = '{shape_obj.shape_name}',  
+                    shape_description = '{shape_obj.shape_description}', 
+                    status = '{shape_obj.status}', last_updated_on = '{today}', 
+                    last_updated_by = '{shape_obj.last_updated_by}'
+                    WHERE shape_id = {shape_obj.shape_id}
+                
+            """
+
+            cursor.execute(update_shape_query)
+            return {
+                "status": True,
+                "message": "Frame Shape updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def get_all_central_inventory_shapes():
     try:

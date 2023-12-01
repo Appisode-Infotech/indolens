@@ -37,6 +37,29 @@ def add_frame_type(frame_obj):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def edit_frame_type(frame_obj):
+    try:
+        with connection.cursor() as cursor:
+            update_shape_query = f"""
+                UPDATE  frame_types SET
+                    frame_id = '{frame_obj.frame_id}', frame_type_name = '{frame_obj.frame_type_name}',  
+                    frame_type_description = '{frame_obj.frame_type_description}', 
+                    status = '{frame_obj.status}', last_updated_on = '{today}', 
+                    last_updated_by = '{frame_obj.last_updated_by}'
+                    WHERE frame_id = {frame_obj.frame_id}
+            """
+
+            cursor.execute(update_shape_query)
+            return {
+                "status": True,
+                "message": "Frame Type updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def get_all_central_inventory_frame_types():
     try:

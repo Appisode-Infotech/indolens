@@ -36,6 +36,29 @@ def add_master_material(material_obj):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+def edit_master_material(material_obj):
+    try:
+        with connection.cursor() as cursor:
+            update_material_query = f"""
+                UPDATE  product_materials SET
+                    material_id = '{material_obj.material_id}', material_name = '{material_obj.material_name}',  
+                    material_description = '{material_obj.material_description}', 
+                    status = '{material_obj.status}', last_updated_on = '{today}', 
+                    last_updated_by = '{material_obj.last_updated_by}'
+                    WHERE material_id = {material_obj.material_id}
+                
+            """
+
+            cursor.execute(update_material_query)
+            return {
+                "status": True,
+                "message": "Frame Material updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
 
 def get_all_central_inventory_materials():
     try:

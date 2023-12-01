@@ -38,6 +38,29 @@ def add_master_color(color_obj):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def edit_master_color(color_obj):
+    try:
+        with connection.cursor() as cursor:
+            update_color_query = f"""
+                UPDATE  product_colors SET
+                    color_id = '{color_obj.color_id}', color_code = '{color_obj.color_code}', 
+                    color_name = '{color_obj.color_name}',  color_description = '{color_obj.color_description}', 
+                    status = '{color_obj.status}', last_updated_on = '{today}',
+                    last_updated_by = '{color_obj.last_updated_by}'
+                    WHERE color_id = {color_obj.color_id}
+            """
+
+            cursor.execute(update_color_query)
+            return {
+                       "status": True,
+                       "message": "Frame Color updated"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def get_all_central_inventory_color():
     try:
