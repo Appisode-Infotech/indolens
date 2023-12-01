@@ -147,6 +147,22 @@
                         <div class="row mb-3 pt-3  bg-200 lens-widget d-none">
 
                             <div class="row mb-3">
+                                <div class="mb-3">
+                                    <h5 class="text-1000 ">Type</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="stockType" type="checkbox"
+                                           name="stockType"
+                                           value="rx"/>
+                                    <label class="form-check-label" for="stockType">Stock</label>
+                                </div>
+                                 <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="visionType4" type="checkbox"
+                                           name="stockType"
+                                           value="rx"/>
+                                    <label class="form-check-label" for="visionType4">Rx</label>
+                                </div>
+                                </div>
+
                                 <h5 class="text-1000 ">Vision Type</h5>
                                 <div class="col-12 col-lg-3">
                                     <input class="form-check-input" id="visionType1" type="checkbox"
@@ -166,139 +182,8 @@
                                            value="progressive"/>
                                     <label class="form-check-label" for="visionType3">Progressive</label>
                                 </div>
-                                <div class="col-12 col-lg-3">
-                                    <input class="form-check-input" id="visionType4" type="checkbox"
-                                           name="visionType"
-                                           value="rx"/>
-                                    <label class="form-check-label" for="visionType4">Rx</label>
-                                </div>
                             </div>
 
-
-                            <div class="col-12 col-lg-12" id="normalPowerCard" style="display: none;">
-                                <div class="row g-3 mb-3">
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Index</h5>
-                                        <select name="Index" class="form-select" aria-label="Default select example">
-                                            <option selected="">Choose Index</option>
-                                            <option value="1.50">1.50</option>
-                                            <option value="1.56">1.56</option>
-                                            <option value="1.59">1.59</option>
-                                            <option value="1.61">1.61</option>
-                                            <option value="1.67">1.67</option>
-                                            <option value="1.74">1.74</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Spherical</h5>
-                                        <select name="Spherical" class="form-select" aria-label="Default select example">
-                                            <option selected="">Select Value</option>
-                                            <option value="-3.5">-3.5</option>
-                                            <option value="-3.0">-3.0</option>
-                                            <option value="-2.5">-2.5</option>
-                                            <option value="-2.0">-2.0</option>
-                                            <option value="-1.5">-1.5</option>
-                                            <option value="-1.0">-1.0</option>
-                                            <option value="-0.5">-0.5</option>
-                                            <option value="0.0">0.0</option>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1.0">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2.0">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3.0">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Cylindrical</h5>
-                                        <select name="Cylindrical" class="form-select" aria-label="Default select example">
-                                            <option selected="">Select Value</option>
-                                            <option value="-3.5">-3.5</option>
-                                            <option value="-3.0">-3.0</option>
-                                            <option value="-2.5">-2.5</option>
-                                            <option value="-2.0">-2.0</option>
-                                            <option value="-1.5">-1.5</option>
-                                            <option value="-1.0">-1.0</option>
-                                            <option value="-0.5">-0.5</option>
-                                            <option value="0.0">0.0</option>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1.0">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2.0">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3.0">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                        </select>
-                                    </div>
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Axis</h5>
-                                        <select name="Axis" class="form-select" aria-label="Default select example">
-                                            <option selected="">Select Value</option>
-                                            <option value="-3.5">-3.5</option>
-                                            <option value="-3.0">-3.0</option>
-                                            <option value="-2.5">-2.5</option>
-                                            <option value="-2.0">-2.0</option>
-                                            <option value="-1.5">-1.5</option>
-                                            <option value="-1.0">-1.0</option>
-                                            <option value="-0.5">-0.5</option>
-                                            <option value="0.0">0.0</option>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1.0">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2.0">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3.0">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                        </select>
-                                    </div>
-
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Add</h5>
-                                        <select name="Add" class="form-select" aria-label="Default select example">
-                                            <option selected="">Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="col-12 col-lg-12" id="rxPowerCard" style="display: none;">
-                                <div class="row g-3 mb-3">
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Index</h5>
-                                        <input name="index" class="form-control" type="text"
-                                               placeholder=""/>
-                                    </div>
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Spherical</h5>
-                                        <input name="sph" class="form-control" type="text"
-                                               placeholder=""/>
-                                    </div>
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Cylindrical</h5>
-                                        <input name="cyl" class="form-control" type="text"
-                                               placeholder=""/>
-                                    </div>
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Axis</h5>
-                                        <input name="axis" class="form-control" type="text"
-                                               placeholder=""/>
-                                    </div>
-
-                                    <div class="col-12 col-lg-3">
-                                        <h5 class="mb-2 text-1000">Add</h5>
-                                        <select name="add" class="form-select" aria-label="Default select example" >
-                                            <option selected="">Open this select menu</option>
-                                            <option value="1">One</option>
-                                            <option value="2">Two</option>
-                                            <option value="3">Three</option>
-                                        </select>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
 
                         <div class="row mb-3 pt-3 pb-3 bg-200 d-none contact-lens-widget">
@@ -740,42 +625,55 @@
 <script>
     // Add an event listener to the checkboxes
     const visionTypeCheckboxes = document.querySelectorAll('input[name="visionType"]');
+    const stockTypeCheckboxes = document.querySelectorAll('input[name="stockType"]');
+    const contactLensTypeCheckboxes = document.querySelectorAll('input[name="contact_lens_type"]');
+    const contactLensDisposabilityCheckboxes = document.querySelectorAll('input[name="contact_lens_disposability"]');
 
     visionTypeCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function () {
-            // Reset visibility of both power cards
-            document.getElementById('normalPowerCard').style.display = 'none';
-            document.getElementById('rxPowerCard').style.display = 'none';
-
-            // Check which checkbox is selected
-            if (this === visionTypeCheckboxes[0]) {
-                console.log(visionTypeCheckboxes[0]);
-                document.getElementById('normalPowerCard').style.display = 'block';
-            } else if (this === visionTypeCheckboxes[1]) {
-                console.log(visionTypeCheckboxes[1]);
-                document.getElementById('normalPowerCard').style.display = 'block';
-            } else if (this === visionTypeCheckboxes[2]) {
-                console.log(visionTypeCheckboxes[2]);
-                document.getElementById('normalPowerCard').style.display = 'block';
-            } else if (this === visionTypeCheckboxes[3]) {
-                console.log(visionTypeCheckboxes[3]);
-                document.getElementById('rxPowerCard').style.display = 'block';
-            }
-
             // Uncheck other checkboxes if one is checked
             visionTypeCheckboxes.forEach(otherCheckbox => {
                 if (otherCheckbox !== this) {
                     otherCheckbox.checked = false;
                 }
             });
-
-             // Check if no checkbox is checked, hide both power cards
-            if (!visionTypeCheckboxes[0].checked && !visionTypeCheckboxes[1].checked && !visionTypeCheckboxes[2].checked && !visionTypeCheckboxes[3].checked) {
-                document.getElementById('normalPowerCard').style.display = 'none';
-                document.getElementById('rxPowerCard').style.display = 'none';
-            }
         });
     });
+
+
+     stockTypeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Uncheck other checkboxes if one is checked
+            stockTypeCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+
+     contactLensTypeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Uncheck other checkboxes if one is checked
+            contactLensTypeCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+
+    contactLensDisposabilityCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Uncheck other checkboxes if one is checked
+            contactLensDisposabilityCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+
 </script>
 
 </body>
