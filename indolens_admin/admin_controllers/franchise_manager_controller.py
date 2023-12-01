@@ -148,3 +148,51 @@ def edit_franchise_owner(franchise_owner, files):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def assign_store_franchise_owner(empId, storeId):
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE franchise_store_employees
+                SET
+                    assigned_store_id = {storeId}
+                WHERE
+                    employee_id = {empId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_store_manager_query)
+
+            return {
+                "status": True,
+                "message": "Store assigned"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def unassign_store_franchise_owner(FranchiseOwnerId, storeId):
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE franchise_store_employees
+                SET
+                    assigned_store_id = 0
+                WHERE
+                    employee_id = {FranchiseOwnerId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_store_manager_query)
+
+            return {
+                       "status": True,
+                       "message": "Store un assigned"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

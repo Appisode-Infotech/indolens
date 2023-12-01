@@ -290,13 +290,14 @@ urlpatterns = [
     path('view_product_details/', viewOwnStore, name='view_product_details'),
     path('all_notifications/', viewOwnStore, name='all_notifications'),
     path('manage_memberships/', viewOwnStore, name='manage_memberships'),
-    # assign/un assign manager
+
+    # assign/un assign Own Store manager
     path('assign_manager_own_store/route<str:route>', assignManagerOwnStore, name='assign_manager_own_store'),
     path('un_assign_manager_own_store/route<str:route>/empId=<int:empId>/storeId=<int:storeId>',
          unAssignManagerOwnStore,
          name='un_assign_manager_own_store'),
 
-    # assign/un assign optimetry
+    # assign/un assign Own Store optimetry
     path('assign_optimetry_own_store/route<str:route>', assignOptimetryOwnStore, name='assign_optimetry_own_store'),
     path('un_assign_optimetry_own_store/route<str:route>/empId=<int:empId>/storeId=<int:storeId>',
          unAssignOptimetryOwnStore,
@@ -318,10 +319,50 @@ urlpatterns = [
         unAssignOtherEmployeeOwnStore,
         name='un_assign_other_employee_own_store'),
 
+    # assign/un assign Franchise store Owner
+    path('assign_franchise_store_owner/route=<str:route>', assignFranchiseStoreOwner,
+         name='assign_franchise_store_owner'),
+    path(
+        'un_assign_franchise_store_owner/route=<str:route>/FranchiseOwnerId=<int:FranchiseOwnerId>/storeId=<int:storeId>',
+        unAssignFranchiseStoreOwner,
+        name='un_assign_franchise_store_owner'),
+
+    # assign/un assign Franchise store Optimetry
+    path('assign_franchise_store_optimetry/route=<str:route>', assignFranchiseStoreOptimetry,
+         name='assign_franchise_store_optimetry'),
+    path(
+        'un_assign_franchise_store_optimetry/route=<str:route>/FranchiseOptimetryId=<int:FranchiseOptimetryId>/storeId=<int:storeId>',
+        unAssignFranchiseStoreOptimetry,
+        name='un_assign_franchise_store_optimetry'),
+
+    # assign/un assign Franchise store Sales Executive
+    path('assign_franchise_store_sales_executive/route=<str:route>', assignFranchiseStoreSalesExecutive,
+         name='assign_franchise_store_sales_executive'),
+    path(
+        'un_assign_franchise_store_sales_executive/route=<str:route>/FranchiseSalesExecutiveId=<int:FranchiseSalesExecutiveId>/storeId=<int:storeId>',
+        unAssignFranchiseStoreSalesExecutive,
+        name='un_assign_franchise_store_sales_executive'),
+
+    # assign/un assign Franchise store Housekeeping
+    path('assign_franchise_store_other_employee/route=<str:route>', assignFranchiseStoreOtherEmployee,
+         name='assign_franchise_store_other_employee'),
+    path(
+        'un_assign_franchise_store_other_employee/route=<str:route>/FranchiseOtherEmployeeId=<int:FranchiseOtherEmployeeId>/storeId=<int:storeId>',
+        unAssignFranchiseStoreOtherEmployee,
+        name='un_assign_franchise_store_other_employee'),
+
     # assign/un area head
     path('assign_area_head_own_store/', assignAreaHeadOwnStore, name='assign_area_head_own_store'),
     path('un_assign_area_head_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignAreaHeadOwnStore,
          name='un_assign_area_head_own_store'),
 
+
+    # assign/un assign Lab Technician
+    path('assign_lab_technician/route=<str:route>', assignLabTechnician,
+         name='assign_lab_technician'),
+    path(
+        'un_assign_lab_technician/route=<str:route>/LabTechnicianId=<int:LabTechnicianId>/labId=<int:labId>',
+        unAssignLabTechnician,
+        name='un_assign_lab_technician'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

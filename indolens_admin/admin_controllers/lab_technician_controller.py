@@ -151,3 +151,51 @@ def enable_disable_lab_technician(ltid, status):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def assign_lab(labtechId, labId):
+    try:
+        with connection.cursor() as cursor:
+            update_lab_technician_query = f"""
+                UPDATE lab_technician
+                SET
+                    assigned_lab_id = {labId}
+                WHERE
+                    lab_technician_id = {labtechId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_lab_technician_query)
+
+            return {
+                       "status": True,
+                       "message": "Lab assigned"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def unassign_lab(labtechId, labId):
+    try:
+        with connection.cursor() as cursor:
+            update_lab_technician_query = f"""
+                UPDATE lab_technician
+                SET
+                    assigned_lab_id = 0
+                WHERE
+                    lab_technician_id = {labtechId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_lab_technician_query)
+
+            return {
+                       "status": True,
+                       "message": "Lab un assigned"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
