@@ -2674,6 +2674,66 @@ def unAssignOtherEmployeeOwnStore(request, route, salesExecutiveId, storeId):
     url = reverse('manage_store_other_employees', kwargs={'status': route})
     return redirect(url)
 
+def assignFranchiseStoreOwner(request, route):
+    if request.method == 'POST':
+        print("Hello asign")
+        response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
+                                                                                                request.POST[
+                                                                                                    'store_id'])
+        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        return redirect(url)
+
+
+def unAssignFranchiseStoreOwner(request, route, FranchiseOwnerId, storeId):
+    response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOwnerId, storeId)
+    url = reverse('manage_store_other_employees', kwargs={'status': route})
+    return redirect(url)
+
+def assignFranchiseStoreOptimetry(request, route):
+    if request.method == 'POST':
+        print("Hello asign")
+        response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
+                                                                                                request.POST[
+                                                                                                    'store_id'])
+        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        return redirect(url)
+
+
+def unAssignFranchiseStoreOptimetry(request, route, FranchiseOptimetryId, storeId):
+    response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOptimetryId, storeId)
+    url = reverse('manage_store_other_employees', kwargs={'status': route})
+    return redirect(url)
+
+def assignFranchiseStoreSalesExecutive(request, route):
+    if request.method == 'POST':
+        print("Hello asign")
+        response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
+                                                                                                request.POST[
+                                                                                                    'store_id'])
+        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        return redirect(url)
+
+
+def unAssignFranchiseStoreSalesExecutive(request, route, FranchiseSalesExecutiveId, storeId):
+    response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseSalesExecutiveId, storeId)
+    url = reverse('manage_store_other_employees', kwargs={'status': route})
+    return redirect(url)
+
+def assignFranchiseStoreOtherEmployee(request, route):
+    if request.method == 'POST':
+        print("Hello asign")
+        response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
+                                                                                                request.POST[
+                                                                                                    'store_id'])
+        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        return redirect(url)
+
+
+def unAssignFranchiseStoreOtherEmployee(request, route, FranchiseOtherEmployeeId, storeId):
+    response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOtherEmployeeId, storeId)
+    url = reverse('manage_store_other_employees', kwargs={'status': route})
+    return redirect(url)
+
 
 def assignAreaHeadOwnStore(request):
     if request.method == 'POST':
@@ -2684,3 +2744,18 @@ def assignAreaHeadOwnStore(request):
 def unAssignAreaHeadOwnStore(request, empId, storeId):
     response, status_code = store_manager_controller.unAssignStore(empId, storeId)
     return redirect('manage_area_head')
+
+
+def assignLabTechnician(request, route):
+    if request.method == 'POST':
+        print("Hello asign")
+        response, status_code = lab_technician_controller.assign_lab(request.POST['lab_technician_id'],  request.POST['lab_id'])
+        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        return redirect(url)
+
+
+def unAssignLabTechnician(request, route, LabTechnicianId, labId):
+    response, status_code = lab_technician_controller.unassign_lab(LabTechnicianId, labId)
+    url = reverse('manage_store_other_employees', kwargs={'status': route})
+    return redirect(url)
+
