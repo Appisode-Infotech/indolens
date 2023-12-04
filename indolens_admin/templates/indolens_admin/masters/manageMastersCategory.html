@@ -205,7 +205,7 @@
 
                                                data-category-info="{{ category | safe }}">View</a>
                                             <a class="dropdown-item"
-                                               type="button"
+                                               type="button" href=" {% url 'edit_product_category' category.category_id %}"
                                             >Update</a>
                                             <div class="dropdown-divider"></div>
                                             {% if category.status == 0 %}

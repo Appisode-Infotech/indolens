@@ -204,7 +204,7 @@
                                                type="button"
                                                data-category-info="{{ brand | safe }}">View</a>
                                             <a class="dropdown-item"
-                                               type="button"
+                                               type="button" href="{% url 'edit_product_brand' brand.brand_id %}"
                                             >Update</a>
                                             <div class="dropdown-divider"></div>
                                             {% if brand.status == 0 %}

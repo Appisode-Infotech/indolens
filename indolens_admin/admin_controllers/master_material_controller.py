@@ -36,15 +36,15 @@ def add_master_material(material_obj):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 def edit_master_material(material_obj):
     try:
         with connection.cursor() as cursor:
             update_material_query = f"""
                 UPDATE  product_materials SET
-                    material_id = '{material_obj.material_id}', material_name = '{material_obj.material_name}',  
+                    material_name = '{material_obj.material_name}',  
                     material_description = '{material_obj.material_description}', 
-                    status = '{material_obj.status}', last_updated_on = '{today}', 
-                    last_updated_by = '{material_obj.last_updated_by}'
+                    last_updated_on = '{today}', last_updated_by = '{material_obj.last_updated_by}'
                     WHERE material_id = {material_obj.material_id}
                 
             """
@@ -92,6 +92,29 @@ def enable_disable_master_material(mid, status):
             return {
                 "status": True,
                 "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_central_inventory_materials_by_id(materialId):
+    try:
+        with connection.cursor() as cursor:
+            get_material_query = f""" SELECT pm.* , creator.name, updater.name
+            FROM product_materials AS pm
+            LEFT JOIN admin AS creator ON pm.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON pm.last_updated_by = updater.admin_id
+            WHERE pm.material_id = {materialId}
+            """
+            cursor.execute(get_material_query)
+            material_data = cursor.fetchall()
+
+            return {
+                "status": True,
+                "product_material": get_product_materials(material_data)
             }, 200
 
     except pymysql.Error as e:

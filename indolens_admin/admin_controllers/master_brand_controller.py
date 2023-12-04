@@ -41,10 +41,9 @@ def edit_product_brand(brand_obj):
         with connection.cursor() as cursor:
             update_brand_query = f"""
                 UPDATE  brands SET
-                    brand_id = '{brand_obj.brand_id}', brand_name = '{brand_obj.brand_name}', 
+                    brand_name = '{brand_obj.brand_name}', 
                     category_id = '{brand_obj.category_id}', brand_description = '{brand_obj.brand_description}', 
-                    status = '{brand_obj.status}', last_updated_on = '{today}', 
-                    last_updated_by = '{brand_obj.last_updated_by}'
+                    last_updated_on = '{today}', last_updated_by = '{brand_obj.last_updated_by}'
                     WHERE brand_id = {brand_obj.brand_id}
             """
 
@@ -91,6 +90,29 @@ def enable_disable_product_brand(bid, status):
             return {
                 "status": True,
                 "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_central_inventory_brand_by_id(brandId):
+    try:
+        with connection.cursor() as cursor:
+            get_product_brand_query = f""" SELECT br.* , creator.name, updater.name
+            FROM brands AS br 
+            LEFT JOIN admin AS creator ON br.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON br.last_updated_by = updater.admin_id
+            WHERE br.brand_id = {brandId}
+            """
+            cursor.execute(get_product_brand_query)
+            brand_data = cursor.fetchall()
+
+            return {
+                "status": True,
+                "product_brand": get_brands(brand_data)
             }, 200
 
     except pymysql.Error as e:

@@ -42,10 +42,9 @@ def edit_frame_shape(shape_obj):
         with connection.cursor() as cursor:
             update_shape_query = f"""
                 UPDATE  frame_shapes SET
-                    shape_id = '{shape_obj.shape_id}', shape_name = '{shape_obj.shape_name}',  
+                    shape_name = '{shape_obj.shape_name}',  
                     shape_description = '{shape_obj.shape_description}', 
-                    status = '{shape_obj.status}', last_updated_on = '{today}', 
-                    last_updated_by = '{shape_obj.last_updated_by}'
+                    last_updated_on = '{today}', last_updated_by = '{shape_obj.last_updated_by}'
                     WHERE shape_id = {shape_obj.shape_id}
                 
             """
@@ -94,6 +93,29 @@ def enable_disable_frame_shape(sid, status):
             return {
                 "status": True,
                 "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_central_inventory_shapes_by_id(shapeId):
+    try:
+        with connection.cursor() as cursor:
+            get_product_shape_query = f""" SELECT fs.* , creator.name, updater.name
+            FROM frame_shapes AS fs 
+            LEFT JOIN admin AS creator ON fs.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON fs.last_updated_by = updater.admin_id
+            WHERE fs.shape_id = {shapeId}
+            """
+            cursor.execute(get_product_shape_query)
+            shapes_data = cursor.fetchall()
+
+            return {
+                "status": True,
+                "product_shape": get_frame_shapes(shapes_data)
             }, 200
 
     except pymysql.Error as e:

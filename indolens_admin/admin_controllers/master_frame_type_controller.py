@@ -42,10 +42,9 @@ def edit_frame_type(frame_obj):
         with connection.cursor() as cursor:
             update_shape_query = f"""
                 UPDATE  frame_types SET
-                    frame_id = '{frame_obj.frame_id}', frame_type_name = '{frame_obj.frame_type_name}',  
+                    frame_type_name = '{frame_obj.frame_type_name}',  
                     frame_type_description = '{frame_obj.frame_type_description}', 
-                    status = '{frame_obj.status}', last_updated_on = '{today}', 
-                    last_updated_by = '{frame_obj.last_updated_by}'
+                    last_updated_on = '{today}', last_updated_by = '{frame_obj.last_updated_by}'
                     WHERE frame_id = {frame_obj.frame_id}
             """
 
@@ -93,6 +92,29 @@ def enable_disable_frame_type(tid, status):
             return {
                 "status": True,
                 "message": "Updated"
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_central_inventory_frame_types_by_id(frameId):
+    try:
+        with connection.cursor() as cursor:
+            get_frame_types_query = f""" SELECT ft.* , creator.name, updater.name
+            FROM frame_types AS ft
+            LEFT JOIN admin AS creator ON ft.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON ft.last_updated_by = updater.admin_id
+            WHERE ft.frame_id = {frameId}
+            """
+            cursor.execute(get_frame_types_query)
+            frame_type_data = cursor.fetchall()
+
+            return {
+                "status": True,
+                "frame_type": get_frame_types(frame_type_data)
             }, 200
 
     except pymysql.Error as e:

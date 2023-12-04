@@ -43,10 +43,9 @@ def edit_master_color(color_obj):
         with connection.cursor() as cursor:
             update_color_query = f"""
                 UPDATE  product_colors SET
-                    color_id = '{color_obj.color_id}', color_code = '{color_obj.color_code}', 
+                    color_code = '{color_obj.color_code}', 
                     color_name = '{color_obj.color_name}',  color_description = '{color_obj.color_description}', 
-                    status = '{color_obj.status}', last_updated_on = '{today}',
-                    last_updated_by = '{color_obj.last_updated_by}'
+                    last_updated_on = '{today}', last_updated_by = '{color_obj.last_updated_by}'
                     WHERE color_id = {color_obj.color_id}
             """
 
@@ -95,6 +94,29 @@ def enable_disable_master_color(mcid, status):
             return {
                        "status": True,
                        "message": "Updated"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_central_inventory_color_by_id(colorId):
+    try:
+        with connection.cursor() as cursor:
+            get_frame_color_query = f""" SELECT pc.* , creator.name, updater.name
+            FROM product_colors AS pc
+            LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id
+            WHERE pc.color_id = {colorId}
+            """
+            cursor.execute(get_frame_color_query)
+            frame_color_data = cursor.fetchall()
+
+            return {
+                       "status": True,
+                       "frame_color": get_product_colors(frame_color_data)
                    }, 200
 
     except pymysql.Error as e:

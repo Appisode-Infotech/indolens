@@ -170,19 +170,6 @@
                                     {% endif %}
                                 </td>
 
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{material.created_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{material.creator_name}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{material.last_updated_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{material.updater_name}}</p>-->
-                                <!--                                </td>-->
-
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
@@ -198,8 +185,8 @@
                                                type="button"
                                             >View</a>
                                             <a class="dropdown-item"
-                                               type="button"
-                                            >Update</a>
+                                               type="button" href="{% url 'edit_master_material' material.material_id %}">
+                                                Update</a>
                                             <div class="dropdown-divider"></div>
 
                                             {% if material.status == 0 %}

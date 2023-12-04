@@ -43,15 +43,12 @@ def edit_product_category(product_cat_obj):
     try:
         with connection.cursor() as cursor:
             update_category_query = f"""
-                UPDATE  product_categories SET 
-                    
-                    category_id = '{product_cat_obj.category_id}', category_name = '{product_cat_obj.category_name}', 
+                UPDATE  product_categories SET  
+                    category_name = '{product_cat_obj.category_name}', 
                     category_prefix = '{product_cat_obj.category_prefix}', 
                     category_description = '{product_cat_obj.category_description}', 
-                    status = '{product_cat_obj.status}', 
                     last_updated_on = '{today}' , last_updated_by = '{product_cat_obj.last_updated_by}'
                     WHERE category_id = {product_cat_obj.category_id}
-                
             """
 
             cursor.execute(update_category_query)
@@ -98,6 +95,28 @@ def enable_disable_product_category(cid, status):
             return {
                        "status": True,
                        "message": "Updated"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_central_inventory_category_by_id(categoryId):
+    try:
+        with connection.cursor() as cursor:
+            get_product_category_query = f""" SELECT pc.* , creator.name, updater.name
+            FROM product_categories AS pc 
+            LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
+            LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id
+            WHERE pc.category_id = {categoryId}"""
+            cursor.execute(get_product_category_query)
+            stores_data = cursor.fetchall()
+
+            return {
+                       "status": True,
+                       "product_category": get_product_categories(stores_data)
                    }, 200
 
     except pymysql.Error as e:

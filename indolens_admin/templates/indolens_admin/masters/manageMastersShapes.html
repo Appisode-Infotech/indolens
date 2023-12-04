@@ -172,19 +172,6 @@
                                     {% endif %}
                                 </td>
 
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{shapes.created_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{shapes.creator_name}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{shapes.last_updated_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{shapes.updater_name}}</p>-->
-                                <!--                                </td>-->
-
 
                                 <td class="align-middle  white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -201,7 +188,7 @@
                                                type="button"
                                             >View</a>
                                             <a class="dropdown-item"
-                                               type="button"
+                                               type="button" href="{% url 'edit_frame_shape' shapes.shape_id %}"
                                             >Update</a>
                                             <div class="dropdown-divider"></div>
 

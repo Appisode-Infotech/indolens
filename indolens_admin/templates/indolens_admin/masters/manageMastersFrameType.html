@@ -170,19 +170,6 @@
                                     {% endif %}
                                 </td>
 
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{type.created_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{type.creator_name}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{type.last_updated_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{type.updater_name}}</p>-->
-                                <!--                                </td>-->
-
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -199,7 +186,7 @@
                                                type="button"
                                             >View</a>
                                             <a class="dropdown-item"
-                                               type="button"
+                                               type="button" href="{% url 'edit_frame_type' type.frame_id %}"
                                             >Update</a>
                                             <div class="dropdown-divider"></div>
                                             {% if type.status == 0 %}
