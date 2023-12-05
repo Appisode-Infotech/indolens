@@ -176,8 +176,13 @@ def manageFranchiseStores(request, status):
 def viewFranchiseStore(request, franchiseStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_franchise_store_by_id(franchiseStoreId)
+        products_list, status_code = franchise_store_controller.get_all_products_for_franchise_store(franchiseStoreId)
+        store_stats, status_code = franchise_store_controller.get_franchise_store_stats(franchiseStoreId)
         return render(request, 'indolens_admin/franchiseStores/franchiseStore.html',
-                      {"franchise_store": response['franchise_store']})
+                      {"franchise_store": response['franchise_store'], "products_list": products_list['products_list'],
+                       "total_employee_count": store_stats['total_employee_count'],
+                       "total_customer_count": store_stats['total_customer_count']})
+
     else:
         return redirect('login')
 
@@ -389,7 +394,6 @@ def createStoreManager(request):
 
             store_manager = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
-            print(response)
             url = reverse('view_store_manager', kwargs={'storeManagerId': response['mid']})
             return redirect(url)
 
@@ -967,8 +971,6 @@ def createOptimetry(request):
             file_data = FileData(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.create_optimetry(optimetry_obj, file_data)
-            print(response)
-
             url = reverse('view_optimetry', kwargs={'ownOptimetryId': response['empid']})
             return redirect(url)
         else:
@@ -1115,7 +1117,6 @@ def createFranchiseOptimetry(request):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.create_franchise_optimetry(optimetry_obj, file_data)
             url = reverse('view_franchise_optimetry', kwargs={'franchiseOptimetryId': response['opid']})
@@ -1407,7 +1408,6 @@ def createFranchiseSaleExecutives(request):
             sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = sales_executives_controller.create_franchise_sales_executives(sales_executives_obj,
                                                                                                   file_data)
-            print(response)
             url = reverse('view_franchise_sales_executives',
                           kwargs={'franchiseSaleExecutivesId': response['franchiseSaleExecutivesId']})
             return redirect(url)
@@ -1989,7 +1989,6 @@ def createFranchiseOtherEmployees(request):
             file_data = FileData(form_data)
             other_emp_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = other_employee_controller.create_franchise_other_employee(other_emp_obj, file_data)
-            print(response)
             url = reverse('view_franchise_other_employees', kwargs={'franchiseEmployeeId': response['empid']})
             return redirect(url)
         else:
@@ -2209,7 +2208,6 @@ def createAuthenticityCard(request):
 
 def manageMastersCategory(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-
         response, status_code = master_category_controller.get_all_central_inventory_category()
         return render(request, 'indolens_admin/masters/manageMastersCategory.html',
                       {"product_category": response['product_category']})
@@ -2253,7 +2251,6 @@ def enableDisableProductCategory(request, categoryId, status):
 
 def manageMastersBrands(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-
         response, status_code = master_brand_controller.get_all_central_inventory_brand()
         return render(request, 'indolens_admin/masters/manageMastersBrands.html',
                       {"product_brand": response["product_brand"]})
@@ -2264,7 +2261,6 @@ def manageMastersBrands(request):
 def addMastersBrands(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-
             master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
             resp = master_brand_controller.add_product_brand(master_brand_obj)
 
@@ -2278,7 +2274,6 @@ def addMastersBrands(request):
 def editMastersBrands(request, brandId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-
             master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
             resp = master_brand_controller.edit_product_brand(master_brand_obj)
 
@@ -2327,7 +2322,6 @@ def editMastersShapes(request, shapeId):
         if request.method == 'POST':
             master_shape_obj = master_shape_model.master_shape_model_from_dict(request.POST)
             resp = master_shape_controller.edit_frame_shape(master_shape_obj)
-            print(resp)
             return redirect('manage_central_inventory_shapes')
         else:
             response, status_code = master_shape_controller.get_central_inventory_shapes_by_id(shapeId)
@@ -2357,7 +2351,6 @@ def manageMastersFrameType(request):
 def addMastersFrameType(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-
             frame_type_obj = master_frame_type_model.master_frame_type_model_from_dict(request.POST)
             resp = master_frame_type_controller.add_frame_type(frame_type_obj)
             return redirect('manage_central_inventory_frame_types')
@@ -2402,7 +2395,6 @@ def manageMastersColor(request):
 def addMastersColor(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-
             color_obj = master_color_model.master_color_model_from_dict(request.POST)
             resp = master_color_controller.add_master_color(color_obj)
             return redirect('manage_central_inventory_color')
@@ -2417,7 +2409,6 @@ def editMastersColor(request, colorId):
         if request.method == 'POST':
             color_obj = master_color_model.master_color_model_from_dict(request.POST)
             resp = master_color_controller.edit_master_color(color_obj)
-            print(resp)
             return redirect('manage_central_inventory_color')
         else:
             response, status_code = master_color_controller.get_central_inventory_color_by_id(colorId)
@@ -2447,7 +2438,6 @@ def manageMastersMaterials(request):
 def addMastersMaterials(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-
             material_obj = master_material_model.master_material_model_from_dict(request.POST)
             resp = master_material_controller.add_master_material(material_obj)
             return redirect('manage_central_inventory_materials')
@@ -2494,7 +2484,16 @@ def addMastersUnits(request):
         if request.method == 'POST':
             data = request.POST
             resp = master_units_controller.add_masters_units(data)
+        return redirect('manage_central_inventory_units')
+    else:
+        return redirect('login')
 
+
+def editMastersUnits(request):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            data = request.POST
+            resp = master_units_controller.edit_master_units(data)
         return redirect('manage_central_inventory_units')
     else:
         return redirect('login')
@@ -2614,14 +2613,12 @@ def manageCentralInventoryOutOfStock(request):
 def manageMoveStocks(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
             if request.POST['own_store_id'] != '':
                 store_id = request.POST['own_store_id']
             else:
                 store_id = request.POST['franchise_store_id']
             response = central_inventory_controller.create_store_stock_request(stock_obj, store_id)
-            print(response)
             return redirect('manageMoveStocks')
         else:
             moved_stocks, status_code = central_inventory_controller.get_all_moved_stocks_list('1')
@@ -2646,7 +2643,6 @@ def manageMoveAStock(request):
 def viewAllStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_stock_requests('%')
-        print(response)
         return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -2733,7 +2729,6 @@ def unAssignOptimetryOwnStore(request, route, empId, storeId):
 
 def assignSalesExecutiveOwnStore(request, route):
     if request.method == 'POST':
-        print("Hello asign")
         response, status_code = sales_executives_controller.assign_store_own_store_sales_executive(
             request.POST['emp_id'], request.POST['store_id'])
         url = reverse('manage_store_sales_executives', kwargs={'status': route})
@@ -2749,7 +2744,6 @@ def unAssignSalesExecutiveOwnStore(request, route, salesExecutiveId, storeId):
 
 def assignOtherEmployeeOwnStore(request, route):
     if request.method == 'POST':
-        print("Hello asign")
         response, status_code = other_employee_controller.assign_store_own_store_other_employee(request.POST['emp_id'],
                                                                                                 request.POST[
                                                                                                     'store_id'])
@@ -2765,7 +2759,6 @@ def unAssignOtherEmployeeOwnStore(request, route, salesExecutiveId, storeId):
 
 def assignFranchiseStoreOwner(request, route):
     if request.method == 'POST':
-        print("Hello asign")
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
                                                                                           request.POST[
                                                                                               'store_id'])
@@ -2781,7 +2774,6 @@ def unAssignFranchiseStoreOwner(request, route, FranchiseOwnerId, storeId):
 
 def assignFranchiseStoreOptimetry(request, route):
     if request.method == 'POST':
-        print("Hello asign")
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
                                                                                           request.POST[
                                                                                               'store_id'])
@@ -2797,7 +2789,6 @@ def unAssignFranchiseStoreOptimetry(request, route, FranchiseOptimetryId, storeI
 
 def assignFranchiseStoreSalesExecutive(request, route):
     if request.method == 'POST':
-        print("Hello asign")
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
                                                                                           request.POST[
                                                                                               'store_id'])
@@ -2814,7 +2805,6 @@ def unAssignFranchiseStoreSalesExecutive(request, route, FranchiseSalesExecutive
 
 def assignFranchiseStoreOtherEmployee(request, route):
     if request.method == 'POST':
-        print("Hello asign")
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
                                                                                           request.POST[
                                                                                               'store_id'])
@@ -2842,7 +2832,6 @@ def unAssignAreaHeadOwnStore(request, empId, storeId):
 
 def assignLabTechnician(request, route):
     if request.method == 'POST':
-        print("Hello asign")
         response, status_code = lab_technician_controller.assign_lab(request.POST['lab_technician_id'],
                                                                      request.POST['lab_id'])
         url = reverse('manage_store_other_employees', kwargs={'status': route})

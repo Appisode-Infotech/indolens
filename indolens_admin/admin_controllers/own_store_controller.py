@@ -122,7 +122,7 @@ def get_own_store_by_id(sid):
             get_own_stores_query = f""" SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name
                                     FROM own_store
                                     LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1 
-                                    WHERE own_store.store_id = '{sid}'"""
+                                    WHERE own_store.store_id = '{sid}' GROUP BY own_store.store_id """
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
@@ -207,7 +207,8 @@ def get_own_storestore_stats(ownStoreId):
             cursor.execute(employee_count_sql_query)
             total_employee_count = cursor.fetchone()[0]
 
-            customer_count_sql_query = f"""SELECT COUNT(*) FROM customers WHERE created_by_store_id = {ownStoreId} """
+            customer_count_sql_query = f"""SELECT COUNT(*) FROM customers WHERE created_by_store_id = {ownStoreId} 
+                                        AND created_by_store_type = 1 """
             cursor.execute(customer_count_sql_query)
             total_customer_count = cursor.fetchone()[0]
 
