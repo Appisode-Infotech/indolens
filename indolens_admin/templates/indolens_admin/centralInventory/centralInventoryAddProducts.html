@@ -188,6 +188,21 @@
 
                         <div class="row mb-3 pt-3 pb-3 bg-200 d-none contact-lens-widget">
                             <div class="row mb-3">
+                                <div class="mb-3">
+                                    <h5 class="text-1000 ">Type</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="ContactLensStockType" type="checkbox"
+                                           name="ContactLensStockType"
+                                           value="Stock"/>
+                                    <label class="form-check-label" for="ContactLensStockType">Stock</label>
+                                </div>
+                                 <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="ContactLensRxType" type="checkbox"
+                                           name="ContactLensStockType"
+                                           value="Rx"/>
+                                    <label class="form-check-label" for="ContactLensRxType">Rx</label>
+                                </div>
+                                </div>
                                 <h5 class="text-1000 ">Contact Lens Type</h5>
                                 <div class="col-12 col-lg-3">
                                     <input class="form-check-input" id="contact_lens_type1" type="checkbox"
@@ -323,10 +338,13 @@
                                 <div class="col-12 col-lg-3 g-3">
                                     <h5 class="mb-2 text-1000">Axis</h5>
                                     <select name="contactLensAxis" class="form-select" aria-label="Default select example">
-                                        <option selected="">Open this select menu</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
+                                         <option selected="">Choose Axis</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
                                     </select>
                                 </div>
 
@@ -605,6 +623,8 @@
             var selectedValue = selectElement.value;
              if (selectedValue === "1") {
                 divToToggle.classList.remove("d-none");
+                $('.lens-widget').addClass('d-none');
+                $('.contact-lens-widget').addClass('d-none');
              }else if(selectedValue === "2"){
                 $('.contact-lens-widget').addClass('d-none');
                 $('.lens-widget').removeClass('d-none');
@@ -624,6 +644,7 @@
     const stockTypeCheckboxes = document.querySelectorAll('input[name="stockType"]');
     const contactLensTypeCheckboxes = document.querySelectorAll('input[name="contact_lens_type"]');
     const contactLensDisposabilityCheckboxes = document.querySelectorAll('input[name="contact_lens_disposability"]');
+    const ContactLensStockTypeCheckboxes = document.querySelectorAll('input[name="ContactLensStockType"]');
 
     visionTypeCheckboxes.forEach(checkbox => {
         checkbox.addEventListener('change', function () {
@@ -663,6 +684,17 @@
         checkbox.addEventListener('change', function () {
             // Uncheck other checkboxes if one is checked
             contactLensDisposabilityCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+
+    ContactLensStockTypeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Uncheck other checkboxes if one is checked
+            ContactLensStockTypeCheckboxes.forEach(otherCheckbox => {
                 if (otherCheckbox !== this) {
                     otherCheckbox.checked = false;
                 }
