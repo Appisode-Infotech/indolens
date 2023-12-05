@@ -94,6 +94,9 @@
 
 
 
+
+
+
     </script>
 </head>
 
@@ -362,6 +365,9 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -391,18 +397,18 @@
 {# Include the JSON-encoded stocks_list data #}
 {{ customers_list|json_script:"customersList" }}
 
-
 <script>
-    let productCardCount = 1;
-    var stocks_list = JSON.parse(document.getElementById('stocksList').textContent);
-    createProductCard();
-    function createProductCard() {
-      // Create a new product card element
-      let productCard = document.createElement("div");
-      productCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
 
-      // Build the product card structure dynamically
-      productCard.innerHTML = `
+let productCardCount = 1;
+var stocks_list = JSON.parse(document.getElementById('stocksList').textContent);
+createProductCard();
+function createProductCard() {
+    // Create a new product card element
+    let productCard = document.createElement("div");
+    productCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
+
+    // Build the product card structure dynamically
+    productCard.innerHTML = `
          <div class="col text-end">
               <a type="button" class="text-danger" onclick="removeProductCard(this)">
                 Remove <i class="fas fa-trash"></i>
@@ -490,146 +496,338 @@
         </div>
       `;
 
-      // Append the product card to the products container
-      document.querySelector("#products_container").appendChild(productCard);
+    // Append the product card to the products container
+    document.querySelector("#products_container").appendChild(productCard);
 
-      // Optionally, you can now initialize any JavaScript plugins for the new card
-      // For example, if you're using Choices.js:
-      let choicesInstance = new Choices(productCard.querySelector("[name='product']"), {
+    // Optionally, you can now initialize any JavaScript plugins for the new card
+    // For example, if you're using Choices.js:
+    let choicesInstance = new Choices(productCard.querySelector("[name='product']"), {
         // Pass any necessary options for Choices.js
         removeItemButton: true,
         placeholder: true,
-      });
-
-      productCardCount++;
-      let jsonData = getFormData();
-      
-    }
-
-    function updateProductFields(selectElement, cardIndex) {
-      // Update duplicated product categories and brands within the same segment
-      let selectedIndex = selectElement.selectedIndex;
-
-      let selectedProduct = stocks_list.find(product => product.product_id == selectElement.value);
-
-      let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
-      let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
-      let productSkuField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
-      let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
-      let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
-      let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
-      let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-      let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
-      let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-      let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
-      let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-
-
-
-      productCategoryField.value = selectedProduct.category_name;
-      productBrandField.value = selectedProduct.brand_name;
-      productSkuField.value = selectedProduct.hsn;
-      productAvailableQtyField.value = selectedProduct.product_quantity;
-      productUnitPriceField.value = selectedProduct.sale_price;
-      productPurchaseQtyField.value = '';
-      productPurchaseQtyField.max = selectedProduct.product_quantity;
-      productProductTotalField.value = '';
-
-      if(selectedProduct.discount>0){
-          discountCheckDiv.style.display = 'block';
-          discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : '+selectedProduct.discount+'%';
-          discountValueField.value = selectedProduct.discount;
-      }else{
-          discountCheckDiv.style.display = 'none';
-      }
-
-      productPurchaseQtyField.addEventListener('input', function () {
-      let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
-      let productTotal;
-      if (discountCheckbox.checked) {
-        // Apply discount if the checkbox is checked
-        let discountPercentage = parseFloat(discountValueField.value) || 0;
-        let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-        productTotal = purchaseQty * discountedPrice;
-      } else {
-        // No discount, use the original sale price
-        productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
-      }
-      productProductTotalField.value = productTotal.toFixed(2);
-      let jsonData = getFormData();
-      
-      });
-
-      discountCheckbox.addEventListener('change', function () {
-            let isChecked = discountCheckbox.checked;
-            if (isChecked) {
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productProductTotalField.value = (discountedPrice*productPurchaseQtyField.value).toFixed(2);
-            } else {
-                productProductTotalField.value = (selectedProduct.sale_price*productPurchaseQtyField.value).toFixed(2);
-                productProductTotalField.innerHTML = '';
-            }
-            let jsonData = getFormData();
-            
-      });
-      let jsonData = getFormData();
-      
-    }
-    function removeProductCard(removeButton) {
-        // Find the parent product card and remove it
-        let productCard = removeButton.closest(".product_widget");
-        if (productCard) {
-            productCard.remove();
-        }
-        let jsonData = getFormData();
-    }
-
-function getFormData() {
-  let formData = [];
-  let cartDataField = document.querySelector(`[name='cartData']`);
-
-  // Iterate through all product cards
-  let productCards = document.querySelectorAll('.product_widget');
-  productCards.forEach((productCard, index) => {
-    let productData = {};
-
-    // Iterate through all form elements within the product card
-    let formElements = productCard.querySelectorAll('input, select');
-    formElements.forEach((element) => {
-      let key = element.name;
-      let value = element.value;
-
-      // Include all elements, including hidden fields, and set discount_checked to "off" if hidden or unchecked
-      if (key !== undefined && key !== null && key !== "") {
-        if (element.type === 'checkbox' && !element.checked) {
-          productData[key] = 'off';
-        } else {
-          productData[key] = value;
-        }
-      }
     });
 
-    // Add productData to formData array
-    formData.push(productData);
-  });
+    productCardCount++;
+    let jsonData = getFormData();
 
-  // Convert formData array to JSON string
-  let jsonData = JSON.stringify(formData);
-
-  // Set the JSON string as the value of cartDataField
-  cartDataField.value = jsonData;
-
-  return formData;
 }
 
-</script>
-<script>
-    function updateCustomerFields(selectCustomerField){
+function updateProductFields(selectElement, cardIndex) {
+    removePowerBoxes(cardIndex);
+    // Update duplicated product categories and brands within the same segment
+    let selectedIndex = selectElement.selectedIndex;
+
+    let selectedProduct = stocks_list.find(product => product.product_id == selectElement.value);
+
+    let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
+    let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
+    let productSkuField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
+    let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
+    let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
+    let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
+    let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+    let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
+    let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
+    let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
+    let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+
+
+
+    productCategoryField.value = selectedProduct.category_name;
+    productBrandField.value = selectedProduct.brand_name;
+    productSkuField.value = selectedProduct.hsn;
+    productAvailableQtyField.value = selectedProduct.product_quantity;
+    productUnitPriceField.value = selectedProduct.sale_price;
+    productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct.product_quantity;
+    productProductTotalField.value = '';
+
+    if (selectedProduct.discount > 0) {
+        discountCheckDiv.style.display = 'block';
+        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueField.value = selectedProduct.discount;
+    } else {
+        discountCheckDiv.style.display = 'none';
+    }
+
+    productPurchaseQtyField.addEventListener('input', function () {
+        let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
+        let productTotal;
+        if (discountCheckbox.checked) {
+            // Apply discount if the checkbox is checked
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productTotal = purchaseQty * discountedPrice;
+        } else {
+            // No discount, use the original sale price
+            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+        }
+        productProductTotalField.value = productTotal.toFixed(2);
+        let jsonData = getFormData();
+        generatePowerCards(cardIndex, purchaseQty);
+    });
+
+    discountCheckbox.addEventListener('change', function () {
+        let isChecked = discountCheckbox.checked;
+        if (isChecked) {
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+        } else {
+            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+            productProductTotalField.innerHTML = '';
+        }
+        let jsonData = getFormData();
+
+    });
+    let jsonData = getFormData();
+
+}
+function removeProductCard(removeButton) {
+    // Find the parent product card and remove it
+    let productCard = removeButton.closest(".product_widget");
+    if (productCard) {
+        productCard.remove();
+    }
+    let jsonData = getFormData();
+}
+
+function getFormData() {
+    let formData = [];
+    let cartDataField = document.querySelector(`[name='cartData']`);
+    // Iterate through all product cards
+    let productCards = document.querySelectorAll('.product_widget');
+    productCards.forEach((productCard, index) => {
+        let productData = {};
+
+        // Iterate through all form elements within the product card
+        let formElements = productCard.querySelectorAll('input, select');
+        formElements.forEach((element) => {
+            let key = element.name;
+            let value = element.value;
+
+         
+            if (element.name.startsWith('power[')) {
+                // Handle power checkboxes separately
+                if (element.checked) {
+                    // Add power value only if the checkbox is checked
+                    productData[key] = value;
+                }
+            } else {
+                // Handle other form elements
+                if (key !== undefined && key !== null && key !== "") {
+                    if (element.type === 'checkbox' && !element.checked && !element.name.startsWith('power[')) {
+                        productData[key] = 'off';
+                    } else {
+                        productData[key] = value;
+                    }
+                }
+            }
+        });
+        // Add productData to formData array
+        formData.push(productData);
+    });
+    // Convert formData array to JSON string
+    let jsonData = JSON.stringify(formData);
+    // Set the JSON string as the value of cartDataField
+    cartDataField.value = jsonData;
+    return formData;
+}
+
+
+
+function generatePowerCards(cardIndex, quantity) {
+    // Remove existing power cards before generating new ones
+    removePowerBoxes(cardIndex);
+    let productWidget = document.querySelector(`.product_widget:nth-child(${cardIndex})`);
+
+    // Create power card elements based on the specified quantity
+    for (let i = 0; i < quantity; i++) {
+        let powerCard = document.createElement("div");
+        powerCard.classList.add(`power_card_${cardIndex}`, "power_card", "mb-3");
+        // Build the power card structure dynamically
+        powerCard.innerHTML = `
+            <h5>Power Card ${i + 1}</h5>
+            <div class="row g-3 mb-3">
+            <div class="col-12 col-lg-2 form-check">
+                <input class="form-check-input" type="checkbox" name="power[${cardIndex}][${i}]" value="Stock" id="power_stock_${cardIndex}_${i}" onchange="handleCheckboxChange(this)">
+                <label class="form-check-label" for="power_stock_${cardIndex}_${i}">Stock</label>
+            </div>
+            <div class="col-12 col-lg-2 form-check">
+                <input class="form-check-input" type="checkbox" name="power[${cardIndex}][${i}]" value="Rx" id="power_rx_${cardIndex}_${i}" onchange="handleCheckboxChange(this)">
+                <label class="form-check-label" for="power_rx_${cardIndex}_${i}">Rx</label>
+            </div>
+            <div class="col-12 col-lg-2 form-check">
+                <input class="form-check-input" type="checkbox" name="power[${cardIndex}][${i}]" value="No Lens" id="power_no_lens_${cardIndex}_${i}" onchange="handleCheckboxChange(this)" checked="checked">
+                <label class="form-check-label" for="power_no_lens_${cardIndex}_${i}">No Lens</label>
+            </div>
+            </div>
+            <div class="row mb-3 stock_power_card[${cardIndex}][${i}] d-none">
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <select name="LensPowerStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                        <option >Choose Power</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <select name="LensBCStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <select name="LensDiaStock[${cardIndex}][${i}]" class="form-select" onchange="getFormData()" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <select name="LensCylinderStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <select name="LensAxisStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                        <option>Choose Axis</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3 rx_power_card[${cardIndex}][${i}] d-none">
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <input name="LensPowerRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <input name="LensBCRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <input name="LensDiaRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <input name="LensCylinderRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <input name="LensAxisRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                            </div>
+        `;
+
+        // Append the power card to the products container
+        productWidget.appendChild(powerCard);
+        let jsonData = getFormData();
+    }
+}
+
+function handleCheckboxChange(checkbox) {
+    // Uncheck all other checkboxes in the same group
+    let checkboxes = document.querySelectorAll(`[name='${checkbox.name}']`);
+
+    checkboxes.forEach((cb) => {
+        if (cb !== checkbox) {
+            cb.checked = false;
+        }
+    });
+
+    // Get the index from the checkbox name attribute
+    const [cardIndex, i] = checkbox.name.match(/\d+/g).map(Number);
+
+    // Show or hide specific divs based on the checkbox value
+    const stockPowerCard = document.querySelector(`.stock_power_card\\[${cardIndex}\\]\\[${i}\\]`);
+    const rxPowerCard = document.querySelector(`.rx_power_card\\[${cardIndex}\\]\\[${i}\\]`);
+
+    if (checkbox.value === "Stock") {
+        stockPowerCard.classList.remove('d-none');
+        rxPowerCard.classList.add('d-none');
+    } else if (checkbox.value === "Rx") {
+        rxPowerCard.classList.remove('d-none');
+        stockPowerCard.classList.add('d-none');
+    } else {
+        stockPowerCard.classList.add('d-none');
+        rxPowerCard.classList.add('d-none');
+    }
+
+    let jsonData = getFormData();
+}
+
+
+function removePowerBoxes(cardIndex) {
+    // Remove existing power card elements
+    let powerCards = document.querySelectorAll(`.power_card_${cardIndex}`);
+    powerCards.forEach((powerCard) => {
+        powerCard.remove();
+    });
+    let jsonData = getFormData();
+}
+
+
+function updateCustomerFields(selectCustomerField) {
     var customers_list = JSON.parse(document.getElementById('customersList').textContent);
     let selectCustomer = customers_list.find(customer => customer.customer_id == selectCustomerField.value);
-    console.log(selectCustomer);
 
     var customerNameInput = document.getElementsByName("customer_name")[0];
     var customerEmailInput = document.getElementsByName("customer_email")[0];
@@ -648,9 +846,9 @@ function getFormData() {
     customerCityInput.value = selectCustomer.city;
     customerLanguageSelect.value = selectCustomer.language;
     customerAddressTextarea.value = selectCustomer.address;
+}
 
 
-    }
 
 </script>
 
