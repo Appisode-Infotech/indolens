@@ -664,9 +664,10 @@ function generatePowerCards(cardIndex, quantity) {
             </div>
             </div>
             <div class="row mb-3 stock_power_card[${cardIndex}][${i}] d-none">
-                                <div class="col-12 col-lg-3 g-3">
+                <h4 class="g-3 text-1000">Left Eye</h4>
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Power</h5>
-                                    <select name="LensPowerStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                    <select name="leftLensPowerStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
                                         <option >Choose Power</option>
                                         <option value="1.50">1.50</option>
                                         <option value="1.56">1.56</option>
@@ -676,9 +677,9 @@ function generatePowerCards(cardIndex, quantity) {
                                         <option value="1.74">1.74</option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-lg-3 g-3">
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">BC</h5>
-                                    <select name="LensBCStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                    <select name="leftLensBCStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
                                         <option>Select Value</option>
                                         <option value="-3.5">-3.5</option>
                                             <option value="-3.0">-3.0</option>
@@ -697,9 +698,9 @@ function generatePowerCards(cardIndex, quantity) {
                                             <option value="3.5">3.5</option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-lg-3 g-3">
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Dia</h5>
-                                    <select name="LensDiaStock[${cardIndex}][${i}]" class="form-select" onchange="getFormData()" aria-label="Default select example">
+                                    <select name="leftLensDiaStock[${cardIndex}][${i}]" class="form-select" onchange="getFormData()" aria-label="Default select example">
                                         <option>Select Value</option>
                                         <option value="-3.5">-3.5</option>
                                             <option value="-3.0">-3.0</option>
@@ -718,9 +719,9 @@ function generatePowerCards(cardIndex, quantity) {
                                             <option value="3.5">3.5</option>
                                     </select>
                                 </div>
-                                <div class="col-12 col-lg-3 g-3">
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Cylinder</h5>
-                                    <select name="LensCylinderStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                    <select name="leftLensCylinderStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
                                         <option>Select Value</option>
                                         <option value="-3.5">-3.5</option>
                                             <option value="-3.0">-3.0</option>
@@ -740,9 +741,98 @@ function generatePowerCards(cardIndex, quantity) {
                                     </select>
                                 </div>
 
-                                <div class="col-12 col-lg-3 g-3">
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Axis</h5>
-                                    <select name="LensAxisStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                    <select name="leftLensAxisStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                        <option>Choose Axis</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                                <h4 class="g-3 text-1000">Right Eye</h4>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <select name="rightLensPowerStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                        <option >Choose Power</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <select name="rightLensBCStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <select name="rightLensDiaStock[${cardIndex}][${i}]" class="form-select" onchange="getFormData()" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <select name="rightLensCylinderStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <select name="rightLensAxisStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
                                         <option>Choose Axis</option>
                                         <option value="1.50">1.50</option>
                                         <option value="1.56">1.56</option>
@@ -753,27 +843,53 @@ function generatePowerCards(cardIndex, quantity) {
                                     </select>
                                 </div>
                             </div>
+                            </div>
+
                             <div class="row mb-3 rx_power_card[${cardIndex}][${i}] d-none">
-                                <div class="col-12 col-lg-3 g-3">
+                                <h4 class="g-3 text-1000">Left Eye</h4>
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Power</h5>
-                                    <input name="LensPowerRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                    <input name="leftLensPowerRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
                                 </div>
-                                <div class="col-12 col-lg-3 g-3">
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">BC</h5>
-                                    <input name="LensBCRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                    <input name="leftLensBCRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
                                 </div>
-                                <div class="col-12 col-lg-3 g-3">
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Dia</h5>
-                                    <input name="LensDiaRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                    <input name="leftLensDiaRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
                                 </div>
-                                <div class="col-12 col-lg-3 g-3">
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Cylinder</h5>
-                                    <input name="LensCylinderRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                    <input name="leftLensCylinderRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
                                 </div>
-                                <div class="col-12 col-lg-3 g-3">
+                                <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Axis</h5>
-                                    <input name="LensAxisRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                    <input name="leftLensAxisRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
                                 </div>
+
+                                <h4 class="g-3 text-1000">Right Eye</h4>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <input name="rightLensPowerRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <input name="rightLensBCRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <input name="rightLensDiaRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <input name="rightLensCylinderRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <input name="rightLensAxisRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                            </div>
                             </div>
         `;
 
