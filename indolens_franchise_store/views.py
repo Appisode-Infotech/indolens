@@ -178,7 +178,7 @@ def viewAllEmployeFranchise(request):
         response, status_code = franchise_store_employee_controller.get_all_franchise_emp(
             request.session.get('assigned_store_id'))
         print(response)
-        return render(request, 'ownEmployee/manageFranchiseEmployees.html',
+        return render(request, 'employee/manageFranchiseEmployees.html',
                       {"franchise_employee_list": response['franchise_employee_list']})
     else:
         return redirect('franchise_store_login')
@@ -284,13 +284,6 @@ def inventoryOutOfStockFranchise(request):
     else:
         return redirect('franchise_store_login')
 
-
-def moveStocksFranchise(request):
-    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
-            'is_franchise_store_logged_in') is True:
-        return render(request, 'inventory/moveStocksFranchise.html')
-    else:
-        return redirect('franchise_store_login')
 
 
 # ================================= SALES AND EXPENSES ======================================

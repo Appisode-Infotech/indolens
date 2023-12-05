@@ -5,7 +5,7 @@ from datetime import datetime
 class Product:
     def __init__(self, values):
         (
-            self.product_id, self.product_name, self.product_description, self.product_images,
+            self.product_id, self.product_name, self.product_description, self.product_images, self.product_qr_code,
             self.category_id, self.brand_id, self.material_id, self.frame_type_id, self.frame_shape_id,
             self.color_id, self.unit_id, self.origin, self.cost_price, self.sale_price, self.model_number,
             self.hsn, self.power_attribute, self.franchise_sale_price, self.product_quantity, self.product_gst,
@@ -24,6 +24,7 @@ class Product:
             'product_name': self.product_name,
             'product_description': self.product_description,
             'product_images': self.product_images,
+            'product_qr_code': self.product_qr_code,
             'category_id': self.category_id,
             'brand_id': self.brand_id,
             'material_id': self.material_id,

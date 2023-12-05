@@ -11,7 +11,7 @@ class Product:
             self.product_id, self.product_name, self.product_description, self.product_images,
             self.category_id, self.brand_id, self.material_id, self.frame_type_id, self.frame_shape_id,
             self.color_id, self.unit_id, self.origin, self.cost_price, self.sale_price, self.model_number,
-            self.hsn, self.product_quantity, self.product_gst, self.status, self.discount, self.created_on, self.created_by, self.last_updated_on,
+            self.hsn, self.power_attribute, self.franchise_sale_price, self.product_quantity, self.product_gst, self.status, self.discount, self.created_on, self.created_by, self.last_updated_on,
             self.last_updated_by, self.creator_name, self.updater_name, self.category_name, self.material_name,
             self.frame_type_name, self.shape_name, self.color_name, self.unit_name, self.brand_name, self.store_name
 
@@ -48,6 +48,8 @@ class Product:
             'sale_price': self.sale_price,
             'model_number': self.model_number,
             'hsn': self.hsn,
+            'power_attribute': self.power_attribute,
+            'franchise_sale_price': self.franchise_sale_price,
             'product_quantity': self.product_quantity,
             'product_gst': self.product_gst,
             'status': self.status,
