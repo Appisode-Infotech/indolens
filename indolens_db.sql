@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Nov 25, 2023 at 06:58 PM
+-- Generation Time: Dec 05, 2023 at 01:51 PM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -229,7 +229,7 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`brand_id`, `brand_name`, `category_id`, `brand_description`, `status`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 'Indolens', 0, 'Indolens Own Brand', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
+(1, 'Indolens', 0, 'Indolens Own Brand', 1, '2023-11-13 20:00:12', 5, '2023-12-04 21:52:22', 5),
 (2, 'Lens Guru', 0, 'Collabration Brand', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5);
 
 -- --------------------------------------------------------
@@ -243,6 +243,7 @@ CREATE TABLE `central_inventory` (
   `product_name` varchar(255) NOT NULL,
   `product_description` varchar(255) NOT NULL,
   `product_images` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`product_images`)),
+  `product_qr_code` varchar(255) NOT NULL,
   `category_id` int(11) NOT NULL,
   `brand_id` int(11) NOT NULL,
   `material_id` int(11) NOT NULL,
@@ -271,12 +272,31 @@ CREATE TABLE `central_inventory` (
 -- Dumping data for table `central_inventory`
 --
 
-INSERT INTO `central_inventory` (`product_id`, `product_name`, `product_description`, `product_images`, `category_id`, `brand_id`, `material_id`, `frame_type_id`, `frame_shape_id`, `color_id`, `unit_id`, `origin`, `cost_price`, `sale_price`, `model_number`, `hsn`, `power_attribute`, `franchise_sale_price`, `product_quantity`, `product_gst`, `status`, `discount`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 'lens 1', '<p>first lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 1, 1, 1, 1, 1, 1, 2, 'Indian', 550, 900, 'M001', 'HSN001', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 0, 10, 18, 1, 50, '2023-11-14 13:00:28', 5, '2023-11-14 13:00:28', 5),
-(2, 'lens 2', '<p>Second lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 1, 1, 3, 2, 2, 2, 1, 'Foreign', 1000, 1500, 'M001', 'HSN001', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 0, 145, 18, 1, 0, '2023-11-14 13:00:28', 5, '2023-11-14 13:13:54', 5),
-(3, 'lens 3', '<p>Third lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 1, 1, 2, 3, 3, 3, 2, 'Domestic', 250, 500, 'M001', 'HSN001', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 0, 250, 18, 1, 0, '2023-11-14 13:00:28', 5, '2023-11-14 13:13:54', 5),
-(4, 'test single vision lens', '<p>test single vision lens</p>', '[\"products/products_1700928278_frame01.jpg\"]', 1, 1, 1, 1, 1, 1, 1, 'Indian', 400, 600, 'MDL9876', 'HSN9876', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 500, 100, 9, 0, 10, '2023-11-25 21:34:36', 5, '2023-11-25 21:34:36', 5),
-(5, 'test single vision lens', '<p>test single vision lens</p>', '[\"products/products_1700928380_frame01.jpg\"]', 1, 1, 1, 1, 1, 1, 1, 'Indian', 400, 600, 'MDL9876', 'HSN9876', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 500, 100, 9, 0, 10, '2023-11-25 21:36:17', 5, '2023-11-25 21:36:17', 5);
+INSERT INTO `central_inventory` (`product_id`, `product_name`, `product_description`, `product_images`, `product_qr_code`, `category_id`, `brand_id`, `material_id`, `frame_type_id`, `frame_shape_id`, `color_id`, `unit_id`, `origin`, `cost_price`, `sale_price`, `model_number`, `hsn`, `power_attribute`, `franchise_sale_price`, `product_quantity`, `product_gst`, `status`, `discount`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
+(1, 'lens 1', '<p>first lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 'product_qr_codes/12.png', 1, 1, 1, 1, 1, 1, 2, 'Indian', 550, 900, 'M001', 'HSN001', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 0, 10, 18, 1, 50, '2023-11-14 13:00:28', 5, '2023-11-14 13:00:28', 5),
+(2, 'lens 2', '<p>Second lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 'product_qr_codes/12.png', 1, 1, 3, 2, 2, 2, 1, 'Foreign', 1000, 1500, 'M001', 'HSN001', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 0, 145, 18, 1, 0, '2023-11-14 13:00:28', 5, '2023-11-14 13:13:54', 5),
+(3, 'lens 3', '<p>Third lens</p>', '[\"products/products_1699947030_frame03.jpg\", \"products/products_1699947030_frame02.jpg\", \"products/products_1699947030_frame01.jpg\"]', 'product_qr_codes/12.png', 1, 1, 2, 3, 3, 3, 2, 'Domestic', 250, 500, 'M001', 'HSN001', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 0, 250, 18, 1, 0, '2023-11-14 13:00:28', 5, '2023-11-14 13:13:54', 5),
+(4, 'test single vision lens', '<p>test single vision lens</p>', '[\"products/products_1700928278_frame01.jpg\"]', 'product_qr_codes/12.png', 1, 1, 1, 1, 1, 1, 1, 'Indian', 400, 600, 'MDL9876', 'HSN9876', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 500, 100, 9, 0, 10, '2023-11-25 21:34:36', 5, '2023-11-25 21:34:36', 5),
+(5, 'test single vision lens', '<p>test single vision lens</p>', '[\"products/products_1700928380_frame01.jpg\"]', 'product_qr_codes/12.png', 1, 1, 1, 1, 1, 1, 1, 'Indian', 400, 600, 'MDL9876', 'HSN9876', '{\"vision_type\": \"single_vision\", \"index\": \"1.50\", \"sph\": \"2.0\", \"cyl\": \"2.5\", \"axis\": \"3.5\", \"add\": \"3\"}', 500, 100, 9, 0, 10, '2023-11-25 21:36:17', 5, '2023-11-25 21:36:17', 5),
+(6, 'Test Frame1', '<p>dfghjkl;</p>', '[\"products/products_1701418149_optometry.jpg\"]', 'product_qr_codes/12.png', 1, 1, 1, 1, 1, 3, 1, 'Indian', 8765, 2499, 'MNo123', 'HSN123', '{}', 987, 250, 10, 0, 25, '2023-12-01 13:33:59', 5, '2023-12-01 13:33:59', 5),
+(7, 'Test lens1', '<p>gvbnmllkjhgf</p>', '[\"products/products_1701418248_frame01.jpg\"]', 'product_qr_codes/12.png', 2, 2, 1, 0, 0, 2, 2, 'Foreign', 2999, 1999, 'LNS011', 'HSN011', '{}', 987, 100, 10, 0, 15, '2023-12-01 13:33:59', 5, '2023-12-01 13:33:59', 5),
+(8, 'Test contact lens1', '<p>kl;kjhytrdfgchj</p>', '[\"products/products_1701418367_frame02.jpg\"]', 'product_qr_codes/12.png', 3, 1, 3, 0, 0, 2, 2, 'Indian', 4500, 2499, 'tg56', 'HSN123', '{\"contact_lens_type\": \"bifocal\", \"contact_lens_disposability\": \"single_vision\", \"power\": \"1.56\", \"bc\": \"3.5\", \"dia\": \"3.0\", \"cyl\": \"1.5\", \"axis\": \"2\"}', 987, 100, 10, 0, 10, '2023-12-01 13:33:59', 5, '2023-12-01 13:33:59', 5),
+(9, 'Test contact lens2', '<p>vhjkl;./</p>', '[\"products/products_1701418859_frame03.jpg\"]', 'product_qr_codes/12.png', 3, 2, 3, 0, 0, 1, 1, 'Indian', 10000, 5000, 'PRD123', 'HSN011', '{\"contact_lens_type\": \"Soft\", \"contact_lens_disposability\": \"Daily\", \"power\": \"1.50\", \"bc\": \"2.0\", \"dia\": \"3.0\", \"cyl\": \"3.5\", \"axis\": \"1\"}', 2500, 100, 10, 0, 10, '2023-12-01 13:48:46', 5, '2023-12-01 13:48:46', 5),
+(10, 'testing', '<p>dfghjkl;kjhg</p>', '[\"products/products_1701760456_frame02.jpg\"]', 'product_qr_codes/12.png', 2, 1, 3, 0, 0, 3, 1, 'Domestic', 600, 500, 'LNS011', 'HSN456', '{\"vision_type\": \"single_vision\", \"stock_type\": \"rx\"}', 450, 7654, 19, 0, 10, '2023-12-05 12:41:40', 5, '2023-12-05 12:41:40', 5),
+(11, 'test qr code', '<p>test qr code</p>', '[\"products/products_1701776676_frame02.jpg\"]', 'product_qr_codes/12.png', 3, 1, 1, 0, 0, 1, 1, 'Indian', 11, 15, 'LKJHGF9876', 'POIUYTR098765', '{\"contact_lens_type\": \"\", \"contact_lens_disposability\": \"\", \"power\": \"Choose Power\", \"bc\": \"Select Value\", \"dia\": \"Select Value\", \"cyl\": \"Select Value\", \"axis\": \"Open this select menu\"}', 13, 1, 9, 0, 10, '2023-12-05 17:13:19', 5, '2023-12-05 17:13:19', 5),
+(12, 'test qr code 1', '<p>test qr code 1</p>', '[\"products/products_1701776799_frame01.jpg\"]', 'product_qr_codes/12.png', 3, 1, 1, 0, 0, 1, 1, 'Indian', 11, 15, 'LKJHGF9876', 'POIUYTR098765', '{\"contact_lens_type\": \"\", \"contact_lens_disposability\": \"\", \"power\": \"Choose Power\", \"bc\": \"Select Value\", \"dia\": \"Select Value\", \"cyl\": \"Select Value\", \"axis\": \"Open this select menu\"}', 13, 1, 9, 0, 10, '2023-12-05 17:16:17', 5, '2023-12-05 17:16:17', 5),
+(13, 'test qr', '<p>test qr</p>', '[\"products/products_1701778686_frame02.jpg\"]', '', 4, 1, 1, 0, 0, 1, 1, 'Foreign', 11, 1, '11', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 17:47:10', 5, '2023-12-05 17:47:10', 5),
+(14, 'test qr', '<p>test qr</p>', '[\"products/products_1701778815_frame01.jpg\"]', '', 4, 1, 1, 0, 0, 1, 1, 'Foreign', 11, 1, '11', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 17:50:00', 5, '2023-12-05 17:50:00', 5),
+(15, 'test qr', '<p>test qr</p>', '[\"products/products_1701778863_frame01.jpg\"]', '', 4, 1, 1, 0, 0, 1, 1, 'Foreign', 11, 1, '11', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 17:50:49', 5, '2023-12-05 17:50:49', 5),
+(16, 'test qr', '<p>test qr</p>', '[\"products/products_1701778903_frame02.jpg\"]', '', 4, 1, 1, 0, 0, 1, 1, 'Foreign', 11, 1, '11', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 17:51:24', 5, '2023-12-05 17:51:24', 5),
+(17, 'test qr', '<p>test qr</p>', '[\"products/products_1701778957_frame03.jpg\"]', 'product_qr_codes/17.png', 4, 1, 1, 0, 0, 1, 1, 'Foreign', 11, 1, '11', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 17:52:20', 5, '2023-12-05 17:52:20', 5),
+(18, 'test qr', '<p>test qr</p>', '[\"products/products_1701779168_frame03.jpg\"]', '', 4, 1, 1, 0, 0, 1, 1, 'Foreign', 11, 1, '11', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 17:55:58', 5, '2023-12-05 17:55:58', 5),
+(19, 'test qr', '<p>test qr</p>', '[\"products/products_1701779230_frame01.jpg\"]', '', 4, 1, 1, 0, 0, 1, 1, 'Foreign', 11, 1, '11', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 17:56:53', 5, '2023-12-05 17:56:53', 5),
+(20, 'poiuytr', '<p>oiuytre</p>', '[\"products/products_1701779280_frame03.jpg\"]', '', 4, 1, 1, 0, 0, 1, 1, 'Domestic', 1, 1, '1', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 17:57:23', 5, '2023-12-05 17:57:23', 5),
+(21, 'poiuytr', '<p>oiuytre</p>', '[\"products/products_1701779387_frame03.jpg\"]', 'product_qr_codes/21.png', 4, 1, 1, 0, 0, 1, 1, 'Domestic', 1, 1, '1', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 17:59:32', 5, '2023-12-05 17:59:32', 5),
+(22, 'poiuytr', '<p>oiuytre</p>', '[\"products/products_1701779760_frame01.jpg\"]', 'product_qr_codes/22.png', 4, 1, 1, 0, 0, 1, 1, 'Domestic', 1, 1, '1', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 18:05:48', 5, '2023-12-05 18:05:48', 5),
+(23, 'product image qr code', '<p>oiuytre</p>', '[\"products/products_1701780415_frame01.jpg\"]', 'product_qr_codes/23.png', 4, 1, 1, 0, 0, 1, 1, 'Domestic', 1, 1, '1', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 18:16:35', 5, '2023-12-05 18:16:35', 5),
+(24, 'product image qr code 01', '<p>oiuytre</p>', '[\"products/products_1701780502_frame01.jpg\"]', 'product_qr_codes/24.png', 4, 1, 1, 0, 0, 1, 1, 'Domestic', 1, 1, '1', '1', '{}', 1, 1, 1, 0, 1, '2023-12-05 18:18:09', 5, '2023-12-05 18:18:09', 5);
 
 -- --------------------------------------------------------
 
@@ -311,7 +331,7 @@ CREATE TABLE `customers` (
 INSERT INTO `customers` (`customer_id`, `name`, `gender`, `age`, `phone`, `email`, `language`, `city`, `address`, `created_by_employee_id`, `created_by_store_id`, `created_by_store_type`, `created_on`, `updated_by_employee_id`, `updated_by_store_id`, `updated_by_store_type`, `updated_on`) VALUES
 (1, 'Customer 1', 'M', 32, '9807543127', 'customer1@test.com', 'Hindi, Kannada, English', 'Bangalore', '#A-123, 2nd floor, 3rd cross, Bangalore 7890087', 1, 1, 1, '2023-11-20 08:30:17', 1, 1, 1, '2023-11-20 08:30:17'),
 (2, 'Customer 2', 'M', 32, '9807543128', 'customer2@test.com', 'Hindi, Kannada, English', 'Bangalore', '#A-123, 2nd floor, 3rd cross, Bangalore 7890087', 1, 1, 1, '2023-11-20 08:30:17', 1, 1, 1, '2023-11-20 08:30:17'),
-(3, 'Customer 3', 'M', 32, '9807543129', 'customer3@test.com', 'Hindi, Kannada, English', 'Bangalore', '#A-123, 2nd floor, 3rd cross, Bangalore 7890087', 1, 1, 1, '2023-11-20 08:30:17', 1, 1, 1, '2023-11-20 08:30:17');
+(3, 'Customer 3', 'M', 32, '9807543129', 'customer3@test.com', 'Hindi, Kannada, English', 'Bangalore', '#A-123, 2nd floor, 3rd cross, Bangalore 7890087', 1, 1, 2, '2023-11-20 08:30:17', 1, 1, 1, '2023-11-20 08:30:17');
 
 -- --------------------------------------------------------
 
@@ -372,9 +392,10 @@ CREATE TABLE `django_session` (
 --
 
 INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALUES
+('aph7p9esm9g0pouwsy40jxkwopsvdl2n', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLVUcpLzE1VslLyys_IU3DJT1XSUSooyk_LzEmNL8hMBkog8fSyCtKVagHSfBz5:1r796g:QmIipEgD5KKFIlHQ3FUhKlXneB3v9cUsCJ2ZIntRvq0', '2023-12-10 06:59:06.121124'),
 ('h769ghhhyh8dv233k9m74cpph1vglxam', '.eJxNjbsOwjAMRX-l8twWshTaCUYGxICYo6gxkaXEqeIghBD_Tko7sNn33McbSLTkmFD76BxaTQxDTg-sgSwMqgY2AWGAs2HjMFUKasBgyBctLJo6ZJTcjjEUtpStoRPb6JGlujy5us7kl188-TXNnlkwIuS4rC9kXZ5SvJNHPdFYfH_f5u_Wquv7fqt23V7fBJM0RxuISXIypayhMXI7sYPPFzEpUU8:1r2o7K:yFDAvtr8UTsJRVAb3QNAwXCD3PEftwhdHHZb8a6NQfw', '2023-11-28 07:45:50.052790'),
 ('jd4p49www8vw0v5rkkk3hsvborv6iatf', '.eJxNjbsOwjAMRX-l8twWshTaCUYGxICYo6gxkaXEqeIghBD_Tko7sNn33McbSLTkmFD76BxaTQxDTg-sgSwMqgY2AWGAs2HjMFUKasBgyBctLJo6ZJTcjjEUtpStoRPb6JGlujy5us7kl188-TXNnlkwIuS4rC9kXZ5SvJNHPdFYfH_f5u_Wquv7fqt23V7fBJM0RxuISXIypayhMXI7sYPPFzEpUU8:1r6wYA:jBPnwAtQRdxs2fSOi8cSC_SFqf53yMQ-jrP7oafytj0', '2023-12-09 17:34:38.513401'),
-('turp8wrxg6w8cxp04xqc6rl2ydlh9m05', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLVUcpLzE1VslLyys_IU3DJT1XSUSooyk_LzEmNL8hMBkog8fSyCtKVagHSfBz5:1r5Jlq:AHsztn2aZH_sj_NXrLsqFzk8KEM3PGg7OGBm0jPH6wM', '2023-12-05 05:58:02.212010');
+('turp8wrxg6w8cxp04xqc6rl2ydlh9m05', '.eJyrVsosjk9Myc3Mi8_JT09PTYnPzFOyKikqTdVRykxRsjLVUcpLzE1VslLyys_IU3DJT1XSUSooyk_LzEmNL8hMBkog8fSyCtKVagHSfBz5:1rASBH:gTE5pCQ29MCIuu-DWuWKOMGkmqbJyMa-m56LQ-FoMlQ', '2023-12-19 09:57:31.939251');
 
 -- --------------------------------------------------------
 
@@ -398,7 +419,7 @@ CREATE TABLE `frame_shapes` (
 --
 
 INSERT INTO `frame_shapes` (`shape_id`, `shape_name`, `shape_description`, `status`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 'Oval', 'Oval Shape Frame', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
+(1, 'Oval', 'Oval Shape Frame', 1, '2023-11-13 20:00:12', 5, '2023-12-04 22:02:29', 5),
 (2, 'Cat ', 'Cat Eye Shape', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
 (3, 'Square', 'Square Shape Frame', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
 (4, 'Round', 'Round Shape Frame', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5);
@@ -425,7 +446,7 @@ CREATE TABLE `frame_types` (
 --
 
 INSERT INTO `frame_types` (`frame_id`, `frame_type_name`, `frame_type_description`, `status`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 'Round ', 'Round Frames', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
+(1, 'Round ', 'Round Frames', 1, '2023-11-13 20:00:12', 5, '2023-12-05 12:41:40', 5),
 (2, 'Oval Frames', 'Soften & Balance Defined Square Face Line', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
 (3, 'Coloured Frames', 'Draws Attention To Eyes', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5);
 
@@ -522,17 +543,17 @@ CREATE TABLE `franchise_store_employees` (
 --
 
 INSERT INTO `franchise_store_employees` (`employee_id`, `name`, `email`, `phone`, `password`, `profile_pic`, `assigned_store_id`, `address`, `document_1_type`, `document_1_url`, `document_2_type`, `document_2_url`, `status`, `role`, `created_by`, `created_on`, `last_updated_by`, `last_updated_on`, `certificates`) VALUES
-(1, 'Franchise Owner 1', 'franchiseowner1@test.com', '9087123594', '$2b$12$O1whVb9hG77U6pgCdfE23uZKrUtgawAMhbeKooJSBiVc.Lj9JMZ8a', 'profile_pic/profile_pic_1699946182_hello.png', 0, '  #A-143, 3rd cross, 4th main, near  Madanayakanahalli ploce station, Bangalore 560098', 'Aadhar', '[\"documents/documents_1699946182_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1699946182_pan.jpg\"]', 0, 1, 5, '2023-11-14 12:46:20', 5, '2023-11-19 13:57:41', NULL),
-(2, 'Franchise Owner 2', 'franchiseowner2@test.com', '9087123595', '$2b$12$O1whVb9hG77U6pgCdfE23uZKrUtgawAMhbeKooJSBiVc.Lj9JMZ8a', 'profile_pic/profile_pic_1699946182_hello.png', 0, '#A-123, 9th cross, dharawi, mumbai 560021', 'Aadhar', '[\"documents/documents_1699946182_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1699946182_pan.jpg\"]', 1, 1, 5, '2023-11-14 12:46:20', 5, '2023-11-14 12:46:20', NULL),
+(1, 'Franchise Owner 1', 'franchiseowner1@test.com', '9087123594', '$2b$12$O1whVb9hG77U6pgCdfE23uZKrUtgawAMhbeKooJSBiVc.Lj9JMZ8a', 'profile_pic/profile_pic_1699946182_hello.png', 1, '  #A-143, 3rd cross, 4th main, near  Madanayakanahalli ploce station, Bangalore 560098', 'Aadhar', '[\"documents/documents_1699946182_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1699946182_pan.jpg\"]', 1, 1, 5, '2023-11-14 12:46:20', 5, '2023-11-19 13:57:41', NULL),
+(2, 'Franchise Owner 2', 'franchiseowner2@test.com', '9087123595', '$2b$12$O1whVb9hG77U6pgCdfE23uZKrUtgawAMhbeKooJSBiVc.Lj9JMZ8a', 'profile_pic/profile_pic_1699946182_hello.png', 2, '#A-123, 9th cross, dharawi, mumbai 560021', 'Aadhar', '[\"documents/documents_1699946182_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1699946182_pan.jpg\"]', 1, 1, 5, '2023-11-14 12:46:20', 5, '2023-11-14 12:46:20', NULL),
 (3, 'Franchise Owner 3', 'franchiseowner3@test.com', '9087123596', '$2b$12$O1whVb9hG77U6pgCdfE23uZKrUtgawAMhbeKooJSBiVc.Lj9JMZ8a', 'profile_pic/profile_pic_1699946182_hello.png', 0, '#A-123, 9th cross, dharawi, mumbai 560021', 'Aadhar', '[\"documents/documents_1699946182_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1699946182_pan.jpg\"]', 1, 1, 5, '2023-11-14 12:46:20', 5, '2023-11-14 12:46:20', NULL),
-(4, 'franchise optimetry 1', 'franchiseoptimetry1@test.com', '9812309736', '$2b$12$El6YZwCxYrpf3HjEwtlL7eXxrR5v.iTUZOQ4VwiQfK3PJwHLLkqC.', 'profile_pic/profile_pic_1699999233_optometry.jpg', 0, '#C-45, 3rd floor, NivasAppartment, HSR layout, Bangalore, Karnataka 560048', '1', '[\"documents/documents_1699999233_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1699999233_pan.jpg\"]', 1, 2, 5, '2023-11-15 03:30:27', 5, '2023-11-15 03:30:27', '[\"certificates/certificates_1700000057_wed2.jpg\", \"certificates/certificates_1700000057_wed1.jpg\"]'),
+(4, 'franchise optimetry 1', 'franchiseoptimetry1@test.com', '9812309736', '$2b$12$El6YZwCxYrpf3HjEwtlL7eXxrR5v.iTUZOQ4VwiQfK3PJwHLLkqC.', 'profile_pic/profile_pic_1699999233_optometry.jpg', 1, '#C-45, 3rd floor, NivasAppartment, HSR layout, Bangalore, Karnataka 560048', '1', '[\"documents/documents_1699999233_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1699999233_pan.jpg\"]', 1, 2, 5, '2023-11-15 03:30:27', 5, '2023-11-15 03:30:27', '[\"certificates/certificates_1700000057_wed2.jpg\", \"certificates/certificates_1700000057_wed1.jpg\"]'),
 (5, 'franchise optimetry 2', 'franchiseoptimetry2@test.com', '9812309737', '$2b$12$El6YZwCxYrpf3HjEwtlL7eXxrR5v.iTUZOQ4VwiQfK3PJwHLLkqC.', 'profile_pic/profile_pic_1699999233_optometry.jpg', 0, '#C-45, 3rd floor, NivasAppartment, HSR layout, Bangalore, Karnataka 560048', '1', '[\"documents/documents_1699999233_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1699999233_pan.jpg\"]', 1, 2, 5, '2023-11-15 03:30:27', 5, '2023-11-15 03:30:27', '[\"certificates/certificates_1700000057_wed2.jpg\", \"certificates/certificates_1700000057_wed1.jpg\"]'),
 (6, 'franchise optimetry 3', 'franchiseoptimetry3@test.com', '9808712345', '$2b$12$u31ReK3XXQhWzJW21rCZW.oaRZTD7MojMTs9g6jlKcWfGANDrxepa', 'profile_pic/profile_pic_1699999836_optometry.jpg', 0, '#C-45, 3rd floor, NivasAppartment, HSR layout, Bangalore, Karnataka 560048', '1', '[\"documents/documents_1699999836_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1699999836_pan.jpg\"]', 0, 2, 5, '2023-11-15 03:38:51', 5, '2023-11-15 03:38:51', '[\"certificates/certificates_1700000057_wed2.jpg\", \"certificates/certificates_1700000057_wed1.jpg\"]'),
 (7, 'franchise optimetry 4', 'franchiseoptimetry4@test.com', '9876345263', '$2b$12$JozpgEyZLEdpFXDEOUcMB.7TM2IFDRugR8EaOx9OJHJjwggqxmYZi', 'profile_pic/profile_pic_1700000057_optometry.jpg', 0, '#C-45, 3rd floor, NivasAppartment, HSR layout, Bangalore, Karnataka 560048', '1', '[\"documents/documents_1700000057_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700000057_pan.jpg\"]', 0, 2, 5, '2023-11-15 03:42:48', 5, '2023-11-15 03:42:48', '[\"certificates/certificates_1700000057_wed2.jpg\", \"certificates/certificates_1700000057_wed1.jpg\"]'),
-(8, 'franchise Sales Executive 1', 'franchisesalesexecutive1@test.com', '9087123403', '$2b$12$IO7Zd3/kywk.ftld4ODHU..6Yk/q1OWF394MYDZgsMCNTi.nbfGYK', 'profile_pic/profile_pic_1700378125_sales_exec.jpg', 0, '#P-14, 3rd floor, 1st cross, 5th mail, Vijaynagar, Bangalore 560068', 'Aadhar', '[\"documents/documents_1700378125_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700378125_pan.jpg\"]', 1, 3, 5, '2023-11-19 12:45:24', 5, '2023-11-19 12:45:24', NULL),
+(8, 'franchise Sales Executive 1', 'franchisesalesexecutive1@test.com', '9087123403', '$2b$12$IO7Zd3/kywk.ftld4ODHU..6Yk/q1OWF394MYDZgsMCNTi.nbfGYK', 'profile_pic/profile_pic_1700378125_sales_exec.jpg', 1, '#P-14, 3rd floor, 1st cross, 5th mail, Vijaynagar, Bangalore 560068', 'Aadhar', '[\"documents/documents_1700378125_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700378125_pan.jpg\"]', 1, 3, 5, '2023-11-19 12:45:24', 5, '2023-11-19 12:45:24', NULL),
 (9, 'franchise Sales Executive 2', 'franchisesalesexecutive2@test.com', '9087123404', '$2b$12$IO7Zd3/kywk.ftld4ODHU..6Yk/q1OWF394MYDZgsMCNTi.nbfGYK', 'profile_pic/profile_pic_1700378125_sales_exec.jpg', 0, '#P-14, 3rd floor, 1st cross, 5th mail, Vijaynagar, Bangalore 560068', 'Aadhar', '[\"documents/documents_1700378125_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700378125_pan.jpg\"]', 1, 3, 5, '2023-11-19 12:45:24', 5, '2023-11-19 12:45:24', NULL),
 (10, 'franchise Sales Executive 3', 'franchisesalesexecutive3@test.com', '9087123405', '$2b$12$IO7Zd3/kywk.ftld4ODHU..6Yk/q1OWF394MYDZgsMCNTi.nbfGYK', 'profile_pic/profile_pic_1700378125_sales_exec.jpg', 0, '#P-14, 3rd floor, 1st cross, 5th mail, Vijaynagar, Bangalore 560068', 'Aadhar', '[\"documents/documents_1700378125_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700378125_pan.jpg\"]', 0, 3, 5, '2023-11-19 12:45:24', 5, '2023-11-19 12:45:24', NULL),
-(11, 'franchise other emp 1', 'franchiseotheremp1@test.com', '9807123094', '$2b$12$R7JLHBwCImm0rLj.elJ52.K0NNnPscHO/AcDFVbmuqErgTR/QupCq', 'profile_pic/profile_pic_1700378448_other_employee.jpg', 0, '#A-23, 1st floor, 2nd main, 3cross, JP Nagar, Bangaore 560058', 'Aadhar', '[\"documents/documents_1700378448_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700378448_pan.jpg\"]', 1, 4, 5, '2023-11-19 12:50:48', 5, '2023-11-19 12:50:48', NULL),
+(11, 'franchise other emp 1', 'franchiseotheremp1@test.com', '9807123094', '$2b$12$R7JLHBwCImm0rLj.elJ52.K0NNnPscHO/AcDFVbmuqErgTR/QupCq', 'profile_pic/profile_pic_1700378448_other_employee.jpg', 1, '#A-23, 1st floor, 2nd main, 3cross, JP Nagar, Bangaore 560058', 'Aadhar', '[\"documents/documents_1700378448_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700378448_pan.jpg\"]', 1, 4, 5, '2023-11-19 12:50:48', 5, '2023-11-19 12:50:48', NULL),
 (12, 'franchise other emp 2', 'franchiseotheremp2@test.com', '9807123095', '$2b$12$avhtixlplgMxaiwLcfpv.OkKDkSk6FcJnuGisdM3uOismM8dH4Hh.', 'profile_pic/profile_pic_1700378468_other_employee.jpg', 0, '#A-23, 1st floor, 2nd main, 3cross, JP Nagar, Bangaore 560058', 'Aadhar', '[\"documents/documents_1700378468_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700378468_pan.jpg\"]', 0, 4, 5, '2023-11-19 12:51:07', 5, '2023-11-19 12:51:07', NULL),
 (13, 'franchise other emp 3', 'franchiseotheremp3@test.com', '9807123096', '$2b$12$k3xcui.fZ7OcMxiUCgugnuWKJ1AvY5nUr3LPkxC3UD.bGMNuRyDKu', 'profile_pic/profile_pic_1700378498_other_employee.jpg', 0, '#A-23, 1st floor, 2nd main, 3cross, JP Nagar, Bangaore 560058', 'Aadhar', '[\"documents/documents_1700378498_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700378498_pan.jpg\"]', 0, 4, 5, '2023-11-19 12:51:37', 5, '2023-11-19 12:51:37', NULL);
 
@@ -603,7 +624,8 @@ CREATE TABLE `lab_technician` (
 INSERT INTO `lab_technician` (`lab_technician_id`, `name`, `email`, `phone`, `password`, `profile_pic`, `assigned_lab_id`, `address`, `document_1_type`, `document_1_url`, `document_2_type`, `document_2_url`, `status`, `created_by`, `created_on`, `last_updated_by`, `last_updated_on`) VALUES
 (1, 'Lab Tech 1', 'labtech1@test.com', '9816254314', '$2b$12$BIWIBfelWp2ojKr0Wg3CTeLqqmaNDp2hihAV5ABUfLUgJ6UR76HYO', 'profile_pic/profile_pic_1700637012_lab_tech.png', 0, '#A-01, ground floor, Shree Krishna Nivas, Hanumantha layout, Brindavana 470023', 'Aadhar', '[\"documents/documents_1700637012_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700637012_pan.jpg\"]', 0, 5, '2023-11-22 12:40:07', 5, '2023-11-22 12:40:07'),
 (2, 'Lab Tech 2', 'labtech2@test.com', '9816254315', '$2b$12$BIWIBfelWp2ojKr0Wg3CTeLqqmaNDp2hihAV5ABUfLUgJ6UR76HYO', 'profile_pic/profile_pic_1700637012_lab_tech.png', 0, '#A-01, ground floor, Shree Krishna Nivas, Hanumantha layout, Brindavana 470023', 'Aadhar', '[\"documents/documents_1700637012_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700637012_pan.jpg\"]', 1, 5, '2023-11-22 12:40:07', 5, '2023-11-22 12:40:07'),
-(3, 'Lab Tech 3', 'labtech3@test.com', '9816254316', '$2b$12$BIWIBfelWp2ojKr0Wg3CTeLqqmaNDp2hihAV5ABUfLUgJ6UR76HYO', 'profile_pic/profile_pic_1700637012_lab_tech.png', 0, '#A-01, ground floor, Shree Krishna Nivas, Hanumantha layout, Brindavana 470023', 'Aadhar', '[\"documents/documents_1700637012_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700637012_pan.jpg\"]', 1, 5, '2023-11-22 12:40:07', 5, '2023-11-22 12:40:07');
+(3, 'Lab Tech 3', 'labtech3@test.com', '9816254316', '$2b$12$BIWIBfelWp2ojKr0Wg3CTeLqqmaNDp2hihAV5ABUfLUgJ6UR76HYO', 'profile_pic/profile_pic_1700637012_lab_tech.png', 0, '#A-01, ground floor, Shree Krishna Nivas, Hanumantha layout, Brindavana 470023', 'Aadhar', '[\"documents/documents_1700637012_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1700637012_pan.jpg\"]', 1, 5, '2023-11-22 12:40:07', 5, '2023-11-22 12:40:07'),
+(4, 'test employee 1', 'rooprajt@gmail.com', '9808780986', '$2b$12$9BswwSlBBuqrE.94xNbome3P6Lyw2RPblq3Z4.TQFCXgXKuQjkB6O', 'profile_pic/profile_pic_1701435580_lab_tech.png', 0, '4rd Cross\r\n#A148', 'Aadhar', '[\"documents/documents_1701435580_314_9898989892.png\"]', 'Pan Card', '[\"documents/documents_1701435580_313_9898989892.png\", \"documents/documents_1701435581_310_9898989892.png\"]', 1, 5, '2023-12-01 17:14:25', 5, '2023-12-01 17:14:25');
 
 -- --------------------------------------------------------
 
@@ -797,9 +819,9 @@ CREATE TABLE `product_categories` (
 --
 
 INSERT INTO `product_categories` (`category_id`, `category_name`, `category_prefix`, `category_description`, `status`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 'Lens', 'IND', 'Indolens Lens', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
-(2, 'Contact Lens', 'IND', 'Indolens Contact Lens', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
-(3, 'Frame', 'IND', 'Indolens Frame ', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
+(1, 'Frame', 'IND', 'Indolens Lens', 1, '2023-11-13 20:00:12', 5, '2023-12-04 14:17:47', 5),
+(2, 'Lens', 'IND', 'Indolens Contact Lens', 0, '2023-11-13 20:00:12', 5, '2023-12-05 14:50:53', 5),
+(3, 'Contact Lens', 'IND', 'Indolens Frame ', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
 (4, 'Lens Cover', 'IND', 'Indolens Lens Cover ', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5);
 
 -- --------------------------------------------------------
@@ -825,7 +847,7 @@ CREATE TABLE `product_colors` (
 --
 
 INSERT INTO `product_colors` (`color_id`, `color_code`, `color_name`, `color_description`, `status`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 'Red01', 'Red', 'Dark Red', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
+(1, 'Red01', 'Red', 'Dark Red', 1, '2023-11-13 20:00:12', 5, '2023-12-05 00:39:05', 5),
 (2, 'Brown02', 'Brown', 'Light Brown', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
 (3, 'Green 03', 'Green', 'Grass Green', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5);
 
@@ -851,7 +873,7 @@ CREATE TABLE `product_materials` (
 --
 
 INSERT INTO `product_materials` (`material_id`, `material_name`, `material_description`, `status`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 'Fiber', 'Fiber Material', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
+(1, 'Fiber update', 'Fiber Material', 1, '2023-11-13 20:00:12', 5, '2023-12-05 12:22:53', 5),
 (2, 'Plastic', 'Plastic Material', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5),
 (3, 'Gold', 'Gold Material', 1, '2023-11-13 20:00:12', 5, '2023-11-13 20:00:12', 5);
 
@@ -897,9 +919,13 @@ INSERT INTO `request_products` (`request_products_id`, `store_id`, `store_type`,
 (10, 1, 1, 1, 90, 0, 1, 0, 0, 0, 0, '', '2023-11-25 22:44:03', 5, '2023-11-25 22:44:03', 5),
 (11, 1, 1, 1, 90, 0, 1, 0, 0, 0, 0, '', '2023-11-25 22:45:39', 5, '2023-11-25 22:45:39', 5),
 (12, 1, 1, 1, 90, 0, 1, 0, 0, 0, 0, '', '2023-11-25 22:45:39', 5, '2023-11-25 22:45:39', 5),
-(13, 1, 1, 1, 50, 0, 0, 0, 1, 2, 0, '', '2023-11-25 23:09:59', 1, '2023-11-25 23:09:59', 1),
+(13, 1, 1, 1, 50, 0, 0, 0, 1, 0, 0, '', '2023-11-25 23:09:59', 1, '2023-11-25 23:09:59', 1),
 (14, 2, 1, 2, 50, 0, 1, 0, 0, 0, 0, '', '2023-11-25 23:20:48', 5, '2023-11-25 23:20:48', 5),
-(15, 2, 1, 2, 55, 0, 1, 0, 0, 0, 0, 'test comment section', '2023-11-25 23:26:36', 5, '2023-11-25 23:26:36', 5);
+(15, 2, 1, 2, 55, 0, 1, 0, 0, 0, 0, 'test comment section', '2023-11-25 23:26:36', 5, '2023-11-25 23:26:36', 5),
+(16, 1, 2, 1, 50, 0, 0, 0, 1, 0, 0, '', '2023-11-26 12:01:08', 1, '2023-11-26 12:01:08', 1),
+(17, 1, 2, 1, 40, 0, 0, 0, 1, 0, 0, '', '2023-11-26 12:06:05', 1, '2023-11-26 12:06:05', 1),
+(18, 1, 2, 1, 40, 0, 0, 0, 1, 0, 0, '', '2023-11-26 12:06:05', 1, '2023-11-26 12:06:05', 1),
+(19, 1, 2, 1, 22, 0, 0, 0, 1, 0, 0, '', '2023-11-26 12:34:52', 1, '2023-11-26 12:34:52', 1);
 
 -- --------------------------------------------------------
 
@@ -958,6 +984,15 @@ CREATE TABLE `store_expense` (
   `created_by` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `store_expense`
+--
+
+INSERT INTO `store_expense` (`store_expense_id`, `store_id`, `store_type`, `expense_amount`, `expense_reason`, `expense_date`, `created_on`, `created_by`) VALUES
+(1, 1, 2, 2500, 'christmas celebration', '2023-12-05 12:41:40', '2023-12-05 12:41:40', 1),
+(2, 1, 2, 50000, 'oiuytre', '2023-12-05 13:39:25', '2023-12-05 13:39:25', 1),
+(3, 1, 1, 2500, 'enjoy the diwali', '2023-12-05 14:10:30', '2023-12-05 14:10:30', 1);
+
 -- --------------------------------------------------------
 
 --
@@ -981,7 +1016,7 @@ CREATE TABLE `store_inventory` (
 --
 
 INSERT INTO `store_inventory` (`store_inventory_id`, `store_id`, `store_type`, `product_id`, `product_quantity`, `created_on`, `created_by`, `last_updated_on`, `last_updated_by`) VALUES
-(1, 1, 1, 1, 675, '2023-11-14 13:13:54', 5, '2023-11-25 22:45:39', 5),
+(1, 1, 2, 1, 10, '2023-11-14 13:13:54', 5, '2023-11-25 22:45:39', 5),
 (3, 1, 1, 2, 10, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
 (4, 1, 1, 3, 85, '2023-11-14 13:13:54', 5, '2023-11-14 13:13:54', 5),
 (8, 3, 1, 1, 90, '2023-11-25 22:00:17', 5, '2023-11-25 22:00:17', 5),
@@ -1351,7 +1386,7 @@ ALTER TABLE `brands`
 -- AUTO_INCREMENT for table `central_inventory`
 --
 ALTER TABLE `central_inventory`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=25;
 
 --
 -- AUTO_INCREMENT for table `customers`
@@ -1417,7 +1452,7 @@ ALTER TABLE `lab`
 -- AUTO_INCREMENT for table `lab_technician`
 --
 ALTER TABLE `lab_technician`
-  MODIFY `lab_technician_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `lab_technician_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `marketing_head`
@@ -1471,7 +1506,7 @@ ALTER TABLE `product_materials`
 -- AUTO_INCREMENT for table `request_products`
 --
 ALTER TABLE `request_products`
-  MODIFY `request_products_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
+  MODIFY `request_products_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `reset_password`
@@ -1489,7 +1524,7 @@ ALTER TABLE `sales_executive`
 -- AUTO_INCREMENT for table `store_expense`
 --
 ALTER TABLE `store_expense`
-  MODIFY `store_expense_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `store_expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `store_inventory`
