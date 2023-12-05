@@ -1,5 +1,13 @@
 def get_power_attribute(data):
-    if data['categoryId'] == '3':
+    if data['categoryId'] == '2':
+        power_attributes = {
+            'vision_type': data.get('visionType', ''),
+            'stock_type': data.get('stockType', '')
+        }
+        print(power_attributes)
+        return power_attributes
+
+    elif data['categoryId'] == '3':
         print('this is contact lesn')
         power_attributes = {
             'contact_lens_type': data.get('contact_lens_type', ''),
