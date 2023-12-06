@@ -268,7 +268,6 @@ def franchiseInventoryProducts(request):
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_inventory_controller.get_all_products_for_franchise_store(
             request.session.get('assigned_store_id'))
-        print(response)
         return render(request, 'inventory/franchiseInventoryProducts.html', {"stocks_list": response['stocks_list']})
     else:
         return redirect('franchise_store_login')

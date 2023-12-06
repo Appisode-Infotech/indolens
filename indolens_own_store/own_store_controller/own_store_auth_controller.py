@@ -31,7 +31,7 @@ def login(store_ob):
                                 WHERE ose.email = '{store_ob.email}'"""
             cursor.execute(login_query)
             admin_data = cursor.fetchall()
-            if admin_data is None:
+            if not admin_data:
                 return {
                     "status": False,
                     "message": "Invalid user email",

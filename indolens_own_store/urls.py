@@ -34,7 +34,6 @@ urlpatterns = [
     # inventory items
     path('manage_store_inventory_products/', storeInventoryProducts, name='manage_store_inventory_products'),
     path('manage_store_out_of_stock/', inventoryOutOfStock, name='manage_store_out_of_stock'),
-    path('move_stocks_store/', moveStocksStore, name='move_stocks_store'),
     # stock request management
     path('create_request_store/', createStockRequestStore, name='create_request_store'),
     path('all_stock_store_requests/', viewAllStockRequestsStore, name='all_stock_store_requests'),

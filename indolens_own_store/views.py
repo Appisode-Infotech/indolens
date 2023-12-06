@@ -260,12 +260,6 @@ def inventoryOutOfStock(request):
         return redirect('own_store_login')
 
 
-def moveStocksStore(request):
-    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        return render(request, 'inventory/moveStocksStore.html')
-    else:
-        return redirect('own_store_login')
-
 
 # ================================= SALES AND EXPENSES ======================================
 

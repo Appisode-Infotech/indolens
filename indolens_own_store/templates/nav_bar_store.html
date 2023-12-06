@@ -81,7 +81,7 @@
                         </div>
                     </a>
                         <div class="parent-wrapper label-1">
-                            <ul class="nav collapse parent {% if 'manage_store_out_of_stock' in request.path or 'manage_store_inventory_products' in request.path or 'move_stocks_store' in request.path %}show{% endif %}"
+                            <ul class="nav collapse parent {% if 'manage_store_out_of_stock' in request.path or 'manage_store_inventory_products' in request.path %}show{% endif %}"
                                 data-bs-parent="#navbarVerticalCollapse"
                                 id="store_inventory">
                                 <li class="collapsed-nav-item-title d-none">Central Inventory
@@ -110,18 +110,6 @@
                                 </a>
                                 </li>
 
-
-                                <li class="nav-item"><a aria-expanded="false"
-                                                        asd="index"
-                                                        class="nav-link {% if 'move_stocks_store' in request.path %}active{% endif %}"
-                                                        data-bs-toggle=""
-                                                        href="{% url 'move_stocks_store' %}">
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text">Stock Movement</span>
-                                    </div>
-                                </a>
-                                    <!-- more inner pages-->
-                                </li>
                             </ul>
                         </div>
                     </div>
