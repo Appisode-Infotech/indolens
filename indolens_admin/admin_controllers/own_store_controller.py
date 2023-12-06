@@ -73,9 +73,9 @@ def get_unassigned_active_own_store_for_manager():
     try:
         with connection.cursor() as cursor:
             unassigned_stores = []
-            get_unassigned_active_own_store_for_manager_query = f"""SELECT o.store_id, o.store_name FROM own_store o 
+            get_unassigned_active_own_store_for_manager_query = f"""SELECT o.store_id, o.store_name FROM own_store AS o 
             LEFT JOIN own_store_employees e ON o.store_id = e.assigned_store_id WHERE (e.employee_id IS NULL OR e.role
-             <> 1 OR e.assigned_store_id = 0) AND o.status = 1;"""
+             <> 1 OR e.assigned_store_id = 0) AND o.status = 1 GROUP BY o.store_id"""
             cursor.execute(get_unassigned_active_own_store_for_manager_query)
             stores_data = cursor.fetchall()
             for store in stores_data:

@@ -332,15 +332,6 @@ def updateSubAdminDocuments(request, subAdminId):
         return redirect('login')
 
 
-def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'admin', 'admin_id', subAdminId)
-        return JsonResponse(response)
-    else:
-        return redirect('login')
-
-
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
 def manageStoreManagers(request, status):
@@ -769,15 +760,6 @@ def UpdateAreaHeadDocuments(request, areaHeadId):
         response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
         return render(request, 'indolens_admin/areaHead/updateDocuments.html',
                       {"area_head": response['area_head']})
-    else:
-        return redirect('login')
-
-
-def deleteAreaHeadDocuments(request, subAdminId, documentURL, document_Type):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'area_head', 'area_head_id', subAdminId)
-        return JsonResponse(response)
     else:
         return redirect('login')
 
@@ -1633,15 +1615,6 @@ def updateAccountantDocuments(request, accountantId):
         return redirect('login')
 
 
-def deleteAccountantDocuments(request, accountantId, documentURL, document_Type):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'accountant', 'accountant_id', accountantId)
-        return JsonResponse(response)
-    else:
-        return redirect('login')
-
-
 def enableDisableAccountant(request, route, accountantId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         accountant_controller.enable_disable_accountant(accountantId, status)
@@ -1773,16 +1746,6 @@ def updateLabTechnicianDocuments(request, labTechnicianId):
         response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
         return render(request, 'indolens_admin/labTechnician/updateDocuments.html',
                       {"lab_technician": response['lab_technician']})
-    else:
-        return redirect('login')
-
-
-def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document_Type):
-    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'labTechnicianId', 'labTechnicianId',
-                                                                            labTechnicianId)
-        return JsonResponse(response)
     else:
         return redirect('login')
 
@@ -2842,3 +2805,72 @@ def unAssignLabTechnician(request, route, LabTechnicianId, labId):
     response, status_code = lab_technician_controller.unassign_lab(LabTechnicianId, labId)
     url = reverse('manage_store_other_employees', kwargs={'status': route})
     return redirect(url)
+
+
+# =============================================== DELETE DOCUMENTS =============================================
+
+def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'admin', 'admin_id', subAdminId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
+def deleteAreaHeadDocuments(request, areaHeadId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'area_head', 'area_head_id', areaHeadId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
+def deleteMarketingHeadDocuments(request, marketingHeadId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'marketing_head', 'marketing_head_id',
+                                                                            marketingHeadId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
+def deleteAccountantDocuments(request, accountantId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'accountant', 'accountant_id', accountantId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
+def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'lab_technician', 'lab_technician_id',
+                                                                            labTechnicianId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
+def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'own_store_employees', 'employee_id',
+                                                                            employeeId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')
+
+
+def deleteFranchiseStoreEmployeeDocuments(request, employeeId, documentURL, document_Type):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'franchise_store_employees', 'employee_id',
+                                                                            employeeId)
+        return JsonResponse(response)
+    else:
+        return redirect('login')

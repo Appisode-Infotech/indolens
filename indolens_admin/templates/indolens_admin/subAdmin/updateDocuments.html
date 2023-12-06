@@ -122,6 +122,7 @@
                                            data-employee-name="{{ manager.name }}"
                                            data-document-preview="{{ MEDIA_URL }}{{ doc }}"
                                            data-action-type="delete"
+                                           data-action-href="{% url 'delete_sub_admin_document' manager.employee_id doc 'document_1_url'%}"
                                            class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
                                         </a>
@@ -171,6 +172,7 @@
                                            data-employee-name="{{ manager.name }}"
                                            data-document-preview="{{ MEDIA_URL }}{{ doc }}"
                                            data-action-type="delete"
+                                           data-action-href="{% url 'delete_sub_admin_document' manager.employee_id doc 'document_2_url'%}"
                                            class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
                                         </a>
@@ -265,10 +267,11 @@ document.addEventListener("DOMContentLoaded", function () {
             var storeName = event.currentTarget.getAttribute('data-employee-name');
             var actionUrl = event.currentTarget.getAttribute('data-document-preview');
             var actionType = event.currentTarget.getAttribute('data-action-type');
+            var actionHref = event.currentTarget.getAttribute('data-action-href');
 
             modalTitle.textContent = "Delete - Document?";
             modalContent.innerHTML = `Are you sure you want to ${actionType} Document ?<br><strong>${actionUrl}</strong> for ${storeName}`;
-            modalSubmit.href = actionUrl;
+            modalSubmit.href = actionHref;
             console.log({{store_manager | safe}});
         });
     });

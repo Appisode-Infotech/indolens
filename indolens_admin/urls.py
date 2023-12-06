@@ -104,9 +104,6 @@ urlpatterns = [
     path('manage_sub_admins/update_sub_admin_documents/subAdminId=<int:subAdminId>', updateSubAdminDocuments,
          name='update_sub_admin_documents'),
     path('manage_sub_admins/view_sub_admin/subAdminId=<int:subAdminId>', viewSubAdmin, name='view_sub_admin'),
-    path(
-        'manage_sub_admins/delete_sub_admin_document/documentURL=<str:documentURL>/document_Type=<str:document_Type>/subAdminId=<int:subAdminId>',
-        deleteSubAdminDocuments, name='delete_sub_admin_document'),
     path('manage_sub_admins/enable_disable_sub_admin/route<str:route>/subAdminId=<int:subAdminId>/status=<int:status>',
          enableDisableSubAdmin, name='enable_disable_sub_admin'),
 
@@ -371,5 +368,29 @@ urlpatterns = [
         'un_assign_lab_technician/route=<str:route>/LabTechnicianId=<int:LabTechnicianId>/labId=<int:labId>',
         unAssignLabTechnician,
         name='un_assign_lab_technician'),
+
+
+    # Delete Documents
+    path(
+            'manage_sub_admins/delete_sub_admin_document/subAdminId=<int:subAdminId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+            deleteSubAdminDocuments, name='delete_sub_admin_document'),
+    path(
+            'manage_area_head/delete_area_head_document/areaHeadId=<int:areaHeadId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+            deleteAreaHeadDocuments, name='delete_area_head_document'),
+    path(
+            'manage_marketing_head/delete_marketing_head_document/marketingHeadId=<int:marketingHeadId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+            deleteMarketingHeadDocuments, name='delete_marketing_head_document'),
+    path(
+            'manage_accountant/delete_accountant_document/accountantId=<int:accountantId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+            deleteAccountantDocuments, name='delete_accountant_document'),
+    path(
+            'manage_lab_technician/delete_lab_tech_document/labTechnicianId=<int:labTechnicianId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+            deleteLabTechnicianDocuments, name='delete_lab_tech_document'),
+    path(
+            'manage_own_store_employee/delete_own_store_employee_document/employeeId=<int:employeeId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+            deleteOwnStoreEmployeeDocuments, name='delete_own_store_employee_document'),
+    path(
+            'manage_franchise_store_employee/delete_franchise_store_employee_document/employeeId=<int:employeeId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+            deleteFranchiseStoreEmployeeDocuments, name='delete_franchise_store_employee_document'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

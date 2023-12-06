@@ -27,6 +27,7 @@ def delete_document(documenturl, document_type, table, condition, user_id):
                 cursor.execute(get_documents_query)
                 documents = json.loads(cursor.fetchone()[0])
                 documents.remove(documenturl)
+                cursor.execute(f""" UPDATE {table} SET {document_type} = {documents} WHERE {condition} = {user_id}""")
             return {
                 "status": True,
                 "message": "Document Deleted Successfully"
