@@ -3,6 +3,8 @@ from django.urls import path
 from .views import *
 from django.conf.urls.static import static
 from django.urls import path, include
+from django.urls import re_path
+
 
 from indolens import settings
 
@@ -41,7 +43,7 @@ urlpatterns = [
     path('manage_central_inventory_products/add_products/', centralInventoryAddProducts, name='add_products'),
     path('manage_central_inventory_products/update_product/productId=<str:productId>', centralInventoryUpdateProduct,
          name='update_product'),
-    path('manage_central_inventory_products/update_product_images/<str:productId>', centralInventoryUpdateProductImages,
+    path('manage_central_inventory_products/update_product_images/productId=<str:productId>', centralInventoryUpdateProductImages,
          name='update_product_images'),
     path(
         'manage_central_inventory_products/<str:filter>/enable_disable_product/productId=<str:productId>/status=<str:status>',
@@ -392,5 +394,13 @@ urlpatterns = [
     path(
             'manage_franchise_store_employee/delete_franchise_store_employee_document/employeeId=<int:employeeId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
             deleteFranchiseStoreEmployeeDocuments, name='delete_franchise_store_employee_document'),
+    path(
+            'manage_central_inventory_products/delete_product_image/productId=<int:productId>/imageURL=<str:imageURL>',
+            deleteProductImage, name='delete_product_image'),
+re_path(
+        r'^manage_central_inventory_products/delete_product_image/productId=(?P<productId>[0-9]+)/imageURL=(?P<imageURL>.+)$',
+        deleteProductImage,
+        name='delete_product_image'
+    ),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

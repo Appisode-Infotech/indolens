@@ -83,10 +83,11 @@
                     <div class="border-top border-dashed border-300 pt-4">
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                             <div class="d-flex flex-wrap">
+                                <label></label>
                                 {% for image in product_data.product_images %}
                                 <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3">
                                     <div class="border border-300 p-2 rounded-2 me-2 mb-2">
-                                        <a href="{{ MEDIA_URL }}{{ image }}" target="_blank">
+                                        <a href="{% url 'delete_product_image' product_data.product_id image %}" target="_blank">
                                             <img class="rounded-2 dz-image" width="100px"
                                                  height="100px" src="{{ MEDIA_URL }}{{ image }}"
                                                  onerror="this.src = 'http://via.placeholder.com/100x100';"
@@ -99,7 +100,6 @@
                                        data-employee-name="{{ manager.name }}"
                                        data-document-preview="{{ MEDIA_URL }}{{ image }}"
                                        data-action-type="delete"
-                                       data-action-href="delete"
                                        class="btn btn-soft-danger me-1 mb-1" type="button">
                                         <i class="fa fa-trash me-1"></i> Delete
                                     </a>
@@ -178,10 +178,11 @@ document.addEventListener("DOMContentLoaded", function () {
             var storeName = event.currentTarget.getAttribute('data-employee-name');
             var actionUrl = event.currentTarget.getAttribute('data-document-preview');
             var actionType = event.currentTarget.getAttribute('data-action-type');
+            var actionHref = event.currentTarget.getAttribute('data-action-href');
 
             modalTitle.textContent = "Delete - Image?";
             modalContent.innerHTML = `Are you sure you want to ${actionType} Image ?<br><strong>${actionUrl}</strong> for ${storeName}`;
-            modalSubmit.href = actionUrl;
+            modalSubmit.href = actionHref;
             console.log({{store_manager | safe}});
         });
     });

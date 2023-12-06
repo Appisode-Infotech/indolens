@@ -2874,3 +2874,16 @@ def deleteFranchiseStoreEmployeeDocuments(request, employeeId, documentURL, docu
         return JsonResponse(response)
     else:
         return redirect('login')
+
+def deleteProductImage(request, productId, imageURL):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        print("requesting to delete the product image")
+        print("requested prduct id"+productId)
+        print("requested prduct image"+imageURL)
+        response, status_code = delete_documents_controller.delete_product_image(imageURL, productId)
+
+        images, status_code = get_central_inventory_product_single(productId)
+        return render(request, 'indolens_admin/centralInventory/updateProductImages.html',
+                      {'product_data': images['product_data'], 'productId': productId})
+    else:
+        return redirect('login')
