@@ -65,38 +65,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -110,7 +78,6 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar_store.html' %}
 
-        {{customers_list}}
         <div class="content">
             <form id="saleForm">
                 <input name="cartData">
@@ -201,19 +168,20 @@
                                                             name="product" required="required">
                                                         <option value="">Select Customer</option>
                                                         {% for customer in customers_list %}
-                                                        <option value="{{customer.customer_id}}">
+                                                        <option value="{{customer.phone}}">
                                                             {{customer.phone}}
                                                         </option>
                                                         {% endfor %}
                                                     </select>
                                                     <h5 class="mb-3">New customer? Continue adding them</h5>
-                                                    <div id="product_info" class="row g-3 mb-3">
+                                                    <div id="customer_info" class="row g-3 mb-3">
                                                         <div class="mb2 col-6">
                                                             <h5 class="mb-3">Customer Name</h5>
                                                             <input class="form-control"
                                                                    name="customer_name"
                                                                    placeholder="Name"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
@@ -223,6 +191,7 @@
                                                                    name="customer_email"
                                                                    placeholder="Email"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
                                                                    type="email" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
@@ -232,6 +201,8 @@
                                                                    name="customer_phone"
                                                                    placeholder="Phone"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
+
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
@@ -241,12 +212,16 @@
                                                                    name="customer_age"
                                                                    placeholder="Age"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
+
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
                                                         <div class="mb2 col-6">
                                                             <h5 class="mb-3">Gender</h5>
-                                                            <select name="customer_gender" class="form-select"
+                                                            <select
+                                                                    onchange="genCustomerObject()"
+                                                                    name="customer_gender" class="form-select"
                                                                     aria-label="Default select example"
                                                                     required="required">
                                                                 <option value="" selected>Please select Gender</option>
@@ -262,12 +237,18 @@
                                                                    name="customer_city"
                                                                    placeholder="City"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
+
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
                                                         <div class="mb2 col-12">
                                                             <h5 class="mb-3">Language</h5>
-                                                            <select name="customer_language" class="form-select"
+                                                            <select
+
+                                                                    onchange="genCustomerObject()"
+
+                                                                    name="customer_language" class="form-select"
                                                                     aria-label="Default select example"
                                                                     required="required">
                                                                 <option value="" selected="selected">Please select
@@ -286,8 +267,11 @@
                                                         </div>
                                                         <div class="mb2 col-12">
                                                             <h5 class="mb-3">Customer Address</h5>
-                                                            <textarea name="customer_address" class="form-control"
-                                                                      rows="3" required="required"></textarea>
+                                                            <textarea
+                                                                    onchange="genCustomerObject()"
+
+                                                                    name="customer_address" class="form-control"
+                                                                    rows="3" required="required"></textarea>
                                                         </div>
 
 
@@ -300,21 +284,58 @@
                                              id="bootstrap-wizard-validation-tab3">
                                             <form class="mb-2 needs-validation" id="wizardValidationForm3"
                                                   novalidate="novalidate" data-wizard-form="3">
-                                                <h1>2</h1>
+                                                <div id="billing_info" class="row g-3 mb-3">
+
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Order Placed By</h5>
+                                                        <select
+                                                                onchange="genBillingInfoObject()"
+                                                                name="orderByEmployee" class="form-select"
+                                                                aria-label="Default select example"
+                                                                required="required">
+                                                            <option value="" selected>Please select employee</option>
+                                                            <option value="EmpId1">Emp1</option>
+                                                            <option value="EmpId2">Emp2</option>
+                                                            <option value="EmpId3">Emp3</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Choose Lab</h5>
+                                                        <select
+                                                                onchange="genBillingInfoObject()"
+                                                                name="assignedLab" class="form-select"
+                                                                aria-label="Default select example"
+                                                                required="required">
+                                                            <option value="" selected>Please select lab</option>
+                                                            <option value="lab1">lab1</option>
+                                                            <option value="lab2">lab2</option>
+                                                            <option value="lab3">lab3</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Estimated Delivery Date</h5>
+
+
+                                                        <input
+                                                                onchange="genBillingInfoObject()"
+                                                                name="estDeliveryDate"
+                                                                class="form-control datetimepicker flatpickr-input"
+                                                                id="datePicker" type="text" placeholder="dd/mm/yyyy"
+                                                                data-options="{&quot;disableMobile&quot;:true,&quot;dateFormat&quot;:&quot;d/m/Y&quot;}"
+                                                                readonly="readonly">
+                                                    </div>
+
+                                                </div>
                                             </form>
                                         </div>
                                         <div class="tab-pane" role="tabpanel"
                                              aria-labelledby="bootstrap-wizard-validation-tab4"
                                              id="bootstrap-wizard-validation-tab4">
                                             <div class="row flex-center pb-8 pt-4 gx-3 gy-4">
-                                                <div class="col-12 col-sm-auto">
-                                                    <div class="text-center text-sm-start"><img class="d-dark-none"
-                                                                                                src="../../assets/img/spot-illustrations/34.png"
-                                                                                                alt="" width="220"/><img
-                                                            class="d-light-none"
-                                                            src="../../assets/img/spot-illustrations/dark_34.png" alt=""
-                                                            width="220"/></div>
-                                                </div>
+
                                                 <div class="col-12 col-sm-auto">
                                                     <div class="text-center text-sm-start">
                                                         <h5 class="mb-3">You are all set!</h5>
@@ -365,6 +386,12 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
+
+
+
+
 
 
 
@@ -943,7 +970,7 @@ function removePowerBoxes(cardIndex) {
 
 function updateCustomerFields(selectCustomerField) {
     var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-    let selectCustomer = customers_list.find(customer => customer.customer_id == selectCustomerField.value);
+    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
 
     var customerNameInput = document.getElementsByName("customer_name")[0];
     var customerEmailInput = document.getElementsByName("customer_email")[0];
@@ -953,6 +980,8 @@ function updateCustomerFields(selectCustomerField) {
     var customerCityInput = document.getElementsByName("customer_city")[0];
     var customerLanguageSelect = document.getElementsByName("customer_language")[0];
     var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+    //customerDataField
+    var customerDataTextarea = document.getElementsByName("customerData")[0];
 
     customerNameInput.value = selectCustomer.name;
     customerEmailInput.value = selectCustomer.email;
@@ -962,10 +991,62 @@ function updateCustomerFields(selectCustomerField) {
     customerCityInput.value = selectCustomer.city;
     customerLanguageSelect.value = selectCustomer.language;
     customerAddressTextarea.value = selectCustomer.address;
+    customerDataTextarea.value = selectCustomer.address;
+
+    var customerdata = {
+        name: selectCustomer.name,
+        email: selectCustomer.email,
+        phone: selectCustomer.phone,
+        age: selectCustomer.age,
+        gender: selectCustomer.gender,
+        city: selectCustomer.city,
+        language: selectCustomer.language,
+        address: selectCustomer.address
+    };
+
+    // Convert customerdata to JSON string and assign it to customerDataTextarea
+    customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
+}
+
+function genCustomerObject(){
+    var customerNameInput = document.getElementsByName("customer_name")[0];
+    var customerEmailInput = document.getElementsByName("customer_email")[0];
+    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+    var customerAgeInput = document.getElementsByName("customer_age")[0];
+    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+    var customerCityInput = document.getElementsByName("customer_city")[0];
+    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+    //customerDataField
+    var customerDataTextarea = document.getElementsByName("customerData")[0];
+
+
+    var customerData = {
+        name: customerNameInput.value,
+        email: customerEmailInput.value,
+        phone: customerPhoneInput.value,
+        age: customerAgeInput.value,
+        gender: customerGenderSelect.value,
+        city: customerCityInput.value,
+        language: customerLanguageSelect.value,
+        address: customerAddressTextarea.value
+    };
+    customerDataTextarea.value = JSON.stringify(customerData, null, 2);
 }
 
 
-
+function genBillingInfoObject(){
+    var estDeliveryDateInput = document.getElementsByName("estDeliveryDate")[0];
+    var assignedLabInput = document.getElementsByName("assignedLab")[0];
+    var orderByEmployeeInput = document.getElementsByName("orderByEmployee")[0];
+    var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
+    var billingInfoData = {
+        estDeliveryDate: estDeliveryDateInput.value,
+        assignedLab: assignedLabInput.value,
+        orderByEmployee: orderByEmployeeInput.value,
+    };
+    billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
+}
 </script>
 
 </body>
