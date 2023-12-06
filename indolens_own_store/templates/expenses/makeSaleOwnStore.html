@@ -67,33 +67,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -107,9 +80,8 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar_store.html' %}
 
-        {{customers_list}}
         <div class="content">
-            <form id="saleForm">
+            <form id="saleForm" action="/makeSale" method="post">
                 <input name="cartData">
                 <input name="customerData">
                 <input name="billingDetailsData">
@@ -198,19 +170,20 @@
                                                             name="product" required="required">
                                                         <option value="">Select Customer</option>
                                                         {% for customer in customers_list %}
-                                                        <option value="{{customer.customer_id}}">
+                                                        <option value="{{customer.phone}}">
                                                             {{customer.phone}}
                                                         </option>
                                                         {% endfor %}
                                                     </select>
                                                     <h5 class="mb-3">New customer? Continue adding them</h5>
-                                                    <div id="product_info" class="row g-3 mb-3">
+                                                    <div id="customer_info" class="row g-3 mb-3">
                                                         <div class="mb2 col-6">
                                                             <h5 class="mb-3">Customer Name</h5>
                                                             <input class="form-control"
                                                                    name="customer_name"
                                                                    placeholder="Name"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
@@ -220,6 +193,7 @@
                                                                    name="customer_email"
                                                                    placeholder="Email"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
                                                                    type="email" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
@@ -229,6 +203,8 @@
                                                                    name="customer_phone"
                                                                    placeholder="Phone"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
+
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
@@ -238,12 +214,16 @@
                                                                    name="customer_age"
                                                                    placeholder="Age"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
+
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
                                                         <div class="mb2 col-6">
                                                             <h5 class="mb-3">Gender</h5>
-                                                            <select name="customer_gender" class="form-select"
+                                                            <select
+                                                                    onchange="genCustomerObject()"
+                                                                    name="customer_gender" class="form-select"
                                                                     aria-label="Default select example"
                                                                     required="required">
                                                                 <option value="" selected>Please select Gender</option>
@@ -259,12 +239,18 @@
                                                                    name="customer_city"
                                                                    placeholder="City"
                                                                    required="required"
+                                                                   onchange="genCustomerObject()"
+
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
                                                         <div class="mb2 col-12">
                                                             <h5 class="mb-3">Language</h5>
-                                                            <select name="customer_language" class="form-select"
+                                                            <select
+
+                                                                    onchange="genCustomerObject()"
+
+                                                                    name="customer_language" class="form-select"
                                                                     aria-label="Default select example"
                                                                     required="required">
                                                                 <option value="" selected="selected">Please select
@@ -283,8 +269,11 @@
                                                         </div>
                                                         <div class="mb2 col-12">
                                                             <h5 class="mb-3">Customer Address</h5>
-                                                            <textarea name="customer_address" class="form-control"
-                                                                      rows="3" required="required"></textarea>
+                                                            <textarea
+                                                                    onchange="genCustomerObject()"
+
+                                                                    name="customer_address" class="form-control"
+                                                                    rows="3" required="required"></textarea>
                                                         </div>
 
 
@@ -297,31 +286,136 @@
                                              id="bootstrap-wizard-validation-tab3">
                                             <form class="mb-2 needs-validation" id="wizardValidationForm3"
                                                   novalidate="novalidate" data-wizard-form="3">
-                                                <h1>2</h1>
+                                                <div id="billing_info" class="row g-3 mb-3">
+
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Order Placed By</h5>
+                                                        <select
+                                                                onchange="genBillingInfoObject()"
+                                                                name="orderByEmployee" class="form-select"
+                                                                aria-label="Default select example"
+                                                                required="required">
+                                                            <option value="" selected>Please select employee</option>
+                                                            <option value="EmpId1">Emp1</option>
+                                                            <option value="EmpId2">Emp2</option>
+                                                            <option value="EmpId3">Emp3</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Choose Lab</h5>
+                                                        <select
+                                                                onchange="genBillingInfoObject()"
+                                                                name="assignedLab" class="form-select"
+                                                                aria-label="Default select example"
+                                                                required="required">
+                                                            <option value="" selected>Please select lab</option>
+                                                            <option value="lab1">lab1</option>
+                                                            <option value="lab2">lab2</option>
+                                                            <option value="lab3">lab3</option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required.</div>
+                                                    </div>
+
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Estimated Delivery Date</h5>
+
+
+                                                        <input
+                                                                onchange="genBillingInfoObject()"
+                                                                name="estDeliveryDate"
+                                                                class="form-control datetimepicker flatpickr-input"
+                                                                id="datePicker" type="text" placeholder="dd/mm/yyyy"
+                                                                data-options="{&quot;disableMobile&quot;:true,&quot;dateFormat&quot;:&quot;d/m/Y&quot;}"
+                                                                readonly="readonly">
+                                                    </div>
+
+                                                </div>
                                             </form>
                                         </div>
                                         <div class="tab-pane" role="tabpanel"
                                              aria-labelledby="bootstrap-wizard-validation-tab4"
                                              id="bootstrap-wizard-validation-tab4">
-                                            <div class="row flex-center pb-8 pt-4 gx-3 gy-4">
-                                                <div class="col-12 col-sm-auto">
-                                                    <div class="text-center text-sm-start"><img class="d-dark-none"
-                                                                                                src="../../assets/img/spot-illustrations/34.png"
-                                                                                                alt="" width="220"/><img
-                                                            class="d-light-none"
-                                                            src="../../assets/img/spot-illustrations/dark_34.png" alt=""
-                                                            width="220"/></div>
-                                                </div>
-                                                <div class="col-12 col-sm-auto">
-                                                    <div class="text-center text-sm-start">
-                                                        <h5 class="mb-3">You are all set!</h5>
-                                                        <p class="text-1100 fs--1">Now you can access your account<br/>anytime
-                                                            anywhere</p><a class="btn btn-primary px-6"
-                                                                           href="../../modules/forms/wizard.html">Start
-                                                        Over</a>
+                                            <h5 class="mb-3">Draft Invoice</h5>
+                                            <!--                                            customer details start-->
+                                            <div class="bg-soft p-4 mb-4 rounded-2">
+                                                <div class="row g-4">
+                                                    <div class="col-12 col-lg-6">
+                                                        <div class="row g-4 g-lg-2">
+                                                            <div class="col-12 col-sm-6 col-lg-12">
+                                                                <div class="row align-items-center g-0">
+                                                                    <div class="d-flex align-items-center"><img
+                                                                            alt="phoenix"
+                                                                            src="{% static 'img/icons/logo.png' %}"
+                                                                            width="50"/>
+
+                                                                        <p class="logo-text ms-2 d-none d-sm-block">
+                                                                            Indolens</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-sm-6 col-lg-12">
+                                                                <div class="row align-items-center g-0">
+                                                                    <div class="col-auto col-lg-6 col-xl-5">
+                                                                        <h6 class="me-3">Invoice Date :</h6>
+                                                                    </div>
+                                                                    <div class="col-auto col-lg-6 col-xl-7">
+                                                                        <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                            19/06/2023</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row align-items-center g-0">
+                                                                    <div class="col-auto col-lg-6 col-xl-5">
+                                                                        <h6 class="me-3">Email :</h6>
+                                                                    </div>
+                                                                    <div class="col-auto col-lg-6 col-xl-7">
+                                                                        <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                            indolensstore@indlens.com</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row align-items-center g-0">
+                                                                    <div class="col-auto col-lg-6 col-xl-5">
+                                                                        <h6 class="me-3">Phone :</h6>
+                                                                    </div>
+                                                                    <div class="col-auto col-lg-6 col-xl-7">
+                                                                        <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                            1234567890</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-6 col-lg-6">
+                                                        <div class="row g-4 gy-lg-5">
+                                                            <div class="col-12 col-lg-8">
+                                                                <h6 class="mb-2 me-3">Draft invoice by :</h6>
+                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                    store name<br/>Store Address Goes Here
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4">
+                                                                <h6 class="mb-2"> PAN No :</h6>
+                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                    XVCJ9637820</p>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4">
+                                                                <h6 class="mb-2"> GST Reg No :</h6>
+                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                    IX9878123TC</p>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4">
+                                                                <h6 class="mb-2"> Order Date :</h6>
+                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                    19/06/2023</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!--                                            customer details end-->
+
+                                            <button id="confirmSale">Confirm Sale</button>
+
                                         </div>
 
                                     </div>
@@ -362,6 +456,17 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
+
+
+
+
+
+
+
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -391,18 +496,18 @@
 {# Include the JSON-encoded stocks_list data #}
 {{ customers_list|json_script:"customersList" }}
 
-
 <script>
-    let productCardCount = 1;
-    var stocks_list = JSON.parse(document.getElementById('stocksList').textContent);
-    createProductCard();
-    function createProductCard() {
-      // Create a new product card element
-      let productCard = document.createElement("div");
-      productCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
 
-      // Build the product card structure dynamically
-      productCard.innerHTML = `
+let productCardCount = 1;
+var stocks_list = JSON.parse(document.getElementById('stocksList').textContent);
+createProductCard();
+function createProductCard() {
+    // Create a new product card element
+    let productCard = document.createElement("div");
+    productCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
+
+    // Build the product card structure dynamically
+    productCard.innerHTML = `
          <div class="col text-end">
               <a type="button" class="text-danger" onclick="removeProductCard(this)">
                 Remove <i class="fas fa-trash"></i>
@@ -490,146 +595,454 @@
         </div>
       `;
 
-      // Append the product card to the products container
-      document.querySelector("#products_container").appendChild(productCard);
+    // Append the product card to the products container
+    document.querySelector("#products_container").appendChild(productCard);
 
-      // Optionally, you can now initialize any JavaScript plugins for the new card
-      // For example, if you're using Choices.js:
-      let choicesInstance = new Choices(productCard.querySelector("[name='product']"), {
+    // Optionally, you can now initialize any JavaScript plugins for the new card
+    // For example, if you're using Choices.js:
+    let choicesInstance = new Choices(productCard.querySelector("[name='product']"), {
         // Pass any necessary options for Choices.js
         removeItemButton: true,
         placeholder: true,
-      });
-
-      productCardCount++;
-      let jsonData = getFormData();
-      
-    }
-
-    function updateProductFields(selectElement, cardIndex) {
-      // Update duplicated product categories and brands within the same segment
-      let selectedIndex = selectElement.selectedIndex;
-
-      let selectedProduct = stocks_list.find(product => product.product_id == selectElement.value);
-
-      let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
-      let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
-      let productSkuField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
-      let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
-      let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
-      let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
-      let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-      let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
-      let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-      let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
-      let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-
-
-
-      productCategoryField.value = selectedProduct.category_name;
-      productBrandField.value = selectedProduct.brand_name;
-      productSkuField.value = selectedProduct.hsn;
-      productAvailableQtyField.value = selectedProduct.product_quantity;
-      productUnitPriceField.value = selectedProduct.sale_price;
-      productPurchaseQtyField.value = '';
-      productPurchaseQtyField.max = selectedProduct.product_quantity;
-      productProductTotalField.value = '';
-
-      if(selectedProduct.discount>0){
-          discountCheckDiv.style.display = 'block';
-          discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : '+selectedProduct.discount+'%';
-          discountValueField.value = selectedProduct.discount;
-      }else{
-          discountCheckDiv.style.display = 'none';
-      }
-
-      productPurchaseQtyField.addEventListener('input', function () {
-      let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
-      let productTotal;
-      if (discountCheckbox.checked) {
-        // Apply discount if the checkbox is checked
-        let discountPercentage = parseFloat(discountValueField.value) || 0;
-        let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-        productTotal = purchaseQty * discountedPrice;
-      } else {
-        // No discount, use the original sale price
-        productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
-      }
-      productProductTotalField.value = productTotal.toFixed(2);
-      let jsonData = getFormData();
-      
-      });
-
-      discountCheckbox.addEventListener('change', function () {
-            let isChecked = discountCheckbox.checked;
-            if (isChecked) {
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productProductTotalField.value = (discountedPrice*productPurchaseQtyField.value).toFixed(2);
-            } else {
-                productProductTotalField.value = (selectedProduct.sale_price*productPurchaseQtyField.value).toFixed(2);
-                productProductTotalField.innerHTML = '';
-            }
-            let jsonData = getFormData();
-            
-      });
-      let jsonData = getFormData();
-      
-    }
-    function removeProductCard(removeButton) {
-        // Find the parent product card and remove it
-        let productCard = removeButton.closest(".product_widget");
-        if (productCard) {
-            productCard.remove();
-        }
-        let jsonData = getFormData();
-    }
-
-function getFormData() {
-  let formData = [];
-  let cartDataField = document.querySelector(`[name='cartData']`);
-
-  // Iterate through all product cards
-  let productCards = document.querySelectorAll('.product_widget');
-  productCards.forEach((productCard, index) => {
-    let productData = {};
-
-    // Iterate through all form elements within the product card
-    let formElements = productCard.querySelectorAll('input, select');
-    formElements.forEach((element) => {
-      let key = element.name;
-      let value = element.value;
-
-      // Include all elements, including hidden fields, and set discount_checked to "off" if hidden or unchecked
-      if (key !== undefined && key !== null && key !== "") {
-        if (element.type === 'checkbox' && !element.checked) {
-          productData[key] = 'off';
-        } else {
-          productData[key] = value;
-        }
-      }
     });
 
-    // Add productData to formData array
-    formData.push(productData);
-  });
+    productCardCount++;
+    let jsonData = getFormData();
 
-  // Convert formData array to JSON string
-  let jsonData = JSON.stringify(formData);
-
-  // Set the JSON string as the value of cartDataField
-  cartDataField.value = jsonData;
-
-  return formData;
 }
 
-</script>
-<script>
-    function updateCustomerFields(selectCustomerField){
+function updateProductFields(selectElement, cardIndex) {
+    removePowerBoxes(cardIndex);
+    // Update duplicated product categories and brands within the same segment
+    let selectedIndex = selectElement.selectedIndex;
+
+    let selectedProduct = stocks_list.find(product => product.product_id == selectElement.value);
+
+    let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
+    let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
+    let productSkuField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
+    let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
+    let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
+    let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
+    let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+    let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
+    let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
+    let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
+    let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+
+
+
+    productCategoryField.value = selectedProduct.category_name;
+    productBrandField.value = selectedProduct.brand_name;
+    productSkuField.value = selectedProduct.hsn;
+    productAvailableQtyField.value = selectedProduct.product_quantity;
+    productUnitPriceField.value = selectedProduct.sale_price;
+    productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct.product_quantity;
+    productProductTotalField.value = '';
+
+    if (selectedProduct.discount > 0) {
+        discountCheckDiv.style.display = 'block';
+        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueField.value = selectedProduct.discount;
+    } else {
+        discountCheckDiv.style.display = 'none';
+    }
+
+    productPurchaseQtyField.addEventListener('input', function () {
+        let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
+        let productTotal;
+        if (discountCheckbox.checked) {
+            // Apply discount if the checkbox is checked
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productTotal = purchaseQty * discountedPrice;
+        } else {
+            // No discount, use the original sale price
+            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+        }
+        productProductTotalField.value = productTotal.toFixed(2);
+        let jsonData = getFormData();
+        generatePowerCards(cardIndex, purchaseQty);
+    });
+
+    discountCheckbox.addEventListener('change', function () {
+        let isChecked = discountCheckbox.checked;
+        if (isChecked) {
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+        } else {
+            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+            productProductTotalField.innerHTML = '';
+        }
+        let jsonData = getFormData();
+
+    });
+    let jsonData = getFormData();
+
+}
+function removeProductCard(removeButton) {
+    // Find the parent product card and remove it
+    let productCard = removeButton.closest(".product_widget");
+    if (productCard) {
+        productCard.remove();
+    }
+    let jsonData = getFormData();
+}
+
+function getFormData() {
+    let formData = [];
+    let cartDataField = document.querySelector(`[name='cartData']`);
+    // Iterate through all product cards
+    let productCards = document.querySelectorAll('.product_widget');
+    productCards.forEach((productCard, index) => {
+        let productData = {};
+
+        // Iterate through all form elements within the product card
+        let formElements = productCard.querySelectorAll('input, select');
+        formElements.forEach((element) => {
+            let key = element.name;
+            let value = element.value;
+
+         
+            if (element.name.startsWith('power[')) {
+                // Handle power checkboxes separately
+                if (element.checked) {
+                    // Add power value only if the checkbox is checked
+                    productData[key] = value;
+                }
+            } else {
+                // Handle other form elements
+                if (key !== undefined && key !== null && key !== "") {
+                    if (element.type === 'checkbox' && !element.checked && !element.name.startsWith('power[')) {
+                        productData[key] = 'off';
+                    } else {
+                        productData[key] = value;
+                    }
+                }
+            }
+        });
+        // Add productData to formData array
+        formData.push(productData);
+    });
+    // Convert formData array to JSON string
+    let jsonData = JSON.stringify(formData);
+    // Set the JSON string as the value of cartDataField
+    cartDataField.value = jsonData;
+    return formData;
+}
+
+
+
+function generatePowerCards(cardIndex, quantity) {
+    // Remove existing power cards before generating new ones
+    removePowerBoxes(cardIndex);
+    let productWidget = document.querySelector(`.product_widget:nth-child(${cardIndex})`);
+
+    // Create power card elements based on the specified quantity
+    for (let i = 0; i < quantity; i++) {
+        let powerCard = document.createElement("div");
+        powerCard.classList.add(`power_card_${cardIndex}`, "power_card", "mb-3");
+        // Build the power card structure dynamically
+        powerCard.innerHTML = `
+            <h5>Power Card ${i + 1}</h5>
+            <div class="row g-3 mb-3">
+            <div class="col-12 col-lg-2 form-check">
+                <input class="form-check-input" type="checkbox" name="power[${cardIndex}][${i}]" value="Stock" id="power_stock_${cardIndex}_${i}" onchange="handleCheckboxChange(this)">
+                <label class="form-check-label" for="power_stock_${cardIndex}_${i}">Stock</label>
+            </div>
+            <div class="col-12 col-lg-2 form-check">
+                <input class="form-check-input" type="checkbox" name="power[${cardIndex}][${i}]" value="Rx" id="power_rx_${cardIndex}_${i}" onchange="handleCheckboxChange(this)">
+                <label class="form-check-label" for="power_rx_${cardIndex}_${i}">Rx</label>
+            </div>
+            <div class="col-12 col-lg-2 form-check">
+                <input class="form-check-input" type="checkbox" name="power[${cardIndex}][${i}]" value="No Lens" id="power_no_lens_${cardIndex}_${i}" onchange="handleCheckboxChange(this)" checked="checked">
+                <label class="form-check-label" for="power_no_lens_${cardIndex}_${i}">No Lens</label>
+            </div>
+            </div>
+            <div class="row mb-3 stock_power_card[${cardIndex}][${i}] d-none">
+                <h4 class="g-3 text-1000">Left Eye</h4>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <select name="leftLensPowerStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                        <option >Choose Power</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <select name="leftLensBCStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <select name="leftLensDiaStock[${cardIndex}][${i}]" class="form-select" onchange="getFormData()" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <select name="leftLensCylinderStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <select name="leftLensAxisStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                        <option>Choose Axis</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                                <h4 class="g-3 text-1000">Right Eye</h4>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <select name="rightLensPowerStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                        <option >Choose Power</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <select name="rightLensBCStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <select name="rightLensDiaStock[${cardIndex}][${i}]" class="form-select" onchange="getFormData()" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <select name="rightLensCylinderStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                        <option>Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <select name="rightLensAxisStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
+                                        <option>Choose Axis</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                            </div>
+                            </div>
+
+                            <div class="row mb-3 rx_power_card[${cardIndex}][${i}] d-none">
+                                <h4 class="g-3 text-1000">Left Eye</h4>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <input name="leftLensPowerRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <input name="leftLensBCRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <input name="leftLensDiaRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <input name="leftLensCylinderRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <input name="leftLensAxisRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+
+                                <h4 class="g-3 text-1000">Right Eye</h4>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <input name="rightLensPowerRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <input name="rightLensBCRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <input name="rightLensDiaRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <input name="rightLensCylinderRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                                <div class="col-12 col-lg-2 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <input name="rightLensAxisRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
+                                </div>
+                            </div>
+                            </div>
+        `;
+
+        // Append the power card to the products container
+        productWidget.appendChild(powerCard);
+        let jsonData = getFormData();
+    }
+}
+
+function handleCheckboxChange(checkbox) {
+    // Uncheck all other checkboxes in the same group
+    let checkboxes = document.querySelectorAll(`[name='${checkbox.name}']`);
+
+    checkboxes.forEach((cb) => {
+        if (cb !== checkbox) {
+            cb.checked = false;
+        }
+    });
+
+    // Get the index from the checkbox name attribute
+    const [cardIndex, i] = checkbox.name.match(/\d+/g).map(Number);
+
+    // Show or hide specific divs based on the checkbox value
+    const stockPowerCard = document.querySelector(`.stock_power_card\\[${cardIndex}\\]\\[${i}\\]`);
+    const rxPowerCard = document.querySelector(`.rx_power_card\\[${cardIndex}\\]\\[${i}\\]`);
+
+    if (checkbox.value === "Stock") {
+        stockPowerCard.classList.remove('d-none');
+        rxPowerCard.classList.add('d-none');
+    } else if (checkbox.value === "Rx") {
+        rxPowerCard.classList.remove('d-none');
+        stockPowerCard.classList.add('d-none');
+    } else {
+        stockPowerCard.classList.add('d-none');
+        rxPowerCard.classList.add('d-none');
+    }
+
+    let jsonData = getFormData();
+}
+
+
+function removePowerBoxes(cardIndex) {
+    // Remove existing power card elements
+    let powerCards = document.querySelectorAll(`.power_card_${cardIndex}`);
+    powerCards.forEach((powerCard) => {
+        powerCard.remove();
+    });
+    let jsonData = getFormData();
+}
+
+
+function updateCustomerFields(selectCustomerField) {
     var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-    let selectCustomer = customers_list.find(customer => customer.customer_id == selectCustomerField.value);
-    console.log(selectCustomer);
+    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
 
     var customerNameInput = document.getElementsByName("customer_name")[0];
     var customerEmailInput = document.getElementsByName("customer_email")[0];
@@ -639,6 +1052,8 @@ function getFormData() {
     var customerCityInput = document.getElementsByName("customer_city")[0];
     var customerLanguageSelect = document.getElementsByName("customer_language")[0];
     var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+    //customerDataField
+    var customerDataTextarea = document.getElementsByName("customerData")[0];
 
     customerNameInput.value = selectCustomer.name;
     customerEmailInput.value = selectCustomer.email;
@@ -648,9 +1063,69 @@ function getFormData() {
     customerCityInput.value = selectCustomer.city;
     customerLanguageSelect.value = selectCustomer.language;
     customerAddressTextarea.value = selectCustomer.address;
+    customerDataTextarea.value = selectCustomer.address;
+
+    var customerdata = {
+        name: selectCustomer.name,
+        email: selectCustomer.email,
+        phone: selectCustomer.phone,
+        age: selectCustomer.age,
+        gender: selectCustomer.gender,
+        city: selectCustomer.city,
+        language: selectCustomer.language,
+        address: selectCustomer.address
+    };
+
+    // Convert customerdata to JSON string and assign it to customerDataTextarea
+    customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
+}
+
+function genCustomerObject(){
+    var customerNameInput = document.getElementsByName("customer_name")[0];
+    var customerEmailInput = document.getElementsByName("customer_email")[0];
+    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+    var customerAgeInput = document.getElementsByName("customer_age")[0];
+    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+    var customerCityInput = document.getElementsByName("customer_city")[0];
+    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+    //customerDataField
+    var customerDataTextarea = document.getElementsByName("customerData")[0];
 
 
-    }
+    var customerData = {
+        name: customerNameInput.value,
+        email: customerEmailInput.value,
+        phone: customerPhoneInput.value,
+        age: customerAgeInput.value,
+        gender: customerGenderSelect.value,
+        city: customerCityInput.value,
+        language: customerLanguageSelect.value,
+        address: customerAddressTextarea.value
+    };
+    customerDataTextarea.value = JSON.stringify(customerData, null, 2);
+}
+
+
+function genBillingInfoObject(){
+    var estDeliveryDateInput = document.getElementsByName("estDeliveryDate")[0];
+    var assignedLabInput = document.getElementsByName("assignedLab")[0];
+    var orderByEmployeeInput = document.getElementsByName("orderByEmployee")[0];
+    var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
+    var billingInfoData = {
+        estDeliveryDate: estDeliveryDateInput.value,
+        assignedLab: assignedLabInput.value,
+        orderByEmployee: orderByEmployeeInput.value,
+    };
+    billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
+}
+
+
+    document.getElementById('confirmSale').addEventListener('click', function() {
+        // Assuming you have input fields within the form, adjust as needed
+        var form = document.getElementById('saleForm');
+        form.submit();
+    });
 
 </script>
 
