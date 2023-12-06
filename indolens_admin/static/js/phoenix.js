@@ -6031,6 +6031,12 @@
 //              wizardFooter.classList.remove('d-none');
 //            }
             // prev-button removing
+            console.log(count);
+            if(count==3){
+            nextButton.classList.add('d-none');
+            }else{
+               nextButton.classList.remove('d-none');
+            }
             if (count > 0) {
               prevButton.classList.remove('d-none');
             } else {

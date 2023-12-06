@@ -65,6 +65,8 @@
 
 
 
+
+
     </script>
 </head>
 
@@ -79,7 +81,7 @@
         {% include 'nav_bar_store.html' %}
 
         <div class="content">
-            <form id="saleForm">
+            <form id="saleForm" action="/makeSale" method="post">
                 <input name="cartData">
                 <input name="customerData">
                 <input name="billingDetailsData">
@@ -334,18 +336,86 @@
                                         <div class="tab-pane" role="tabpanel"
                                              aria-labelledby="bootstrap-wizard-validation-tab4"
                                              id="bootstrap-wizard-validation-tab4">
-                                            <div class="row flex-center pb-8 pt-4 gx-3 gy-4">
+                                            <h5 class="mb-3">Draft Invoice</h5>
+                                            <!--                                            customer details start-->
+                                            <div class="bg-soft p-4 mb-4 rounded-2">
+                                                <div class="row g-4">
+                                                    <div class="col-12 col-lg-6">
+                                                        <div class="row g-4 g-lg-2">
+                                                            <div class="col-12 col-sm-6 col-lg-12">
+                                                                <div class="row align-items-center g-0">
+                                                                    <div class="d-flex align-items-center"><img
+                                                                            alt="phoenix"
+                                                                            src="{% static 'img/icons/logo.png' %}"
+                                                                            width="50"/>
 
-                                                <div class="col-12 col-sm-auto">
-                                                    <div class="text-center text-sm-start">
-                                                        <h5 class="mb-3">You are all set!</h5>
-                                                        <p class="text-1100 fs--1">Now you can access your account<br/>anytime
-                                                            anywhere</p><a class="btn btn-primary px-6"
-                                                                           href="../../modules/forms/wizard.html">Start
-                                                        Over</a>
+                                                                        <p class="logo-text ms-2 d-none d-sm-block">
+                                                                            Indolens</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-12 col-sm-6 col-lg-12">
+                                                                <div class="row align-items-center g-0">
+                                                                    <div class="col-auto col-lg-6 col-xl-5">
+                                                                        <h6 class="me-3">Invoice Date :</h6>
+                                                                    </div>
+                                                                    <div class="col-auto col-lg-6 col-xl-7">
+                                                                        <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                            19/06/2023</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row align-items-center g-0">
+                                                                    <div class="col-auto col-lg-6 col-xl-5">
+                                                                        <h6 class="me-3">Email :</h6>
+                                                                    </div>
+                                                                    <div class="col-auto col-lg-6 col-xl-7">
+                                                                        <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                            indolensstore@indlens.com</p>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="row align-items-center g-0">
+                                                                    <div class="col-auto col-lg-6 col-xl-5">
+                                                                        <h6 class="me-3">Phone :</h6>
+                                                                    </div>
+                                                                    <div class="col-auto col-lg-6 col-xl-7">
+                                                                        <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                            1234567890</p>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-12 col-sm-6 col-lg-6">
+                                                        <div class="row g-4 gy-lg-5">
+                                                            <div class="col-12 col-lg-8">
+                                                                <h6 class="mb-2 me-3">Draft invoice by :</h6>
+                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                    store name<br/>Store Address Goes Here
+                                                                </p>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4">
+                                                                <h6 class="mb-2"> PAN No :</h6>
+                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                    XVCJ9637820</p>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4">
+                                                                <h6 class="mb-2"> GST Reg No :</h6>
+                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                    IX9878123TC</p>
+                                                            </div>
+                                                            <div class="col-12 col-lg-4">
+                                                                <h6 class="mb-2"> Order Date :</h6>
+                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
+                                                                    19/06/2023</p>
+                                                            </div>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
+                                            <!--                                            customer details end-->
+
+                                            <button id="confirmSale">Confirm Sale</button>
+
                                         </div>
 
                                     </div>
@@ -386,6 +456,8 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
 
 
 
@@ -1047,6 +1119,14 @@ function genBillingInfoObject(){
     };
     billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
 }
+
+
+    document.getElementById('confirmSale').addEventListener('click', function() {
+        // Assuming you have input fields within the form, adjust as needed
+        var form = document.getElementById('saleForm');
+        form.submit();
+    });
+
 </script>
 
 </body>
