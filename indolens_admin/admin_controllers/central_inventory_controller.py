@@ -580,7 +580,6 @@ def change_product_status(productId, status):
             update_stock_request_query = f"""UPDATE central_inventory SET status = '{status}' 
             WHERE product_id = '{productId}' """
             cursor.execute(update_stock_request_query)
-
         return {
             "status": True,
             "message": "updated stock status"
@@ -661,7 +660,8 @@ def get_central_inventory_lens():
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
-                                    WHERE JSON_EXTRACT(power_attribute, '$.stock_type') = 'stock' """
+                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'stock' 
+                                    AND ci.category_id = 2 AND ci.status = 1 """
 
             cursor.execute(get_all_stock_lens)
             stock_lens = cursor.fetchall()
@@ -677,7 +677,8 @@ def get_central_inventory_lens():
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
-                                    WHERE JSON_EXTRACT(power_attribute, '$.stock_type') = 'rx' """
+                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'rx' 
+                                    AND ci.category_id = 2 AND ci.status = 1 """
 
             cursor.execute(get_all_rx_lens)
             rx_lens = cursor.fetchall()

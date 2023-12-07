@@ -402,5 +402,11 @@ re_path(
         deleteProductImage,
         name='delete_product_image'
     ),
+
+    #Update Image
+
+    path('manage_central_inventory_products/add_product_image/productId=<int:productId>',
+            addProductImage, name='add_product_image'),
+
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
