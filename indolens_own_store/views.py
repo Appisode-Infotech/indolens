@@ -1,6 +1,6 @@
 from django.shortcuts import redirect, render
 
-from indolens_admin.admin_controllers import customers_controller
+from indolens_admin.admin_controllers import customers_controller, central_inventory_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
@@ -260,7 +260,6 @@ def inventoryOutOfStock(request):
         return redirect('own_store_login')
 
 
-
 # ================================= SALES AND EXPENSES ======================================
 
 def allExpenseStore(request):
@@ -284,7 +283,13 @@ def makeSaleOwnStore(request):
         response, status_code = store_inventory_controller.get_all_products_for_store(
             request.session.get('assigned_store_id'))
         customerResponse, status_code_cust = customers_controller.get_all_stores_customers()
+        lense_response, status_code = central_inventory_controller.get_central_inventory_lens()
+        print("===================== stock_lens ============================")
+        print(lense_response['stock_lens'])
+        print("=================== rx_lens ==============================")
+        print(lense_response['rx_lens'])
         return render(request, 'expenses/makeSaleOwnStore.html',
-                      {"stocks_list": response['stocks_list'], 'customers_list': customerResponse['customers_list']})
+                      {"stocks_list": response['stocks_list'], 'customers_list': customerResponse['customers_list'],
+                       "stock_lens": lense_response['stock_lens'], "rx_lens": lense_response['rx_lens']})
     else:
         return redirect('own_store_login')

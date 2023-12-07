@@ -644,3 +644,49 @@ def create_store_stock_request(stock_obj, store_id):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def get_central_inventory_lens():
+    try:
+        with connection.cursor() as cursor:
+            get_all_stock_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
+                                    FROM central_inventory As ci
+                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
+                                    WHERE JSON_EXTRACT(power_attribute, '$.stock_type') = 'stock' """
+
+            cursor.execute(get_all_stock_lens)
+            stock_lens = cursor.fetchall()
+            get_all_rx_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
+                                    FROM central_inventory As ci
+                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
+                                    WHERE JSON_EXTRACT(power_attribute, '$.stock_type') = 'rx' """
+
+            cursor.execute(get_all_rx_lens)
+            rx_lens = cursor.fetchall()
+            return {
+                "status": True,
+                "stock_lens": get_products(stock_lens),
+                "rx_lens": get_products(rx_lens),
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
