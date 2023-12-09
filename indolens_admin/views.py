@@ -362,7 +362,7 @@ def createStoreManager(request):
                 file_list = []
 
                 for index, file_obj in enumerate(file_objs):
-                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
                     form_data_key = f"doc"
                     file_dict = {form_data_key: file_name}
 
@@ -384,7 +384,9 @@ def createStoreManager(request):
             file_data = FileData(form_data)
 
             store_manager = store_employee_model.store_employee_from_dict(request.POST)
+            print(store_manager)
             response, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
+            print(response)
             url = reverse('view_store_manager', kwargs={'storeManagerId': response['mid']})
             return redirect(url)
 
@@ -397,6 +399,7 @@ def createStoreManager(request):
 def viewStoreManager(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
+        print(response)
         return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
                       {"store_manager": response['store_manager']})
     else:
@@ -2869,9 +2872,23 @@ def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_T
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type, 'own_store_employees', 'employee_id', employeeId)
         print("=================================response========================")
         print(response)
+        role = response['role']
 
-        url = reverse('update_store_manager_documents', kwargs={'storeManagerId': employeeId})
-        return redirect(url)
+        # Dictionary mapping roles to URLs and their respective keyword arguments
+        role_urls = {
+            1: ('update_store_manager_documents', 'storeManagerId'),
+            2: ('update_optometry_documents', 'optimetryId'),
+            3: ('update_sales_executives_documents', 'salesExecutiveId'),
+            4: ('update_other_employees_documents', 'otherEmployeeId')
+        }
+
+        # Assuming you have employeeId available
+        if role in role_urls:
+            url_name, id_key = role_urls[role]
+            url = reverse(url_name, kwargs={id_key: employeeId})
+            return redirect(url)
+        else:
+            return redirect('dashboard')
     else:
         return redirect('login')
 

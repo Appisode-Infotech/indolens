@@ -38,14 +38,24 @@ def delete_document(documenturl, document_type, table, condition, user_id):
                 print(documents)
                 documents.remove(documenturl)
                 cursor.execute(f""" UPDATE {table} SET {document_type} = '{json.dumps(documents)}' WHERE {condition} = {user_id} """)
+                get_role = f""" SELECT role from {table} Where {condition} = {user_id}"""
+                cursor.execute(get_role)
+                role = cursor.fetchone()
             return {
                 "status": True,
+                "role": role[0],
                 "message": "Document Deleted Successfully"
             }, 200
         else:
             print("else loop as file not found")
+            with connection.cursor() as cursor:
+                get_role = f""" SELECT role from {table} Where {condition} = {user_id}"""
+                cursor.execute(get_role)
+                role = cursor.fetchone()
+                print(role[0])
             return {
                 "status": False,
+                "role": role[0],
                 "message": f"Document Doesn't Exist"
             }, 200
 
