@@ -2859,7 +2859,6 @@ def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document
 
 def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        print("deleting own store emp documenst")
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type, 'own_store_employees', 'employee_id', employeeId)
         print("=================================response========================")
         print(response)
