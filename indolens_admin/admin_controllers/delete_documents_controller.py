@@ -14,28 +14,18 @@ today = datetime.datetime.now(ist)
 def delete_document(documenturl, document_type, table, condition, user_id):
     print("=====================================in controller")
     try:
-        print('========================documenturl')
-        print(documenturl)
         parts = documenturl.split('/')
         folder_name = parts[0]
         file_name = parts[-1]
         file_path = os.path.join("media", folder_name, file_name)
-        print(parts)
-        print(folder_name)
-        print(file_name)
-        print(file_path)
-        print("=========================")
 
         if os.path.exists(file_path):
-            print("found the file")
             os.remove(file_path)
-            print("deleted the filed")
             with connection.cursor() as cursor:
                 get_documents_query = f"""
                 SELECT {document_type} FROM {table} WHERE {condition} = {user_id} """
                 cursor.execute(get_documents_query)
                 documents = json.loads(cursor.fetchone()[0])
-                print(documents)
                 documents.remove(documenturl)
                 cursor.execute(f""" UPDATE {table} SET {document_type} = '{json.dumps(documents)}' WHERE {condition} = {user_id} """)
                 get_role = f""" SELECT role from {table} Where {condition} = {user_id}"""
@@ -47,12 +37,10 @@ def delete_document(documenturl, document_type, table, condition, user_id):
                 "message": "Document Deleted Successfully"
             }, 200
         else:
-            print("else loop as file not found")
             with connection.cursor() as cursor:
                 get_role = f""" SELECT role from {table} Where {condition} = {user_id}"""
                 cursor.execute(get_role)
                 role = cursor.fetchone()
-                print(role[0])
             return {
                 "status": False,
                 "role": role[0],
