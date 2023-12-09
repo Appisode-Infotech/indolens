@@ -648,7 +648,7 @@ def create_store_stock_request(stock_obj, store_id):
 def get_central_inventory_lens():
     try:
         with connection.cursor() as cursor:
-            get_all_stock_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+            get_all_stock_single_vision_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
                                     FROM central_inventory As ci
                                     LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
@@ -660,12 +660,13 @@ def get_central_inventory_lens():
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
-                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'stock' 
+                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'stock' AND
+                                    JSON_EXTRACT(ci.power_attribute, '$.vision_type') = 'single_vision'
                                     AND ci.category_id = 2 AND ci.status = 1 """
 
-            cursor.execute(get_all_stock_lens)
-            stock_lens = cursor.fetchall()
-            get_all_rx_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+            cursor.execute(get_all_stock_single_vision_lens)
+            stock_single_vision_lens = cursor.fetchall()
+            get_all_stock_bifocal_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
                                     FROM central_inventory As ci
                                     LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
@@ -677,15 +678,93 @@ def get_central_inventory_lens():
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
-                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'rx' 
+                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'stock' AND
+                                    JSON_EXTRACT(ci.power_attribute, '$.vision_type') = 'bifocal'
                                     AND ci.category_id = 2 AND ci.status = 1 """
 
-            cursor.execute(get_all_rx_lens)
-            rx_lens = cursor.fetchall()
+            cursor.execute(get_all_stock_bifocal_lens)
+            stock_bifocal_lens = cursor.fetchall()
+            get_all_stock_progressive_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
+                                    FROM central_inventory As ci
+                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
+                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'stock' AND
+                                    JSON_EXTRACT(ci.power_attribute, '$.vision_type') = 'progressive'
+                                    AND ci.category_id = 2 AND ci.status = 1 """
+
+            cursor.execute(get_all_stock_progressive_lens)
+            stock_progressive_lens = cursor.fetchall()
+
+            get_all_rx_single_vision_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
+                                    FROM central_inventory As ci
+                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
+                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'rx' AND
+                                    JSON_EXTRACT(ci.power_attribute, '$.vision_type') = 'single_vision'
+                                    AND ci.category_id = 2 AND ci.status = 1 """
+
+            cursor.execute(get_all_rx_single_vision_lens)
+            rx_single_vision_lens = cursor.fetchall()
+            get_all_rx_bifocal_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
+                                    FROM central_inventory As ci
+                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
+                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'rx' AND
+                                    JSON_EXTRACT(ci.power_attribute, '$.vision_type') = 'bifocal'
+                                    AND ci.category_id = 2 AND ci.status = 1 """
+
+            cursor.execute(get_all_rx_bifocal_lens)
+            rx_bifocal_lens = cursor.fetchall()
+            get_all_rx_progressive_lens = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
+                                    FROM central_inventory As ci
+                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id  
+                                    WHERE JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'rx' AND
+                                    JSON_EXTRACT(ci.power_attribute, '$.vision_type') = 'progressive'
+                                    AND ci.category_id = 2 AND ci.status = 1 """
+
+            cursor.execute(get_all_rx_progressive_lens)
+            rx_progressive_lens = cursor.fetchall()
             return {
                 "status": True,
-                "stock_lens": get_products(stock_lens),
-                "rx_lens": get_products(rx_lens),
+                "stock_bifocal_lens": get_products(stock_bifocal_lens),
+                "stock_single_vision_lens": get_products(stock_single_vision_lens),
+                "stock_progressive_lens": get_products(stock_progressive_lens),
+                "rx_progressive_lens": get_products(rx_progressive_lens),
+                "rx_bifocal_lens": get_products(rx_bifocal_lens),
+                "rx_single_vision_lens": get_products(rx_single_vision_lens),
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
