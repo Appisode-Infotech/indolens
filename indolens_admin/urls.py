@@ -51,6 +51,7 @@ urlpatterns = [
     path('manageMoveStocks/', manageMoveStocks, name='manageMoveStocks'),
     path('manageMoveStocks/move_a_stock/', manageMoveAStock, name='move_a_stock'),
     path('manageMoveStocks/restock_products/status=<str:status>', restockProduct, name='restock_products'),
+    path('manageMoveStocks/restockProductOutOfStock', restockProductOutOfStock, name='restockProductOutOfStock'),
     path('all_stock_requests/', viewAllStockRequests, name='all_stock_requests'),
     path('pending_stock_requests/', viewPendingStockRequests, name='pending_stock_requests'),
     path('completed_stock_requests/', viewCompletedStockRequests, name='completed_stock_requests'),

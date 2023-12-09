@@ -91,14 +91,16 @@
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
 
-                        <div class="col-12 col-sm-auto">
-                            <div class="d-flex align-items-center">
-                                <div class="search-box me-3">
+                        <div class="mb-1">
+                            <div class="row g-3">
+                                <div class="col-auto">
+                                    <div class="search-box">
                                     <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
                                         <input aria-label="Search" class="form-control search-input search"
                                                placeholder="Search Store" type="search"/>
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
+                                </div>
                                 </div>
                                 <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
                                     <div class="btn-group position-static" role="group">
@@ -125,6 +127,11 @@
                                 <div class="col-auto"><a class="btn btn-primary px-5"
                                                          href="{% url 'create_franchise_store' %}"><i
                                         class="fa-solid fa-plus me-2"></i>Add Franchise Store</a></div>
+                                <div class="col-auto">
+                                    <button id= "btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
