@@ -177,8 +177,8 @@ urlpatterns = [
          name='create_franchise_optimetry'),
     path('manage_franchise_optimetry/edit_franchise_optimetry/optimetryId=<int:franchiseOptimetryId>',
          editFranchiseOptimetry, name='edit_franchise_optimetry'),
-    path('manage_franchise_optimetry/update_optimetry_documents/optimetryId=<int:franchiseOptimetryId>',
-         updateFranchiseOptimetryDocuments, name='update_optimetry_documents'),
+    path('manage_franchise_optimetry/update_franchise_optimetry_documents/optimetryId=<int:franchiseOptimetryId>',
+         updateFranchiseOptimetryDocuments, name='update_franchise_optimetry_documents'),
     path('manage_franchise_optimetry/view_franchise_optimetry/optimetryId=<int:franchiseOptimetryId>',
          viewFranchiseOptimetry, name='view_franchise_optimetry'),
     path(
@@ -388,20 +388,22 @@ urlpatterns = [
     path(
             'manage_lab_technician/delete_lab_tech_document/labTechnicianId=<int:labTechnicianId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
             deleteLabTechnicianDocuments, name='delete_lab_tech_document'),
-    path(
-            'manage_own_store_employee/delete_own_store_employee_document/employeeId=<int:employeeId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-            deleteOwnStoreEmployeeDocuments, name='delete_own_store_employee_document'),
+    re_path(
+        r'^manage_own_store_employee/delete_own_store_employee_document/employeeId=(?P<employeeId>[0-9]+)/documentURL=(?P<documentURL>.+?)/document_Type=(?P<document_Type>[^/]+)$',
+        deleteOwnStoreEmployeeDocuments,
+        name='delete_own_store_employee_document'
+    ),
     path(
             'manage_franchise_store_employee/delete_franchise_store_employee_document/employeeId=<int:employeeId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
             deleteFranchiseStoreEmployeeDocuments, name='delete_franchise_store_employee_document'),
     path(
             'manage_central_inventory_products/delete_product_image/productId=<int:productId>/imageURL=<str:imageURL>',
             deleteProductImage, name='delete_product_image'),
-re_path(
-        r'^manage_central_inventory_products/delete_product_image/productId=(?P<productId>[0-9]+)/imageURL=(?P<imageURL>.+)$',
-        deleteProductImage,
-        name='delete_product_image'
-    ),
+    re_path(
+            r'^manage_central_inventory_products/delete_product_image/productId=(?P<productId>[0-9]+)/imageURL=(?P<imageURL>.+)$',
+            deleteProductImage,
+            name='delete_product_image'
+        ),
 
     #Update Image
 

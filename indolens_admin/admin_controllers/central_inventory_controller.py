@@ -691,3 +691,4 @@ def get_central_inventory_lens():
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
