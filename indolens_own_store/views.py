@@ -284,10 +284,6 @@ def makeSaleOwnStore(request):
             request.session.get('assigned_store_id'))
         customerResponse, status_code_cust = customers_controller.get_all_stores_customers()
         lense_response, status_code = central_inventory_controller.get_central_inventory_lens()
-        print("===================== stock_lens ============================")
-        print(lense_response['stock_lens'])
-        print("=================== rx_lens ==============================")
-        print(lense_response['rx_lens'])
         return render(request, 'expenses/makeSaleOwnStore.html',
                       {"stocks_list": response['stocks_list'], 'customers_list': customerResponse['customers_list'],
                        "stock_bifocal_lens": lense_response['stock_bifocal_lens'],
