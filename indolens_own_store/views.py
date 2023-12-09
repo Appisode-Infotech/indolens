@@ -290,6 +290,12 @@ def makeSaleOwnStore(request):
         print(lense_response['rx_lens'])
         return render(request, 'expenses/makeSaleOwnStore.html',
                       {"stocks_list": response['stocks_list'], 'customers_list': customerResponse['customers_list'],
-                       "stock_lens": lense_response['stock_lens'], "rx_lens": lense_response['rx_lens']})
+                       "stock_bifocal_lens": lense_response['stock_bifocal_lens'],
+                       "stock_single_vision_lens": lense_response['stock_single_vision_lens'],
+                       "stock_progressive_lens": lense_response['stock_progressive_lens'],
+                       "rx_progressive_lens": lense_response['rx_progressive_lens'],
+                       "rx_bifocal_lens": lense_response['rx_bifocal_lens'],
+                       "rx_single_vision_lens": lense_response['rx_single_vision_lens']
+                       })
     else:
         return redirect('own_store_login')
