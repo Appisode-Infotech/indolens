@@ -2492,6 +2492,13 @@ def restockProduct(request, status):
     else:
         return redirect('login')
 
+def restockProductOutOfStock(request):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.restock_central_inventory_products(
+            request.POST['productId'], request.POST['productQty'], )
+        return redirect('manage_out_of_stock')
+    else:
+        return redirect('login')
 
 def centralInventoryUpdateProduct(request, productId):
     if request.method == 'POST':

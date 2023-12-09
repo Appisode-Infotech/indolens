@@ -67,6 +67,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -467,6 +468,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -495,10 +497,8 @@
 
 {# Include the JSON-encoded stocks_list data #}
 {{ customers_list|json_script:"customersList" }}
-
 <script>
-
-let productCardCount = 1;
+    let productCardCount = 1;
 var stocks_list = JSON.parse(document.getElementById('stocksList').textContent);
 createProductCard();
 function createProductCard() {
@@ -706,7 +706,7 @@ function getFormData() {
             let key = element.name;
             let value = element.value;
 
-         
+
             if (element.name.startsWith('power[')) {
                 // Handle power checkboxes separately
                 if (element.checked) {
@@ -763,6 +763,20 @@ function generatePowerCards(cardIndex, quantity) {
             </div>
             </div>
             <div class="row mb-3 stock_power_card[${cardIndex}][${i}] d-none">
+            <div class="mb2 col-12">
+            <h5 class="mb-3">Select Lens</h5>
+              <select onchange="updateLensFields(this, ${productCardCount})"
+                class="form-select" data-choices="data-choices"
+                data-options='{"removeItemButton":true,"placeholder":true}'
+                                name="selected_stock_lens[${cardIndex}][${i}]"
+                <option value="">Select Lens</option>
+                <!-- Populate options dynamically, e.g., from stocks_list -->
+                {% for product in stock_lens %}
+                <option value="{{product.product_id}}">{{product.product_name}}</option>
+                {% endfor %}
+              </select>
+          <div class="custom-error" style="color: red;"></div>
+          </div>
                 <h4 class="g-3 text-1000">Left Eye</h4>
                                 <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Power</h5>
@@ -945,6 +959,21 @@ function generatePowerCards(cardIndex, quantity) {
                             </div>
 
                             <div class="row mb-3 rx_power_card[${cardIndex}][${i}] d-none">
+                              <div class="col-12">
+            <h5 class="mb-3">Select Lens</h5>
+              <select onchange="updateLensFields(this, ${productCardCount})"
+                class="form-select" data-choices="data-choices"
+                data-options='{"removeItemButton":true,"placeholder":true}'
+                name="selected_rx_lens[${cardIndex}][${i}]"
+                required="required">
+                <option value="">Select Lens</option>
+                <!-- Populate options dynamically, e.g., from stocks_list -->
+                {% for product in rx_lens %}
+                <option value="{{product.product_id}}">{{product.product_name}}</option>
+                {% endfor %}
+              </select>
+          <div class="custom-error" style="color: red;"></div>
+          </div>
                                 <h4 class="g-3 text-1000">Left Eye</h4>
                                 <div class="col-12 col-lg-2 g-3">
                                     <h5 class="mb-2 text-1000">Power</h5>
@@ -1080,7 +1109,7 @@ function updateCustomerFields(selectCustomerField) {
     customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
 }
 
-function genCustomerObject(){
+function genCustomerObject() {
     var customerNameInput = document.getElementsByName("customer_name")[0];
     var customerEmailInput = document.getElementsByName("customer_email")[0];
     var customerPhoneInput = document.getElementsByName("customer_phone")[0];
@@ -1107,7 +1136,7 @@ function genCustomerObject(){
 }
 
 
-function genBillingInfoObject(){
+function genBillingInfoObject() {
     var estDeliveryDateInput = document.getElementsByName("estDeliveryDate")[0];
     var assignedLabInput = document.getElementsByName("assignedLab")[0];
     var orderByEmployeeInput = document.getElementsByName("orderByEmployee")[0];
@@ -1121,14 +1150,17 @@ function genBillingInfoObject(){
 }
 
 
-    document.getElementById('confirmSale').addEventListener('click', function() {
-        // Assuming you have input fields within the form, adjust as needed
-        var form = document.getElementById('saleForm');
-        form.submit();
-    });
+document.getElementById('confirmSale').addEventListener('click', function () {
+    // Assuming you have input fields within the form, adjust as needed
+    var form = document.getElementById('saleForm');
+    form.submit();
+});
 
+
+function updateLensFields(selectedLens,productCount) {
+
+}
 </script>
-
 </body>
 
 </html>
