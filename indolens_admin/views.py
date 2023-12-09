@@ -12,7 +12,7 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
-    customers_controller, stores_inventory_controller, lens_power_attribute_controller
+    customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
@@ -2866,10 +2866,12 @@ def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document
 
 def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'own_store_employees', 'employee_id',
-                                                                            employeeId)
-        return JsonResponse(response)
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type, 'own_store_employees', 'employee_id', employeeId)
+        print("=================================response========================")
+        print(response)
+
+        url = reverse('update_store_manager_documents', kwargs={'storeManagerId': employeeId})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2886,7 +2888,6 @@ def deleteFranchiseStoreEmployeeDocuments(request, employeeId, documentURL, docu
 def deleteProductImage(request, productId, imageURL):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_product_image(imageURL, productId)
-        print(response)
         url = reverse('update_product_images', kwargs={'productId': productId})
         return redirect(url)
     else:
@@ -2895,8 +2896,45 @@ def deleteProductImage(request, productId, imageURL):
 def addProductImage(request, productId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
-        url = reverse('update_product_images', kwargs={'productId': productId})
-        return redirect(url)
+            print("request for adding new product image ")
+            if request.method == 'POST':
+                form_data = {}
+                file_data = {}
+                file_label_mapping = {
+                    'productImages': 'products'
+                }
+
+                for file_key, file_objs in request.FILES.lists():
+                    label = file_label_mapping.get(file_key, 'unknown')
+                    subdirectory = f"{label}/"
+                    file_list = []
+
+                    for index, file_obj in enumerate(file_objs):
+                        file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                        form_data_key = f"prod_img"
+                        file_dict = {form_data_key: file_name}
+
+                        with default_storage.open(file_name, 'wb+') as destination:
+                            for chunk in file_obj.chunks():
+                                destination.write(chunk)
+
+                        file_list.append(file_dict)
+
+                    if len(file_list) == 1:
+                        file_data[file_key] = file_list[0]
+                    else:
+                        file_data[file_key] = file_list
+
+                # Combine the file data with the original form data
+                for key, value in file_data.items():
+                    form_data[key] = value
+
+                file_data = FileData(form_data)
+                print("==========================================new file list==========================================")
+                print(file_data)
+                response, status_code = add_documents_controller.add_products_image(file_data, productId)
+                print(response)
+            url = reverse('update_product_images', kwargs={'productId': productId})
+            return redirect(url)
     else:
         return redirect('login')

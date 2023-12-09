@@ -101,17 +101,33 @@
                                        data-document-preview="{{ MEDIA_URL }}{{ image }}"
                                        data-action-type="delete"
                                        data-action-href="{% url 'delete_product_image' product_data.product_id image %}"
-                                       class="btn btn-soft-danger me-1 mb-1" type="button">
+                                       class="btn btn-soft-danger me-1 mb-5" type="button">
                                         <i class="fa fa-trash me-1"></i> Delete
                                     </a>
                                 </div>
                                 {% endfor %}
                             </div>
-                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column"
-                                 id="documentPreviews"></div>
                         </div>
                     </div>
                 </div>
+
+                <form action="{% url 'add_product_image' product_data.product_id %}" class="mb-9 needs-validation" method="post" novalidate="novalidate"
+                  enctype="multipart/form-data">
+                {% csrf_token %}
+                    <h4 class="mb-3">Upload Images</h4>
+                        <div class="mb-3 col-9">
+                            <h5 class="mb-3">Upload product images(Can choose multiple)</h5>
+                            <input  required class="form-control" id="document1" multiple="multiple"
+                                   name="productImages"
+                                   type="file"/>
+                            <div class="invalid-feedback">Please upload at least one picture.</div>
+                        </div>
+                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
+                    <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Upload</button>
+                </form>
+
+
+
                 <div class="modal fade" id="delete_document" tabindex="-1"
                      aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered">
