@@ -1022,7 +1022,6 @@ def viewOptimetry(request, ownOptimetryId):
 def updateOptimetryDocuments(request, ownOptimetryId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_optimetry_by_id(ownOptimetryId)
-
         return render(request, 'indolens_admin/optimetry/updateDocuments.html',
                       {"optimetry": response['optimetry']})
     else:
@@ -1881,6 +1880,7 @@ def viewOtherEmployees(request, ownEmployeeId):
 def updateOtherEmployeesDocuments(request, ownEmployeeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_other_emp_by_id(ownEmployeeId)
+        print(response)
         return render(request, 'indolens_admin/otherEmployees/updateDocuments.html',
                       {"other_employee": response['other_employee']})
     else:
@@ -2495,6 +2495,7 @@ def restockProduct(request, status):
     else:
         return redirect('login')
 
+
 def restockProductOutOfStock(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.restock_central_inventory_products(
@@ -2502,6 +2503,7 @@ def restockProductOutOfStock(request):
         return redirect('manage_out_of_stock')
     else:
         return redirect('login')
+
 
 def centralInventoryUpdateProduct(request, productId):
     if request.method == 'POST':
@@ -2869,7 +2871,9 @@ def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document
 
 def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type, 'own_store_employees', 'employee_id', employeeId)
+        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
+                                                                            'own_store_employees', 'employee_id',
+                                                                            employeeId)
         print("=================================response========================")
         print(response)
         role = response['role']
@@ -2877,9 +2881,9 @@ def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_T
         # Dictionary mapping roles to URLs and their respective keyword arguments
         role_urls = {
             1: ('update_store_manager_documents', 'storeManagerId'),
-            2: ('update_optometry_documents', 'optimetryId'),
-            3: ('update_sales_executives_documents', 'salesExecutiveId'),
-            4: ('update_other_employees_documents', 'otherEmployeeId')
+            2: ('update_optimetry_documents', 'ownOptimetryId'),
+            3: ('update_sales_executives_documents', 'ownSaleExecutivesId'),
+            4: ('update_other_employees_documents', 'ownEmployeeId')
         }
 
         # Assuming you have employeeId available
@@ -2898,9 +2902,27 @@ def deleteFranchiseStoreEmployeeDocuments(request, employeeId, documentURL, docu
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'franchise_store_employees', 'employee_id',
                                                                             employeeId)
-        return JsonResponse(response)
+        print(response)
+        role = response['role']
+
+        # Dictionary mapping roles to URLs and their respective keyword arguments
+        role_urls = {
+            1: ('update_franchise_owner_documents', 'franchiseOwnersId'),
+            2: ('update_franchise_optimetry_documents', 'franchiseOptimetryId'),
+            3: ('update_franchise_sales_executives_documents', 'franchiseSaleExecutivesId'),
+            4: ('update_franchise_other_employees_documents', 'franchiseEmployeeId')
+        }
+
+        # Assuming you have employeeId available
+        if role in role_urls:
+            url_name, id_key = role_urls[role]
+            url = reverse(url_name, kwargs={id_key: employeeId})
+            return redirect(url)
+        else:
+            return redirect('dashboard')
     else:
         return redirect('login')
+
 
 def deleteProductImage(request, productId, imageURL):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -2909,6 +2931,7 @@ def deleteProductImage(request, productId, imageURL):
         return redirect(url)
     else:
         return redirect('login')
+
 
 def addProductImage(request, productId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -2947,11 +2970,136 @@ def addProductImage(request, productId):
                     form_data[key] = value
 
                 file_data = FileData(form_data)
-                print("==========================================new file list==========================================")
+                print(
+                    "==========================================new file list==========================================")
                 print(file_data)
                 response, status_code = add_documents_controller.add_products_image(file_data, productId)
                 print(response)
             url = reverse('update_product_images', kwargs={'productId': productId})
             return redirect(url)
+    else:
+        return redirect('login')
+
+
+def addOwnStoreEmployeeImage(request, employeeId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            emp_obj = store_employee_model.store_employee_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_own_store_employee_image(file_data, employeeId, emp_obj)
+            print(response)
+            role = response['role']
+
+            # Dictionary mapping roles to URLs and their respective keyword arguments
+            role_urls = {
+                1: ('update_store_manager_documents', 'storeManagerId'),
+                2: ('update_optimetry_documents', 'ownOptimetryId'),
+                3: ('update_sales_executives_documents', 'ownSaleExecutivesId'),
+                4: ('update_other_employees_documents', 'ownEmployeeId')
+            }
+
+            # Assuming you have employeeId available
+            if role in role_urls:
+                url_name, id_key = role_urls[role]
+                url = reverse(url_name, kwargs={id_key: employeeId})
+                return redirect(url)
+            else:
+                return redirect('dashboard')
+    else:
+        return redirect('login')
+def addFranchiseStoreEmployeeImage(request, employeeId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            emp_obj = store_employee_model.store_employee_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_franchise_store_employee_image(file_data, employeeId, emp_obj)
+            print(response)
+            role = response['role']
+
+            # Dictionary mapping roles to URLs and their respective keyword arguments
+            role_urls = {
+                1: ('update_franchise_owner_documents', 'franchiseOwnersId'),
+                2: ('update_franchise_optimetry_documents', 'franchiseOptimetryId'),
+                3: ('update_franchise_sales_executives_documents', 'franchiseSaleExecutivesId'),
+                4: ('update_franchise_other_employees_documents', 'franchiseEmployeeId')
+            }
+
+            # Assuming you have employeeId available
+            if role in role_urls:
+                url_name, id_key = role_urls[role]
+                url = reverse(url_name, kwargs={id_key: employeeId})
+                return redirect(url)
+            else:
+                return redirect('dashboard')
     else:
         return redirect('login')

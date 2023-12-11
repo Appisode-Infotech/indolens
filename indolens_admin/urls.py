@@ -210,8 +210,8 @@ urlpatterns = [
     path('manage_franchise_sales_executives/edit_sales_executives/salesExecutiveId=<int:franchiseSaleExecutivesId>',
          editFranchiseSaleExecutives, name='edit_franchise_sales_executives'),
     path(
-        'manage_franchise_sales_executives/update_sales_executives_documents/salesExecutiveId=<int:franchiseSaleExecutivesId>',
-        updateFranchiseSaleExecutivesDocuments, name='update_sales_executives_documents'),
+        'manage_franchise_sales_executives/update_franchise_sales_executives_documents/salesExecutiveId=<int:franchiseSaleExecutivesId>',
+        updateFranchiseSaleExecutivesDocuments, name='update_franchise_sales_executives_documents'),
     path(
         'manage_franchise_sales_executives/enable_disable_sales_executive/route=<str:route>/saleExecutivesId=<int:franchiseSaleExecutivesId>/status=<int:status>',
         enableDisableFranchiseSaleExecutives, name='enable_disable_franchise_sales_executive'),
@@ -261,8 +261,8 @@ urlpatterns = [
     path('manage_franchise_other_employees/edit_other_employees/otherEmpId=<int:franchiseEmployeeId>',
          editFranchiseOtherEmployees,
          name='edit_franchise_other_employees'),
-    path('manage_franchise_other_employees/update_other_employees_documents/otherEmpId=<int:franchiseEmployeeId>',
-         updateFranchiseOtherEmployeesDocuments, name='update_other_employees_documents'),
+    path('manage_franchise_other_employees/update_franchise_other_employees_documents/otherEmpId=<int:franchiseEmployeeId>',
+         updateFranchiseOtherEmployeesDocuments, name='update_franchise_other_employees_documents'),
     path('manage_franchise_other_employees/view_other_employees/otherEmpId=<int:franchiseEmployeeId>',
          viewFranchiseOtherEmployees,
          name='view_franchise_other_employees'),
@@ -394,9 +394,12 @@ urlpatterns = [
         deleteOwnStoreEmployeeDocuments,
         name='delete_own_store_employee_document'
     ),
-    path(
-            'manage_franchise_store_employee/delete_franchise_store_employee_document/employeeId=<int:employeeId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-            deleteFranchiseStoreEmployeeDocuments, name='delete_franchise_store_employee_document'),
+    re_path(
+        r'^manage_franchise_store_employee/delete_franchise_store_employee_document/employeeId=(?P<employeeId>[0-9]+)/documentURL=(?P<documentURL>.+?)/document_Type=(?P<document_Type>[^/]+)$',
+        deleteFranchiseStoreEmployeeDocuments,
+        name='delete_franchise_store_employee_document'
+    ),
+
     path(
             'manage_central_inventory_products/delete_product_image/productId=<int:productId>/imageURL=<str:imageURL>',
             deleteProductImage, name='delete_product_image'),
@@ -410,6 +413,10 @@ urlpatterns = [
 
     path('manage_central_inventory_products/add_product_image/productId=<int:productId>',
             addProductImage, name='add_product_image'),
+    path('manage_own_store_employee/add_own_store_employee_image/employeeId=<int:employeeId>',
+            addOwnStoreEmployeeImage, name='add_own_store_employee_image'),
+    path('manage_franchise_store_employee/add_franchise_store_employee_image/employeeId=<int:employeeId>',
+            addFranchiseStoreEmployeeImage, name='add_franchise_store_employee_image'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

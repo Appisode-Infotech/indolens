@@ -52,17 +52,92 @@ def add_products_image(new_images, productId):
             """
             cursor.execute(get_documents_query)
             old_images = json.loads(cursor.fetchone()[0])
-            print("==========================================old product images==========================================")
-            print(old_images)
             product_image = old_images+new_images.product_img
-            print("==========================================latest product images==========================================")
-            print(product_image)
             cursor.execute(
                 f""" UPDATE central_inventory SET product_images = '{json.dumps(product_image)}' WHERE product_id = {productId}""")
         return {
             "status": True,
             "message": "Document Deleted Successfully"
         }
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def add_own_store_employee_image(file_data, employeeId, emp_obj):
+    try:
+        with connection.cursor() as cursor:
+            get_document1_query = f"""
+                        SELECT document_1_url FROM own_store_employees Where employee_id = {employeeId}
+                        """
+            cursor.execute(get_document1_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document1 = old_images + file_data.document1
+
+            cursor.execute(
+                f""" UPDATE own_store_employees SET document_1_url = '{json.dumps(document1)}', 
+                document_1_type = '{emp_obj.document_1_type}' WHERE employee_id = {employeeId}""")
+
+            get_document2_query = f"""
+                        SELECT document_2_url FROM own_store_employees Where employee_id = {employeeId}
+                        """
+            cursor.execute(get_document2_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document2 = old_images + file_data.document2
+            cursor.execute(
+                f""" UPDATE own_store_employees SET document_2_url = '{json.dumps(document2)}', 
+                document_2_type = '{emp_obj.document_2_type}' WHERE employee_id = {employeeId}""")
+
+            get_role = f""" SELECT role from own_store_employees Where employee_id = {employeeId}"""
+            cursor.execute(get_role)
+            role = cursor.fetchone()
+
+        return {
+            "status": True,
+            "role": role[0],
+            "message": "Document Inserted Successfully"
+        }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def add_franchise_store_employee_image(file_data, employeeId, emp_obj):
+    try:
+        with connection.cursor() as cursor:
+            get_document1_query = f"""
+                        SELECT document_1_url FROM franchise_store_employees Where employee_id = {employeeId}
+                        """
+            cursor.execute(get_document1_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document1 = old_images + file_data.document1
+
+            cursor.execute(
+                f""" UPDATE franchise_store_employees SET document_1_url = '{json.dumps(document1)}', 
+                document_1_type = '{emp_obj.document_1_type}' WHERE employee_id = {employeeId}""")
+
+            get_document2_query = f"""
+                        SELECT document_2_url FROM franchise_store_employees Where employee_id = {employeeId}
+                        """
+            cursor.execute(get_document2_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document2 = old_images + file_data.document2
+            cursor.execute(
+                f""" UPDATE franchise_store_employees SET document_2_url = '{json.dumps(document2)}', 
+                document_2_type = '{emp_obj.document_2_type}' WHERE employee_id = {employeeId}""")
+
+            get_role = f""" SELECT role from franchise_store_employees Where employee_id = {employeeId}"""
+            cursor.execute(get_role)
+            role = cursor.fetchone()
+
+        return {
+            "status": True,
+            "role": role[0],
+            "message": "Document Inserted Successfully"
+        }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

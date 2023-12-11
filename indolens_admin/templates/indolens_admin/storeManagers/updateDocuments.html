@@ -75,13 +75,14 @@
             <h2 class="mb-4">Update documents - Store Manager</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="/admin/lol" class="row g-3" method="post">
+                    <form action="{% url 'add_own_store_employee_image' manager.employee_id %}"  class="row g-3" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="border-top border-dashed border-300 pt-4">
                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                 <h6 class="mb-2">Document 1</h6>
                                 <div class="mb-3">
                                     <select id="document1Type" aria-label="Default select example" class="form-select"
-                                            name="document1Type">
+                                            name="document_1_type">
                                         {% if manager.document_1_type == "Aadhar" %}
                                         <option selected value="Aadhar">Aadhar</option>
                                         <option value="Driving Licence">Driving Licence</option>
@@ -92,16 +93,16 @@
                                         <option selected value="Driving Licence">Driving Licence</option>
                                         <option value="Ration Card">Ration Card</option>
                                         <option value="Voter Id">Voter Id</option>
-                                        {% elif manager.document_1_type == "Voter ID" %}
-                                        <option value="Aadhar">Aadhar</option>
-                                        <option value="Driving Licence">Driving Licence</option>
-                                        <option selected value="Ration Card">Ration Card</option>
-                                        <option value="Voter Id">Voter Id</option>
-                                        {% elif manager.document_1_type == "Ration Card" %}
+                                        {% elif manager.document_1_type == "Voter Id" %}
                                         <option value="Aadhar">Aadhar</option>
                                         <option value="Driving Licence">Driving Licence</option>
                                         <option value="Ration Card">Ration Card</option>
                                         <option selected value="Voter Id">Voter Id</option>
+                                        {% elif manager.document_1_type == "Ration Card" %}
+                                        <option value="Aadhar">Aadhar</option>
+                                        <option value="Driving Licence">Driving Licence</option>
+                                        <option selected value="Ration Card">Ration Card</option>
+                                        <option value="Voter Id">Voter Id</option>
                                         {% endif %}
                                     </select>
                                 </div>
@@ -135,7 +136,6 @@
                                         multiple)</label>
 
                                     <input class="form-control" id="document1" multiple="multiple" name="document1"
-                                           required
                                            type="file"/>
                                 </div>
 
@@ -148,10 +148,10 @@
                                 <h6 class="mb-2">Document 2</h6>
                                 <div class="mb-3">
                                     <select aria-label="Default select example" class="form-select"
-                                            name="document2Type">
+                                            name="document_2_type">
                                         {% if manager.document_2_type == "Pan Card" %}
                                         <option>Open this select menu</option>
-                                        <option selected value="1">Pan Card</option>
+                                        <option selected value="Pan Card">Pan Card</option>
                                         {% endif %}
                                     </select>
                                 </div>
@@ -184,8 +184,7 @@
                                     <label class="form-label" for="document2">Document 2 Upload (Can choose
                                         multiple)</label>
 
-                                    <input class="form-control" id="document2" multiple="multiple" name="document1"
-                                           required
+                                    <input class="form-control" id="document2" multiple="multiple" name="document2"
                                            type="file"/>
                                 </div>
 

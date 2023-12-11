@@ -69,44 +69,45 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for manager in store_manager %}
+        {% for franchise_owner in franchise_owner %}
         <div class="content">
 
             <h2 class="mb-4">Update documents - Store Manager</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="/admin/lol" class="row g-3" method="post">
+                    <form action="{% url 'add_franchise_store_employee_image' franchise_owner.franchise_owner_id %}"  class="row g-3" method="post" enctype="multipart/form-data">
+                        {% csrf_token %}
                         <div class="border-top border-dashed border-300 pt-4">
                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                 <h6 class="mb-2">Document 1</h6>
                                 <div class="mb-3">
                                     <select id="document1Type" aria-label="Default select example" class="form-select"
-                                            name="document1Type">
-                                        {% if manager.document_1_type == "Aadhar" %}
+                                            name="document_1_type">
+                                        {% if franchise_owner.document_1_type == "Aadhar" %}
                                         <option selected value="Aadhar">Aadhar</option>
                                         <option value="Driving Licence">Driving Licence</option>
                                         <option value="Ration Card">Ration Card</option>
                                         <option value="Voter Id">Voter Id</option>
-                                        {% elif manager.document_1_type == "Driving Licence" %}
+                                        {% elif franchise_owner.document_1_type == "Driving Licence" %}
                                         <option value="Aadhar">Aadhar</option>
                                         <option selected value="Driving Licence">Driving Licence</option>
                                         <option value="Ration Card">Ration Card</option>
                                         <option value="Voter Id">Voter Id</option>
-                                        {% elif manager.document_1_type == "Voter ID" %}
-                                        <option value="Aadhar">Aadhar</option>
-                                        <option value="Driving Licence">Driving Licence</option>
-                                        <option selected value="Ration Card">Ration Card</option>
-                                        <option value="Voter Id">Voter Id</option>
-                                        {% elif manager.document_1_type == "Ration Card" %}
+                                        {% elif franchise_owner.document_1_type == "Voter Id" %}
                                         <option value="Aadhar">Aadhar</option>
                                         <option value="Driving Licence">Driving Licence</option>
                                         <option value="Ration Card">Ration Card</option>
                                         <option selected value="Voter Id">Voter Id</option>
+                                        {% elif franchise_owner.document_1_type == "Ration Card" %}
+                                        <option value="Aadhar">Aadhar</option>
+                                        <option value="Driving Licence">Driving Licence</option>
+                                        <option selected value="Ration Card">Ration Card</option>
+                                        <option value="Voter Id">Voter Id</option>
                                         {% endif %}
                                     </select>
                                 </div>
                                 <div class="d-flex flex-wrap">
-                                    {% for doc in manager.document_1_url %}
+                                    {% for doc in franchise_owner.document_1_url %}
                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3">
                                         <div class="border border-300 p-2 rounded-2 me-2 mb-2">
                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -118,10 +119,11 @@
                                         </div>
                                         <a data-bs-toggle="modal"
                                            data-bs-target="#delete_document"
-                                           data-employee-id="{{ manager.employee_id }}"
-                                           data-employee-name="{{ manager.name }}"
+                                           data-employee-id="{{ franchise_owner.franchise_owner_id }}"
+                                           data-employee-name="{{ franchise_owner.name }}"
                                            data-document-preview="{{ MEDIA_URL }}{{ doc }}"
                                            data-action-type="delete"
+                                           data-action-href="{% url 'delete_franchise_store_employee_document' franchise_owner.franchise_owner_id doc 'document_1_url' %}"
                                            class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
                                         </a>
@@ -134,7 +136,6 @@
                                         multiple)</label>
 
                                     <input class="form-control" id="document1" multiple="multiple" name="document1"
-                                           required
                                            type="file"/>
                                 </div>
 
@@ -147,15 +148,15 @@
                                 <h6 class="mb-2">Document 2</h6>
                                 <div class="mb-3">
                                     <select aria-label="Default select example" class="form-select"
-                                            name="document2Type">
-                                        {% if manager.document_2_type == "Pan Card" %}
+                                            name="document_2_type">
+                                        {% if franchise_owner.document_2_type == "Pan Card" %}
                                         <option>Open this select menu</option>
-                                        <option selected value="1">Pan Card</option>
+                                        <option selected value="Pan Card">Pan Card</option>
                                         {% endif %}
                                     </select>
                                 </div>
                                 <div class="d-flex flex-wrap">
-                                    {% for doc in manager.document_2_url %}
+                                    {% for doc in franchise_owner.document_2_url %}
                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3">
                                         <div class="border border-300 p-2 rounded-2 me-2 mb-2">
                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -167,10 +168,11 @@
                                         </div>
                                         <a data-bs-toggle="modal"
                                            data-bs-target="#delete_document"
-                                           data-employee-id="{{ manager.employee_id }}"
-                                           data-employee-name="{{ manager.name }}"
+                                           data-employee-id="{{ franchise_owner.franchise_owner_id }}"
+                                           data-employee-name="{{ franchise_owner.name }}"
                                            data-document-preview="{{ MEDIA_URL }}{{ doc }}"
                                            data-action-type="delete"
+                                           data-action-href="{% url 'delete_franchise_store_employee_document' franchise_owner.franchise_owner_id doc 'document_2_url' %}"
                                            class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
                                         </a>
@@ -182,8 +184,7 @@
                                     <label class="form-label" for="document2">Document 2 Upload (Can choose
                                         multiple)</label>
 
-                                    <input class="form-control" id="document2" multiple="multiple" name="document1"
-                                           required
+                                    <input class="form-control" id="document2" multiple="multiple" name="document2"
                                            type="file"/>
                                 </div>
 
@@ -265,11 +266,12 @@ document.addEventListener("DOMContentLoaded", function () {
             var storeName = event.currentTarget.getAttribute('data-employee-name');
             var actionUrl = event.currentTarget.getAttribute('data-document-preview');
             var actionType = event.currentTarget.getAttribute('data-action-type');
+            var actionHref = event.currentTarget.getAttribute('data-action-href');
 
             modalTitle.textContent = "Delete - Document?";
             modalContent.innerHTML = `Are you sure you want to ${actionType} Document ?<br><strong>${actionUrl}</strong> for ${storeName}`;
-            modalSubmit.href = actionUrl;
-            console.log({{store_manager | safe}});
+            modalSubmit.href = actionHref;
+            console.log({{store_franchise_owner | safe}});
         });
     });
 });

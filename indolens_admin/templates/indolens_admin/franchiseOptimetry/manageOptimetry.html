@@ -240,6 +240,9 @@
                                                 Password</a>
                                             <a class="dropdown-item" href="{% url 'edit_franchise_optimetry' opti.employee_id %}">Allocate
                                                 Store</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'update_franchise_optimetry_documents' opti.employee_id %}">Update
+                                                Documents</a>
 
                                             <div class="dropdown-divider"></div>
                                             {% if opti.status == 0 %}
