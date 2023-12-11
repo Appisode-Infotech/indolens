@@ -113,9 +113,12 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-auto"><a class="btn btn-primary px-5"
+                                <div class="col-auto me-3"><a class="btn btn-primary px-5"
                                                          href="{% url 'create_sales_executives' %}"><i
                                         class="fa-solid fa-plus me-2"></i>Add Sales Executive</a></div>
+                                 <button id= "btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                        class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                </button>
                             </div>
                         </div>
                     </div>
@@ -479,6 +482,7 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 </script>
+<script src="{% static 'js/csvExport.js' %}"></script>
 
 </body>
 

@@ -81,10 +81,10 @@
                             <h2 class="mb-0">Stock Movements<span class="fw-normal text-700 ms-3">({{moved_stocks|length}})</span></h2>
                         </div>
                     </div>
-                    <div class="row g-3 justify-content-between align-items-end mb-4">
+                    <div class="mb-4">
 
-                        <div class="col-12 col-sm-auto">
-                            <div class="d-flex align-items-center">
+                        <div class="row g-3">
+                            <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
                                 <div class="search-box me-3">
                                     <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
                                         <input aria-label="Search" class="form-control search-input search"
@@ -92,6 +92,7 @@
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
                                 </div>
+                            </div>
 
                                 <div class="col-auto"><a class="btn btn-primary px-5"
                                                          href="{% url 'add_products' %}"
