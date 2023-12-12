@@ -1780,6 +1780,7 @@ def viewLabTechnician(request, labTechnicianId):
 def updateLabTechnicianDocuments(request, labTechnicianId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
+        print(response)
         return render(request, 'indolens_admin/labTechnician/updateDocuments.html',
                       {"lab_technician": response['lab_technician']})
     else:
@@ -2881,7 +2882,8 @@ def deleteMarketingHeadDocuments(request, marketingHeadId, documentURL, document
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'marketing_head', 'marketing_head_id',
                                                                             marketingHeadId)
-        return JsonResponse(response)
+        url = reverse('update_marketing_head_documents', kwargs={'marketingHeadId': marketingHeadId})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2890,7 +2892,8 @@ def deleteAccountantDocuments(request, accountantId, documentURL, document_Type)
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'accountant', 'accountant_id', accountantId)
-        return JsonResponse(response)
+        url = reverse('update_accountant_documents', kwargs={'accountantId': accountantId})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2900,7 +2903,8 @@ def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'lab_technician', 'lab_technician_id',
                                                                             labTechnicianId)
-        return JsonResponse(response)
+        url = reverse('update_lab_technician_documents', kwargs={'labTechnicianId': labTechnicianId})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -3234,6 +3238,151 @@ def addAreaHeadDocuments(request, areaHeadId):
             print(response)
 
             url = reverse('update_area_head_documents', kwargs={'areaHeadId': areaHeadId})
+            return redirect(url)
+    else:
+        return redirect('login')
+
+def addAccountantDocuments(request, accountantId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            accountant = accountant_model.accountant_model_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_accountant_doc(file_data, accountantId, accountant)
+            print(response)
+
+            url = reverse('update_accountant_documents', kwargs={'accountantId': accountantId})
+            return redirect(url)
+    else:
+        return redirect('login')
+
+def addLabTechnicianDocuments(request, LabTechnicianId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            lab_technician = lab_technician_model.lab_technician_model_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_lab_technician_doc(file_data, LabTechnicianId, lab_technician)
+            print(response)
+
+            url = reverse('update_lab_technician_documents', kwargs={'labTechnicianId': LabTechnicianId})
+            return redirect(url)
+    else:
+        return redirect('login')
+
+
+def addMarketingHeadDocuments(request, marketingHeadId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            marketing_head = marketing_head_model.marketing_head_model_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_marketing_heads_doc(file_data, marketingHeadId, marketing_head)
+            print(response)
+
+            url = reverse('update_marketing_head_documents', kwargs={'marketingHeadId': marketingHeadId})
             return redirect(url)
     else:
         return redirect('login')
