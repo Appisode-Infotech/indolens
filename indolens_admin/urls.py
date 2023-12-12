@@ -5,7 +5,6 @@ from django.conf.urls.static import static
 from django.urls import path, include
 from django.urls import re_path
 
-
 from indolens import settings
 
 urlpatterns = [
@@ -43,7 +42,8 @@ urlpatterns = [
     path('manage_central_inventory_products/add_products/', centralInventoryAddProducts, name='add_products'),
     path('manage_central_inventory_products/update_product/productId=<str:productId>', centralInventoryUpdateProduct,
          name='update_product'),
-    path('manage_central_inventory_products/update_product_images/productId=<str:productId>', centralInventoryUpdateProductImages,
+    path('manage_central_inventory_products/update_product_images/productId=<str:productId>',
+         centralInventoryUpdateProductImages,
          name='update_product_images'),
     path(
         'manage_central_inventory_products/<str:filter>/enable_disable_product/productId=<str:productId>/status=<str:status>',
@@ -61,39 +61,46 @@ urlpatterns = [
     # masters management
     path('manage_central_inventory_category/', manageMastersCategory, name='manage_central_inventory_category'),
     path('manage_central_inventory_category/add_product_category/', addProductCategory, name='add_product_category'),
-    path('manage_central_inventory_category/edit_product_category/categoryId=<int:categoryId>', editProductCategory, name='edit_product_category'),
+    path('manage_central_inventory_category/edit_product_category/categoryId=<int:categoryId>', editProductCategory,
+         name='edit_product_category'),
     path(
         'manage_central_inventory_category/enable_disable_product_category/categoryId=<int:categoryId>/status=<int:status>',
         enableDisableProductCategory, name='enable_disable_product_category'),
     path('manage_central_inventory_brands/', manageMastersBrands, name='manage_central_inventory_brands'),
     path('manage_central_inventory_brands/add_product_brand/', addMastersBrands, name='add_product_brand'),
-    path('manage_central_inventory_brands/edit_product_brand/brandId=<int:brandId>', editMastersBrands, name='edit_product_brand'),
+    path('manage_central_inventory_brands/edit_product_brand/brandId=<int:brandId>', editMastersBrands,
+         name='edit_product_brand'),
     path('manage_central_inventory_brands/enable_disable_product_brand/brandId=<int:brandId>/status=<int:status>',
          enableDisableMastersBrands, name='enable_disable_product_brand'),
     path('manage_central_inventory_shapes/', manageMastersShapes, name='manage_central_inventory_shapes'),
     path('manage_central_inventory_shapes/add_frame_shape/', addMastersShapes, name='add_frame_shape'),
-    path('manage_central_inventory_shapes/edit_frame_shape/shapeId=<int:shapeId>', editMastersShapes, name='edit_frame_shape'),
+    path('manage_central_inventory_shapes/edit_frame_shape/shapeId=<int:shapeId>', editMastersShapes,
+         name='edit_frame_shape'),
     path('manage_central_inventory_shapes/enable_disable_frame_shape/shapeId=<int:shapeId>/status=<int:status>',
          enableDisableMastersShapes, name='enable_disable_frame_shape'),
     path('manage_central_inventory_frame_types/', manageMastersFrameType, name='manage_central_inventory_frame_types'),
     path('manage_central_inventory_frame_types/add_frame_type/', addMastersFrameType, name='add_frame_type'),
-    path('manage_central_inventory_frame_types/edit_frame_type/frameId=<int:frameId>', editMastersFrameType, name='edit_frame_type'),
+    path('manage_central_inventory_frame_types/edit_frame_type/frameId=<int:frameId>', editMastersFrameType,
+         name='edit_frame_type'),
     path('manage_central_inventory_frame_types/enable_disable_frame_type/frameId=<int:frametypeId>/status=<int:status>',
          enableDisableMastersFrameType, name='enable_disable_frame_type'),
     path('manage_central_inventory_color/', manageMastersColor, name='manage_central_inventory_color'),
     path('manage_central_inventory_color/add_master_color/', addMastersColor, name='add_master_color'),
-    path('manage_central_inventory_color/edit_master_color/colorId=<int:colorId>', editMastersColor, name='edit_master_color'),
+    path('manage_central_inventory_color/edit_master_color/colorId=<int:colorId>', editMastersColor,
+         name='edit_master_color'),
     path('manage_central_inventory_color/enable_disable_master_color/colorId=<int:colorId>/status=<int:status>',
          enableDisableMastersColor, name='enable_disable_master_color'),
     path('manage_central_inventory_materials/', manageMastersMaterials, name='manage_central_inventory_materials'),
     path('manage_central_inventory_materials/add_master_material/', addMastersMaterials, name='add_master_material'),
-    path('manage_central_inventory_materials/edit_master_material/materialId=<int:materialId>', editMastersMaterials, name='edit_master_material'),
+    path('manage_central_inventory_materials/edit_master_material/materialId=<int:materialId>', editMastersMaterials,
+         name='edit_master_material'),
     path(
         'manage_central_inventory_materials/enable_disable_master_material/materialId=<int:materialId>/status=<int:status>',
         enableDisableMastersMaterials, name='enable_disable_master_material'),
     path('manage_central_inventory_units/', manageMastersUnits, name='manage_central_inventory_units'),
     path('manage_central_inventory_units/add_Master_units', addMastersUnits, name='add_Master_units'),
-    path('manage_central_inventory_units/edit_master_units/unitsId=<int:unitId>', editMastersUnits, name='edit_master_units'),
+    path('manage_central_inventory_units/edit_master_units/unitsId=<int:unitId>', editMastersUnits,
+         name='edit_master_units'),
     path('manage_central_inventory_units/enable_disable_master_units/unitsId=<int:unitId>/status=<int:status>',
          enableDisableMastersUnits, name='enable_disable_master_units'),
     # customers
@@ -225,8 +232,9 @@ urlpatterns = [
     path('manage_accountant/update_accountant_documents/accountantId=<int:accountantId>', updateAccountantDocuments,
          name='update_accountant_documents'),
     path('manage_accountant/view_accountant/accountantId=<int:accountantId>', viewAccountant, name='view_accountant'),
-    path('manage_accountant/enable_disable_accountant/route=<str:route>/accountantId=<int:accountantId>/status=<int:status>',
-         enableDisableAccountant, name='enable_disable_accountant'),
+    path(
+        'manage_accountant/enable_disable_accountant/route=<str:route>/accountantId=<int:accountantId>/status=<int:status>',
+        enableDisableAccountant, name='enable_disable_accountant'),
     # manage lab tech
     path('manage_lab_technician/status=<str:status>', manageLabTechnician, name='manage_lab_technician'),
     path('manage_lab_technician/create_lab_technician/', createLabTechnician, name='create_lab_technician'),
@@ -261,8 +269,9 @@ urlpatterns = [
     path('manage_franchise_other_employees/edit_other_employees/otherEmpId=<int:franchiseEmployeeId>',
          editFranchiseOtherEmployees,
          name='edit_franchise_other_employees'),
-    path('manage_franchise_other_employees/update_franchise_other_employees_documents/otherEmpId=<int:franchiseEmployeeId>',
-         updateFranchiseOtherEmployeesDocuments, name='update_franchise_other_employees_documents'),
+    path(
+        'manage_franchise_other_employees/update_franchise_other_employees_documents/otherEmpId=<int:franchiseEmployeeId>',
+        updateFranchiseOtherEmployeesDocuments, name='update_franchise_other_employees_documents'),
     path('manage_franchise_other_employees/view_other_employees/otherEmpId=<int:franchiseEmployeeId>',
          viewFranchiseOtherEmployees,
          name='view_franchise_other_employees'),
@@ -363,7 +372,6 @@ urlpatterns = [
     path('un_assign_area_head_own_store/?empId=<int:empId>/?storeId=<int:storeId>', unAssignAreaHeadOwnStore,
          name='un_assign_area_head_own_store'),
 
-
     # assign/un assign Lab Technician
     path('assign_lab_technician/route=<str:route>', assignLabTechnician,
          name='assign_lab_technician'),
@@ -372,23 +380,25 @@ urlpatterns = [
         unAssignLabTechnician,
         name='un_assign_lab_technician'),
 
-
     # Delete Documents
+    re_path(
+        r'^manage_sub_admins/delete_sub_admin_document/subAdminId=(?P<subAdminId>[0-9]+)/documentURL=(?P<documentURL>.+?)/document_Type=(?P<document_Type>[^/]+)$',
+        deleteSubAdminDocuments, name='delete_sub_admin_document'
+    ),
+    re_path(
+        r'^manage_area_head/delete_area_head_document/areaHeadId=(?P<areaHeadId>[0-9]+)/documentURL=(?P<documentURL>.+?)/document_Type=(?P<document_Type>[^/]+)$',
+        deleteAreaHeadDocuments,
+        name='delete_area_head_document'
+    ),
     path(
-            'manage_sub_admins/delete_sub_admin_document/subAdminId=<int:subAdminId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-            deleteSubAdminDocuments, name='delete_sub_admin_document'),
+        'manage_marketing_head/delete_marketing_head_document/marketingHeadId=<int:marketingHeadId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+        deleteMarketingHeadDocuments, name='delete_marketing_head_document'),
     path(
-            'manage_area_head/delete_area_head_document/areaHeadId=<int:areaHeadId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-            deleteAreaHeadDocuments, name='delete_area_head_document'),
+        'manage_accountant/delete_accountant_document/accountantId=<int:accountantId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+        deleteAccountantDocuments, name='delete_accountant_document'),
     path(
-            'manage_marketing_head/delete_marketing_head_document/marketingHeadId=<int:marketingHeadId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-            deleteMarketingHeadDocuments, name='delete_marketing_head_document'),
-    path(
-            'manage_accountant/delete_accountant_document/accountantId=<int:accountantId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-            deleteAccountantDocuments, name='delete_accountant_document'),
-    path(
-            'manage_lab_technician/delete_lab_tech_document/labTechnicianId=<int:labTechnicianId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-            deleteLabTechnicianDocuments, name='delete_lab_tech_document'),
+        'manage_lab_technician/delete_lab_tech_document/labTechnicianId=<int:labTechnicianId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
+        deleteLabTechnicianDocuments, name='delete_lab_tech_document'),
     re_path(
         r'^manage_own_store_employee/delete_own_store_employee_document/employeeId=(?P<employeeId>[0-9]+)/documentURL=(?P<documentURL>.+?)/document_Type=(?P<document_Type>[^/]+)$',
         deleteOwnStoreEmployeeDocuments,
@@ -401,22 +411,26 @@ urlpatterns = [
     ),
 
     path(
-            'manage_central_inventory_products/delete_product_image/productId=<int:productId>/imageURL=<str:imageURL>',
-            deleteProductImage, name='delete_product_image'),
+        'manage_central_inventory_products/delete_product_image/productId=<int:productId>/imageURL=<str:imageURL>',
+        deleteProductImage, name='delete_product_image'),
     re_path(
-            r'^manage_central_inventory_products/delete_product_image/productId=(?P<productId>[0-9]+)/imageURL=(?P<imageURL>.+)$',
-            deleteProductImage,
-            name='delete_product_image'
-        ),
+        r'^manage_central_inventory_products/delete_product_image/productId=(?P<productId>[0-9]+)/imageURL=(?P<imageURL>.+)$',
+        deleteProductImage,
+        name='delete_product_image'
+    ),
 
-    #Update Image
+    # Update Image
 
     path('manage_central_inventory_products/add_product_image/productId=<int:productId>',
-            addProductImage, name='add_product_image'),
+         addProductImage, name='add_product_image'),
     path('manage_own_store_employee/add_own_store_employee_image/employeeId=<int:employeeId>',
-            addOwnStoreEmployeeImage, name='add_own_store_employee_image'),
+         addOwnStoreEmployeeImage, name='add_own_store_employee_image'),
     path('manage_franchise_store_employee/add_franchise_store_employee_image/employeeId=<int:employeeId>',
-            addFranchiseStoreEmployeeImage, name='add_franchise_store_employee_image'),
+         addFranchiseStoreEmployeeImage, name='add_franchise_store_employee_image'),
+    path('manage_sub_admins/add_sub_admins_doc/subAdminId=<int:subAdminId>',
+         addSubAdminDocuments, name='add_sub_admins_doc'),
+    path('manage_area_head/add_area_head_doc/areaHeadId=<int:areaHeadId>',
+         addAreaHeadDocuments, name='add_area_head_doc'),
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

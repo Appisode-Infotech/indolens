@@ -93,12 +93,12 @@
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
                                                                 data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
-                                                                src="/static/img/team/avatar.png"/></div>
+                                                                src="{{MEDIA_URL}}{{admin.profile_pic}}"/></div>
                         </div>
 
                         <div class="col-md-12">
                             <label class="form-label" for="profilePic">Upload profile pic</label>
-                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic" required
+                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic"
                                    type="file" value="{{ admin.profile_pic }}"/>
                         </div>
                         <div class="col-md-6">
@@ -125,24 +125,6 @@
                             <input class="form-control" id="phone" name="phone" required="" type="text"
                                    value="{{admin.phone}}"/>
                             <div class="invalid-feedback">Please provide a valid phone number.</div>
-                        </div>
-                        <div class="col-md-6">
-
-                            <label class="form-label" for="password">Password</label>
-
-                            <input class="form-control" id="password" name="password" required="" type="text"
-                                   value="{{admin.password}}"/>
-                            <div class="invalid-feedback">Please provide a valid Password.</div>
-                        </div>
-
-                        <div class="col-md-12">
-
-                            <label class="form-label" for="confirmPassword">Confirm Password</label>
-
-                            <input class="form-control" id="confirmPassword" name="confirmPassword" required=""
-                                   type="text"
-                                   value="{{admin.password}}"/>
-                            <div class="invalid-feedback">Passwords do not match.</div>
                         </div>
 
                         <div class="col-12">

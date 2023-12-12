@@ -92,7 +92,7 @@ def get_sub_admin_by_id(said):
         return {"status": False, "message": str(e)}, 301
 
 
-def edit_sub_admin(sub_admin):
+def edit_sub_admin(sub_admin, files):
     try:
         with connection.cursor() as cursor:
             update_admin_query = f"""
@@ -102,13 +102,8 @@ def edit_sub_admin(sub_admin):
                     email = '{sub_admin.email}',
                     phone = '{sub_admin.phone}',
                     password = '{sub_admin.password}',
-                    profile_pic = '{sub_admin.profile_pic}',
+                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{sub_admin.complete_address}',
-                    document_1_type = '{sub_admin.document_1_type}',
-                    document_1_url = '{sub_admin.document1}',
-                    document_2_type = '{sub_admin.document_2_type}',
-                    document_2_url = '{sub_admin.document2}',
-                    status = 1,
                     last_updated_by = '{sub_admin.last_updated_by}',
                     last_updated_on = '{today}'
                 WHERE

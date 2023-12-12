@@ -143,3 +143,73 @@ def add_franchise_store_employee_image(file_data, employeeId, emp_obj):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def add_sub_admin_doc(file_data, subAdminId, emp_obj):
+    try:
+        with connection.cursor() as cursor:
+            get_document1_query = f"""
+                        SELECT document_1_url FROM admin Where admin_id = {subAdminId}
+                        """
+            cursor.execute(get_document1_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document1 = old_images + file_data.document1
+
+            cursor.execute(
+                f""" UPDATE admin SET document_1_url = '{json.dumps(document1)}', 
+                document_1_type = '{emp_obj.document_1_type}' WHERE admin_id = {subAdminId}""")
+
+            get_document2_query = f"""
+                        SELECT document_2_url FROM admin Where admin_id = {subAdminId}
+                        """
+            cursor.execute(get_document2_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document2 = old_images + file_data.document2
+            cursor.execute(
+                f""" UPDATE admin SET document_2_url = '{json.dumps(document2)}', 
+                document_2_type = '{emp_obj.document_2_type}' WHERE admin_id = {subAdminId}""")
+
+        return {
+            "status": True,
+            "message": "Document Inserted Successfully"
+        }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def add_area_head_doc(file_data, areaHeadId, area_head):
+    try:
+        with connection.cursor() as cursor:
+            get_document1_query = f"""
+                        SELECT document_1_url FROM area_head Where area_head_id = {areaHeadId}
+                        """
+            cursor.execute(get_document1_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document1 = old_images + file_data.document1
+
+            cursor.execute(
+                f""" UPDATE area_head SET document_1_url = '{json.dumps(document1)}', 
+                document_1_type = '{area_head.document1_type}' WHERE area_head_id = {areaHeadId}""")
+
+            get_document2_query = f"""
+                        SELECT document_2_url FROM area_head Where area_head_id = {areaHeadId}
+                        """
+            cursor.execute(get_document2_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document2 = old_images + file_data.document2
+            cursor.execute(
+                f""" UPDATE area_head SET document_2_url = '{json.dumps(document2)}', 
+                document_2_type = '{area_head.document2_type}' WHERE area_head_id = {areaHeadId}""")
+
+        return {
+            "status": True,
+            "message": "Document Inserted Successfully"
+        }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

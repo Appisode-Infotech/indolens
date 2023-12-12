@@ -295,9 +295,43 @@ def createSubAdmin(request):
 def editSubAdmin(request, subAdminId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic'
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+
             sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
-            response, status_code = sub_admin_controller.edit_sub_admin(sub_admin)
-            return redirect('manageSubAdmins')
+            response, status_code = sub_admin_controller.edit_sub_admin(sub_admin, file_data)
+            url = reverse('view_sub_admin', kwargs={'subAdminId': subAdminId})
+            return redirect(url)
         else:
             response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
             return render(request, 'indolens_admin/subAdmin/editSubAdmin.html',
@@ -2826,7 +2860,8 @@ def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'admin', 'admin_id', subAdminId)
-        return JsonResponse(response)
+        url = reverse('update_sub_admin_documents', kwargs={'subAdminId': subAdminId})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2835,7 +2870,8 @@ def deleteAreaHeadDocuments(request, areaHeadId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'area_head', 'area_head_id', areaHeadId)
-        return JsonResponse(response)
+        url = reverse('update_area_head_documents', kwargs={'areaHeadId': areaHeadId})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -3042,6 +3078,8 @@ def addOwnStoreEmployeeImage(request, employeeId):
                 return redirect('dashboard')
     else:
         return redirect('login')
+
+
 def addFranchiseStoreEmployeeImage(request, employeeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
@@ -3101,5 +3139,101 @@ def addFranchiseStoreEmployeeImage(request, employeeId):
                 return redirect(url)
             else:
                 return redirect('dashboard')
+    else:
+        return redirect('login')
+
+def addSubAdminDocuments(request, subAdminId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            emp_obj = store_employee_model.store_employee_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_sub_admin_doc(file_data, subAdminId, emp_obj)
+            print(response)
+
+            url = reverse('update_sub_admin_documents', kwargs={'subAdminId': subAdminId})
+            return redirect(url)
+    else:
+        return redirect('login')
+
+def addAreaHeadDocuments(request, areaHeadId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            area_head = area_head_model.area_head_model_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_area_head_doc(file_data, areaHeadId, area_head)
+            print(response)
+
+            url = reverse('update_area_head_documents', kwargs={'areaHeadId': areaHeadId})
+            return redirect(url)
     else:
         return redirect('login')
