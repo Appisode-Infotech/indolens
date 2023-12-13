@@ -109,55 +109,103 @@
                         <table class="table fs--1 mb-0 border-top border-200">
                             <thead>
                             <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:30%;">STORE NAME
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="storeName"
+                                    scope="col">STORE NAME
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="displayName" scope="col">
                                     DISPLAY NAME
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
-                                    STORE ADMIN
+                                <th class="sort align-middle ps-3" data-sort="storeAdmin" scope="col">
+                                    STORE MANAGER
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="date" scope="col">
                                     CREATED DATE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="deadline" scope="col" style="width:15%;">
+                                <th class="sort align-middle ps-3" data-sort="city" scope="col">
                                     CITY
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">STATUS
+                                <th class="sort align-middle ps-3" data-sort="status" scope="col">STATUS
                                 </th>
 
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
-                            {% for store in own_store_list %}
+                            {% for store in own_stores %}
                             <tr class="position-static">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 storeName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_own_store_area_head' store.store_id %}">{{store.store_name}}</a>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap displayName ps-3 py-4">
                                     <p class="mb-0 fs--1 text-900">{{store.store_display_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span></td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap storeAdmin ">
+                                    {% if store.manager_name != None %}
+
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{store.manager_name}}</p>
+                                    {% else %}
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle white-space-nowrap date ps-3 py-4 date">
                                     <p class="mb-0 fs--1 text-900">{{store.created_on}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                <td class="align-middle white-space-nowrap task ps-3 py-4 city">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{store.store_city}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end statuses">
+                                <td class="align-middle white-space-nowrap text-center status">
                                     {% if store.status == 0 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
-                                {% elif store.status == 1 %}
-                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
+                                    {% elif store.status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
                                 {% endif %}
+                                <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                    <div class="font-sans-serif btn-reveal-trigger position-static">
+                                        <button aria-expanded="false"
+                                                aria-haspopup="true"
+                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                data-boundary="window"
+                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
+                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
+                                                                                             href="{% url 'view_own_store' store.store_id %}">View</a>
+                                            <a class="dropdown-item"
+                                               href="{% url 'edit_own_store' store.store_id %}">Edit</a>
+
+                                            <div class="dropdown-divider"></div>
+                                            {% if store.status == 0 %}
+                                            <a class="dropdown-item text-success"
+                                               type="button"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#enable_disable_store"
+                                               data-store-id="{{ store.store_id }}"
+                                               data-store-name="{{ store.store_name }}"
+                                               data-action-type="enable"
+                                               data-action-url="{% url 'enable_disable_own_store' store.store_id 1 status %}">
+                                                Make Active
+                                            </a>
+
+                                            {% elif store.status == 1 %}
+                                            <a class="dropdown-item text-danger"
+                                               type="button"
+                                               href="{% url 'enable_disable_own_store' store.store_id 1 status%}"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#enable_disable_store"
+                                               data-store-id="{{ store.store_id }}"
+                                               data-store-name="{{ store.store_name }}"
+                                               data-action-type="disable"
+                                               data-action-url="{% url 'enable_disable_own_store' store.store_id 0 status %}">
+                                                Make Inactive
+                                            </a>
+                                            {% endif %}
+                                        </div>
+                                    </div>
+                                </td>
                             </tr>
                             {% endfor %}
                             </tbody>
