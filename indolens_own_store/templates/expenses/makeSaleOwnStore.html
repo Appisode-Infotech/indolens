@@ -68,6 +68,8 @@
 
 
 
+
+
     </script>
 </head>
 
@@ -469,6 +471,8 @@
 
 
 
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -618,70 +622,81 @@ function updateProductFields(selectElement, cardIndex) {
 
     let selectedProduct = stocks_list.find(product => product.product_id == selectElement.value);
 
-    let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
-    let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
-    let productSkuField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
-    let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
-    let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-    let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
-    let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
-    let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-    let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
-    let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-    let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
-    let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    if (selectedProduct.category_id === 1) {
+        let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
+        let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
+        let productSkuField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
+        let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
+        let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
+        let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
+        let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+        let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+        let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
+        let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
+        let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
+        let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
 
 
+        productCategoryField.value = selectedProduct.category_name;
+        productBrandField.value = selectedProduct.brand_name;
+        productSkuField.value = selectedProduct.hsn;
+        productAvailableQtyField.value = selectedProduct.product_quantity;
+        productUnitPriceField.value = selectedProduct.sale_price;
+        productPurchaseQtyField.value = '';
+        productPurchaseQtyField.max = selectedProduct.product_quantity;
+        productProductTotalField.value = '';
 
-    productCategoryField.value = selectedProduct.category_name;
-    productBrandField.value = selectedProduct.brand_name;
-    productSkuField.value = selectedProduct.hsn;
-    productAvailableQtyField.value = selectedProduct.product_quantity;
-    productUnitPriceField.value = selectedProduct.sale_price;
-    productPurchaseQtyField.value = '';
-    productPurchaseQtyField.max = selectedProduct.product_quantity;
-    productProductTotalField.value = '';
 
-    if (selectedProduct.discount > 0) {
-        discountCheckDiv.style.display = 'block';
-        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-        discountValueField.value = selectedProduct.discount;
-    } else {
-        discountCheckDiv.style.display = 'none';
+        productCategoryField.value = selectedProduct.category_name;
+        productBrandField.value = selectedProduct.brand_name;
+        productSkuField.value = selectedProduct.hsn;
+        productAvailableQtyField.value = selectedProduct.product_quantity;
+        productUnitPriceField.value = selectedProduct.sale_price;
+        productPurchaseQtyField.value = '';
+        productPurchaseQtyField.max = selectedProduct.product_quantity;
+        productProductTotalField.value = '';
+
+        if (selectedProduct.discount > 0) {
+            discountCheckDiv.style.display = 'block';
+            discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+            discountValueField.value = selectedProduct.discount;
+        } else {
+            discountCheckDiv.style.display = 'none';
+        }
+
+
+        productPurchaseQtyField.addEventListener('input', function () {
+            let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
+            let productTotal;
+            if (discountCheckbox.checked) {
+                // Apply discount if the checkbox is checked
+                let discountPercentage = parseFloat(discountValueField.value) || 0;
+                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+                productTotal = purchaseQty * discountedPrice;
+            } else {
+                // No discount, use the original sale price
+                productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+            }
+            productProductTotalField.value = productTotal.toFixed(2);
+            let jsonData = getFormData();
+            generatePowerCards(cardIndex, purchaseQty);
+        });
+
+        discountCheckbox.addEventListener('change', function () {
+            let isChecked = discountCheckbox.checked;
+            if (isChecked) {
+                let discountPercentage = parseFloat(discountValueField.value) || 0;
+                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+                productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+            } else {
+                productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+                productProductTotalField.innerHTML = '';
+            }
+            let jsonData = getFormData();
+
+        });
+        let jsonData = getFormData();
     }
-
-    productPurchaseQtyField.addEventListener('input', function () {
-        let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
-        let productTotal;
-        if (discountCheckbox.checked) {
-            // Apply discount if the checkbox is checked
-            let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-            productTotal = purchaseQty * discountedPrice;
-        } else {
-            // No discount, use the original sale price
-            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
-        }
-        productProductTotalField.value = productTotal.toFixed(2);
-        let jsonData = getFormData();
-        generatePowerCards(cardIndex, purchaseQty);
-    });
-
-    discountCheckbox.addEventListener('change', function () {
-        let isChecked = discountCheckbox.checked;
-        if (isChecked) {
-            let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-            productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
-        } else {
-            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
-            productProductTotalField.innerHTML = '';
-        }
-        let jsonData = getFormData();
-
-    });
-    let jsonData = getFormData();
-
 }
 function removeProductCard(removeButton) {
     // Find the parent product card and remove it
@@ -1157,9 +1172,10 @@ document.getElementById('confirmSale').addEventListener('click', function () {
 });
 
 
-function updateLensFields(selectedLens,productCount) {
+function updateLensFields(selectedLens, productCount) {
 
 }
+
 </script>
 </body>
 
