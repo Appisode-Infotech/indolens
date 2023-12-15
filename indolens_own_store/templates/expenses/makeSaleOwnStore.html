@@ -60,16 +60,6 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -473,6 +463,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -503,678 +494,91 @@
 {{ customers_list|json_script:"customersList" }}
 <script>
     let productCardCount = 1;
-var stocks_list = JSON.parse(document.getElementById('stocksList').textContent);
-createProductCard();
-function createProductCard() {
-    // Create a new product card element
-    let productCard = document.createElement("div");
-    productCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
+    var stocks_list = JSON.parse(document.getElementById('stocksList').textContent);
 
-    // Build the product card structure dynamically
-    productCard.innerHTML = `
-         <div class="col text-end">
-              <a type="button" class="text-danger" onclick="removeProductCard(this)">
-                Remove <i class="fas fa-trash"></i>
-              </a>
-         </div>
-        <div class="mb2 col-12">
-          <h5 class="mb-3">Select Product</h5>
-          <select onchange="updateProductFields(this, ${productCardCount})"
-            class="form-select" data-choices="data-choices"
-            data-options='{"removeItemButton":true,"placeholder":true}'
-            name="product" required="required">
-            <option value="">Select product</option>
-            <!-- Populate options dynamically, e.g., from stocks_list -->
-            {% for product in stocks_list %}
-            <option value="{{product.product_id}}">{{product.product_name}}</option>
-            {% endfor %}
-          </select>
-          <div class="custom-error" style="color: red;"></div>
-        </div>
-        <div id="product_info" class="row g-3 mb-3">
-          <div class="mb2 col-4">
-            <h5 class="mb-3">Product Category</h5>
-            <input class="form-control" name="product_category[${productCardCount}]"
-              placeholder="Category"
-              required="required"
-              type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.</div>
-          </div>
-          <div class="mb2 col-4">
-            <h5 class="mb-3">Product Brand</h5>
-            <input class="form-control" name="product_brand[${productCardCount}]"
-              placeholder="Brand"
-              required="required"
-              type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.</div>
-          </div>
-          <!-- Add the rest of your product card HTML structure here -->
-          <div class="mb2 col-4">
-            <h5 class="mb-3">Product HSN</h5>
-            <input class="form-control" name="product_hsn[${productCardCount}]"
-              placeholder="HSN"
-              required="required"
-              type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.</div>
-          </div>
-          <div class="mb2 col-6">
-            <h5 class="mb-3">Available Quantity</h5>
-            <input class="form-control" name="available_qty[${productCardCount}]"
-              placeholder="Available Quantity"
-              required="required"
-              type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.</div>
-          </div>
-          <div class="mb2 col-6">
-            <h5 class="mb-3">Unit Price</h5>
-            <input class="form-control" name="unit_price[${productCardCount}]"
-              placeholder="Unit Price"
-              required="required"
-              type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.</div>
-          </div>
-          <div class="mb2 col-6">
-            <h5 class="mb-3">Purchase Quantity</h5>
-            <input class="form-control" name="purchase_qty[${productCardCount}]"
-              placeholder="Purchase quantity"
-              required="required"
-              type="number"
-              min="1"
-              type="text" value=""/>
-            <div class="invalid-feedback">This field should be 1 in minimum and should be less than available quantity.</div>
-          </div>
-          <div class="mb2 col-6">
-            <h5 class="mb-3">Product Total</h5>
-            <input class="form-control" name="product_total[${productCardCount}]"
-              placeholder="Product Total"
-              required="required"
-              type="text" value="0" readonly/>
-            <div class="invalid-feedback">This field is required.</div>
-          </div>
-          <div id="discount_check_div[${productCardCount}]" class="form-check" style="display:none">
-                 <input  id="discount_value_field[${productCardCount}]" type="hidden" name="discount_percentage[${productCardCount}]" required="required" readonly/>
-                 <input class="form-check-input" type="checkbox" name="discount_checked[${productCardCount}]" id="bootstrap-wizard-validation-wizard-checkbox" />
-                 <label id="discount_value[${productCardCount}]" class="form-check-label text-900" for="bootstrap-wizard-validation-wizard-checkbox"></label>
-          </div>
-        </div>
-      `;
+    function updateCustomerFields(selectCustomerField) {
+        var customers_list = JSON.parse(document.getElementById('customersList').textContent);
+        let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
 
-    // Append the product card to the products container
-    document.querySelector("#products_container").appendChild(productCard);
+        var customerNameInput = document.getElementsByName("customer_name")[0];
+        var customerEmailInput = document.getElementsByName("customer_email")[0];
+        var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+        var customerAgeInput = document.getElementsByName("customer_age")[0];
+        var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+        var customerCityInput = document.getElementsByName("customer_city")[0];
+        var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+        var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+        //customerDataField
+        var customerDataTextarea = document.getElementsByName("customerData")[0];
 
-    // Optionally, you can now initialize any JavaScript plugins for the new card
-    // For example, if you're using Choices.js:
-    let choicesInstance = new Choices(productCard.querySelector("[name='product']"), {
-        // Pass any necessary options for Choices.js
-        removeItemButton: true,
-        placeholder: true,
-    });
+        customerNameInput.value = selectCustomer.name;
+        customerEmailInput.value = selectCustomer.email;
+        customerPhoneInput.value = selectCustomer.phone;
+        customerAgeInput.value = selectCustomer.age;
+        customerGenderSelect.value = selectCustomer.gender;
+        customerCityInput.value = selectCustomer.city;
+        customerLanguageSelect.value = selectCustomer.language;
+        customerAddressTextarea.value = selectCustomer.address;
+        customerDataTextarea.value = selectCustomer.address;
 
-    productCardCount++;
-    let jsonData = getFormData();
+        var customerdata = {
+            name: selectCustomer.name,
+            email: selectCustomer.email,
+            phone: selectCustomer.phone,
+            age: selectCustomer.age,
+            gender: selectCustomer.gender,
+            city: selectCustomer.city,
+            language: selectCustomer.language,
+            address: selectCustomer.address
+        };
 
-}
-
-function updateProductFields(selectElement, cardIndex) {
-    removePowerBoxes(cardIndex);
-    // Update duplicated product categories and brands within the same segment
-    let selectedIndex = selectElement.selectedIndex;
-
-    let selectedProduct = stocks_list.find(product => product.product_id == selectElement.value);
-
-    if (selectedProduct.category_id === 1) {
-        let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
-        let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
-        let productSkuField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
-        let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
-        let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-        let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
-        let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
-        let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-        let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
-        let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-        let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
-        let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-
-
-        productCategoryField.value = selectedProduct.category_name;
-        productBrandField.value = selectedProduct.brand_name;
-        productSkuField.value = selectedProduct.hsn;
-        productAvailableQtyField.value = selectedProduct.product_quantity;
-        productUnitPriceField.value = selectedProduct.sale_price;
-        productPurchaseQtyField.value = '';
-        productPurchaseQtyField.max = selectedProduct.product_quantity;
-        productProductTotalField.value = '';
-
-
-        productCategoryField.value = selectedProduct.category_name;
-        productBrandField.value = selectedProduct.brand_name;
-        productSkuField.value = selectedProduct.hsn;
-        productAvailableQtyField.value = selectedProduct.product_quantity;
-        productUnitPriceField.value = selectedProduct.sale_price;
-        productPurchaseQtyField.value = '';
-        productPurchaseQtyField.max = selectedProduct.product_quantity;
-        productProductTotalField.value = '';
-
-        if (selectedProduct.discount > 0) {
-            discountCheckDiv.style.display = 'block';
-            discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-            discountValueField.value = selectedProduct.discount;
-        } else {
-            discountCheckDiv.style.display = 'none';
-        }
-
-
-        productPurchaseQtyField.addEventListener('input', function () {
-            let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
-            let productTotal;
-            if (discountCheckbox.checked) {
-                // Apply discount if the checkbox is checked
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productTotal = purchaseQty * discountedPrice;
-            } else {
-                // No discount, use the original sale price
-                productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
-            }
-            productProductTotalField.value = productTotal.toFixed(2);
-            let jsonData = getFormData();
-            generatePowerCards(cardIndex, purchaseQty);
-        });
-
-        discountCheckbox.addEventListener('change', function () {
-            let isChecked = discountCheckbox.checked;
-            if (isChecked) {
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
-            } else {
-                productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
-                productProductTotalField.innerHTML = '';
-            }
-            let jsonData = getFormData();
-
-        });
-        let jsonData = getFormData();
-    }
-}
-function removeProductCard(removeButton) {
-    // Find the parent product card and remove it
-    let productCard = removeButton.closest(".product_widget");
-    if (productCard) {
-        productCard.remove();
-    }
-    let jsonData = getFormData();
-}
-
-function getFormData() {
-    let formData = [];
-    let cartDataField = document.querySelector(`[name='cartData']`);
-    // Iterate through all product cards
-    let productCards = document.querySelectorAll('.product_widget');
-    productCards.forEach((productCard, index) => {
-        let productData = {};
-
-        // Iterate through all form elements within the product card
-        let formElements = productCard.querySelectorAll('input, select');
-        formElements.forEach((element) => {
-            let key = element.name;
-            let value = element.value;
-
-
-            if (element.name.startsWith('power[')) {
-                // Handle power checkboxes separately
-                if (element.checked) {
-                    // Add power value only if the checkbox is checked
-                    productData[key] = value;
-                }
-            } else {
-                // Handle other form elements
-                if (key !== undefined && key !== null && key !== "") {
-                    if (element.type === 'checkbox' && !element.checked && !element.name.startsWith('power[')) {
-                        productData[key] = 'off';
-                    } else {
-                        productData[key] = value;
-                    }
-                }
-            }
-        });
-        // Add productData to formData array
-        formData.push(productData);
-    });
-    // Convert formData array to JSON string
-    let jsonData = JSON.stringify(formData);
-    // Set the JSON string as the value of cartDataField
-    cartDataField.value = jsonData;
-    return formData;
-}
-
-
-
-function generatePowerCards(cardIndex, quantity) {
-    // Remove existing power cards before generating new ones
-    removePowerBoxes(cardIndex);
-    let productWidget = document.querySelector(`.product_widget:nth-child(${cardIndex})`);
-
-    // Create power card elements based on the specified quantity
-    for (let i = 0; i < quantity; i++) {
-        let powerCard = document.createElement("div");
-        powerCard.classList.add(`power_card_${cardIndex}`, "power_card", "mb-3");
-        // Build the power card structure dynamically
-        powerCard.innerHTML = `
-            <h5>Power Card ${i + 1}</h5>
-            <div class="row g-3 mb-3">
-            <div class="col-12 col-lg-2 form-check">
-                <input class="form-check-input" type="checkbox" name="power[${cardIndex}][${i}]" value="Stock" id="power_stock_${cardIndex}_${i}" onchange="handleCheckboxChange(this)">
-                <label class="form-check-label" for="power_stock_${cardIndex}_${i}">Stock</label>
-            </div>
-            <div class="col-12 col-lg-2 form-check">
-                <input class="form-check-input" type="checkbox" name="power[${cardIndex}][${i}]" value="Rx" id="power_rx_${cardIndex}_${i}" onchange="handleCheckboxChange(this)">
-                <label class="form-check-label" for="power_rx_${cardIndex}_${i}">Rx</label>
-            </div>
-            <div class="col-12 col-lg-2 form-check">
-                <input class="form-check-input" type="checkbox" name="power[${cardIndex}][${i}]" value="No Lens" id="power_no_lens_${cardIndex}_${i}" onchange="handleCheckboxChange(this)" checked="checked">
-                <label class="form-check-label" for="power_no_lens_${cardIndex}_${i}">No Lens</label>
-            </div>
-            </div>
-            <div class="row mb-3 stock_power_card[${cardIndex}][${i}] d-none">
-            <div class="mb2 col-12">
-            <h5 class="mb-3">Select Lens</h5>
-              <select onchange="updateLensFields(this, ${productCardCount})"
-                class="form-select" data-choices="data-choices"
-                data-options='{"removeItemButton":true,"placeholder":true}'
-                                name="selected_stock_lens[${cardIndex}][${i}]"
-                <option value="">Select Lens</option>
-                <!-- Populate options dynamically, e.g., from stocks_list -->
-                {% for product in stock_lens %}
-                <option value="{{product.product_id}}">{{product.product_name}}</option>
-                {% endfor %}
-              </select>
-          <div class="custom-error" style="color: red;"></div>
-          </div>
-                <h4 class="g-3 text-1000">Left Eye</h4>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Power</h5>
-                                    <select name="leftLensPowerStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
-                                        <option >Choose Power</option>
-                                        <option value="1.50">1.50</option>
-                                        <option value="1.56">1.56</option>
-                                        <option value="1.59">1.59</option>
-                                        <option value="1.61">1.61</option>
-                                        <option value="1.67">1.67</option>
-                                        <option value="1.74">1.74</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">BC</h5>
-                                    <select name="leftLensBCStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
-                                        <option>Select Value</option>
-                                        <option value="-3.5">-3.5</option>
-                                            <option value="-3.0">-3.0</option>
-                                            <option value="-2.5">-2.5</option>
-                                            <option value="-2.0">-2.0</option>
-                                            <option value="-1.5">-1.5</option>
-                                            <option value="-1.0">-1.0</option>
-                                            <option value="-0.5">-0.5</option>
-                                            <option value="0.0">0.0</option>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1.0">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2.0">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3.0">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Dia</h5>
-                                    <select name="leftLensDiaStock[${cardIndex}][${i}]" class="form-select" onchange="getFormData()" aria-label="Default select example">
-                                        <option>Select Value</option>
-                                        <option value="-3.5">-3.5</option>
-                                            <option value="-3.0">-3.0</option>
-                                            <option value="-2.5">-2.5</option>
-                                            <option value="-2.0">-2.0</option>
-                                            <option value="-1.5">-1.5</option>
-                                            <option value="-1.0">-1.0</option>
-                                            <option value="-0.5">-0.5</option>
-                                            <option value="0.0">0.0</option>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1.0">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2.0">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3.0">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Cylinder</h5>
-                                    <select name="leftLensCylinderStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
-                                        <option>Select Value</option>
-                                        <option value="-3.5">-3.5</option>
-                                            <option value="-3.0">-3.0</option>
-                                            <option value="-2.5">-2.5</option>
-                                            <option value="-2.0">-2.0</option>
-                                            <option value="-1.5">-1.5</option>
-                                            <option value="-1.0">-1.0</option>
-                                            <option value="-0.5">-0.5</option>
-                                            <option value="0.0">0.0</option>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1.0">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2.0">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3.0">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Axis</h5>
-                                    <select name="leftLensAxisStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
-                                        <option>Choose Axis</option>
-                                        <option value="1.50">1.50</option>
-                                        <option value="1.56">1.56</option>
-                                        <option value="1.59">1.59</option>
-                                        <option value="1.61">1.61</option>
-                                        <option value="1.67">1.67</option>
-                                        <option value="1.74">1.74</option>
-                                    </select>
-                                </div>
-                                <h4 class="g-3 text-1000">Right Eye</h4>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Power</h5>
-                                    <select name="rightLensPowerStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
-                                        <option >Choose Power</option>
-                                        <option value="1.50">1.50</option>
-                                        <option value="1.56">1.56</option>
-                                        <option value="1.59">1.59</option>
-                                        <option value="1.61">1.61</option>
-                                        <option value="1.67">1.67</option>
-                                        <option value="1.74">1.74</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">BC</h5>
-                                    <select name="rightLensBCStock[${cardIndex}][${i}]" onchange="getFormData();" class="form-select" aria-label="Default select example">
-                                        <option>Select Value</option>
-                                        <option value="-3.5">-3.5</option>
-                                            <option value="-3.0">-3.0</option>
-                                            <option value="-2.5">-2.5</option>
-                                            <option value="-2.0">-2.0</option>
-                                            <option value="-1.5">-1.5</option>
-                                            <option value="-1.0">-1.0</option>
-                                            <option value="-0.5">-0.5</option>
-                                            <option value="0.0">0.0</option>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1.0">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2.0">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3.0">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Dia</h5>
-                                    <select name="rightLensDiaStock[${cardIndex}][${i}]" class="form-select" onchange="getFormData()" aria-label="Default select example">
-                                        <option>Select Value</option>
-                                        <option value="-3.5">-3.5</option>
-                                            <option value="-3.0">-3.0</option>
-                                            <option value="-2.5">-2.5</option>
-                                            <option value="-2.0">-2.0</option>
-                                            <option value="-1.5">-1.5</option>
-                                            <option value="-1.0">-1.0</option>
-                                            <option value="-0.5">-0.5</option>
-                                            <option value="0.0">0.0</option>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1.0">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2.0">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3.0">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Cylinder</h5>
-                                    <select name="rightLensCylinderStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
-                                        <option>Select Value</option>
-                                        <option value="-3.5">-3.5</option>
-                                            <option value="-3.0">-3.0</option>
-                                            <option value="-2.5">-2.5</option>
-                                            <option value="-2.0">-2.0</option>
-                                            <option value="-1.5">-1.5</option>
-                                            <option value="-1.0">-1.0</option>
-                                            <option value="-0.5">-0.5</option>
-                                            <option value="0.0">0.0</option>
-                                            <option value="0.5">0.5</option>
-                                            <option value="1.0">1.0</option>
-                                            <option value="1.5">1.5</option>
-                                            <option value="2.0">2.0</option>
-                                            <option value="2.5">2.5</option>
-                                            <option value="3.0">3.0</option>
-                                            <option value="3.5">3.5</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Axis</h5>
-                                    <select name="rightLensAxisStock[${cardIndex}][${i}]" onchange="getFormData()" class="form-select" aria-label="Default select example">
-                                        <option>Choose Axis</option>
-                                        <option value="1.50">1.50</option>
-                                        <option value="1.56">1.56</option>
-                                        <option value="1.59">1.59</option>
-                                        <option value="1.61">1.61</option>
-                                        <option value="1.67">1.67</option>
-                                        <option value="1.74">1.74</option>
-                                    </select>
-                                </div>
-                            </div>
-                            </div>
-
-                            <div class="row mb-3 rx_power_card[${cardIndex}][${i}] d-none">
-                              <div class="col-12">
-            <h5 class="mb-3">Select Lens</h5>
-              <select onchange="updateLensFields(this, ${productCardCount})"
-                class="form-select" data-choices="data-choices"
-                data-options='{"removeItemButton":true,"placeholder":true}'
-                name="selected_rx_lens[${cardIndex}][${i}]"
-                required="required">
-                <option value="">Select Lens</option>
-                <!-- Populate options dynamically, e.g., from stocks_list -->
-                {% for product in rx_lens %}
-                <option value="{{product.product_id}}">{{product.product_name}}</option>
-                {% endfor %}
-              </select>
-          <div class="custom-error" style="color: red;"></div>
-          </div>
-                                <h4 class="g-3 text-1000">Left Eye</h4>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Power</h5>
-                                    <input name="leftLensPowerRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">BC</h5>
-                                    <input name="leftLensBCRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Dia</h5>
-                                    <input name="leftLensDiaRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Cylinder</h5>
-                                    <input name="leftLensCylinderRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Axis</h5>
-                                    <input name="leftLensAxisRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-
-                                <h4 class="g-3 text-1000">Right Eye</h4>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Power</h5>
-                                    <input name="rightLensPowerRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">BC</h5>
-                                    <input name="rightLensBCRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Dia</h5>
-                                    <input name="rightLensDiaRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Cylinder</h5>
-                                    <input name="rightLensCylinderRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-                                <div class="col-12 col-lg-2 g-3">
-                                    <h5 class="mb-2 text-1000">Axis</h5>
-                                    <input name="rightLensAxisRx[${cardIndex}][${i}]" class="form-control" oninput="getFormData()"/>
-                                </div>
-                            </div>
-                            </div>
-        `;
-
-        // Append the power card to the products container
-        productWidget.appendChild(powerCard);
-        let jsonData = getFormData();
-    }
-}
-
-function handleCheckboxChange(checkbox) {
-    // Uncheck all other checkboxes in the same group
-    let checkboxes = document.querySelectorAll(`[name='${checkbox.name}']`);
-
-    checkboxes.forEach((cb) => {
-        if (cb !== checkbox) {
-            cb.checked = false;
-        }
-    });
-
-    // Get the index from the checkbox name attribute
-    const [cardIndex, i] = checkbox.name.match(/\d+/g).map(Number);
-
-    // Show or hide specific divs based on the checkbox value
-    const stockPowerCard = document.querySelector(`.stock_power_card\\[${cardIndex}\\]\\[${i}\\]`);
-    const rxPowerCard = document.querySelector(`.rx_power_card\\[${cardIndex}\\]\\[${i}\\]`);
-
-    if (checkbox.value === "Stock") {
-        stockPowerCard.classList.remove('d-none');
-        rxPowerCard.classList.add('d-none');
-    } else if (checkbox.value === "Rx") {
-        rxPowerCard.classList.remove('d-none');
-        stockPowerCard.classList.add('d-none');
-    } else {
-        stockPowerCard.classList.add('d-none');
-        rxPowerCard.classList.add('d-none');
+        // Convert customerdata to JSON string and assign it to customerDataTextarea
+        customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
     }
 
-    let jsonData = getFormData();
-}
+    function genCustomerObject() {
+        var customerNameInput = document.getElementsByName("customer_name")[0];
+        var customerEmailInput = document.getElementsByName("customer_email")[0];
+        var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+        var customerAgeInput = document.getElementsByName("customer_age")[0];
+        var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+        var customerCityInput = document.getElementsByName("customer_city")[0];
+        var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+        var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+        //customerDataField
+        var customerDataTextarea = document.getElementsByName("customerData")[0];
 
+        var customerData = {
+            name: customerNameInput.value,
+            email: customerEmailInput.value,
+            phone: customerPhoneInput.value,
+            age: customerAgeInput.value,
+            gender: customerGenderSelect.value,
+            city: customerCityInput.value,
+            language: customerLanguageSelect.value,
+            address: customerAddressTextarea.value
+        };
+        customerDataTextarea.value = JSON.stringify(customerData, null, 2);
+    }
 
-function removePowerBoxes(cardIndex) {
-    // Remove existing power card elements
-    let powerCards = document.querySelectorAll(`.power_card_${cardIndex}`);
-    powerCards.forEach((powerCard) => {
-        powerCard.remove();
+    function genBillingInfoObject() {
+        var estDeliveryDateInput = document.getElementsByName("estDeliveryDate")[0];
+        var assignedLabInput = document.getElementsByName("assignedLab")[0];
+        var orderByEmployeeInput = document.getElementsByName("orderByEmployee")[0];
+        var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
+        var billingInfoData = {
+            estDeliveryDate: estDeliveryDateInput.value,
+            assignedLab: assignedLabInput.value,
+            orderByEmployee: orderByEmployeeInput.value,
+        };
+        billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
+    }
+
+    document.getElementById('confirmSale').addEventListener('click', function () {
+        // Assuming you have input fields within the form, adjust as needed
+        var form = document.getElementById('saleForm');
+        form.submit();
     });
-    let jsonData = getFormData();
-}
-
-
-function updateCustomerFields(selectCustomerField) {
-    var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
-
-    var customerNameInput = document.getElementsByName("customer_name")[0];
-    var customerEmailInput = document.getElementsByName("customer_email")[0];
-    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
-    var customerAgeInput = document.getElementsByName("customer_age")[0];
-    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
-    var customerCityInput = document.getElementsByName("customer_city")[0];
-    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
-    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
-    //customerDataField
-    var customerDataTextarea = document.getElementsByName("customerData")[0];
-
-    customerNameInput.value = selectCustomer.name;
-    customerEmailInput.value = selectCustomer.email;
-    customerPhoneInput.value = selectCustomer.phone;
-    customerAgeInput.value = selectCustomer.age;
-    customerGenderSelect.value = selectCustomer.gender;
-    customerCityInput.value = selectCustomer.city;
-    customerLanguageSelect.value = selectCustomer.language;
-    customerAddressTextarea.value = selectCustomer.address;
-    customerDataTextarea.value = selectCustomer.address;
-
-    var customerdata = {
-        name: selectCustomer.name,
-        email: selectCustomer.email,
-        phone: selectCustomer.phone,
-        age: selectCustomer.age,
-        gender: selectCustomer.gender,
-        city: selectCustomer.city,
-        language: selectCustomer.language,
-        address: selectCustomer.address
-    };
-
-    // Convert customerdata to JSON string and assign it to customerDataTextarea
-    customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
-}
-
-function genCustomerObject() {
-    var customerNameInput = document.getElementsByName("customer_name")[0];
-    var customerEmailInput = document.getElementsByName("customer_email")[0];
-    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
-    var customerAgeInput = document.getElementsByName("customer_age")[0];
-    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
-    var customerCityInput = document.getElementsByName("customer_city")[0];
-    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
-    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
-    //customerDataField
-    var customerDataTextarea = document.getElementsByName("customerData")[0];
-
-
-    var customerData = {
-        name: customerNameInput.value,
-        email: customerEmailInput.value,
-        phone: customerPhoneInput.value,
-        age: customerAgeInput.value,
-        gender: customerGenderSelect.value,
-        city: customerCityInput.value,
-        language: customerLanguageSelect.value,
-        address: customerAddressTextarea.value
-    };
-    customerDataTextarea.value = JSON.stringify(customerData, null, 2);
-}
-
-
-function genBillingInfoObject() {
-    var estDeliveryDateInput = document.getElementsByName("estDeliveryDate")[0];
-    var assignedLabInput = document.getElementsByName("assignedLab")[0];
-    var orderByEmployeeInput = document.getElementsByName("orderByEmployee")[0];
-    var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
-    var billingInfoData = {
-        estDeliveryDate: estDeliveryDateInput.value,
-        assignedLab: assignedLabInput.value,
-        orderByEmployee: orderByEmployeeInput.value,
-    };
-    billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
-}
-
-
-document.getElementById('confirmSale').addEventListener('click', function () {
-    // Assuming you have input fields within the form, adjust as needed
-    var form = document.getElementById('saleForm');
-    form.submit();
-});
-
-
-function updateLensFields(selectedLens, productCount) {
-
-}
 
 </script>
 </body>
