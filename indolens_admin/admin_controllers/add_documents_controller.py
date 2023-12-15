@@ -213,3 +213,105 @@ def add_area_head_doc(file_data, areaHeadId, area_head):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+def add_marketing_heads_doc(file_data, marketingHeadId, marketing_head):
+    try:
+        with connection.cursor() as cursor:
+            get_document1_query = f"""
+                        SELECT document_1_url FROM marketing_head Where marketing_head_id = {marketingHeadId}
+                        """
+            cursor.execute(get_document1_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document1 = old_images + file_data.document1
+
+            cursor.execute(
+                f""" UPDATE marketing_head SET document_1_url = '{json.dumps(document1)}', 
+                document_1_type = '{marketing_head.document_1_type}' WHERE marketing_head_id = {marketingHeadId}""")
+
+            get_document2_query = f"""
+                        SELECT document_2_url FROM marketing_head Where marketing_head_id = {marketingHeadId}
+                        """
+            cursor.execute(get_document2_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document2 = old_images + file_data.document2
+            cursor.execute(
+                f""" UPDATE marketing_head SET document_2_url = '{json.dumps(document2)}', 
+                document_2_type = '{marketing_head.document_2_type}' WHERE marketing_head_id = {marketingHeadId}""")
+
+        return {
+            "status": True,
+            "message": "Document Inserted Successfully"
+        }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def add_accountant_doc(file_data, accountantId, accountant):
+    try:
+        with connection.cursor() as cursor:
+            get_document1_query = f"""
+                        SELECT document_1_url FROM accountant Where accountant_id = {accountantId}
+                        """
+            cursor.execute(get_document1_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document1 = old_images + file_data.document1
+
+            cursor.execute(
+                f""" UPDATE accountant SET document_1_url = '{json.dumps(document1)}', 
+                document_1_type = '{accountant.document_1_type}' WHERE accountant_id = {accountantId}""")
+
+            get_document2_query = f"""
+                        SELECT document_2_url FROM accountant Where accountant_id = {accountantId}
+                        """
+            cursor.execute(get_document2_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document2 = old_images + file_data.document2
+            cursor.execute(
+                f""" UPDATE accountant SET document_2_url = '{json.dumps(document2)}', 
+                document_2_type = '{accountant.document_2_type}' WHERE accountant_id = {accountantId}""")
+
+        return {
+            "status": True,
+            "message": "Document Inserted Successfully"
+        }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def add_lab_technician_doc(file_data, LabTechnicianId, lab_technician):
+    try:
+        with connection.cursor() as cursor:
+            get_document1_query = f"""
+                        SELECT document_1_url FROM lab_technician Where lab_technician_id = {LabTechnicianId}
+                        """
+            cursor.execute(get_document1_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document1 = old_images + file_data.document1
+
+            cursor.execute(
+                f""" UPDATE lab_technician SET document_1_url = '{json.dumps(document1)}', 
+                document_1_type = '{lab_technician.document_1_type}' WHERE lab_technician_id = {LabTechnicianId}""")
+
+            get_document2_query = f"""
+                        SELECT document_2_url FROM lab_technician Where lab_technician_id = {LabTechnicianId}
+                        """
+            cursor.execute(get_document2_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            document2 = old_images + file_data.document2
+            cursor.execute(
+                f""" UPDATE lab_technician SET document_2_url = '{json.dumps(document2)}', 
+                document_2_type = '{lab_technician.document_2_type}' WHERE lab_technician_id = {LabTechnicianId}""")
+
+        return {
+            "status": True,
+            "message": "Document Inserted Successfully"
+        }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

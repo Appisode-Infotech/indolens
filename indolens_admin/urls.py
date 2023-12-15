@@ -390,15 +390,21 @@ urlpatterns = [
         deleteAreaHeadDocuments,
         name='delete_area_head_document'
     ),
-    path(
-        'manage_marketing_head/delete_marketing_head_document/marketingHeadId=<int:marketingHeadId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-        deleteMarketingHeadDocuments, name='delete_marketing_head_document'),
-    path(
-        'manage_accountant/delete_accountant_document/accountantId=<int:accountantId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-        deleteAccountantDocuments, name='delete_accountant_document'),
-    path(
-        'manage_lab_technician/delete_lab_tech_document/labTechnicianId=<int:labTechnicianId>/documentURL=<str:documentURL>/document_Type=<str:document_Type>',
-        deleteLabTechnicianDocuments, name='delete_lab_tech_document'),
+    re_path(
+        r'^manage_marketing_head/delete_marketing_head_document/marketingHeadId=(?P<marketingHeadId>[0-9]+)/documentURL=(?P<documentURL>.+?)/document_Type=(?P<document_Type>[^/]+)$',
+        deleteMarketingHeadDocuments,
+        name='delete_marketing_head_document'
+    ),
+    re_path(
+        r'^manage_accountant/delete_accountant_document/accountantId=(?P<accountantId>[0-9]+)/documentURL=(?P<documentURL>.+?)/document_Type=(?P<document_Type>[^/]+)$',
+        deleteAccountantDocuments,
+        name='delete_accountant_document'
+    ),
+    re_path(
+        r'^manage_lab_technician/delete_lab_tech_document/labTechnicianId=(?P<labTechnicianId>[0-9]+)/documentURL=(?P<documentURL>.+?)/document_Type=(?P<document_Type>[^/]+)$',
+        deleteLabTechnicianDocuments,
+        name='delete_lab_tech_document'
+    ),
     re_path(
         r'^manage_own_store_employee/delete_own_store_employee_document/employeeId=(?P<employeeId>[0-9]+)/documentURL=(?P<documentURL>.+?)/document_Type=(?P<document_Type>[^/]+)$',
         deleteOwnStoreEmployeeDocuments,
@@ -431,6 +437,13 @@ urlpatterns = [
          addSubAdminDocuments, name='add_sub_admins_doc'),
     path('manage_area_head/add_area_head_doc/areaHeadId=<int:areaHeadId>',
          addAreaHeadDocuments, name='add_area_head_doc'),
+    path('manage_marketing_head/add_marketing_heads_doc/marketingHeadId=<int:marketingHeadId>',
+         addMarketingHeadDocuments, name='add_marketing_heads_doc'),
+    path('manage_accountant/add_accountant_doc/accountantId=<int:accountantId>',
+             addAccountantDocuments, name='add_accountant_doc'),
+    path('manage_lab_technician/add_lab_technician_doc/LabTechnicianId=<int:LabTechnicianId>',
+                 addLabTechnicianDocuments, name='add_lab_technician_doc'),
+
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

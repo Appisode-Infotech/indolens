@@ -1,11 +1,10 @@
 from django.shortcuts import render, redirect
 
-from indolens_admin.admin_controllers import own_store_controller, franchise_store_controller, store_manager_controller, \
-    franchise_manager_controller, marketing_head_controller, sales_executives_controller, \
-    accountant_controller, lab_technician_controller, other_employee_controller, lab_controller, \
+from indolens_admin.admin_controllers import own_store_controller,\
+    lab_technician_controller, lab_controller, \
     stores_inventory_controller, central_inventory_controller
 from indolens_area_head.area_head_controller import area_head_auth_controller, stores_controller, \
-    area_stores_inventory_controller, area_head_customers_controller
+    area_stores_inventory_controller, area_head_customers_controller, store_employee_controller
 from indolens_area_head.area_head_model.area_head_req_models import area_head_auth_model
 from indolens_own_store.own_store_controller import store_inventory_controller
 
@@ -80,8 +79,10 @@ def dashboard(request):
 def manageOwnStores(request, status):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
+
         response, status_code = stores_controller.get_area_head_own_stores(status,
                                                                            request.session.get('assigned_stores'))
+        print(response)
         return render(request, 'ownStore/manageOwnStores.html',
                       {"own_stores": response['own_stores'], "status": status})
     else:
@@ -91,6 +92,7 @@ def manageOwnStores(request, status):
 def viewOwnStore(request, ownStoreId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
+        print(ownStoreId)
         response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
         products_list, status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
         store_stats, status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
@@ -101,150 +103,26 @@ def viewOwnStore(request, ownStoreId):
     else:
         return redirect('login_area_head')
 
-
-def viewFranchiseStore(request, fid):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = franchise_store_controller.get_franchise_store_by_id(fid)
-        return render(request, 'franchiseStores/franchiseStore.html',
-                      {"franchise_store": response['franchise_store']})
-    else:
-        return redirect('login_area_head')
-
-def manageFranchiseStores(request, status):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = stores_controller.get_area_head_franchise_stores(status)
-        return render(request, 'franchiseStores/manageFranchiseStores.html',
-                      {"franchise_store_list": response['franchise_store'], "status": status})
-    else:
-        return redirect('login_area_head')
-
-
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
-def manageStoreManagers(request):
+def manageEmployee(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        response, status_code = store_manager_controller.get_all_store_manager()
-        return render(request, 'storeManagers/manageStoreManagers.html',
-                      {"store_managers": response['store_managers']})
-    else:
-        return redirect('login_area_head')
-
-def viewStoreManager(request, mid):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = store_manager_controller.get_store_manager_by_id(mid)
-        return render(request, 'storeManagers/viewStoreManager.html',
-                      {"store_manager": response['store_manager']})
-    else:
-        return redirect('login_area_head')
-
-# =================================ADMIN FRANCHISE OWNERS MANAGEMENT======================================
-
-def manageFranchiseOwners(request):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = franchise_manager_controller.get_all_franchise_owner()
-        return render(request, 'franchiseOwners/manageFranchiseOwners.html',
-                      {"franchise_owners": response['franchise_owners']})
-    else:
-        return redirect('login_area_head')
-
-def viewFranchiseOwners(request, foid):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = franchise_manager_controller.get_franchise_owner_by_id(foid)
-        return render(request, 'franchiseOwners/viewFranchiseOwner.html',
-                      {"franchise_owner": response['franchise_owner']})
-    else:
-        return redirect('login_area_head')
-
-# =================================ADMIN MARKETING HEADS MANAGEMENT======================================
-
-def manageMarketingHead(request):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = marketing_head_controller.get_all_marketing_head()
-        return render(request, 'marketingHeads/manageMarketingHead.html',
-                      {"marketing_heads_list": response['marketing_heads_list']})
-    else:
-        return redirect('login_area_head')
-
-def viewMarketingHead(request, mhid):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = marketing_head_controller.get_marketing_head_by_id(mhid)
+        response, status_code = store_employee_controller.get_all_store_employee(request.session.get('assigned_stores'))
         print(response)
-        return render(request, 'marketingHeads/viewMarketingHead.html',
-                      {"marketing_head": response['marketing_head']})
+        return render(request, 'storeEmployee/manageStoreEmployee.html',
+                      {"store_employees": response['store_employees']})
     else:
         return redirect('login_area_head')
 
-# =================================ADMIN OPTIMETRY MANAGEMENT======================================
-
-
-def manageOptimetry(request):
+def viewEmployee(request, employeeId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        return render(request, 'optimetry/manageOptimetry.html')
+        response, status_code = store_employee_controller.get_store_employee_by_id(employeeId)
+        return render(request, 'storeEmployee/viewStoreEmployee.html',
+                      {"store_employee": response['store_employee']})
     else:
         return redirect('login_area_head')
-
-def viewOptimetry(request):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        return render(request, 'optimetry/viewOptimetry.html')
-
-    else:
-        return redirect('login_area_head')
-# =================================ADMIN OPTIMETRY MANAGEMENT======================================
-
-
-def manageSaleExecutives(request):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = sales_executives_controller.get_all_sales_executive()
-        print(response)
-        return render(request, 'salesExecutive/manageSaleExecutives.html',
-                      {"sales_executive_list": response['sales_executive_list']})
-    else:
-        return redirect('login_area_head')
-
-
-def viewSaleExecutives(request, seid):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = sales_executives_controller.get_sales_executive_by_id(seid)
-        print(response)
-        return render(request, 'salesExecutive/viewSaleExecutives.html',
-                      {"sales_executive": response['sales_executive']})
-    else:
-        return redirect('login_area_head')
-
-
-# =================================ADMIN ACCOUNTANT MANAGEMENT======================================
-
-def manageAccountant(request):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = accountant_controller.get_all_accountant()
-        return render(request, 'accountant/manageAccountant.html',
-                      {"accountant_list": response['accountant_list']})
-    else:
-        return redirect('login_area_head')
-
-
-def viewAccountant(request, aid):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = accountant_controller.get_accountant_by_id(aid)
-        return render(request, 'accountant/viewAccountant.html',
-                      {"accountant": response['accountant']})
-    else:
-        return redirect('login_area_head')
-
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
@@ -264,29 +142,6 @@ def viewLabTechnician(request, ltid):
         response, status_code = lab_technician_controller.get_lab_technician_by_id(ltid)
         return render(request, 'labTechnician/viewLabTechnician.html',
                       {"lab_technician": response['lab_technician']})
-    else:
-        return redirect('login_area_head')
-
-
-# =================================ADMIN ACCOUNTANT MANAGEMENT======================================
-
-def manageOtherEmployees(request):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = other_employee_controller.get_all_other_emp()
-        print(response)
-        return render(request, 'otherEmployees/manageOtherEmployees.html',
-                      {"other_employee_list": response['other_emp_list']})
-    else:
-        return redirect('login_area_head')
-
-
-def viewOtherEmployees(request, empid):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
-            'is_area_head_logged_in') is True:
-        response, status_code = other_employee_controller.get_other_emp_by_id(empid)
-        return render(request, 'otherEmployees/viewOtherEmployees.html',
-                      {"other_employee": response['other_employee']})
     else:
         return redirect('login_area_head')
 
@@ -364,6 +219,7 @@ def viewAllCustomers(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = area_head_customers_controller.get_all_area_stores_customers(request.session.get('assigned_stores'))
+        print(response)
         return render(request, 'customers/viewAllCustomers.html',{"customers_list": response['customers_list']})
     else:
         return redirect('login_area_head')
