@@ -83,7 +83,7 @@
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Store Employees<span class="fw-normal text-700 ms-3">(2)</span></h2>
+                            <h2 class="mb-0">Store Employees<span class="fw-normal text-700 ms-3">({{store_employees|length}})</span></h2>
                         </div>
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -109,6 +109,9 @@
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
                                     scope="col" style="width:30%;">NAME
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                    ROLE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
                                     PHONE
@@ -148,9 +151,10 @@
                             {% for employee in store_employees%}
                             <tr class="position-static">
                                 <td>
+
                                     <div class="avatar avatar-m"><img alt=""
-                                                                      class="rounded-circle"
-                                                                      src="{% static 'img/team/32.png' %}"/>
+                                                                               src="{{MEDIA_URL}}{{employee.profile_pic}}"
+                                                                               width="53"/>
                                     </div>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
@@ -160,6 +164,18 @@
                                 </a>
                                 </td>
 
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    {% if employee.role == 1 %}
+                                    <p class="mb-0 fs--1 text-900">MANAGER</p>
+                                    {% elif employee.role == 2 %}
+                                    <p class="mb-0 fs--1 text-900">OPTOMETRY</p>
+                                    {% elif employee.role == 3 %}
+                                    <p class="mb-0 fs--1 text-900">SALES EXECUTIVE</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">OTHER EMPLOYEE</p>
+                                    {% endif %}
+
+                                </td>
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
                                     <p class="mb-0 fs--1 text-900">{{employee.phone}}</p>
                                 </td>

@@ -1,8 +1,8 @@
 from django.shortcuts import render, redirect
 
-from indolens_admin.admin_controllers import own_store_controller,\
+from indolens_admin.admin_controllers import own_store_controller, \
     lab_technician_controller, lab_controller, \
-    stores_inventory_controller, central_inventory_controller
+    stores_inventory_controller, central_inventory_controller, customers_controller
 from indolens_area_head.area_head_controller import area_head_auth_controller, stores_controller, \
     area_stores_inventory_controller, area_head_customers_controller, store_employee_controller
 from indolens_area_head.area_head_model.area_head_req_models import area_head_auth_model
@@ -92,7 +92,6 @@ def manageOwnStores(request, status):
 def viewOwnStore(request, ownStoreId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        print(ownStoreId)
         response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
         products_list, status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
         store_stats, status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
@@ -109,7 +108,6 @@ def manageEmployee(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = store_employee_controller.get_all_store_employee(request.session.get('assigned_stores'))
-        print(response)
         return render(request, 'storeEmployee/manageStoreEmployee.html',
                       {"store_employees": response['store_employees']})
     else:
@@ -119,6 +117,7 @@ def viewEmployee(request, employeeId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = store_employee_controller.get_store_employee_by_id(employeeId)
+        print(response)
         return render(request, 'storeEmployee/viewStoreEmployee.html',
                       {"store_employee": response['store_employee']})
     else:
@@ -225,10 +224,11 @@ def viewAllCustomers(request):
         return redirect('login_area_head')
 
 
-def viewCustomerDetails(request):
+def viewCustomerDetails(request, customerId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        return render(request, 'customers/viewCustomerDetails.html')
+        response, status_code = customers_controller.get_customers_by_id(customerId)
+        return render(request, 'customers/viewCustomerDetails.html', {"customer": response['customer']})
     else:
         return redirect('login_area_head')
 
