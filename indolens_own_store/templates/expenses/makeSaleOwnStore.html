@@ -60,6 +60,39 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     </script>
 </head>
 
@@ -138,15 +171,774 @@
                                              id="bootstrap-wizard-validation-tab1">
                                             <form class="needs-validation" id="wizardValidationForm1"
                                                   novalidate="novalidate" data-wizard-form="1">
-                                                <div id="products_container">
-                                                    <!-- product card starts here generated dynamically -->
-                                                    <!-- product card ends here-->
+                                                <div id="product_container">
+                                                    <div id="lens_products_container" class="card-header bg-100 mb-4">
+
+                                                        <div class="col text-end">
+                                                            <a type="button" class="text-danger">
+                                                                Remove <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="mb2 col-12">
+                                                            <h5 class="mb-3">Select Lens</h5>
+                                                            <select class="form-select" data-choices="data-choices"
+                                                                    data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                    name="product" required="required">
+                                                                <option value="">Select Lens</option>
+                                                                {% for product in stocks_list %}
+                                                                {% if product.category_id == 2 %}
+                                                                <option value="{{product.product_id}}">
+                                                                    {{product.product_name}}
+                                                                </option>
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                            </select>
+                                                            <div class="custom-error" style="color: red;"></div>
+                                                        </div>
+                                                        <div class="row g-3 mb-3">
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Lens Type</h5>
+                                                                <input class="form-control"
+                                                                       name="lens_type"
+                                                                       placeholder="Stock/Rx"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Product Brand</h5>
+                                                                <input class="form-control"
+                                                                       name="product_brand"
+                                                                       placeholder="Brand"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <!-- Add the rest of your product card HTML structure here -->
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Product HSN</h5>
+                                                                <input class="form-control"
+                                                                       name="product_hsn"
+                                                                       placeholder="HSN"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Available Quantity</h5>
+                                                                <input class="form-control"
+                                                                       name="available_qty"
+                                                                       placeholder="Available Quantity"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Unit Price</h5>
+                                                                <input class="form-control"
+                                                                       name="unit_price"
+                                                                       placeholder="Unit Price"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Unit Type</h5>
+                                                                <input class="form-control"
+                                                                       name="unit_type"
+                                                                       placeholder="Unit Type"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Purchase Quantity</h5>
+                                                                <input class="form-control"
+                                                                       name="purchase_qty"
+                                                                       placeholder="Purchase quantity"
+                                                                       required="required"
+                                                                       min="1"
+                                                                       type="text" value=""/>
+                                                                <div class="invalid-feedback">This field should be 1 in
+                                                                    minimum and should be less than available quantity.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Product Total</h5>
+                                                                <input class="form-control"
+                                                                       name="product_total"
+                                                                       placeholder="Product Total"
+                                                                       required="required"
+                                                                       type="text" value="0" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-6" id="discount_check_div">
+                                                                <input id="discount_value_field"
+                                                                       type="hidden"
+                                                                       class="form-check"
+                                                                       name="discount_percentage"
+                                                                       required="required" readonly/>
+                                                                <input class="form-check-input" type="checkbox"
+                                                                       name="discount_checked"
+                                                                       id="bootstrap-wizard-validation-wizard-checkbox"/>
+                                                                <label id="discount_value"
+                                                                       class="form-check-label text-900"
+                                                                       for="bootstrap-wizard-validation-wizard-checkbox">Discount
+                                                                    x% available</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dropdown-divider"></div>
+                                                        <h5 class="mb-3">Power attributes</h5>
+                                                        <div class="row mb-3 stock_power_card">
+                                                            <div class="col-12">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Eye</th>
+                                                                        <th scope="col">Power</th>
+                                                                        <th scope="col">BC</th>
+                                                                        <th scope="col">Dia</th>
+                                                                        <th scope="col">Cylinder</th>
+                                                                        <th scope="col">Axis</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">Left</th>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="leftLensPowerStock"
+
+                                                                                    class="form-select"
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="leftLensBCStock"
+
+                                                                                    class="form-select"
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="leftLensDiaStock"
+                                                                                    class="form-select"
+
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="leftLensCylinderStock"
+
+                                                                                    class="form-select"
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="leftLensAxisStock"
+
+                                                                                    class="form-select"
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Right</th>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="rightLensPowerStock"
+
+                                                                                    class="form-select"
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="rightLensBCStock"
+
+                                                                                    class="form-select"
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="rightLensDiaStock"
+                                                                                    class="form-select"
+
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="rightLensCylinderStock"
+
+                                                                                    class="form-select"
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <select name="rightLensAxisStock"
+
+                                                                                    class="form-select"
+                                                                                    aria-label="Default select example">
+                                                                                <option>Select</option>
+                                                                                <!-- Add options dynamically -->
+                                                                            </select>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3 rx_power_card">
+                                                            <div class="col-12">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Eye</th>
+                                                                        <th scope="col">Power</th>
+                                                                        <th scope="col">BC</th>
+                                                                        <th scope="col">Dia</th>
+                                                                        <th scope="col">Cylinder</th>
+                                                                        <th scope="col">Axis</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">Left</th>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="leftLensPowerRx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="leftLensBCRx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example">
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="leftLensDiaRx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="leftLensCylinderRx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="leftLensAxisRx"
+
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Right</th>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="rightLensPowerRx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="rightLensBCRx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="rightLensDiaRx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="rightLensCylinderRx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="rightLensAxisRx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div id="contact_lens_products_container"
+                                                         class="card-header bg-100 mb-4">
+                                                        <div class="col text-end">
+                                                            <a type="button" class="text-danger">
+                                                                Remove <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="mb2 col-12">
+                                                            <h5 class="mb-3">Select Contact Lens</h5>
+                                                            <select class="form-select" data-choices="data-choices"
+                                                                    data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                    name="product" required="required">
+                                                                <option value="">Select Contact Lens</option>
+                                                                {% for product in stocks_list %}
+                                                                {% if product.category_id == 3 %}
+                                                                <option value="{{product.product_id}}">
+                                                                    {{product.product_name}}
+                                                                </option>
+                                                                {% endif %}
+                                                                {% endfor %}
+                                                            </select>
+                                                            <div class="custom-error" style="color: red;"></div>
+                                                        </div>
+                                                        <div class="row g-3 mb-3">
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Lens Type</h5>
+                                                                <input class="form-control"
+                                                                       name="lens_type"
+                                                                       placeholder="Stock/Rx"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Contact Lens Physicality</h5>
+                                                                <input class="form-control"
+                                                                       name="lens_physicality"
+                                                                       placeholder="Physicality"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Contact Lens Disposablility</h5>
+                                                                <input class="form-control"
+                                                                       name="lens_disposablility"
+                                                                       placeholder="Disposablility"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Vision Type</h5>
+                                                                <input class="form-control"
+                                                                       name="vision_type"
+                                                                       placeholder="Vision Type"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Product Brand</h5>
+                                                                <input class="form-control"
+                                                                       name="product_brand"
+                                                                       placeholder="Brand"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <!-- Add the rest of your product card HTML structure here -->
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Product HSN</h5>
+                                                                <input class="form-control"
+                                                                       name="product_hsn"
+                                                                       placeholder="HSN"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Available Quantity</h5>
+                                                                <input class="form-control"
+                                                                       name="available_qty"
+                                                                       placeholder="Available Quantity"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Unit Price</h5>
+                                                                <input class="form-control"
+                                                                       name="unit_price"
+                                                                       placeholder="Unit Price"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Unit Type</h5>
+                                                                <input class="form-control"
+                                                                       name="unit_type"
+                                                                       placeholder="Unit Type"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Purchase Quantity</h5>
+                                                                <input class="form-control"
+                                                                       name="purchase_qty"
+                                                                       placeholder="Purchase quantity"
+                                                                       required="required"
+                                                                       min="1"
+                                                                       type="text" value=""/>
+                                                                <div class="invalid-feedback">This field should be 1 in
+                                                                    minimum and should be less than available quantity.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Product Total</h5>
+                                                                <input class="form-control"
+                                                                       name="product_total"
+                                                                       placeholder="Product Total"
+                                                                       required="required"
+                                                                       type="text" value="0" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-6" id="discount_check_div_cl">
+                                                                <input id="discount_value_field_cl"
+                                                                       type="hidden"
+                                                                       class="form-check"
+                                                                       name="discount_percentage"
+                                                                       required="required" readonly/>
+                                                                <input class="form-check-input" type="checkbox"
+                                                                       name="discount_checked"
+                                                                       id="bootstrap-wizard-validation-wizard-checkbox_cl"/>
+                                                                <label id="discount_value_cl"
+                                                                       class="form-check-label text-900"
+                                                                       for="bootstrap-wizard-validation-wizard-checkbox">Discount
+                                                                    x% available</label>
+                                                            </div>
+                                                        </div>
+                                                        <div class="dropdown-divider"></div>
+                                                        <h5 class="mb-3">Power attributes</h5>
+                                                        <div class="row mb-3 cl_stock_power_card">
+                                                            <div class="col-12">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Eye</th>
+                                                                        <th scope="col">Power</th>
+                                                                        <th scope="col">BC</th>
+                                                                        <th scope="col">Dia</th>
+                                                                        <th scope="col">Cylinder</th>
+                                                                        <th scope="col">Axis</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">Left</th>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_power_stock"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_bc_sStock"
+
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example">
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_dia_stock"
+                                                                                   class="form-control"
+
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_cylinder_stock"
+
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_axis_Stock"
+
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Right</th>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_power_Stock"
+
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_bc_Stock"
+
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_dia_stock"
+                                                                                   class="form-control"
+
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_cylinder_stock"
+
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_axis_stock"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                        <div class="row mb-3 cl_rx_power_card">
+                                                            <div class="col-12">
+                                                                <table class="table">
+                                                                    <thead>
+                                                                    <tr>
+                                                                        <th scope="col">Eye</th>
+                                                                        <th scope="col">Power</th>
+                                                                        <th scope="col">BC</th>
+                                                                        <th scope="col">Dia</th>
+                                                                        <th scope="col">Cylinder</th>
+                                                                        <th scope="col">Axis</th>
+                                                                    </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                    <tr>
+                                                                        <th scope="row">Left</th>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_power_rx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_bc_rx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example">
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_Dia_rx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_Cylinder_rx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="left_cl_Axis_rx"
+
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    <tr>
+                                                                        <th scope="row">Right</th>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_Power_rx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_BC_rx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_Dia_rx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_Cylinder_rx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                        <td class="col-6 col-lg-2">
+                                                                            <input name="right_cl_Axis_rx"
+                                                                                   class="form-control"
+                                                                                   aria-label="Default select example"/>
+                                                                        </td>
+                                                                    </tr>
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                    <div id="other_products_container" class="card-header bg-100 mb-4">
+                                                        <div class="col text-end">
+                                                            <a type="button" class="text-danger">
+                                                                Remove <i class="fas fa-trash"></i>
+                                                            </a>
+                                                        </div>
+
+                                                        <div class="mb2 col-12">
+                                                            <h5 class="mb-3">Select Product</h5>
+                                                            <select class="form-select" data-choices="data-choices"
+                                                                    data-options='{"removeItemButton":true,"placeholder":true}'
+                                                                    name="product" required="required">
+                                                                <option value="">Select Product</option>
+                                                                {% for product in stocks_list %}
+                                                                <option value="{{product.product_id}}">
+                                                                    {{product.product_name}}
+                                                                </option>
+                                                                {% endfor %}
+                                                            </select>
+                                                            <div class="custom-error" style="color: red;"></div>
+                                                        </div>
+                                                        <div class="row g-3 mb-3">
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Product Category</h5>
+                                                                <input class="form-control"
+                                                                       name="product_category"
+                                                                       placeholder="Category"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Product Brand</h5>
+                                                                <input class="form-control"
+                                                                       name="product_brand"
+                                                                       placeholder="Brand"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <!-- Add the rest of your product card HTML structure here -->
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Product HSN</h5>
+                                                                <input class="form-control"
+                                                                       name="product_hsn"
+                                                                       placeholder="HSN"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Available Quantity</h5>
+                                                                <input class="form-control"
+                                                                       name="available_qty"
+                                                                       placeholder="Available Quantity"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Unit Price</h5>
+                                                                <input class="form-control"
+                                                                       name="unit_price"
+                                                                       placeholder="Unit Price"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-4">
+                                                                <h5 class="mb-3">Unit Type</h5>
+                                                                <input class="form-control"
+                                                                       name="unit_type"
+                                                                       placeholder="Unit Type"
+                                                                       required="required"
+                                                                       type="text" value="" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Purchase Quantity</h5>
+                                                                <input class="form-control"
+                                                                       name="purchase_qty"
+                                                                       placeholder="Purchase quantity"
+                                                                       required="required"
+                                                                       min="1"
+                                                                       type="text" value=""/>
+                                                                <div class="invalid-feedback">This field should be 1 in
+                                                                    minimum and should be less than available quantity.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-6">
+                                                                <h5 class="mb-3">Product Total</h5>
+                                                                <input class="form-control"
+                                                                       name="product_total"
+                                                                       placeholder="Product Total"
+                                                                       required="required"
+                                                                       type="text" value="0" readonly/>
+                                                                <div class="invalid-feedback">This field is required.
+                                                                </div>
+                                                            </div>
+                                                            <div class="mb2 col-6" id="discount_check_div_op">
+                                                                <input id="discount_value_field_op"
+                                                                       type="hidden"
+                                                                       class="form-check"
+                                                                       name="discount_percentage"
+                                                                       required="required" readonly/>
+                                                                <input class="form-check-input" type="checkbox"
+                                                                       name="discount_checked"
+                                                                       id="bootstrap-wizard-validation-wizard-checkbox_op"/>
+                                                                <label id="discount_value_op"
+                                                                       class="form-check-label text-900"
+                                                                       for="bootstrap-wizard-validation-wizard-checkbox">Discount
+                                                                    x% available</label>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
 
-                                                <div class="flex-1 text-end">
-                                                    <a class="btn btn-primary px-6 px-sm-6"
-                                                       onclick="createProductCard()">Add product
-                                                    </a>
+                                                <div class="row">
+                                                    <div class="col-12">
+                                                        <div class="btn-group me-1 float-end">
+                                                            <button class="btn dropdown-toggle mb-1 btn-primary"
+                                                                    type="button" data-bs-toggle="dropdown"
+                                                                    aria-haspopup="true" aria-expanded="false">Add
+                                                                Product
+                                                            </button>
+                                                            <div class="dropdown-menu">
+                                                                <a class="dropdown-item" href="#">Lens</a>
+                                                                <a class="dropdown-item" href="#">Contact Lens</a>
+                                                                <a class="dropdown-item" href="#">Other Products</a>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </form>
                                         </div>
@@ -432,9 +1224,7 @@
                     </div>
                 </div>
             </div>
-
             {% include 'footer.html' %}
-
         </div>
     </div>
     <script>
@@ -449,6 +1239,24 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -579,6 +1387,9 @@
         var form = document.getElementById('saleForm');
         form.submit();
     });
+
+
+
 
 </script>
 </body>
