@@ -2542,8 +2542,10 @@ def restockProductOutOfStock(request):
 
 def centralInventoryUpdateProduct(request, productId):
     if request.method == 'POST':
+        power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
         product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
-        response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId)
+        response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId, power_attributes)
+        print(response)
     response, status_code = get_central_inventory_product_single(productId)
     types, status_code = central_inventory_controller.get_all_active_types()
     return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',

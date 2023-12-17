@@ -194,7 +194,9 @@ def add_central_inventory_products(product_obj, file, power_attributes):
         return {"status": False, "message": str(e)}, 301
 
 
-def update_central_inventory_products(product_obj, productId):
+def update_central_inventory_products(product_obj, productId, power_attribute):
+    power_attributes_json = json.dumps(power_attribute)
+    print(power_attributes_json)
     try:
         with connection.cursor() as cursor:
             update_product_query = f"""
@@ -217,7 +219,8 @@ def update_central_inventory_products(product_obj, productId):
                     last_updated_by = '{product_obj.last_updated_by}',
                     product_quantity = '{product_obj.product_quantity}',
                     product_gst = '{product_obj.product_gstin}',
-                    discount = '{product_obj.discount}'
+                    discount = '{product_obj.discount}',
+                    power_attribute = '{power_attributes_json}'
                 WHERE product_id = '{productId}'
             """
 
