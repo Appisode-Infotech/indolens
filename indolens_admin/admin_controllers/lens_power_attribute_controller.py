@@ -10,6 +10,7 @@ def get_power_attribute(data):
     elif data['categoryId'] == '3':
         print('this is contact lesn')
         power_attributes = {
+            'stock_type': data.get('ContactLensStockType', ''),
             'contact_lens_type': data.get('contact_lens_type', ''),
             'contact_lens_disposability': data.get('contact_lens_disposability', ''),
             'power': data.get('contactLensPower', ''),

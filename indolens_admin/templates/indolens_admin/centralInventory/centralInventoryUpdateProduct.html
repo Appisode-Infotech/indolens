@@ -100,8 +100,222 @@
                                       data-tinymce='{"height":"15rem","placeholder":"Write a description here..."}'
                                       name="productDescription">{{product_data.product_description}}</textarea>
                             <div class="invalid-feedback">Please provide a Product description.</div>
+                        </div>
+
+
+<!--                        New code-->
+                        {% if product_data.category_id == 2 %}
+                        <div class="row mb-3 pt-3  bg-200 lens-widget ">
+
+                            <div class="row mb-3">
+                                <div class="mb-3">
+                                    <h5 class="text-1000 ">Type</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="stockType" type="checkbox"
+                                           name="stockType"
+                                           value="stock"/>
+                                    <label class="form-check-label" for="stockType">Stock</label>
+                                </div>
+                                 <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="visionType4" type="checkbox"
+                                           name="stockType"
+                                           value="rx"/>
+                                    <label class="form-check-label" for="visionType4">Rx</label>
+                                </div>
+                                </div>
+
+                                <h5 class="text-1000 ">Vision Type</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="visionType1" type="checkbox"
+                                           name="visionType"
+                                           value="single_vision"/>
+                                    <label class="form-check-label" for="visionType1">Single Vision</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="visionType2" type="checkbox"
+                                           name="visionType"
+                                           value="bifocal"/>
+                                    <label class="form-check-label" for="visionType2">Bi-Focal</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="visionType3" type="checkbox"
+                                           name="visionType"
+                                           value="progressive"/>
+                                    <label class="form-check-label" for="visionType3">Progressive</label>
+                                </div>
+                            </div>
 
                         </div>
+                        {% endif %}
+
+                        {% if product_data.category_id == 3 %}
+                        <div id="contactLensForm" class="row mb-3 pt-3 pb-3 bg-200 contact-lens-widget">
+                            <div class="row mb-3">
+                                <div class="mb-3">
+                                    <h5 class="text-1000 ">Type</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="ContactLensStockType" type="checkbox"
+                                           name="ContactLensStockType"
+                                           value="stock"/>
+                                    <label class="form-check-label" for="ContactLensStockType">Stock</label>
+                                </div>
+                                 <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="ContactLensRxType" type="checkbox"
+                                           name="ContactLensStockType"
+                                           value="rx"/>
+                                    <label class="form-check-label" for="ContactLensRxType">Rx</label>
+                                </div>
+                                </div>
+                                <h5 class="text-1000 ">Contact Lens Type</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_type1" type="checkbox"
+                                           name="contact_lens_type"
+                                           value="Soft"/>
+                                    <label class="form-check-label" for="contact_lens_type1">Soft</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_type2" type="checkbox"
+                                           name="contact_lens_type"
+                                           value="Semi Soft"/>
+                                    <label class="form-check-label" for="contact_lens_type2">Semi Soft</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_type3" type="checkbox"
+                                           name="contact_lens_type"
+                                           value="Hard"/>
+                                    <label class="form-check-label" for="contact_lens_type3">Hard</label>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <h5 class="text-1000 ">Contact Lens Disposablity</h5>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability1" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="Daily"/>
+                                    <label class="form-check-label" for="contact_lens_disposability1">Daily</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability2" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="1 Month"/>
+                                    <label class="form-check-label" for="contact_lens_disposability2">1 Month</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability3" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="3 Month"/>
+                                    <label class="form-check-label" for="contact_lens_disposability3">3 Month</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability4" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="6 Month"/>
+                                    <label class="form-check-label" for="contact_lens_disposability4">6 Month</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input class="form-check-input" id="contact_lens_disposability5" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="Yearly"/>
+                                    <label class="form-check-label" for="contact_lens_disposability5">Yearly</label>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Power</h5>
+                                    <select name="contactLensPower" class="form-select" aria-label="Default select example">
+                                        <option selected="">Choose Power</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">BC</h5>
+                                    <select name="contactLensBC" class="form-select" aria-label="Default select example">
+                                        <option selected="">Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Dia</h5>
+                                    <select name="contactLensDia" class="form-select" aria-label="Default select example">
+                                        <option selected="">Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Cylinder</h5>
+                                    <select name="contactLensCylinder" class="form-select" aria-label="Default select example">
+                                        <option selected="">Select Value</option>
+                                        <option value="-3.5">-3.5</option>
+                                            <option value="-3.0">-3.0</option>
+                                            <option value="-2.5">-2.5</option>
+                                            <option value="-2.0">-2.0</option>
+                                            <option value="-1.5">-1.5</option>
+                                            <option value="-1.0">-1.0</option>
+                                            <option value="-0.5">-0.5</option>
+                                            <option value="0.0">0.0</option>
+                                            <option value="0.5">0.5</option>
+                                            <option value="1.0">1.0</option>
+                                            <option value="1.5">1.5</option>
+                                            <option value="2.0">2.0</option>
+                                            <option value="2.5">2.5</option>
+                                            <option value="3.0">3.0</option>
+                                            <option value="3.5">3.5</option>
+                                    </select>
+                                </div>
+
+                                <div class="col-12 col-lg-3 g-3">
+                                    <h5 class="mb-2 text-1000">Axis</h5>
+                                    <select name="contactLensAxis" class="form-select" aria-label="Default select example">
+                                         <option selected="">Choose Axis</option>
+                                        <option value="1.50">1.50</option>
+                                        <option value="1.56">1.56</option>
+                                        <option value="1.59">1.59</option>
+                                        <option value="1.61">1.61</option>
+                                        <option value="1.67">1.67</option>
+                                        <option value="1.74">1.74</option>
+                                    </select>
+                                </div>
+
+                            </div>
+                        </div>
+                        {% endif %}
+
+
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Quantity</h5>
@@ -164,11 +378,6 @@
                                                         aria-label="category" class="form-select mb-3"
                                                         onchange="handleCategoryChange()">
                                                     <option value="{{product_data.category_id}}">{{product_data.category_name}}</option>
-                                                    {% for category in response.product_categories %}
-                                                    <option value="{{category.category_id}}">
-                                                        {{category.category_name}}
-                                                    </option>
-                                                    {% endfor %}
                                                 </select>
                                                 <div class="invalid-feedback">Please select category.</div>
                                             </div>
@@ -358,26 +567,152 @@
 <script src="{% static 'js/file-upload-preview.js' %}"></script>
 
 <script>
-    // Function to handle category change
-    function handleCategoryChange() {
-        var selectElement = document.getElementById("categorySelect");
-        var divToToggle = document.getElementById("only_frame_options");
-        var selectedValue = selectElement.value;
+    document.addEventListener("DOMContentLoaded", function() {
+        var stockData = {
+            "vision_type": "{{product_data.power_attribute.vision_type}}",
+            "stock_type": "{{product_data.power_attribute.stock_type}}",
+            };
 
-        if (selectedValue === "1") {
-            divToToggle.classList.remove("d-none");
-        } else {
-            divToToggle.classList.add("d-none");
+        // Function to check the corresponding checkbox based on the value
+        function checkCheckbox(elementId, valueToCheck) {
+            var checkbox = document.getElementById(elementId);
+            if (checkbox && checkbox.value === valueToCheck) {
+                checkbox.checked = true;
+            }
         }
-    }
 
-    // Initial call to handleCategoryChange when the page loads
-    document.addEventListener("DOMContentLoaded", function () {
-        handleCategoryChange();
+        // Check vision type checkboxes
+        checkCheckbox("visionType1", stockData.vision_type);
+        checkCheckbox("visionType2", stockData.vision_type);
+        checkCheckbox("visionType3", stockData.vision_type);
+
+        // Check stock type checkboxes
+        checkCheckbox("stockType", stockData.stock_type);
+        checkCheckbox("visionType4", stockData.stock_type);
     });
 </script>
 
 
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var stockData = {
+            "stock_type": "{{product_data.power_attribute.stock_type}}",
+            "contact_lens_type": "{{product_data.power_attribute.contact_lens_type}}",
+            "contact_lens_disposability": "{{product_data.power_attribute.contact_lens_disposability}}",
+            "power": "{{product_data.power_attribute.power}}",
+            "bc": "{{product_data.power_attribute.bc}}",
+            "dia": "{{product_data.power_attribute.dia}}",
+            "cyl": "{{product_data.power_attribute.cyl}}",
+            "axis": "{{product_data.power_attribute.axis}}"
+        };
+
+        // Function to set the checked attribute for checkboxes
+        function setCheckboxValue(elementId, valueToCheck) {
+            var checkbox = document.getElementById(elementId);
+            if (checkbox && checkbox.value === valueToCheck) {
+                checkbox.checked = true;
+            }
+        }
+
+        // Set checkbox values
+        setCheckboxValue("ContactLensStockType", stockData.stock_type);
+        setCheckboxValue("ContactLensRxType", stockData.stock_type);
+        setCheckboxValue("contact_lens_type1", stockData.contact_lens_type);
+        setCheckboxValue("contact_lens_type2", stockData.contact_lens_type);
+        setCheckboxValue("contact_lens_type3", stockData.contact_lens_type);
+        setCheckboxValue("contact_lens_disposability1", stockData.contact_lens_disposability);
+        setCheckboxValue("contact_lens_disposability2", stockData.contact_lens_disposability);
+        setCheckboxValue("contact_lens_disposability3", stockData.contact_lens_disposability);
+        setCheckboxValue("contact_lens_disposability4", stockData.contact_lens_disposability);
+        setCheckboxValue("contact_lens_disposability5", stockData.contact_lens_disposability);
+
+        // Function to set the selected option for dropdowns
+        function setSelectValue(selectName, valueToSelect) {
+            var select = document.querySelector('select[name="' + selectName + '"]');
+            if (select) {
+                Array.from(select.options).forEach(function(option) {
+                    if (option.value === valueToSelect) {
+                        option.selected = true;
+                    }
+                });
+            }
+        }
+
+        // Set select values
+        setSelectValue("contactLensPower", stockData.power);
+        setSelectValue("contactLensBC", stockData.bc);
+        setSelectValue("contactLensDia", stockData.dia);
+        setSelectValue("contactLensCylinder", stockData.cyl);
+        setSelectValue("contactLensAxis", stockData.axis);
+    });
+</script>
+
+
+<script>
+    // Add an event listener to the checkboxes
+    const visionTypeCheckboxes = document.querySelectorAll('input[name="visionType"]');
+    const stockTypeCheckboxes = document.querySelectorAll('input[name="stockType"]');
+    const contactLensTypeCheckboxes = document.querySelectorAll('input[name="contact_lens_type"]');
+    const contactLensDisposabilityCheckboxes = document.querySelectorAll('input[name="contact_lens_disposability"]');
+    const ContactLensStockTypeCheckboxes = document.querySelectorAll('input[name="ContactLensStockType"]');
+
+    visionTypeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Uncheck other checkboxes if one is checked
+            visionTypeCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+
+
+     stockTypeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Uncheck other checkboxes if one is checked
+            stockTypeCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+
+     contactLensTypeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Uncheck other checkboxes if one is checked
+            contactLensTypeCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+
+    contactLensDisposabilityCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Uncheck other checkboxes if one is checked
+            contactLensDisposabilityCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+
+    ContactLensStockTypeCheckboxes.forEach(checkbox => {
+        checkbox.addEventListener('change', function () {
+            // Uncheck other checkboxes if one is checked
+            ContactLensStockTypeCheckboxes.forEach(otherCheckbox => {
+                if (otherCheckbox !== this) {
+                    otherCheckbox.checked = false;
+                }
+            });
+        });
+    });
+
+</script>
 </body>
 
 </html>

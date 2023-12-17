@@ -196,3 +196,26 @@ def unassign_store_franchise_owner(FranchiseOwnerId, storeId):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def get_active_own_stores():
+    try:
+        with connection.cursor() as cursor:
+            unassigned_stores = []
+            get_unassigned_active_own_store_for_manager_query = f"""SELECT f.store_id, f.store_name FROM franchise_store f 
+            WHERE f.status = 1;"""
+            cursor.execute(get_unassigned_active_own_store_for_manager_query)
+            stores_data = cursor.fetchall()
+            for store in stores_data:
+                unassigned_stores.append({
+                    "store_id": store[0],
+                    "store_name": store[1]
+                })
+            return {
+                       "status": True,
+                       "available_stores": unassigned_stores
+                   }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

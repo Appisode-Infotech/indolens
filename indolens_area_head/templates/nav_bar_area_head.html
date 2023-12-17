@@ -73,285 +73,252 @@
                             </ul>
                         </div>
                     </div>
-                    <div class="nav-item-wrapper"><a aria-controls="franchise_store_management"
-                                                     aria-expanded="false" asd="index"
-                                                     class="nav-link dropdown-indicator label-1"
-                                                     data-bs-toggle="collapse" href="#franchise_store_management"
-                                                     role="button">
-                        <div class="d-flex align-items-center">
-                            <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
-                            <span class="nav-link-icon"><span data-feather="shopping-bag"></span></span><span
-                                class="nav-link-text">Franchise Stores</span>
-                        </div>
-                    </a>
-                        <div class="parent-wrapper label-1">
-                            <ul class="nav collapse parent {% if 'manage_Franchise_stores' in request.path or 'view_franchise_store_area_head' in request.path %}show{% endif %}"
-                                data-bs-parent="#navbarVerticalCollapse"
-                                id="franchise_store_management">
-                                <li class="collapsed-nav-item-title d-none">Franchise Stores
-                                </li>
-
-                                <li class="nav-item"><a aria-expanded="false"
-                                                        asd="index"
-                                                        class="nav-link {% if 'manage_Franchise_stores' in request.path %}active{% endif %}"
-                                                        data-bs-toggle=""
-                                                        href="{% url 'manage_Franchise_stores_area_head' 'All'%}">
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text">Manage Franchise stores</span>
-                                    </div>
-                                </a>
-                                    <!-- more inner pages-->
-                                </li>
-
-                            </ul>
-                        </div>
-                    </div>
                 </li>
 
                 <!--                inventory nav items-->
 
-                <li class="nav-item">
-                    <!-- label-->
-                    <p class="navbar-vertical-label">Inventory
-                    </p>
-                    <hr class="navbar-vertical-line"/>
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-controls="central_inventory_management"
-                                                     aria-expanded="false" asd="index"
-                                                     class="nav-link dropdown-indicator label-1"
-                                                     data-bs-toggle="collapse" href="#central_inventory"
-                                                     role="button">
-                        <div class="d-flex align-items-center">
-                            <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
-                            <span class="nav-link-icon"><span data-feather="archive"></span></span><span
-                                class="nav-link-text">Central Inventory</span>
-                        </div>
-                    </a>
-                        <div class="parent-wrapper label-1">
-                            <ul class="nav collapse parent {% if 'manage_out_of_stock' in request.path or 'manage_central_inventory_products' in request.path or 'manageMoveStocks' in request.path %}show{% endif %}"
-                                data-bs-parent="#navbarVerticalCollapse"
-                                id="central_inventory">
-                                <li class="collapsed-nav-item-title d-none">Central Inventory
-                                </li>
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; label&ndash;&gt;-->
+<!--                    <p class="navbar-vertical-label">Inventory-->
+<!--                    </p>-->
+<!--                    <hr class="navbar-vertical-line"/>-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-controls="central_inventory_management"-->
+<!--                                                     aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link dropdown-indicator label-1"-->
+<!--                                                     data-bs-toggle="collapse" href="#central_inventory"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center">-->
+<!--                            <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>-->
+<!--                            <span class="nav-link-icon"><span data-feather="archive"></span></span><span-->
+<!--                                class="nav-link-text">Central Inventory</span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                        <div class="parent-wrapper label-1">-->
+<!--                            <ul class="nav collapse parent {% if 'manage_out_of_stock' in request.path or 'manage_central_inventory_products' in request.path or 'manageMoveStocks' in request.path %}show{% endif %}"-->
+<!--                                data-bs-parent="#navbarVerticalCollapse"-->
+<!--                                id="central_inventory">-->
+<!--                                <li class="collapsed-nav-item-title d-none">Central Inventory-->
+<!--                                </li>-->
 
-                                <li class="nav-item"><a aria-expanded="false"
-                                                        asd="index"
-                                                        class="nav-link {% if 'manage_out_of_stock' in request.path %}active{% endif %}"
-                                                        data-bs-toggle=""
-                                                        href="{% url 'manage_out_of_stock_area_head' %}">
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text">Out Of Stock</span>
-                                    </div>
-                                </a>
-                                </li>
-                                <li class="nav-item"><a aria-expanded="false"
-                                                        asd="index"
-                                                        class="nav-link {% if 'manage_central_inventory_products' in request.path %}active{% endif %}"
-                                                        data-bs-toggle=""
-                                                        href="{% url 'manage_central_inventory_products_area_head' 'All' %}">
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text">Manage Products</span>
-                                    </div>
-                                </a>
-                                    <!-- more inner pages-->
-                                </li>
+<!--                                <li class="nav-item"><a aria-expanded="false"-->
+<!--                                                        asd="index"-->
+<!--                                                        class="nav-link {% if 'manage_out_of_stock' in request.path %}active{% endif %}"-->
+<!--                                                        data-bs-toggle=""-->
+<!--                                                        href="{% url 'manage_out_of_stock_area_head' %}">-->
+<!--                                    <div class="d-flex align-items-center"><span-->
+<!--                                            class="nav-link-text">Out Of Stock</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                </li>-->
+<!--                                <li class="nav-item"><a aria-expanded="false"-->
+<!--                                                        asd="index"-->
+<!--                                                        class="nav-link {% if 'manage_central_inventory_products' in request.path %}active{% endif %}"-->
+<!--                                                        data-bs-toggle=""-->
+<!--                                                        href="{% url 'manage_central_inventory_products_area_head' 'All' %}">-->
+<!--                                    <div class="d-flex align-items-center"><span-->
+<!--                                            class="nav-link-text">Manage Products</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                    &lt;!&ndash; more inner pages&ndash;&gt;-->
+<!--                                </li>-->
 
-                                <li class="nav-item"><a aria-expanded="false"
-                                                        asd="index"
-                                                        class="nav-link {% if 'manageMoveStocks' in request.path %}active{% endif %}"
-                                                        data-bs-toggle=""
-                                                        href="{% url 'manageMoveStocks_area_head' %}">
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text">Stock Movement</span>
-                                    </div>
-                                </a>
-                                    <!-- more inner pages-->
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="nav-item-wrapper"><a aria-controls="stock_requests"
-                                                     aria-expanded="false" asd="index"
-                                                     class="nav-link dropdown-indicator label-1"
-                                                     data-bs-toggle="collapse" href="#stock_requests"
-                                                     role="button">
-                        <div class="d-flex align-items-center">
-                            <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>
-                            <span class="nav-link-icon"><span data-feather="box"></span></span><span
-                                class="nav-link-text">Stock Requests</span>
-                        </div>
-                    </a>
-                        <div class="parent-wrapper label-1">
-                            <ul class="nav collapse parent {% if 'all_stock_requests' in request.path or 'pending_stock_requests' in request.path or 'completed_stock_requests' in request.path or 'rejected_stock_requests' in request.path %}show{% endif %}"
-                                data-bs-parent="#navbarVerticalCollapse"
-                                id="stock_requests">
-                                <li class="collapsed-nav-item-title d-none">Stock Requests
-                                </li>
-                                <li class="nav-item"><a aria-expanded="false" asd="index"
-                                                        class="nav-link {% if 'all_stock_requests' in request.path %}active{% endif %}"
-                                                        data-bs-toggle=""
-                                                        href="{% url 'all_stock_requests_area_head' %}">
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text">All Requests</span>
-                                    </div>
-                                </a>
-                                    <!-- more inner pages-->
-                                </li>
+<!--                                <li class="nav-item"><a aria-expanded="false"-->
+<!--                                                        asd="index"-->
+<!--                                                        class="nav-link {% if 'manageMoveStocks' in request.path %}active{% endif %}"-->
+<!--                                                        data-bs-toggle=""-->
+<!--                                                        href="{% url 'manageMoveStocks_area_head' %}">-->
+<!--                                    <div class="d-flex align-items-center"><span-->
+<!--                                            class="nav-link-text">Stock Movement</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                    &lt;!&ndash; more inner pages&ndash;&gt;-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                    <div class="nav-item-wrapper"><a aria-controls="stock_requests"-->
+<!--                                                     aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link dropdown-indicator label-1"-->
+<!--                                                     data-bs-toggle="collapse" href="#stock_requests"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center">-->
+<!--                            <div class="dropdown-indicator-icon"><span class="fas fa-caret-right"></span></div>-->
+<!--                            <span class="nav-link-icon"><span data-feather="box"></span></span><span-->
+<!--                                class="nav-link-text">Stock Requests</span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                        <div class="parent-wrapper label-1">-->
+<!--                            <ul class="nav collapse parent {% if 'all_stock_requests' in request.path or 'pending_stock_requests' in request.path or 'completed_stock_requests' in request.path or 'rejected_stock_requests' in request.path %}show{% endif %}"-->
+<!--                                data-bs-parent="#navbarVerticalCollapse"-->
+<!--                                id="stock_requests">-->
+<!--                                <li class="collapsed-nav-item-title d-none">Stock Requests-->
+<!--                                </li>-->
+<!--                                <li class="nav-item"><a aria-expanded="false" asd="index"-->
+<!--                                                        class="nav-link {% if 'all_stock_requests' in request.path %}active{% endif %}"-->
+<!--                                                        data-bs-toggle=""-->
+<!--                                                        href="{% url 'all_stock_requests_area_head' %}">-->
+<!--                                    <div class="d-flex align-items-center"><span-->
+<!--                                            class="nav-link-text">All Requests</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                    &lt;!&ndash; more inner pages&ndash;&gt;-->
+<!--                                </li>-->
 
-                                <li class="nav-item"><a aria-expanded="false" asd="index"
-                                                        class="nav-link {% if 'pending_stock_requests' in request.path %}active{% endif %}"
-                                                        data-bs-toggle=""
-                                                        href="{% url 'pending_stock_requests_area_head' %}">
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text">Pending Requests</span>
-                                    </div>
-                                </a>
-                                    <!-- more inner pages-->
-                                </li>
+<!--                                <li class="nav-item"><a aria-expanded="false" asd="index"-->
+<!--                                                        class="nav-link {% if 'pending_stock_requests' in request.path %}active{% endif %}"-->
+<!--                                                        data-bs-toggle=""-->
+<!--                                                        href="{% url 'pending_stock_requests_area_head' %}">-->
+<!--                                    <div class="d-flex align-items-center"><span-->
+<!--                                            class="nav-link-text">Pending Requests</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                    &lt;!&ndash; more inner pages&ndash;&gt;-->
+<!--                                </li>-->
 
-                                <li class="nav-item"><a aria-expanded="false" asd="index"
-                                                        class="nav-link {% if 'completed_stock_requests' in request.path %}active{% endif %}"
-                                                        data-bs-toggle=""
-                                                        href="{% url 'completed_stock_requests_area_head' %}">
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text">Completed Requests</span>
-                                    </div>
-                                </a>
-                                    <!-- more inner pages-->
-                                </li>
-                                <li class="nav-item"><a aria-expanded="false" asd="index"
-                                                        class="nav-link {% if 'rejected_stock_requests' in request.path %}active{% endif %}"
-                                                        data-bs-toggle=""
-                                                        href="{% url 'rejected_stock_requests_area_head' %}">
-                                    <div class="d-flex align-items-center"><span
-                                            class="nav-link-text">Rejected Requests</span>
-                                    </div>
-                                </a>
-                                    <!-- more inner pages-->
-                                </li>
+<!--                                <li class="nav-item"><a aria-expanded="false" asd="index"-->
+<!--                                                        class="nav-link {% if 'completed_stock_requests' in request.path %}active{% endif %}"-->
+<!--                                                        data-bs-toggle=""-->
+<!--                                                        href="{% url 'completed_stock_requests_area_head' %}">-->
+<!--                                    <div class="d-flex align-items-center"><span-->
+<!--                                            class="nav-link-text">Completed Requests</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                    &lt;!&ndash; more inner pages&ndash;&gt;-->
+<!--                                </li>-->
+<!--                                <li class="nav-item"><a aria-expanded="false" asd="index"-->
+<!--                                                        class="nav-link {% if 'rejected_stock_requests' in request.path %}active{% endif %}"-->
+<!--                                                        data-bs-toggle=""-->
+<!--                                                        href="{% url 'rejected_stock_requests_area_head' %}">-->
+<!--                                    <div class="d-flex align-items-center"><span-->
+<!--                                            class="nav-link-text">Rejected Requests</span>-->
+<!--                                    </div>-->
+<!--                                </a>-->
+<!--                                    &lt;!&ndash; more inner pages&ndash;&gt;-->
+<!--                                </li>-->
 
 
-                            </ul>
-                        </div>
-                    </div>
-                </li>
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </div>-->
+<!--                </li>-->
 
                 <!--                orders management nav item-->
-                <li class="nav-item">
-                    <!-- label-->
-                    <p class="navbar-vertical-label">ORDERS
-                    </p>
-                    <hr class="navbar-vertical-line"/>
-                    <!-- parent pages-->
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'all_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'all_orders_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="shopping-bag"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">All Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; label&ndash;&gt;-->
+<!--                    <p class="navbar-vertical-label">ORDERS-->
+<!--                    </p>-->
+<!--                    <hr class="navbar-vertical-line"/>-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'all_orders' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'all_orders_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="shopping-bag"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">All Orders</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'pending_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'pending_orders_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Pending Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'pending_orders' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'pending_orders_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Pending Orders</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'received_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'received_orders_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="check-circle"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Received Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'received_orders' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'received_orders_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="check-circle"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Received Orders</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'processing_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'processing_orders_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="activity"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Processing Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'ready_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'ready_orders_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Ready Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'processing_orders' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'processing_orders_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="activity"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Processing Orders</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'ready_orders' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'ready_orders_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Ready Orders</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'delivered_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'delivered_orders_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="check"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Delivered Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'cancelled_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'cancelled_orders_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="x-circle"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Cancelled Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'delivered_orders' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'delivered_orders_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="check"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Delivered Orders</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'cancelled_orders' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'cancelled_orders_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="x-circle"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Cancelled Orders</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'refunded_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'refunded_orders_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="refresh-cw"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Refunded Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'refunded_orders' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'refunded_orders_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="refresh-cw"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Refunded Orders</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
 
                 <li class="nav-item">
                     <!-- label-->
@@ -384,163 +351,61 @@
                     <!-- parent pages-->
 
 
+                
                 <li class="nav-item">
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'manage_store_managers' in request.path %}active{% endif %}"
+                                                     class="nav-link label-1 {% if 'manage_employees' in request.path %}active{% endif %}"
                                                      data-bs-toggle=""
-                                                     href="{% url 'manage_store_managers_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="user-check"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Store Managers</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'manage_franchise_owners' in request.path %}active{% endif %}"
-                                                     data-bs-toggle=""
-                                                     href="{% url 'manage_franchise_owners_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="user-check"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Franchise Owners</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
-
-
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'manage_marketing_head' in request.path %}active{% endif %}"
-                                                     data-bs-toggle=""
-                                                     href="{% url 'manage_marketing_head_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="target"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Marketing Heads</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'manage_optimetry' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'manage_optimetry_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="eye"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Optimetry</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'manage_sales_executives' in request.path %}active{% endif %}"
-                                                     data-bs-toggle=""
-                                                     href="{% url 'manage_sales_executives_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="briefcase"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Sales Executives</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'manage_accountant' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'manage_accountant_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="dollar-sign"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Accountant</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
-
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'manage_lab_technician' in request.path %}active{% endif %}"
-                                                     data-bs-toggle=""
-                                                     href="{% url 'manage_lab_technician_area_head' %}"
+                                                     href="{% url 'manage_employees' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="clipboard"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Lab Technician</span></span>
+                                class="nav-link-text">Store Employees</span></span>
                         </div>
                     </a>
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false"
-                                                     asd="index"
-                                                     class="nav-link label-1 {% if 'manage_other_employees' in request.path %}active{% endif %}"
-                                                     data-bs-toggle=""
-                                                     href="{% url 'manage_other_employees_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="tool"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">House Keeping & Others</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
 
-                <!--                lab nav items-->
-                <li class="nav-item">
-                    <!-- label-->
-                    <p class="navbar-vertical-label">LABS
-                    </p>
-                    <hr class="navbar-vertical-line"/>
-                    <!-- parent pages-->
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'manage_labs' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'manage_labs_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="cpu"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Labs</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+<!--                &lt;!&ndash;                lab nav items&ndash;&gt;-->
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; label&ndash;&gt;-->
+<!--                    <p class="navbar-vertical-label">LABS-->
+<!--                    </p>-->
+<!--                    <hr class="navbar-vertical-line"/>-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false"
-                                                     asd="index"
-                                                     class="nav-link label-1 {% if 'manage_authenticity_card' in request.path %}active{% endif %}"
-                                                     data-bs-toggle=""
-                                                     href="{% url 'manage_authenticity_card_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="credit-card"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Authenticity Card</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'manage_labs' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'manage_labs_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="cpu"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Manage Labs</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
+
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false"-->
+<!--                                                     asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'manage_authenticity_card' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle=""-->
+<!--                                                     href="{% url 'manage_authenticity_card_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="credit-card"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Manage Authenticity Card</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
 
                 <li class="nav-item">
                     <!-- label-->
@@ -577,26 +442,26 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <!-- label-->
-                    <p class="navbar-vertical-label">MEMBERSHIPS
-                    </p>
-                    <hr class="navbar-vertical-line"/>
-                    <!-- parent pages-->
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; label&ndash;&gt;-->
+<!--                    <p class="navbar-vertical-label">MEMBERSHIPS-->
+<!--                    </p>-->
+<!--                    <hr class="navbar-vertical-line"/>-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'manage_memberships' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'manage_memberships_area_head' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Manage Memberships</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+<!--                <li class="nav-item">-->
+<!--                    &lt;!&ndash; parent pages&ndash;&gt;-->
+<!--                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"-->
+<!--                                                     class="nav-link label-1 {% if 'manage_memberships' in request.path %}active{% endif %}"-->
+<!--                                                     data-bs-toggle="" href="{% url 'manage_memberships_area_head' %}"-->
+<!--                                                     role="button">-->
+<!--                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span-->
+<!--                                data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span-->
+<!--                                class="nav-link-text">Manage Memberships</span></span>-->
+<!--                        </div>-->
+<!--                    </a>-->
+<!--                    </div>-->
+<!--                </li>-->
 
                 <!--                Masters start-->
 

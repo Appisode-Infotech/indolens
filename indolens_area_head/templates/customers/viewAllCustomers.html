@@ -151,7 +151,7 @@
                                     </td>
                                     <td class="customer align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
-                                            href="{% url 'customer_details' customer.customer_id %}">
+                                            href="{% url 'customer_details_area_head' customer.customer_id %}">
                                         <div class="avatar avatar-m">
                                             <div class="avatar-name rounded-circle"><span class="first-letter"></span>
                                             </div>
@@ -161,16 +161,11 @@
                                     <td class="email align-middle white-space-nowrap pe-5">
                                         {% if customer.created_by_store_type == 1 %}
                                         <p class="fw-semi-bold">OWN STORE</p>
-                                        {% else %}
-                                        <p class="fw-semi-bold">FRANCHISE STORE</p>
                                         {% endif %}
                                     </td>
                                     <td class="email align-middle white-space-nowrap pe-5">
                                         {% if customer.created_by_store_type == 1 %}
-                                        <a class="fw-semi-bold" href="{% url 'view_own_store' customer.created_by_store_id %}">
-                                            {{customer.store_name}}</a>
-                                        {% else %}
-                                        <a class="fw-semi-bold" href="{% url 'view_franchise_store' customer.created_by_store_id %}">
+                                        <a class="fw-semi-bold" href="{% url 'view_own_store_area_head' customer.created_by_store_id %}">
                                             {{customer.store_name}}</a>
                                         {% endif %}
 

@@ -372,7 +372,7 @@ def manageStoreManagers(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_all_store_manager(status)
         available_stores_response, available_stores_status_code = own_store_controller.get_unassigned_active_own_store_for_manager()
-        return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
+        return render(request, 'indolens_admin/storeEmployee/manageStoreEmployee.html',
                       {"store_managers": response['store_managers'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
     else:
@@ -425,7 +425,7 @@ def createStoreManager(request):
             return redirect(url)
 
         else:
-            return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
+            return render(request, 'indolens_admin/storeEmployee/createStoreManager.html')
     else:
         return redirect('login')
 
@@ -434,7 +434,7 @@ def viewStoreManager(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
         print(response)
-        return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
+        return render(request, 'indolens_admin/storeEmployee/viewStoreEmployee.html',
                       {"store_manager": response['store_manager']})
     else:
         return redirect('login')
@@ -482,7 +482,7 @@ def editStoreManager(request, storeManagerId):
 
         else:
             response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
-            return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
+            return render(request, 'indolens_admin/storeEmployee/editStoreManager.html',
                           {"store_manager": response['store_manager']})
     else:
         return redirect('login')
@@ -491,7 +491,7 @@ def editStoreManager(request, storeManagerId):
 def updateStoreManagerDocuments(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
-        return render(request, 'indolens_admin/storeManagers/updateDocuments.html',
+        return render(request, 'indolens_admin/storeEmployee/updateDocuments.html',
                       {"store_manager": response['store_manager']})
     else:
         return redirect('login')
@@ -521,8 +521,12 @@ def enableDisableStoreManager(request, route, storeManagerId, status):
 def manageFranchiseOwners(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_all_franchise_owner(status)
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        print(available_stores_response)
+        print("manager franchise owner+++++++++++++++++++++++++++++++++++++")
         return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
-                      {"franchise_owners": response['franchise_owners'], "status": status})
+                      {"franchise_owners": response['franchise_owners'],
+                       "available_stores": available_stores_response['available_stores'], "status": status})
     else:
         return redirect('login')
 
@@ -1780,6 +1784,7 @@ def viewLabTechnician(request, labTechnicianId):
 def updateLabTechnicianDocuments(request, labTechnicianId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
+        print(response)
         return render(request, 'indolens_admin/labTechnician/updateDocuments.html',
                       {"lab_technician": response['lab_technician']})
     else:
@@ -2541,8 +2546,10 @@ def restockProductOutOfStock(request):
 
 def centralInventoryUpdateProduct(request, productId):
     if request.method == 'POST':
+        power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
         product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
-        response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId)
+        response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId, power_attributes)
+        print(response)
     response, status_code = get_central_inventory_product_single(productId)
     types, status_code = central_inventory_controller.get_all_active_types()
     return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
@@ -2772,13 +2779,17 @@ def assignFranchiseStoreOwner(request, route):
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
                                                                                           request.POST[
                                                                                               'store_id'])
-        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        print(response)
+        url = reverse('manage_franchise_owners', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignFranchiseStoreOwner(request, route, FranchiseOwnerId, storeId):
+    print("unassign===============================================")
+    print(FranchiseOwnerId)
+    print(storeId)
     response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOwnerId, storeId)
-    url = reverse('manage_store_other_employees', kwargs={'status': route})
+    url = reverse('manage_franchise_owners', kwargs={'status': route})
     return redirect(url)
 
 
@@ -2881,7 +2892,8 @@ def deleteMarketingHeadDocuments(request, marketingHeadId, documentURL, document
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'marketing_head', 'marketing_head_id',
                                                                             marketingHeadId)
-        return JsonResponse(response)
+        url = reverse('update_marketing_head_documents', kwargs={'marketingHeadId': marketingHeadId})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2890,7 +2902,8 @@ def deleteAccountantDocuments(request, accountantId, documentURL, document_Type)
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'accountant', 'accountant_id', accountantId)
-        return JsonResponse(response)
+        url = reverse('update_accountant_documents', kwargs={'accountantId': accountantId})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -2900,7 +2913,8 @@ def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'lab_technician', 'lab_technician_id',
                                                                             labTechnicianId)
-        return JsonResponse(response)
+        url = reverse('update_lab_technician_documents', kwargs={'labTechnicianId': labTechnicianId})
+        return redirect(url)
     else:
         return redirect('login')
 
@@ -3234,6 +3248,151 @@ def addAreaHeadDocuments(request, areaHeadId):
             print(response)
 
             url = reverse('update_area_head_documents', kwargs={'areaHeadId': areaHeadId})
+            return redirect(url)
+    else:
+        return redirect('login')
+
+def addAccountantDocuments(request, accountantId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            accountant = accountant_model.accountant_model_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_accountant_doc(file_data, accountantId, accountant)
+            print(response)
+
+            url = reverse('update_accountant_documents', kwargs={'accountantId': accountantId})
+            return redirect(url)
+    else:
+        return redirect('login')
+
+def addLabTechnicianDocuments(request, LabTechnicianId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            lab_technician = lab_technician_model.lab_technician_model_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_lab_technician_doc(file_data, LabTechnicianId, lab_technician)
+            print(response)
+
+            url = reverse('update_lab_technician_documents', kwargs={'labTechnicianId': LabTechnicianId})
+            return redirect(url)
+    else:
+        return redirect('login')
+
+
+def addMarketingHeadDocuments(request, marketingHeadId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'profilePic': 'profile_pic',
+                'document1': 'documents',
+                'document2': 'documents',
+            }
+
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
+
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{file_key}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"doc"
+                    file_dict = {form_data_key: file_name}
+
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
+
+                    file_list.append(file_dict)
+
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
+
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
+
+            file_data = FileData(form_data)
+            print(vars(file_data))
+            print(request.POST)
+            marketing_head = marketing_head_model.marketing_head_model_from_dict(request.POST)
+            response, status_code = add_documents_controller.add_marketing_heads_doc(file_data, marketingHeadId, marketing_head)
+            print(response)
+
+            url = reverse('update_marketing_head_documents', kwargs={'marketingHeadId': marketingHeadId})
             return redirect(url)
     else:
         return redirect('login')

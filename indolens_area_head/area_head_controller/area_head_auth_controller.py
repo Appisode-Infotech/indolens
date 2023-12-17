@@ -31,8 +31,7 @@ def login(area_head):
                                 WHERE email = '{area_head.email}'"""
             cursor.execute(login_query)
             area_head_data = cursor.fetchall()
-            print(area_head_data)
-            
+
             if area_head_data is None:
                 return {
                     "status": False,
@@ -64,7 +63,6 @@ def login(area_head):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-
 
 def forgot_password(email):
     try:

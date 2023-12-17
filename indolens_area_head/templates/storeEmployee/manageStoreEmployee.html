@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Manage Optimetry</title>
+    <title>Indolens admin - Manage Store Managers</title>
 
     {% load static %}
 
@@ -62,7 +62,6 @@
 
 
 
-
     </script>
 </head>
 
@@ -84,7 +83,7 @@
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Optimetry<span class="fw-normal text-700 ms-3">(2)</span></h2>
+                            <h2 class="mb-0">Store Employees<span class="fw-normal text-700 ms-3">({{store_employees|length}})</span></h2>
                         </div>
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -110,6 +109,9 @@
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
                                     scope="col" style="width:30%;">NAME
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                    ROLE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
                                     PHONE
@@ -146,72 +148,72 @@
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
+                            {% for employee in store_employees%}
                             <tr class="position-static">
                                 <td>
+
                                     <div class="avatar avatar-m"><img alt=""
-                                                                      class="rounded-circle"
-                                                                      src="{% static 'img/team/32.png' %}"/>
+                                                                               src="{{MEDIA_URL}}{{employee.profile_pic}}"
+                                                                               width="53"/>
                                     </div>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
-                                        class="text-decoration-none fw-bold fs-0" href="{% url 'view_optimetry' %}">Santhosh
-                                    Kumar</a>
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_employees' employee.employee_id %}">
+                                    {{employee.name}}
+                                </a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">8660225160</p>
+                                    {% if employee.role == 1 %}
+                                    <p class="mb-0 fs--1 text-900">MANAGER</p>
+                                    {% elif employee.role == 2 %}
+                                    <p class="mb-0 fs--1 text-900">OPTOMETRY</p>
+                                    {% elif employee.role == 3 %}
+                                    <p class="mb-0 fs--1 text-900">SALES EXECUTIVE</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">OTHER EMPLOYEE</p>
+                                    {% endif %}
+
+                                </td>
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">{{employee.phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">devsandy12@gmail.com</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.email}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <a class="text-decoration-none fw-semi-bold fs-0"
-                                       href="{%url 'view_own_store_area_head'%}">Indolens
-                                        - 01</a>
+                                    <p class="mb-0 fs--1 text-900">{{employee.store_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if employee.status == 0 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
+                                {% elif employee.status == 1 %}
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                {% endif %}
+                                </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.creator_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">May 21, 2028</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.last_updated_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">Super Admin</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.updater_name}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">#31, first cross ,madanayakanahalli,
-                                        bangalore</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.address}}</p>
                                 </td>
 
-                                <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                    <div class="font-sans-serif btn-reveal-trigger position-static">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
-                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_optimetry' %}">View</a>
-                                            <a class="dropdown-item" href="{% url 'edit_optimetry' %}">Update/Change
-                                                Password</a>
-                                            <a class="dropdown-item" href="{% url 'edit_optimetry' %}">Allocate
-                                                Store</a>
 
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="#!">Make Inactive</a>
-                                        </div>
-                                    </div>
-                                </td>
                             </tr>
+                            {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -248,7 +250,6 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
-
 
 
 
