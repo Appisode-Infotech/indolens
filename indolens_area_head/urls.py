@@ -28,7 +28,7 @@ urlpatterns = [
     path('rejected_stock_requests/', viewRejectedStockRequests, name='rejected_stock_requests_area_head'),
     # customers
     path('view_customers/', viewAllCustomers, name='view_customers_area_head'),
-    path('view_customers/customer_details/', viewCustomerDetails, name='customer_details_area_head'),
+    path('view_customers/customer_details/customerId=<int:customerId>', viewCustomerDetails, name='customer_details_area_head'),
 
     # store managers
     path('manage_employees/', manageEmployee, name='manage_employees'),
