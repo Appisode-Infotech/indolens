@@ -521,8 +521,12 @@ def enableDisableStoreManager(request, route, storeManagerId, status):
 def manageFranchiseOwners(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_all_franchise_owner(status)
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        print(available_stores_response)
+        print("manager franchise owner+++++++++++++++++++++++++++++++++++++")
         return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
-                      {"franchise_owners": response['franchise_owners'], "status": status})
+                      {"franchise_owners": response['franchise_owners'],
+                       "available_stores": available_stores_response['available_stores'], "status": status})
     else:
         return redirect('login')
 
@@ -2775,13 +2779,17 @@ def assignFranchiseStoreOwner(request, route):
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
                                                                                           request.POST[
                                                                                               'store_id'])
-        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        print(response)
+        url = reverse('manage_franchise_owners', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignFranchiseStoreOwner(request, route, FranchiseOwnerId, storeId):
+    print("unassign===============================================")
+    print(FranchiseOwnerId)
+    print(storeId)
     response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOwnerId, storeId)
-    url = reverse('manage_store_other_employees', kwargs={'status': route})
+    url = reverse('manage_franchise_owners', kwargs={'status': route})
     return redirect(url)
 
 
