@@ -521,8 +521,12 @@ def enableDisableStoreManager(request, route, storeManagerId, status):
 def manageFranchiseOwners(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_all_franchise_owner(status)
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        print(available_stores_response)
+        print("manager franchise owner+++++++++++++++++++++++++++++++++++++")
         return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
-                      {"franchise_owners": response['franchise_owners'], "status": status})
+                      {"franchise_owners": response['franchise_owners'],
+                       "available_stores": available_stores_response['available_stores'], "status": status})
     else:
         return redirect('login')
 
@@ -2542,8 +2546,10 @@ def restockProductOutOfStock(request):
 
 def centralInventoryUpdateProduct(request, productId):
     if request.method == 'POST':
+        power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
         product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
-        response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId)
+        response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId, power_attributes)
+        print(response)
     response, status_code = get_central_inventory_product_single(productId)
     types, status_code = central_inventory_controller.get_all_active_types()
     return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
@@ -2773,13 +2779,17 @@ def assignFranchiseStoreOwner(request, route):
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
                                                                                           request.POST[
                                                                                               'store_id'])
-        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        print(response)
+        url = reverse('manage_franchise_owners', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignFranchiseStoreOwner(request, route, FranchiseOwnerId, storeId):
+    print("unassign===============================================")
+    print(FranchiseOwnerId)
+    print(storeId)
     response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOwnerId, storeId)
-    url = reverse('manage_store_other_employees', kwargs={'status': route})
+    url = reverse('manage_franchise_owners', kwargs={'status': route})
     return redirect(url)
 
 

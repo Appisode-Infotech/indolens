@@ -283,15 +283,11 @@ def makeSaleOwnStore(request):
         response, status_code = store_inventory_controller.get_all_products_for_store(
             request.session.get('assigned_store_id'))
         customerResponse, status_code_cust = customers_controller.get_all_stores_customers()
-        lense_response, status_code = central_inventory_controller.get_central_inventory_lens()
+        lens_response, status_code = central_inventory_controller.get_central_inventory_lens(request.session.get('assigned_store_id'))
+        print(lens_response)
         return render(request, 'expenses/makeSaleOwnStore.html',
-                      {"stocks_list": response['stocks_list'], 'customers_list': customerResponse['customers_list'],
-                       "stock_bifocal_lens": lense_response['stock_bifocal_lens'],
-                       "stock_single_vision_lens": lense_response['stock_single_vision_lens'],
-                       "stock_progressive_lens": lense_response['stock_progressive_lens'],
-                       "rx_progressive_lens": lense_response['rx_progressive_lens'],
-                       "rx_bifocal_lens": lense_response['rx_bifocal_lens'],
-                       "rx_single_vision_lens": lense_response['rx_single_vision_lens']
-                       })
+                      {"other_products": response['stocks_list'], 'customers_list': customerResponse['customers_list'],
+                       "lens": lens_response['lens_list'],
+                       "contact_lens": lens_response['contact_lens_list'] })
     else:
         return redirect('own_store_login')
