@@ -17,6 +17,8 @@ from indolens_admin.admin_models.admin_resp_model.master_shapes_resp_model impor
 from indolens_admin.admin_models.admin_resp_model.master_units_resp_model import get_master_units
 from indolens_admin.admin_models.admin_resp_model.product_request_list_resp_model import get_request_product_list
 from indolens_admin.admin_models.admin_resp_model.store_inventory_product_resp_model import get_store_stocks
+from indolens_own_store.own_store_model.response_model.store_inventory_product_resp_model import \
+    get_store_inventory_stocks
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
@@ -689,7 +691,7 @@ def get_central_inventory_lens(store_id):
             return {
                 "status": True,
                 "lens_list": get_products(lens_list),
-                "contact_lens_list": get_products(contact_lens_list)
+                "contact_lens_list": get_store_inventory_stocks(contact_lens_list)
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
