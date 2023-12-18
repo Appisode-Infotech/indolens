@@ -669,6 +669,7 @@ def manageAreaHead(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_all_area_head(status)
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
+        print(available_stores_response)
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
                       {"area_heads_list": response['area_heads_list'],
                        "available_stores": available_stores_response['available_stores'],
@@ -2845,8 +2846,10 @@ def unAssignFranchiseStoreOtherEmployee(request, route, FranchiseOtherEmployeeId
 
 def assignAreaHeadOwnStore(request):
     if request.method == 'POST':
-        response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
-        return redirect('manage_area_head')
+        print(request.POST)
+        # response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
+    url = reverse('manage_area_head', kwargs={'status': 'All'})
+    return redirect(url)
 
 
 def unAssignAreaHeadOwnStore(request, empId, storeId):
