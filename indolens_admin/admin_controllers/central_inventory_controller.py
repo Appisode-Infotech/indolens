@@ -472,6 +472,7 @@ def change_stock_request_status(requestId, status, updator):
             product_details = cursor.fetchone()
             quantity = product_details[4]
             dispenser_inventory = product_details[9]
+            print(dispenser_inventory)
 
             # requested products from centre inventory
             if dispenser_inventory == 0:
@@ -598,7 +599,6 @@ def change_product_status(productId, status):
 
 
 def create_store_stock_request(stock_obj, store_id):
-    print(stock_obj.comments)
     try:
         with connection.cursor() as cursor:
             stock_req_query = """INSERT INTO request_products ( 

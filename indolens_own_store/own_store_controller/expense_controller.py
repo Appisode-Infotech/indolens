@@ -1,8 +1,11 @@
 import datetime
+import re
+
 import pymysql
 import pytz
 from django.db import connection
 
+from indolens_own_store.own_store_controller import lens_sale_power_attribute_controller
 from indolens_own_store.own_store_model.response_model.store_expense_resp_model import get_store_expenses
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -43,6 +46,35 @@ def get_all_store_expense(store_id, store_type):
                 "status": True,
                 "message": "success",
                 "stor_expense_list": get_store_expenses(store_expense_data)
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def make_sale(cart_data, customerData, billingDetailsData):
+    try:
+        with connection.cursor() as cursor:
+            for data in cart_data:
+                new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
+                print("======================")
+                if new_data.get('product_category_id') == '2':
+                    print("===============================lense===============================")
+                    print(new_data)
+                    power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
+                elif new_data.get('product_category_id') == '3':
+                    print("===============================Contact lense===============================")
+                    print(new_data)
+                    power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
+                else:
+                    print("===============================Other Products===============================")
+                    print(new_data)
+
+            return {
+                "status": True,
+                "message": "success"
             }, 200
 
     except pymysql.Error as e:

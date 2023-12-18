@@ -1,3 +1,5 @@
+import json
+
 from django.shortcuts import redirect, render
 
 from indolens_admin.admin_controllers import customers_controller, central_inventory_controller
@@ -280,11 +282,15 @@ def allExpenseStore(request):
 
 def makeSaleOwnStore(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        if request.method == 'POST':
+            cart_data = json.loads(request.POST['cartData'])
+            customerData = json.loads(request.POST['customerData'])
+            billingDetailsData = json.loads(request.POST['billingDetailsData'])
+            expense_controller.make_sale(cart_data, customerData, billingDetailsData)
         response, status_code = store_inventory_controller.get_all_products_for_store(
             request.session.get('assigned_store_id'))
         customerResponse, status_code_cust = customers_controller.get_all_stores_customers()
         lens_response, status_code = central_inventory_controller.get_central_inventory_lens(request.session.get('assigned_store_id'))
-        print(lens_response)
         return render(request, 'expenses/makeSaleOwnStore.html',
                       {"other_products_list": response['stocks_list'], 'customers_list': customerResponse['customers_list'],
                        "lens_list": lens_response['lens_list'],

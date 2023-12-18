@@ -372,7 +372,7 @@ def manageStoreManagers(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_all_store_manager(status)
         available_stores_response, available_stores_status_code = own_store_controller.get_unassigned_active_own_store_for_manager()
-        return render(request, 'indolens_admin/storeEmployee/manageStoreEmployee.html',
+        return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
                       {"store_managers": response['store_managers'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
     else:
@@ -434,7 +434,7 @@ def viewStoreManager(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
         print(response)
-        return render(request, 'indolens_admin/storeEmployee/viewStoreEmployee.html',
+        return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
                       {"store_manager": response['store_manager']})
     else:
         return redirect('login')
@@ -2612,6 +2612,7 @@ def centralInventoryAddProducts(request):
             power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
             response, status_code = central_inventory_controller.add_central_inventory_products(product_obj, file_data,
                                                                                                 power_attributes)
+            print(response)
             url = reverse('manage_central_inventory_products', kwargs={'status': 'All'})
             return redirect(url)
         else:
@@ -2635,11 +2636,15 @@ def manageMoveStocks(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
+            print(stock_obj.store_type)
             if request.POST['own_store_id'] != '':
                 store_id = request.POST['own_store_id']
+                print(store_id)
             else:
                 store_id = request.POST['franchise_store_id']
+                print(store_id)
             response = central_inventory_controller.create_store_stock_request(stock_obj, store_id)
+            print(response)
             return redirect('manageMoveStocks')
         else:
             moved_stocks, status_code = central_inventory_controller.get_all_moved_stocks_list('1')
@@ -2664,6 +2669,7 @@ def manageMoveAStock(request):
 def viewAllStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_stock_requests('%')
+        print(response)
         return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -2699,6 +2705,8 @@ def viewRejectedStockRequests(request):
 
 def changeStockRequestStatus(request, route, requestId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        print(requestId)
+        print(status)
         response, status_code = central_inventory_controller.change_stock_request_status(requestId, status,
                                                                                          request.session.get('id'))
         if route == 'All':
