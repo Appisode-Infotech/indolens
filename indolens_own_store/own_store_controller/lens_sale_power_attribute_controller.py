@@ -15,7 +15,6 @@ def get_power_attribute(data):
                 'rightLensCylinderStock': data.get('rightLensCylinderStock', ''),
                 'rightLensAxisStock': data.get('rightLensAxisStock', ''),
             }
-            print(power_attributes)
             return power_attributes
         else:
             power_attributes = {
@@ -32,7 +31,6 @@ def get_power_attribute(data):
                 'rightLensCylinderRx': data.get('rightLensCylinderRx', ''),
                 'rightLensAxisRx': data.get('rightLensAxisRx', ''),
             }
-            print(power_attributes)
             return power_attributes
 
     elif data['product_category_id'] == '3':

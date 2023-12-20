@@ -653,30 +653,35 @@ function addLensContainer() {
                             <select name="leftLensPowerStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="leftLensBCStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="leftLensDiaStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="leftLensCylinderStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="leftLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                     </tr>
@@ -686,30 +691,35 @@ function addLensContainer() {
                             <select name="rightLensPowerStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="rightLensBCStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="rightLensDiaStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="rightLensCylinderStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="rightLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                     </tr>
@@ -1408,7 +1418,8 @@ function addLensContainer() {
       let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
       let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
       let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);        let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
+      let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
       let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
       let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
       let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');

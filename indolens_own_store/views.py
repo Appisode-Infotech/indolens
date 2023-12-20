@@ -286,14 +286,20 @@ def makeSaleOwnStore(request):
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
-            expense_controller.make_sale(cart_data, customerData, billingDetailsData)
-        response, status_code = store_inventory_controller.get_all_products_for_store(
-            request.session.get('assigned_store_id'))
-        customerResponse, status_code_cust = customers_controller.get_all_stores_customers()
-        lens_response, status_code = central_inventory_controller.get_central_inventory_lens(request.session.get('assigned_store_id'))
-        return render(request, 'expenses/makeSaleOwnStore.html',
-                      {"other_products_list": response['stocks_list'], 'customers_list': customerResponse['customers_list'],
-                       "lens_list": lens_response['lens_list'],
-                       "contact_lens_list": lens_response['contact_lens_list'] })
+            make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
+                                                                   request.session.get('id'),
+                                                                   request.session.get('assigned_store_id'))
+            return redirect('own_store_make_sale')
+        else:
+            response, status_code = store_inventory_controller.get_all_products_for_store(
+                request.session.get('assigned_store_id'))
+            customerResponse, status_code_cust = customers_controller.get_all_stores_customers()
+            lens_response, status_code = central_inventory_controller.get_central_inventory_lens(
+                request.session.get('assigned_store_id'))
+            return render(request, 'expenses/makeSaleOwnStore.html',
+                          {"other_products_list": response['stocks_list'],
+                           'customers_list': customerResponse['customers_list'],
+                           "lens_list": lens_response['lens_list'],
+                           "contact_lens_list": lens_response['contact_lens_list']})
     else:
         return redirect('own_store_login')

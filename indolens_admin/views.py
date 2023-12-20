@@ -12,7 +12,8 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     lab_controller, other_employee_controller, master_category_controller, master_brand_controller, \
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
-    customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller
+    customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller, \
+    orders_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
@@ -2093,7 +2094,9 @@ def enableDisableFranchiseOtherEmployees(request, route, franchiseEmployeeId, st
 # =================================ADMIN ORDERS MANAGEMENT======================================
 
 def viewAllOrders(request):
-    return render(request, 'indolens_admin/orders/viewAllOrders.html')
+    response, status_code = orders_controller.get_all_orders('All', 'All')
+    print(response)
+    return render(request, 'indolens_admin/orders/viewAllOrders.html', {"orders_list": response['orders_list']})
 
 
 def viewPendingOrders(request):
