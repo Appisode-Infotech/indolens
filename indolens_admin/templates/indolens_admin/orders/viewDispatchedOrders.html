@@ -80,7 +80,7 @@
             <div class="mb-9">
                 <div class="row g-3 mb-4">
                     <div class="col-auto">
-                        <h2 class="mb-0">Pending Orders</h2>
+                        <h2 class="mb-0">Dispatched Orders</h2>
                     </div>
                 </div>
 
@@ -143,6 +143,7 @@
                                 </tr>
                                 </thead>
                                 <tbody class="list" id="order-table-body">
+                                {% for order in orders_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                     <td class="fs--1 align-middle px-0 py-3">
                                         <div class="form-check mb-0 fs-0">
@@ -150,37 +151,72 @@
                                         </div>
                                     </td>
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                              href="{% url 'order_details' %}">#2453</a>
+                                                                                              href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
                                     </td>
-                                    <td class="total align-middle text-end fw-semi-bold text-1000">₹87</td>
+                                    <td class="total align-middle text-end fw-semi-bold text-1000">{{order.total_cost}}</td>
                                     <td class="customer align-middle white-space-nowrap ps-8">
-                                        <a class="d-flex align-items-center" href="{% url 'customer_details' 1 %}">
+                                        <a class="d-flex align-items-center" href="{% url 'customer_details' 1%}">
                                             <div class="avatar avatar-m">
-                                                <div class="avatar-name rounded-circle"><span>M</span></div>
+                                                <div class="avatar-name rounded-circle"><span>{{order.customer_name.0}}</span></div>
                                             </div>
-                                            <h6 class="mb-0 ms-3 text-900">Manjunath</h6>
+                                            <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
                                         </a>
                                     </td>
                                     <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
-                                                class="badge-label">Pending</span><span class="ms-1"
-                                                                                        data-feather="clock"
-                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                        {% if order.payment_status == 1 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">PENDING</span><span class="ms-1"
+                                                                                         data-feather="check"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.payment_status == 2 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">COMPLETE</span><span class="ms-1"
+                                                                                         data-feather="check"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                        {% endif %}
                                     </td>
-                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
-                                                class="badge-label">Pending</span><span class="ms-1"
-                                                                                        data-feather="clock"
-                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        {% if order.order_status == 1 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">NEW</span><span class="ms-1" data-feather="check"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 2 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">PROCESSING</span><span class="ms-1" data-feather="check"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 3 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">READY</span><span class="ms-1" data-feather="check"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 4 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">DISPATCHED</span><span class="ms-1" data-feather="check"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 5 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">COMPLETED</span><span class="ms-1" data-feather="check"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 6 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">CANCELLED</span><span class="ms-1" data-feather="check"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                        {% endif %}
+
                                     </td>
                                     <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        Cash on delivery
+                                        {{order.creator_name}}
                                     </td>
-                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">Dec
-                                        12, 12:56 PM
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                        {{order.created_on}}
+                                    </td>
+                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        {{order.updater_name}}
+                                    </td>
+                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                        {{order.updated_on}}
                                     </td>
                                 </tr>
-
+                                {% endfor %}
 
                                 </tbody>
                             </table>

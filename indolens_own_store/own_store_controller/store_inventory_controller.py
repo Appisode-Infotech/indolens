@@ -94,7 +94,11 @@ def get_all_central_inventory_products():
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN store_inventory AS si ON ci.product_id = si.product_id AND si.store_type = 1
-                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id GROUP BY ci.product_id """
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
+                                    WHERE ( JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'stock' OR 
+                                    ci.category_id <> 3 ) AND ci.category_id <> 2 AND ci.status = 1
+                                    GROUP BY ci.product_id 
+                                     """
 
             cursor.execute(get_all_product_query)
             product_list = cursor.fetchall()

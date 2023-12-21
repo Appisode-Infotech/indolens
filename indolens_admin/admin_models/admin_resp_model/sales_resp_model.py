@@ -41,7 +41,7 @@ class SalesOrder:
             'created_by_store': self.created_by_store,
             'created_by_store_type': self.created_by_store_type,
             'created_by': self.created_by,
-            'created_on': self.created_on.strftime('%Y-%m-%d') if isinstance(self.created_on, datetime) else None,
+            'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on, datetime) else None,
             'updated_by': self.updated_by,
             'updated_on': self.updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.updated_on, datetime) else None,
             'customer_name': self.customer_name,

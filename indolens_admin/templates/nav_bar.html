@@ -283,27 +283,15 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'pending_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'pending_orders' %}" role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Pending Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
 
                 <li class="nav-item">
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'received_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'received_orders' %}" role="button">
+                                                     class="nav-link label-1 {% if 'new_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'new_orders' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-circle"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Received Orders</span></span>
+                                class="nav-link-text">New Orders</span></span>
                         </div>
                     </a>
                     </div>
@@ -335,19 +323,36 @@
                     </div>
                 </li>
 
+
                 <li class="nav-item">
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'delivered_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'delivered_orders' %}"
-                                                     role="button">
+                                                     class="nav-link label-1 {% if 'Dispatched_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'Dispatched_orders' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="check"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Delivered Orders</span></span>
+                                data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Dispatched Orders</span></span>
                         </div>
                     </a>
                     </div>
                 </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'completed_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'completed_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="check"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Completed Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+
+
                 <li class="nav-item">
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"

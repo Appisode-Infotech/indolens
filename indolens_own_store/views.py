@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 
 from indolens_admin.admin_controllers import customers_controller, central_inventory_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
-    expense_controller, store_employee_controller, store_customers_controller
+    expense_controller, store_employee_controller, store_customers_controller, store_orders_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
     store_expense_model, store_create_stock_request_model
 
@@ -100,20 +100,23 @@ def viewEmployees(request, employeeId):
 # ================================= OWN STORE ORDER MANAGEMENT ======================================
 def allStoreOrders(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        store_orders_controller.get_all_orders('All', 'All', request.session.get('assigned_store_id'))
         return render(request, 'orders/allStoreOrders.html')
     else:
         return redirect('own_store_login')
 
 
-def pendingStoreOrders(request):
+def dispatchedStoreOrders(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        store_orders_controller.get_all_orders('Dispatched', 'All', request.session.get('assigned_store_id'))
         return render(request, 'orders/pendingStoreOrders.html')
     else:
         return redirect('own_store_login')
 
 
-def receivedStoreOrders(request):
+def newStoreOrders(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        store_orders_controller.get_all_orders('New', 'All', request.session.get('assigned_store_id'))
         return render(request, 'orders/receivedStoreOrders.html')
     else:
         return redirect('own_store_login')
@@ -121,6 +124,7 @@ def receivedStoreOrders(request):
 
 def processingStoreOrders(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        store_orders_controller.get_all_orders('Processing', 'All', request.session.get('assigned_store_id'))
         return render(request, 'orders/processingStoreOrders.html')
     else:
         return redirect('own_store_login')
@@ -128,13 +132,15 @@ def processingStoreOrders(request):
 
 def readyStoreOrders(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        store_orders_controller.get_all_orders('Ready', 'All', request.session.get('assigned_store_id'))
         return render(request, 'orders/readyStoreOrders.html')
     else:
         return redirect('own_store_login')
 
 
-def deliveredStoreOrders(request):
+def completedStoreOrders(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        store_orders_controller.get_all_orders('Completed', 'All', request.session.get('assigned_store_id'))
         return render(request, 'orders/deliveredStoreOrders.html')
     else:
         return redirect('own_store_login')
@@ -142,6 +148,7 @@ def deliveredStoreOrders(request):
 
 def cancelledStoreOrders(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        store_orders_controller.get_all_orders('Cancelled', 'All', request.session.get('assigned_store_id'))
         return render(request, 'orders/cancelledStoreOrders.html')
     else:
         return redirect('own_store_login')
@@ -149,6 +156,7 @@ def cancelledStoreOrders(request):
 
 def refundedStoreOrders(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        store_orders_controller.get_all_orders('Cancelled', 'All', request.session.get('assigned_store_id'))
         return render(request, 'orders/refundedStoreOrders.html')
     else:
         return redirect('own_store_login')
@@ -188,13 +196,14 @@ def createStockRequestStore(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
+            print(vars(stock_obj))
             response = store_inventory_controller.create_store_stock_request(stock_obj)
             products, status_code = store_inventory_controller.get_all_central_inventory_products()
             return render(request, 'stockRequests/createStockRequestStore.html',
                           {"product_list": products['product_list']})
         else:
             response, status_code = store_inventory_controller.get_all_central_inventory_products()
-            print(response)
+            print(response['product_list'])
             return render(request, 'stockRequests/createStockRequestStore.html',
                           {"product_list": response['product_list']})
     else:

@@ -280,14 +280,14 @@ urlpatterns = [
         enableDisableFranchiseOtherEmployees, name='enable_disable_franchise_other_employees'),
     # orders management
     path('all_orders/', viewAllOrders, name='all_orders'),
-    path('pending_orders/', viewPendingOrders, name='pending_orders'),
-    path('received_orders/', viewReceivedOrders, name='received_orders'),
+    path('Dispatched_orders/', viewDispatchedOrders, name='Dispatched_orders'),
+    path('new_orders/', viewNewOrders, name='new_orders'),
     path('processing_orders/', viewProcessingOrders, name='processing_orders'),
     path('ready_orders/', viewReadyOrders, name='ready_orders'),
-    path('delivered_orders/', viewDeliveredOrders, name='delivered_orders'),
+    path('completed_orders/', viewCompletedOrders, name='completed_orders'),
     path('cancelled_orders/', viewCancelledOrders, name='cancelled_orders'),
     path('refunded_orders/', viewRefundedOrders, name='refunded_orders'),
-    path('order_details/', viewOrderDetails, name='order_details'),
+    path('order_details/orderId=<str:orderId>', viewOrderDetails, name='order_details'),
     # labs
     path('manage_labs/', manageLabs, name='manage_labs'),
     path('manage_labs/create_lab/', createLab, name='create_lab'),
