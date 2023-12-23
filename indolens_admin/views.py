@@ -92,11 +92,15 @@ def dashboard(request):
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
         sales, status_code = orders_controller.get_all_orders('All', 'All')
+        new_order, status_code = orders_controller.get_all_orders('New', 'All')
+        delivered_orders, status_code = orders_controller.get_all_orders('Completed', 'All')
         out_of_stock, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
         return render(request, 'indolens_admin/dashboard.html',
                       {"own_store_list": own_stores['own_stores'],
                        "franchise_store_list": franchise_store['franchise_store'],
-                       "orders_list": sales['orders_list'], "out_of_stock": len(out_of_stock['stocks_list'])})
+                       "orders_list": sales['orders_list'], "out_of_stock": len(out_of_stock['stocks_list']),
+                       "new_orders": len(new_order['orders_list']),
+                       "delivered_orders": len(delivered_orders['orders_list'])})
     else:
         return redirect('login')
 
