@@ -288,6 +288,7 @@ urlpatterns = [
     path('cancelled_orders/', viewCancelledOrders, name='cancelled_orders'),
     path('refunded_orders/', viewRefundedOrders, name='refunded_orders'),
     path('order_details/orderId=<str:orderId>', viewOrderDetails, name='order_details'),
+    path('view_order_creator/employeeID=<int:employeeID>/storeType=<int:storeType>', viewOrderCreator, name='view_order_creator'),
     # labs
     path('manage_labs/', manageLabs, name='manage_labs'),
     path('manage_labs/create_lab/', createLab, name='create_lab'),

@@ -235,13 +235,13 @@
 
                                     </td>
                                     <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        {{order.creator_name}}
+                                        <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
                                     </td>
                                     <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
                                         {{order.created_on}}
                                     </td>
                                     <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        {{order.updater_name}}
+                                       <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}"> {{order.updater_name}} </a>
                                     </td>
                                     <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
                                         {{order.updated_on}}

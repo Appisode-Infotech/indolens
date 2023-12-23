@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens store - Order details</title>
+    <title>Indolens admin - Order details</title>
     {% load static %}
 
 
@@ -76,9 +76,9 @@
         <div class="content">
 
             <div class="mb-9">
-                <h2 class="mb-0">Order <span>#349</span></h2>
+                <h2 class="mb-0">Order <span>{{order_detail.0.order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
-                    <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold" href="#!"> 2364847</a></p>
+                    <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold" > {{order_detail.0.customer_id}}</a></p>
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><span class="fas fa-print me-2"></span>Print</button>
                         <button class="btn px-3 text-900"><span class="fas fa-undo me-2"></span>Refund</button>
@@ -88,9 +88,9 @@
                                     data-bs-toggle="dropdown" type="button">More action<span
                                     class="fas fa-chevron-down ms-2"></span></button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
+                                <li><a class="dropdown-item" >Action</a></li>
+                                <li><a class="dropdown-item" >Another action</a></li>
+                                <li><a class="dropdown-item" >Something else here</a></li>
                             </ul>
                         </div>
                     </div>
@@ -105,26 +105,28 @@
                                     <tr>
                                         <th class="sort white-space-nowrap align-middle fs--2" scope="col"></th>
                                         <th class="sort white-space-nowrap align-middle" data-sort="products"
-                                            scope="col" style="min-width:400px;">PRODUCTS
+                                            scope="col" style="min-width:200px;">PRODUCTS
                                         </th>
                                         <th class="sort align-middle ps-4" data-sort="color" scope="col"
-                                            style="width:150px;">COLOR
+                                            style="width:150px;">SELL PRICE
                                         </th>
                                         <th class="sort align-middle ps-4" data-sort="size" scope="col"
-                                            style="width:300px;">SIZE
+                                            style="width:300px;">DISCOUNT
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="price" scope="col"
-                                            style="width:150px;">PRICE
+                                        <th class="sort align-middle ps-4" data-sort="size" scope="col"
+                                            style="width:300px;">GST
                                         </th>
                                         <th class="sort align-middle text-end ps-4" data-sort="quantity" scope="col"
                                             style="width:200px;">QUANTITY
                                         </th>
+
                                         <th class="sort align-middle text-end ps-4" data-sort="total" scope="col"
                                             style="width:250px;">TOTAL
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody class="list" id="order-table-body">
+                                    {% for order in order_detail %}
 
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
@@ -133,39 +135,24 @@
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0" href="#!">Prescription Glasses
-                                                with Anti-Glare Coating</a>
+                                            <a class="fw-semi-bold line-clamp-2 mb-0" >
+                                                {{order.product_name}}
+                                            </a>
                                         </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">Crystal
-                                            Clear
-                                        </td>
-                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            Medium
-                                        </td>
-                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹149
-                                        </td>
-                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">3</td>
-                                        <td class="total align-middle fw-bold text-1000 text-end py-0 ps-4">₹447</td>
-                                    </tr>
-                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                        <td class="align-middle white-space-nowrap py-2">
-                                            <div class="border rounded-2"><img
-                                                    alt="" src="{% static 'img/products/2.png' %}" width="53"/></div>
-                                        </td>
-                                        <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0" href="#!">Camera Lens with Image
-                                                Stabilization</a>
-                                        </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">Telephoto
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
+                                            {{order.unit_sale_price}}
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            50mm
+                                            {{order.discount_percentage}}%
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹299
+                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            {{order.product_gst}}%
                                         </td>
-                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">1</td>
-                                        <td class="total align-middle fw-bold text-1000 text-end py-0 ps-4">₹299</td>
+                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">{{order.purchase_quantity}}</td>
+                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹ {{order.product_total_cost}}
+                                        </td>
                                     </tr>
+                                    {% endfor %}
 
                                     </tbody>
                                 </table>
@@ -173,7 +160,7 @@
                         </div>
                         <div class="d-flex flex-between-center py-3 border-bottom mb-7">
                             <p class="text-1100 fw-semi-bold lh-sm mb-0">Items subtotal :</p>
-                            <p class="text-1100 fw-bold lh-sm mb-0">₹1690</p>
+                            <p class="text-1100 fw-bold lh-sm mb-0">₹ {{order_detail.0.total_cost}}</p>
                         </div>
                         <div class="row gx-4 gy-6 g-xl-7 justify-content-sm-center justify-content-xl-start">
                             <div class="col-12 col-sm-auto">
@@ -185,7 +172,7 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="#!">Shatinon Mekalan</a>
+                                        <a class="fs--1 ms-4" >{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -194,7 +181,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:shatinon@jeemail.com:">shatinon@jeemail.com</a>
+                                           href="{{order_detail.0.email}}:">{{order_detail.0.email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -202,10 +189,8 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Address</h6>
                                         </div>
-                                        <div class="ms-4">
-                                            <p class="text-800 mb-0 fs--1">Shatinon Mekalan</p>
-                                            <p class="text-800 mb-0 fs--1">Vancouver, British Columbia,<br
-                                                    class="d-none d-sm-block"/>Canada</p>
+                                        <div class="ms-4" style="max-width: 200px;">
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -214,7 +199,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:+1234567890">+1234567890</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +213,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:shatinon@jeemail.com:">shatinon@jeemail.com</a>
+                                           href="mailto:shatinon@jeemail.com:">{{order_detail.0.email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -236,7 +221,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:+1234567890">+1234567890</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -244,9 +229,8 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Address</h6>
                                         </div>
-                                        <div class="ms-4">
-                                            <p class="text-800 mb-0 fs--1">Shatinon Mekalan</p>
-                                            <p class="text-800 mb-0 fs--1">Vancouver, British Columbia <br/>Canada</p>
+                                        <div class="ms-4" style="max-width: 200px;">
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -255,7 +239,7 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Shipping Date</h6>
                                         </div>
-                                        <p class="mb-0 text-800 fs--1 ms-4">12 Nov, 2021</p>
+                                        <p class="mb-0 text-800 fs--1 ms-4">{{order_detail.0.estimated_delivery_date}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -268,7 +252,7 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Gift order</h6>
                                         </div>
-                                        <a class="mb-0 text-800 fs--1 ms-4">Yes</a>
+                                        <a class="mb-0 text-800 fs--1 ms-4">N/A</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -276,7 +260,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Wraping</h6>
                                         </div>
-                                        <p class="mb-0 text-800 fs--1 ms-4">Magic wrapper</p>
+                                        <p class="mb-0 text-800 fs--1 ms-4">N/A</p>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -284,7 +268,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Recipient</h6>
                                         </div>
-                                        <p class="mb-0 text-800 fs--1 ms-4">Monjito Shiniga</p>
+                                        <p class="mb-0 text-800 fs--1 ms-4">N/A</p>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -293,9 +277,7 @@
                                             <h6 class="mb-0">Gift Meaasge</h6>
                                         </div>
                                         <div class="ms-4">
-                                            <p class="text-800 fs--1 mb-0">Happy Birthday Shiniga <br/>Lots of Love Buga
-                                                Buga!!</p>
-                                            <p class="mb-0 text-800 fs--1">Yours, <br/>Mekalan</p>
+                                            <p class="text-800 fs--1 mb-0">N/A</p>
                                         </div>
                                     </div>
                                 </div>
@@ -311,28 +293,20 @@
                                         <div>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Items subtotal :</p>
-                                                <p class="text-1100 fw-semi-bold">₹691</p>
-                                            </div>
-                                            <div class="d-flex justify-content-between">
-                                                <p class="text-900 fw-semi-bold">Discount :</p>
-                                                <p class="text-danger fw-semi-bold">-₹59</p>
-                                            </div>
-                                            <div class="d-flex justify-content-between">
-                                                <p class="text-900 fw-semi-bold">Tax :</p>
-                                                <p class="text-1100 fw-semi-bold">₹126.20</p>
+                                                <p class="text-1100 fw-semi-bold">₹ {{order_detail.0.total_cost}}</p>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Subtotal :</p>
-                                                <p class="text-1100 fw-semi-bold">₹665</p>
+                                                <p class="text-1100 fw-semi-bold">₹ {{order_detail.0.discount_cost}}</p>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Shipping Cost :</p>
-                                                <p class="text-1100 fw-semi-bold">₹30</p>
+                                                <p class="text-1100 fw-semi-bold">₹0</p>
                                             </div>
                                         </div>
                                         <div class="d-flex justify-content-between border-top border-dashed pt-4">
                                             <h4 class="mb-0">Total :</h4>
-                                            <h4 class="mb-0">₹695.20</h4>
+                                            <h4 class="mb-0">₹{{order_detail.0.discount_cost}}</h4>
                                         </div>
                                     </div>
                                 </div>

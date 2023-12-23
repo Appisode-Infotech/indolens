@@ -3,6 +3,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -163,9 +164,11 @@ def get_order_details(orderId):
         with connection.cursor() as cursor:
             get_order_details_query = f"""
                 SELECT 
-                    so.*, 
-                    c.*, 
-                    SUM(product_total_cost) AS total_cost, 
+                    so.*,
+                    (SELECT SUM(unit_sale_price) AS total_cost FROM sales_order WHERE order_id = '{orderId}' 
+                    GROUP BY order_id ), 
+                    (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{orderId}' 
+                    GROUP BY order_id ), 
                     CASE 
                         WHEN so.created_by_store_type = 1 THEN os.store_name 
                         ELSE fs.store_name 
@@ -177,23 +180,25 @@ def get_order_details(orderId):
                     CASE 
                         WHEN so.created_by_store_type = 1 THEN updater_os.name 
                         ELSE updater_fs.name 
-                    END AS updater_name
+                    END AS updater_name,
+                    c.*, ci.*
                 FROM sales_order AS so
                 LEFT JOIN customers AS c ON c.customer_id = so.customer_id
+                LEFT JOIN central_inventory AS ci ON ci.product_id = so.product_id
                 LEFT JOIN own_store os ON so.created_by_store = os.store_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store fs ON so.created_by_store = fs.store_id AND so.created_by_store_type = 2
                 LEFT JOIN own_store_employees creator_os ON so.created_by = creator_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees creator_fs ON so.created_by = creator_fs.employee_id AND so.created_by_store_type = 2
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
-                WHERE so.order_id = {orderId}
+                WHERE so.order_id = '{orderId}' GROUP BY so.sale_item_id  
                 """
             cursor.execute(get_order_details_query)
             orders_details = cursor.fetchall()
 
             return {
                        "status": True,
-                       "orders_details": orders_details
+                       "orders_details": get_order_detail(orders_details)
                    }, 200
 
     except pymysql.Error as e:
@@ -201,3 +206,27 @@ def get_order_details(orderId):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
+def get_order_creator_role(employeeID, storeType):
+    status_conditions = {
+        1: "own_store_employees",
+        2: "franchise_store_employees",
+    }
+    status_condition = status_conditions[storeType]
+    try:
+        with connection.cursor() as cursor:
+            get_order_creator_query = f"""
+                SELECT role FROM {status_condition} WHERE employee_id = {employeeID}
+                """
+            cursor.execute(get_order_creator_query)
+            role = cursor.fetchone()
+
+            return {
+                       "status": True,
+                       "role": role[0]
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

@@ -91,9 +91,12 @@ def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
+        sales, status_code = orders_controller.get_all_orders('All', 'All')
+        out_of_stock, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
         return render(request, 'indolens_admin/dashboard.html',
                       {"own_store_list": own_stores['own_stores'],
-                       "franchise_store_list": franchise_store['franchise_store']})
+                       "franchise_store_list": franchise_store['franchise_store'],
+                       "orders_list": sales['orders_list'], "out_of_stock": len(out_of_stock['stocks_list'])})
     else:
         return redirect('login')
 
@@ -122,7 +125,8 @@ def viewOwnStore(request, ownStoreId):
                        "total_customer_count": store_stats['total_customer_count'],
                        "sales_data": sales_data['orders_list'], "store_expense": store_expense['store_expense'],
                        "revenue_generated": sum(item['total_cost'] for item in sales_data['orders_list']),
-                       "net_income": sum(item['total_cost'] for item in sales_data['orders_list'])-store_expense['store_expense']})
+                       "net_income": sum(item['total_cost'] for item in sales_data['orders_list']) - store_expense[
+                           'store_expense']})
     else:
         return redirect('login')
 
@@ -192,7 +196,8 @@ def viewFranchiseStore(request, franchiseStoreId):
                        "total_customer_count": store_stats['total_customer_count'],
                        "sales_data": sales_data['orders_list'], "store_expense": store_expense['store_expense'],
                        "revenue_generated": sum(item['total_cost'] for item in sales_data['orders_list']),
-                       "net_income": sum(item['total_cost'] for item in sales_data['orders_list'])-store_expense['store_expense']})
+                       "net_income": sum(item['total_cost'] for item in sales_data['orders_list']) - store_expense[
+                           'store_expense']})
 
     else:
         return redirect('login')
@@ -2175,8 +2180,39 @@ def viewRefundedOrders(request):
 
 def viewOrderDetails(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_order_details(orderId)
-        return render(request, 'indolens_admin/orders/viewOrderDetails.html')
+        order_detail, status_code = orders_controller.get_order_details(orderId)
+        print(order_detail['orders_details'])
+        return render(request, 'indolens_admin/orders/viewOrderDetails.html',
+                      {"order_detail": order_detail['orders_details']})
+    else:
+        return redirect('login')
+
+
+def viewOrderCreator(request, employeeID, storeType):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        order_detail, status_code = orders_controller.get_order_creator_role(employeeID, storeType)
+        print(order_detail)
+        role = order_detail['role']
+        role_urls = {}
+        if storeType == 1:
+            role_urls = {
+                1: ('view_store_manager', 'storeManagerId'),
+                2: ('view_optimetry', 'ownOptimetryId'),
+                3: ('view_sales_executives', 'ownSaleExecutivesId')
+            }
+        elif storeType == 2:
+            role_urls = {
+                1: ('view_franchise_owner', 'franchiseOwnersId'),
+                2: ('view_franchise_optimetry', 'franchiseOptimetryId'),
+                3: ('view_sales_executives', 'franchiseSaleExecutivesId')
+            }
+
+        if role in role_urls:
+            url_name, id_key = role_urls[role]
+            url = reverse(url_name, kwargs={id_key: employeeID})
+            return redirect(url)
+        else:
+            return redirect('dashboard')
     else:
         return redirect('login')
 
@@ -2197,7 +2233,9 @@ def viewCustomerDetails(request, customerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = customers_controller.get_customers_by_id(customerId)
         sales_data, sale_status_code = orders_controller.get_all_customer_orders(customerId)
-        return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer']})
+        return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer'],
+                                                                                     "sales_data": sales_data[
+                                                                                         'orders_list']})
     else:
         return redirect('login')
 
@@ -3014,7 +3052,6 @@ def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_T
             4: ('update_other_employees_documents', 'ownEmployeeId')
         }
 
-        # Assuming you have employeeId available
         if role in role_urls:
             url_name, id_key = role_urls[role]
             url = reverse(url_name, kwargs={id_key: employeeId})
@@ -3041,7 +3078,6 @@ def deleteFranchiseStoreEmployeeDocuments(request, employeeId, documentURL, docu
             4: ('update_franchise_other_employees_documents', 'franchiseEmployeeId')
         }
 
-        # Assuming you have employeeId available
         if role in role_urls:
             url_name, id_key = role_urls[role]
             url = reverse(url_name, kwargs={id_key: employeeId})
@@ -3162,7 +3198,6 @@ def addOwnStoreEmployeeImage(request, employeeId):
                 4: ('update_other_employees_documents', 'ownEmployeeId')
             }
 
-            # Assuming you have employeeId available
             if role in role_urls:
                 url_name, id_key = role_urls[role]
                 url = reverse(url_name, kwargs={id_key: employeeId})
@@ -3226,7 +3261,6 @@ def addFranchiseStoreEmployeeImage(request, employeeId):
                 4: ('update_franchise_other_employees_documents', 'franchiseEmployeeId')
             }
 
-            # Assuming you have employeeId available
             if role in role_urls:
                 url_name, id_key = role_urls[role]
                 url = reverse(url_name, kwargs={id_key: employeeId})

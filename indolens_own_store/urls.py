@@ -30,7 +30,7 @@ urlpatterns = [
     path('completed_store_orders/', completedStoreOrders, name='completed_store_orders'),
     path('cancelled_store_orders/', cancelledStoreOrders, name='cancelled_store_orders'),
     path('refunded_store_orders/', refundedStoreOrders, name='refunded_store_orders'),
-    path('order_details_store/', orderDetails, name='order_details_store'),
+    path('order_details_store/orderId<str:orderId>', orderDetails, name='order_details_store'),
     # inventory items
     path('manage_store_inventory_products/', storeInventoryProducts, name='manage_store_inventory_products'),
     path('manage_store_out_of_stock/', inventoryOutOfStock, name='manage_store_out_of_stock'),
