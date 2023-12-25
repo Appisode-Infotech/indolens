@@ -34,7 +34,7 @@ def get_power_attribute(data):
             return power_attributes
 
     elif data['product_category_id'] == '3':
-        if data['lens_type'] == 'rx':
+        if data['lens_type'] == 'stock':
             power_attributes = {
                 'lens_type': data.get('lens_type', ''),
                 'lens_physicality': data.get('lens_physicality', ''),
