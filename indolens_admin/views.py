@@ -13,7 +13,7 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
     customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller, \
-    orders_controller, store_expenses
+    orders_controller, store_expenses, dashboard_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
@@ -91,16 +91,24 @@ def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
-        sales, status_code = orders_controller.get_all_orders('All', 'All')
-        new_order, status_code = orders_controller.get_all_orders('New', 'All')
-        delivered_orders, status_code = orders_controller.get_all_orders('Completed', 'All')
+        sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
+        own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
+        own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
+        own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
+        franchise_store_new_order, status_code = dashboard_controller.get_order_stats('New', 2)
+        franchise_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 2)
+        franchise_store_sales, status_code = dashboard_controller.get_sales_stats(2)
         out_of_stock, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
         return render(request, 'indolens_admin/dashboard.html',
                       {"own_store_list": own_stores['own_stores'],
                        "franchise_store_list": franchise_store['franchise_store'],
                        "orders_list": sales['orders_list'], "out_of_stock": len(out_of_stock['stocks_list']),
-                       "new_orders": len(new_order['orders_list']),
-                       "delivered_orders": len(delivered_orders['orders_list'])})
+                       "own_store_new_order": own_store_new_order['count'],
+                       "own_store_delivered_orders": own_store_delivered_orders['count'],
+                       "franchise_store_new_order": franchise_store_new_order['count'],
+                       "franchise_store_delivered_orders": franchise_store_delivered_orders['count'],
+                       "own_store_sale": own_store_sales['sale'],
+                       "franchise_store_sale": franchise_store_sales['sale']})
     else:
         return redirect('login')
 
@@ -2112,72 +2120,75 @@ def enableDisableFranchiseOtherEmployees(request, route, franchiseEmployeeId, st
 
 # =================================ADMIN ORDERS MANAGEMENT======================================
 
-def viewAllOrders(request):
+def viewAllOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_all_orders('All', 'All')
+        response, status_code = orders_controller.get_all_orders('All', 'All', store)
         print(response)
-        return render(request, 'indolens_admin/orders/viewAllOrders.html', {"orders_list": response['orders_list']})
+        return render(request, 'indolens_admin/orders/viewAllOrders.html',
+                      {"orders_list": response['orders_list'], "store": store})
     else:
         return redirect('login')
 
 
-def viewDispatchedOrders(request):
+def viewDispatchedOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_all_orders('Dispatched', 'All')
+        response, status_code = orders_controller.get_all_orders('Dispatched', 'All', store)
         return render(request, 'indolens_admin/orders/viewDispatchedOrders.html',
-                      {"orders_list": response['orders_list']})
+                      {"orders_list": response['orders_list'], "store": store})
     else:
         return redirect('login')
 
 
-def viewNewOrders(request):
+def viewNewOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_all_orders('New', 'All')
-        return render(request, 'indolens_admin/orders/viewNewOrders.html', {"orders_list": response['orders_list']})
+        response, status_code = orders_controller.get_all_orders('New', 'All', store)
+        return render(request, 'indolens_admin/orders/viewNewOrders.html',
+                      {"orders_list": response['orders_list'], "store": store})
     else:
         return redirect('login')
 
 
-def viewProcessingOrders(request):
+def viewProcessingOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_all_orders('Processing', 'All')
+        response, status_code = orders_controller.get_all_orders('Processing', 'All', store)
         return render(request, 'indolens_admin/orders/viewProcessingOrders.html',
-                      {"orders_list": response['orders_list']})
+                      {"orders_list": response['orders_list'], "store": store})
     else:
         return redirect('login')
 
 
-def viewReadyOrders(request):
+def viewReadyOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_all_orders('Ready', 'All')
-        return render(request, 'indolens_admin/orders/viewReadyOrders.html', {"orders_list": response['orders_list']})
+        response, status_code = orders_controller.get_all_orders('Ready', 'All', store)
+        return render(request, 'indolens_admin/orders/viewReadyOrders.html',
+                      {"orders_list": response['orders_list'], "store": store})
     else:
         return redirect('login')
 
 
-def viewCompletedOrders(request):
+def viewCompletedOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_all_orders('Completed', 'All')
+        response, status_code = orders_controller.get_all_orders('Completed', 'All', store)
         return render(request, 'indolens_admin/orders/viewCompletedOrders.html',
-                      {"orders_list": response['orders_list']})
+                      {"orders_list": response['orders_list'], "store": store})
     else:
         return redirect('login')
 
 
-def viewCancelledOrders(request):
+def viewCancelledOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_all_orders('Cancelled', 'All')
+        response, status_code = orders_controller.get_all_orders('Cancelled', 'All', store)
         return render(request, 'indolens_admin/orders/viewCancelledOrders.html',
-                      {"orders_list": response['orders_list']})
+                      {"orders_list": response['orders_list'], "store": store})
     else:
         return redirect('login')
 
 
-def viewRefundedOrders(request):
+def viewRefundedOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_all_orders('Cancelled', 'Refunded')
+        response, status_code = orders_controller.get_all_orders('Cancelled', 'Refunded', store)
         return render(request, 'indolens_admin/orders/viewRefundedOrders.html',
-                      {"orders_list": response['orders_list']})
+                      {"orders_list": response['orders_list'], "store": store})
     else:
         return redirect('login')
 
@@ -2185,7 +2196,6 @@ def viewRefundedOrders(request):
 def viewOrderDetails(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
-        print(order_detail['orders_details'])
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
                       {"order_detail": order_detail['orders_details']})
     else:
@@ -2195,7 +2205,6 @@ def viewOrderDetails(request, orderId):
 def viewOrderCreator(request, employeeID, storeType):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_creator_role(employeeID, storeType)
-        print(order_detail)
         role = order_detail['role']
         role_urls = {}
         if storeType == 1:
@@ -2225,7 +2234,6 @@ def viewOrderCreator(request, employeeID, storeType):
 
 def viewAllCustomers(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-
         response, status_code = customers_controller.get_all_stores_customers()
         return render(request, 'indolens_admin/customers/viewAllCustomers.html',
                       {"customers_list": response['customers_list']})

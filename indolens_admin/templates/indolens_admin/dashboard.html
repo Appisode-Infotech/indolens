@@ -93,8 +93,8 @@
                                         width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0">₹18,000 Sales</h4>
-                                        <p class="text-800 fs--1 mb-0">From Own Stores Today</p>
+                                        <h4 class="mb-0">₹{{own_store_sale}} Sales</h4>
+                                        <p class="text-800 fs--1 mb-0">From Own Stores </p>
                                     </div>
                                 </div>
                             </div>
@@ -104,8 +104,8 @@
                                         height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0">₹12,000 Sales</h4>
-                                        <p class="text-800 fs--1 mb-0">From Franchise Stores Today</p>
+                                        <h4 class="mb-0">₹ {{franchise_store_sale}} Sales</h4>
+                                        <p class="text-800 fs--1 mb-0">From Franchise Stores </p>
                                     </div>
                                 </div>
                             </div>
@@ -114,8 +114,8 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
                                     <div class="ms-3">
-                                        <h4 class="mb-0">15 Orders</h4>
-                                        <p class="text-800 fs--1 mb-0">From Own Stores Today</p>
+                                        <h4 class="mb-0"><a href="{% url 'new_orders' 'ownStores' %}">{{own_store_new_order}} new orders</a></h4>
+                                        <p class="text-800 fs--1 mb-0">From Own Stores </p>
                                     </div>
                                 </div>
                             </div>
@@ -124,8 +124,8 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
                                     <div class="ms-3">
-                                        <h4 class="mb-0">5 Delivered</h4>
-                                        <p class="text-800 fs--1 mb-0">From Franchise Stores Today</p>
+                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'ownStores' %}">{{own_store_delivered_orders}} Delivered</a></h4>
+                                        <p class="text-800 fs--1 mb-0">From Own Stores </p>
                                     </div>
                                 </div>
                             </div>
@@ -138,9 +138,9 @@
                                         width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'Dispatched_orders' %}">{{new_orders}}
+                                        <h4 class="mb-0"><a href="{% url 'new_orders' 'franchiseStores' %}">{{franchise_store_new_order}}
                                             new orders</a></h4>
-                                        <p class="text-800 fs--1 mb-0">New orders</p>
+                                        <p class="text-800 fs--1 mb-0">From Franchise Stores </p>
                                     </div>
                                 </div>
                             </div>
@@ -150,8 +150,8 @@
                                         height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'completed_orders' %}">{{delivered_orders}} Delivered</a></h4>
-                                        <p class="text-800 fs--1 mb-0">Orders delivered today</p>
+                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'franchiseStores' %}">{{franchise_store_delivered_orders}} Delivered</a></h4>
+                                        <p class="text-800 fs--1 mb-0">From Franchise Stores </p>
                                     </div>
                                 </div>
                             </div>
@@ -533,7 +533,7 @@
                                 </div>
                                 <div class="col-auto">
                                     <a class="btn btn-sm btn-phoenix-secondary bg-white hover-bg-100 me-2"
-                                       href="{% url 'all_orders' %}"
+                                       href="{% url 'all_orders' 'All' %}"
                                        type="button">View All Sales
                                     </a>
 

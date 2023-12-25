@@ -100,8 +100,33 @@
                             </div>
                             <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
                                 <div class="btn-group position-static" role="group">
+                                    <div class="col-auto scrollbar overflow-hidden-y flex-grow-1 me-4">
+                                        <div class="btn-group position-static" role="group">
+                                            <div class="btn-group position-static text-nowrap">
+                                                <button id="sortStatus" aria-expanded="false"
+                                                        aria-haspopup="true"
+                                                        class="btn btn-phoenix-secondary px-7 flex-shrink-0"
+                                                        data-boundary="window"
+                                                        data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                        type="button">{{store}}<span
+                                                        class="fas fa-angle-down ms-2"></span>
+                                                </button>
+                                                <ul class="dropdown-menu">
+                                                    <li><a class="dropdown-item"
+                                                           href="{% url 'ready_orders' 'All' %}">All</a>
+                                                    </li>
+                                                    <li><a class="dropdown-item text-success"
+                                                           href="{% url 'ready_orders' 'ownStores' %}">Own
+                                                        Stores</a></li>
+                                                    <li><a class="dropdown-item text-success"
+                                                           href="{% url 'ready_orders' 'franchiseStores' %}">Franchise
+                                                        Stores </a>
+                                                    </li>
 
-
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <button class="btn btn-link text-900 me-4 px-0 ms-4"><span
                                             class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                     </button>

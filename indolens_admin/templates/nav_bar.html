@@ -274,7 +274,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'all_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'all_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'all_orders' 'All' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="shopping-bag"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">All Orders</span></span>
@@ -288,7 +288,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'new_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'new_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'new_orders' 'All' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-circle"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">New Orders</span></span>
@@ -301,7 +301,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'processing_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'processing_orders' %}"
+                                                     data-bs-toggle="" href="{% url 'processing_orders' 'All' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="activity"></span></span><span class="nav-link-text-wrapper"><span
@@ -314,7 +314,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'ready_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'ready_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'ready_orders' 'All' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Ready Orders</span></span>
@@ -328,7 +328,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'Dispatched_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'Dispatched_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'Dispatched_orders' 'All' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Dispatched Orders</span></span>
@@ -341,7 +341,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'completed_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'completed_orders' %}"
+                                                     data-bs-toggle="" href="{% url 'completed_orders' 'All' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check"></span></span><span class="nav-link-text-wrapper"><span
@@ -357,7 +357,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'cancelled_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'cancelled_orders' %}"
+                                                     data-bs-toggle="" href="{% url 'cancelled_orders' 'All' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="x-circle"></span></span><span class="nav-link-text-wrapper"><span
@@ -371,7 +371,7 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'refunded_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'refunded_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'refunded_orders' 'All' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="refresh-cw"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Refunded Orders</span></span>

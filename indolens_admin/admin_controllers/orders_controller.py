@@ -9,7 +9,7 @@ from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sa
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
 
-def get_all_orders(status, pay_status):
+def get_all_orders(status, pay_status, store):
     status_conditions = {
         "All": "LIKE '%'",
         "New": "= 1",
@@ -27,6 +27,12 @@ def get_all_orders(status, pay_status):
         "Refunded": "= 3",
     }
     payment_status_value = payment_status_values[pay_status]
+    store_values = {
+        "All": "LIKE '%'",
+        "ownStores": "= 1",
+        "franchiseStores": "= 2",
+    }
+    store_condition = store_values[store]
     try:
         with connection.cursor() as cursor:
             get_order_query = f"""
@@ -54,7 +60,7 @@ def get_all_orders(status, pay_status):
                 LEFT JOIN franchise_store_employees creator_fs ON so.created_by = creator_fs.employee_id AND so.created_by_store_type = 2
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
-                WHERE so.order_status {status_condition} AND so.payment_status {payment_status_value}
+                WHERE so.order_status {status_condition} AND so.payment_status {payment_status_value} AND so.created_by_store_type {store_condition}
                 GROUP BY so.order_id          
                 """
             cursor.execute(get_order_query)
