@@ -1,6 +1,9 @@
+import json
+
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
+from indolens_admin.admin_controllers import central_inventory_controller
 from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
     franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller, \
     franchise_store_employee_controller, franchise_store_orders_controller
@@ -259,7 +262,6 @@ def createStockRequestFranchise(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
             stock_obj = franchise_create_stock_request_model.franchise_create_stock_request_model_from_dict(
                 request.POST)
             response = franchise_inventory_controller.create_store_stock_request(stock_obj)
@@ -363,6 +365,26 @@ def allExpenseFranchise(request):
 def makeSaleFranchiseStore(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        return render(request, 'expenses/makeSaleFranchiseStore.html')
+        if request.method == 'POST':
+            cart_data = json.loads(request.POST['cartData'])
+            customerData = json.loads(request.POST['customerData'])
+            billingDetailsData = json.loads(request.POST['billingDetailsData'])
+            make_order, status_code = franchise_expense_controller.make_sale(cart_data, customerData, billingDetailsData,
+                                                                   request.session.get('id'),
+                                                                   request.session.get('assigned_store_id'))
+            url = reverse('order_details_franchise_store', kwargs={'orderId': make_order['order_id']})
+            return redirect(url)
+        else:
+            response, status_code = franchise_inventory_controller.get_all_products_for_store(
+                request.session.get('assigned_store_id'))
+            customerResponse, status_code_cust = franchise_store_customers_controller.get_all_stores_customers()
+            lens_response, status_code = central_inventory_controller.get_central_inventory_lens(
+                request.session.get('assigned_store_id'))
+            print(lens_response)
+            return render(request, 'expenses/makeSaleFranchiseStore.html',
+                          {"other_products_list": response['stocks_list'],
+                           'customers_list': customerResponse['customers_list'],
+                           "lens_list": lens_response['lens_list'],
+                           "contact_lens_list": lens_response['contact_lens_list']})
     else:
         return redirect('franchise_store_login')

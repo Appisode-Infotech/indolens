@@ -326,14 +326,14 @@ def allExpenseStore(request):
 def makeSaleOwnStore(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),
                                                                    request.session.get('assigned_store_id'))
-            return redirect('own_store_make_sale')
+            url = reverse('order_details_store', kwargs={'orderId': make_order['order_id']})
+            return redirect(url)
         else:
             response, status_code = store_inventory_controller.get_all_products_for_store(
                 request.session.get('assigned_store_id'))

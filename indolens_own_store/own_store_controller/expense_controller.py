@@ -165,7 +165,8 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
 
             return {
                 "status": True,
-                "message": "success"
+                "message": "success",
+                "order_id": "ORDER001"
             }, 200
 
     except pymysql.Error as e:
