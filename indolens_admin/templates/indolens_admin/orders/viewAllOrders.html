@@ -200,7 +200,7 @@
                                         {{order.total_cost}}
                                     </td>
                                     <td class="customer align-middle white-space-nowrap ps-8">
-                                        <a class="d-flex align-items-center" href="{% url 'customer_details' 1%}">
+                                        <a class="d-flex align-items-center" href="{% url 'customer_details' order.customer_id %}">
                                             <div class="avatar avatar-m">
                                                 <div class="avatar-name rounded-circle">
                                                     <span>{{order.customer_name.0}}</span></div>

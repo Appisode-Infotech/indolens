@@ -59,6 +59,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -78,7 +79,8 @@
             <div class="mb-9">
                 <h2 class="mb-0">Order <span>{{order_detail.0.order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
-                    <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold" > {{order_detail.0.customer_id}}</a></p>
+                    <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
+                    </p>
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><span class="fas fa-print me-2"></span>Print</button>
                         <button class="btn px-3 text-900"><span class="fas fa-undo me-2"></span>Refund</button>
@@ -88,9 +90,9 @@
                                     data-bs-toggle="dropdown" type="button">More action<span
                                     class="fas fa-chevron-down ms-2"></span></button>
                             <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" >Action</a></li>
-                                <li><a class="dropdown-item" >Another action</a></li>
-                                <li><a class="dropdown-item" >Something else here</a></li>
+                                <li><a class="dropdown-item">Action</a></li>
+                                <li><a class="dropdown-item">Another action</a></li>
+                                <li><a class="dropdown-item">Something else here</a></li>
                             </ul>
                         </div>
                     </div>
@@ -135,7 +137,7 @@
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0" >
+                                            <a class="fw-semi-bold line-clamp-2 mb-0">
                                                 {{order.product_name}}
                                             </a>
                                         </td>
@@ -148,10 +150,12 @@
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
                                             {{order.product_gst}}%
                                         </td>
-                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">{{order.purchase_quantity}}</td>
-                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹ {{order.product_total_cost}}
+                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">
+                                            {{order.purchase_quantity}}
                                         </td>
-                                        <td>{{order.power_attribute}}</td>
+                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹
+                                            {{order.product_total_cost}}
+                                        </td>
                                     </tr>
                                     {% endfor %}
 
@@ -161,7 +165,7 @@
                         </div>
                         <div class="d-flex flex-between-center py-3 border-bottom mb-7">
                             <p class="text-1100 fw-semi-bold lh-sm mb-0">Items subtotal :</p>
-                            <p class="text-1100 fw-bold lh-sm mb-0">₹ {{order_detail.0.total_cost}}</p>
+                            <p class="text-1100 fw-bold lh-sm mb-0">₹ {{order_detail.0.discount_cost}}</p>
                         </div>
                         <div class="row gx-4 gy-6 g-xl-7 justify-content-sm-center justify-content-xl-start">
                             <div class="col-12 col-sm-auto">
@@ -173,7 +177,7 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" >{{order_detail.0.customer_name}}</a>
+                                        <a class="fs--1 ms-4">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -240,7 +244,8 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Shipping Date</h6>
                                         </div>
-                                        <p class="mb-0 text-800 fs--1 ms-4">{{order_detail.0.estimated_delivery_date}}</p>
+                                        <p class="mb-0 text-800 fs--1 ms-4">
+                                            {{order_detail.0.estimated_delivery_date}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -293,12 +298,13 @@
                                         <h3 class="card-title mb-4">Summary</h3>
                                         <div>
                                             <div class="d-flex justify-content-between">
-                                                <p class="text-900 fw-semi-bold">Items subtotal :</p>
-                                                <p class="text-1100 fw-semi-bold">₹ {{order_detail.0.total_cost}}</p>
+                                                <p class="text-900 fw-semi-bold">Total Amount :</p>
+                                                <p id="total_amount" class="text-1100 fw-semi-bold">
+                                                    ₹ {{ order_detail.0.total_cost}}</p>
                                             </div>
                                             <div class="d-flex justify-content-between">
-                                                <p class="text-900 fw-semi-bold">Subtotal :</p>
-                                                <p class="text-1100 fw-semi-bold">₹ {{order_detail.0.discount_cost}}</p>
+                                                <p class="text-900 fw-semi-bold">Discount Amount :</p>
+                                                <p id="discount_amount" class="text-1100 fw-semi-bold"></p>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Shipping Cost :</p>
@@ -362,5 +368,14 @@
 
 
 </body>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var totalCost = {{ order_detail.0.total_cost }};
+        var discountCost = {{ order_detail.0.discount_cost }};
 
+        var discountedAmount = totalCost - discountCost;
+
+        document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
+    });
+</script>
 </html>

@@ -115,10 +115,10 @@
                                                     <li><a class="dropdown-item"
                                                            href="{% url 'refunded_orders' 'All' %}">All</a>
                                                     </li>
-                                                    <li><a class="dropdown-item text-success"
+                                                    <li><a class="dropdown-item "
                                                            href="{% url 'refunded_orders' 'ownStores' %}">Own
                                                         Stores</a></li>
-                                                    <li><a class="dropdown-item text-success"
+                                                    <li><a class="dropdown-item "
                                                            href="{% url 'refunded_orders' 'franchiseStores' %}">Franchise
                                                         Stores </a>
                                                     </li>
@@ -180,7 +180,7 @@
                                     </td>
                                     <td class="total align-middle text-end fw-semi-bold text-1000">{{order.total_cost}}</td>
                                     <td class="customer align-middle white-space-nowrap ps-8">
-                                        <a class="d-flex align-items-center" href="{% url 'customer_details' 1%}">
+                                        <a class="d-flex align-items-center" href="{% url 'customer_details' order.customer_id%}">
                                             <div class="avatar avatar-m">
                                                 <div class="avatar-name rounded-circle"><span>{{order.customer_name.0}}</span></div>
                                             </div>
@@ -234,13 +234,14 @@
 
                                     </td>
                                     <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        {{order.creator_name}}
+                                        <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
                                     </td>
                                     <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
                                         {{order.created_on}}
                                     </td>
                                     <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        {{order.updater_name}}
+                                        <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
+                                            {{order.updater_name}} </a>
                                     </td>
                                     <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
                                         {{order.updated_on}}

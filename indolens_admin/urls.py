@@ -278,6 +278,7 @@ urlpatterns = [
     path(
         'manage_franchise_other_employees/enable_disable_other_employees/route=<str:route>/otherEmpId=<int:franchiseEmployeeId>/status=<int:status>',
         enableDisableFranchiseOtherEmployees, name='enable_disable_franchise_other_employees'),
+
     # orders management
     path('all_orders/store=<str:store>', viewAllOrders, name='all_orders'),
     path('Dispatched_orders/store=<str:store>', viewDispatchedOrders, name='Dispatched_orders'),
@@ -289,6 +290,7 @@ urlpatterns = [
     path('refunded_orders/store=<str:store>', viewRefundedOrders, name='refunded_orders'),
     path('order_details/orderId=<str:orderId>', viewOrderDetails, name='order_details'),
     path('view_order_creator/employeeID=<int:employeeID>/storeType=<int:storeType>', viewOrderCreator, name='view_order_creator'),
+
     # labs
     path('manage_labs/', manageLabs, name='manage_labs'),
     path('manage_labs/create_lab/', createLab, name='create_lab'),

@@ -2207,6 +2207,9 @@ def viewOrderCreator(request, employeeID, storeType):
         order_detail, status_code = orders_controller.get_order_creator_role(employeeID, storeType)
         role = order_detail['role']
         role_urls = {}
+        print(role)
+        print(storeType)
+        print(type(employeeID))
         if storeType == 1:
             role_urls = {
                 1: ('view_store_manager', 'storeManagerId'),
@@ -2217,12 +2220,13 @@ def viewOrderCreator(request, employeeID, storeType):
             role_urls = {
                 1: ('view_franchise_owner', 'franchiseOwnersId'),
                 2: ('view_franchise_optimetry', 'franchiseOptimetryId'),
-                3: ('view_sales_executives', 'franchiseSaleExecutivesId')
+                3: ('view_franchise_sales_executives', 'franchiseSaleExecutivesId')
             }
 
         if role in role_urls:
             url_name, id_key = role_urls[role]
             url = reverse(url_name, kwargs={id_key: employeeID})
+            print(url)
             return redirect(url)
         else:
             return redirect('dashboard')
@@ -2251,14 +2255,12 @@ def viewCustomerDetails(request, customerId):
             total_bill = total_bill+price.get('total_cost')
 
         if total_bill > 5000 and total_bill < 25000:
-            print(2)
             membership = "Platinum"
         elif total_bill > 25000:
-            print(3)
             membership = "Luxuary"
         return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer'],
                                                                                      "sales_data": sales_data['orders_list'],
-                                                                                     "membership":membership})
+                                                                                     "membership": membership})
     else:
         return redirect('login')
 
