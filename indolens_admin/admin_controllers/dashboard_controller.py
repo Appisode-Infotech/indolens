@@ -39,18 +39,19 @@ def get_sales_stats(store):
     try:
         with connection.cursor() as cursor:
             get_order_query = f"""
-                        SELECT SUM(product_total_cost) AS total_sale
-                        FROM sales_order
-                        WHERE created_by_store_type = {store} 
-                        """
+                                SELECT IFNULL(SUM(product_total_cost), 0) AS total_sale
+                                FROM sales_order
+                                WHERE created_by_store_type = {store} 
+                                """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchone()
-            print(orders_list[0])
+            total_sale = orders_list[0] if orders_list[0] is not None else 0
 
             return {
                 "status": True,
-                "sale": orders_list[0]
+                "sale": total_sale
             }, 200
+
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
