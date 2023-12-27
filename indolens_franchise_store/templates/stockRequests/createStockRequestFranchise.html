@@ -112,6 +112,8 @@
                                 </th>
                                 <th class="sort white-space-nowrap align-middle fs--2" scope="col"
                                     style="width:70px;"></th>
+                                <th class="sort white-space-nowrap align-middle fs--2" scope="col"
+                                    style="width:70px;"></th>
                                 <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                     scope="col" style="width:350px;">PRODUCT NAME
                                 </th>
@@ -128,7 +130,7 @@
                                     style="width:150px;">STORE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="tags" scope="col"
-                                    style="width:250px;">IN STOCK
+                                    style="width:250px;">STORE STOCK
                                 </th>
                                 <th class="sort align-middle ps-4" data-sort="time" scope="col"
                                     style="width:50px;">PUBLISHED ON
@@ -168,12 +170,16 @@
                                 <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                     {{product.brand_name}}
                                 </td>
+                                <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                    {% if product.target_store_name == 0 %}
+                                    CENTRAL INVENTORY
+                                    {% else %}
+                                    {{product.target_store_name}}
+                                    {% endif %}
+                                </td>
 
                                 <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                     {{product.store_quantity}}
-                                </td>
-                                <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 </td>
                                 <td class="time align-middle white-space-nowrap text-600 ps-4">
                                     {{product.created_on}}
@@ -188,6 +194,9 @@
                                                 class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
                                                 class="dropdown-item" data-bs-target="#verticallyCentered"
+                                                data-bs-product-id="{{product.product_id}}"
+                                                data-bs-target-store-id="{{product.target_store_id}}"
+                                                data-bs-unit-cost ="{{product.franchise_sale_price}}"
                                                 data-bs-toggle="modal">Request</a>
                                         </div>
                                     </div>
@@ -213,12 +222,12 @@
                                         {% csrf_token %}
                                         <div class="col-12">
 
-                                            <label class="form-label" for="validationCustom01">Product
+                                            <label class="form-label" for="product_id">Product
                                                 ID</label>
 
-                                            <input class="form-control" readonly id="validationCustom01"
+                                            <input class="form-control" readonly id="product_id"
                                                    required="" name="product_id"
-                                                   type="text" value="1"/>
+                                                   type="text"/>
                                         </div>
 
                                         <div class="col-12">
@@ -231,8 +240,8 @@
                                                    type="number" value=""/>
                                             <div class="invalid-feedback">Enter valid quantity!</div>
                                         </div>
-
-                                        <input  name="request_to_store_id" type="hidden" value="0"/>
+                                        <input id="request_to_store_id" name="request_to_store_id" type="hidden"/>
+                                        <input id="unit_cost" name="unit_cost" type="hidden"/>
                                         <input  name="request_from_store_id" type="hidden" value="{{request.session.assigned_store_id}}"/>
                                         <input  name="created_by" type="hidden" value="{{request.session.id}}"/>
                                         <input  name="store_type" type="hidden" value="{{request.session.store_type}}"/>
@@ -313,134 +322,30 @@
 <script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'vendors/prism/prism.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
-<script>
-    let productCounter = 1;
-    const removeButton = document.querySelector('.btn-danger');
-    removeButton.style.display = 'none';
-
-    function addProduct() {
-        // Clone the product_widget element
-        const productWidgets = document.getElementById('product_widgets');
-        const productWidget = productWidgets.querySelector('.product_widget:last-child');
-        const clonedWidget = productWidget.cloneNode(true);
-
-        // Clear input values in the cloned widget
-        const inputs = clonedWidget.querySelectorAll('input');
-        for (const input of inputs) {
-            input.value = '';
-        }
-
-        // Increment the product counter and update the label
-        productCounter++;
-        const productLabel = clonedWidget.querySelector('h5');
-        productLabel.textContent = `Product ${productCounter}`;
-
-        // Append the cloned widget after the last product_widget
-        productWidgets.appendChild(clonedWidget);
-        updateRemoveButtonVisibility();
-
-    }
-
-    function removeProduct() {
-        // Find the container for product widgets
-        const productWidgets = document.getElementById('product_widgets');
-
-        // Find all product widgets excluding the first one
-        const productWidgetCount = productWidgets.querySelectorAll('.product_widget').length;
-
-        // Only remove if there's more than one product widget
-        if (productWidgetCount > 1) {
-            // Find and remove the last child (last added widget)
-            const lastChild = productWidgets.lastElementChild;
-            if (lastChild) {
-                lastChild.remove();
-            }
-
-            // Decrement the product counter
-            productCounter--;
-        }
-        updateRemoveButtonVisibility();
-
-    }
-
-    function updateRemoveButtonVisibility() {
-        // Find the "Remove Product" button
-        const removeButton = document.querySelector('.btn-danger');
-
-        // Find all product widgets excluding the first one
-        const productWidgets = document.getElementById('product_widgets');
-        const productWidgetCount = productWidgets.querySelectorAll('.product_widget').length;
-
-        // Show or hide the button based on the number of widgets
-        if (productWidgetCount > 1) {
-            removeButton.style.display = 'block';
-        } else {
-            removeButton.style.display = 'none';
-        }
-    }
-
-
-</script>
-<script>
-        // Add an event listener to the "Start Over" button
-        document.querySelector('.btn-start-over').addEventListener('click', function () {
-            // Gather data from the first form (tab 1)
-            var formData1 = formDataToObject(document.querySelector('#wizardValidationForm1'));
-
-            // Gather data from the second form (tab 2)
-            var formData2 = formDataToObject(document.querySelector('#wizardValidationForm2'));
-
-            // Gather data from the third form (tab 3)
-            var formData3 = formDataToObject(document.querySelector('#wizardValidationForm3'));
-
-            // Combine all form data into a single object
-            var allFormData = {
-                form1: formData1,
-                form2: formData2,
-                form3: formData3
-            };
-
-            // Display the collected data in the console
-            console.log(allFormData);
-
-            // Send the collected data to the server using AJAX
-            fetch('/your-server-endpoint', {
-                method: 'POST',
-                body: JSON.stringify(allFormData),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(response => {
-                if (response.ok) {
-                    // Handle success
-                    alert('Data submitted successfully');
-                    // You can also redirect to a different page here if needed
-                } else {
-                    // Handle errors
-                    alert('Failed to submit data');
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('An error occurred');
-            });
-        });
-
-        // Function to convert FormData to a JavaScript object
-        function formDataToObject(form) {
-            var object = {};
-            var formData = new FormData(form);
-            formData.forEach(function (value, key) {
-                object[key] = value;
-            });
-            return object;
-        }
-
-
-</script>
-
 
 </body>
 
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var enableDisableButtons = document.querySelectorAll('[data-bs-target="#verticallyCentered"]');
+    var modal = document.getElementById('verticallyCentered');
+    var productIdField = modal.querySelector('#product_id');
+    var targetStoreField = modal.querySelector('#request_to_store_id');
+    var unitCostField = modal.querySelector('#unit_cost');
+
+    enableDisableButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+
+            var productId = event.currentTarget.getAttribute('data-bs-product-id');
+            var targetStore = event.currentTarget.getAttribute('data-bs-target-store-id');
+            var unitCost = event.currentTarget.getAttribute('data-bs-unit-cost');
+
+            productIdField.value = productId;
+            targetStoreField.value = targetStore;
+            unitCostField.value = unitCost;
+        });
+    });
+});
+
+</script>
 </html>

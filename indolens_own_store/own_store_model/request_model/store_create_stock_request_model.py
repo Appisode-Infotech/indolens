@@ -39,8 +39,9 @@ class StoreCreateStockRequestModel:
     created_by: Optional[int]
     store_type: Optional[int]
     comments: Optional[str]
+    unit_cost: Optional[str]
 
-    def __init__(self, product_id: Optional[int], product_quantity: Optional[int], request_to_store_id: Optional[int], request_from_store_id: Optional[int], created_by: Optional[int], store_type: Optional[int], comments: Optional[str]) -> None:
+    def __init__(self, product_id: Optional[int], product_quantity: Optional[int], request_to_store_id: Optional[int], request_from_store_id: Optional[int], created_by: Optional[int], store_type: Optional[int], comments: Optional[str], unit_cost: Optional[str]) -> None:
         self.product_id = product_id
         self.product_quantity = product_quantity
         self.request_to_store_id = request_to_store_id
@@ -48,6 +49,7 @@ class StoreCreateStockRequestModel:
         self.created_by = created_by
         self.store_type = store_type
         self.comments = comments
+        self.unit_cost = unit_cost
 
     @staticmethod
     def from_dict(obj: Any) -> 'StoreCreateStockRequestModel':
@@ -59,7 +61,8 @@ class StoreCreateStockRequestModel:
         created_by = from_union([from_str, from_none], obj.get("created_by"))
         store_type = from_union([from_str, from_none], obj.get("store_type"))
         comments = from_union([from_str, from_none], obj.get("comments"))
-        return StoreCreateStockRequestModel(product_id, product_quantity, request_to_store_id, request_from_store_id, created_by, store_type, comments)
+        unit_cost = from_union([from_str, from_none], obj.get("unit_cost"))
+        return StoreCreateStockRequestModel(product_id, product_quantity, request_to_store_id, request_from_store_id, created_by, store_type, comments, unit_cost)
 
     def to_dict(self) -> dict:
         result: dict = {}
@@ -77,6 +80,8 @@ class StoreCreateStockRequestModel:
             result["store_type"] = from_union([from_int, from_none], self.store_type)
         if self.comments is not None:
             result["comments"] = from_union([from_int, from_none], self.comments)
+        if self.unit_cost is not None:
+            result["unit_cost"] = from_union([from_int, from_none], self.unit_cost)
         return result
 
 

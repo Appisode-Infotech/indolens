@@ -214,29 +214,17 @@
                     </div>
                 </li>
 
-                <li class="nav-item">
-                    <!-- parent pages-->
-                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'pending_franchise_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'pending_franchise_store_orders' %}"
-                                                     role="button">
-                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Pending Orders</span></span>
-                        </div>
-                    </a>
-                    </div>
-                </li>
+
 
                 <li class="nav-item">
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
-                                                     class="nav-link label-1 {% if 'received_franchise_store_orders' in request.path %}active{% endif %}"
+                                                     class="nav-link label-1 {% if 'new_franchise_store_orders' in request.path %}active{% endif %}"
                                                      data-bs-toggle=""
-                                                     href="{% url 'received_franchise_store_orders' %}" role="button">
+                                                     href="{% url 'new_franchise_store_orders' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-circle"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Received Orders</span></span>
+                                class="nav-link-text">New Orders</span></span>
                         </div>
                     </a>
                     </div>
@@ -265,6 +253,20 @@
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Ready Orders</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'dispatched_franchise_store_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'dispatched_franchise_store_orders' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Dispatched Orders</span></span>
                         </div>
                     </a>
                     </div>

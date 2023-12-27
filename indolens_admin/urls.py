@@ -278,16 +278,19 @@ urlpatterns = [
     path(
         'manage_franchise_other_employees/enable_disable_other_employees/route=<str:route>/otherEmpId=<int:franchiseEmployeeId>/status=<int:status>',
         enableDisableFranchiseOtherEmployees, name='enable_disable_franchise_other_employees'),
+
     # orders management
-    path('all_orders/', viewAllOrders, name='all_orders'),
-    path('pending_orders/', viewPendingOrders, name='pending_orders'),
-    path('received_orders/', viewReceivedOrders, name='received_orders'),
-    path('processing_orders/', viewProcessingOrders, name='processing_orders'),
-    path('ready_orders/', viewReadyOrders, name='ready_orders'),
-    path('delivered_orders/', viewDeliveredOrders, name='delivered_orders'),
-    path('cancelled_orders/', viewCancelledOrders, name='cancelled_orders'),
-    path('refunded_orders/', viewRefundedOrders, name='refunded_orders'),
-    path('order_details/', viewOrderDetails, name='order_details'),
+    path('all_orders/store=<str:store>', viewAllOrders, name='all_orders'),
+    path('Dispatched_orders/store=<str:store>', viewDispatchedOrders, name='Dispatched_orders'),
+    path('new_orders/store=<str:store>', viewNewOrders, name='new_orders'),
+    path('processing_orders/store=<str:store>', viewProcessingOrders, name='processing_orders'),
+    path('ready_orders/store=<str:store>', viewReadyOrders, name='ready_orders'),
+    path('completed_orders/store=<str:store>', viewCompletedOrders, name='completed_orders'),
+    path('cancelled_orders/store=<str:store>', viewCancelledOrders, name='cancelled_orders'),
+    path('refunded_orders/store=<str:store>', viewRefundedOrders, name='refunded_orders'),
+    path('order_details/orderId=<str:orderId>', viewOrderDetails, name='order_details'),
+    path('view_order_creator/employeeID=<int:employeeID>/storeType=<int:storeType>', viewOrderCreator, name='view_order_creator'),
+
     # labs
     path('manage_labs/', manageLabs, name='manage_labs'),
     path('manage_labs/create_lab/', createLab, name='create_lab'),
