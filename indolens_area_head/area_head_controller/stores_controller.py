@@ -29,6 +29,7 @@ def get_area_head_own_stores(status, assigned_stores):
                                         FROM own_store
                                         LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1
                                         WHERE own_store.status {status_condition} AND own_store.store_id IN {stores}
+                                        ORDER BY own_store.store_id DESC
                                         """
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()

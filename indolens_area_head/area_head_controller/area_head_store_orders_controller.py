@@ -101,7 +101,7 @@ def get_all_store_orders(store_id):
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
                 WHERE so.created_by_store = {store_id} AND so.created_by_store_type = 1
-                GROUP BY so.order_id          
+                GROUP BY so.order_id ORDER BY so.order_id DESC       
                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchall()
@@ -193,7 +193,7 @@ def get_all_customer_orders(customerId):
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
                 WHERE so.customer_id = {customerId}
-                GROUP BY so.order_id          
+                GROUP BY so.order_id ORDER BY so.order_id DESC
                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchall()
@@ -201,42 +201,6 @@ def get_all_customer_orders(customerId):
             return {
                        "status": True,
                        "orders_list": get_sales_orders(orders_list)
-                   }, 200
-
-    except pymysql.Error as e:
-        return {"status": False, "message": str(e)}, 301
-    except Exception as e:
-        return {"status": False, "message": str(e)}, 301
-
-def franchise_order_status_change(orderID, orderStatus):
-    try:
-        with connection.cursor() as cursor:
-            get_order_creator_query = f"""
-                UPDATE sales_order SET order_status = {orderStatus}
-                WHERE order_id = '{orderID}'
-                """
-            cursor.execute(get_order_creator_query)
-
-            return {
-                       "status": True,
-                   }, 200
-
-    except pymysql.Error as e:
-        return {"status": False, "message": str(e)}, 301
-    except Exception as e:
-        return {"status": False, "message": str(e)}, 301
-
-def franchise_payment_status_change(orderID, paymentStatus):
-    try:
-        with connection.cursor() as cursor:
-            get_order_creator_query = f"""
-                UPDATE sales_order SET payment_status = {paymentStatus}
-                WHERE order_id = '{orderID}'
-                """
-            cursor.execute(get_order_creator_query)
-
-            return {
-                       "status": True,
                    }, 200
 
     except pymysql.Error as e:

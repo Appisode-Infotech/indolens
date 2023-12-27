@@ -32,7 +32,7 @@ urlpatterns = [
 
     # store managers
     path('manage_employees/', manageEmployee, name='manage_employees'),
-    path('manage_employees/view_employees/?employeeId=<int:employeeId>', viewEmployee,
+    path('manage_employees/view_employees/employeeId=<int:employeeId>', viewEmployee,
          name='view_employees'),
 
     # manage lab tech
@@ -59,8 +59,8 @@ urlpatterns = [
     path('manage_labs/job_details/', jobDetails, name='job_details_area_head'),
     path('manage_authenticity_card/', manageAuthenticityCard, name='manage_authenticity_card_area_head'),
     # marketing
-    path('manage_tasks/', viewOwnStore, name='manage_tasks_area_head'),
-    path('manage_campaigns/', viewOwnStore, name='manage_campaigns_area_head'),
+    path('manage_tasks/', manageTask, name='manage_tasks_area_head'),
+    path('manage_campaigns/', manageCampaigns, name='manage_campaigns_area_head'),
     path('view_product_details/', viewOwnStore, name='view_product_details_area_head'),
     path('all_notifications/', viewOwnStore, name='all_notifications_area_head'),
     path('manage_memberships/', viewOwnStore, name='manage_memberships_area_head'),

@@ -136,9 +136,6 @@
                                     <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
                                         CITY
                                     </th>
-                                    <th class="sort align-middle text-end pe-0" data-sort="last-order" scope="col"
-                                        style="width:10%;min-width: 150px;">LAST ORDER
-                                    </th>
                                 </tr>
                                 </thead>
                                 <tbody class="list" id="customers-table-body">
@@ -176,15 +173,12 @@
                                         {{customer.language}}
                                     </td>
                                     <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
-                                        52
+                                        {{customer.total_order_counts}}
                                     </td>
                                     <td class="total-spent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
-                                        ₹ 12509
+                                        ₹ {{customer.total_spend}}
                                     </td>
                                     <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.city}}
-                                    </td>
-                                    <td class="last-order align-middle white-space-nowrap text-700 text-end">Nov 18,
-                                        5:43 PM
                                     </td>
                                 </tr>
                                 {% endfor %}

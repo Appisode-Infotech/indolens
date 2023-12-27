@@ -5,7 +5,7 @@ from indolens_admin.admin_controllers import own_store_controller, \
     stores_inventory_controller, central_inventory_controller, customers_controller
 from indolens_area_head.area_head_controller import area_head_auth_controller, stores_controller, \
     area_stores_inventory_controller, area_head_customers_controller, store_employee_controller, \
-    area_head_store_orders_controller
+    area_head_store_orders_controller, area_head_dashboard_controller
 from indolens_area_head.area_head_model.area_head_req_models import area_head_auth_model
 from indolens_own_store.own_store_controller import store_inventory_controller
 
@@ -71,6 +71,9 @@ def resetPassword(request, code):
 def dashboard(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
+        new_order, status_code = area_head_dashboard_controller.get_order_stats('New', 1)
+        delivered_orders, status_code = area_head_dashboard_controller.get_order_stats('Completed', 1)
+        store_sales, status_code = area_head_dashboard_controller.get_sales_stats(1)
         orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All',
                                                                                     request.session.get(
                                                                                         'assigned_stores'))
@@ -87,7 +90,6 @@ def manageOwnStores(request, status):
 
         response, status_code = stores_controller.get_area_head_own_stores(status,
                                                                            request.session.get('assigned_stores'))
-        print(response)
         return render(request, 'ownStore/manageOwnStores.html',
                       {"own_stores": response['own_stores'], "status": status})
     else:
@@ -101,7 +103,6 @@ def viewOwnStore(request, ownStoreId):
         products_list, status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
         store_stats, status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
         orders_list, status_code = area_head_store_orders_controller.get_all_store_orders(ownStoreId)
-        print(orders_list)
         return render(request, 'ownStore/ownStore.html',
                       {"store_data": response['own_stores'], "products_list": products_list['products_list'],
                        "total_employee_count": store_stats['total_employee_count'],
@@ -228,10 +229,11 @@ def viewRefundedOrders(request):
         return redirect('login_area_head')
 
 
-def viewOrderDetails(request):
+def viewOrderDetails(request, orderId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        return render(request, 'orders/viewOrderDetails.html')
+        orders_list, status_code = area_head_store_orders_controller.get_order_details(orderId)
+        return render(request, 'orders/viewOrderDetails.html', {"order_detail": orders_list['orders_details']})
     else:
         return redirect('login_area_head')
 
@@ -243,7 +245,6 @@ def viewAllCustomers(request):
             'is_area_head_logged_in') is True:
         response, status_code = area_head_customers_controller.get_all_area_stores_customers(
             request.session.get('assigned_stores'))
-        print(response)
         return render(request, 'customers/viewAllCustomers.html', {"customers_list": response['customers_list']})
     else:
         return redirect('login_area_head')
@@ -264,7 +265,8 @@ def viewCustomerDetails(request, customerId):
         elif total_bill > 25000:
             membership = "Luxuary"
         return render(request, 'customers/viewCustomerDetails.html',
-                      {"customer": response['customer'], "orders_list": orders_list['orders_list'], "membership": membership})
+                      {"customer": response['customer'], "orders_list": orders_list['orders_list'],
+                       "membership": membership})
     else:
         return redirect('login_area_head')
 
@@ -395,5 +397,19 @@ def viewRejectedStockRequests(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'stockRequests/viewrejectedStockRequests.html')
+    else:
+        return redirect('login_area_head')
+
+
+def manageTask(request):
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
+            'is_area_head_logged_in') is True:
+        return redirect('dashboard_area_head')
+    else:
+        return redirect('login_area_head')
+def manageCampaigns(request):
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
+            'is_area_head_logged_in') is True:
+        return redirect('dashboard_area_head')
     else:
         return redirect('login_area_head')

@@ -3,10 +3,10 @@ import json
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
-from indolens_admin.admin_controllers import customers_controller, central_inventory_controller, orders_controller, \
-    dashboard_controller
+from indolens_admin.admin_controllers import customers_controller, central_inventory_controller, orders_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
-    expense_controller, store_employee_controller, store_customers_controller, store_orders_controller
+    expense_controller, store_employee_controller, store_customers_controller, store_orders_controller, \
+    own_store_dashboard_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
     store_expense_model, store_create_stock_request_model
 
@@ -73,14 +73,13 @@ def storeEmployeeLogout(request):
 # ================================= OWN STORE DASHBOARD ======================================
 def dashboard(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
-        own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
-        own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
+        own_store_new_order, status_code = own_store_dashboard_controller.get_order_stats('New', 1, request.session.get('assigned_store_id'))
+        own_store_delivered_orders, status_code = own_store_dashboard_controller.get_order_stats('Completed', 1, request.session.get('assigned_store_id'))
+        own_store_sales, status_code = own_store_dashboard_controller.get_sales_stats(1, request.session.get('assigned_store_id'))
         out_of_stock, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15,
                                                                                                        request.session.get(
                                                                                                            'assigned_store_id'))
-        orders_list, status_code = store_orders_controller.get_all_orders('All', 'All',
-                                                                          request.session.get('assigned_store_id'))
+        orders_list, status_code = store_orders_controller.get_all_orders('All', 'All', request.session.get('assigned_store_id'))
         return render(request, 'dashboardOwnStore.html',
                       {"own_store_new_order": own_store_new_order['count'],
                        "own_store_delivered_orders": own_store_delivered_orders['count'],
