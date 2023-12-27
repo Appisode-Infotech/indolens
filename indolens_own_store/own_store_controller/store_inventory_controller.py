@@ -10,8 +10,10 @@ from indolens_own_store.own_store_model.response_model.stock_request_product_res
 from indolens_own_store.own_store_model.response_model.store_inventory_product_resp_model import \
     get_store_inventory_stocks
 
-ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
+def getIndianTime():
+    ist = pytz.timezone('Asia/Kolkata')
+    today = datetime.datetime.now(ist)
+    return today
 
 
 def get_all_out_of_stock_products_for_store(quantity, store_id):
@@ -158,7 +160,7 @@ def create_store_stock_request(stock_obj):
 
             cursor.execute(stock_req_query, (
                 stock_obj.request_from_store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
-                0, 0, 1, stock_obj.request_to_store_id, 0, today, stock_obj.created_by, today, stock_obj.created_by,
+                0, 0, 1, stock_obj.request_to_store_id, 0, getIndianTime(), stock_obj.created_by, getIndianTime(), stock_obj.created_by,
                 stock_obj.unit_cost))
             return {
                 "status": True,
