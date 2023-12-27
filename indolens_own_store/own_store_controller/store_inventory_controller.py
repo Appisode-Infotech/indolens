@@ -41,9 +41,9 @@ def get_all_out_of_stock_products_for_store(quantity, store_id):
                 "stocks_list": get_store_inventory_stocks(product_list)
             }, 200
     except pymysql.Error as e:
-        return {"status": False, "message": str(e)}, 301
+        return {"status": False, "message": str(e), "stocks_list": []}, 301
     except Exception as e:
-        return {"status": False, "message": str(e)}, 301
+        return {"status": False, "message": str(e), "stocks_list": []}, 301
 
 
 def get_all_products_for_store(store_id):
@@ -78,12 +78,12 @@ def get_all_products_for_store(store_id):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_all_central_inventory_products():
+def get_all_central_inventory_products(store_id):
     try:
         with connection.cursor() as cursor:
             get_all_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name, 
-                                    si.product_quantity, 0 as store_id
+                                    si.product_quantity, 0 as store_id, 0 as store_name
                                     FROM central_inventory As ci
                                     LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
                                     LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
@@ -105,7 +105,7 @@ def get_all_central_inventory_products():
 
             get_stores_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                                 ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name, 
-                                                si.product_quantity, store_products.store_id
+                                                si.product_quantity, store_products.store_id, os.store_name
                                                 FROM store_inventory AS store_products 
                                                 LEFT JOIN central_inventory As ci ON store_products.product_id = ci.product_id
                                                 LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
@@ -117,10 +117,11 @@ def get_all_central_inventory_products():
                                                 LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                                 LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                                 LEFT JOIN store_inventory AS si ON ci.product_id = si.product_id 
+                                                LEFT JOIN own_store AS os ON os.store_id = si.store_id 
                                                 AND si.store_type = 1
                                                 LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
                                                 WHERE store_products.store_type = 1 AND 
-                                                store_products.product_quantity != 0 
+                                                store_products.product_quantity != 0 AND store_products.store_id != {store_id}
                                                 GROUP BY store_products.product_id"""
 
             cursor.execute(get_stores_product_query)

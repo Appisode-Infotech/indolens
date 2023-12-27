@@ -3,7 +3,7 @@ import json
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
-from indolens_admin.admin_controllers import central_inventory_controller
+from indolens_admin.admin_controllers import central_inventory_controller, dashboard_controller
 from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
     franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller, \
     franchise_store_employee_controller, franchise_store_orders_controller
@@ -74,7 +74,20 @@ def franchiseOwnerLogout(request):
 def dashboard(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        return render(request, 'franchise_dashboard.html')
+        franchise_store_new_order, status_code = dashboard_controller.get_order_stats('New', 2)
+        franchise_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 2)
+        franchise_store_sales, status_code = dashboard_controller.get_sales_stats(2)
+        out_of_stock, status_code = franchise_inventory_controller.get_all_out_of_stock_products_for_franchise_store(15,
+                                                                                                                     request.session.get(
+                                                                                                                         'assigned_store_id'))
+        orders_list, status_code = franchise_store_orders_controller.get_all_orders('All', 'All',
+                                                                                    request.session.get(
+                                                                                        'assigned_store_id'))
+        return render(request, 'franchise_dashboard.html',
+                      {"franchise_store_new_order": franchise_store_new_order['count'],
+                       "franchise_store_delivered_orders": franchise_store_delivered_orders['count'],
+                       "out_of_stock": len(out_of_stock['stocks_list']), "orders_list": orders_list['orders_list'],
+                       "franchise_store_sale": franchise_store_sales['sale']})
     else:
         return redirect('franchise_store_login')
 
@@ -177,6 +190,7 @@ def orderDetailsFranchise(request, orderId):
     else:
         return redirect('franchise_store_login')
 
+
 def franchiseOrderStatusChange(request, orderId, status):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
@@ -185,6 +199,8 @@ def franchiseOrderStatusChange(request, orderId, status):
         return redirect(url)
     else:
         return redirect('franchise_store_login')
+
+
 def franchisePaymentStatusChange(request, orderId, status):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
@@ -223,9 +239,9 @@ def viewCustomerDetailsFranchise(request, customerId):
         elif total_bill > 25000:
             membership = "Luxuary"
         return render(request, 'customers/viewCustomerDetailsFranchise.html', {"customers": response['customers'],
-                                                                                     "sales_data": sales_data[
-                                                                                         'orders_list'],
-                                                                                     "membership": membership})
+                                                                               "sales_data": sales_data[
+                                                                                   'orders_list'],
+                                                                               "membership": membership})
     else:
         return redirect('franchise_store_login')
 
@@ -270,6 +286,7 @@ def createStockRequestFranchise(request):
                           {"product_list": products['product_list']})
         else:
             response, status_code = franchise_inventory_controller.get_all_central_inventory_products()
+            print(response)
             return render(request, 'stockRequests/createStockRequestFranchise.html',
                           {"product_list": response['product_list']})
     else:
@@ -369,9 +386,10 @@ def makeSaleFranchiseStore(request):
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
-            make_order, status_code = franchise_expense_controller.make_sale(cart_data, customerData, billingDetailsData,
-                                                                   request.session.get('id'),
-                                                                   request.session.get('assigned_store_id'))
+            make_order, status_code = franchise_expense_controller.make_sale(cart_data, customerData,
+                                                                             billingDetailsData,
+                                                                             request.session.get('id'),
+                                                                             request.session.get('assigned_store_id'))
             url = reverse('order_details_franchise_store', kwargs={'orderId': make_order['order_id']})
             return redirect(url)
         else:

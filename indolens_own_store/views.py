@@ -3,7 +3,8 @@ import json
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
-from indolens_admin.admin_controllers import customers_controller, central_inventory_controller, orders_controller
+from indolens_admin.admin_controllers import customers_controller, central_inventory_controller, orders_controller, \
+    dashboard_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller, store_orders_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
@@ -72,7 +73,19 @@ def storeEmployeeLogout(request):
 # ================================= OWN STORE DASHBOARD ======================================
 def dashboard(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        return render(request, 'dashboardOwnStore.html')
+        own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
+        own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
+        own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
+        out_of_stock, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15,
+                                                                                                       request.session.get(
+                                                                                                           'assigned_store_id'))
+        orders_list, status_code = store_orders_controller.get_all_orders('All', 'All',
+                                                                          request.session.get('assigned_store_id'))
+        return render(request, 'dashboardOwnStore.html',
+                      {"own_store_new_order": own_store_new_order['count'],
+                       "own_store_delivered_orders": own_store_delivered_orders['count'],
+                       "own_store_sale": own_store_sales['sale'], "out_of_stock": len(out_of_stock['stocks_list']),
+                       "orders_list":orders_list['orders_list']})
     else:
         return redirect('own_store_login')
 
@@ -178,6 +191,7 @@ def orderDetails(request, orderId):
     else:
         return redirect('own_store_login')
 
+
 def orderStatusChange(request, orderId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_update, status_code = orders_controller.order_status_change(orderId, status)
@@ -185,6 +199,7 @@ def orderStatusChange(request, orderId, status):
         return redirect(url)
     else:
         return redirect('own_store_login')
+
 
 def orderPaymentStatusChange(request, orderId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
@@ -234,11 +249,14 @@ def createStockRequestStore(request):
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
             response = store_inventory_controller.create_store_stock_request(stock_obj)
-            products, status_code = store_inventory_controller.get_all_central_inventory_products()
+            products, status_code = store_inventory_controller.get_all_central_inventory_products(
+                request.session.get('assigned_store_id'))
             return render(request, 'stockRequests/createStockRequestStore.html',
                           {"product_list": products['product_list']})
         else:
-            response, status_code = store_inventory_controller.get_all_central_inventory_products()
+            response, status_code = store_inventory_controller.get_all_central_inventory_products(
+                request.session.get('assigned_store_id'))
+            print(response)
             return render(request, 'stockRequests/createStockRequestStore.html',
                           {"product_list": response['product_list']})
     else:

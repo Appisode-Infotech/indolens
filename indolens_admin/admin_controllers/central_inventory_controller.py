@@ -382,9 +382,9 @@ def get_all_out_of_stock_central_inventory_products(quantity):
                 "categories_list": get_all_central_inventory_category()[0]['product_category']
             }, 200
     except pymysql.Error as e:
-        return {"status": False, "message": str(e)}, 301
+        return {"status": False, "message": str(e), "stocks_list": []}, 301
     except Exception as e:
-        return {"status": False, "message": str(e)}, 301
+        return {"status": False, "message": str(e), "stocks_list": []}, 301
 
 
 def get_all_out_of_stock_products_for_store(quantity):

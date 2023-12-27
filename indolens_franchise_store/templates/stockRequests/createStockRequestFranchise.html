@@ -112,6 +112,8 @@
                                 </th>
                                 <th class="sort white-space-nowrap align-middle fs--2" scope="col"
                                     style="width:70px;"></th>
+                                <th class="sort white-space-nowrap align-middle fs--2" scope="col"
+                                    style="width:70px;"></th>
                                 <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                     scope="col" style="width:350px;">PRODUCT NAME
                                 </th>
@@ -129,9 +131,6 @@
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="tags" scope="col"
                                     style="width:250px;">STORE STOCK
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="tags" scope="col"
-                                    style="width:250px;">INVENTORY STOCK
                                 </th>
                                 <th class="sort align-middle ps-4" data-sort="time" scope="col"
                                     style="width:50px;">PUBLISHED ON
@@ -171,16 +170,16 @@
                                 <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                     {{product.brand_name}}
                                 </td>
+                                <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                    {% if product.target_store_name == 0 %}
+                                    CENTRAL INVENTORY
+                                    {% else %}
+                                    {{product.target_store_name}}
+                                    {% endif %}
+                                </td>
 
                                 <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                     {{product.store_quantity}}
-                                </td>
-
-                                <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
-                                    {{product.product_quantity}}
-                                </td>
-                                <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 </td>
                                 <td class="time align-middle white-space-nowrap text-600 ps-4">
                                     {{product.created_on}}
