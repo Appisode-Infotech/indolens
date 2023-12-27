@@ -179,7 +179,11 @@
                                 </td>
 
                                 <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                    {% if product.store_quantity == None %}
+                                    0
+                                    {% else %}
                                     {{product.store_quantity}}
+                                    {% endif %}
                                 </td>
                                 <td class="time align-middle white-space-nowrap text-600 ps-4">
                                     {{product.created_on}}

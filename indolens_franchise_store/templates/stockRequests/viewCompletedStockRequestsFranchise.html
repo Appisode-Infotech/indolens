@@ -137,6 +137,10 @@
                                     style="width:5%;">STATUS
                                 </th>
 
+                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                    style="width:5%;">DELIVERY STATUS
+                                </th>
+
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
                             </tr>
                             </thead>
@@ -175,7 +179,11 @@
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                    {% if stock.delivery_status == 2 %}
                                     <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">Not Delivered</p>
+                                    {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end statuses">
                                     {% if stock.request_status == 0 %}
@@ -189,8 +197,17 @@
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
+                                <td class="align-middle white-space-nowrap text-end statuses">
+                                    {% if stock.delivery_status == 0 %}
+                                    <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>
+                                    {% elif stock.delivery_status == 1 %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">DISPATCHED</span>
+                                    {% elif stock.delivery_status == 2 %}
+                                    <span
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">DELIVERED</span>
+                                    {% endif %}
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
