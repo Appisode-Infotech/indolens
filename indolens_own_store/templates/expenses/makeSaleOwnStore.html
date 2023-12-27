@@ -107,7 +107,9 @@
         {% include 'nav_bar_store.html' %}
 
         <div class="content">
-            <form id="saleForm" action="/makeSale" method="post">
+            <form id="saleForm" action="{% url 'own_store_make_sale' %}" method="post">
+                {% csrf_token %}
+
                 <input name="cartData">
                 <input name="customerData">
                 <input name="billingDetailsData">
@@ -598,6 +600,13 @@ function addLensContainer() {
                 minimum and should be less than available quantity.
             </div>
         </div>
+
+        <input class="form-control"
+                   name="product_category_id[${productCardCount}]"
+                   placeholder="Category"
+                   required="required"
+                   hidden
+                   type="text" value="" readonly/>
         <div class="mb2 col-4">
             <h5 class="mb-3">Purchase Quantity</h5>
             <input class="form-control" name="purchase_qty[${productCardCount}]" placeholder="Purchase quantity" required="required" min="1"
@@ -644,30 +653,35 @@ function addLensContainer() {
                             <select name="leftLensPowerStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="leftLensBCStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="leftLensDiaStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="leftLensCylinderStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="leftLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                     </tr>
@@ -677,30 +691,35 @@ function addLensContainer() {
                             <select name="rightLensPowerStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="rightLensBCStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="rightLensDiaStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="rightLensCylinderStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
                             <select name="rightLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
+                                <option value="1">1</option>
                             </select>
                         </td>
                     </tr>
@@ -813,6 +832,14 @@ function addLensContainer() {
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
+
+        <input class="form-control"
+                   name="product_category_id[${productCardCount}]"
+                   placeholder="Category"
+                   required="required"
+                   hidden
+
+                   type="text" value="" readonly/>
         <div class="mb2 col-4">
             <h5 class="mb-3">Contact Lens Physicality</h5>
             <input class="form-control"
@@ -1027,6 +1054,12 @@ function addLensContainer() {
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
+        <input class="form-control"
+                   name="product_category_id[${productCardCount}]"
+                   placeholder="Category"
+                   hidden
+                   required="required"
+                   type="text" value="" readonly/>
         <div class="mb2 col-4">
             <h5 class="mb-3">Product Brand</h5>
             <input class="form-control"
@@ -1228,6 +1261,7 @@ function addLensContainer() {
     function updateLensProductFields(selectElement, cardIndex){
         let selectedProduct = lens_list.find(product => product.product_id == selectElement.value);
         let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
+        let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
         let stockTypeField = document.querySelector(`[name='stock_type[${cardIndex}]']`);
         let productLensTypeField = document.querySelector(`[name='lens_type[${cardIndex}]']`);
         let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
@@ -1253,6 +1287,7 @@ function addLensContainer() {
         productUnitPriceField.value = selectedProduct?.sale_price ?? '';
         productUnitTypeField.value = selectedProduct?.unit_name ?? '';
         stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
+        productCategoryIdField.value = selectedProduct?.category_id ?? '';
 
         if (selectedProduct.discount > 0) {
             discountCheckDiv.style.display = 'block';
@@ -1319,6 +1354,7 @@ function addLensContainer() {
       let clDiaField = document.querySelector(`[name='cl_dia[${cardIndex}]']`);
       let clCylField = document.querySelector(`[name='cl_cylinder[${cardIndex}]']`);
       let clAxisField = document.querySelector(`[name='cl_axis[${cardIndex}]']`);
+      let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
 
       lensTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
       lensPhysicalityField.value = selectedProduct?.power_attribute.contact_lens_type ?? '';
@@ -1329,6 +1365,7 @@ function addLensContainer() {
       productBrandField.value = selectedProduct?.brand_name ?? '';
       productUnitPriceField.value = selectedProduct?.sale_price ?? '';
       productUnitTypeField.value = selectedProduct?.unit_name ?? '';
+      productCategoryIdField.value = selectedProduct?.category_id ?? '';
 
 
       clPowerField.value = selectedProduct?.power_attribute.power ?? '';
@@ -1376,10 +1413,13 @@ function addLensContainer() {
       let selectedProduct = other_products_list.find(product => product.product_id == selectElement.value);
       let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
       let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
+      let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
+
       let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
       let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
       let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);        let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
+      let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
       let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
       let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
       let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
@@ -1393,6 +1433,7 @@ function addLensContainer() {
       productBrandField.value = selectedProduct?.brand_name ?? '';
       productUnitPriceField.value = selectedProduct?.sale_price ?? '';
       productUnitTypeField.value = selectedProduct?.unit_name ?? '';
+      productCategoryIdField.value = selectedProduct?.category_id ?? '';
 
 
       if (selectedProduct.discount > 0) {

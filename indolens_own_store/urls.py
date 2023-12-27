@@ -21,16 +21,22 @@ urlpatterns = [
     path('view_store_customers/', viewStoreCustomers, name='view_store_customers'),
     path('view_store_customers/view_store_customer_details/customerId=<int:customerId>', viewStoreCustomerDetails,
          name='view_store_customer_details'),
+
     # orders management
     path('all_store_orders/', allStoreOrders, name='all_store_orders'),
-    path('pending_store_orders/', pendingStoreOrders, name='pending_store_orders'),
-    path('received_store_orders/', receivedStoreOrders, name='received_store_orders'),
+    path('dispatched_store_orders/', dispatchedStoreOrders, name='dispatched_store_orders'),
+    path('new_store_orders/', newStoreOrders, name='new_store_orders'),
     path('processing_store_orders/', processingStoreOrders, name='processing_store_orders'),
     path('ready_store_orders/', readyStoreOrders, name='ready_store_orders'),
-    path('delivered_store_orders/', deliveredStoreOrders, name='delivered_store_orders'),
+    path('completed_store_orders/', completedStoreOrders, name='completed_store_orders'),
     path('cancelled_store_orders/', cancelledStoreOrders, name='cancelled_store_orders'),
     path('refunded_store_orders/', refundedStoreOrders, name='refunded_store_orders'),
-    path('order_details_store/', orderDetails, name='order_details_store'),
+    path('order_details_store/orderId=<str:orderId>', orderDetails, name='order_details_store'),
+    path('order_details_store/order_status_change/orderId=<str:orderId>/status=<str:status>', orderStatusChange,
+         name='order_status_change'),
+    path('order_details_store/order_payment_status_change/orderId=<str:orderId>/status=<str:status>', orderPaymentStatusChange,
+         name='order_payment_status_change'),
+
     # inventory items
     path('manage_store_inventory_products/', storeInventoryProducts, name='manage_store_inventory_products'),
     path('manage_store_out_of_stock/', inventoryOutOfStock, name='manage_store_out_of_stock'),

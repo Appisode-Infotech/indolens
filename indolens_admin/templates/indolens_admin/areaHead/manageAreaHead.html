@@ -61,6 +61,10 @@
 
 
 
+
+
+
+
     </script>
 </head>
 
@@ -108,12 +112,16 @@
                                                     type="button">{{status}}<span class="fas fa-angle-down ms-2"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{% url 'manage_area_head' 'All' %}">All</a></li>
+                                                <li><a class="dropdown-item" href="{% url 'manage_area_head' 'All' %}">All</a>
+                                                </li>
                                                 <li>
                                                     <hr class="dropdown-divider"/>
                                                 </li>
-                                                <li><a class="dropdown-item text-success" href="{% url 'manage_area_head' 'Active' %}">Active Only</a></li>
-                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_area_head' 'Inactive' %}">Inactive Only</a></li>
+                                                <li><a class="dropdown-item text-success"
+                                                       href="{% url 'manage_area_head' 'Active' %}">Active Only</a></li>
+                                                <li><a class="dropdown-item text-danger"
+                                                       href="{% url 'manage_area_head' 'Inactive' %}">Inactive Only</a>
+                                                </li>
 
                                             </ul>
                                         </div>
@@ -246,7 +254,7 @@
                                                type="button"
                                                data-bs-role="Area Head"
                                                data-bs-toggle="modal"
-                                               data-bs-active-list="{{area_head.id_name_pair}}"
+                                               data-bs-active-list="{{area_head.assigned_stores}}"
                                                data-bs-target="#operations_modal"
                                                data-employee-id="{{ area_head.area_head_id }}"
                                                data-employee-name="{{ area_head.name }}"
@@ -322,13 +330,13 @@
                                             <input type="hidden" name="emp_id" id="emp_id">
                                             <h5 class="mb-3">Select Store (Only active and unallocated stores appear
                                                 here)</h5>
-
                                             <select class="form-select" data-choices="data-choices" multiple="multiple"
                                                     data-options='{"removeItemButton":true,"placeholder":true}'
                                                     name="store_id"
-                                                    required="required">
+                                                    required="required" id="store_select">
                                                 <option value="">Select a store</option>
                                             </select>
+
 
                                             <div class="custom-error" style="color: red;"></div>
                                             <div class="modal-footer">
@@ -382,6 +390,10 @@
           navbarVertical.classList.add('navbar-darker');
         }
 
+
+
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -412,7 +424,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var modalTitle = document.getElementById('modal_title');
     var modalContent = document.getElementById('modal_content');
     var modalSubmit = document.getElementById('modal_submit');
-    var modalForm = document.querySelector('.allocate-store-form'); // Select the existing form
+    var modalForm = document.querySelector('.allocate-store-form');
 
     operationsButtons.forEach(function (button) {
         button.addEventListener('click', function (event) {
@@ -421,6 +433,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var actionType = event.currentTarget.getAttribute('data-action-type');
             var actionUrl = event.currentTarget.getAttribute('data-action-url');
             var role = event.currentTarget.getAttribute('data-bs-role');
+            var assignedStore = event.currentTarget.getAttribute('data-bs-active-list');
 
             if (actionType === 'enable' || actionType === 'disable') {
                 modalTitle.textContent = actionType === "enable" ? "Enable " +role+" - " + empName : "Disable " +role+ "- " + empName;
@@ -430,13 +443,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 modalForm.style.display = 'none';
             } else if (actionType === 'allocate') {
                 document.getElementById('footer_div').style.display = 'none';
-                modalTitle.textContent = "Allocate store for - " + empName;
+                modalTitle.textContent = "Allocate store for - " + empName + assignedStore;
                 document.getElementById('emp_id').value = empId;
                 modalSubmit.href = actionUrl;
                 // Show the form for "Allocate" action
                 modalForm.style.display = 'block';
             } else if (actionType === 'unallocate') {
-                modalTitle.textContent = "Unallocate Store - " + empName;
+                modalTitle.textContent = "Unallocate Store - " + empName + assignedStore;
                 modalContent.innerHTML = `Are you sure you want to unallocate the store <br><strong>${event.currentTarget.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong> (ID: ${empId})?`;
                 modalSubmit.href = actionUrl;
                 // Hide the form for "Unallocate" action
@@ -451,6 +464,10 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
+
+
 </script>
 
 </body>

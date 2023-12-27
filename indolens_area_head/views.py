@@ -156,7 +156,7 @@ def viewAllOrders(request):
 def viewPendingOrders(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        return render(request, 'orders/viewPendingOrders.html')
+        return render(request, 'orders/viewDispatchedOrders.html')
     else:
         return redirect('login_area_head')
 
@@ -164,7 +164,7 @@ def viewPendingOrders(request):
 def viewReceivedOrders(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        return render(request, 'orders/viewReceivedOrders.html')
+        return render(request, 'orders/viewNewOrders.html')
     else:
         return redirect('login_area_head')
 
@@ -186,7 +186,7 @@ def viewReadyOrders(request):
 def viewDeliveredOrders(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        return render(request, 'orders/viewDeliveredOrders.html')
+        return render(request, 'orders/viewCompletedOrders.html')
     else:
         return redirect('login_area_head')
 

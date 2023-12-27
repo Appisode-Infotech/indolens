@@ -12,7 +12,7 @@ class Product:
             self.created_by, self.last_updated_on,
             self.last_updated_by, self.creator_name, self.updater_name, self.category_name, self.material_name,
             self.frame_type_name, self.shape_name, self.color_name, self.unit_name, self.brand_name,
-            self.store_quantity, self.target_store_id
+            self.store_quantity, self.target_store_id, self.target_store_name
         ) = values
 
         # Parse product images from JSON string to a list
@@ -61,6 +61,7 @@ class Product:
             'brand_name': self.brand_name,
             'store_quantity': self.store_quantity,
             'target_store_id': self.target_store_id,
+            'target_store_name': self.target_store_name,
         }
 
 

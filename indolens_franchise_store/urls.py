@@ -20,16 +20,22 @@ urlpatterns = [
     path('view_franchise_store_employee/', viewAllEmployeFranchise, name='view_franchise_store_employee'),
     path('view_franchise_store_employee/view_franchise_store_employee_details/employeeId=<int:employeeId>', viewEmployeeDetailsFranchise,
          name='view_franchise_store_employee_details'),
+
     # orders management
     path('all_franchise_store_orders/', allFranchiseOrders, name='all_franchise_store_orders'),
-    path('pending_franchise_store_orders/', pendingFranchiseOrders, name='pending_franchise_store_orders'),
-    path('received_franchise_store_orders/', receivedFranchiseOrders, name='received_franchise_store_orders'),
+    path('dispatched_franchise_store_orders/', dispatchedFranchiseOrders, name='dispatched_franchise_store_orders'),
+    path('new_franchise_store_orders/', newFranchiseOrders, name='new_franchise_store_orders'),
     path('processing_franchise_store_orders/', processingFranchiseOrders, name='processing_franchise_store_orders'),
     path('ready_franchise_store_orders/', readyFranchiseOrders, name='ready_franchise_store_orders'),
     path('delivered_franchise_store_orders/', deliveredFranchiseOrders, name='delivered_franchise_store_orders'),
     path('cancelled_franchise_store_orders/', cancelledFranchiseOrders, name='cancelled_franchise_store_orders'),
     path('refunded_franchise_store_orders/', refundedFranchiseOrders, name='refunded_franchise_store_orders'),
-    path('order_details_franchise_store/', orderDetailsFranchise, name='order_details_franchise_store'),
+    path('order_details_franchise_store/orderId=<str:orderId>', orderDetailsFranchise, name='order_details_franchise_store'),
+    path('order_details_franchise_store/franchise_order_status_change/orderId=<str:orderId>/status=<str:status>',
+         franchiseOrderStatusChange, name='franchise_order_status_change'),
+    path('order_details_franchise_store/franchise_payment_status_change/orderId=<str:orderId>/status=<str:status>',
+         franchisePaymentStatusChange, name='franchise_payment_status_change'),
+
     # inventory items
     path('manage_franchise_store_inventory_products/', franchiseInventoryProducts,
          name='manage_franchise_store_inventory_products'),
