@@ -123,7 +123,7 @@ def get_order_details(orderId):
             get_order_details_query = f"""
                 SELECT 
                     so.*,
-                    (SELECT SUM(unit_sale_price) AS total_cost FROM sales_order WHERE order_id = '{orderId}' 
+                    (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{orderId}' 
                     GROUP BY order_id ), 
                     (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{orderId}' 
                     GROUP BY order_id ), 

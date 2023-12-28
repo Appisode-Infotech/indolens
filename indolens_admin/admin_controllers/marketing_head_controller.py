@@ -61,7 +61,7 @@ def get_all_marketing_head(status):
             LEFT JOIN admin AS creator ON mh.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON mh.last_updated_by = updater.admin_id
             WHERE mh.status {status_condition}
-            GROUP BY mh.marketing_head_id
+            GROUP BY mh.marketing_head_id ORDER BY mh.marketing_head_id DESC
             """
             cursor.execute(get_marketing_head_query)
             marketing_head = cursor.fetchall()

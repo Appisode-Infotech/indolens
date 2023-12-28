@@ -253,7 +253,7 @@ def viewAllCustomers(request):
 def viewCustomerDetails(request, customerId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        response, status_code = customers_controller.get_customers_by_id(customerId)
+        response, status_code = area_head_customers_controller.get_customers_by_id(customerId)
         orders_list, status_code = area_head_store_orders_controller.get_all_customer_orders(customerId)
         total_bill = 0
         membership = "Gold"

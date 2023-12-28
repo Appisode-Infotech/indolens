@@ -278,7 +278,7 @@ def get_all_central_inventory_products(status):
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                    WHERE ci.status {status_condition} """
+                                    WHERE ci.status {status_condition} ORDER BY ci.product_id DESC """
 
             cursor.execute(get_all_product_query)
             product_list = cursor.fetchall()
@@ -372,7 +372,8 @@ def get_all_out_of_stock_central_inventory_products(quantity):
                                     LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                    WHERE ci.product_quantity <= '{quantity}'"""
+                                    WHERE ci.product_quantity <= '{quantity}'
+                                    ORDER BY ci.product_id DESC"""
 
             cursor.execute(get_all_product_query)
             stocks_list = cursor.fetchall()
@@ -485,7 +486,8 @@ def get_all_stock_requests(status):
                                     LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
                                     LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
                                     LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
-                                    WHERE rp.request_status LIKE '{status}' AND is_requested = 1 """
+                                    WHERE rp.request_status LIKE '{status}' AND is_requested = 1
+                                    ORDER BY rp.request_products_id DESC"""
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()

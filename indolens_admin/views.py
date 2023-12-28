@@ -2196,6 +2196,7 @@ def viewRefundedOrders(request, store):
 def viewOrderDetails(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
+        print(order_detail)
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
                       {"order_detail": order_detail['orders_details']})
     else:

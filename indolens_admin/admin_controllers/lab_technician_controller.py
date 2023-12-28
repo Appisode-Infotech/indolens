@@ -61,7 +61,7 @@ def get_all_lab_technician(status):
             LEFT JOIN admin AS creator ON lt.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON lt.last_updated_by = updater.admin_id
             WHERE lt.status {status_condition}
-            GROUP BY lt.lab_technician_id
+            GROUP BY lt.lab_technician_id ORDER BY lt.lab_technician_id DESC
             """
             cursor.execute(get_lab_technician_query)
             lab_technician = cursor.fetchall()

@@ -55,7 +55,7 @@ def get_all_orders(status, pay_status, store_id):
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
                 WHERE so.order_status {status_condition} AND so.payment_status {payment_status_value} AND so.created_by_store_type = 1
                 AND so.created_by_store = {store_id}
-                GROUP BY so.order_id          
+                GROUP BY so.order_id ORDER BY so.sale_item_id DESC        
                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchall()

@@ -61,7 +61,7 @@ def get_all_orders(status, pay_status, store):
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
                 WHERE so.order_status {status_condition} AND so.payment_status {payment_status_value} AND so.created_by_store_type {store_condition}
-                GROUP BY so.order_id          
+                GROUP BY so.order_id ORDER BY so.sale_item_id DESC         
                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchall()
@@ -150,7 +150,7 @@ def get_all_customer_orders(customerId):
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
                 WHERE so.customer_id = {customerId}
-                GROUP BY so.order_id          
+                GROUP BY so.order_id ORDER BY so.order_id DESC   
                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchall()
@@ -171,7 +171,7 @@ def get_order_details(orderId):
             get_order_details_query = f"""
                 SELECT 
                     so.*,
-                    (SELECT SUM(unit_sale_price) AS total_cost FROM sales_order WHERE order_id = '{orderId}' 
+                    (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{orderId}' 
                     GROUP BY order_id ), 
                     (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{orderId}' 
                     GROUP BY order_id ), 

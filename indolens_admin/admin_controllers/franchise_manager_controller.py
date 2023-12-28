@@ -59,7 +59,8 @@ def get_all_franchise_owner(status):
                                             LEFT JOIN franchise_store AS os ON a.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id 
-                                            WHERE a.role = 1 AND a.status {status_condition}"""
+                                            WHERE a.role = 1 AND a.status {status_condition}
+                                            ORDER BY a.employee_id DESC"""
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {

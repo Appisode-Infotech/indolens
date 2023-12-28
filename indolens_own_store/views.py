@@ -184,8 +184,6 @@ def refundedStoreOrders(request):
 def orderDetails(request, orderId):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
-        print(order_detail)
-
         return render(request, 'orders/orderDetails.html', {"order_detail": order_detail['orders_details']})
     else:
         return redirect('own_store_login')
@@ -353,7 +351,7 @@ def makeSaleOwnStore(request):
         else:
             response, status_code = store_inventory_controller.get_all_products_for_store(
                 request.session.get('assigned_store_id'))
-            customerResponse, status_code_cust = customers_controller.get_all_stores_customers()
+            customerResponse, status_code_cust = store_customers_controller.get_all_customers()
             lens_response, status_code = central_inventory_controller.get_central_inventory_lens(
                 request.session.get('assigned_store_id'))
             return render(request, 'expenses/makeSaleOwnStore.html',

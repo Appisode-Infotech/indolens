@@ -60,7 +60,7 @@ def get_all_accountant(status):
             LEFT JOIN admin AS creator ON ac.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON ac.last_updated_by = updater.admin_id
             WHERE ac.status {status_condition}
-            GROUP BY ac.accountant_id
+            GROUP BY ac.accountant_id ORDER BY ac.accountant_id DESC
             """
             cursor.execute(get_accountant_query)
             accountant = cursor.fetchall()

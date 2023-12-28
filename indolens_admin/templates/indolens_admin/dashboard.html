@@ -543,6 +543,44 @@
                     </div>
                     <div class="table-responsive mx-n1 px-1 scrollbar">
                         <table class="table fs--1 mb-0 border-top border-200">
+                            <thead>
+                                <tr>
+                                    <th class="white-space-nowrap fs--1 align-middle ps-0" style="width:26px;">
+                                        <div class="form-check mb-0 fs-0">
+                                            <input class="form-check-input" type="checkbox"/>
+                                        </div>
+                                    </th>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
+                                        style="width:5%;">ORDER ID
+                                    </th>
+                                    <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                        style="width:6%;">TOTAL
+                                    </th>
+                                    <th class="sort align-middle ps-8" data-sort="customer" scope="col"
+                                        style="width:28%; min-width: 250px;">CUSTOMER
+                                    </th>
+                                    <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
+                                        style="width:10%;">PAYMENT STATUS
+                                    </th>
+                                    <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
+                                        scope="col" style="width:12%; min-width: 200px;">ORDER
+                                        STATUS
+                                    </th>
+                                    <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
+                                        style="width:30%;">CREATED BY
+                                    </th>
+                                    <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
+                                        style="width:30%;">CREATED ON
+                                    </th>
+                                    <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
+                                        style="width:30%;">UPDATED BY
+                                    </th>
+                                    <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
+                                        style="width:30%;">UPDATED ON
+                                    </th>
+
+                                </tr>
+                                </thead>
                             {% for order in orders_list %}
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                 <td class="fs--1 align-middle px-0 py-3">
@@ -647,7 +685,6 @@
                     </div>
                 </div>
             </div>
-
             {% include 'footer.html' %}
         </div>
     </div>

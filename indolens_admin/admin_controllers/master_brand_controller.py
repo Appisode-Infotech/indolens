@@ -65,6 +65,7 @@ def get_all_central_inventory_brand():
             FROM brands AS br 
             LEFT JOIN admin AS creator ON br.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON br.last_updated_by = updater.admin_id
+            ORDER BY br.brand_id DESC
             """
             cursor.execute(get_product_brand_query)
             brand_data = cursor.fetchall()

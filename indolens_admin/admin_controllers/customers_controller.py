@@ -15,11 +15,14 @@ today = datetime.datetime.now(ist)
 def get_all_stores_customers():
     try:
         with connection.cursor() as cursor:
-            get_store_customers_query = f""" SELECT c.*, os.store_name, creator.name, updater.name 
+            get_store_customers_query = f""" SELECT c.*, os.store_name, creator.name, updater.name,
+                                            (SELECT SUM(so.product_total_cost) FROM sales_order AS so WHERE so.customer_id = c.customer_id) AS total_spend,
+                                            (SELECT COUNT(DISTINCT so.order_id) FROM sales_order AS so WHERE so.customer_id = c.customer_id) AS order_count
                                             FROM customers AS c
                                             LEFT JOIN own_store AS os ON c.created_by_store_id = os.store_id
                                             LEFT JOIN own_store_employees AS creator ON c.created_by_employee_id = creator.employee_id
-                                            LEFT JOIN own_store_employees AS updater ON c.updated_by_employee_id = updater.employee_id """
+                                            LEFT JOIN own_store_employees AS updater ON c.updated_by_employee_id = updater.employee_id
+                                            ORDER BY c.customer_id DESC"""
             cursor.execute(get_store_customers_query)
             store_customers = cursor.fetchall()
             return {

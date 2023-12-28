@@ -61,7 +61,7 @@ def get_all_area_head(status):
             ON FIND_IN_SET(os.store_id, ah.assigned_stores)
             LEFT JOIN admin AS creator ON ah.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON ah.last_updated_by = updater.admin_id
-            WHERE ah.status {status_condition} GROUP BY ah.area_head_id """
+            WHERE ah.status {status_condition} GROUP BY ah.area_head_id ORDER BY ah.area_head_id DESC"""
             cursor.execute(get_area_head_query)
             area_heads = cursor.fetchall()
 

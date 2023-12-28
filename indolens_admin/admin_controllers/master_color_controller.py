@@ -68,6 +68,7 @@ def get_all_central_inventory_color():
             FROM product_colors AS pc
             LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id
+            ORDER BY pc.color_id DESC
             """
             cursor.execute(get_frame_color_query)
             frame_color_data = cursor.fetchall()

@@ -46,7 +46,8 @@ def get_all_store_expense(store_id, store_type):
         with connection.cursor() as cursor:
             get_expense_obj_query = f""" SELECT se.*, creator.name FROM store_expense AS se
                                             LEFT JOIN own_store_employees AS creator ON se.created_by = creator.employee_id
-                                            WHERE se.store_id = {store_id} AND se.store_type= {store_type}"""
+                                            WHERE se.store_id = {store_id} AND se.store_type= {store_type}
+                                            ORDER BY se.store_expense_id DESC"""
             cursor.execute(get_expense_obj_query)
             store_expense_data = cursor.fetchall()
             return {

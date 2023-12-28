@@ -12,11 +12,13 @@ from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model impor
 def get_all_franchise_emp(store):
     try:
         with connection.cursor() as cursor:
-            get_store_employee_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM franchise_store_employees AS sm
+            get_store_employee_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name
+                                            FROM franchise_store_employees AS sm
                                             LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.assigned_store_id = '{store}' """
+                                            WHERE sm.assigned_store_id = '{store}' 
+                                            ORDER BY sm.employee_id DESC"""
             cursor.execute(get_store_employee_query)
             store_employees = cursor.fetchall()
             return {

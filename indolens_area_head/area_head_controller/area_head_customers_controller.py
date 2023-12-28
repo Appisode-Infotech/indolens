@@ -40,7 +40,10 @@ def get_all_area_stores_customers(assigned_stores):
 def get_customers_by_id(customer_id):
     try:
         with connection.cursor() as cursor:
-            get_store_customers_query = f""" SELECT c.*, os.store_name, creator.name, updater.name 
+            get_store_customers_query = f""" SELECT c.*, os.store_name, creator.name, updater.name, 
+                                            (SELECT SUM(product_total_cost) AS total_spend FROM sales_order 
+                                            WHERE customer_id = '{customer_id}'),
+                                            (SELECT COUNT(DISTINCT order_id) AS order_count FROM sales_order WHERE customer_id = {customer_id})
                                             FROM customers AS c
                                             LEFT JOIN own_store AS os ON c.created_by_store_id = os.store_id
                                             LEFT JOIN own_store_employees AS creator ON c.created_by_employee_id = creator.employee_id

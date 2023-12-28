@@ -17,7 +17,7 @@ def get_all_store_employee(store_id):
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.assigned_store_id = '{store_id}' """
+                                            WHERE sm.assigned_store_id = '{store_id}' ORDER BY sm.employee_id DESC"""
             cursor.execute(get_store_employee_query)
             store_employees = cursor.fetchall()
             return {

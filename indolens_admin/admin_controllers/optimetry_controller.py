@@ -145,7 +145,8 @@ def get_all_optimetry(status):
                                             LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id
-                                            WHERE op.role = 2 AND op.status {status_condition} """
+                                            WHERE op.role = 2 AND op.status {status_condition}
+                                            ORDER BY op.employee_id DESC"""
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {
@@ -173,7 +174,8 @@ def get_all_franchise_optimetry(status):
                                             LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id
-                                            WHERE op.role = 2 AND op.status {status_condition}"""
+                                            WHERE op.role = 2 AND op.status {status_condition}
+                                            ORDER BY op.employee_id DESC"""
             cursor.execute(get_store_manager_query)
             franchise_optimetry = cursor.fetchall()
             return {

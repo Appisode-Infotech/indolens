@@ -47,7 +47,8 @@ def get_all_labs():
             get_lab_query = f""" SELECT l.*, creator.name, updater.name, lt.name FROM lab AS l
                                 LEFT JOIN lab_technician AS lt ON lt.assigned_lab_id = l.lab_id
                                 LEFT JOIN admin AS creator ON l.created_by = creator.admin_id
-                                LEFT JOIN admin AS updater ON l.last_updated_by = updater.admin_id"""
+                                LEFT JOIN admin AS updater ON l.last_updated_by = updater.admin_id
+                                ORDER BY l.lab_id DESC"""
             cursor.execute(get_lab_query)
             lab_data = cursor.fetchall()
             return {
