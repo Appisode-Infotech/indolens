@@ -3,7 +3,7 @@ import json
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
-from indolens_admin.admin_controllers import customers_controller, central_inventory_controller, orders_controller
+from indolens_admin.admin_controllers import central_inventory_controller, orders_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller, store_orders_controller, \
     own_store_dashboard_controller
@@ -191,7 +191,7 @@ def orderDetails(request, orderId):
 
 def orderStatusChange(request, orderId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        order_update, status_code = orders_controller.order_status_change(orderId, status)
+        order_update, status_code = store_orders_controller.order_status_change(orderId, status)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:
@@ -200,7 +200,7 @@ def orderStatusChange(request, orderId, status):
 
 def orderPaymentStatusChange(request, orderId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        order_detail, status_code = orders_controller.order_payment_status_change(orderId, status)
+        order_detail, status_code = store_orders_controller.order_payment_status_change(orderId, status)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:

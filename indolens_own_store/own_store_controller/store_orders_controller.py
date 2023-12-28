@@ -114,3 +114,47 @@ def get_all_store_orders(store_id, store_type):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
+def order_status_change(orderID, orderStatus):
+    try:
+        with connection.cursor() as cursor:
+            order_status_change_query = f"""
+                UPDATE sales_order SET order_status = {orderStatus}
+                WHERE order_id = '{orderID}'
+                """
+            cursor.execute(order_status_change_query)
+
+            return {
+                "status": True,
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def order_payment_status_change(orderID, paymentStatus):
+    try:
+        with connection.cursor() as cursor:
+            order_payment_status_change_query = f"""
+                UPDATE sales_order SET payment_status = {paymentStatus}
+                WHERE order_id = '{orderID}'
+                """
+            cursor.execute(order_payment_status_change_query)
+
+            if paymentStatus == "3":
+                order_status_change_query = f"""
+                                UPDATE sales_order SET order_status = 6
+                                WHERE order_id = '{orderID}'
+                                """
+                cursor.execute(order_status_change_query)
+
+            return {
+                "status": True,
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
