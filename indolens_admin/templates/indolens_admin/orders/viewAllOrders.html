@@ -84,17 +84,16 @@
                         <h2 class="mb-0">All Orders</h2>
                     </div>
                 </div>
+
+                </ul>
                 <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                    <li class="nav-item"><a aria-current="page" class="nav-link active" href="#">All </a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Pending </a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Received </a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Processing</a>
-                    <li class="nav-item"><a class="nav-link" href="#">Ready</a>
-                    <li class="nav-item"><a class="nav-link" href="#">Delivered</a>
-                    </li>
-                    <li class="nav-item"><a class="nav-link" href="#">Refunded</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Cancelled</a></li>
+                    <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-1">New</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-2">Processing</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-3">Ready</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-4">Dispatched</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-5">Delivered</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-6">Cancelled</a></li>
                 </ul>
                 <div data-list='{"valueNames":["order","total","customer","payment_status","fulfilment_status","delivery_type","date"],"page":10,"pagination":true}'
                      id="orderTable">
@@ -187,7 +186,8 @@
                                 </thead>
                                 <tbody class="list" id="order-table-body">
                                 {% for order in orders_list %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                data-category="{{ order.order_status }}">
                                     <td class="fs--1 align-middle px-0 py-3">
                                         <div class="form-check mb-0 fs-0">
                                             <input class="form-check-input" type="checkbox"/>
@@ -247,7 +247,7 @@
                                                                                            style="height:12.8px;width:12.8px;"></span></span>
                                         {% elif order.order_status == 5 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">COMPLETED</span><span class="ms-1"
+                                                class="badge-label">DELIVERED</span><span class="ms-1"
                                                                                           data-feather="check"
                                                                                           style="height:12.8px;width:12.8px;"></span></span>
                                         {% elif order.order_status == 6 %}
@@ -321,6 +321,10 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/filter.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
 
 </body>
 

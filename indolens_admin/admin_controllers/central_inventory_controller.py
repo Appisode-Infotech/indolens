@@ -520,7 +520,8 @@ def change_stock_request_status(requestId, status, updator):
 
                 if status == 1:
                     if available_quantity >= quantity:
-                        update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}' 
+                        update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}', 
+                        last_updated_on = '{today}', last_updated_by = '{updator}'
                         WHERE request_products_id = '{requestId}' """
                         cursor.execute(update_stock_request_query)
 
