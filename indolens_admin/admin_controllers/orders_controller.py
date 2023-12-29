@@ -1,4 +1,5 @@
 import datetime
+
 import pymysql
 import pytz
 from django.db import connection
@@ -8,6 +9,7 @@ from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sa
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
+
 
 def get_all_orders(status, pay_status, store):
     status_conditions = {
@@ -75,6 +77,7 @@ def get_all_orders(status, pay_status, store):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def get_all_store_orders(store_id, store_type):
     try:
@@ -164,6 +167,7 @@ def get_all_customer_orders(customerId):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def get_order_details(orderId):
     try:
@@ -255,6 +259,7 @@ def order_status_change(orderID, orderStatus):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def order_payment_status_change(orderID, paymentStatus):
     try:

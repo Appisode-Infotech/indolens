@@ -92,6 +92,7 @@ def dashboard(request):
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
         sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
+        print(sales)
         own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
         own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
         own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
