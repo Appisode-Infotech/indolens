@@ -64,7 +64,7 @@ def get_all_store_expense(store_id, store_type):
 
 def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id):
     print("===================controller=========================")
-    print(billingDetailsData)
+    print(customerData)
     print(billingDetailsData.get('orderId'))
     try:
         with connection.cursor() as cursor:
@@ -93,6 +93,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                 `updated_on` = '{today}' """
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
+            print(customer_id)
 
             for data in cart_data:
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
