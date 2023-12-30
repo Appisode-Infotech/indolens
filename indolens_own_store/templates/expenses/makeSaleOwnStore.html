@@ -186,7 +186,8 @@
                                                             </button>
                                                             <div class="dropdown-menu">
                                                                 <a type="button" onclick="addLensContainer()" class="dropdown-item">Add a Lens</a>
-                                                                <a type="button" onclick="addContactLensContainer()" class="dropdown-item">Add a Contact Lens</a>
+                                                                <a type="button" onclick="addStockContactLensContainer()" class="dropdown-item">Add Stock Contact Lens</a>
+                                                                <a type="button" onclick="addRxContactLensContainer()" class="dropdown-item">Add Rx Contact Lens</a>
                                                                 <a type="button" onclick="addOtherProductsContainer()" class="dropdown-item">Add Other Products</a>
                                                             </div>
                                                         </div>
@@ -639,39 +640,65 @@ function addLensContainer() {
                 <thead>
                     <tr>
                         <th scope="col">Eye</th>
-                        <th scope="col">Power</th>
-                        <th scope="col">BC</th>
-                        <th scope="col">Dia</th>
-                        <th scope="col">Cylinder</th>
+                        <th scope="col">Sph</th>
+                        <th scope="col">Cyl</th>
                         <th scope="col">Axis</th>
+                        <th scope="col">Add</th>
+                        <th scope="col">PD</th>
                     </tr>
                 </thead>
                 <tbody>
+
                     <tr>
+                        <th scope="row">Right</th>
+                        <td class="col-6 col-lg-2">
+                            <select name="rightLensSphStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                                <option>Select</option>
+                                <!-- Add options dynamically -->
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                        <td class="col-6 col-lg-2">
+                            <select name="rightLensCylStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                                <option>Select</option>
+                                <!-- Add options dynamically -->
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                        <td class="col-6 col-lg-2">
+                            <select name="rightLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                                <option>Select</option>
+                                <!-- Add options dynamically -->
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                        <td class="col-6 col-lg-2">
+                            <select name="rightLensAddStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                                <option>Select</option>
+                                <!-- Add options dynamically -->
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                        <td class="col-6 col-lg-2">
+                            <select name="rightLensPdStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                                <option>Select</option>
+                                <!-- Add options dynamically -->
+                                <option value="1">1</option>
+                            </select>
+                        </td>
+                    </tr>
+
+                     <tr>
                         <th scope="row">Left</th>
                         <td class="col-6 col-lg-2">
-                            <select name="leftLensPowerStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                            <select name="leftLensSphStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
                                 <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
-                            <select name="leftLensBCStock[${productCardCount}]" class="form-select" aria-label="Default select example">
-                                <option>Select</option>
-                                <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                            </select>
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <select name="leftLensDiaStock[${productCardCount}]" class="form-select" aria-label="Default select example">
-                                <option>Select</option>
-                                <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                            </select>
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <select name="leftLensCylinderStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                            <select name="leftLensCylStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
                                 <option value="1">1</option>
@@ -684,39 +711,15 @@ function addLensContainer() {
                                 <option value="1">1</option>
                             </select>
                         </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Right</th>
                         <td class="col-6 col-lg-2">
-                            <select name="rightLensPowerStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                            <select name="leftLensAddStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
                                 <option value="1">1</option>
                             </select>
                         </td>
                         <td class="col-6 col-lg-2">
-                            <select name="rightLensBCStock[${productCardCount}]" class="form-select" aria-label="Default select example">
-                                <option>Select</option>
-                                <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                            </select>
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <select name="rightLensDiaStock[${productCardCount}]" class="form-select" aria-label="Default select example">
-                                <option>Select</option>
-                                <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                            </select>
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <select name="rightLensCylinderStock[${productCardCount}]" class="form-select" aria-label="Default select example">
-                                <option>Select</option>
-                                <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                            </select>
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <select name="rightLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                            <select name="leftLensPdStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option>Select</option>
                                 <!-- Add options dynamically -->
                                 <option value="1">1</option>
@@ -733,48 +736,48 @@ function addLensContainer() {
                 <thead>
                     <tr>
                         <th scope="col">Eye</th>
-                        <th scope="col">Power</th>
-                        <th scope="col">BC</th>
-                        <th scope="col">Dia</th>
-                        <th scope="col">Cylinder</th>
+                        <th scope="col">Sph</th>
+                        <th scope="col">Cyl</th>
                         <th scope="col">Axis</th>
+                        <th scope="col">Add</th>
+                        <th scope="col">PD</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
+                        <th scope="row">Right</th>
+                        <td class="col-6 col-lg-2">
+                            <input name="rightLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                        </td>
+                        <td class="col-6 col-lg-2">
+                            <input name="rightLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                        </td>
+                        <td class="col-6 col-lg-2">
+                            <input name="rightLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                        </td>
+                        <td class="col-6 col-lg-2">
+                            <input name="rightLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                        </td>
+                        <td class="col-6 col-lg-2">
+                            <input name="rightLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                        </td>
+                    </tr>
+                     <tr>
                         <th scope="row">Left</th>
                         <td class="col-6 col-lg-2">
-                            <input name="leftLensPowerRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input name="leftLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input name="leftLensBCRx[${productCardCount}]" class="form-control" aria-label="Default select example">
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <input name="leftLensDiaRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <input name="leftLensCylinderRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input name="leftLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example">
                         </td>
                         <td class="col-6 col-lg-2">
                             <input name="leftLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
                         </td>
-                    </tr>
-                    <tr>
-                        <th scope="row">Right</th>
                         <td class="col-6 col-lg-2">
-                            <input name="rightLensPowerRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input name="leftLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input name="rightLensBCRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <input name="rightLensDiaRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <input name="rightLensCylinderRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <input name="rightLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input name="leftLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
                         </td>
                     </tr>
                 </tbody>
@@ -794,7 +797,8 @@ function addLensContainer() {
 
 }
 
-    function addContactLensContainer(){
+
+    function addStockContactLensContainer(){
     let contactLensProductCard = document.createElement("div");
     contactLensProductCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
     contactLensProductCard.innerHTML = `
