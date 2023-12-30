@@ -1699,8 +1699,10 @@ def enableDisableAccountant(request, route, accountantId, status):
 def manageLabTechnician(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_technician_controller.get_all_lab_technician(status)
+        lab_list, status_code = lab_controller.get_all_labs()
         return render(request, 'indolens_admin/labTechnician/manageLabTechnician.html',
-                      {"lab_technician_list": response['lab_technician_list'], "status": status})
+                      {"lab_technician_list": response['lab_technician_list'], "lab_list": lab_list['lab_list'],
+                       "status": status})
     else:
         return redirect('login')
 
@@ -2253,14 +2255,15 @@ def viewCustomerDetails(request, customerId):
         total_bill = 0
         membership = "Gold"
         for price in sales_data['orders_list']:
-            total_bill = total_bill+price.get('total_cost')
+            total_bill = total_bill + price.get('total_cost')
 
         if total_bill > 5000 and total_bill < 25000:
             membership = "Platinum"
         elif total_bill > 25000:
             membership = "Luxuary"
         return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer'],
-                                                                                     "sales_data": sales_data['orders_list'],
+                                                                                     "sales_data": sales_data[
+                                                                                         'orders_list'],
                                                                                      "membership": membership})
     else:
         return redirect('login')
@@ -2271,6 +2274,7 @@ def viewCustomerDetails(request, customerId):
 def manageLabs(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_controller.get_all_labs()
+        print(response)
         return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
     else:
         return redirect('login')
@@ -2304,8 +2308,9 @@ def editLab(request, labId):
 def viewLab(request, labId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_controller.get_lab_by_id(labId)
+        lab_job, status_cde = lab_controller.get_lab_job(labId)
         return render(request, 'indolens_admin/labs/viewLab.html',
-                      {"lab_data": response['lab_data']})
+                      {"lab_data": response['lab_data'], "lab_job": lab_job['orders_list']})
     else:
         return redirect('login')
 
@@ -2326,8 +2331,10 @@ def viewAllJobs(request):
     return render(request, 'indolens_admin/labs/viewAllJobs.html')
 
 
-def jobDetails(request):
-    return render(request, 'indolens_admin/labs/jobDetails.html')
+def jobDetails(request, jobId):
+    job_detail, status_code = orders_controller.get_order_details(jobId)
+    print(job_detail)
+    return render(request, 'indolens_admin/labs/jobDetails.html', {"order_detail": job_detail['orders_details']})
 
 
 def manageAuthenticityCard(request):
@@ -2979,28 +2986,31 @@ def unAssignFranchiseStoreOtherEmployee(request, route, FranchiseOtherEmployeeId
 
 def assignAreaHeadOwnStore(request):
     if request.method == 'POST':
-        print(request.POST)
-        # response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
+        print(type(request.POST.getlist('store_id')))
+        print(','.join(request.POST.getlist('store_id')))
+        response, status_code = area_head_controller.assignStore(request.POST['emp_id'], ','.join(request.POST.getlist('store_id')))
+        print(response)
     url = reverse('manage_area_head', kwargs={'status': 'All'})
     return redirect(url)
 
 
 def unAssignAreaHeadOwnStore(request, empId, storeId):
-    response, status_code = store_manager_controller.unAssignStore(empId, storeId)
-    return redirect('manage_area_head')
+    response, status_code = area_head_controller.unAssignStore(empId, storeId)
+    url = reverse('manage_area_head', kwargs={'status': 'All'})
+    return redirect(url)
 
 
 def assignLabTechnician(request, route):
     if request.method == 'POST':
         response, status_code = lab_technician_controller.assign_lab(request.POST['lab_technician_id'],
                                                                      request.POST['lab_id'])
-        url = reverse('manage_store_other_employees', kwargs={'status': route})
+        url = reverse('manage_lab_technician', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignLabTechnician(request, route, LabTechnicianId, labId):
     response, status_code = lab_technician_controller.unassign_lab(LabTechnicianId, labId)
-    url = reverse('manage_store_other_employees', kwargs={'status': route})
+    url = reverse('manage_lab_technician', kwargs={'status': route})
     return redirect(url)
 
 

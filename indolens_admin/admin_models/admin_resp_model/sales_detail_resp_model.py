@@ -1,4 +1,5 @@
 from datetime import datetime
+import json
 
 class SalesOrder:
     def __init__(self, values):
@@ -31,8 +32,13 @@ class SalesOrder:
             self.franchise_sale_price, self.product_quantity,
             self.product_gst, self.status, self.discount_product,
             self.created_on_product, self.created_by_product,
-            self.last_updated_on_product, self.last_updated_by_product
+            self.last_updated_on_product, self.last_updated_by_product, self.category_name, self.material_name,
+            self.frame_type_name, self.shape_name, self.color_name, self.unit_name, self.brand_name,
         ) = values
+
+        # Parse product images from JSON string to a list
+        self.product_images = json.loads(self.product_images) if self.product_images else []
+        self.power_attribute = json.loads(self.power_attribute) if self.power_attribute else []
 
     def to_dict(self):
         return {
@@ -109,6 +115,13 @@ class SalesOrder:
             'last_updated_on_product': self.last_updated_on_product.strftime('%Y-%m-%d %H:%M:%S') if isinstance(
                 self.last_updated_on_product, datetime) else None,
             'last_updated_by_product': self.last_updated_by_product,
+            'category_name': self.category_name,
+            'material_name': self.material_name,
+            'frame_type_name': self.frame_type_name,
+            'shape_name': self.shape_name,
+            'color_name': self.color_name,
+            'unit_name': self.unit_name,
+            'brand_name': self.brand_name,
         }
 
 def get_order_detail(response):

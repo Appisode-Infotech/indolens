@@ -59,6 +59,8 @@
 
 
 
+
+
     </script>
 </head>
 
@@ -76,28 +78,13 @@
         <div class="content">
 
             <div class="mb-9">
-                <h2 class="mb-0">Order <span>#349</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
-                    <p class="text-800 lh-sm mb-0">Job ID : <a class="fw-bold" href="#!"> 2364847</a></p>
-                    <div class="d-flex">
-                        <button class="btn pe-3 ps-0 text-900"><span class="fas fa-print me-2"></span>Print</button>
-                        <button class="btn px-3 text-900"><span class="fas fa-undo me-2"></span>Refund</button>
-                        <div class="dropdown">
-                            <button aria-expanded="false"
-                                    class="btn text-900 dropdown-toggle dropdown-caret-none ps-3 pe-0"
-                                    data-bs-toggle="dropdown" type="button">More action<span
-                                    class="fas fa-chevron-down ms-2"></span></button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item" href="#">Action</a></li>
-                                <li><a class="dropdown-item" href="#">Another action</a></li>
-                                <li><a class="dropdown-item" href="#">Something else here</a></li>
-                            </ul>
-                        </div>
-                    </div>
+                    <p class="text-800 lh-sm mb-0">Job ID : <a class="fw-bold" href="#!">
+                        {{order_detail.0.order_id}}</a></p>
                 </div>
                 <div class="row g-5 gy-7">
                     <div class="col-12 col-xl-8 col-xxl-9">
-                        <div data-list='{"valueNames":["products","color","size","price","quantity","total"],"page":10}'
+                        <div data-list='{"valueNames":["products","category","material","type","shape","color","unit","brand"],"page":10}'
                              id="orderTable">
                             <div class="table-responsive scrollbar">
                                 <table class="table fs--1 mb-0 border-top border-200">
@@ -105,75 +92,125 @@
                                     <tr>
                                         <th class="sort white-space-nowrap align-middle fs--2" scope="col"></th>
                                         <th class="sort white-space-nowrap align-middle" data-sort="products"
-                                            scope="col" style="min-width:400px;">PRODUCTS
+                                            scope="col" style="min-width:200px;">PRODUCTS
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="color" scope="col"
-                                            style="width:150px;">COLOR
+                                        <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                            style="width:150px;">CATEGORY
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="size" scope="col"
-                                            style="width:300px;">SIZE
+                                        <th class="sort align-middle ps-4" data-sort="material" scope="col"
+                                            style="width:300px;">MATERIAL
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="price" scope="col"
-                                            style="width:150px;">PRICE
+                                        <th class="sort align-middle ps-4" data-sort="type" scope="col"
+                                            style="width:300px;">TYPE
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="quantity" scope="col"
-                                            style="width:200px;">QUANTITY
+                                        <th class="sort align-middle text-end ps-4" data-sort="shape" scope="col"
+                                            style="width:200px;">SHAPE
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="total" scope="col"
-                                            style="width:250px;">TOTAL
+                                        <th class="sort align-middle text-end ps-4" data-sort="color" scope="col"
+                                            style="width:250px;">COLOR
+                                        </th>
+                                        <th class="sort align-middle text-end ps-4" data-sort="unit" scope="col"
+                                            style="width:250px;">UNIT
+                                        </th>
+                                        <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
+                                            style="width:250px;">BRAND
                                         </th>
                                     </tr>
                                     </thead>
                                     <tbody class="list" id="order-table-body">
+                                    {% for order in order_detail %}
 
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
                                             <div class="border rounded-2"><img
-                                                    alt="" src="{% static 'img/products/1.png' %}" width="53"/>
+                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}"
+                                                    width="53"/>
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0" href="#!">Prescription Glasses
-                                                with Anti-Glare Coating</a>
+                                            <a class="fw-semi-bold line-clamp-2 mb-0">
+                                                {{order.product_name}}
+                                            </a>
                                         </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">Crystal
-                                            Clear
-                                        </td>
-                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            Medium
-                                        </td>
-                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹149
-                                        </td>
-                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">3</td>
-                                        <td class="total align-middle fw-bold text-1000 text-end py-0 ps-4">₹447</td>
-                                    </tr>
-                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                        <td class="align-middle white-space-nowrap py-2">
-                                            <div class="border rounded-2"><img
-                                                    alt="" src="{% static 'img/products/2.png' %}" width="53"/></div>
-                                        </td>
-                                        <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0" href="#!">Camera Lens with Image
-                                                Stabilization</a>
-                                        </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">Telephoto
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
+                                            {% if order.category_name == None %}
+                                            N/A
+                                            {% else %}
+                                            {{order.category_name}}
+                                            {% endif %}
+
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            50mm
+                                            {% if order.material_name == None %}
+                                            N/A
+                                            {% else %}
+                                            {{order.material_name}}
+                                            {% endif %}
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹299
+                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            {% if order.frame_type_name == None %}
+                                            N/A
+                                            {% else %}
+                                            {{order.frame_type_name}}
+                                            {% endif %}
                                         </td>
-                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">1</td>
-                                        <td class="total align-middle fw-bold text-1000 text-end py-0 ps-4">₹299</td>
+                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">
+                                            {% if order.shape_name == None %}
+                                            N/A
+                                            {% else %}
+                                            {{order.shape_name}}
+                                            {% endif %}
+                                        </td>
+                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            {% if order.color_name == None %}
+                                            N/A
+                                            {% else %}
+                                            {{order.color_name}}
+                                            {% endif %}
+                                        </td>
+                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            {% if order.unit_name == None %}
+                                            N/A
+                                            {% else %}
+                                            {{order.unit_name}}
+                                            {% endif %}
+                                        </td>
+                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            {% if order.brand_name == None %}
+                                            N/A
+                                            {% else %}
+                                            {{order.brand_name}}
+                                            {% endif %}
+                                        </td>
+                                        {% if order.category_id == 2 or order.category_id == 3 %}
+                                        <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                            <div class="font-sans-serif btn-reveal-trigger position-static" >
+                                                <button aria-expanded="false"
+                                                        aria-haspopup="true"
+                                                        class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                        data-boundary="window"
+                                                        data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                    <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                    <a class="dropdown-item view-button" data-bs-toggle="modalView"
+                                                       type="button"
+                                                           style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                                                       data-category-info="{{ order | safe }}"
+                                                    title="{{ order.power_attribute | safe }}">View Lens Powers</a>
+
+                                                </div>
+                                            </div>
+                                        </td>
+                                        {% endif %}
                                     </tr>
+                                    {% endfor %}
 
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                         <div class="d-flex flex-between-center py-3 border-bottom mb-7">
-                            <p class="text-1100 fw-semi-bold lh-sm mb-0">Items subtotal :</p>
-                            <p class="text-1100 fw-bold lh-sm mb-0">₹1690</p>
                         </div>
                         <div class="row gx-4 gy-6 g-xl-7 justify-content-sm-center justify-content-xl-start">
                             <div class="col-12 col-sm-auto">
@@ -185,7 +222,8 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="#!">Shatinon Mekalan</a>
+                                        <a class="fs--1 ms-4"
+                                           href="{% url 'customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -194,7 +232,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:shatinon@jeemail.com:">shatinon@jeemail.com</a>
+                                           href="mailto:{{order_detail.0.email}}::">{{order_detail.0.email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -202,10 +240,8 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Address</h6>
                                         </div>
-                                        <div class="ms-4">
-                                            <p class="text-800 mb-0 fs--1">Shatinon Mekalan</p>
-                                            <p class="text-800 mb-0 fs--1">Vancouver, British Columbia,<br
-                                                    class="d-none d-sm-block"/>Canada</p>
+                                        <div class="ms-4" style="max-width: 200px;">
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -214,7 +250,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:+1234567890">+1234567890</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -228,7 +264,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:shatinon@jeemail.com:">shatinon@jeemail.com</a>
+                                           href="mailto:shatinon@jeemail.com:">{{order_detail.0.email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -236,7 +272,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:+1234567890">+1234567890</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -244,9 +280,8 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Address</h6>
                                         </div>
-                                        <div class="ms-4">
-                                            <p class="text-800 mb-0 fs--1">Shatinon Mekalan</p>
-                                            <p class="text-800 mb-0 fs--1">Vancouver, British Columbia <br/>Canada</p>
+                                        <div class="ms-4" style="max-width: 200px;">
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -255,7 +290,8 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Shipping Date</h6>
                                         </div>
-                                        <p class="mb-0 text-800 fs--1 ms-4">12 Nov, 2021</p>
+                                        <p class="mb-0 text-800 fs--1 ms-4">
+                                            {{order_detail.0.estimated_delivery_date}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -268,15 +304,15 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Gift order</h6>
                                         </div>
-                                        <a class="mb-0 text-800 fs--1 ms-4">Yes</a>
+                                        <a class="mb-0 text-800 fs--1 ms-4">N/A</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
                                                                                           data-feather="package"
                                                                                           style="stroke-width:2.5;">  </span>
-                                            <h6 class="mb-0">Wraping</h6>
+                                            <h6 class="mb-0">Wrapping</h6>
                                         </div>
-                                        <p class="mb-0 text-800 fs--1 ms-4">Magic wrapper</p>
+                                        <p class="mb-0 text-800 fs--1 ms-4">N/A</p>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -284,18 +320,16 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Recipient</h6>
                                         </div>
-                                        <p class="mb-0 text-800 fs--1 ms-4">Monjito Shiniga</p>
+                                        <p class="mb-0 text-800 fs--1 ms-4">N/A</p>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
                                                                                           data-feather="mail"
                                                                                           style="stroke-width:2.5;">  </span>
-                                            <h6 class="mb-0">Gift Meaasge</h6>
+                                            <h6 class="mb-0">Gift Message</h6>
                                         </div>
                                         <div class="ms-4">
-                                            <p class="text-800 fs--1 mb-0">Happy Birthday Shiniga <br/>Lots of Love Buga
-                                                Buga!!</p>
-                                            <p class="mb-0 text-800 fs--1">Yours, <br/>Mekalan</p>
+                                            <p class="text-800 fs--1 mb-0">N/A</p>
                                         </div>
                                     </div>
                                 </div>
@@ -307,24 +341,46 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3 class="card-title mb-4">Job Status</h3>
+                                        <h3 class="card-title mb-4">Order Status</h3>
                                         <h6 class="mb-2">Payment status</h6>
-                                        <select aria-label="delivery type" class="form-select mb-4">
-                                            <option value="cod">Processing</option>
-                                            <option value="card">Canceled</option>
-                                            <option value="paypal">Completed</option>
+                                        <select disabled aria-label="delivery type" class="form-select mb-4"
+                                                id="paymentStatusSelect">
+                                            <option value="1">Pending</option>
+                                            <option value="2">Complete</option>
+                                            <option value="3">Refund</option>
                                         </select>
+
                                         <h6 class="mb-2">Order status</h6>
-                                        <select aria-label="delivery type" class="form-select">
-                                            <option value="cod">Unfulfilled</option>
-                                            <option value="card">Fulfilled</option>
-                                            <option value="paypal">Pending</option>
+                                        <select disabled aria-label="delivery type" class="form-select"
+                                                id="orderStatusSelect">
+                                            <option value="2">Process</option>
+                                            <option value="3">Ready</option>
+                                            <option value="4">Dispatch</option>
+                                            <option value="5">Complete</option>
+                                            <option value="6">Cancel</option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
+                        <div class="d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
+                            all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                        </div>
+                        <div class="d-flex">
+                            <button class="page-link" data-list-pagination="prev"><span
+                                    class="fas fa-chevron-left"></span></button>
+                            <ul class="mb-0 pagination"></ul>
+                            <button class="page-link pe-0" data-list-pagination="next"><span
+                                    class="fas fa-chevron-right"></span></button>
+                        </div>
+                    </div>
+                    {% include 'modal_master_view.html' %}
                 </div>
             </div>
             {% include 'footer.html' %}
@@ -351,8 +407,25 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
+<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 
 
 </body>
+<script>
+        var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
+        var navbarTop = document.querySelector('.navbar-top');
+        if (navbarTopStyle === 'darker') {
+          navbarTop.classList.add('navbar-darker');
+        }
 
+        var navbarVerticalStyle = localStorage.getItem('phoenixNavbarVerticalStyle');
+        var navbarVertical = document.querySelector('.navbar-vertical');
+        if (navbarVerticalStyle === 'darker') {
+          navbarVertical.classList.add('navbar-darker');
+        }
+
+
+
+    </script>
 </html>

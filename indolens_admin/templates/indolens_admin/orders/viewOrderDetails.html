@@ -133,7 +133,7 @@
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
                                             <div class="border rounded-2"><img
-                                                    alt="" src="{% static 'img/products/1.png' %}" width="53"/>
+                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}" width="53"/>
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
@@ -177,7 +177,7 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4">{{order_detail.0.customer_name}}</a>
+                                        <a class="fs--1 ms-4" href="{% url 'customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -186,7 +186,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="{{order_detail.0.email}}:">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.0.email}}::">{{order_detail.0.email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -218,7 +218,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:shatinon@jeemail.com:">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.0.email}}:">{{order_detail.0.email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"

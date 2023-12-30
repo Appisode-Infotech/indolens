@@ -79,6 +79,14 @@
                         <h2 class="mb-0">Customers</h2>
                     </div>
                 </div>
+                <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a>
+                        </li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-1">Own
+                            Store</a></li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-2">Franchise
+                            Store</a></li>
+                    </ul>
 
                 <div data-list='{"valueNames":["customer","email","total-orders","total-spent","city","last-seen","last-order"],"page":10,"pagination":true}'
                      id="products">
@@ -143,7 +151,7 @@
                                 </thead>
                                 <tbody class="list" id="customers-table-body">
                                 {% for customer in customers_list %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static" data-category="{{ customer.created_by_store_type }}">
                                     <td class="fs--1 align-middle ps-0 py-3">
                                         <div class="form-check mb-0 fs-0">
                                             <input class="form-check-input" type="checkbox"/>
@@ -256,7 +264,9 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/csvExport.js' %}"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/filter.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
 </body>
 
 </html>

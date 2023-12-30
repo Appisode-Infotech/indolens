@@ -5,6 +5,7 @@ import pytz
 from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.lab_resp_model import get_labs
+from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
@@ -44,10 +45,14 @@ def create_lab(lab_obj):
 def get_all_labs():
     try:
         with connection.cursor() as cursor:
-            get_lab_query = f""" SELECT l.*, creator.name, updater.name, lt.name FROM lab AS l
+            get_lab_query = f""" SELECT l.*, creator.name, updater.name, lt.name, 
+                                COUNT(DISTINCT CASE WHEN so.order_status IN (1, 2, 3) THEN so.order_id END)
+                                FROM lab AS l
                                 LEFT JOIN lab_technician AS lt ON lt.assigned_lab_id = l.lab_id
                                 LEFT JOIN admin AS creator ON l.created_by = creator.admin_id
                                 LEFT JOIN admin AS updater ON l.last_updated_by = updater.admin_id
+                                LEFT JOIN sales_order AS so ON l.lab_id = so.assigned_lab
+                                GROUP BY l.lab_id
                                 ORDER BY l.lab_id DESC"""
             cursor.execute(get_lab_query)
             lab_data = cursor.fetchall()
@@ -65,10 +70,12 @@ def get_all_labs():
 def get_lab_by_id(labid):
     try:
         with connection.cursor() as cursor:
-            get_lab_query = f""" SELECT l.*, creator.name, updater.name, lt.name FROM lab AS l
+            get_lab_query = f""" SELECT l.*, creator.name, updater.name, lt.name,  COUNT(DISTINCT so.order_id) AS order_count
+                                FROM lab AS l
                                 LEFT JOIN lab_technician AS lt ON lt.assigned_lab_id = l.lab_id
                                 LEFT JOIN admin AS creator ON l.created_by = creator.admin_id
-                                LEFT JOIN admin AS updater ON l.last_updated_by = updater.admin_id 
+                                LEFT JOIN admin AS updater ON l.last_updated_by = updater.admin_id
+                                LEFT JOIN sales_order AS so ON l.lab_id = so.assigned_lab
                                 WHERE lab_id = '{labid}'"""
             cursor.execute(get_lab_query)
             lab_data = cursor.fetchall()
@@ -137,6 +144,51 @@ def edit_lab_by_id(lab_obj):
                 "status": True,
                 "message": "Lab updated"
             }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_lab_job(labId):
+    try:
+        with connection.cursor() as cursor:
+            get_order_query = f"""
+                SELECT 
+                    so.*, 
+                    c.name, 
+                    SUM(product_total_cost) AS total_cost, 
+                    CASE 
+                        WHEN so.created_by_store_type = 1 THEN os.store_name 
+                        ELSE fs.store_name 
+                    END AS store_name,
+                    CASE 
+                        WHEN so.created_by_store_type = 1 THEN creator_os.name 
+                        ELSE creator_fs.name 
+                    END AS creator_name,
+                    CASE 
+                        WHEN so.created_by_store_type = 1 THEN updater_os.name 
+                        ELSE updater_fs.name 
+                    END AS updater_name
+                FROM sales_order AS so
+                LEFT JOIN customers AS c ON c.customer_id = so.customer_id
+                LEFT JOIN own_store os ON so.created_by_store = os.store_id AND so.created_by_store_type = 1
+                LEFT JOIN franchise_store fs ON so.created_by_store = fs.store_id AND so.created_by_store_type = 2
+                LEFT JOIN own_store_employees creator_os ON so.created_by = creator_os.employee_id AND so.created_by_store_type = 1
+                LEFT JOIN franchise_store_employees creator_fs ON so.created_by = creator_fs.employee_id AND so.created_by_store_type = 2
+                LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
+                LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
+                WHERE so.assigned_lab = {labId}
+                GROUP BY so.order_id ORDER BY so.sale_item_id DESC         
+                """
+            cursor.execute(get_order_query)
+            orders_list = cursor.fetchall()
+
+            return {
+                       "status": True,
+                       "orders_list": get_sales_orders(orders_list)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

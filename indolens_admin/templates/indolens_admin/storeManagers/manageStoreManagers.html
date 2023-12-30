@@ -60,6 +60,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -106,12 +107,17 @@
                                                     type="button">{{status}}<span class="fas fa-angle-down ms-2"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{% url 'manage_store_managers' 'All' %}">All</a></li>
+                                                <li><a class="dropdown-item"
+                                                       href="{% url 'manage_store_managers' 'All' %}">All</a></li>
                                                 <li>
                                                     <hr class="dropdown-divider"/>
                                                 </li>
-                                                <li><a class="dropdown-item text-success" href="{% url 'manage_store_managers' 'Active' %}">Active Only</a></li>
-                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_store_managers' 'Inactive' %}">Inactive Only</a></li>
+                                                <li><a class="dropdown-item text-success"
+                                                       href="{% url 'manage_store_managers' 'Active' %}">Active Only</a>
+                                                </li>
+                                                <li><a class="dropdown-item text-danger"
+                                                       href="{% url 'manage_store_managers' 'Inactive' %}">Inactive
+                                                    Only</a></li>
 
                                             </ul>
                                         </div>
@@ -119,14 +125,14 @@
                                 </div>
 
                                 <div class="col-auto me-4"><a class="btn btn-primary px-5"
-                                                         href="{% url 'create_store_manager' %}"><i
+                                                              href="{% url 'create_store_manager' %}"><i
                                         class="fa-solid fa-plus me-2"></i>Add a Store Manager</a></div>
 
                                 <div class="col-auto">
-                                <button id= "btnExport" class="btn btn-link text-900 me-4 px-0"><span
-                                        class="fa-solid fa-file-export fs--1 me-2"></span>Export
-                                </button>
-                            </div>
+                                    <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -328,7 +334,8 @@
                                     <div class="modal-body" id="modal_content">
                                         <!-- Form for Allocate Store -->
                                         <form class="row g-3 needs-validation allocate-store-form" method="post"
-                                              action="{% url 'assign_manager_own_store' status %}" novalidate="novalidate">
+                                              action="{% url 'assign_manager_own_store' status %}"
+                                              novalidate="novalidate">
                                             {% csrf_token %}
                                             <input type="hidden" name="emp_id" id="emp_id">
                                             <h5 class="mb-3">Select Store (Only active and unallocated stores appear
@@ -395,6 +402,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -417,6 +425,7 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+
 <script>
 document.addEventListener("DOMContentLoaded", function () {
     var operationsButtons = document.querySelectorAll('[data-bs-target="#operations_modal"]');
@@ -424,7 +433,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var modalTitle = document.getElementById('modal_title');
     var modalContent = document.getElementById('modal_content');
     var modalSubmit = document.getElementById('modal_submit');
-    var modalForm = document.querySelector('.allocate-store-form'); // Select the existing form
+    var modalForm = document.querySelector('.allocate-store-form');
 
     operationsButtons.forEach(function (button) {
         button.addEventListener('click', function (event) {
@@ -463,6 +472,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
 
 </script>
 <script src="{% static 'js/csvExport.js' %}"></script>

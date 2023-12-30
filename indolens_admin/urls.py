@@ -300,7 +300,7 @@ urlpatterns = [
          name='enable_disable_lab'),
     path('manage_labs/view_active_jobs/', viewActiveJobs, name='view_active_jobs'),
     path('manage_labs/view_all_jobs/', viewAllJobs, name='view_all_jobs'),
-    path('manage_labs/job_details/', jobDetails, name='job_details'),
+    path('manage_labs/job_details/jobId=<str:jobId>', jobDetails, name='job_details'),
     path('manage_authenticity_card/', manageAuthenticityCard, name='manage_authenticity_card'),
     path('manage_authenticity_card/create_authenticity_card/', createAuthenticityCard, name='create_authenticity_card'),
     # marketing

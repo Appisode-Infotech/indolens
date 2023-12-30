@@ -148,3 +148,52 @@ def enable_disable_area_head(ahId, status):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def assignStore(empId, storeId):
+    print(storeId)
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE area_head
+                SET
+                    assigned_stores = '{storeId}'
+                WHERE
+                    area_head_id = {empId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_store_manager_query)
+
+            return {
+                       "status": True,
+                       "message": "Store assigned"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def unAssignStore(empId, storeId):
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE area_head
+                SET
+                    assigned_stores = 0
+                WHERE
+                    area_head_id = {empId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_store_manager_query)
+
+            return {
+                       "status": True,
+                       "message": "Store un assigned"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

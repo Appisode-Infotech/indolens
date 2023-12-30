@@ -144,7 +144,7 @@
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_active_jobs'  %}">{{lab_list|length}}</a>
+                                        href="{% url 'view_active_jobs'  %}">{{lab.job_count}}</a>
                                 </td>
                                 <td class="align-middle white-space-nowrap start ps-3 py-4">
                                     {% if lab.lab_technician_name != None %}

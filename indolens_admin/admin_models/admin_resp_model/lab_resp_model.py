@@ -9,7 +9,7 @@ class Lab:
             self.lab_zip, self.lab_lat, self.lab_lng, self.lab_address,
             self.status, self.created_by, self.created_on, self.last_updated_by,
             self.last_updated_on, self.creator_name, self.updater_name,
-            self.lab_technician_name
+            self.lab_technician_name,self.job_count,
         ) = values
 
     def to_dict(self):
@@ -34,7 +34,8 @@ class Lab:
                                                                                                 datetime) else None,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name,
-            'lab_technician_name': self.lab_technician_name
+            'lab_technician_name': self.lab_technician_name,
+            'job_count': self.job_count,
         }
 
 
