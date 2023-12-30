@@ -510,7 +510,7 @@ def editStoreManager(request, storeManagerId):
 
         else:
             response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
-            return render(request, 'indolens_admin/storeEmployee/editStoreManager.html',
+            return render(request, 'indolens_admin/storeManagers/editStoreManager.html',
                           {"store_manager": response['store_manager']})
     else:
         return redirect('login')
@@ -519,7 +519,7 @@ def editStoreManager(request, storeManagerId):
 def updateStoreManagerDocuments(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
-        return render(request, 'indolens_admin/storeEmployee/updateDocuments.html',
+        return render(request, 'indolens_admin/storeManagers/updateDocuments.html',
                       {"store_manager": response['store_manager']})
     else:
         return redirect('login')
