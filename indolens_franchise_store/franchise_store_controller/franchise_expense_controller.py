@@ -104,7 +104,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             `amount_paid`, `estimated_delivery_date`, `created_by_store`,
                                             `created_by`, `created_on`, `updated_by`, `updated_on`, `created_by_store_type`)
                                             VALUES
-                                            ('ORDER001', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
+                                            ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
                                             '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                             {new_data.get('discount_percentage')}, {is_discount_applied}, 
@@ -129,7 +129,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 `amount_paid`, `estimated_delivery_date`, `created_by_store`,
                                                                 `created_by`, `created_on`, `updated_by`, `updated_on`, `created_by_store_type`)
                                                                 VALUES
-                                                                ('ORDER001', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
+                                                                ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
                                                                 '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
                                                                 {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                                 {new_data.get('discount_percentage')}, {is_discount_applied}, 
@@ -152,7 +152,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                         `amount_paid`, `estimated_delivery_date`, `created_by_store`,
                                                         `created_by`, `created_on`, `updated_by`, `updated_on`, `power_attribute`, `created_by_store_type`)
                                                         VALUES
-                                                        ('ORDER001', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
+                                                        ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
                                                         '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
                                                         {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                         {new_data.get('discount_percentage')}, {is_discount_applied}, 
@@ -167,7 +167,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
             return {
                 "status": True,
                 "message": "success",
-                "order_id": "ORDER001"
+                "order_id": billingDetailsData.get('orderId')
             }, 200
 
     except pymysql.Error as e:
