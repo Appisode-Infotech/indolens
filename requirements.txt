@@ -6,4 +6,5 @@ djangorestframework~=3.14.0
 bcrypt
 pytz
 requests
-Pillow
+Pillow==9.5.0
+qrcode

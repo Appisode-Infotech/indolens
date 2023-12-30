@@ -2654,6 +2654,7 @@ def enableDisableMastersUnits(request, unitId, status):
 def manageCentralInventoryProducts(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_central_inventory_products(status)
+        print(response)
         return render(request, 'indolens_admin/centralInventory/manageCentralInventoryProducts.html',
                       {"product_list": response['product_list'], "categories_List": response['categoriesList'],
                        "status": status})
