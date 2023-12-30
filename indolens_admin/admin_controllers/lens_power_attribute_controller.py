@@ -2,7 +2,8 @@ def get_power_attribute(data):
     if data['categoryId'] == '2':
         power_attributes = {
             'vision_type': data.get('visionType', ''),
-            'stock_type': data.get('stockType', '')
+            'stock_type': data.get('stockType', ''),
+            'index': data.get('index', '')
         }
         print(power_attributes)
         return power_attributes
