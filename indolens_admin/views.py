@@ -453,7 +453,7 @@ def createStoreManager(request):
             return redirect(url)
 
         else:
-            return render(request, 'indolens_admin/storeEmployee/createStoreManager.html')
+            return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
     else:
         return redirect('login')
 
