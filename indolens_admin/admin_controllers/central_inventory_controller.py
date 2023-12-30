@@ -108,7 +108,7 @@ def add_central_inventory_products(product_obj, file, power_attributes):
                                                 category_id, brand_id, material_id, frame_type_id, frame_shape_id, 
                                                 color_id, unit_id, origin, cost_price, sale_price, model_number, hsn, 
                                                 created_on, created_by, last_updated_on, last_updated_by, 
-                                                product_quantity, product_gst, discount, franchise_sale_price, power_attribute) 
+                                                product_quantity, product_gst, discount, franchise_sale_price, power_attribute, status) 
                                                 VALUES ('{product_obj.product_title}','{product_obj.product_description}',
                                                 '{json.dumps(file.product_img)}','{product_obj.category_id}',
                                                 '{product_obj.brand_id}','{product_obj.material_id}',
@@ -119,7 +119,7 @@ def add_central_inventory_products(product_obj, file, power_attributes):
                                                 '{today}','{product_obj.created_by}','{today}',
                                                 '{product_obj.last_updated_by}', '{product_obj.product_quantity}', 
                                                 '{product_obj.product_gstin}', {product_obj.discount}, 
-                                                {product_obj.franchise_sale_price}, '{power_attributes_json}') """
+                                                {product_obj.franchise_sale_price}, '{power_attributes_json}', 0) """
 
             cursor.execute(add_product_query)
 
