@@ -87,7 +87,7 @@
                     </li>
                     {% endfor %}
                 </ul>
-                <div data-list='{"valueNames":["product","price","category","tags","vendor","time"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slno","product","price","category","brand","quantity", "status","date"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -141,9 +141,12 @@
                     </div>
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                         <div class="table-responsive scrollbar mx-n1 px-1">
-                            <table class="table fs--1 mb-0">
+                            <table class="table fs--1 mb-0" id="myTable">
                                 <thead>
                                 <tr>
+                                    <th class="sort white-space-nowrap align-middle ps-4" data-sort="slno"
+                                        scope="col" style="width:350px;">SL NO
+                                    </th>
                                     <th class="white-space-nowrap fs--1 align-middle"
                                         style="max-width:20px; width:18px;">
                                     </th>
@@ -159,17 +162,17 @@
                                     <th class="sort align-middle ps-4" data-sort="category" scope="col"
                                         style="width:150px;">CATEGORY
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="brand" scope="col"
                                         style="width:150px;">BRAND
                                     </th>
 
-                                    <th class="sort align-middle ps-3" data-sort="tags" scope="col"
+                                    <th class="sort align-middle ps-3" data-sort="quantity" scope="col"
                                         style="width:250px;">IN STOCK
                                     </th>
-                                    <th class="sort align-middle ps-3" data-sort="tags" scope="col"
+                                    <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                         style="width:250px;">STATUS
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="time" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="date" scope="col"
                                         style="width:50px;">PUBLISHED ON
                                     </th>
                                     <th class="sort text-end align-middle pe-0 ps-4" scope="col"></th>
@@ -180,6 +183,7 @@
                                 {% for product in product_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                     data-category="{{ product.category_name }}">
+                                    <td class="order align-middle white-space-nowrap py-0 slno"></td>
                                     <td class="fs--1 align-middle">
                                     </td>
                                     <td class="align-middle white-space-nowrap py-0">
@@ -205,21 +209,21 @@
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{product.category_name}}
                                     </td>
-                                    <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                    <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{product.brand_name}}
                                     </td>
 
-                                    <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                    <td class="quantity align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         {{product.product_quantity}}
                                     </td>
-                                    <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                    <td class="status align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         {% if product.status == 1 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                         {% else %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-danger">Inactive</span>
                                         {% endif %}
                                     </td>
-                                    <td class="time align-middle white-space-nowrap text-600 ps-4">
+                                    <td class="date align-middle white-space-nowrap text-600 ps-4">
                                         {{product.created_on}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">

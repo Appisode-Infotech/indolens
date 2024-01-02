@@ -95,7 +95,7 @@
                     <li class="nav-item"><a class="nav-link filter" href="#filter-5">Delivered</a></li>
                     <li class="nav-item"><a class="nav-link filter" href="#filter-6">Cancelled</a></li>
                 </ul>
-                <div data-list='{"valueNames":["order","total","customer","payment_status","fulfilment_status","delivery_type","date"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slno","order","total","customer","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on","date"],"page":10,"pagination":true}'
                      id="orderTable">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -145,13 +145,11 @@
                     </div>
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                         <div class="table-responsive scrollbar mx-n1 px-1">
-                            <table class="table table-sm fs--1 mb-0">
+                            <table class="table table-sm fs--1 mb-0" id="myTable">
                                 <thead>
                                 <tr>
-                                    <th class="white-space-nowrap fs--1 align-middle ps-0" style="width:26px;">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
                                     </th>
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
                                         style="width:5%;">ORDER ID
@@ -169,16 +167,16 @@
                                         scope="col" style="width:12%; min-width: 200px;">ORDER
                                         STATUS
                                     </th>
-                                    <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
+                                    <th class="sort align-middle text-start" data-sort="created_by" scope="col"
                                         style="width:30%;">CREATED BY
                                     </th>
-                                    <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
+                                    <th class="sort align-middle text-start" data-sort="created_on" scope="col"
                                         style="width:30%;">CREATED ON
                                     </th>
-                                    <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
+                                    <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
                                         style="width:30%;">UPDATED BY
                                     </th>
-                                    <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
+                                    <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
                                         style="width:30%;">UPDATED ON
                                     </th>
 
@@ -188,11 +186,7 @@
                                 {% for order in orders_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                 data-category="{{ order.order_status }}">
-                                    <td class="fs--1 align-middle px-0 py-3">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
-                                    </td>
+                                    <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
                                     </td>
@@ -258,17 +252,17 @@
                                         {% endif %}
 
                                     </td>
-                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
                                         <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
                                     </td>
-                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                    <td class="created_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
                                         {{order.created_on}}
                                     </td>
-                                    <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
                                         <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
                                             {{order.updater_name}} </a>
                                     </td>
-                                    <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                    <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
                                         {{order.updated_on}}
                                     </td>
                                 </tr>

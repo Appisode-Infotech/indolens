@@ -86,7 +86,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","id","name","status"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -155,17 +155,17 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar col-auto">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
 
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:10%;">ID
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="slno"
+                                    scope="col" style="width:10%;">SL NO
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="name" scope="col" style="width:10%;">
                                     UNIT NAME
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="status" scope="col" style="width:10%;">
                                     STATUS
                                 </th>
                                 <!--                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">-->
@@ -188,16 +188,13 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for units in units_list %}
                             <tr class="position-static">
+                                <td class="align-middle white-space-nowrap py-0 slno"></td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{units.unit_id}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 name">
                                     <p class="mb-0 fs--1 text-900">{{units.unit_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 status">
                                     {% if units.status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
                                     {% elif units.status == 1 %}

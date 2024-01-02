@@ -59,6 +59,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -74,11 +75,12 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","storeName","storeType","productName","category","quantity","price","requestDate","movedDate","movementType","deliveredFrom"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Stock Movements<span class="fw-normal text-700 ms-3">({{moved_stocks|length}})</span></h2>
+                            <h2 class="mb-0">Stock Movements<span class="fw-normal text-700 ms-3">({{moved_stocks|length}})</span>
+                            </h2>
                         </div>
                     </div>
                     <div class="mb-4">
@@ -93,269 +95,272 @@
                                     </form>
                                 </div>
                             </div>
+                            <div class="col-auto"><a class="btn btn-primary px-5"
+                                                     href="{% url 'add_products' %}"
+                                                     data-bs-target="#verticallyCentered"
+                                                     data-bs-toggle="modal" type="button"><i
+                                    class="fa-solid fa-plus me-2"></i>Move Stock</a></div>
 
-                                <div class="col-auto"><a class="btn btn-primary px-5"
-                                                         href="{% url 'add_products' %}"
-                                                         data-bs-target="#verticallyCentered"
-                                                         data-bs-toggle="modal" type="button"><i
-                                        class="fa-solid fa-plus me-2"></i>Move Stock</a></div>
 
-
-                                <div class="col-auto ms-3">
-                                    <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
-                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
-                                    </button>
-                                </div>
-
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
-                            <thead>
-                            <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:30%;">STORE NAME
-                                </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:30%;">STORE TYPE
-                                </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:30%;">PRODUCT NAME
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    CATEGORY
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
-                                    QUANTITY
-                                </th>
-
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
-                                    PRICE
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    REQUESTED DATE
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    MOVED DATE
-                                </th>
-
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">MOVEMENT TYPE
-                                </th>
-
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">DELIVERED FROM
-                                </th>
-
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
-                            </tr>
-                            </thead>
-                            <tbody class="list" id="project-list-table-body">
-                            {% for stock in moved_stocks %}
-                            <tr class="position-static">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
-                                    {% if stock.store_type == 1 %}
-                                    <a
-                                            class="text-decoration-none fw-bold fs-0"
-                                            href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
-                                    {% else %}
-                                    <a
-                                            class="text-decoration-none fw-bold fs-0"
-                                            href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
-                                    {% endif %}
-                                </td>
-
-                                <td class="align-middle white-space-nowrap start py-4">
-                                    {% if stock.store_type == 1 %}
-                                    <p class="mb-0 fs--1 text-900">OWN STORE</p>
-                                    {% else %}
-                                    <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
-                                    {% endif %}
-                                </td>
-
-                                <td class="product align-middle">
-                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
-
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{stock.category_name}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-end statuses">
-                                    {% if stock.is_requested == 1 %}
-                                    <p class="mb-0 fs--1 text-900">REQUESTED</p>
-                                    {% else %}
-                                    <p class="mb-0 fs--1 text-900">SELF</p>
-                                    {% endif %}
-                                </td>
-                                <td class="align-middle white-space-nowrap text-end statuses">
-                                    {% if stock.sender_store != None %}
-                                    <a class="fw-semi-bold line-clamp-3 mb-0"
-                                       href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</a>
-                                    {% else %}
-                                    <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
-                                    {% endif %}
-                                </td>
-
-                                <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                    <div class="font-sans-serif btn-reveal-trigger position-static">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
-                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2">
-                                            <a class="dropdown-item view-button" data-bs-toggle="modalView"
-                                               type="button"
-                                               data-category-info="{{ stock }}">View</a>
-                                        </div>
-                                    </div>
-                                </td>
-                            </tr>
-                            {% endfor %}
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
-                        <div class="d-flex">
-                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
-                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
-                            all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
-                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
-                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                        </div>
-                        <div class="d-flex">
-                            <button class="page-link" data-list-pagination="prev"><span
-                                    class="fas fa-chevron-left"></span></button>
-                            <ul class="mb-0 pagination"></ul>
-                            <button class="page-link pe-0" data-list-pagination="next"><span
-                                    class="fas fa-chevron-right"></span></button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% include 'footer.html' %}
-        </div>
-        <div aria-hidden="true" aria-labelledby="verticallyCenteredModalLabel"
-             class="modal fade"
-             id="verticallyCentered" tabindex="-1">
-            <div class="modal-dialog modal-dialog-centered">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="verticallyCenteredModalLabel">Move a
-                            product</h5>
-                        <button aria-label="Close" class="btn p-1" data-bs-dismiss="modal"
-                                type="button"><span class="fas fa-times fs--1"></span></button>
-                    </div>
-                    <div class="p-4 code-to-copy">
-                        <form action="{% url 'manageMoveStocks' %}"
-                              class="row g-3 needs-validation"
-                              method='POST' novalidate="">
-                            {% csrf_token %}
-                            <div class="mb2 col-12">
-                                <h5 class="mb-3">Select Product</h5>
-                                <select class="form-select" data-choices="data-choices"
-                                        data-options='{"removeItemButton":true,"placeholder":true}'
-                                        name="product_id" required="required">
-                                    <option value="">Select Product</option>
-
-                                    {% for products in products %}
-                                    <option value="{{products.product_id}}">{{products.product_name}}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="custom-error" style="color: red;"></div>
-                            </div>
-
-                            <div class="mb-2 col-12">
-                                <h5 class="mb-3 ">Select Store Type</h5>
-                                <select class="form-select"
-                                        id="storeType"
-                                        name="store_type"
-                                        required="required">
-                                    <option value="">Select Store Type</option>
-                                    <option value="1">Own Store</option>
-                                    <option value="2">Franchise</option>
-                                </select>
-                                <div class="invalid-feedback">This field is required.</div>
-                            </div>
-
-                            <div class="mb2 col-12" id="ownStoreSelectDiv">
-                                <h5 class="mb-3">Select Own Store</h5>
-                                <select class="form-select" data-choices="data-choices"
-                                        data-options='{"removeItemButton":true,"placeholder":true}'
-                                        name="own_store_id" >
-                                    <option value="">Choose Store to move</option>
-                                    {% for store in own_store_list %}
-                                    <option value="{{store.store_id}}">{{store.store_name}}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="custom-error" style="color: red;"></div>
-                            </div>
-
-                            <div class="mb2 col-12" id="franchiseStoreSelectDiv">
-                                <h5 class="mb-3">Select Franchise Store</h5>
-                                <select class="form-select" data-choices="data-choices"
-                                        data-options='{"removeItemButton":true,"placeholder":true}'
-                                        name="franchise_store_id" >
-                                    <option value="">Choose Store to move</option>
-                                    {% for store in franchise_store_list %}
-                                    <option value="{{store.store_id}}">{{store.store_name}}</option>
-                                    {% endfor %}
-                                </select>
-                                <div class="custom-error" style="color: red;"></div>
-                            </div>
-
-                            <div class="col-12">
-
-                                <h5 class="mb-3">Quantity</h5>
-
-                                <input class="form-control" id="qty" maxlength="256" required name="product_quantity" type="number"
-                                       value="" max="100">
-                                <div class="invalid-feedback">Enter Valid Quantity!</div>
-                            </div>
-
-                            <div class="col-12">
-
-                                <h5 class="mb-3">Comments</h5>
-
-                                <input class="form-control" id="expense_reason" maxlength="256"
-                                       required="" name="comments"
-                                       type="text" value=""/>
-                                <div class="invalid-feedback">Enter any comments!</div>
-                            </div>
-
-                            <input name="created_by" required type="hidden"
-                                   value="{{ request.session.id }}">
-
-                            <div class="modal-footer">
-                                <button class="btn btn-primary" type="submit">Submit</button>
-                                <button class="btn btn-outline-primary" data-bs-dismiss="modal"
-                                        type="button">
-                                    Cancel
+                            <div class="col-auto ms-3">
+                                <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                        class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                 </button>
                             </div>
-                        </form>
-                    </div>
 
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive scrollbar col-auto">
+                    <table class="table fs--1 mb-0 border-top border-200" id="myTable">
+                        <thead>
+                        <tr>
+                            <th class="sort white-space-nowrap align-middle ps-0" data-sort="slno"
+                                scope="col" style="width:30%;">SL No
+                            </th>
+                            <th class="sort white-space-nowrap align-middle ps-0" data-sort="storeName"
+                                scope="col" style="width:30%;">STORE NAME
+                            </th>
+                            <th class="sort white-space-nowrap align-middle ps-0" data-sort="storeType"
+                                scope="col" style="width:30%;">STORE TYPE
+                            </th>
+                            <th class="sort white-space-nowrap align-middle ps-0" data-sort="productName"
+                                scope="col" style="width:30%;">PRODUCT NAME
+                            </th>
+                            <th class="sort align-middle ps-3" data-sort="category" scope="col" style="width:10%;">
+                                CATEGORY
+                            </th>
+                            <th class="sort align-middle ps-3" data-sort="quantity" scope="col" style="width:10%;">
+                                QUANTITY
+                            </th>
+
+                            <th class="sort align-middle ps-3" data-sort="price" scope="col" style="width:10%;">
+                                PRICE
+                            </th>
+                            <th class="sort align-middle ps-3" data-sort="requestDate" scope="col" style="width:10%;">
+                                REQUESTED DATE
+                            </th>
+                            <th class="sort align-middle ps-3" data-sort="movedDate" scope="col" style="width:10%;">
+                                MOVED DATE
+                            </th>
+
+                            <th class="sort align-middle ps-3" data-sort="movementType" scope="col"
+                                style="width:5%;">MOVEMENT TYPE
+                            </th>
+
+                            <th class="sort align-middle ps-3" data-sort="delivereFrom" scope="col"
+                                style="width:5%;">DELIVERED FROM
+                            </th>
+
+                            <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
+                        </tr>
+                        </thead>
+                        <tbody class="list" id="project-list-table-body">
+                        {% for stock in moved_stocks %}
+                        <tr class="position-static">
+                            <td class="align-middle time white-space-nowrap ps-0 py-4 slno"></td>
+                            <td class="align-middle time white-space-nowrap ps-0 py-4 storeName">
+                                {% if stock.store_type == 1 %}
+                                <a
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
+                                {% else %}
+                                <a
+                                        class="text-decoration-none fw-bold fs-0"
+                                        href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
+                                {% endif %}
+                            </td>
+
+                            <td class="align-middle white-space-nowrap py-4 storeType">
+                                {% if stock.store_type == 1 %}
+                                <p class="mb-0 fs--1 text-900">OWN STORE</p>
+                                {% else %}
+                                <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
+                                {% endif %}
+                            </td>
+
+                            <td class="align-middle productName">
+                                <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
+
+                            <td class="align-middle white-space-nowrap ps-3 py-4 categoryName">
+                                <p class="mb-0 fs--1 text-900">{{stock.category_name}}</p>
+                            </td>
+
+                            <td class="align-middle white-space-nowrap ps-3 py-4 quantity">
+                                <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
+                            </td>
+
+                            <td class="align-middle white-space-nowrap ps-3 py-4 price">
+                                <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
+                            </td>
+
+                            <td class="align-middle white-space-nowrap ps-3 py-4 requestDate">
+                                <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
+                            </td>
+                            <td class="align-middle white-space-nowrap ps-3 py-4 movedDate">
+                                <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
+                            </td>
+                            <td class="align-middle white-space-nowrap text-end movementType">
+                                {% if stock.is_requested == 1 %}
+                                <p class="mb-0 fs--1 text-900">REQUESTED</p>
+                                {% else %}
+                                <p class="mb-0 fs--1 text-900">SELF</p>
+                                {% endif %}
+                            </td>
+                            <td class="align-middle white-space-nowrap text-end deliveredFrom">
+                                {% if stock.sender_store != None %}
+                                <a class="fw-semi-bold line-clamp-3 mb-0"
+                                   href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</a>
+                                {% else %}
+                                <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
+                                {% endif %}
+                            </td>
+
+                            <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                <div class="font-sans-serif btn-reveal-trigger position-static">
+                                    <button aria-expanded="false"
+                                            aria-haspopup="true"
+                                            class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                            data-boundary="window"
+                                            data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
+                                        <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                    <div class="dropdown-menu dropdown-menu-end py-2">
+                                        <a class="dropdown-item view-button" data-bs-toggle="modalView"
+                                           type="button"
+                                           data-category-info="{{ stock }}">View</a>
+                                    </div>
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
+                    <div class="d-flex">
+                        <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                           data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
+                        all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                            class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                            class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                    </div>
+                    <div class="d-flex">
+                        <button class="page-link" data-list-pagination="prev"><span
+                                class="fas fa-chevron-left"></span></button>
+                        <ul class="mb-0 pagination"></ul>
+                        <button class="page-link pe-0" data-list-pagination="next"><span
+                                class="fas fa-chevron-right"></span></button>
+                    </div>
                 </div>
             </div>
         </div>
+        {% include 'footer.html' %}
+    </div>
+    <div aria-hidden="true" aria-labelledby="verticallyCenteredModalLabel"
+         class="modal fade"
+         id="verticallyCentered" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Move a
+                        product</h5>
+                    <button aria-label="Close" class="btn p-1" data-bs-dismiss="modal"
+                            type="button"><span class="fas fa-times fs--1"></span></button>
+                </div>
+                <div class="p-4 code-to-copy">
+                    <form action="{% url 'manageMoveStocks' %}"
+                          class="row g-3 needs-validation"
+                          method='POST' novalidate="">
+                        {% csrf_token %}
+                        <div class="mb2 col-12">
+                            <h5 class="mb-3">Select Product</h5>
+                            <select class="form-select" data-choices="data-choices"
+                                    data-options='{"removeItemButton":true,"placeholder":true}'
+                                    name="product_id" required="required">
+                                <option value="">Select Product</option>
+
+                                {% for products in products %}
+                                <option value="{{products.product_id}}">{{products.product_name}}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="custom-error" style="color: red;"></div>
+                        </div>
+
+                        <div class="mb-2 col-12">
+                            <h5 class="mb-3 ">Select Store Type</h5>
+                            <select class="form-select"
+                                    id="storeType"
+                                    name="store_type"
+                                    required="required">
+                                <option value="">Select Store Type</option>
+                                <option value="1">Own Store</option>
+                                <option value="2">Franchise</option>
+                            </select>
+                            <div class="invalid-feedback">This field is required.</div>
+                        </div>
+
+                        <div class="mb2 col-12" id="ownStoreSelectDiv">
+                            <h5 class="mb-3">Select Own Store</h5>
+                            <select class="form-select" data-choices="data-choices"
+                                    data-options='{"removeItemButton":true,"placeholder":true}'
+                                    name="own_store_id">
+                                <option value="">Choose Store to move</option>
+                                {% for store in own_store_list %}
+                                <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="custom-error" style="color: red;"></div>
+                        </div>
+
+                        <div class="mb2 col-12" id="franchiseStoreSelectDiv">
+                            <h5 class="mb-3">Select Franchise Store</h5>
+                            <select class="form-select" data-choices="data-choices"
+                                    data-options='{"removeItemButton":true,"placeholder":true}'
+                                    name="franchise_store_id">
+                                <option value="">Choose Store to move</option>
+                                {% for store in franchise_store_list %}
+                                <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                {% endfor %}
+                            </select>
+                            <div class="custom-error" style="color: red;"></div>
+                        </div>
+
+                        <div class="col-12">
+
+                            <h5 class="mb-3">Quantity</h5>
+
+                            <input class="form-control" id="qty" maxlength="256" required name="product_quantity"
+                                   type="number"
+                                   value="" max="100">
+                            <div class="invalid-feedback">Enter Valid Quantity!</div>
+                        </div>
+
+                        <div class="col-12">
+
+                            <h5 class="mb-3">Comments</h5>
+
+                            <input class="form-control" id="expense_reason" maxlength="256"
+                                   required="" name="comments"
+                                   type="text" value=""/>
+                            <div class="invalid-feedback">Enter any comments!</div>
+                        </div>
+
+                        <input name="created_by" required type="hidden"
+                               value="{{ request.session.id }}">
+
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="submit">Submit</button>
+                            <button class="btn btn-outline-primary" data-bs-dismiss="modal"
+                                    type="button">
+                                Cancel
+                            </button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
     </div>
 
     <script>
@@ -370,6 +375,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
     </script>
@@ -398,6 +404,7 @@
 <script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 
+
 <script>
 $(document).ready(function() {
     // Hide the "Select Own Store" and "Select Franchise Store" divs by default
@@ -422,6 +429,7 @@ $(document).ready(function() {
     // Trigger the change event to handle the initial state
     $('#storeType').trigger('change');
 });
+
 
 
 </script>

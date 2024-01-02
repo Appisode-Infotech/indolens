@@ -251,10 +251,7 @@ def createStockRequestStore(request):
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
             response = store_inventory_controller.create_store_stock_request(stock_obj)
-            products, status_code = store_inventory_controller.get_all_central_inventory_products(
-                request.session.get('assigned_store_id'))
-            return render(request, 'stockRequests/createStockRequestStore.html',
-                          {"product_list": products['product_list']})
+            return redirect('create_request_store')
         else:
             response, status_code = store_inventory_controller.get_all_central_inventory_products(
                 request.session.get('assigned_store_id'))
@@ -300,6 +297,15 @@ def viewRejectedStockRequestsStore(request):
             request.session.get('assigned_store_id'), '2')
         return render(request, 'stockRequests/viewRejectedStockRequestsStore.html',
                       {"stocks_request_list": response['stocks_request_list']})
+    else:
+        return redirect('own_store_login')
+
+def stockRequestDeliveryStatusChange(request, requestId, status):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        print(request)
+        response, status_code = store_inventory_controller.request_delivery_status_change(requestId, status, request.session.get('id'))
+        print(response)
+        return redirect('completed_store_stock_requests')
     else:
         return redirect('own_store_login')
 
@@ -368,7 +374,6 @@ def makeSaleOwnStore(request):
                           {"other_products_list": response['stocks_list'],
                            'customers_list': customerResponse['customers_list'],
                            "lens_list": lens_response['lens_list'],
-                           "contact_lens_list": lens_response['contact_lens_list'],
-                           "rx_contact_lens_list": lens_response['rx_contact_lens_list']})
+                           "contact_lens_list": lens_response['contact_lens_list']})
     else:
         return redirect('own_store_login')
