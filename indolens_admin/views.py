@@ -308,13 +308,14 @@ def createSubAdmin(request):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-
+            
             sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
             response, status_code = sub_admin_controller.create_sub_admin(sub_admin, file_data)
             url = reverse('view_sub_admin', kwargs={'subAdminId': response['said']})
             return redirect(url)
 
         else:
+            print(request.session.get('id'))
             return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
     else:
         return redirect('login')
@@ -2375,9 +2376,12 @@ def editProductCategory(request, categoryId):
             master_category_controller.edit_product_category(product_cat_obj)
             return redirect('manage_central_inventory_category')
         else:
-            response, status_code = master_category_controller.get_central_inventory_category_by_id(categoryId)
-            return render(request, 'indolens_admin/masters/editProductCategory.html',
-                          {"product_category": response['product_category']})
+            if categoryId == 1 or categoryId == 2 or categoryId == 3:
+                return redirect('manage_central_inventory_category')
+            else:
+                response, status_code = master_category_controller.get_central_inventory_category_by_id(categoryId)
+                return render(request, 'indolens_admin/masters/editProductCategory.html',
+                              {"product_category": response['product_category']})
     else:
         return redirect('login')
 
@@ -2988,7 +2992,8 @@ def assignAreaHeadOwnStore(request):
     if request.method == 'POST':
         print(type(request.POST.getlist('store_id')))
         print(','.join(request.POST.getlist('store_id')))
-        response, status_code = area_head_controller.assignStore(request.POST['emp_id'], ','.join(request.POST.getlist('store_id')))
+        response, status_code = area_head_controller.assignStore(request.POST['emp_id'],
+                                                                 ','.join(request.POST.getlist('store_id')))
         print(response)
     url = reverse('manage_area_head', kwargs={'status': 'All'})
     return redirect(url)

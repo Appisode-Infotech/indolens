@@ -25,7 +25,7 @@ def create_sub_admin(sub_admin, files):
                     '{sub_admin.full_name}', '{sub_admin.email}', '{sub_admin.phone}', '{hashed_password}', 2, 
                     '{files.profile_pic}', '{sub_admin.complete_address}', '{sub_admin.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sub_admin.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{sub_admin.created_by}', '{today}', '{sub_admin.last_updated_by}', '{today}'
+                    1, {int(sub_admin.created_by)}, '{today}', {int(sub_admin.last_updated_by)}, '{today}'
                 )
             """
 

@@ -122,13 +122,14 @@
                                    value="{{store.store_phone}}"/>
                             <div class="invalid-feedback">Please provide a valid store phone number.</div>
                         </div>
+
                         <div class="col-md-4">
 
                             <label class="form-label" for="storeGSTIN">Store GSTIN</label>
 
                             <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
-                                   value="{{store.store_gst}}"/>
-                            <div class="invalid-feedback">Please provide a valid store GSTIN.</div>
+                                   value="{{store.store_gst}}" maxlength="15" minlength="15"/>
+                            <div class="invalid-feedback">Enter valid store GSTIN.</div>
                         </div>
 
                         <div class="col-md-4">

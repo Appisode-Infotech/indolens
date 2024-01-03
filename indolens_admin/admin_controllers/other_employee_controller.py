@@ -21,12 +21,12 @@ def create_other_employee(other_emp, files):
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, 
                     document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role
+                    last_updated_by, last_updated_on, role,assigned_store_id
                 ) VALUES (
                     '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{other_emp.address}', '{other_emp.document_1_type}', 
                     '{json.dumps(files.document1)}', '{other_emp.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{other_emp.created_by}', '{today}', '{other_emp.last_updated_by}', '{today}', 4
+                    0, '{other_emp.created_by}', '{today}', '{other_emp.last_updated_by}', '{today}', 4,0
                 )
             """
 
@@ -116,12 +116,12 @@ def create_franchise_other_employee(other_emp, files):
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, 
                     document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role
+                    last_updated_by, last_updated_on, role, assigned_store_id
                 ) VALUES (
                     '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{other_emp.address}', '{other_emp.document_1_type}', 
                     '{json.dumps(files.document1)}', '{other_emp.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{other_emp.created_by}', '{today}', '{other_emp.last_updated_by}', '{today}', 4
+                    0, '{other_emp.created_by}', '{today}', '{other_emp.last_updated_by}', '{today}', 4,0
                 )
             """
 
