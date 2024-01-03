@@ -334,9 +334,9 @@
                                                                 aria-label="Default select example"
                                                                 required="required">
                                                             <option value="" selected>Please select employee</option>
-                                                            <option value="EmpId1">Emp1</option>
-                                                            <option value="EmpId2">Emp2</option>
-                                                            <option value="EmpId3">Emp3</option>
+                                                            {% for employee in employee_list %}
+                                                            <option value="{{employee.employee_id}}">{{employee.name}}</option>
+                                                            {% endfor %}
                                                         </select>
                                                         <div class="invalid-feedback">This field is required.</div>
                                                     </div>
@@ -348,9 +348,9 @@
                                                                 aria-label="Default select example"
                                                                 required="required">
                                                             <option value="" selected>Please select lab</option>
-                                                            <option value="lab1">lab1</option>
-                                                            <option value="lab2">lab2</option>
-                                                            <option value="lab3">lab3</option>
+                                                            {% for lab in lab_list %}
+                                                            <option value="{{lab.lab_id}}">{{lab.lab_name}}</option>
+                                                            {% endfor %}
                                                         </select>
                                                         <div class="invalid-feedback">This field is required.</div>
                                                     </div>
@@ -888,16 +888,16 @@ function addLensContainer() {
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
-        <div class="mb2 col-4">
-            <h5 class="mb-3">Vision Type</h5>
-            <input class="form-control"
-                   name="vision_type[${productCardCount}]"
-                   placeholder="Vision Type"
-                   required="required"
-                   type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
+<!--        <div class="mb2 col-4">-->
+<!--            <h5 class="mb-3">Vision Type</h5>-->
+<!--            <input class="form-control"-->
+<!--                   name="vision_type[${productCardCount}]"-->
+<!--                   placeholder="Vision Type"-->
+<!--                   required="required"-->
+<!--                   type="text" value="" readonly/>-->
+<!--            <div class="invalid-feedback">This field is required.-->
+<!--            </div>-->
+<!--        </div>-->
         <div class="mb2 col-4">
             <h5 class="mb-3">Product Brand</h5>
             <input class="form-control"

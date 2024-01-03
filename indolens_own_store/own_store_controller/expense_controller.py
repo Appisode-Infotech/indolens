@@ -97,6 +97,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
             for data in cart_data:
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
                 if new_data.get('product_category_id') == '2':
+                    print("lens")
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "":
                         discount_percentage = 0
@@ -113,14 +114,15 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             `created_by`, `created_on`, `updated_by`, `updated_on`, `created_by_store_type`)
                                             VALUES
                                             ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
-                                            '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
+                                            {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                             {discount_percentage}, {is_discount_applied}, 
-                                            '{json.dumps(power_attributes)}', 1, 
+                                            '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
                                             {customer_id}, 1, 1, 1, 1, 500, %s, 
-                                            {store_id}, 17, 
-                                            '{today}', 17, '{today}', 1) """
+                                            {store_id}, {billingDetailsData.get('orderByEmployee')}, 
+                                            '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', 1) """
 
+                    print(insert_len_sales_query)
                     cursor.execute(insert_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
                     # print("deduct lense in centre inventory")
@@ -134,6 +136,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     if discount_percentage == "":
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
+                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     insert_contact_len_sales_query = f""" INSERT INTO `sales_order`
@@ -149,9 +152,9 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                                 {discount_percentage}, {is_discount_applied}, 
                                                                 '{json.dumps(power_attributes)}', 1, 
-                                                                {customer_id}, 1, 1, 1, 1, 500, %s, 
-                                                                {store_id}, 1, 
-                                                                '{today}', 1, '{today}', 1) """
+                                                                {customer_id}, {billingDetailsData.get('assignedLab')}, 1, 1, 1, 500, %s, 
+                                                                {store_id}, {billingDetailsData.get('orderByEmployee')}, 
+                                                                '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', 1) """
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
                     # if power_attributes.get('stock_type') == 'stock':
@@ -188,8 +191,8 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
                                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                             {discount_percentage}, {is_discount_applied}, 
-                                                            1, {customer_id}, 1, 1, 1, 1, 500, %s, 
-                                                            {store_id}, 1, '{today}', 1, '{today}', '{power_attributes}', 1 )
+                                                            {billingDetailsData.get('assignedLab')}, {customer_id}, 1, 1, 1, 1, 500, %s, 
+                                                            {store_id}, {billingDetailsData.get('orderByEmployee')}, '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', '{power_attributes}', 1 )
                                                         """
 
                     cursor.execute(insert_contact_len_sales_query,

@@ -6,7 +6,7 @@ from rest_framework.reverse import reverse
 from indolens_admin.admin_controllers import central_inventory_controller, orders_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller, store_orders_controller, \
-    own_store_dashboard_controller
+    own_store_dashboard_controller, own_store_lab_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
     store_expense_model, store_create_stock_request_model
 
@@ -301,10 +301,12 @@ def viewRejectedStockRequestsStore(request):
     else:
         return redirect('own_store_login')
 
+
 def stockRequestDeliveryStatusChange(request, requestId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         print(request)
-        response, status_code = store_inventory_controller.request_delivery_status_change(requestId, status, request.session.get('id'))
+        response, status_code = store_inventory_controller.request_delivery_status_change(requestId, status,
+                                                                                          request.session.get('id'))
         print(response)
         return redirect('completed_store_stock_requests')
     else:
@@ -355,6 +357,7 @@ def makeSaleOwnStore(request):
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
+            print(billingDetailsData)
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),
                                                                    request.session.get('assigned_store_id'))
@@ -362,15 +365,20 @@ def makeSaleOwnStore(request):
             url = reverse('order_details_store', kwargs={'orderId': make_order['order_id']})
             return redirect(url)
         else:
-            response, status_code = store_inventory_controller.get_all_products_for_store(
+            employee_list, emp_status_code = store_employee_controller.get_all_active_store_employee(
                 request.session.get('assigned_store_id'))
-            customerResponse, status_code_cust = store_customers_controller.get_all_customers()
-            lens_response, status_code = central_inventory_controller.get_central_inventory_lens(
+            lab_list, lab_status_code = own_store_lab_controller.get_all_active_labs()
+            store_products, status_code = store_inventory_controller.get_all_products_for_store(
+                request.session.get('assigned_store_id'))
+            customerResponse, cust_status_code = store_customers_controller.get_all_customers()
+            lens_response, lens_status_code = central_inventory_controller.get_central_inventory_lens(
                 request.session.get('assigned_store_id'))
             return render(request, 'expenses/makeSaleOwnStore.html',
-                          {"other_products_list": response['stocks_list'],
+                          {"other_products_list": store_products['stocks_list'],
                            'customers_list': customerResponse['customers_list'],
                            "lens_list": lens_response['lens_list'],
-                           "contact_lens_list": lens_response['contact_lens_list']})
+                           "contact_lens_list": lens_response['contact_lens_list'],
+                           "employee_list": employee_list['active_employee_list'],
+                           "lab_list": lab_list['lab_list']})
     else:
         return redirect('own_store_login')
