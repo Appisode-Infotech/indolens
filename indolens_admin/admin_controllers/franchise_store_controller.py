@@ -55,6 +55,7 @@ def get_all_franchise_stores(status):
                                         FROM franchise_store
                                         LEFT JOIN franchise_store_employees ON franchise_store.store_id = franchise_store_employees.assigned_store_id AND franchise_store_employees.role = 1
                                         WHERE franchise_store.status {status_condition}
+                                        ORDER BY franchise_store_employees.employee_id DESC
                                         """
             cursor.execute(get_franchise_stores_query)
             stores_data = cursor.fetchall()

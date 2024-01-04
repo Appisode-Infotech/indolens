@@ -32,25 +32,25 @@ urlpatterns = [
 
     # store managers
     path('manage_employees/', manageEmployee, name='manage_employees'),
-    path('manage_employees/view_employees/?employeeId=<int:employeeId>', viewEmployee,
+    path('manage_employees/view_employees/employeeId=<int:employeeId>', viewEmployee,
          name='view_employees'),
 
     # manage lab tech
     path('manage_lab_technician/', manageLabTechnician, name='manage_lab_technician_area_head'),
-    path('manage_lab_technician/view_lab_technician/?labTechnicianId=<int:ltid>', viewLabTechnician,
+    path('manage_lab_technician/view_lab_technician_area_head/?labTechnicianId=<int:ltid>', viewLabTechnician,
          name='view_lab_technician_area_head'),
 
 
     # orders management
     path('all_orders/', viewAllOrders, name='all_orders_area_head'),
-    path('pending_orders/', viewPendingOrders, name='pending_orders_area_head'),
+    path('dispatched_orders/', viewdispatchedOrders, name='pending_orders_area_head'),
     path('received_orders/', viewReceivedOrders, name='received_orders_area_head'),
     path('processing_orders/', viewProcessingOrders, name='processing_orders_area_head'),
     path('ready_orders/', viewReadyOrders, name='ready_orders_area_head'),
     path('delivered_orders/', viewDeliveredOrders, name='delivered_orders_area_head'),
     path('cancelled_orders/', viewCancelledOrders, name='cancelled_orders_area_head'),
     path('refunded_orders/', viewRefundedOrders, name='refunded_orders_area_head'),
-    path('order_details/', viewOrderDetails, name='order_details_area_head'),
+    path('order_details_area_head/orderId=<str:orderId>', viewOrderDetails, name='order_details_area_head'),
     # labs
     path('manage_labs/', manageLabs, name='manage_labs_area_head'),
     path('manage_labs/view_lab/?labId=<int:labid>', viewLab, name='view_lab_area_head'),
@@ -59,8 +59,8 @@ urlpatterns = [
     path('manage_labs/job_details/', jobDetails, name='job_details_area_head'),
     path('manage_authenticity_card/', manageAuthenticityCard, name='manage_authenticity_card_area_head'),
     # marketing
-    path('manage_tasks/', viewOwnStore, name='manage_tasks_area_head'),
-    path('manage_campaigns/', viewOwnStore, name='manage_campaigns_area_head'),
+    path('manage_tasks/', manageTask, name='manage_tasks_area_head'),
+    path('manage_campaigns/', manageCampaigns, name='manage_campaigns_area_head'),
     path('view_product_details/', viewOwnStore, name='view_product_details_area_head'),
     path('all_notifications/', viewOwnStore, name='all_notifications_area_head'),
     path('manage_memberships/', viewOwnStore, name='manage_memberships_area_head'),

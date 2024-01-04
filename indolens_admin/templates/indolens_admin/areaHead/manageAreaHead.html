@@ -65,6 +65,9 @@
 
 
 
+
+
+
     </script>
 </head>
 
@@ -82,7 +85,7 @@
 
             <div class="mb-9">
 
-                <div data-list='{"valueNames":["name","phone","email","stores","status","createdDate","createdBy","updatedDate","updatedBy","address"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","name","phone","email","stores","status","createdDate","createdBy","updatedDate","updatedBy","address"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -134,9 +137,12 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
@@ -180,6 +186,7 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for area_head in area_heads_list %}
                             <tr class="position-static">
+                                <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
                                     <a href="{{MEDIA_URL}}{{lab_technician.profile_pic}}" target="_blank">
                                         <div class="avatar avatar-m">
@@ -194,14 +201,14 @@
                                     {{area_head.name}}</a>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 phone">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 phone">
                                     <p class="mb-0 fs--1 text-900">{{area_head.phone}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 email">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 email">
                                     <p class="mb-0 fs--1 text-900">{{area_head.email}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 stores">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 stores">
                                     {% if area_head.id_name_pair|length != 0 %}
                                     {% for id, name in area_head.id_name_pair %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
@@ -222,19 +229,7 @@
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                     {% endif %}
                                 </td>
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 createdDate">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{area_head.created_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 createdBy">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{area_head.creator_name}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 updatedDate">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{area_head.last_updated_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 updatedBy">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{area_head.updater_name}}</p>-->
-                                <!--                                </td>-->
-                                <td class="align-middle white-space-nowrap task ps-3 py-4 address">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 address">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{area_head.address}}</p>
                                 </td>
 
@@ -261,11 +256,6 @@
                                                data-action-type="allocate">
                                                 Manage store allocation
                                             </a>
-
-                                            <a class="dropdown-item"
-                                               href="{% url 'edit_store_manager' area_head.area_head_id %}">Send
-                                                password
-                                                reset link</a>
                                             {% endif %}
 
                                             <a class="dropdown-item"
@@ -328,13 +318,18 @@
                                               action="{% url 'assign_area_head_own_store' %}" novalidate="novalidate">
                                             {% csrf_token %}
                                             <input type="hidden" name="emp_id" id="emp_id">
+
                                             <h5 class="mb-3">Select Store (Only active and unallocated stores appear
                                                 here)</h5>
-                                            <select class="form-select" data-choices="data-choices" multiple="multiple"
+                                            <select class="form-select" data-choices="data-choices"
+                                                    multiple="multiple"
                                                     data-options='{"removeItemButton":true,"placeholder":true}'
                                                     name="store_id"
                                                     required="required" id="store_select">
                                                 <option value="">Select a store</option>
+                                                {% for store in available_stores %}
+                                                <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                                {% endfor %}
                                             </select>
 
 
@@ -394,6 +389,9 @@
 
 
 
+
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -434,6 +432,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var actionUrl = event.currentTarget.getAttribute('data-action-url');
             var role = event.currentTarget.getAttribute('data-bs-role');
             var assignedStore = event.currentTarget.getAttribute('data-bs-active-list');
+            var storeSelect = document.getElementById('store_select');
 
             if (actionType === 'enable' || actionType === 'disable') {
                 modalTitle.textContent = actionType === "enable" ? "Enable " +role+" - " + empName : "Disable " +role+ "- " + empName;
@@ -443,18 +442,38 @@ document.addEventListener("DOMContentLoaded", function () {
                 modalForm.style.display = 'none';
             } else if (actionType === 'allocate') {
                 document.getElementById('footer_div').style.display = 'none';
-                modalTitle.textContent = "Allocate store for - " + empName + assignedStore;
+                modalTitle.textContent = "Allocate store for - " + empName;
                 document.getElementById('emp_id').value = empId;
                 modalSubmit.href = actionUrl;
                 // Show the form for "Allocate" action
                 modalForm.style.display = 'block';
-            } else if (actionType === 'unallocate') {
-                modalTitle.textContent = "Unallocate Store - " + empName + assignedStore;
-                modalContent.innerHTML = `Are you sure you want to unallocate the store <br><strong>${event.currentTarget.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong> (ID: ${empId})?`;
-                modalSubmit.href = actionUrl;
-                // Hide the form for "Unallocate" action
-                modalForm.style.display = 'none';
+
+                var assignedStores = JSON.parse(assignedStore);
+
+                for (var i = 0; i < storeSelect.options.length; i++) {
+                    var option = storeSelect.options[i];
+                    var found = false;
+                    console.log('Option value:', option.value);
+
+                    for (var j = 0; j < assignedStores.length; j++) {
+                        console.log('Assigned store:', assignedStores[j]);
+
+                        if (option.value == assignedStores[j]) {
+                            console.log('Value selected:');
+                            option.selected = true;
+                            found = true;
+                            break;
+                        }
+                    }
+
+                    if (!found) {
+                        option.selected = false;
+                    }
+                }
             }
+
+            var selectedValues = [...storeSelect.selectedOptions].map(option => option.value);
+            storeSelect.setAttribute('data-choices', selectedValues.join(','));
 
              // Use data-bs-toggle and data-bs-target attributes to trigger the modal
             var targetModal = event.currentTarget.getAttribute('data-bs-target');
@@ -464,6 +483,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+
+
 
 
 

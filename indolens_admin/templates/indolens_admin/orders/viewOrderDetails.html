@@ -133,7 +133,7 @@
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
                                             <div class="border rounded-2"><img
-                                                    alt="" src="{% static 'img/products/1.png' %}" width="53"/>
+                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}" width="53"/>
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
@@ -177,7 +177,7 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4">{{order_detail.0.customer_name}}</a>
+                                        <a class="fs--1 ms-4" href="{% url 'customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -186,7 +186,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="{{order_detail.0.email}}:">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.0.email}}::">{{order_detail.0.email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -218,7 +218,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:shatinon@jeemail.com:">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.0.email}}:">{{order_detail.0.email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -264,7 +264,7 @@
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
                                                                                           data-feather="package"
                                                                                           style="stroke-width:2.5;">  </span>
-                                            <h6 class="mb-0">Wraping</h6>
+                                            <h6 class="mb-0">Wrapping</h6>
                                         </div>
                                         <p class="mb-0 text-800 fs--1 ms-4">N/A</p>
                                     </div>
@@ -280,7 +280,7 @@
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
                                                                                           data-feather="mail"
                                                                                           style="stroke-width:2.5;">  </span>
-                                            <h6 class="mb-0">Gift Meaasge</h6>
+                                            <h6 class="mb-0">Gift Message</h6>
                                         </div>
                                         <div class="ms-4">
                                             <p class="text-800 fs--1 mb-0">N/A</p>
@@ -323,16 +323,19 @@
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
                                         <h6 class="mb-2">Payment status</h6>
-                                        <select aria-label="delivery type" class="form-select mb-4">
-                                            <option value="cod">Processing</option>
-                                            <option value="card">Canceled</option>
-                                            <option value="paypal">Completed</option>
+                                        <select disabled aria-label="delivery type" class="form-select mb-4" id="paymentStatusSelect">
+                                            <option value="1">Pending</option>
+                                            <option value="2">Complete</option>
+                                            <option value="3">Refund</option>
                                         </select>
+
                                         <h6 class="mb-2">Order status</h6>
-                                        <select aria-label="delivery type" class="form-select">
-                                            <option value="cod">Unfulfilled</option>
-                                            <option value="card">Fulfilled</option>
-                                            <option value="paypal">Pending</option>
+                                        <select disabled  aria-label="delivery type" class="form-select" id="orderStatusSelect">
+                                            <option value="2">Process</option>
+                                            <option value="3">Ready</option>
+                                            <option value="4">Dispatch</option>
+                                            <option value="5">Complete</option>
+                                            <option value="6">Cancel</option>
                                         </select>
                                     </div>
                                 </div>
@@ -369,6 +372,34 @@
 
 </body>
 <script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var status = "{{order_detail.0.payment_status}}";
+        var select = document.getElementById("paymentStatusSelect");
+
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === status) {
+                select.selectedIndex = i;
+                for (var j = 0; j < i; j++) {
+                    select.options[j].disabled = true;
+                }
+                break;
+            }
+        }
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        var status = {{order_detail.0.order_status}};
+        var select = document.getElementById("orderStatusSelect");
+
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value == status) {
+                select.selectedIndex = i;
+                for (var j = 0; j < i; j++) {
+                    select.options[j].disabled = true;
+                }
+                break;
+            }
+        }
+    });
     document.addEventListener('DOMContentLoaded', function() {
         var totalCost = {{ order_detail.0.total_cost }};
         var discountCost = {{ order_detail.0.discount_cost }};

@@ -20,12 +20,12 @@ def create_area_head(area_head, files):
                 INSERT INTO area_head (
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on
+                    status, created_by, created_on, last_updated_by, last_updated_on,assigned_stores
                 ) VALUES (
                     '{area_head.full_name}', '{area_head.email}', '{area_head.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{area_head.complete_address}', '{area_head.document1_type}', 
                     '{json.dumps(files.document1)}', '{area_head.document2_type}', '{json.dumps(files.document2)}', 
-                    1, '{area_head.created_by}', '{today}', '{area_head.last_updated_by}', '{today}'
+                    1, '{area_head.created_by}', '{today}', '{area_head.last_updated_by}', '{today}',0
                 )
             """
 
@@ -61,7 +61,7 @@ def get_all_area_head(status):
             ON FIND_IN_SET(os.store_id, ah.assigned_stores)
             LEFT JOIN admin AS creator ON ah.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON ah.last_updated_by = updater.admin_id
-            WHERE ah.status {status_condition} GROUP BY ah.area_head_id """
+            WHERE ah.status {status_condition} GROUP BY ah.area_head_id ORDER BY ah.area_head_id DESC"""
             cursor.execute(get_area_head_query)
             area_heads = cursor.fetchall()
 
@@ -142,6 +142,55 @@ def enable_disable_area_head(ahId, status):
             return {
                        "status": True,
                        "message": "Updated"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def assignStore(empId, storeId):
+    print(storeId)
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE area_head
+                SET
+                    assigned_stores = '{storeId}'
+                WHERE
+                    area_head_id = {empId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_store_manager_query)
+
+            return {
+                       "status": True,
+                       "message": "Store assigned"
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def unAssignStore(empId, storeId):
+    try:
+        with connection.cursor() as cursor:
+            update_store_manager_query = f"""
+                UPDATE area_head
+                SET
+                    assigned_stores = 0
+                WHERE
+                    area_head_id = {empId}
+            """
+            # Execute the update query using your cursor
+            cursor.execute(update_store_manager_query)
+
+            return {
+                       "status": True,
+                       "message": "Store un assigned"
                    }, 200
 
     except pymysql.Error as e:

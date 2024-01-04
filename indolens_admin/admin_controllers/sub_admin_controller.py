@@ -25,7 +25,7 @@ def create_sub_admin(sub_admin, files):
                     '{sub_admin.full_name}', '{sub_admin.email}', '{sub_admin.phone}', '{hashed_password}', 2, 
                     '{files.profile_pic}', '{sub_admin.complete_address}', '{sub_admin.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sub_admin.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{sub_admin.created_by}', '{today}', '{sub_admin.last_updated_by}', '{today}'
+                    1, {int(sub_admin.created_by)}, '{today}', {int(sub_admin.last_updated_by)}, '{today}'
                 )
             """
 
@@ -57,7 +57,8 @@ def get_all_sub_admin(status):
                                             FROM admin AS a
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id
-                                            WHERE a.role = 2 AND a.status {status_condition}"""
+                                            WHERE a.role = 2 AND a.status {status_condition}
+                                            ORDER BY a.admin_id DESC"""
             cursor.execute(get_all_sub_admin_query)
             sub_admins = cursor.fetchall()
             return {

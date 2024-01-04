@@ -83,7 +83,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["id","shape","description","status","action"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -113,20 +113,20 @@
                             <thead>
                             <tr>
 
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:10%;">ID
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="id"
+                                    scope="col" style="width:10%;">SL NO
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="shape" scope="col" style="width:10%;">
                                     SHAPE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="description" scope="col" style="width:10%;">
                                     DESCRIPTION
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="status" scope="col" style="width:10%;">
                                     STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="action" scope="col" style="width:10%;">
                                     ACTION
                                 </th>
                                 <!--                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">-->
@@ -150,19 +150,19 @@
                             {% for shapes in product_shape %}
 
                             <tr class="position-static">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 id">
                                     {{shapes.shape_id}}
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 shape">
                                     <p class="mb-0 fs--1 text-900">{{shapes.shape_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 description">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{shapes.shape_description}}</p>
                                 </td>
 
-                                <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700 status">
                                     {% if shapes.status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
                                     {% elif shapes.status == 1 %}

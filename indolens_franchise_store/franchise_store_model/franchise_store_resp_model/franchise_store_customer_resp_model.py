@@ -7,7 +7,8 @@ class StoreCustomer:
             self.customer_id, self.name, self.gender, self.age, self.phone, self.email,
             self.language, self.city, self.address, self.created_by_employee_id, self.created_by_store_id,
             self.created_by_store_type, self.created_on, self.updated_by_employee_id, self.updated_by_store_id,
-            self.updated_by_store_type, self.updated_on, self.store_name, self.creator_name, self.updater_name
+            self.updated_by_store_type, self.updated_on, self.store_name, self.creator_name, self.updater_name,
+            self.total_spend, self.total_order_counts,
         ) = values
 
 
@@ -33,6 +34,8 @@ class StoreCustomer:
             'store_name': self.store_name,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name,
+            'total_spend': self.total_spend,
+            'total_order_counts': self.total_order_counts,
         }
 
 def get_franchise_store_customers(response):

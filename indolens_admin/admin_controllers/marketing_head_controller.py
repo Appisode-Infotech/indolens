@@ -20,12 +20,12 @@ def create_marketing_head(marketing_head, files):
                 INSERT INTO marketing_head (
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on
+                    status, created_by, created_on, last_updated_by, last_updated_on, assigned_area_head	
                 ) VALUES (
                     '{marketing_head.fullName}', '{marketing_head.email}', '{marketing_head.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{marketing_head.completeAddress}', '{marketing_head.document_1_type}', 
                     '{json.dumps(files.document1)}', '{marketing_head.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{marketing_head.created_by}', '{today}', '{marketing_head.last_updated_by}', '{today}'
+                    1, '{marketing_head.created_by}', '{today}', '{marketing_head.last_updated_by}', '{today}', 0
                 )
             """
 
@@ -61,7 +61,7 @@ def get_all_marketing_head(status):
             LEFT JOIN admin AS creator ON mh.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON mh.last_updated_by = updater.admin_id
             WHERE mh.status {status_condition}
-            GROUP BY mh.marketing_head_id
+            GROUP BY mh.marketing_head_id ORDER BY mh.marketing_head_id DESC
             """
             cursor.execute(get_marketing_head_query)
             marketing_head = cursor.fetchall()

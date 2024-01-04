@@ -3,10 +3,10 @@ import json
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
-from indolens_admin.admin_controllers import central_inventory_controller, dashboard_controller
+from indolens_admin.admin_controllers import central_inventory_controller
 from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
     franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller, \
-    franchise_store_employee_controller, franchise_store_orders_controller
+    franchise_store_employee_controller, franchise_store_orders_controller, franchise_store_dashboard_controller
 from indolens_franchise_store.franchise_store_model.franchise_store_req_model import franchise_store_employee_model, \
     franchise_expense_model, franchise_create_stock_request_model
 
@@ -74,15 +74,12 @@ def franchiseOwnerLogout(request):
 def dashboard(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        franchise_store_new_order, status_code = dashboard_controller.get_order_stats('New', 2)
-        franchise_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 2)
-        franchise_store_sales, status_code = dashboard_controller.get_sales_stats(2)
-        out_of_stock, status_code = franchise_inventory_controller.get_all_out_of_stock_products_for_franchise_store(15,
-                                                                                                                     request.session.get(
-                                                                                                                         'assigned_store_id'))
-        orders_list, status_code = franchise_store_orders_controller.get_all_orders('All', 'All',
-                                                                                    request.session.get(
-                                                                                        'assigned_store_id'))
+        franchise_store_new_order, status_code = franchise_store_dashboard_controller.get_order_stats('New', 2, request.session.get( 'assigned_store_id'))
+        franchise_store_delivered_orders, status_code = franchise_store_dashboard_controller.get_order_stats(
+            'Completed', 2, request.session.get('assigned_store_id'))
+        franchise_store_sales, status_code = franchise_store_dashboard_controller.get_sales_stats(2, request.session.get('assigned_store_id'))
+        out_of_stock, status_code = franchise_inventory_controller.get_all_out_of_stock_products_for_franchise_store(15, request.session.get( 'assigned_store_id'))
+        orders_list, status_code = franchise_store_orders_controller.get_all_orders('All', 'All', request.session.get('assigned_store_id'))
         return render(request, 'franchise_dashboard.html',
                       {"franchise_store_new_order": franchise_store_new_order['count'],
                        "franchise_store_delivered_orders": franchise_store_delivered_orders['count'],

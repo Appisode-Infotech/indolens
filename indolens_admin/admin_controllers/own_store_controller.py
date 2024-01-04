@@ -54,7 +54,7 @@ def get_all_own_stores(status):
                                     SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name
                                     FROM own_store
                                     LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1
-                                    WHERE own_store.status {status_condition} 
+                                    WHERE own_store.status {status_condition} ORDER BY own_store_employees.employee_id DESC
                                     """
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()

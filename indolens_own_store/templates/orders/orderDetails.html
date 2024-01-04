@@ -79,7 +79,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <h2 class="mb-0">Order <span>{{order_detail.0.order_id}}</span></h2>
+                <h2 class="mb-0"><span>{{order_detail.0.order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
                     <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
                     </p>
@@ -333,6 +333,7 @@
 
                                         <h6 class="mb-2">Order status</h6>
                                         <select onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')" aria-label="delivery type" class="form-select" id="orderStatusSelect">
+                                            <option value="1">New</option>
                                             <option value="2">Process</option>
                                             <option value="3">Ready</option>
                                             <option value="4">Dispatch</option>

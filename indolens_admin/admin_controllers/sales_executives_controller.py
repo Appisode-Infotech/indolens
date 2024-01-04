@@ -21,12 +21,12 @@ def create_own_sales_executives(sales_executives, files):
                    name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, 
                     document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role
+                    last_updated_by, last_updated_on, role,assigned_store_id
                 ) VALUES (
                     '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
-                    '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3
+                    '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3, 0
                 )
             """
 
@@ -116,12 +116,12 @@ def create_franchise_sales_executives(sales_executives, files):
                    name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, 
                     document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role
+                    last_updated_by, last_updated_on, role,assigned_store_id
                 ) VALUES (
                     '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
-                    '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3
+                    '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3,0
                 )
             """
 
@@ -154,7 +154,8 @@ def get_all_own_sales_executive(status):
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.role = 3 AND sm.status {status_condition}"""
+                                            WHERE sm.role = 3 AND sm.status {status_condition}
+                                            ORDER BY sm.employee_id DESC"""
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {
@@ -182,7 +183,8 @@ def get_all_franchise_sales_executive(status):
                                             LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.role = 3 AND sm.status {status_condition}"""
+                                            WHERE sm.role = 3 AND sm.status {status_condition}
+                                            ORDER BY sm.employee_id DESC"""
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {

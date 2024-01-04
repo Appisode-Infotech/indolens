@@ -67,6 +67,7 @@ def get_all_central_inventory_materials():
             FROM product_materials AS pm
             LEFT JOIN admin AS creator ON pm.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON pm.last_updated_by = updater.admin_id
+            ORDER BY pm.material_id DESC
             """
             cursor.execute(get_material_query)
             material_data = cursor.fetchall()

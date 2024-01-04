@@ -5,6 +5,7 @@ from django.db import connection
 
 from indolens_franchise_store.franchise_store_model.franchise_store_resp_model.franchise_store_inventory_product_resp_model import \
     get_franchise_store_inventory_stocks
+from indolens_own_store.own_store_controller.store_inventory_controller import getIndianTime
 from indolens_own_store.own_store_model.response_model.central_inventory_product_resp_model import get_products
 from indolens_own_store.own_store_model.response_model.product_request_list_resp_model import get_request_product_list
 from indolens_own_store.own_store_model.response_model.stock_request_product_resp_model import \
@@ -32,7 +33,8 @@ def get_all_out_of_stock_products_for_franchise_store(quantity, store_id):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
                                     LEFT JOIN franchise_store AS os ON os.store_id = '{store_id}'
-                                    WHERE si.product_quantity <= {quantity} AND si.store_id = '{store_id}' AND si.store_type = 2 """
+                                    WHERE si.product_quantity <= {quantity} AND si.store_id = '{store_id}' AND si.store_type = 2 
+                                    ORDER BY si.store_inventory_id  DESC """
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
@@ -64,7 +66,8 @@ def get_all_products_for_franchise_store(store_id):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
                                     LEFT JOIN franchise_store AS os ON os.store_id = '{store_id}' 
-                                    WHERE si.store_id = {store_id} AND si.store_type = 2 """
+                                    WHERE si.store_id = {store_id} AND si.store_type = 2 
+                                    ORDER BY si.store_inventory_id DESC"""
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
@@ -97,7 +100,7 @@ def get_all_central_inventory_products():
                                                 LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
                                                 WHERE ( JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'stock' OR 
                                                 ci.category_id <> 3 ) AND ci.category_id <> 2 AND ci.status = 1
-                                                GROUP BY ci.product_id 
+                                                GROUP BY ci.product_id ORDER BY ci.product_id DESC 
                                                  """
 
             cursor.execute(get_all_product_query)
@@ -155,7 +158,7 @@ def create_store_stock_request(stock_obj):
                            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
             cursor.execute(stock_req_query, (stock_obj.request_from_store_id, 2, stock_obj.product_id, stock_obj.product_quantity, 0, 0, 1,
-                                             stock_obj.request_to_store_id, 0, today, stock_obj.created_by, today, stock_obj.created_by))
+                                             stock_obj.request_to_store_id, 0, getIndianTime(), stock_obj.created_by, getIndianTime(), stock_obj.created_by))
             return {
                 "status": True,
                 "message": "success"
@@ -185,7 +188,8 @@ def view_all_store_stock_request(store_id, status):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
                                     LEFT JOIN franchise_store os ON os.store_id = {store_id}
-                                    WHERE rp.store_id = {store_id} AND rp.request_status LIKE '{status}' AND rp.store_type = 2 """
+                                    WHERE rp.store_id = {store_id} AND rp.request_status LIKE '{status}' AND rp.store_type = 2 
+                                    ORDER BY rp.request_products_id DESC"""
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()

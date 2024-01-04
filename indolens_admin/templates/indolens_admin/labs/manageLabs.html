@@ -56,16 +56,6 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -83,7 +73,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","name","jobs","start","labTech","createdon","city","status","action"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -108,25 +98,28 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
                                     scope="col" style="width:30%;">LAB NAME
                                 </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="jobs"
                                     scope="col" style="width:30%;">ACTIVE JOBS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="labTech" scope="col" style="width:10%;">
                                     LAB TECHNICIAN
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    CREATED DATE
+                                <th class="sort align-middle ps-3" data-sort="createdon" scope="col" style="width:10%;">
+                                    CREATED ON
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="deadline" scope="col" style="width:15%;">
+                                <th class="sort align-middle ps-3" data-sort="city" scope="col" style="width:15%;">
                                     CITY
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
 
@@ -136,17 +129,18 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for lab in lab_list %}
                             <tr class="position-static">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 slno"></td>
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 name"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_lab' lab.lab_id %}">
                                     {{lab.lab_name}}
                                 </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 jobs"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_active_jobs'  %}">{{lab_list|length}}</a>
+                                        href="{% url 'view_active_jobs'  %}">{{lab.job_count}}</a>
                                 </td>
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 labTech">
                                     {% if lab.lab_technician_name != None %}
                                     <a class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_lab_technician' lab.lab_id %}">{{lab.lab_technician_name}}</a>
@@ -161,14 +155,14 @@
 
                                 <!--                                <td class="align-middle white-space-nowrap text-end statuses"><span-->
                                 <!--                                        class="badge badge-phoenix fs&#45;&#45;2 badge-phoenix-danger">UNASSIGNED</span></td>-->
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 createdon">
                                     <p class="mb-0 fs--1 text-900">{{lab.created_on}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 city ">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{lab.lab_city}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end statuses">
+                                <td class="align-middle white-space-nowrap text-end status">
                                     {% if lab.status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
                                     {% elif lab.status == 1 %}

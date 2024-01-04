@@ -70,7 +70,7 @@
 <!-- ===============================================-->
 <main class="main" id="top">
     <div class="container-fluid px-0">
-        {% include 'nav_bar_franchise.html' %}
+        {% include 'nav_bar_store.html' %}
 
         <div class="content">
 
@@ -160,10 +160,10 @@
                                         {{customer.language}}
                                     </td>
                                     <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
-                                        52
+                                        {{customer.total_order_counts}}
                                     </td>
                                     <td class="total-spent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
-                                        ₹ 12509
+                                        ₹ {{customer.total_spend}}
                                     </td>
                                     <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.city}}
                                     </td>

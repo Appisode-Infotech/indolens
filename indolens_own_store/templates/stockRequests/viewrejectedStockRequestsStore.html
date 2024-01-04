@@ -172,7 +172,11 @@
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                    {% if stock.delivery_status == 2 %}
                                     <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">Not Delivered</p>
+                                    {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end statuses">
                                     {% if stock.request_status == 0 %}
@@ -181,14 +185,15 @@
                                     {% elif stock.request_status == 1 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
-                                    {% else %}
+                                    {% elif stock.delivery_status == 2 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
+                                    {% elif stock.delivery_status == 3 %}
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses"><span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>
-                                </td>
+
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -198,18 +203,13 @@
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="">View</a>
-                                            <!--                                            <a class="dropdown-item"-->
-                                            <!--                                               href="">Edit</a>-->
-                                            <!--                                            <a class="dropdown-item"-->
-                                            <!--                                               href="">Allocate Manager</a>-->
-                                            <!--                                            &lt;!&ndash;                                            <a class="dropdown-item" href="#!">Export</a>&ndash;&gt;-->
-
+                                        <div class="dropdown-menu dropdown-menu-end py-2">
+                                            <a class="dropdown-item">View</a>
+                                            {% if stock.request_status == 1 %}
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-success" href="#!">Accept</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="#!">Reject</a>
+                                            <a class="dropdown-item text-success"
+                                               href="{% url 'request_delivery_status_change' stock.request_products_id 2 %}">DELIVERED</a>
+                                            {% endif %}
                                         </div>
                                     </div>
                                 </td>

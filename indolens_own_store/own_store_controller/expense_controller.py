@@ -46,7 +46,8 @@ def get_all_store_expense(store_id, store_type):
         with connection.cursor() as cursor:
             get_expense_obj_query = f""" SELECT se.*, creator.name FROM store_expense AS se
                                             LEFT JOIN own_store_employees AS creator ON se.created_by = creator.employee_id
-                                            WHERE se.store_id = {store_id} AND se.store_type= {store_type}"""
+                                            WHERE se.store_id = {store_id} AND se.store_type= {store_type}
+                                            ORDER BY se.store_expense_id DESC"""
             cursor.execute(get_expense_obj_query)
             store_expense_data = cursor.fetchall()
             return {
@@ -62,6 +63,8 @@ def get_all_store_expense(store_id, store_type):
 
 
 def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id):
+    print("===================controller=========================")
+    print(customerData)
     try:
         with connection.cursor() as cursor:
             create_update_customer = f"""INSERT INTO `customers`(`name`, `gender`, `age`, `phone`, `email`,
@@ -89,10 +92,15 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                 `updated_on` = '{today}' """
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
+            print(customer_id)
 
             for data in cart_data:
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
                 if new_data.get('product_category_id') == '2':
+                    print("lens")
+                    discount_percentage = new_data.get('discount_percentage')
+                    if discount_percentage == "":
+                        discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
                     print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
@@ -105,19 +113,28 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             `amount_paid`, `estimated_delivery_date`, `created_by_store`,
                                             `created_by`, `created_on`, `updated_by`, `updated_on`, `created_by_store_type`)
                                             VALUES
-                                            ('ORDER001', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
-                                            '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
+                                            ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
+                                            {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
-                                            {new_data.get('discount_percentage')}, {is_discount_applied}, 
-                                            '{json.dumps(power_attributes)}', 1, 
+                                            {discount_percentage}, {is_discount_applied}, 
+                                            '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
                                             {customer_id}, 1, 1, 1, 1, 500, %s, 
-                                            {store_id}, 1, 
-                                            '{today}', 1, '{today}', 1) """
+                                            {store_id}, {billingDetailsData.get('orderByEmployee')}, 
+                                            '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', 1) """
 
+                    print(insert_len_sales_query)
                     cursor.execute(insert_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
+                    # print("deduct lense in centre inventory")
+                    #
+                    # update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                    #                                                                             WHERE product_id = {new_data.get('product')}"""
+                    # cursor.execute(update_central_Inventory)
 
                 elif new_data.get('product_category_id') == '3':
+                    discount_percentage = new_data.get('discount_percentage')
+                    if discount_percentage == "":
+                        discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
                     print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
@@ -130,43 +147,69 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 `amount_paid`, `estimated_delivery_date`, `created_by_store`,
                                                                 `created_by`, `created_on`, `updated_by`, `updated_on`, `created_by_store_type`)
                                                                 VALUES
-                                                                ('ORDER001', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
+                                                                ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
                                                                 '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
                                                                 {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
-                                                                {new_data.get('discount_percentage')}, {is_discount_applied}, 
+                                                                {discount_percentage}, {is_discount_applied}, 
                                                                 '{json.dumps(power_attributes)}', 1, 
-                                                                {customer_id}, 1, 1, 1, 1, 500, %s, 
-                                                                {store_id}, 1, 
-                                                                '{today}', 1, '{today}', 1) """
+                                                                {customer_id}, {billingDetailsData.get('assignedLab')}, 1, 1, 1, 500, %s, 
+                                                                {store_id}, {billingDetailsData.get('orderByEmployee')}, 
+                                                                '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', 1) """
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
+                    # if power_attributes.get('stock_type') == 'stock':
+                    #     print("deduct contact lens in store")
+                    #     update_central_Inventory = f"""UPDATE store_inventory SET
+                    #                                     product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                    #                                     WHERE product_id = {new_data.get('product')} AND
+                    #                                     store_id = {store_id} AND store_type = 1"""
+                    #     cursor.execute(update_central_Inventory)
+                    # else:
+                    #     print("deduct contact lens in centre")
+                    #     update_central_Inventory = f"""UPDATE central_inventory
+                    #                                     SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                    #                                     WHERE product_id = {new_data.get('product')}"""
+                    #     cursor.execute(update_central_Inventory)
                 else:
+                    print(customer_id)
+                    discount_percentage = new_data.get('discount_percentage')
+                    if discount_percentage == "":
+                        discount_percentage = 0
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     power_attributes = {}
-                    insert_contact_len_sales_query = f""" INSERT INTO `sales_order`
-                                                        (`order_id`, `product_id`, `hsn`, `unit_sale_price`, `unit_type`,
-                                                        `purchase_quantity`, `product_total_cost`, `discount_percentage`,
-                                                        `is_discount_applied`, `assigned_lab`, `customer_id`,
-                                                        `order_status`, `payment_status`, `delivery_status`, `payment_mode`,
-                                                        `amount_paid`, `estimated_delivery_date`, `created_by_store`,
-                                                        `created_by`, `created_on`, `updated_by`, `updated_on`, `power_attribute`, `created_by_store_type`)
-                                                        VALUES
-                                                        ('ORDER001', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
-                                                        '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
-                                                        {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
-                                                        {new_data.get('discount_percentage')}, {is_discount_applied}, 
-                                                        1, {customer_id}, 1, 1, 1, 1, 500, 
-                                                        %s, 
-                                                        {store_id}, 1, 
-                                                        '{today}', 1, '{today}','{power_attributes}', 1 ) """
+                    insert_contact_len_sales_query = f"""
+                                                            INSERT INTO `sales_order`
+                                                            (`order_id`, `product_id`, `hsn`, `unit_sale_price`, `unit_type`,
+                                                            `purchase_quantity`, `product_total_cost`, `discount_percentage`,
+                                                            `is_discount_applied`, `assigned_lab`, `customer_id`,
+                                                            `order_status`, `payment_status`, `delivery_status`, `payment_mode`,
+                                                            `amount_paid`, `estimated_delivery_date`, `created_by_store`,
+                                                            `created_by`, `created_on`, `updated_by`, `updated_on`, `power_attribute`, `created_by_store_type`)
+                                                            VALUES
+                                                            ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
+                                                            {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
+                                                            {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
+                                                            {discount_percentage}, {is_discount_applied}, 
+                                                            {billingDetailsData.get('assignedLab')}, {customer_id}, 1, 1, 1, 1, 500, %s, 
+                                                            {store_id}, {billingDetailsData.get('orderByEmployee')}, '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', '{power_attributes}', 1 )
+                                                        """
+
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
+
+
+                    # print("deduct other product")
+                    # update_central_Inventory = f"""UPDATE store_inventory SET
+                    #                                 product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                    #                                 WHERE product_id = {new_data.get('product')} AND
+                    #                                 store_id = {store_id} AND store_type = 1"""
+                    # cursor.execute(update_central_Inventory)
 
             return {
                 "status": True,
                 "message": "success",
-                "order_id": "ORDER001"
+                "order_id": billingDetailsData.get('orderId')
             }, 200
 
     except pymysql.Error as e:
