@@ -70,7 +70,7 @@
         {% include 'nav_bar.html' %}
         <div class="content">
             <div class="mb-9">
-                <div data-list='{"valueNames":["name","phone","email","areaHead","status","createdAt","createdBy","updatedAt","updatedBy"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","name","phone","email","areaHead","status","createdAt","createdBy","updatedAt","updatedBy","address"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -117,9 +117,12 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
@@ -162,6 +165,7 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for marketing_head in marketing_heads_list%}
                             <tr class="position-static">
+                                <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
                                     <a href="{{MEDIA_URL}}{{lab_technician.profile_pic}}" target="_blank">
                                     <div class="avatar avatar-m">
@@ -174,15 +178,15 @@
                                         href="{% url 'view_marketing_head' marketing_head.marketing_head_id %}">{{marketing_head.name}}</a>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 phone">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 phone">
                                     <p class="mb-0 fs--1 text-900">{{marketing_head.phone}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 email">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 email">
                                     <p class="mb-0 fs--1 text-900">{{marketing_head.email}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 areaHead">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 areaHead">
                                     {% if marketing_head.area_head_name|length != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
                                        href="{%url 'view_area_head' marketing_head.assigned_area_head%}">

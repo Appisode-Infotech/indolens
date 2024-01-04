@@ -74,7 +74,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["name","phone","email","store","status","createdDate","createdBy","updatedDate","updatedBy","address"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","name","phone","email","store","status","createdDate","createdBy","updatedDate","updatedBy","address"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -125,9 +125,12 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
@@ -172,6 +175,7 @@
                             {% for emp in other_employee_list %}
 
                             <tr class="position-static">
+                                <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
                                     <a href="{{MEDIA_URL}}{{emp.profile_pic}}" target="_blank">
                                     <div class="avatar avatar-m">

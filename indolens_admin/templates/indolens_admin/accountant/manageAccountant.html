@@ -74,7 +74,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["name","phone","email","status","createdDate","createdBy","updatedDate","updatedBy","address"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","name","phone","email","status","createdDate","createdBy","updatedDate","updatedBy","address"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -121,9 +121,12 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
@@ -164,6 +167,7 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for accountant in accountant_list %}
                             <tr class="position-static">
+                                <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
                                     <a href="{{MEDIA_URL}}{{accountant.profile_pic}}" target="_blank">
                                     <div class="avatar avatar-m">
@@ -177,11 +181,11 @@
 
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 phone">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 phone">
                                     <p class="mb-0 fs--1 text-900">{{accountant.phone}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 email">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 email">
                                     <p class="mb-0 fs--1 text-900">{{accountant.email}}</p>
                                 </td>
 
@@ -193,7 +197,7 @@
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 createdDate">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 createdDate">
                                     <p class="mb-0 fs--1 text-900">{{accountant.created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 createdBy">
@@ -205,7 +209,7 @@
                                 <td class="align-middle white-space-nowrap ps-3 py-4 updatedBy">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{accountant.updater_name}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4 address">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 address">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{accountant.address}}</p>
                                 </td>
 
@@ -220,8 +224,7 @@
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
                                                                                              href="{% url 'view_accountant' accountant.accountant_id %}">View</a>
 
-                                            <a class="dropdown-item" href="{% url 'edit_accountant'  accountant.accountant_id %}">Allocate
-                                                Store</a>
+
                                             <a class="dropdown-item"
                                                href="{% url 'edit_accountant' accountant.accountant_id %}">Update
                                                 Profile</a>

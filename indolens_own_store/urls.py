@@ -46,6 +46,7 @@ urlpatterns = [
     path('pending_store_stock_requests/', viewPendingStockRequestsStore, name='pending_store_stock_requests'),
     path('completed_store_stock_requests/', viewCompletedStockRequestsStore, name='completed_store_stock_requests'),
     path('rejected_store_stock_requests/', viewRejectedStockRequestsStore, name='rejected_store_stock_requests'),
+    path('request_delivery_status_change/requestId=<int:requestId>/status=<int:status>', stockRequestDeliveryStatusChange, name='request_delivery_status_change'),
     # Make sale
     path('own_store_make_sale/', makeSaleOwnStore, name='own_store_make_sale'),
     path('all_expenses_store/', allExpenseStore, name='all_expenses_store'),

@@ -99,8 +99,8 @@ def get_all_central_inventory_products(store_id):
                                     LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                     LEFT JOIN store_inventory AS si ON ci.product_id = si.product_id AND si.store_type = 1
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
-                                    WHERE ( JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'stock' OR 
-                                    ci.category_id <> 3 ) AND ci.category_id <> 2 AND ci.status = 1
+                                    WHERE ci.category_id <> 3 AND ci.category_id <> 2 AND ci.status = 1 AND ci.
+                                    product_quantity != 0
                                     GROUP BY ci.product_id ORDER BY ci.product_id DESC
                                      """
 
@@ -198,10 +198,26 @@ def view_all_store_stock_request(store_id, status):
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
-            print(product_list)
             return {
                 "status": True,
                 "stocks_request_list": get_request_product_list(product_list)
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def request_delivery_status_change(request_id, status, updated_by):
+    try:
+        with connection.cursor() as cursor:
+            update_stock_request_query = f"""UPDATE request_products SET last_updated_on = '{getIndianTime}', 
+                                                last_updated_by = {updated_by}, delivery_status = {status}
+                                                WHERE request_products_id = '{request_id}' """
+            cursor.execute(update_stock_request_query)
+            return {
+                "status": True,
+                "message": "updated delivery status"
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

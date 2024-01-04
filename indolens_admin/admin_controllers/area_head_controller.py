@@ -20,12 +20,12 @@ def create_area_head(area_head, files):
                 INSERT INTO area_head (
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on
+                    status, created_by, created_on, last_updated_by, last_updated_on,assigned_stores
                 ) VALUES (
                     '{area_head.full_name}', '{area_head.email}', '{area_head.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{area_head.complete_address}', '{area_head.document1_type}', 
                     '{json.dumps(files.document1)}', '{area_head.document2_type}', '{json.dumps(files.document2)}', 
-                    1, '{area_head.created_by}', '{today}', '{area_head.last_updated_by}', '{today}'
+                    1, '{area_head.created_by}', '{today}', '{area_head.last_updated_by}', '{today}',0
                 )
             """
 

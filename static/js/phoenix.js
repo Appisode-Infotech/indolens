@@ -6048,6 +6048,21 @@
     });
   };
 
+document.addEventListener("DOMContentLoaded", function() {
+  // Function to update serial numbers
+  const updateSerialNumbers = () => {
+    var table = document.getElementById("myTable");
+    var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
+
+    for (var i = 0; i < rows.length; i++) {
+      var serialCell = rows[i].getElementsByTagName("td")[0];
+      serialCell.textContent = i + 1;
+    }
+  }
+
+  // Call the function to update serial numbers once the DOM is fully loaded
+  updateSerialNumbers();
+});
 
 const addImagePreview = () => {
   const profilePicInput = document.getElementById('profilePic');

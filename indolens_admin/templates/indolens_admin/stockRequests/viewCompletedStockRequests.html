@@ -80,7 +80,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","requestId","name","type","product","productId","quantity","price","req_date","moved_date","approval_status","delivery_status"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -117,42 +117,49 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="requestId"
+                                    scope="col" style="width:30%;">Request Id
+                                </th>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
                                     scope="col" style="width:30%;">STORE NAME
                                 </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="type"
                                     scope="col" style="width:30%;">STORE TYPE
                                 </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="product"
                                     scope="col" style="width:30%;">PRODUCT NAME
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="productId" scope="col" style="width:10%;">
                                     PRODUCT ID
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="quantity" scope="col" style="width:10%;">
                                     QUANTITY
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="price" scope="col" style="width:10%;">
                                     PRICE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="req_date" scope="col" style="width:10%;">
                                     REQUESTED DATE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="moved_date" scope="col" style="width:10%;">
                                     MOVED DATE
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="approval_status" scope="col"
                                     style="width:5%;">APPROVAL STATUS
                                 </th>
-
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="delivery_status" scope="col"
                                     style="width:5%;">DELIVERY STATUS
                                 </th>
+
+
 
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
                             </tr>
@@ -161,7 +168,11 @@
                             {% for stock in stocks_request_list %}
                             <tr class="position-static"
                             data-category="{{ stock.store_type }}">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
+                                <td class="fs--1 align-middle px-0 py-3 slno"></td>
+
+                                <td class="align-middle white-space-nowrap py-4 requestId">{{stock.request_id}}</td>
+
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 name">
                                     {% if stock.store_type == 1 %}
                                     <a
                                         class="text-decoration-none fw-bold fs-0"
@@ -173,7 +184,7 @@
                                     {% endif %}
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start py-4">
+                                <td class="align-middle white-space-nowrap py-4 type">
                                     {% if stock.store_type == 1 %}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
                                     {% else %}
@@ -181,32 +192,32 @@
                                     {% endif %}
                                 </td>
 
-                                <td class="product align-middle">
+                                <td class=" align-middle product">
                                     <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 productId">
                                     <p class="mb-0 fs--1 text-900">{{stock.product_id}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 quantity">
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 price">
                                     <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 req_date">
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 moved_date">
                                     {% if stock.delivery_status == 2 %}
                                     <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">Not Delivered</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses">
+                                <td class="align-middle white-space-nowrap text-end approval_status">
                                     {% if stock.request_status == 0 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">PENDING</span>
@@ -218,7 +229,7 @@
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses">
+                                <td class="align-middle white-space-nowrap text-end delivery_status">
                                     {% if stock.delivery_status == 0 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>
@@ -228,26 +239,10 @@
                                     {% elif stock.delivery_status == 2 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">DELIVERED</span>
+                                    {% elif stock.delivery_status == 3 %}
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
-                                </td>
-
-                                <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                    <div class="font-sans-serif btn-reveal-trigger position-static">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
-                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_own_store' 1%}">View</a>
-
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-success" href="#!">Accept</a>
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="#!">Reject</a>
-                                        </div>
-                                    </div>
                                 </td>
                             </tr>
                             {% endfor %}

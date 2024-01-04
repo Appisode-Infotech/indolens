@@ -21,12 +21,13 @@ def create_optimetry(optimetry_obj, files):
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, 
                     document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role, certificates
+                    last_updated_by, last_updated_on, role, certificates, assigned_store_id
                 ) VALUES (
                     '{optimetry_obj.name}', '{optimetry_obj.email}', '{optimetry_obj.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{optimetry_obj.address}', '{optimetry_obj.document_1_type}', 
                     '{json.dumps(files.document1)}', '{optimetry_obj.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, '{json.dumps(files.certificates)}'
+                    0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, 
+                    '{json.dumps(files.certificates)}', 0
                 )
             """
 
@@ -107,12 +108,12 @@ def create_franchise_optimetry(optimetry_obj, files):
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, 
                     document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role, certificates
+                    last_updated_by, last_updated_on, role, certificates,assigned_store_id
                 ) VALUES (
                     '{optimetry_obj.name}', '{optimetry_obj.email}', '{optimetry_obj.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{optimetry_obj.address}', '{optimetry_obj.document_1_type}', 
                     '{json.dumps(files.document1)}', '{optimetry_obj.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, '{json.dumps(files.certificates)}'
+                    0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, '{json.dumps(files.certificates)}',0
                 )
             """
 

@@ -70,7 +70,7 @@
         {% include 'nav_bar.html' %}
         <div class="content">
             <div class="mb-9">
-                <div data-list='{"valueNames":["storeName","displayName","storeAdmin","date","city","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","storeName","displayName","storeAdmin","date","city","status","action"],"page":6,"pagination":true}'
                      id="ownStoresList">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -124,9 +124,12 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="slno"
+                                    scope="col">SL NO
+                                </th>
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="storeName"
                                     scope="col">STORE NAME
                                 </th>
@@ -151,6 +154,7 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for store in own_store_list %}
                             <tr class="position-static">
+                                <td class="order align-middle white-space-nowrap py-0 slno"></td>
                                 <td class="align-middle time white-space-nowrap ps-0 storeName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_own_store' store.store_id %}">{{store.store_name}}</a>

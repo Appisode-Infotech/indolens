@@ -20,12 +20,12 @@ def create_lab_technician(lab_technician, files):
                 INSERT INTO lab_technician (
                     name, email, phone, password, profile_pic, 
                     address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on
+                    status, created_by, created_on, last_updated_by, last_updated_on,assigned_lab_id 
                 ) VALUES (
                     '{lab_technician.name}', '{lab_technician.email}', '{lab_technician.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{lab_technician.address}', '{lab_technician.document_1_type}', 
                     '{json.dumps(files.document1)}', '{lab_technician.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{lab_technician.created_by}', '{today}', '{lab_technician.last_updated_by}', '{today}'
+                    1, '{lab_technician.created_by}', '{today}', '{lab_technician.last_updated_by}', '{today}', 0
                 )
             """
 

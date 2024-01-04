@@ -76,7 +76,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["managerName","phone","email","assignedStore","status","createdDate","cretedBy","updatedDate","updatedBy","address"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","managerName","phone","email","assignedStore","status","createdDate","cretedBy","updatedDate","updatedBy","address"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -137,9 +137,12 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="managerName"
@@ -157,20 +160,6 @@
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
-                                <!--                                <th class="sort align-middle ps-3" data-sort="createdDate" scope="col"-->
-                                <!--                                    style="width:10%;">-->
-                                <!--                                    CREATED ON-->
-                                <!--                                </th>-->
-                                <!--                                <th class="sort align-middle ps-3" data-sort="cretedBy" scope="col" style="width:15%;">-->
-                                <!--                                    CREATED BY-->
-                                <!--                                </th>-->
-                                <!--                                <th class="sort align-middle ps-3" data-sort="updatedDate" scope="col"-->
-                                <!--                                    style="width:5%;">UPDATED ON-->
-                                <!--                                </th>-->
-
-                                <!--                                <th class="sort align-middle ps-3" data-sort="updatedBy" scope="col"-->
-                                <!--                                    style="width:5%;">UPDATED BY-->
-                                <!--                                </th>-->
 
                                 <th class="sort align-middle ps-3" data-sort="address" scope="col"
                                     style="width:5%;">ADDRESS
@@ -183,6 +172,7 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for manager in store_managers%}
                             <tr class="position-static">
+                                <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
                                     <a href="{{MEDIA_URL}}{{manager.profile_pic}}" target="_blank">
                                         <div class="avatar avatar-m">
@@ -225,18 +215,6 @@
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                     {% endif %}
                                 </td>
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 createdDate">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{manager.created_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 cretedBy">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{manager.creator_name}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 updatedDate">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{manager.last_updated_on}}</p>-->
-                                <!--                                </td>-->
-                                <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 updatedBy">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{manager.updater_name}}</p>-->
-                                <!--                                </td>-->
                                 <td class="align-middle white-space-nowrap task ps-3 py-4 address">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{manager.address}}</p>
                                 </td>

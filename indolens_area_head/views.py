@@ -24,10 +24,14 @@ def login(request):
         if response['status']:
             request.session.clear()
             for data in response['area_head']:
+                if len(data['assigned_stores']) == 1:
+                    assigned_stores = f"({data['assigned_stores'][0]})"
+                else:
+                    assigned_stores = tuple(data['assigned_stores'])
                 request.session.update({
                     'is_area_head_logged_in': True,
                     'id': data['area_head_id'],
-                    'assigned_stores': data['assigned_stores'],
+                    'assigned_stores': assigned_stores,
                     'name': data['name'],
                     'email': data['email'],
                     'profile_pic': data['profile_pic'],

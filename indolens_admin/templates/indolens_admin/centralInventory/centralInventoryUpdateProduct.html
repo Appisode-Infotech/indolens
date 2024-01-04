@@ -151,7 +151,6 @@
                             <div class="mb-3">
                                 <h4 class="mb-3">Index</h4>
                                 <select class="form-select" id="index" name="index" required="required">
-                                    <option value="{{product_data.power_attribute.index}}">{{product_data.power_attribute.index}}</option>
                                     <option value="0.1">0.1</option>
                                     <option value="0.2">0.2</option>
                                     <option value="0.3">0.3</option>
@@ -232,103 +231,6 @@
                                            value="Yearly"/>
                                     <label class="form-check-label" for="contact_lens_disposability5">Yearly</label>
                                 </div>
-                            </div>
-                            <div class="row mb-3">
-
-                                <div class="col-12 col-lg-3 g-3">
-                                    <h5 class="mb-2 text-1000">Power</h5>
-                                    <select name="contactLensPower" class="form-select"
-                                            aria-label="Default select example">
-                                        <option selected="">Choose Power</option>
-                                        <option value="1.50">1.50</option>
-                                        <option value="1.56">1.56</option>
-                                        <option value="1.59">1.59</option>
-                                        <option value="1.61">1.61</option>
-                                        <option value="1.67">1.67</option>
-                                        <option value="1.74">1.74</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-3 g-3">
-                                    <h5 class="mb-2 text-1000">BC</h5>
-                                    <select name="contactLensBC" class="form-select"
-                                            aria-label="Default select example">
-                                        <option selected="">Select Value</option>
-                                        <option value="-3.5">-3.5</option>
-                                        <option value="-3.0">-3.0</option>
-                                        <option value="-2.5">-2.5</option>
-                                        <option value="-2.0">-2.0</option>
-                                        <option value="-1.5">-1.5</option>
-                                        <option value="-1.0">-1.0</option>
-                                        <option value="-0.5">-0.5</option>
-                                        <option value="0.0">0.0</option>
-                                        <option value="0.5">0.5</option>
-                                        <option value="1.0">1.0</option>
-                                        <option value="1.5">1.5</option>
-                                        <option value="2.0">2.0</option>
-                                        <option value="2.5">2.5</option>
-                                        <option value="3.0">3.0</option>
-                                        <option value="3.5">3.5</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-3 g-3">
-                                    <h5 class="mb-2 text-1000">Dia</h5>
-                                    <select name="contactLensDia" class="form-select"
-                                            aria-label="Default select example">
-                                        <option selected="">Select Value</option>
-                                        <option value="-3.5">-3.5</option>
-                                        <option value="-3.0">-3.0</option>
-                                        <option value="-2.5">-2.5</option>
-                                        <option value="-2.0">-2.0</option>
-                                        <option value="-1.5">-1.5</option>
-                                        <option value="-1.0">-1.0</option>
-                                        <option value="-0.5">-0.5</option>
-                                        <option value="0.0">0.0</option>
-                                        <option value="0.5">0.5</option>
-                                        <option value="1.0">1.0</option>
-                                        <option value="1.5">1.5</option>
-                                        <option value="2.0">2.0</option>
-                                        <option value="2.5">2.5</option>
-                                        <option value="3.0">3.0</option>
-                                        <option value="3.5">3.5</option>
-                                    </select>
-                                </div>
-                                <div class="col-12 col-lg-3 g-3">
-                                    <h5 class="mb-2 text-1000">Cylinder</h5>
-                                    <select name="contactLensCylinder" class="form-select"
-                                            aria-label="Default select example">
-                                        <option selected="">Select Value</option>
-                                        <option value="-3.5">-3.5</option>
-                                        <option value="-3.0">-3.0</option>
-                                        <option value="-2.5">-2.5</option>
-                                        <option value="-2.0">-2.0</option>
-                                        <option value="-1.5">-1.5</option>
-                                        <option value="-1.0">-1.0</option>
-                                        <option value="-0.5">-0.5</option>
-                                        <option value="0.0">0.0</option>
-                                        <option value="0.5">0.5</option>
-                                        <option value="1.0">1.0</option>
-                                        <option value="1.5">1.5</option>
-                                        <option value="2.0">2.0</option>
-                                        <option value="2.5">2.5</option>
-                                        <option value="3.0">3.0</option>
-                                        <option value="3.5">3.5</option>
-                                    </select>
-                                </div>
-
-                                <div class="col-12 col-lg-3 g-3">
-                                    <h5 class="mb-2 text-1000">Axis</h5>
-                                    <select name="contactLensAxis" class="form-select"
-                                            aria-label="Default select example">
-                                        <option selected="">Choose Axis</option>
-                                        <option value="1.50">1.50</option>
-                                        <option value="1.56">1.56</option>
-                                        <option value="1.59">1.59</option>
-                                        <option value="1.61">1.61</option>
-                                        <option value="1.67">1.67</option>
-                                        <option value="1.74">1.74</option>
-                                    </select>
-                                </div>
-
                             </div>
                         </div>
                         {% endif %}
@@ -610,10 +512,12 @@
 <script src="{% static 'js/file-upload-preview.js' %}"></script>
 
 <script>
+    //set valuesfor lens power attribute
     document.addEventListener("DOMContentLoaded", function() {
         var stockData = {
             "vision_type": "{{product_data.power_attribute.vision_type}}",
             "stock_type": "{{product_data.power_attribute.stock_type}}",
+            "index": "{{product_data.power_attribute.index}}",
             };
 
         // Function to check the corresponding checkbox based on the value
@@ -623,6 +527,20 @@
                 checkbox.checked = true;
             }
         }
+
+        function setSelectValue(selectId, valueToSelect) {
+            var select = document.getElementById(selectId);
+            if (select) {
+                for (var i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value === valueToSelect) {
+                        select.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        setSelectValue("index", stockData.index);
 
         // Check vision type checkboxes
         checkCheckbox("visionType1", stockData.vision_type);
@@ -644,13 +562,7 @@
         var stockData = {
             "stock_type": "{{product_data.power_attribute.stock_type}}",
             "contact_lens_type": "{{product_data.power_attribute.contact_lens_type}}",
-            "contact_lens_disposability": "{{product_data.power_attribute.contact_lens_disposability}}",
-            "power": "{{product_data.power_attribute.power}}",
-            "bc": "{{product_data.power_attribute.bc}}",
-            "dia": "{{product_data.power_attribute.dia}}",
-            "cyl": "{{product_data.power_attribute.cyl}}",
-            "axis": "{{product_data.power_attribute.axis}}"
-            "index": "{{product_data.power_attribute.index}}"
+            "contact_lens_disposability": "{{product_data.power_attribute.contact_lens_disposability}}"
         };
 
         // Function to set the checked attribute for checkboxes
@@ -673,28 +585,13 @@
         setCheckboxValue("contact_lens_disposability4", stockData.contact_lens_disposability);
         setCheckboxValue("contact_lens_disposability5", stockData.contact_lens_disposability);
 
-        function setSelectValue(selectId, valueToSelect) {
-            var select = document.getElementById(selectId);
-            if (select) {
-                for (var i = 0; i < select.options.length; i++) {
-                    if (select.options[i].value === valueToSelect) {
-                        select.selectedIndex = i;
-                        break;
-                    }
-                }
-            }
-        }
-
-        setSelectValue("index", stockData.index);
         });
-
-
 
 </script>
 
 
 <script>
-    // Add an event listener to the checkboxes
+    // Add an event listener to set the new values for checkboxes
     const visionTypeCheckboxes = document.querySelectorAll('input[name="visionType"]');
     const stockTypeCheckboxes = document.querySelectorAll('input[name="stockType"]');
     const contactLensTypeCheckboxes = document.querySelectorAll('input[name="contact_lens_type"]');
