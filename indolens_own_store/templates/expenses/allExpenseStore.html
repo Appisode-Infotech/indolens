@@ -89,7 +89,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["SlNo","reason","amount","date","createdBy"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -182,24 +182,24 @@
 
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
-                                    scope="col" style="width:30%;">EXPENSE ID
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="SlNo"
+                                    scope="col" style="width:30%;">SL NO
                                 </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="reason"
                                     scope="col" style="width:30%;">REASON
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="amount" scope="col" style="width:10%;">
                                     AMOUNT
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="date" scope="col" style="width:10%;">
                                     DATE
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="createdBy" scope="col"
                                     style="width:5%;">CREATED BY
                                 </th>
 
@@ -209,24 +209,22 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for expense in stor_expense_list %}
                             <tr class="position-static">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
-                                    <h5>{{expense.store_expense_id}}</h5>
-                                </td>
+                                <td class="align-middle white-space-nowrap py-0 SlNo"></td>
 
-                                <td class="align-middle white-space-nowrap start py-4">
+                                <td class="align-middle white-space-nowrap py-4 reason">
                                     <p class="mb-0 fs--1 text-900">{{expense.expense_reason}}</p>
                                 </td>
 
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 amount">
                                     <p class="mb-0 fs--1 text-900">₹{{expense.expense_amount}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 date">
                                     <p class="mb-0 fs--1 text-900">{{expense.created_on}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end statuses">
+                                <td class="align-middle white-space-nowrap text-end createdBy">
                                     <a class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_employee' expense.created_by %}">{{expense.creator_name}}</a>
                                 </td>

@@ -197,13 +197,11 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
 
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
-
-
                     # print("deduct other product")
                     # update_central_Inventory = f"""UPDATE store_inventory SET
-                    #                                 product_quantity = product_quantity - {new_data.get('purchase_qty')}
-                    #                                 WHERE product_id = {new_data.get('product')} AND
-                    #                                 store_id = {store_id} AND store_type = 1"""
+                    #  product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                    #                       WHERE product_id = {new_data.get('product')} AND
+                    #                             store_id = {store_id} AND store_type = 1"""
                     # cursor.execute(update_central_Inventory)
 
             return {

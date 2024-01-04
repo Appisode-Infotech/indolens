@@ -90,7 +90,7 @@
                     <li class="nav-item"><a class="nav-link" href="#">Lens</a></li>
                     <li class="nav-item"><a class="nav-link" href="#">Accessories</a></li>
                 </ul>
-                <div data-list='{"valueNames":["product","price","category","tags","vendor","time"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["SlNo","product","price","category","brand","inStock","publishedOn"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -139,14 +139,11 @@
                     </div>
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                         <div class="table-responsive scrollbar mx-n1 px-1">
-                            <table class="table fs--1 mb-0">
+                            <table class="table fs--1 mb-0" id="myTable">
                                 <thead>
                                 <tr>
-                                    <th class="white-space-nowrap fs--1 align-middle"
-                                        style="max-width:20px; width:18px;">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="SlNo" scope="col"
+                                    style="width:5%;">SL NO
                                     </th>
                                     <th class="sort white-space-nowrap align-middle fs--2" scope="col"
                                         style="width:70px;"></th>
@@ -159,14 +156,14 @@
                                     <th class="sort align-middle ps-4" data-sort="category" scope="col"
                                         style="width:150px;">CATEGORY
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="brand" scope="col"
                                         style="width:150px;">BRAND
                                     </th>
 
-                                    <th class="sort align-middle ps-3" data-sort="tags" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="inStock" scope="col"
                                         style="width:250px;">IN STOCK
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="time" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="publishedOn" scope="col"
                                         style="width:50px;">PUBLISHED ON
                                     </th>
                                     <th class="sort text-end align-middle pe-0 ps-4" scope="col"></th>
@@ -175,11 +172,8 @@
                                 <tbody class="list" id="products-table-body">
                                 {% for stock in stocks_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                    <td class="fs--1 align-middle">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
-                                    </td>
+                                    <td class="align-middle white-space-nowrap py-0 SlNo"></td>
+
                                     <td class="align-middle white-space-nowrap py-0">
                                         <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
                                         <div class="avatar avatar-m">
@@ -188,22 +182,29 @@
                                         </div>
                                     </a>
                                     </td>
+
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0" href="#!"> {{stock.product_name}}</a></td>
+
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
                                         {{stock.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.category_name}}
                                     </td>
-                                    <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                    <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.brand_name}}
                                     </td>
 
-                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                    <td class="inStock align-middle white-space-nowrap  fw-bold text-700 ps-4">
+                                        {% if stock.store_product_quantity == None%}
+                                        0
+                                        {% else %}
                                         {{stock.store_product_quantity}}
+                                        {% endif %}
                                     </td>
-                                    <td class="time align-middle white-space-nowrap text-600 ps-4">
+
+                                    <td class="publishedOn align-middle white-space-nowrap text-600 ps-4">
                                         {{stock.store_product_created_on}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
