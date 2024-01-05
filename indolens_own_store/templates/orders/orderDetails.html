@@ -85,7 +85,7 @@
                     </p>
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><span class="fas fa-print me-2"></span>Print</button>
-                        <button class="btn px-3 text-900"><span class="fas fa-undo me-2"></span>Refund</button>
+                        <button class="btn px-3 text-900"><a href="{% url 'order_payment_status_change' order_detail.0.order_id '3' %}"><span class="fas fa-undo me-2"></span>Refund</a></button>
                         <div class="dropdown">
                             <button aria-expanded="false"
                                     class="btn text-900 dropdown-toggle dropdown-caret-none ps-3 pe-0"

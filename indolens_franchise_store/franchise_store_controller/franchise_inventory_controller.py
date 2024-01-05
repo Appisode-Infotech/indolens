@@ -98,8 +98,8 @@ def get_all_central_inventory_products():
                                                 LEFT JOIN units AS u ON ci.unit_id = u.unit_id
                                                 LEFT JOIN store_inventory AS si ON ci.product_id = si.product_id AND si.store_type = 2
                                                 LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
-                                                WHERE ( JSON_EXTRACT(ci.power_attribute, '$.stock_type') = 'stock' OR 
-                                                ci.category_id <> 3 ) AND ci.category_id <> 2 AND ci.status = 1
+                                                WHERE ci.category_id <> 3 AND ci.category_id <> 2 AND ci.status = 1
+                                                AND ci.product_quantity != 0 
                                                 GROUP BY ci.product_id ORDER BY ci.product_id DESC 
                                                  """
 
@@ -234,3 +234,19 @@ def get_all_products_for_store(store_id):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
+def request_delivery_status_change(request_id, status, updated_by):
+    try:
+        with connection.cursor() as cursor:
+            update_stock_request_query = f"""UPDATE request_products SET last_updated_on = '{getIndianTime}', 
+                                                last_updated_by = {updated_by}, delivery_status = {status}
+                                                WHERE request_products_id = '{request_id}' """
+            cursor.execute(update_stock_request_query)
+            return {
+                "status": True,
+                "message": "updated delivery status"
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

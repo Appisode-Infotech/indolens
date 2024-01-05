@@ -662,7 +662,7 @@ def create_store_stock_request(stock_obj, store_id):
 
             cursor.execute(stock_req_query, (
                 store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
-                1, 0, 0, 0, 0, today, stock_obj.created_by, today, stock_obj.created_by, stock_obj.comments))
+                1, 1, 0, 0, 0, today, stock_obj.created_by, today, stock_obj.created_by, stock_obj.comments))
 
             update_store_Inventory = f"""INSERT INTO store_inventory 
                                            (store_id, store_type, product_id, product_quantity, created_on, 

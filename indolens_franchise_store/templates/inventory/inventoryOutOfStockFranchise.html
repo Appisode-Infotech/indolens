@@ -94,7 +94,7 @@
                     <li class="nav-item"><a class="nav-link" href="#">Accessories<span
                             class="text-700 fw-semi-bold">(810)</span></a></li>
                 </ul>
-                <div data-list='{"valueNames":["product","price","category","tags","vendor","time"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slNo","product","price","category","brand","inStock","publishedOn"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -141,14 +141,11 @@
                     </div>
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                         <div class="table-responsive scrollbar mx-n1 px-1">
-                            <table class="table fs--1 mb-0">
+                            <table class="table fs--1 mb-0" id="myTable">
                                 <thead>
                                 <tr>
-                                    <th class="white-space-nowrap fs--1 align-middle"
-                                        style="max-width:20px; width:18px;">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
+                                    <th class="sort white-space-nowrap align-middle ps-0" data-sort="slNo"
+                                    scope="col" style="width:10%;">SL NO
                                     </th>
                                     <th class="sort white-space-nowrap align-middle fs--2" scope="col"
                                         style="width:70px;"></th>
@@ -177,11 +174,7 @@
                                 <tbody class="list" id="products-table-body">
                                 {% for stock in stocks_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                    <td class="fs--1 align-middle">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
-                                    </td>
+                                    <td class="align-middle white-space-nowrap py-0 slNo"></td>
                                     <td class="align-middle white-space-nowrap py-0">
                                         <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
                                         <div class="avatar avatar-m">
@@ -198,14 +191,14 @@
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.category_name}}
                                     </td>
-                                    <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                    <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.brand_name}}
                                     </td>
 
-                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                    <td class="inStock align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
                                         {{stock.store_product_quantity}}
                                     </td>
-                                    <td class="time align-middle white-space-nowrap text-600 ps-4">
+                                    <td class="publishedOn align-middle white-space-nowrap text-600 ps-4">
                                         {{stock.store_product_created_on}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">

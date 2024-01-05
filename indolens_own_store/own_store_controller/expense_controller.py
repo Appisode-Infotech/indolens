@@ -63,8 +63,6 @@ def get_all_store_expense(store_id, store_type):
 
 
 def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id):
-    print("===================controller=========================")
-    print(customerData)
     try:
         with connection.cursor() as cursor:
             create_update_customer = f"""INSERT INTO `customers`(`name`, `gender`, `age`, `phone`, `email`,

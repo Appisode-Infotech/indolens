@@ -61,6 +61,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -78,7 +79,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <h2 class="mb-0">Order <span>{{order_detail.0.order_id}}</span></h2>
+                <h2 class="mb-0"><span>{{order_detail.0.order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
                     <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
                     </p>
@@ -178,7 +179,7 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4">{{order_detail.0.customer_name}}</a>
+                                        <a class="fs--1 ms-4" href="{% url 'view_franchise_store_customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -314,7 +315,7 @@
                                         </div>
                                         <div class="d-flex justify-content-between border-top border-dashed pt-4">
                                             <h4 class="mb-0">Total :</h4>
-                                            <h4 class="mb-0">₹{{order_detail.0.total_cost}}</h4>
+                                            <h4 class="mb-0">₹{{order_detail.0.discount_cost}}</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -324,14 +325,15 @@
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
                                         <h6 class="mb-2">Payment status</h6>
-                                        <select onchange="franchiseChangePaymentStatus(this,'{{order_detail.0.order_id}}')" aria-label="delivery type" class="form-select mb-4" id="paymentStatusSelect">
+                                        <select onchange="changePaymentStatus(this,'{{order_detail.0.order_id}}')" aria-label="delivery type" class="form-select mb-4" id="paymentStatusSelect">
                                             <option value="1">Pending</option>
                                             <option value="2">Complete</option>
                                             <option value="3">Refund</option>
                                         </select>
 
                                         <h6 class="mb-2">Order status</h6>
-                                        <select onchange="franchiseChangeOrderStatus(this,'{{order_detail.0.order_id}}')" aria-label="delivery type" class="form-select" id="orderStatusSelect">
+                                        <select onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')" aria-label="delivery type" class="form-select" id="orderStatusSelect">
+                                            <option value="1">New</option>
                                             <option value="2">Process</option>
                                             <option value="3">Ready</option>
                                             <option value="4">Dispatch</option>
@@ -373,18 +375,18 @@
 
 </body>
 <script>
-   function franchiseChangeOrderStatus(statusWidget, order_id) {
+   function changeOrderStatus(statusWidget, order_id) {
     console.log(statusWidget.value);
     console.log(order_id);
 
-    const url = `/franchise_store/order_details_franchise_store/franchise_order_status_change/orderId=${order_id}/status=${statusWidget.value}`;
+    const url = `/own_store/order_details_store/order_status_change/orderId=${order_id}/status=${statusWidget.value}`;
     window.location.href = url; // Redirect to the constructed URL
 }
-   function franchiseChangePaymentStatus(statusWidget, order_id) {
+   function changePaymentStatus(statusWidget, order_id) {
     console.log(statusWidget.value);
     console.log(order_id);
 
-    const url = `/franchise_store/order_details_franchise_store/franchise_payment_status_change/orderId=${order_id}/status=${statusWidget.value}`;
+    const url = `/own_store/order_details_store/order_payment_status_change/orderId=${order_id}/status=${statusWidget.value}`;
     window.location.href = url;
 }
 

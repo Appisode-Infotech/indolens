@@ -357,11 +357,9 @@ def makeSaleOwnStore(request):
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
-            print(billingDetailsData)
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),
                                                                    request.session.get('assigned_store_id'))
-            print(make_order)
             url = reverse('order_details_store', kwargs={'orderId': make_order['order_id']})
             return redirect(url)
         else:
