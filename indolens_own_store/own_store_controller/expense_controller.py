@@ -95,12 +95,10 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
             for data in cart_data:
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
                 if new_data.get('product_category_id') == '2':
-                    print("lens")
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "":
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
-                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     insert_len_sales_query = f""" INSERT INTO `sales_order`
@@ -120,21 +118,18 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                             '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', 1) """
 
-                    print(insert_len_sales_query)
                     cursor.execute(insert_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
-                    # print("deduct lense in centre inventory")
-                    #
-                    # update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
-                    #                                                                             WHERE product_id = {new_data.get('product')}"""
-                    # cursor.execute(update_central_Inventory)
+
+                    update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                                                                                                WHERE product_id = {new_data.get('product')}"""
+                    cursor.execute(update_central_Inventory)
 
                 elif new_data.get('product_category_id') == '3':
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "":
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
-                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     insert_contact_len_sales_query = f""" INSERT INTO `sales_order`
@@ -155,21 +150,12 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', 1) """
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
-                    # if power_attributes.get('stock_type') == 'stock':
-                    #     print("deduct contact lens in store")
-                    #     update_central_Inventory = f"""UPDATE store_inventory SET
-                    #                                     product_quantity = product_quantity - {new_data.get('purchase_qty')}
-                    #                                     WHERE product_id = {new_data.get('product')} AND
-                    #                                     store_id = {store_id} AND store_type = 1"""
-                    #     cursor.execute(update_central_Inventory)
-                    # else:
-                    #     print("deduct contact lens in centre")
-                    #     update_central_Inventory = f"""UPDATE central_inventory
-                    #                                     SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
-                    #                                     WHERE product_id = {new_data.get('product')}"""
-                    #     cursor.execute(update_central_Inventory)
+
+                    update_central_Inventory = f"""UPDATE central_inventory
+                                                SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                                                WHERE product_id = {new_data.get('product')}"""
+                    cursor.execute(update_central_Inventory)
                 else:
-                    print(customer_id)
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "":
                         discount_percentage = 0
@@ -195,12 +181,11 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
 
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
-                    # print("deduct other product")
-                    # update_central_Inventory = f"""UPDATE store_inventory SET
-                    #  product_quantity = product_quantity - {new_data.get('purchase_qty')}
-                    #                       WHERE product_id = {new_data.get('product')} AND
-                    #                             store_id = {store_id} AND store_type = 1"""
-                    # cursor.execute(update_central_Inventory)
+                    update_central_Inventory = f"""UPDATE store_inventory SET
+                     product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                                          WHERE product_id = {new_data.get('product')} AND
+                                                store_id = {store_id} AND store_type = 1"""
+                    cursor.execute(update_central_Inventory)
 
             return {
                 "status": True,

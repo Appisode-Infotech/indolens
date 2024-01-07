@@ -195,6 +195,19 @@ def orderDetails(request, orderId):
         return redirect('own_store_login')
 
 
+def orderInvoice(request, orderId):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        order_detail, status_code = orders_controller.get_order_details(orderId)
+        store_data, store_status_code = orders_controller.get_store_details(
+            order_detail['orders_details'][0]['created_by_store'],
+            order_detail['orders_details'][0]['created_by_store_type'])
+        print(store_data['store_data'])
+        return render(request, 'orders/store_order_invoice.html', {"order_detail": order_detail['orders_details'],
+                                                                   "store_data": store_data['store_data']})
+    else:
+        return redirect('own_store_login')
+
+
 def orderStatusChange(request, orderId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_update, status_code = store_orders_controller.order_status_change(orderId, status)
@@ -252,7 +265,8 @@ def createStockRequestStore(request):
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
             response = store_inventory_controller.create_store_stock_request(stock_obj)
-            return redirect('create_request_store')
+            route = request.POST.get('route')
+            return redirect(route)
         else:
             response, status_code = store_inventory_controller.get_all_central_inventory_products(
                 request.session.get('assigned_store_id'))
@@ -304,10 +318,8 @@ def viewRejectedStockRequestsStore(request):
 
 def stockRequestDeliveryStatusChange(request, requestId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        print(request)
         response, status_code = store_inventory_controller.request_delivery_status_change(requestId, status,
                                                                                           request.session.get('id'))
-        print(response)
         return redirect('completed_store_stock_requests')
     else:
         return redirect('own_store_login')
@@ -319,7 +331,9 @@ def storeInventoryProducts(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.get_all_products_for_store(
             request.session.get('assigned_store_id'))
-        return render(request, 'inventory/storeInventoryProducts.html', {"stocks_list": response['stocks_list']})
+        return render(request, 'inventory/storeInventoryProducts.html', {"stocks_list": response['stocks_list'],
+                                                                         "categories_List": response[
+                                                                             'product_category']})
     else:
         return redirect('own_store_login')
 
@@ -329,7 +343,8 @@ def inventoryOutOfStock(request):
         response, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15,
                                                                                                    request.session.get(
                                                                                                        'assigned_store_id'))
-        return render(request, 'inventory/inventoryOutOfStock.html', {"stocks_list": response['stocks_list']})
+        return render(request, 'inventory/inventoryOutOfStock.html', {"stocks_list": response['stocks_list'],
+                                                                      "categories_List": response['product_category']})
     else:
         return redirect('own_store_login')
 

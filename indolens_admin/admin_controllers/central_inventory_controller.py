@@ -528,18 +528,7 @@ def change_stock_request_status(requestId, status, updator):
                                                                             WHERE product_id = {product_details[3]}"""
                         cursor.execute(update_central_Inventory)
 
-                        update_store_Inventory = f"""INSERT INTO store_inventory 
-                                                                       (store_id, store_type, product_id, product_quantity, created_on, 
-                                                                       created_by, last_updated_on, last_updated_by) 
-                                                                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                                                                       ON DUPLICATE KEY UPDATE
-                                                                       product_quantity = product_quantity + {quantity}, 
-                                                                       last_updated_on = '{today}', 
-                                                                       last_updated_by = {updator}"""
 
-                        cursor.execute(update_store_Inventory,
-                                       (product_details[1], product_details[2], product_details[3],
-                                        product_details[4], today, updator, today, updator))
 
                         return {
                             "status": True,
@@ -581,19 +570,6 @@ def change_stock_request_status(requestId, status, updator):
                                                         WHERE product_id = {product_details[3]} AND 
                                                         store_id = {dispenser_inventory} AND store_type = 1"""
                         cursor.execute(update_central_Inventory)
-
-                        update_store_Inventory = f"""INSERT INTO store_inventory 
-                                                       (store_id, store_type, product_id, product_quantity, created_on, 
-                                                       created_by, last_updated_on, last_updated_by) 
-                                                       VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                                                       ON DUPLICATE KEY UPDATE
-                                                       product_quantity = product_quantity + {quantity}, 
-                                                       last_updated_on = '{today}', 
-                                                       last_updated_by = {updator}"""
-
-                        cursor.execute(update_store_Inventory,
-                                       (product_details[1], product_details[2], product_details[3],
-                                        product_details[4], today, updator, today, updator))
 
                         return {
                             "status": True,

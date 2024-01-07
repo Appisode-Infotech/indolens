@@ -84,19 +84,9 @@
                     <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
                     </p>
                     <div class="d-flex">
-                        <button class="btn pe-3 ps-0 text-900"><span class="fas fa-print me-2"></span>Print</button>
+                        <button class="btn pe-3 ps-0 text-900"><a href="{% url 'order_invoice_store' order_detail.0.order_id %}"><span class="fas fa-file-invoice"></span> Invoice</a></button>
                         <button class="btn px-3 text-900"><a href="{% url 'order_payment_status_change' order_detail.0.order_id '3' %}"><span class="fas fa-undo me-2"></span>Refund</a></button>
-                        <div class="dropdown">
-                            <button aria-expanded="false"
-                                    class="btn text-900 dropdown-toggle dropdown-caret-none ps-3 pe-0"
-                                    data-bs-toggle="dropdown" type="button">More action<span
-                                    class="fas fa-chevron-down ms-2"></span></button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item">Action</a></li>
-                                <li><a class="dropdown-item">Another action</a></li>
-                                <li><a class="dropdown-item">Something else here</a></li>
-                            </ul>
-                        </div>
+
                     </div>
                 </div>
                 <div class="row g-5 gy-7">
@@ -179,7 +169,7 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4">{{order_detail.0.customer_name}}</a>
+                                        <a class="fs--1 ms-4" href="{% url 'view_store_customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"

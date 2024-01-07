@@ -242,6 +242,25 @@ def request_delivery_status_change(request_id, status, updated_by):
                                                 last_updated_by = {updated_by}, delivery_status = {status}
                                                 WHERE request_products_id = '{request_id}' """
             cursor.execute(update_stock_request_query)
+            if status == 2:
+                fetch_req_product_query = f"""SELECT * FROM request_products 
+                                        WHERE request_products_id = '{request_id}'"""
+                cursor.execute(fetch_req_product_query)
+                product_details = cursor.fetchone()
+                quantity = product_details[4]
+
+                update_store_Inventory = f"""INSERT INTO store_inventory 
+                                               (store_id, store_type, product_id, product_quantity, created_on, 
+                                               created_by, last_updated_on, last_updated_by) 
+                                               VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                                               ON DUPLICATE KEY UPDATE
+                                               product_quantity = product_quantity + {quantity}, 
+                                               last_updated_on = '{getIndianTime()}', 
+                                               last_updated_by = {updated_by}"""
+
+                cursor.execute(update_store_Inventory,
+                               (product_details[1], product_details[2], product_details[3],
+                                product_details[4], getIndianTime(), updated_by, getIndianTime(), updated_by))
             return {
                 "status": True,
                 "message": "updated delivery status"

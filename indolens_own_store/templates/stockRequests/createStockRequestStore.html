@@ -151,8 +151,6 @@
                                 </td>
                                 <td class="product align-middle ps-4"><a
                                         class="fw-semi-bold line-clamp-3 mb-0">{{product.product_name}} </a>
-                                    <p>From store: {{product.target_store_id}}</p>
-                                    <p>Product Id: {{product.product_id}}</p>
                                 </td>
                                 <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                     ₹{{product.sale_price}}
@@ -243,6 +241,7 @@
                                         <input  name="request_from_store_id" type="hidden" value="{{request.session.assigned_store_id}}"/>
                                         <input  name="created_by" type="hidden" value="{{request.session.id}}"/>
                                         <input  name="store_type" type="hidden" value="{{request.session.store_type}}"/>
+                                        <input  name="route" type="hidden" value="create_request_store"/>
 
                                         <div class="modal-footer">
                                             <button class="btn btn-primary" type="submit">Submit</button>

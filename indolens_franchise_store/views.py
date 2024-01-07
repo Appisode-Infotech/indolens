@@ -410,7 +410,6 @@ def makeSaleFranchiseStore(request):
             store_products, status_code = franchise_inventory_controller.get_all_products_for_store(
                 request.session.get('assigned_store_id'))
             customerResponse, cust_status_code = franchise_store_customers_controller.get_all_customers()
-            print(customerResponse)
             lens_response, lens_status_code = central_inventory_controller.get_central_inventory_lens(
                 request.session.get('assigned_store_id'))
 
