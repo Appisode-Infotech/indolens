@@ -3,6 +3,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
 from indolens_franchise_store.franchise_store_model.franchise_store_resp_model.franchise_store_inventory_product_resp_model import \
     get_franchise_store_inventory_stocks
 from indolens_own_store.own_store_controller.store_inventory_controller import getIndianTime
@@ -38,9 +39,18 @@ def get_all_out_of_stock_products_for_franchise_store(quantity, store_id):
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
+
+            get_product_category_query = f""" SELECT pc.* , creator.name, updater.name
+                                                FROM product_categories AS pc 
+                                                LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
+                                                LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id 
+                                                ORDER BY pc.category_id DESC"""
+            cursor.execute(get_product_category_query)
+            stores_data = cursor.fetchall()
             return {
                 "status": True,
-                "stocks_list": get_franchise_store_inventory_stocks(product_list)
+                "stocks_list": get_franchise_store_inventory_stocks(product_list),
+                "product_category": get_product_categories(stores_data)
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e), "stocks_list": []}, 301
@@ -71,9 +81,17 @@ def get_all_products_for_franchise_store(store_id):
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
+            get_product_category_query = f""" SELECT pc.* , creator.name, updater.name
+                                    FROM product_categories AS pc 
+                                    LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id 
+                                    ORDER BY pc.category_id DESC"""
+            cursor.execute(get_product_category_query)
+            stores_data = cursor.fetchall()
             return {
                 "status": True,
-                "stocks_list": get_franchise_store_inventory_stocks(product_list)
+                "stocks_list": get_franchise_store_inventory_stocks(product_list),
+                "product_category": get_product_categories(stores_data)
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

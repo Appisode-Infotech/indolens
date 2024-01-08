@@ -75,12 +75,19 @@ def franchiseOwnerLogout(request):
 def dashboard(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        franchise_store_new_order, status_code = franchise_store_dashboard_controller.get_order_stats('New', 2, request.session.get( 'assigned_store_id'))
+        franchise_store_new_order, status_code = franchise_store_dashboard_controller.get_order_stats('New', 2,
+                                                                                                      request.session.get(
+                                                                                                          'assigned_store_id'))
         franchise_store_delivered_orders, status_code = franchise_store_dashboard_controller.get_order_stats(
             'Completed', 2, request.session.get('assigned_store_id'))
-        franchise_store_sales, status_code = franchise_store_dashboard_controller.get_sales_stats(2, request.session.get('assigned_store_id'))
-        out_of_stock, status_code = franchise_inventory_controller.get_all_out_of_stock_products_for_franchise_store(15, request.session.get( 'assigned_store_id'))
-        orders_list, status_code = franchise_store_orders_controller.get_all_orders('All', 'All', request.session.get('assigned_store_id'))
+        franchise_store_sales, status_code = franchise_store_dashboard_controller.get_sales_stats(2,
+                                                                                                  request.session.get(
+                                                                                                      'assigned_store_id'))
+        out_of_stock, status_code = franchise_inventory_controller.get_all_out_of_stock_products_for_franchise_store(15,
+                                                                                                                     request.session.get(
+                                                                                                                         'assigned_store_id'))
+        orders_list, status_code = franchise_store_orders_controller.get_all_orders('All', 'All', request.session.get(
+            'assigned_store_id'))
         return render(request, 'franchise_dashboard.html',
                       {"franchise_store_new_order": franchise_store_new_order['count'],
                        "franchise_store_delivered_orders": franchise_store_delivered_orders['count'],
@@ -185,6 +192,19 @@ def orderDetailsFranchise(request, orderId):
         order_detail, status_code = franchise_store_orders_controller.get_order_details(orderId)
         print(order_detail)
         return render(request, 'orders/orderDetailsFranchise.html', {"order_detail": order_detail['orders_details']})
+    else:
+        return redirect('franchise_store_login')
+
+
+def orderInvoiceFranchise(request, orderId):
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        order_detail, status_code = franchise_store_orders_controller.get_order_details(orderId)
+        store_data, store_status_code = franchise_store_orders_controller.get_store_details(
+            order_detail['orders_details'][0]['created_by_store'],
+            order_detail['orders_details'][0]['created_by_store_type'])
+        return render(request, 'orders/franchise_order_invoice.html', {"order_detail": order_detail['orders_details'],
+                                                                       "store_data": store_data['store_data']})
     else:
         return redirect('franchise_store_login')
 
@@ -335,12 +355,12 @@ def viewRejectedStockRequestsFranchise(request):
         return redirect('franchise_store_login')
 
 
-
 def stockRequestDeliveryStatusChange(request, requestId, status):
-    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
         print(request)
         response, status_code = franchise_inventory_controller.request_delivery_status_change(requestId, status,
-                                                                                          request.session.get('id'))
+                                                                                              request.session.get('id'))
         print(response)
         return redirect('completed_franchise_store_stock_requests')
     else:
@@ -352,10 +372,11 @@ def stockRequestDeliveryStatusChange(request, requestId, status):
 def franchiseInventoryProducts(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        print( request.session.get('assigned_store_id'))
         response, status_code = franchise_inventory_controller.get_all_products_for_franchise_store(
             request.session.get('assigned_store_id'))
-        return render(request, 'inventory/franchiseInventoryProducts.html', {"stocks_list": response['stocks_list']})
+        return render(request, 'inventory/franchiseInventoryProducts.html', {"stocks_list": response['stocks_list'],
+                                                                             "categories_List": response[
+                                                                                 'product_category']})
     else:
         return redirect('franchise_store_login')
 
@@ -366,7 +387,9 @@ def inventoryOutOfStockFranchise(request):
         response, status_code = franchise_inventory_controller.get_all_out_of_stock_products_for_franchise_store(15,
                                                                                                                  request.session.get(
                                                                                                                      'assigned_store_id'))
-        return render(request, 'inventory/inventoryOutOfStockFranchise.html', {"stocks_list": response['stocks_list']})
+        return render(request, 'inventory/inventoryOutOfStockFranchise.html', {"stocks_list": response['stocks_list'],
+                                                                             "categories_List": response[
+                                                                                 'product_category']})
     else:
         return redirect('franchise_store_login')
 
@@ -405,7 +428,7 @@ def makeSaleFranchiseStore(request):
             return redirect(url)
         else:
             employee_list, emp_status_code = franchise_store_employee_controller.get_all_active_franchise_emp(
-            request.session.get('assigned_store_id'))
+                request.session.get('assigned_store_id'))
             lab_list, lab_status_code = franchise_store_lab_controller.get_all_active_labs()
             store_products, status_code = franchise_inventory_controller.get_all_products_for_store(
                 request.session.get('assigned_store_id'))

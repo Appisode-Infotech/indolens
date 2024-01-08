@@ -5,6 +5,7 @@ from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
+from indolens_own_store.own_store_model.response_model.store_resp_model import get_store
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
@@ -252,6 +253,34 @@ def franchise_payment_status_change(orderID, paymentStatus):
             return {
                        "status": True,
                    }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_store_details(storeId, storeType):
+    try:
+        with connection.cursor() as cursor:
+
+            if storeType == 1:
+                get_own_stores_query = f""" SELECT own_store.*
+                                                    FROM own_store
+                                                    WHERE own_store.store_id = '{storeId}' """
+                cursor.execute(get_own_stores_query)
+                stores_data = cursor.fetchall()
+
+            else:
+                get_franchise_stores_query = f""" SELECT franchise_store.* FROM franchise_store
+                                                    WHERE franchise_store.store_id = '{storeId}' """
+                cursor.execute(get_franchise_stores_query)
+                stores_data = cursor.fetchall()
+
+            return {
+                "status": True,
+                "store_data": get_store(stores_data)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

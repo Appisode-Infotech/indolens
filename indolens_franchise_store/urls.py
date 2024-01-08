@@ -31,6 +31,7 @@ urlpatterns = [
     path('cancelled_franchise_store_orders/', cancelledFranchiseOrders, name='cancelled_franchise_store_orders'),
     path('refunded_franchise_store_orders/', refundedFranchiseOrders, name='refunded_franchise_store_orders'),
     path('order_details_franchise_store/orderId=<str:orderId>', orderDetailsFranchise, name='order_details_franchise_store'),
+    path('order_invoice_franchise_store/orderId=<str:orderId>', orderInvoiceFranchise, name='order_invoice_franchise_store'),
     path('order_details_franchise_store/franchise_order_status_change/orderId=<str:orderId>/status=<str:status>',
          franchiseOrderStatusChange, name='franchise_order_status_change'),
     path('order_details_franchise_store/franchise_payment_status_change/orderId=<str:orderId>/status=<str:status>',
