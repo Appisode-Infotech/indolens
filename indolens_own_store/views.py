@@ -6,7 +6,7 @@ from rest_framework.reverse import reverse
 from indolens_admin.admin_controllers import central_inventory_controller, orders_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller, store_orders_controller, \
-    own_store_dashboard_controller, own_store_lab_controller
+    own_store_dashboard_controller, own_store_lab_controller, own_store_eye_test_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
     store_expense_model, store_create_stock_request_model
 
@@ -395,3 +395,39 @@ def makeSaleOwnStore(request):
                            "lab_list": lab_list['lab_list']})
     else:
         return redirect('own_store_login')
+
+
+# ================================= Eye Test ======================================
+
+def ownStoreEyeTest(request):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        if request.method == 'POST':
+            response = own_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
+                                                       request.session.get('assigned_store_id'))
+        customerResponse, cust_status_code = store_customers_controller.get_all_customers()
+        return render(request, 'ownStoreEyeTest/ownStoreEyeTest.html',
+                      {'customers_list': customerResponse['customers_list']})
+    else:
+        return redirect('own_store_login')
+
+
+def getOwnStoreEyeTest(request):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        response, status_code = own_store_eye_test_controller.get_eye_test()
+        print(response)
+        return render(request, 'ownStoreEyeTest/viewAllStoreEyeTest.html',
+                      {'eye_test_list': response['eye_test_list']})
+
+    else:
+        return redirect('own_store_login')
+
+def getOwnStoreEyeTestById(request, testId):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        response, status_code = own_store_eye_test_controller.get_eye_test_by_id(testId)
+        print(response)
+        return render(request, 'ownStoreEyeTest/viewAllStoreEyeTest.html',
+                      {'eye_test_list': response['eye_test']})
+
+    else:
+        return redirect('own_store_login')
+
