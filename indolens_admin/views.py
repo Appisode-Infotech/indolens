@@ -89,6 +89,19 @@ def resetPassword(request, code):
 
 def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        # Replace the placeholders with your email and SMTP server details
+        subject = "Hello, this is a test email"
+        body = "This is the body of the email."
+
+        to_email = "devsandy12@gmail.com"
+        smtp_server = "smtppro.zoho.in"
+        smtp_port = 465  # This might vary, check with your email provider
+        smtp_username = "santhoshkumar@accelstack.in"
+        smtp_password = "BJyZHHA4DeWr"
+
+        # Call the function to send the email
+        dashboard_controller.send_email(subject, body, to_email, smtp_server, smtp_port, smtp_username, smtp_password)
+
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
         sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
