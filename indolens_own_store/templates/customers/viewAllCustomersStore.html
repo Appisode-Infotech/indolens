@@ -82,7 +82,7 @@
                     </div>
                 </div>
 
-                <div data-list='{"valueNames":["customer","email","total-orders","total-spent","city","last-seen","last-order"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slNo","customer","email","language","totalOrders","totalSpent","city","lastOrder"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -97,8 +97,13 @@
                                 </div>
                             </div>
 
+                            <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                                <div class="btn-group position-static" role="group">
+
+                                </div>
+                            </div>
                             <div class="col-auto">
-                                <button class="btn btn-link text-900 me-4 px-0"><span
+                                <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
                                         class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                 </button>
                             </div>
@@ -106,13 +111,11 @@
                     </div>
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                         <div class="table-responsive scrollbar-overlay mx-n1 px-1">
-                            <table class="table table-sm fs--1 mb-0">
+                            <table class="table table-sm fs--1 mb-0" id="myTable">
                                 <thead>
                                 <tr>
-                                    <th class="white-space-nowrap fs--1 align-middle ps-0">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slNo" scope="col"
+                                        style="width:5%;">SL NO
                                     </th>
                                     <th class="sort align-middle pe-5" data-sort="customer" scope="col"
                                         style="width:10%;">CUSTOMER
@@ -120,31 +123,25 @@
                                     <th class="sort align-middle pe-5" data-sort="email" scope="col" style="width:20%;">
                                         EMAIL
                                     </th>
-                                    <th class="sort align-middle pe-5" data-sort="email" scope="col" style="width:20%;">
+                                    <th class="sort align-middle pe-5" data-sort="language" scope="col" style="width:20%;">
                                         LANGUAGE
                                     </th>
-                                    <th class="sort align-middle text-end" data-sort="total-orders" scope="col"
+                                    <th class="sort align-middle text-end" data-sort="totalOrders" scope="col"
                                         style="width:10%">ORDERS
                                     </th>
-                                    <th class="sort align-middle text-end ps-3" data-sort="total-spent" scope="col"
+                                    <th class="sort align-middle text-end ps-3" data-sort="totalSpent" scope="col"
                                         style="width:10%">TOTAL SPENT
                                     </th>
                                     <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
                                         CITY
                                     </th>
-                                    <th class="sort align-middle text-end pe-0" data-sort="last-order" scope="col"
-                                        style="width:10%;min-width: 150px;">LAST ORDER
-                                    </th>
+
                                 </tr>
                                 </thead>
                                 <tbody class="list" id="customers-table-body">
                                 {% for customer in store_customers_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                    <td class="fs--1 align-middle ps-0 py-3">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
-                                    </td>
+                                    <td class="fs--1 align-middle px-0 py-3 slNo"></td>
                                     <td class="customer align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
                                             href="{% url 'view_store_customer_details' customer.customer_id %}">
@@ -156,20 +153,19 @@
                                     </a></td>
                                     <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold">{{customer.email}}</a>
                                     </td>
-                                    <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-1000">
+                                    <td class="language align-middle white-space-nowrap fw-semi-bold text-1000">
                                         {{customer.language}}
                                     </td>
-                                    <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
+
+                                    <td class="totalOrders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
                                         {{customer.total_order_counts}}
                                     </td>
-                                    <td class="total-spent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
+                                    <td class="totalSpent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
                                         ₹ {{customer.total_spend}}
                                     </td>
                                     <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.city}}
                                     </td>
-                                    <td class="last-order align-middle white-space-nowrap text-700 text-end">Nov 18,
-                                        5:43 PM
-                                    </td>
+
                                 </tr>
                                 {% endfor %}
                                 </tbody>
@@ -233,6 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="{% static 'vendors/list.js/list.min.js' %}"></script>
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 
 </body>

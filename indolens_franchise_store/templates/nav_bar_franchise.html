@@ -62,6 +62,41 @@
                     </div>
                 </li>
 
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">Eye Test
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'franchise_store_eye_test' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'franchise_store_eye_test' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon">
+                            <i class="fas fa-eye"></i>
+                        </span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Eye Test</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'get_franchise_eye_test' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'get_franchise_eye_test' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon">
+                            <i class="fas fa-eye"></i>
+                        </span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">View Eye Test</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
                 <!--                inventory nav items-->
 
                 <li class="nav-item">
@@ -350,8 +385,8 @@
                                                      data-bs-toggle="" href="{% url 'view_franchise_store_employee' %}"
                                                      role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
-                                data-feather="employees"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">View Employee</span></span>
+                                data-feather="user"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Employees</span></span>
                         </div>
                     </a>
                     </div>

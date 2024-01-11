@@ -77,7 +77,7 @@
         <div class="content">
 
             <div class="col-12 col-xxl-6">
-                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slNo","product","price","category","brand","store","inStock","publishedOn"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -101,15 +101,12 @@
 
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0">
+                        <table class="table fs--1 mb-0" id="myTable">
                             <thead>
                             <tr>
-                                <th class="white-space-nowrap fs--1 align-middle"
-                                    style="max-width:20px; width:18px;">
-                                    <div class="form-check mb-0 fs-0">
-                                        <input class="form-check-input" type="checkbox"/>
-                                    </div>
-                                </th>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="SlNo"
+                                    scope="col" style="width:10%;">SL NO
+                                    </th>
                                 <th class="sort white-space-nowrap align-middle fs--2" scope="col"
                                     style="width:70px;"></th>
                                 <th class="sort white-space-nowrap align-middle fs--2" scope="col"
@@ -123,16 +120,16 @@
                                 <th class="sort align-middle ps-4" data-sort="category" scope="col"
                                     style="width:150px;">CATEGORY
                                 </th>
-                                <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                <th class="sort align-middle ps-4" data-sort="brand" scope="col"
                                     style="width:150px;">BRAND
                                 </th>
-                                <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                <th class="sort align-middle ps-4" data-sort="store" scope="col"
                                     style="width:150px;">STORE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="tags" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="inStock" scope="col"
                                     style="width:250px;">STORE STOCK
                                 </th>
-                                <th class="sort align-middle ps-4" data-sort="time" scope="col"
+                                <th class="sort align-middle ps-4" data-sort="publishedOn" scope="col"
                                     style="width:50px;">PUBLISHED ON
                                 </th>
                                 <th class="sort text-end align-middle pe-0 ps-4" scope="col"></th>
@@ -142,11 +139,7 @@
 
                             {% for product in product_list %}
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="fs--1 align-middle">
-                                    <div class="form-check mb-0 fs-0">
-                                        <input class="form-check-input" type="checkbox"/>
-                                    </div>
-                                </td>
+                                <td class="align-middle white-space-nowrap py-0 slNo"></td>
                                 <td class="fs--1 align-middle">
                                 </td>
                                 <td class="align-middle white-space-nowrap py-0">
@@ -167,10 +160,10 @@
                                 <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                     {{product.category_name}}
                                 </td>
-                                <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                     {{product.brand_name}}
                                 </td>
-                                <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                <td class="store align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                     {% if product.target_store_name == 0 %}
                                     CENTRAL INVENTORY
                                     {% else %}
@@ -178,14 +171,15 @@
                                     {% endif %}
                                 </td>
 
-                                <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+
+                                <td class="inStock align-middle white-space-nowrap fw-bold text-700 ps-4">
                                     {% if product.store_quantity == None %}
                                     0
                                     {% else %}
                                     {{product.store_quantity}}
                                     {% endif %}
                                 </td>
-                                <td class="time align-middle white-space-nowrap text-600 ps-4">
+                                <td class="publishedOn align-middle white-space-nowrap text-600 ps-4">
                                     {{product.created_on}}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end pe-0 ps-4">

@@ -56,13 +56,6 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -95,7 +88,7 @@
                     <li class="nav-item"><a class="nav-link filter" href="#filter-5">Delivered</a></li>
                     <li class="nav-item"><a class="nav-link filter" href="#filter-6">Cancelled</a></li>
                 </ul>
-                <div data-list='{"valueNames":["slno","order","total","customer","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on","date"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slno","order","total","customer","payment_status","fulfilment_status","createdby","created_on","updated_by","updated_on","date"],"page":10,"pagination":true}'
                      id="orderTable">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -135,7 +128,7 @@
                                     </div>
                                 </div>
                             </div>
-                                    <button class="btn btn-link text-900 me-4 px-0 ms-4"><span
+                                    <button id= "btnExport" class="btn btn-link text-900 me-4 px-0 ms-4"><span
                                             class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                     </button>
                                 </div>
@@ -167,7 +160,7 @@
                                         scope="col" style="width:12%; min-width: 200px;">ORDER
                                         STATUS
                                     </th>
-                                    <th class="sort align-middle text-start" data-sort="created_by" scope="col"
+                                    <th class="sort align-middle text-start" data-sort="createdby" scope="col"
                                         style="width:30%;">CREATED BY
                                     </th>
                                     <th class="sort align-middle text-start" data-sort="created_on" scope="col"
@@ -252,7 +245,7 @@
                                         {% endif %}
 
                                     </td>
-                                    <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <td class="createdby align-middle white-space-nowrap text-900 fs--1 text-start">
                                         <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
                                     </td>
                                     <td class="created_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">

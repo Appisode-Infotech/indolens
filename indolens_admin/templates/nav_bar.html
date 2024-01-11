@@ -263,6 +263,29 @@
                     </div>
                 </li>
 
+                <!--Eye Test nav item-->
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">Eye Test
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'eye_test' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'eye_test' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon">
+                            <i class="fas fa-eye"></i>
+                        </span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">View Eye Test</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
                 <!--                orders management nav item-->
                 <li class="nav-item">
                     <!-- label-->

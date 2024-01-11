@@ -447,6 +447,9 @@ urlpatterns = [
     path('manage_lab_technician/add_lab_technician_doc/LabTechnicianId=<int:LabTechnicianId>',
                  addLabTechnicianDocuments, name='add_lab_technician_doc'),
 
+    path('eye_test/', ViewAllEyeTest, name='eye_test'),
+    path('eye_test_by_id/testId=<int:testId>', getEyeTestById, name='eye_test_by_id'),
+
 
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -7,6 +7,9 @@
               document.querySelector('body').classList.add(`navbar-${navbarStyle}`);
             }
 
+
+
+
     </script>
     <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
         <!-- scrollbar removed-->
@@ -60,6 +63,42 @@
                     </a>
                     </div>
                 </li>
+
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">Eye Test
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'own_store_eye_test' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'own_store_eye_test' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon">
+                            <i class="fas fa-eye"></i>
+                        </span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Eye Test</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'get_eye_test' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'get_eye_test' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon">
+                            <i class="fas fa-eye"></i>
+                        </span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">View Eye Test</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
 
                 <!--                inventory nav items-->
 
@@ -202,7 +241,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'all_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'all_store_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'all_store_orders' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="shopping-bag"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">All Orders</span></span>
@@ -216,7 +256,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'new_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'new_store_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'new_store_orders' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-circle"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">New Orders</span></span>
@@ -242,7 +283,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'ready_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'ready_store_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'ready_store_orders' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Ready Orders</span></span>
@@ -256,7 +298,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'dispatched_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'dispatched_store_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'dispatched_store_orders' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Dispatched Orders</span></span>
@@ -280,7 +323,6 @@
                 </li>
 
 
-
                 <li class="nav-item">
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
@@ -299,7 +341,8 @@
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
                                                      class="nav-link label-1 {% if 'refunded_store_orders' in request.path %}active{% endif %}"
-                                                     data-bs-toggle="" href="{% url 'refunded_store_orders' %}" role="button">
+                                                     data-bs-toggle="" href="{% url 'refunded_store_orders' %}"
+                                                     role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="refresh-cw"></span></span><span class="nav-link-text-wrapper"><span
                                 class="nav-link-text">Refunded Orders</span></span>

@@ -6,7 +6,7 @@ from rest_framework.reverse import reverse
 from indolens_admin.admin_controllers import central_inventory_controller, orders_controller
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller, store_orders_controller, \
-    own_store_dashboard_controller, own_store_lab_controller
+    own_store_dashboard_controller, own_store_lab_controller, own_store_eye_test_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
     store_expense_model, store_create_stock_request_model
 
@@ -112,6 +112,13 @@ def viewEmployees(request, employeeId):
     else:
         return redirect('own_store_login')
 
+def viewFranchiseEmployees(request, employeeId):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        response, status_code = store_employee_controller.get_franchise_employee_by_id(employeeId)
+        return render(request, 'ownEmployee/viewEmployee.html', {"store_employee": response['store_employee']})
+    else:
+        return redirect('own_store_login')
+
 
 # ================================= OWN STORE ORDER MANAGEMENT ======================================
 def allStoreOrders(request):
@@ -195,6 +202,19 @@ def orderDetails(request, orderId):
         return redirect('own_store_login')
 
 
+def orderInvoice(request, orderId):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        order_detail, status_code = orders_controller.get_order_details(orderId)
+        store_data, store_status_code = orders_controller.get_store_details(
+            order_detail['orders_details'][0]['created_by_store'],
+            order_detail['orders_details'][0]['created_by_store_type'])
+        print(store_data['store_data'])
+        return render(request, 'orders/store_order_invoice.html', {"order_detail": order_detail['orders_details'],
+                                                                   "store_data": store_data['store_data']})
+    else:
+        return redirect('own_store_login')
+
+
 def orderStatusChange(request, orderId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_update, status_code = store_orders_controller.order_status_change(orderId, status)
@@ -252,7 +272,8 @@ def createStockRequestStore(request):
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
             response = store_inventory_controller.create_store_stock_request(stock_obj)
-            return redirect('create_request_store')
+            route = request.POST.get('route')
+            return redirect(route)
         else:
             response, status_code = store_inventory_controller.get_all_central_inventory_products(
                 request.session.get('assigned_store_id'))
@@ -304,10 +325,8 @@ def viewRejectedStockRequestsStore(request):
 
 def stockRequestDeliveryStatusChange(request, requestId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        print(request)
         response, status_code = store_inventory_controller.request_delivery_status_change(requestId, status,
                                                                                           request.session.get('id'))
-        print(response)
         return redirect('completed_store_stock_requests')
     else:
         return redirect('own_store_login')
@@ -319,7 +338,9 @@ def storeInventoryProducts(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.get_all_products_for_store(
             request.session.get('assigned_store_id'))
-        return render(request, 'inventory/storeInventoryProducts.html', {"stocks_list": response['stocks_list']})
+        return render(request, 'inventory/storeInventoryProducts.html', {"stocks_list": response['stocks_list'],
+                                                                         "categories_List": response[
+                                                                             'product_category']})
     else:
         return redirect('own_store_login')
 
@@ -329,7 +350,8 @@ def inventoryOutOfStock(request):
         response, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15,
                                                                                                    request.session.get(
                                                                                                        'assigned_store_id'))
-        return render(request, 'inventory/inventoryOutOfStock.html', {"stocks_list": response['stocks_list']})
+        return render(request, 'inventory/inventoryOutOfStock.html', {"stocks_list": response['stocks_list'],
+                                                                      "categories_List": response['product_category']})
     else:
         return redirect('own_store_login')
 
@@ -357,11 +379,9 @@ def makeSaleOwnStore(request):
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
-            print(billingDetailsData)
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),
                                                                    request.session.get('assigned_store_id'))
-            print(make_order)
             url = reverse('order_details_store', kwargs={'orderId': make_order['order_id']})
             return redirect(url)
         else:
@@ -382,3 +402,39 @@ def makeSaleOwnStore(request):
                            "lab_list": lab_list['lab_list']})
     else:
         return redirect('own_store_login')
+
+
+# ================================= Eye Test ======================================
+
+def ownStoreEyeTest(request):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        if request.method == 'POST':
+            response = own_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
+                                                       request.session.get('assigned_store_id'))
+        customerResponse, cust_status_code = store_customers_controller.get_all_customers()
+        return render(request, 'ownStoreEyeTest/ownStoreEyeTest.html',
+                      {'customers_list': customerResponse['customers_list']})
+    else:
+        return redirect('own_store_login')
+
+
+def getOwnStoreEyeTest(request):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        response, status_code = own_store_eye_test_controller.get_eye_test()
+        print(response)
+        return render(request, 'ownStoreEyeTest/viewAllStoreEyeTest.html',
+                      {'eye_test_list': response['eye_test_list']})
+
+    else:
+        return redirect('own_store_login')
+
+def getOwnStoreEyeTestById(request, testId):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        response, status_code = own_store_eye_test_controller.get_eye_test_by_id(testId)
+        print(response)
+        return render(request, 'ownStoreEyeTest/viewAllStoreEyeTest.html',
+                      {'eye_test_list': response['eye_test']})
+
+    else:
+        return redirect('own_store_login')
+
