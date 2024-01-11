@@ -27,7 +27,7 @@ def add_eye_test(customerData, created_by, store_id):
                                                 '{customerData.get('customer_age')}','{customerData.get('customer_phone')}',
                                                 '{customerData.get('customer_email')}','{customerData.get('customer_language')}',
                                                 '{customerData.get('customer_city')}','{customerData.get('customer_address')}',
-                                                {created_by},{store_id}, 1, '{today}',{created_by},{store_id},'1', 
+                                                {created_by},{store_id}, 1, '{today}',{created_by},{store_id},'2', 
                                                 '{today}')
                                                 ON DUPLICATE KEY UPDATE 
                                                 `name` = '{customerData.get('customer_name')}', 
@@ -39,7 +39,7 @@ def add_eye_test(customerData, created_by, store_id):
                                                 `address` = '{customerData.get('customer_address')}', 
                                                 `updated_by_employee_id` = {created_by}, 
                                                 `updated_by_store_id` = {store_id}, 
-                                                `updated_by_store_type` = 1, 
+                                                `updated_by_store_type` = 2, 
                                                 `updated_on` = '{today}' """
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
@@ -50,7 +50,8 @@ def add_eye_test(customerData, created_by, store_id):
 
             add_eye_test_query = f""" INSERT INTO eye_test (customer_id, power_attributes, 
             created_by_store_id, created_by_store_type, created_by, created_on, updated_by, updated_on)
-            VALUES({customer_id}, '{json.dumps(power_attributes)}', {store_id},1, {created_by}, '{today}', {created_by}, '{today}')"""
+            VALUES({customer_id}, '{json.dumps(power_attributes)}', {store_id},2, {created_by}, '{today}', {created_by}, 
+            '{today}')"""
             cursor.execute(add_eye_test_query)
 
             return {

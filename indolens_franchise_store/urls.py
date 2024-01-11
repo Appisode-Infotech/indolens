@@ -20,6 +20,8 @@ urlpatterns = [
     path('view_franchise_store_employee/', viewAllEmployeFranchise, name='view_franchise_store_employee'),
     path('view_franchise_store_employee/view_franchise_store_employee_details/employeeId=<int:employeeId>', viewEmployeeDetailsFranchise,
          name='view_franchise_store_employee_details'),
+    path('view_franchise_store_employee/view_own_store_employee_details/employeeId=<int:employeeId>', viewEmployeeDetailsOwn,
+         name='view_own_store_employee_details'),
 
     # orders management
     path('all_franchise_store_orders/', allFranchiseOrders, name='all_franchise_store_orders'),
@@ -57,4 +59,8 @@ urlpatterns = [
     # Make sale
     path('franchise_store_make_sale/', makeSaleFranchiseStore, name='franchise_store_make_sale'),
     path('all_expenses_franchise_store/', allExpenseFranchise, name='all_expenses_franchise_store'),
+
+    path('franchise_store_eye_test/', franchiseStoreEyeTest, name='franchise_store_eye_test'),
+    path('get_franchise_eye_test/', getfranchiseStoreEyeTest, name='get_franchise_eye_test'),
+    path('get_franchise_eye_test_by_id/testId=<int:testId>', getfranchiseStoreEyeTestById, name='get_franchise_eye_test_by_id'),
 ]

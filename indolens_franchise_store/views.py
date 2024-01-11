@@ -7,7 +7,7 @@ from indolens_admin.admin_controllers import central_inventory_controller
 from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
     franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller, \
     franchise_store_employee_controller, franchise_store_orders_controller, franchise_store_dashboard_controller, \
-    franchise_store_lab_controller
+    franchise_store_lab_controller, franchise_store_eye_test_controller
 from indolens_franchise_store.franchise_store_model.franchise_store_req_model import franchise_store_employee_model, \
     franchise_expense_model, franchise_create_stock_request_model
 
@@ -290,6 +290,16 @@ def viewEmployeeDetailsFranchise(request, employeeId):
         return redirect('franchise_store_login')
 
 
+def viewEmployeeDetailsOwn(request, employeeId):
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        response, status_code = franchise_store_employee_controller.get_own_store_employee_by_id(employeeId)
+        print(response)
+        return render(request, 'employee/viewEmployee.html',
+                      {"franchise_employee": response['franchise_employee']})
+    else:
+        return redirect('franchise_store_login')
+
+
 # ================================= FRANCHISE STORE STOCK REQUESTS MANAGEMENT ======================================
 
 def createStockRequestFranchise(request):
@@ -443,5 +453,41 @@ def makeSaleFranchiseStore(request):
                            "contact_lens_list": lens_response['contact_lens_list'],
                            "employee_list": employee_list['active_employee_list'],
                            "lab_list": lab_list['lab_list']})
+    else:
+        return redirect('franchise_store_login')
+
+
+# ================================= Eye Test ======================================
+
+def franchiseStoreEyeTest(request):
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        if request.method == 'POST':
+            response = franchise_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
+                                                       request.session.get('assigned_store_id'))
+        customerResponse, cust_status_code = franchise_store_customers_controller.get_all_customers()
+        print(customerResponse)
+        return render(request, 'franchiseStoreEyeTest/franchiseStoreEyeTest.html',
+                      {'customers_list': customerResponse['customers_list']})
+    else:
+        return redirect('franchise_store_login')
+
+
+def getfranchiseStoreEyeTest(request):
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        response, status_code = franchise_store_eye_test_controller.get_eye_test()
+        print(response)
+        return render(request, 'franchiseStoreEyeTest/viewAllStoreEyeTest.html',
+                      {'eye_test_list': response['eye_test_list']})
+
+    else:
+        return redirect('franchise_store_login')
+
+def getfranchiseStoreEyeTestById(request, testId):
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        response, status_code = franchise_store_eye_test_controller.get_eye_test_by_id(testId)
+        print(response)
+        return render(request, 'franchiseStoreEyeTest/viewAllStoreEyeTest.html',
+                      {'eye_test_list': response['eye_test']})
+
     else:
         return redirect('franchise_store_login')

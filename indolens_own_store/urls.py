@@ -17,6 +17,8 @@ urlpatterns = [
     # manage store Employee
     path('manage_store_employees/', manageStoreEmployees, name='manage_store_employees'),
     path('manage_store_employees/view_employee/employeeId=<int:employeeId>', viewEmployees, name='view_employee'),
+
+    path('manage_store_employees/view_franchise_employee/employeeId=<int:employeeId>', viewFranchiseEmployees, name='view_franchise_employee'),
     # Manage customers
     path('view_store_customers/', viewStoreCustomers, name='view_store_customers'),
     path('view_store_customers/view_store_customer_details/customerId=<int:customerId>', viewStoreCustomerDetails,
@@ -51,7 +53,6 @@ urlpatterns = [
     # Make sale
     path('own_store_make_sale/', makeSaleOwnStore, name='own_store_make_sale'),
     path('all_expenses_store/', allExpenseStore, name='all_expenses_store'),
-
 
     path('own_store_eye_test/', ownStoreEyeTest, name='own_store_eye_test'),
     path('get_eye_test/', getOwnStoreEyeTest, name='get_eye_test'),

@@ -103,7 +103,7 @@
 
                                 </div>
                             </div>
-                            <div class="col-auto">
+                            <div id= "btnExport" class="col-auto">
                                 <button class="btn btn-link text-900 me-4 px-0"><span
                                         class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                 </button>
@@ -117,6 +117,9 @@
                                 <tr>
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="slNo" scope="col"
                                         style="width:5%;">SL NO
+                                    </th>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slNo" scope="col"
+                                        style="width:5%;">Test NO
                                     </th>
                                     <th class="sort align-middle pe-5" data-sort="customer" scope="col"
                                         style="width:10%;">CUSTOMER
@@ -161,14 +164,22 @@
                                     <td class="power align-middle white-space-nowrap pe-5"><a class="fw-semi-bold">{{test.power_attributes}}</a>
                                     </td>
                                     <td class="createdBy align-middle white-space-nowrap fw-semi-bold text-1000">
-                                        {{test.creator_name}}
+                                        {% if test.created_by_store_type == 1 %}
+                                        <a href="{% url 'view_employee' test.created_by %}">{{test.creator_name}}</a>
+                                        {% else %}
+                                        <a href="{% url 'view_franchise_employee' test.created_by %}">{{test.creator_name}}</a>
+                                        {% endif %}
                                     </td>
 
                                     <td class="createdOn align-middle white-space-nowrap fw-semi-bold text-end text-1000">
                                         {{test.created_on}}
                                     </td>
                                     <td class="updatedBy align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
-                                        {{test.updater_name}}
+                                        {% if test.created_by_store_type == 1 %}
+                                        <a href="{% url 'view_employee' test.created_by %}">{{test.creator_name}}</a>
+                                        {% else %}
+                                        <a href="{% url 'view_franchise_employee' test.created_by %}">{{test.creator_name}}</a>
+                                        {% endif %}
                                     </td>
                                     <td class="updatedOn align-middle white-space-nowrap text-1000 ps-7">
                                         {{test.updated_on}}
@@ -238,6 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="{% static 'vendors/list.js/list.min.js' %}"></script>
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 
 </body>

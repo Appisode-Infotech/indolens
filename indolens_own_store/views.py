@@ -112,6 +112,13 @@ def viewEmployees(request, employeeId):
     else:
         return redirect('own_store_login')
 
+def viewFranchiseEmployees(request, employeeId):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        response, status_code = store_employee_controller.get_franchise_employee_by_id(employeeId)
+        return render(request, 'ownEmployee/viewEmployee.html', {"store_employee": response['store_employee']})
+    else:
+        return redirect('own_store_login')
+
 
 # ================================= OWN STORE ORDER MANAGEMENT ======================================
 def allStoreOrders(request):
