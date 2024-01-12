@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en-US" dir="ltr">
+
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens Customer - Track Order</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- Stylesheets -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+    </script>
+  </head>
+
+
+  <body>
+
+    <!-- ===============================================-->
+    <!--    Main Content-->
+    <!-- ===============================================-->
+    <main class="main" id="top">
+
+
+      <!-- ============================================-->
+      <!-- <section> begin ============================-->
+      <section class="pt-5 pb-9">
+
+        <div class="container-small cart">
+          <div class="d-flex flex-wrap justify-content-between align-items-end mb-5">
+            <div>
+              <h2>Order {{order_detail.0.order_id}} Status</h2>
+              <p class="text-800 mb-0">Order Date: <span class="ms-sm-1">{{order_detail.0.created_on}}</span></p>
+            </div>
+            <button class="btn btn-outline-primary mt-3"><span class="fa-solid fa-phone me-2"></span>Call Support</button>
+          </div>
+          <div class="row g-9">
+            <div class="col-12 col-lg-6">
+              <div class="border border-300 rounded-3 overflow-hidden h-100">
+                <div class="googlemap h-100 min-vh-50" data-googlemap data-latlng="40.7228022,-74.0020158" data-scrollwheel="false" data-zoom="15"></div>
+              </div>
+            </div>
+
+            <div class="col-12 col-lg-6">
+              <div class="timeline-vertical">
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
+                        <p class="fs--2 fw-semi-bold text-700 mb-0">23 August, 2023<br class="d-none d-md-block"> 10:30 AM</p>
+                      </div>
+                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
+                        <div class="icon-item icon-item-sm bg-success dark__bg-success"><span class="fa-solid fa-check text-white dark__text-white fs--2"></span></div><span class="timeline-bar border-end border-success"></span>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Order is processing</h4>
+                        <p class="fs--1 text-800 mb-0">Your package is ready for the seller to prepare.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
+                        <p class="fs--2 fw-semi-bold text-700 mb-0">25 August, 2023<br class="d-none d-md-block"> 11:30 AM</p>
+                      </div>
+                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
+                        <div class="icon-item icon-item-sm bg-success dark__bg-success"><span class="fa-solid fa-check text-white dark__text-white fs--2"></span></div><span class="timeline-bar border-end border-warning"></span>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Picked Up</h4>
+                        <p class="fs--1 text-800 mb-0">Your package has been picked up from the seller.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
+                        <p class="fs--2 fw-semi-bold text-700 mb-0">27 August, 2023<br class="d-none d-md-block"> 6:30 AM</p>
+                      </div>
+                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
+                        <div class="icon-item icon-item-sm bg-warning dark__bg-warning"><span class="fa-solid fa-truck-ramp-box text-white dark__text-white fs--2"></span></div><span class="timeline-bar border-end border-dashed border-400"></span>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Ready to Ship</h4>
+                        <p class="fs--1 text-800 mb-0">Your package is now ready to be shipped.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
+                        <p class="fs--2 fw-semi-bold text-700 mb-0">Estimated time<br class="d-none d-md-block"> 29 August, 2023</p>
+                      </div>
+                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
+                        <div class="icon-item icon-item-sm bg-400"><span class="fa-solid fa-truck text-white dark__text-white fs--2"></span></div><span class="timeline-bar border-end border-dashed border-400"></span>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Shipped</h4>
+                        <p class="fs--1 text-800 mb-0">Pending</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div class="timeline-item">
+                  <div class="row g-md-3 align-items-center">
+                    <div class="col-12 col-md-auto d-flex">
+                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
+                        <p class="fs--2 fw-semi-bold text-700 mb-0">Estimated time<br class="d-none d-md-block"> 30 August, 2023</p>
+                      </div>
+                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
+                        <div class="icon-item icon-item-sm bg-400"><span class="fa-solid fa-truck-fast text-white dark__text-white fs--2"></span></div>
+                      </div>
+                    </div>
+                    <div class="col">
+                      <div class="timeline-item-content ps-6 ps-md-3">
+                        <h4>Delivered</h4>
+                        <p class="fs--1 text-800 mb-0">Pending</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </section>
+    </main>
+    <!-- ===============================================-->
+    <!--    End of Main Content-->
+    <!-- ===============================================-->
+
+
+    <!-- ===============================================-->
+    <!--    JavaScripts-->
+    <!-- ===============================================-->
+  <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+  <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+  <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+  <script src="{% static 'vendors/is/is.min.js' %}"></script>
+  <script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+  <script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+  <script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+  <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+  <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+  <script src="{% static 'js/phoenix.js' %}"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARdVcREeBK44lIWnv5-iPijKqvlSAVwbw&callback=initMap" async></script>
+
+  </body>
+
+</html>

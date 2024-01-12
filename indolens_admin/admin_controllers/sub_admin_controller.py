@@ -6,6 +6,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.sub_admin_resp_model import get_sub_admin
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -30,6 +31,13 @@ def create_sub_admin(sub_admin, files):
             """
 
             cursor.execute(insert_admin_query)
+
+            subject = email_template_controller.get_employee_creation_email_subject()
+            body = email_template_controller.get_employee_creation_email_body(sub_admin.full_name, 'Sub-Admin',
+                                                                              sub_admin.email,
+                                                                              sub_admin.password)
+            send_notification_controller.send_email(subject, body, sub_admin.email)
+
             said = cursor.lastrowid
 
             return {

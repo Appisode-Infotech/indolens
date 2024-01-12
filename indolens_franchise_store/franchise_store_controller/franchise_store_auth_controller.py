@@ -69,6 +69,20 @@ def login(store_ob):
         return {"status": False, "message": str(e)}, 301
 
 
+def get_assigned_store(employee_id):
+    try:
+        with connection.cursor() as cursor:
+            get_assigned_store = f"""SELECT assigned_store_id FROM franchise_store_employees 
+                                WHERE employee_id = '{employee_id}'"""
+            cursor.execute(get_assigned_store)
+            assigned_store = cursor.fetchone()
+            return assigned_store[0]
+
+    except pymysql.Error as e:
+        return 0
+    except Exception as e:
+        return 0
+
 def forgot_password(email):
     try:
         with connection.cursor() as cursor:

@@ -289,6 +289,7 @@ urlpatterns = [
     path('cancelled_orders/store=<str:store>', viewCancelledOrders, name='cancelled_orders'),
     path('refunded_orders/store=<str:store>', viewRefundedOrders, name='refunded_orders'),
     path('order_details/orderId=<str:orderId>', viewOrderDetails, name='order_details'),
+    path('order_invoice/orderId=<str:orderId>', orderInvoice, name='order_invoice'),
     path('view_order_creator/employeeID=<int:employeeID>/storeType=<int:storeType>', viewOrderCreator, name='view_order_creator'),
 
     # labs
@@ -449,6 +450,8 @@ urlpatterns = [
 
     path('eye_test/', ViewAllEyeTest, name='eye_test'),
     path('eye_test_by_id/testId=<int:testId>', getEyeTestById, name='eye_test_by_id'),
+
+
 
 
 ]

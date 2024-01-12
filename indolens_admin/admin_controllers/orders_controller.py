@@ -5,6 +5,7 @@ from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
+from indolens_own_store.own_store_model.response_model.order_track import order_track
 from indolens_own_store.own_store_model.response_model.store_resp_model import get_store
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -270,6 +271,26 @@ def get_store_details(storeId, storeType):
             return {
                 "status": True,
                 "store_data": get_store(stores_data)
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_order_track(orderId):
+    try:
+        with connection.cursor() as cursor:
+            get_own_stores_query = f""" SELECT ot.*
+                                        FROM order_track AS ot
+                                        WHERE ot.order_id = '{orderId}' """
+            cursor.execute(get_own_stores_query)
+            stores_data = cursor.fetchall()
+
+            return {
+                "status": True,
+                "order_track": order_track(stores_data)
             }, 200
 
     except pymysql.Error as e:

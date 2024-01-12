@@ -6,6 +6,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.marketing_head_resp_model import get_marketing_heads
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -31,6 +32,13 @@ def create_marketing_head(marketing_head, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_marketing_head_query)
+
+            subject = email_template_controller.get_employee_creation_email_subject()
+            body = email_template_controller.get_employee_creation_email_body(marketing_head.fullName, 'Marketing Head',
+                                                                              marketing_head.email,
+                                                                              marketing_head.password)
+            send_notification_controller.send_email(subject, body, marketing_head.email)
+
             mhid = cursor.lastrowid
 
             return {

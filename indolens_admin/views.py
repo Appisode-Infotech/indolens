@@ -90,17 +90,11 @@ def resetPassword(request, code):
 def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         # Replace the placeholders with your email and SMTP server details
-        subject = "Hello, this is a test email"
-        body = "This is the body of the email."
+        # subject = "Hello, this is a test email"
+        # body = "This is the body of the email."
+        # to_email = "devsandy12@gmail.com"
 
-        to_email = "devsandy12@gmail.com"
-        smtp_server = "smtppro.zoho.in"
-        smtp_port = 465  # This might vary, check with your email provider
-        smtp_username = "santhoshkumar@accelstack.in"
-        smtp_password = "BJyZHHA4DeWr"
-
-        # Call the function to send the email
-        dashboard_controller.send_email(subject, body, to_email, smtp_server, smtp_port, smtp_username, smtp_password)
+        # dashboard_controller.send_email(subject, body, to_email)
 
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
@@ -321,14 +315,17 @@ def createSubAdmin(request):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            
+
             sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
             response, status_code = sub_admin_controller.create_sub_admin(sub_admin, file_data)
-            url = reverse('view_sub_admin', kwargs={'subAdminId': response['said']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_sub_admin', kwargs={'subAdminId': response['said']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/subAdmin/createSubAdmin.html',
+                              {"message":"Something went wrong or email is already in use"})
 
         else:
-            print(request.session.get('id'))
             return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
     else:
         return redirect('login')
@@ -460,11 +457,13 @@ def createStoreManager(request):
             file_data = FileData(form_data)
 
             store_manager = store_employee_model.store_employee_from_dict(request.POST)
-            print(store_manager)
             response, status_code = store_manager_controller.create_store_manager(store_manager, file_data)
-            print(response)
-            url = reverse('view_store_manager', kwargs={'storeManagerId': response['mid']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_store_manager', kwargs={'storeManagerId': response['mid']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/storeManagers/createStoreManager.html',
+                              {"message": "Something went wrong or the email is already in use"})
 
         else:
             return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
@@ -611,8 +610,12 @@ def createFranchiseOwners(request):
 
             franchise_owner_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = franchise_manager_controller.create_franchise_owner(franchise_owner_obj, file_data)
-            url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': response['franchiseOwnersId']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': response['franchiseOwnersId']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html',
+                              {"message": "Something went wrong or the email is already in use"})
 
         else:
             return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html')
@@ -761,8 +764,12 @@ def createAreaHead(request):
             area_head = area_head_model.area_head_model_from_dict(request.POST)
             response, status_code = area_head_controller.create_area_head(area_head, file_data)
 
-            url = reverse('view_area_head', kwargs={'areaHeadId': response['areaHeadId']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_area_head', kwargs={'areaHeadId': response['areaHeadId']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/areaHead/createAreaHead.html',
+                              {"message": "Something went wrong or the email is already in use"})
 
         else:
             return render(request, 'indolens_admin/areaHead/createAreaHead.html')
@@ -896,8 +903,12 @@ def createMarketingHead(request):
             file_data = FileData(form_data)
             marketing_head_obj = marketing_head_model.marketing_head_model_from_dict(request.POST)
             response, status_code = marketing_head_controller.create_marketing_head(marketing_head_obj, file_data)
-            url = reverse('view_marketing_head', kwargs={'marketingHeadId': response['marketingHeadId']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_marketing_head', kwargs={'marketingHeadId': response['marketingHeadId']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html',
+                              {"message": "Something went wrong or the email is already in use"})
         else:
             return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html')
     else:
@@ -1035,8 +1046,12 @@ def createOptimetry(request):
             file_data = FileData(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.create_optimetry(optimetry_obj, file_data)
-            url = reverse('view_optimetry', kwargs={'ownOptimetryId': response['empid']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_optimetry', kwargs={'ownOptimetryId': response['empid']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/optimetry/createOptimetry.html',
+                              {"message": "Something went wrong or the email is already in use"})
         else:
             return render(request, 'indolens_admin/optimetry/createOptimetry.html')
     else:
@@ -1183,8 +1198,12 @@ def createFranchiseOptimetry(request):
             file_data = FileData(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.create_franchise_optimetry(optimetry_obj, file_data)
-            url = reverse('view_franchise_optimetry', kwargs={'franchiseOptimetryId': response['opid']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_franchise_optimetry', kwargs={'franchiseOptimetryId': response['opid']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/franchiseOptimetry/createOptimetry.html',
+                              {"message": "Something went wrong or the email is already in use"})
         else:
             return render(request, 'indolens_admin/franchiseOptimetry/createOptimetry.html')
     return redirect('login')
@@ -1327,8 +1346,12 @@ def createSaleExecutives(request):
             sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = sales_executives_controller.create_own_sales_executives(sales_executives_obj,
                                                                                             file_data)
-            url = reverse('view_sales_executives', kwargs={'ownSaleExecutivesId': response['seId']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_sales_executives', kwargs={'ownSaleExecutivesId': response['seId']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html',
+                              {"message": "Something went wrong or the email is already in use"})
         else:
             return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html')
     return redirect('login')
@@ -1474,9 +1497,13 @@ def createFranchiseSaleExecutives(request):
             sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = sales_executives_controller.create_franchise_sales_executives(sales_executives_obj,
                                                                                                   file_data)
-            url = reverse('view_franchise_sales_executives',
-                          kwargs={'franchiseSaleExecutivesId': response['franchiseSaleExecutivesId']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_franchise_sales_executives',
+                              kwargs={'franchiseSaleExecutivesId': response['franchiseSaleExecutivesId']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html',
+                              {"message": "Something went wrong or the email is already in use"})
         else:
             return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html')
     return redirect('login')
@@ -1624,8 +1651,12 @@ def createAccountant(request):
 
             accountant_obj = accountant_model.accountant_model_from_dict(request.POST)
             response, status_code = accountant_controller.create_accountant(accountant_obj, file_data)
-            url = reverse('view_accountant', kwargs={'accountantId': response['aid']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_accountant', kwargs={'accountantId': response['aid']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/accountant/createAccountant.html',
+                              {"message": "Something went wrong or the email is already in use"})
 
         else:
             return render(request, 'indolens_admin/accountant/createAccountant.html')
@@ -1761,8 +1792,12 @@ def createLabTechnician(request):
 
             lab_tech_obj = lab_technician_model.lab_technician_model_from_dict(request.POST)
             response, status_code = lab_technician_controller.create_lab_technician(lab_tech_obj, file_data)
-            url = reverse('view_lab_technician', kwargs={'labTechnicianId': response['ltid']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_lab_technician', kwargs={'labTechnicianId': response['ltid']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/labTechnician/createLabTechnician.html',
+                              {"message": "Something went wrong or the email is already in use"})
         else:
             return render(request, 'indolens_admin/labTechnician/createLabTechnician.html')
     else:
@@ -1896,8 +1931,12 @@ def createOtherEmployees(request):
             file_data = FileData(form_data)
             other_emp_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = other_employee_controller.create_other_employee(other_emp_obj, file_data)
-            url = reverse('view_other_employees', kwargs={'ownEmployeeId': response['empid']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_other_employees', kwargs={'ownEmployeeId': response['empid']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html',
+                              {"message": "Something went wrong or the email is already in use"})
         else:
             return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html', )
     else:
@@ -2042,8 +2081,12 @@ def createFranchiseOtherEmployees(request):
             file_data = FileData(form_data)
             other_emp_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = other_employee_controller.create_franchise_other_employee(other_emp_obj, file_data)
-            url = reverse('view_franchise_other_employees', kwargs={'franchiseEmployeeId': response['empid']})
-            return redirect(url)
+            if status_code == 200:
+                url = reverse('view_franchise_other_employees', kwargs={'franchiseEmployeeId': response['empid']})
+                return redirect(url)
+            else:
+                return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html',
+                              {"message": "Something went wrong or the email is already in use"})
         else:
             return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html', )
     else:
@@ -2215,6 +2258,18 @@ def viewOrderDetails(request, orderId):
         print(order_detail)
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
                       {"order_detail": order_detail['orders_details']})
+    else:
+        return redirect('login')
+
+
+def orderInvoice(request, orderId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        order_detail, status_code = orders_controller.get_order_details(orderId)
+        store_data, store_status_code = orders_controller.get_store_details(
+            order_detail['orders_details'][0]['created_by_store'],
+            order_detail['orders_details'][0]['created_by_store_type'])
+        return render(request, 'orders/store_order_invoice.html', {"order_detail": order_detail['orders_details'],
+                                                                   "store_data": store_data['store_data']})
     else:
         return redirect('login')
 
@@ -3583,7 +3638,6 @@ def ViewAllEyeTest(request):
 def getEyeTestById(request, testId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = eye_test_controller.get_eye_test_by_id(testId)
-        print(response)
         return render(request, 'indolens_admin/eyeTest/viewAllEyeTest.html',
                       {'eye_test_list': response['eye_test']})
 

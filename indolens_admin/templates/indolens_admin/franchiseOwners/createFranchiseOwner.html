@@ -75,6 +75,13 @@
         <div class="content">
 
             <h2 class="mb-4">Create a Franchise Owners</h2>
+            {% if message %}
+                    <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
+                        <strong>{{message}}</strong>
+
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+                    </div>
+                    {% endif %}
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'create_franchise_owner' %}"

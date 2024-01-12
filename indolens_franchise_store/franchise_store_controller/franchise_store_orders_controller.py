@@ -7,8 +7,10 @@ from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
 from indolens_own_store.own_store_model.response_model.store_resp_model import get_store
 
-ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
+def getIndianTime():
+    ist = pytz.timezone('Asia/Kolkata')
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_all_orders(status, pay_status, store_id):
     status_conditions = {
@@ -224,6 +226,11 @@ def franchise_order_status_change(orderID, orderStatus):
                 WHERE order_id = '{orderID}'
                 """
             cursor.execute(get_order_status_change_query)
+
+            add_order_track_query = f""" 
+                                        INSERT INTO order_track (order_id, status, created_on) 
+                                        VALUES ('{orderID}', {orderStatus}, '{getIndianTime()}' ) """
+            cursor.execute(add_order_track_query)
 
             return {
                        "status": True,

@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'indolens_lab',
     'indolens_marketing_head',
     'indolens_own_store',
+    'front_end_website',
 ]
 
 MIDDLEWARE = [

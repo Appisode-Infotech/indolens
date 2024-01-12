@@ -62,24 +62,3 @@ def get_sales_stats(store):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
-
-def send_email(subject, body, to_email, smtp_server, smtp_port, smtp_username, smtp_password):
-    # Create the MIME object
-    msg = MIMEMultipart()
-    msg['From'] = smtp_username
-    msg['To'] = to_email
-    msg['Subject'] = subject
-
-    # Attach the email body as plain text
-    msg.attach(MIMEText(body, 'plain'))
-
-    # Connect to the SMTP server
-    with smtplib.SMTP_SSL(smtp_server, smtp_port) as server:
-        # Login to the SMTP server
-        a = server.login(smtp_username, smtp_password)
-        print(a)
-        # Send the email
-        b = server.sendmail(smtp_username, to_email, msg.as_string())
-        print(b)
-
-    print("Email sent successfully.")
