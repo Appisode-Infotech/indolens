@@ -65,6 +65,8 @@
 
 
 
+
+
     </script>
 </head>
 
@@ -110,7 +112,8 @@
                             <div class="mb-3 text-start">
                                 <label class="form-label" for="email">Email address</label>
                                 <div class="form-icon-container">
-                                    <input class="form-control form-icon-input" id="email" name="email" placeholder="name@example.com"
+                                    <input class="form-control form-icon-input" id="email" name="email"
+                                           placeholder="name@example.com"
                                            required
                                            type="email"/><span
                                         class="fas fa-user text-900 fs--1 form-icon"></span>
@@ -118,16 +121,26 @@
 
                                 </div>
                             </div>
+
                             <div class="mb-3 text-start">
                                 <label class="form-label" for="password">Password</label>
-                                <div class="form-icon-container">
-                                    <input class="form-control form-icon-input" id="password" name="password"
-                                           placeholder="Password"
-                                           required type="password"/><span
-                                        class="fas fa-key text-900 fs--1 form-icon"></span>
-                                    <div class="invalid-feedback">Please provide a valid password.</div>
+                                <div class="input-group mb-3">
+
+                                    <input class="form-control" type="password" id="password" name="password" placeholder="Password">
+                                    <button id="togglePassword" type="button" class="input-group-text" id="basic-addon2"><i class="far fa-eye" id="togglePasswordIcon" ></i></button>
                                 </div>
                             </div>
+
+<!--                            <div class="mb-3 text-start">-->
+<!--                                <label class="form-label" for="password">Password</label>-->
+<!--                                <div class=" input-group form-icon-container">-->
+<!--                                    <input class="form-control form-icon-input" id="password" name="password"-->
+<!--                                           placeholder="Password"-->
+<!--                                           required type="password"/><span-->
+<!--                                        class="fas fa-key text-900 fs&#45;&#45;1 form-icon"></span>-->
+<!--                                    <div class="invalid-feedback">Please provide a valid password.</div>-->
+<!--                                </div>-->
+<!--                            </div>-->
                             <div class="row flex-between-center mb-7">
                                 <div class="col-auto">
                                     <div class="form-check mb-0">

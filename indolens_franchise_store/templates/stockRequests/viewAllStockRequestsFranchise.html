@@ -81,7 +81,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["SlNo","type","product","productId","quantity","price","requestDate","movedDAte","approvalStatus","deliveryStatus"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -103,41 +103,47 @@
                             </div>
                         </div>
                     </div>
-                    <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                    <div class="table-responsive scrollbar" >
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="SlNo"
+                                    scope="col" style="width:10%;">SL NO
+                                    </th>
+
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
                                     scope="col" style="width:30%;">STORE NAME
                                 </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="type"
                                     scope="col" style="width:30%;">STORE TYPE
                                 </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="product"
                                     scope="col" style="width:30%;">PRODUCT NAME
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="productId" scope="col" style="width:10%;">
                                     PRODUCT ID
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="quantity" scope="col" style="width:10%;">
                                     QUANTITY
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="price" scope="col" style="width:10%;">
                                     PRICE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="requestDate" scope="col" style="width:10%;">
                                     REQUESTED DATE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+
+                                <th class="sort align-middle ps-3" data-sort="movedDAte" scope="col" style="width:10%;">
                                     MOVED DATE
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
-                                    style="width:5%;">STATUS
+                                <th class="sort align-middle ps-3" data-sort="approvalStatus" scope="col"
+                                    style="width:5%;">APPROVAL STATUS
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="deliveryStatus" scope="col"
                                     style="width:5%;">DELIVERY STATUS
                                 </th>
 
@@ -147,12 +153,13 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for stock in stocks_request_list %}
                             <tr class="position-static">
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4">
+                                <td class="fs--1 align-middle px-0 py-3 SlNo"></td>
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 name">
                                     <p class="mb-0 fs--1 text-900"
                                         class="text-decoration-none fw-bold fs-0" >{{stock.store_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start py-4">
+                                <td class="align-middle white-space-nowrap py-4 type">
                                     {%if stock.store_type == 1%}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
                                     {% else %}
@@ -163,29 +170,29 @@
                                 <td class="product align-middle">
                                     <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 productId">
                                     <p class="mb-0 fs--1 text-900">{{stock.product_id}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 quantity">
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 price">
                                     <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 requestDate">
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 movedDAte">
                                     {% if stock.delivery_status == 2 %}
                                     <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">Not Delivered</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses">
+                                <td class="align-middle white-space-nowrap text-end approvalStatus">
                                     {% if stock.request_status == 0 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">PENDING</span>
@@ -197,7 +204,7 @@
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end statuses">
+                                <td class="align-middle white-space-nowrap text-end deliveryStatus">
                                     {% if stock.delivery_status == 0 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>
@@ -219,11 +226,14 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2">
-
-                                            <a class="dropdown-item text-success" href="#!">Accept</a>
+                                            <a class="dropdown-item">View</a>
+                                            {% if stock.request_status == 1 %}
                                             <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-danger" href="#!">Reject</a>
+                                            <a class="dropdown-item text-success"
+                                               href="{% url 'franchise_request_delivery_status_change' stock.request_products_id 2 %}">DELIVERED</a>
+                                            {% endif %}
                                         </div>
+                                    </div>
                                 </td>
 
                             </tr>

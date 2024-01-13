@@ -76,8 +76,7 @@
         {% include 'nav_bar.html' %}
         <div class="content">
             <form action="{% url 'update_product' product_data.product_id %}" class="mb-9 needs-validation"
-                  method="post" novalidate="novalidate"
-                  enctype="multipart/form-data">
+                  method="post" novalidate="novalidate">
                 {% csrf_token %}
                 <div class="row g-3 flex-between-end mb-5">
                     <div class="col-auto">

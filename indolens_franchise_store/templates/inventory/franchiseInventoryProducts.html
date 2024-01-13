@@ -62,6 +62,9 @@
 
 
 
+
+
+
     </script>
 </head>
 
@@ -85,16 +88,17 @@
                 </div>
 
                 <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                    <li class="nav-item"><a aria-current="page" class="nav-link active" href="#">All <span
-                            class="text-700 fw-semi-bold">(68817)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Frames <span
-                            class="text-700 fw-semi-bold">(70348)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Lens <span
-                            class="text-700 fw-semi-bold">(17)</span></a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Accessories<span
-                            class="text-700 fw-semi-bold">(810)</span></a></li>
+                    <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a></li>
+                    {% for category in categories_List %}
+                    {% if category.category_id != 2 and category.category_id != 3 %}
+                    <li class="nav-item">
+                        <a class="nav-link filter" href="#filter-{{ category.category_name }}">
+                            {{ category.category_name}}</a>
+                    </li>
+                    {% endif %}
+                    {% endfor %}
                 </ul>
-                <div data-list='{"valueNames":["product","price","category","tags","vendor","time"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["SlNo","product","price","category","brand","inStock","publishedOn"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -111,31 +115,11 @@
                             </div>
                             <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
                                 <div class="btn-group position-static" role="group">
-                                    <div class="btn-group position-static text-nowrap">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-phoenix-secondary px-7 flex-shrink-0"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown"
-                                                type="button">
-                                            Category<span class="fas fa-angle-down ms-2"></span></button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="#">Action</a></li>
-                                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                                            <li>
-                                                <hr class="dropdown-divider"/>
-                                            </li>
-                                            <li><a class="dropdown-item" href="#">Separated link</a></li>
-                                        </ul>
-                                    </div>
+
                                 </div>
                             </div>
-                            <!--                            <div class="col-auto"><a class="btn btn-primary px-5"-->
-                            <!--                                                     href="{% url 'add_products' %}"><i-->
-                            <!--                                    class="fa-solid fa-plus me-2"></i>Add Product</a></div>-->
                             <div class="col-auto">
-                                <button class="btn btn-link text-900 me-4 px-0"><span
+                                <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
                                         class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                 </button>
                             </div>
@@ -143,14 +127,11 @@
                     </div>
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                         <div class="table-responsive scrollbar mx-n1 px-1">
-                            <table class="table fs--1 mb-0">
+                            <table class="table fs--1 mb-0" id="myTable">
                                 <thead>
                                 <tr>
-                                    <th class="white-space-nowrap fs--1 align-middle"
-                                        style="max-width:20px; width:18px;">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="SlNo" scope="col"
+                                        style="width:5%;">SL NO
                                     </th>
                                     <th class="sort white-space-nowrap align-middle fs--2" scope="col"
                                         style="width:70px;"></th>
@@ -163,14 +144,14 @@
                                     <th class="sort align-middle ps-4" data-sort="category" scope="col"
                                         style="width:150px;">CATEGORY
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="brand" scope="col"
                                         style="width:150px;">BRAND
                                     </th>
 
-                                    <th class="sort align-middle ps-3" data-sort="tags" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="inStock" scope="col"
                                         style="width:250px;">IN STOCK
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="time" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="publishedOn" scope="col"
                                         style="width:50px;">PUBLISHED ON
                                     </th>
                                     <th class="sort text-end align-middle pe-0 ps-4" scope="col"></th>
@@ -178,60 +159,61 @@
                                 </thead>
                                 <tbody class="list" id="products-table-body">
                                 {% for stock in stocks_list %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                    <td class="fs--1 align-middle">
-                                        <div class="form-check mb-0 fs-0">
-                                            <input class="form-check-input" type="checkbox"/>
-                                        </div>
-                                    </td>
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                    data-category="{{ stock.category_name }}">
+                                    <td class="align-middle white-space-nowrap py-0 SlNo"></td>
+
                                     <td class="align-middle white-space-nowrap py-0">
                                         <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
-                                        <div class="avatar avatar-m">
-                                            <img alt="" class="rounded-circle"
-                                                 src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
-                                        </div>
-                                    </a>
+                                            <div class="avatar avatar-m">
+                                                <img alt="" class="rounded-circle"
+                                                     src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
+                                            </div>
+                                        </a>
                                     </td>
+
                                     <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!"> {{stock.product_name}}</a></td>
+                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!"> {{stock.product_name}}</a>
+                                    </td>
+
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
                                         {{stock.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.category_name}}
                                     </td>
-                                    <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                    <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.brand_name}}
                                     </td>
 
-                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                    <td class="inStock align-middle white-space-nowrap  fw-bold text-700 ps-4">
+                                        {% if stock.store_product_quantity == None%}
+                                        0
+                                        {% else %}
                                         {{stock.store_product_quantity}}
+                                        {% endif %}
                                     </td>
-                                    <td class="time align-middle white-space-nowrap text-600 ps-4">
+
+                                    <td class="publishedOn align-middle white-space-nowrap text-600 ps-4">
                                         {{stock.store_product_created_on}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
-                                        <div class="position-relative">
-                                            <div class="hover-actions">
-                                                <button class="btn btn-sm btn-phoenix-secondary me-1 fs--2">
-                                                    <span class="fas fa-check"></span></button>
-                                                <button class="btn btn-sm btn-phoenix-secondary fs--2"><span
-                                                        class="fas fa-trash"></span></button>
-                                            </div>
-                                        </div>
                                         <div class="font-sans-serif btn-reveal-trigger position-static">
                                             <button aria-expanded="false"
-                                                    aria-haspopup="true"
                                                     class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
                                                     data-boundary="window" data-bs-reference="parent"
                                                     data-bs-toggle="dropdown" type="button"><span
                                                     class="fas fa-ellipsis-h fs--2"></span></button>
-                                            <div class="dropdown-menu dropdown-menu-end py-2"><a
-                                                    class="dropdown-item" href="#!">Restock</a><a
-                                                    class="dropdown-item" href="#!">View</a><a
+                                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                                <a class="dropdown-item" data-bs-target="#verticallyCentered"
+                                                   data-bs-product-id="{{stock.product_id}}"
+                                                   data-bs-target-store-id="{{stock.target_store_id}}"
+                                                   data-bs-unit-cost="{{stock.franchise_sale_price}}"
+                                                   data-bs-toggle="modal">Request</a>
+                                                <a class="dropdown-item" href="#!">View</a><a
                                                     class="dropdown-item" href="#!">Export</a>
                                                 <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Remove</a>
+                                                <a class="dropdown-item text-danger" href="#!">Return</a>
                                             </div>
                                         </div>
                                     </td>
@@ -239,6 +221,63 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
+                        </div>
+                        <div aria-hidden="true" aria-labelledby="verticallyCenteredModalLabel" class="modal fade"
+                             id="verticallyCentered" tabindex="-1">
+                            <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="verticallyCenteredModalLabel">Request for
+                                            stock</h5>
+                                        <button aria-label="Close" class="btn p-1" data-bs-dismiss="modal"
+                                                type="button"><span class="fas fa-times fs--1"></span></button>
+                                    </div>
+                                    <div class="p-4 code-to-copy">
+                                        <form action="{% url 'create_request_franchise_store' %}" class="row g-3 needs-validation"
+                                              method='POST'
+                                              novalidate="">
+                                            {% csrf_token %}
+                                            <div class="col-12">
+
+                                                <label class="form-label" for="product_id">Product
+                                                    ID</label>
+
+                                                <input class="form-control" readonly id="product_id"
+                                                       required="" name="product_id"
+                                                       type="text"/>
+                                            </div>
+
+                                            <div class="col-12">
+
+                                                <label class="form-label" for="expense_reason">Request
+                                                    Quantity</label>
+
+                                                <input class="form-control" id="expense_reason" maxlength="256"
+                                                       required="" name="product_quantity"
+                                                       type="number" value=""/>
+                                                <div class="invalid-feedback">Enter valid quantity!</div>
+                                            </div>
+                                            <input id="request_to_store_id" name="request_to_store_id" type="hidden"/>
+                                            <input id="unit_cost" name="unit_cost" type="hidden"/>
+                                            <input name="request_from_store_id" type="hidden"
+                                                   value="{{request.session.assigned_store_id}}"/>
+                                            <input name="created_by" type="hidden" value="{{request.session.id}}"/>
+                                            <input name="store_type" type="hidden"
+                                                   value="{{request.session.store_type}}"/>
+                                            <input name="route" type="hidden" value="manage_store_inventory_products"/>
+
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary" type="submit">Submit</button>
+                                                <button class="btn btn-outline-primary" data-bs-dismiss="modal"
+                                                        type="button">
+                                                    Cancel
+                                                </button>
+                                            </div>
+                                        </form>
+                                    </div>
+
+                                </div>
+                            </div>
                         </div>
                         <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
                             <div class="col-auto d-flex">
@@ -281,6 +320,9 @@
 
 
 
+
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -301,7 +343,35 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/filter.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
 
 </body>
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var enableDisableButtons = document.querySelectorAll('[data-bs-target="#verticallyCentered"]');
+    var modal = document.getElementById('verticallyCentered');
+    var productIdField = modal.querySelector('#product_id');
+    var targetStoreField = modal.querySelector('#request_to_store_id');
+    var unitCostField = modal.querySelector('#unit_cost');
 
+    enableDisableButtons.forEach(function (button) {
+        button.addEventListener('click', function (event) {
+
+            var productId = event.currentTarget.getAttribute('data-bs-product-id');
+            var targetStore = event.currentTarget.getAttribute('data-bs-target-store-id');
+            var unitCost = event.currentTarget.getAttribute('data-bs-unit-cost');
+
+            productIdField.value = productId;
+            targetStoreField.value = targetStore;
+            unitCostField.value = unitCost;
+        });
+    });
+});
+
+
+
+</script>
 </html>

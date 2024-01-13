@@ -6,6 +6,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.accountant_resp_model import get_accountants
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -31,6 +32,13 @@ def create_accountant(accountant, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_accountant_query)
+
+            subject = email_template_controller.get_employee_creation_email_subject()
+            body = email_template_controller.get_employee_creation_email_body(accountant.name, 'Accountant',
+                                                                              accountant.email,
+                                                                              accountant.password)
+            send_notification_controller.send_email(subject, body, accountant.email)
+
             aid = cursor.lastrowid
 
             return {

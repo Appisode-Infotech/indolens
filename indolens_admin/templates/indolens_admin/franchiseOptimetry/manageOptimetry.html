@@ -121,7 +121,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-auto m3-e"><a class="btn btn-primary px-5"
+                                <div class="col-auto me-3"><a class="btn btn-primary px-5"
                                                          href="{% url 'create_franchise_optimetry' %}"><i
                                         class="fa-solid fa-plus me-2"></i>Add Optimetry</a></div>
                                 <button id= "btnExport" class="btn btn-link text-900 me-4 px-0"><span
@@ -229,7 +229,8 @@
                                 <td class="align-middle white-space-nowrap updatedby ps-3 py-4">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{opti.updater_name}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap address ps-3 py-4">
+                                <td class="align-middle white-space-nowrap address ps-3 py-4"
+                                style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{opti.address}}</p>
                                 </td>
 

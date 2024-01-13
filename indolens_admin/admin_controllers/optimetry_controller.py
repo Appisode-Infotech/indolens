@@ -6,6 +6,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -33,6 +34,13 @@ def create_optimetry(optimetry_obj, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_optimetry_obj_query)
+
+            subject = email_template_controller.get_employee_creation_email_subject()
+            body = email_template_controller.get_employee_creation_email_body(optimetry_obj.name, 'Optometry',
+                                                                              optimetry_obj.email,
+                                                                              optimetry_obj.password)
+            send_notification_controller.send_email(subject, body, optimetry_obj.email)
+
             empid = cursor.lastrowid
 
             return {
@@ -119,6 +127,13 @@ def create_franchise_optimetry(optimetry_obj, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_optimetry_obj_query)
+
+            subject = email_template_controller.get_employee_creation_email_subject()
+            body = email_template_controller.get_employee_creation_email_body(optimetry_obj.name, 'Optometry',
+                                                                              optimetry_obj.email,
+                                                                              optimetry_obj.password)
+            send_notification_controller.send_email(subject, body, optimetry_obj.email)
+
             opid = cursor.lastrowid
 
             return {

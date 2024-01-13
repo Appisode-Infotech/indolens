@@ -20,6 +20,8 @@ urlpatterns = [
     path('view_franchise_store_employee/', viewAllEmployeFranchise, name='view_franchise_store_employee'),
     path('view_franchise_store_employee/view_franchise_store_employee_details/employeeId=<int:employeeId>', viewEmployeeDetailsFranchise,
          name='view_franchise_store_employee_details'),
+    path('view_franchise_store_employee/view_own_store_employee_details/employeeId=<int:employeeId>', viewEmployeeDetailsOwn,
+         name='view_own_store_employee_details'),
 
     # orders management
     path('all_franchise_store_orders/', allFranchiseOrders, name='all_franchise_store_orders'),
@@ -31,6 +33,7 @@ urlpatterns = [
     path('cancelled_franchise_store_orders/', cancelledFranchiseOrders, name='cancelled_franchise_store_orders'),
     path('refunded_franchise_store_orders/', refundedFranchiseOrders, name='refunded_franchise_store_orders'),
     path('order_details_franchise_store/orderId=<str:orderId>', orderDetailsFranchise, name='order_details_franchise_store'),
+    path('order_invoice_franchise_store/orderId=<str:orderId>', orderInvoiceFranchise, name='order_invoice_franchise_store'),
     path('order_details_franchise_store/franchise_order_status_change/orderId=<str:orderId>/status=<str:status>',
          franchiseOrderStatusChange, name='franchise_order_status_change'),
     path('order_details_franchise_store/franchise_payment_status_change/orderId=<str:orderId>/status=<str:status>',
@@ -52,7 +55,12 @@ urlpatterns = [
          name='completed_franchise_store_stock_requests'),
     path('rejected_franchise_store_stock_requests/', viewRejectedStockRequestsFranchise,
          name='rejected_franchise_store_stock_requests'),
+    path('franchise_request_delivery_status_change/requestId=<int:requestId>/status=<int:status>', stockRequestDeliveryStatusChange, name='franchise_request_delivery_status_change'),
     # Make sale
     path('franchise_store_make_sale/', makeSaleFranchiseStore, name='franchise_store_make_sale'),
     path('all_expenses_franchise_store/', allExpenseFranchise, name='all_expenses_franchise_store'),
+
+    path('franchise_store_eye_test/', franchiseStoreEyeTest, name='franchise_store_eye_test'),
+    path('get_franchise_eye_test/', getfranchiseStoreEyeTest, name='get_franchise_eye_test'),
+    path('get_franchise_eye_test_by_id/testId=<int:testId>', getfranchiseStoreEyeTestById, name='get_franchise_eye_test_by_id'),
 ]

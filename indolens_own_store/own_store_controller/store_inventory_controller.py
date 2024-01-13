@@ -3,12 +3,14 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
 from indolens_own_store.own_store_model.response_model.central_inventory_product_resp_model import get_products
 from indolens_own_store.own_store_model.response_model.product_request_list_resp_model import get_request_product_list
 from indolens_own_store.own_store_model.response_model.stock_request_product_resp_model import \
     get_products_for_stock_request
 from indolens_own_store.own_store_model.response_model.store_inventory_product_resp_model import \
     get_store_inventory_stocks
+
 
 def getIndianTime():
     ist = pytz.timezone('Asia/Kolkata')
@@ -39,9 +41,18 @@ def get_all_out_of_stock_products_for_store(quantity, store_id):
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
+
+            get_product_category_query = f""" SELECT pc.* , creator.name, updater.name
+                                    FROM product_categories AS pc 
+                                    LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id 
+                                    ORDER BY pc.category_id DESC"""
+            cursor.execute(get_product_category_query)
+            stores_data = cursor.fetchall()
             return {
                 "status": True,
-                "stocks_list": get_store_inventory_stocks(product_list)
+                "stocks_list": get_store_inventory_stocks(product_list),
+                "product_category": get_product_categories(stores_data)
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e), "stocks_list": []}, 301
@@ -72,9 +83,18 @@ def get_all_products_for_store(store_id):
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
+
+            get_product_category_query = f""" SELECT pc.* , creator.name, updater.name
+                        FROM product_categories AS pc 
+                        LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
+                        LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id 
+                        ORDER BY pc.category_id DESC"""
+            cursor.execute(get_product_category_query)
+            stores_data = cursor.fetchall()
             return {
                 "status": True,
-                "stocks_list": get_store_inventory_stocks(product_list)
+                "stocks_list": get_store_inventory_stocks(product_list),
+                "product_category": get_product_categories(stores_data)
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -162,7 +182,8 @@ def create_store_stock_request(stock_obj):
 
             cursor.execute(stock_req_query, (
                 stock_obj.request_from_store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
-                0, 0, 1, stock_obj.request_to_store_id, 0, getIndianTime(), stock_obj.created_by, getIndianTime(), stock_obj.created_by,
+                0, 0, 1, stock_obj.request_to_store_id, 0, getIndianTime(), stock_obj.created_by, getIndianTime(),
+                stock_obj.created_by,
                 stock_obj.unit_cost))
             return {
                 "status": True,
@@ -215,6 +236,26 @@ def request_delivery_status_change(request_id, status, updated_by):
                                                 last_updated_by = {updated_by}, delivery_status = {status}
                                                 WHERE request_products_id = '{request_id}' """
             cursor.execute(update_stock_request_query)
+            if status == 2:
+                fetch_req_product_query = f"""SELECT * FROM request_products 
+                                        WHERE request_products_id = '{request_id}'"""
+                cursor.execute(fetch_req_product_query)
+                product_details = cursor.fetchone()
+                quantity = product_details[4]
+
+                update_store_Inventory = f"""INSERT INTO store_inventory 
+                                               (store_id, store_type, product_id, product_quantity, created_on, 
+                                               created_by, last_updated_on, last_updated_by) 
+                                               VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+                                               ON DUPLICATE KEY UPDATE
+                                               product_quantity = product_quantity + {quantity}, 
+                                               last_updated_on = '{getIndianTime()}', 
+                                               last_updated_by = {updated_by}"""
+
+                cursor.execute(update_store_Inventory,
+                               (product_details[1], product_details[2], product_details[3],
+                                product_details[4], getIndianTime(), updated_by, getIndianTime(), updated_by))
+
             return {
                 "status": True,
                 "message": "updated delivery status"

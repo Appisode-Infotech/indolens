@@ -73,7 +73,8 @@ class SalesOrder:
             'store_name': self.store_name,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name,
-            # New Customer Fields
+
+            # customer fields
             'customer_name': self.customer_name,
             'customer_id': self.customer_id,
             'gender': self.gender,
@@ -85,6 +86,7 @@ class SalesOrder:
             'address': self.address,
             'created_by_employee_id': self.created_by_employee_id,
             'created_by_store_id': self.created_by_store_id,
+
             # Product Fields
             'product_id': self.product_id,
             'product_name': self.product_name,

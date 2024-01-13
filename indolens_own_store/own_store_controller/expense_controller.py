@@ -7,6 +7,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_own_store.own_store_controller import lens_sale_power_attribute_controller
 from indolens_own_store.own_store_model.response_model.store_expense_resp_model import get_store_expenses
 
@@ -63,8 +64,6 @@ def get_all_store_expense(store_id, store_type):
 
 
 def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id):
-    print("===================controller=========================")
-    print(customerData)
     try:
         with connection.cursor() as cursor:
             create_update_customer = f"""INSERT INTO `customers`(`name`, `gender`, `age`, `phone`, `email`,
@@ -97,12 +96,10 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
             for data in cart_data:
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
                 if new_data.get('product_category_id') == '2':
-                    print("lens")
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "":
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
-                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     insert_len_sales_query = f""" INSERT INTO `sales_order`
@@ -118,25 +115,22 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                             {discount_percentage}, {is_discount_applied}, 
                                             '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
-                                            {customer_id}, 1, 1, 1, 1, 500, %s, 
+                                            {customer_id}, 1, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                             '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', 1) """
 
-                    print(insert_len_sales_query)
                     cursor.execute(insert_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
-                    # print("deduct lense in centre inventory")
-                    #
-                    # update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
-                    #                                                                             WHERE product_id = {new_data.get('product')}"""
-                    # cursor.execute(update_central_Inventory)
+
+                    update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                                                                                                WHERE product_id = {new_data.get('product')}"""
+                    cursor.execute(update_central_Inventory)
 
                 elif new_data.get('product_category_id') == '3':
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "":
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
-                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     insert_contact_len_sales_query = f""" INSERT INTO `sales_order`
@@ -152,26 +146,17 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                                 {discount_percentage}, {is_discount_applied}, 
                                                                 '{json.dumps(power_attributes)}', 1, 
-                                                                {customer_id}, {billingDetailsData.get('assignedLab')}, 1, 1, 1, 500, %s, 
+                                                                {customer_id}, {billingDetailsData.get('assignedLab')}, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                                                 {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                                                 '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', 1) """
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
-                    # if power_attributes.get('stock_type') == 'stock':
-                    #     print("deduct contact lens in store")
-                    #     update_central_Inventory = f"""UPDATE store_inventory SET
-                    #                                     product_quantity = product_quantity - {new_data.get('purchase_qty')}
-                    #                                     WHERE product_id = {new_data.get('product')} AND
-                    #                                     store_id = {store_id} AND store_type = 1"""
-                    #     cursor.execute(update_central_Inventory)
-                    # else:
-                    #     print("deduct contact lens in centre")
-                    #     update_central_Inventory = f"""UPDATE central_inventory
-                    #                                     SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
-                    #                                     WHERE product_id = {new_data.get('product')}"""
-                    #     cursor.execute(update_central_Inventory)
+
+                    update_central_Inventory = f"""UPDATE central_inventory
+                                                SET product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                                                WHERE product_id = {new_data.get('product')}"""
+                    cursor.execute(update_central_Inventory)
                 else:
-                    print(customer_id)
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "":
                         discount_percentage = 0
@@ -191,20 +176,23 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
                                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                             {discount_percentage}, {is_discount_applied}, 
-                                                            {billingDetailsData.get('assignedLab')}, {customer_id}, 1, 1, 1, 1, 500, %s, 
+                                                            {billingDetailsData.get('assignedLab')}, {customer_id}, 1, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, '{today}', {billingDetailsData.get('orderByEmployee')}, '{today}', '{power_attributes}', 1 )
                                                         """
 
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
+                    update_central_Inventory = f"""UPDATE store_inventory SET
+                     product_quantity = product_quantity - {new_data.get('purchase_qty')}
+                                          WHERE product_id = {new_data.get('product')} AND
+                                                store_id = {store_id} AND store_type = 1"""
+                    cursor.execute(update_central_Inventory)
 
-
-                    # print("deduct other product")
-                    # update_central_Inventory = f"""UPDATE store_inventory SET
-                    #                                 product_quantity = product_quantity - {new_data.get('purchase_qty')}
-                    #                                 WHERE product_id = {new_data.get('product')} AND
-                    #                                 store_id = {store_id} AND store_type = 1"""
-                    # cursor.execute(update_central_Inventory)
+            subject = email_template_controller.get_order_creation_email_subject(billingDetailsData.get('orderId'))
+            body = email_template_controller.get_order_placed_email_body(customerData.get('name'),
+                                                                         billingDetailsData.get('orderId'), today,
+                                                                         convert_to_db_date_format(billingDetailsData.get('estDeliveryDate')))
+            send_notification_controller.send_email(subject, body, customerData.get('email'))
 
             return {
                 "status": True,

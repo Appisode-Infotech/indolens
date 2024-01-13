@@ -6,6 +6,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.franchise_owner_resp_model import get_franchise_owners
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -31,6 +32,13 @@ def create_franchise_owner(franchise_owner, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_franchise_owner_query)
+
+            subject = email_template_controller.get_employee_creation_email_subject()
+            body = email_template_controller.get_employee_creation_email_body(franchise_owner.name, 'Franchise Owner',
+                                                                              franchise_owner.email,
+                                                                              franchise_owner.password)
+            send_notification_controller.send_email(subject, body, franchise_owner.email)
+
             foid = cursor.lastrowid
 
             return {

@@ -50,3 +50,39 @@ def get_power_attribute(data):
         print('this is other product with no power attributes')
         power_attributes = {}
         return power_attributes
+
+
+def get_eye_test_power_attribute(data):
+    power_attributes = {
+        'RightDvSph': data.get('RightDvSph', ''),
+        'RightDvCyl': data.get('RightDvCyl', ''),
+        'RightDvAxis': data.get('RightDvAxis', ''),
+        'RightDvVision': data.get('RightDvVision', ''),
+        'RightNvSph': data.get('RightNvSph', ''),
+        'RightNvCyl': data.get('RightNvCyl', ''),
+        'RightNvAxis': data.get('RightNvAxis', ''),
+        'RightNvVision': data.get('RightNvVision', ''),
+        'LeftDvSph': data.get('LeftDvSph', ''),
+        'LeftDvCyl': data.get('LeftDvCyl', ''),
+        'LeftDvAxis': data.get('LeftDvAxis', ''),
+        'LeftDvVision': data.get('LeftDvVision', ''),
+        'LeftNvSph': data.get('LeftNvSph', ''),
+        'LeftNvCyl': data.get('LeftNvCyl', ''),
+        'LeftNvAxis': data.get('LeftNvAxis', ''),
+        'LeftNvVision': data.get('LeftNvVision', ''),
+        'unifocal': data.get('unifocal', ''),
+        'bifocal': data.get('bifocal', ''),
+        'progressive': data.get('progressive', ''),
+        'cr39': data.get('cr39', ''),
+        'arc': data.get('arc', ''),
+        'pdr': data.get('pdr', ''),
+        'pdl': data.get('pdl', ''),
+        'glass': data.get('glass', ''),
+        'highIndex': data.get('highIndex', ''),
+        'pg': data.get('pg', ''),
+        'constant': data.get('constant', ''),
+        'distance': data.get('distance', ''),
+        'near': data.get('near', ''),
+
+    }
+    return power_attributes

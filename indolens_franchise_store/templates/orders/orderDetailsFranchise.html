@@ -61,6 +61,8 @@
 
 
 
+
+
     </script>
 </head>
 
@@ -78,13 +80,17 @@
         <div class="content">
 
             <div class="mb-9">
-                <h2 class="mb-0">Order <span>{{order_detail.0.order_id}}</span></h2>
+                <h2 class="mb-0"><span>{{order_detail.0.order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
                     <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
                     </p>
                     <div class="d-flex">
-                        <button class="btn pe-3 ps-0 text-900"><span class="fas fa-print me-2"></span>Print</button>
-                        <button class="btn px-3 text-900"><a href="{% url 'franchise_payment_status_change' order_detail.0.order_id '3' %}"><span class="fas fa-undo me-2"></span>Refund</a></button>
+                        <button class="btn pe-3 ps-0 text-900"><a
+                                href="{% url 'order_invoice_franchise_store' order_detail.0.order_id %}"><span
+                                class="fas fa-file-invoice"></span> Invoice</a></button>
+                        <button class="btn px-3 text-900"><a
+                                href="{% url 'franchise_payment_status_change' order_detail.0.order_id '3' %}"><span
+                                class="fas fa-undo me-2"></span>Refund</a></button>
                         <div class="dropdown">
                             <button aria-expanded="false"
                                     class="btn text-900 dropdown-toggle dropdown-caret-none ps-3 pe-0"
@@ -178,7 +184,8 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4">{{order_detail.0.customer_name}}</a>
+                                        <a class="fs--1 ms-4"
+                                           href="{% url 'view_franchise_store_customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -314,8 +321,20 @@
                                         </div>
                                         <div class="d-flex justify-content-between border-top border-dashed pt-4">
                                             <h4 class="mb-0">Total :</h4>
-                                            <h4 class="mb-0">₹{{order_detail.0.total_cost}}</h4>
+                                            <h4 class="mb-0" id="totalCost">₹{{order_detail.0.discount_cost}}</h4>
                                         </div>
+                                        <div>
+                                            <div class="d-flex justify-content-between mt-3">
+                                                <p class="text-900 fw-semi-bold">Amount Paid :</p>
+                                                <p class="text-1100 fw-semi-bold" id="amountPaid">
+                                                    ₹{{order_detail.0.amount_paid}}</p>
+                                            </div>
+                                            <div class="d-flex justify-content-between border-top border-dashed pt-4">
+                                                <h4 class="mb-0">Balance :</h4>
+                                                <h4 class="mb-0" id="balance"></h4>
+                                            </div>
+                                        </div>
+
                                     </div>
                                 </div>
                             </div>
@@ -324,14 +343,18 @@
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
                                         <h6 class="mb-2">Payment status</h6>
-                                        <select onchange="franchiseChangePaymentStatus(this,'{{order_detail.0.order_id}}')" aria-label="delivery type" class="form-select mb-4" id="paymentStatusSelect">
+                                        <select onchange="changePaymentStatus(this,'{{order_detail.0.order_id}}')"
+                                                aria-label="delivery type" class="form-select mb-4"
+                                                id="paymentStatusSelect">
                                             <option value="1">Pending</option>
                                             <option value="2">Complete</option>
                                             <option value="3">Refund</option>
                                         </select>
 
                                         <h6 class="mb-2">Order status</h6>
-                                        <select onchange="franchiseChangeOrderStatus(this,'{{order_detail.0.order_id}}')" aria-label="delivery type" class="form-select" id="orderStatusSelect">
+                                        <select onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')"
+                                                aria-label="delivery type" class="form-select" id="orderStatusSelect">
+                                            <option value="1">New</option>
                                             <option value="2">Process</option>
                                             <option value="3">Ready</option>
                                             <option value="4">Dispatch</option>
@@ -373,20 +396,21 @@
 
 </body>
 <script>
-   function franchiseChangeOrderStatus(statusWidget, order_id) {
+   function changeOrderStatus(statusWidget, order_id) {
     console.log(statusWidget.value);
     console.log(order_id);
 
     const url = `/franchise_store/order_details_franchise_store/franchise_order_status_change/orderId=${order_id}/status=${statusWidget.value}`;
     window.location.href = url; // Redirect to the constructed URL
 }
-   function franchiseChangePaymentStatus(statusWidget, order_id) {
+   function changePaymentStatus(statusWidget, order_id) {
     console.log(statusWidget.value);
     console.log(order_id);
 
     const url = `/franchise_store/order_details_franchise_store/franchise_payment_status_change/orderId=${order_id}/status=${statusWidget.value}`;
     window.location.href = url;
 }
+
 
 </script>
 <script>
@@ -405,15 +429,38 @@
         }
     });
     document.addEventListener("DOMContentLoaded", function() {
-        var status = {{order_detail.0.order_status}};
+        var status = {{ order_detail.0.order_status }};
         var select = document.getElementById("orderStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
             if (select.options[i].value == status) {
                 select.selectedIndex = i;
-                for (var j = 0; j < i; j++) {
+
+                // Disable all options
+                for (var j = 0; j < select.options.length; j++) {
                     select.options[j].disabled = true;
                 }
+
+                // Enable the next option from the selected one
+                if (i < select.options.length - 1) {
+                    select.options[i + 1].disabled = false;
+                }
+
+                // Add event listener to update options dynamically
+                select.addEventListener("change", function() {
+                    var selectedIndex = this.selectedIndex;
+
+                    // Disable all options
+                    for (var k = 0; k < this.options.length; k++) {
+                        this.options[k].disabled = true;
+                    }
+
+                    // Enable the next option from the selected one
+                    if (selectedIndex < this.options.length - 1) {
+                        this.options[selectedIndex + 1].disabled = false;
+                    }
+                });
+
                 break;
             }
         }
@@ -421,10 +468,14 @@
     document.addEventListener('DOMContentLoaded', function() {
         var totalCost = {{ order_detail.0.total_cost }};
         var discountCost = {{ order_detail.0.discount_cost }};
+        var amountPaid = {{order_detail.0.amount_paid}};
 
         var discountedAmount = totalCost - discountCost;
+        var balanceAmount = discountCost - amountPaid;
 
         document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
+        document.getElementById('balance').textContent = '₹ ' + balanceAmount;
     });
+
 </script>
 </html>

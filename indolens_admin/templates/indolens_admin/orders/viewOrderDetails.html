@@ -60,6 +60,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -82,20 +83,15 @@
                     <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
                     </p>
                     <div class="d-flex">
-                        <button class="btn pe-3 ps-0 text-900"><span class="fas fa-print me-2"></span>Print</button>
-                        <button class="btn px-3 text-900"><span class="fas fa-undo me-2"></span>Refund</button>
-                        <div class="dropdown">
-                            <button aria-expanded="false"
-                                    class="btn text-900 dropdown-toggle dropdown-caret-none ps-3 pe-0"
-                                    data-bs-toggle="dropdown" type="button">More action<span
-                                    class="fas fa-chevron-down ms-2"></span></button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item">Action</a></li>
-                                <li><a class="dropdown-item">Another action</a></li>
-                                <li><a class="dropdown-item">Something else here</a></li>
-                            </ul>
-                        </div>
+                        <button class="btn pe-3 ps-0 text-900"><a
+                                href="{% url 'order_invoice' order_detail.0.order_id %}"><span
+                                class="fas fa-file-invoice"></span> Invoice</a></button>
+                        <button class="btn px-3 text-900"><a
+                                href="{% url 'customer_order_tracking' order_detail.0.order_id %}"><span
+                                class="fas fa-undo me-2"></span>Track Order</a></button>
+
                     </div>
+
                 </div>
                 <div class="row g-5 gy-7">
                     <div class="col-12 col-xl-8 col-xxl-9">
@@ -133,7 +129,8 @@
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
                                             <div class="border rounded-2"><img
-                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}" width="53"/>
+                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}"
+                                                    width="53"/>
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
@@ -177,7 +174,8 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="{% url 'customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
+                                        <a class="fs--1 ms-4"
+                                           href="{% url 'customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -323,14 +321,16 @@
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
                                         <h6 class="mb-2">Payment status</h6>
-                                        <select disabled aria-label="delivery type" class="form-select mb-4" id="paymentStatusSelect">
+                                        <select disabled aria-label="delivery type" class="form-select mb-4"
+                                                id="paymentStatusSelect">
                                             <option value="1">Pending</option>
                                             <option value="2">Complete</option>
                                             <option value="3">Refund</option>
                                         </select>
 
                                         <h6 class="mb-2">Order status</h6>
-                                        <select disabled  aria-label="delivery type" class="form-select" id="orderStatusSelect">
+                                        <select disabled aria-label="delivery type" class="form-select"
+                                                id="orderStatusSelect">
                                             <option value="2">Process</option>
                                             <option value="3">Ready</option>
                                             <option value="4">Dispatch</option>
@@ -408,5 +408,6 @@
 
         document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
     });
+
 </script>
 </html>

@@ -36,7 +36,8 @@ def get_all_active_store_employee(store_id):
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.assigned_store_id = '{store_id}' AND sm.status = 1 
+                                            WHERE sm.assigned_store_id = '{store_id}' AND sm.assigned_store_id != 0 
+                                            AND sm.status = 1 
                                             ORDER BY sm.employee_id DESC"""
             cursor.execute(get_store_employee_query)
             store_employees = cursor.fetchall()
@@ -55,6 +56,26 @@ def get_store_employee_by_id(employee_id):
         with connection.cursor() as cursor:
             get_store_employee_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
+                                            LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
+                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
+                                            WHERE sm.employee_id = '{employee_id}' """
+            cursor.execute(get_store_employee_query)
+            store_employees = cursor.fetchall()
+            return {
+                "status": True,
+                "store_employee": get_own_store_employees(store_employees)
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def get_franchise_employee_by_id(employee_id):
+    try:
+        with connection.cursor() as cursor:
+            get_store_employee_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM franchise_store_employees AS sm
+                                            LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
                                             WHERE sm.employee_id = '{employee_id}' """

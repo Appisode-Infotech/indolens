@@ -6,6 +6,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -32,6 +33,13 @@ def create_own_sales_executives(sales_executives, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_sales_executives_query)
+
+            subject = email_template_controller.get_employee_creation_email_subject()
+            body = email_template_controller.get_employee_creation_email_body(sales_executives.name, 'Sales Executive',
+                                                                              sales_executives.email,
+                                                                              sales_executives.password)
+            send_notification_controller.send_email(subject, body, sales_executives.email)
+
             seId = cursor.lastrowid
 
             return {
@@ -127,6 +135,13 @@ def create_franchise_sales_executives(sales_executives, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_sales_executives_query)
+
+            subject = email_template_controller.get_employee_creation_email_subject()
+            body = email_template_controller.get_employee_creation_email_body(sales_executives.name, 'Sales Executive',
+                                                                              sales_executives.email,
+                                                                              sales_executives.password)
+            send_notification_controller.send_email(subject, body, sales_executives.email)
+
             seId = cursor.lastrowid
 
             return {

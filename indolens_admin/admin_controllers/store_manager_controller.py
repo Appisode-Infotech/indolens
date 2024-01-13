@@ -2,11 +2,11 @@ import datetime
 import json
 import bcrypt
 
-
 import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import send_notification_controller, email_template_controller
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -25,7 +25,7 @@ def create_store_manager(store_manager, files):
                     last_updated_by, last_updated_on, role
                 ) VALUES (
                     '{store_manager.name}', '{store_manager.email}', '{store_manager.phone}', '{hashed_password}', 
-                    '{files.profile_pic}', '{store_manager.assigned_store_id}', '{store_manager.address}', 
+                    '{files.profile_pic}', 0, '{store_manager.address}', 
                     '{store_manager.document_1_type}', '{json.dumps(files.document1)}', 
                     '{store_manager.document_2_type}', '{json.dumps(files.document2)}', 1, '{store_manager.created_by}', 
                     '{today}', '{store_manager.last_updated_by}', '{today}', 1
@@ -34,6 +34,9 @@ def create_store_manager(store_manager, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_store_manager_query)
+            subject = email_template_controller.get_employee_creation_email_subject()
+            body = email_template_controller.get_employee_creation_email_body(store_manager.name, 'Manager', store_manager.email, store_manager.password)
+            send_notification_controller.send_email(subject, body, store_manager.email)
 
             mid = cursor.lastrowid
             return {
@@ -47,6 +50,7 @@ def create_store_manager(store_manager, files):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def update_store_manager(store_manager, files):
     try:
         with connection.cursor() as cursor:
@@ -57,13 +61,15 @@ def update_store_manager(store_manager, files):
                     email = '{store_manager.email}',
                     phone = '{store_manager.phone}',
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                    assigned_store_id = '{store_manager.assigned_store_id}',
+                    assigned_store_id = {store_manager.assigned_store_id},
                     address = '{store_manager.address}',
                     last_updated_by = '{store_manager.last_updated_by}',
                     last_updated_on = '{today}'
                 WHERE employee_id = {store_manager.employee_id} 
             """
+            print(update_store_manager_query)
             cursor.execute(update_store_manager_query)
+
             return {
                 "status": True,
                 "message": "store manager updated"
@@ -73,7 +79,6 @@ def update_store_manager(store_manager, files):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-
 
 
 def get_all_store_manager(status):
@@ -111,7 +116,7 @@ def get_store_manager_by_id(mid):
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id 
-                                            WHERE sm.employee_id = '{mid}'"""
+                                            WHERE sm.employee_id = {mid} """
             cursor.execute(get_store_manager_query)
             store_manager = cursor.fetchall()
             return {
@@ -164,9 +169,9 @@ def assignStore(empId, storeId):
             cursor.execute(update_store_manager_query)
 
             return {
-                       "status": True,
-                       "message": "Store assigned"
-                   }, 200
+                "status": True,
+                "message": "Store assigned"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -188,9 +193,9 @@ def unAssignStore(empId, storeId):
             cursor.execute(update_store_manager_query)
 
             return {
-                       "status": True,
-                       "message": "Store un assigned"
-                   }, 200
+                "status": True,
+                "message": "Store un assigned"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

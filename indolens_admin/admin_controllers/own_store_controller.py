@@ -54,7 +54,9 @@ def get_all_own_stores(status):
                                     SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name
                                     FROM own_store
                                     LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1
-                                    WHERE own_store.status {status_condition} ORDER BY own_store_employees.employee_id DESC
+                                    WHERE own_store.status {status_condition} 
+                                    GROUP BY own_store.store_id
+                                    ORDER BY own_store.store_id DESC
                                     """
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
@@ -73,9 +75,15 @@ def get_unassigned_active_own_store_for_manager():
     try:
         with connection.cursor() as cursor:
             unassigned_stores = []
-            get_unassigned_active_own_store_for_manager_query = f"""SELECT o.store_id, o.store_name FROM own_store AS o 
-            LEFT JOIN own_store_employees e ON o.store_id = e.assigned_store_id WHERE (e.employee_id IS NULL OR e.role
-             <> 1 OR e.assigned_store_id = 0) AND o.status = 1 GROUP BY o.store_id"""
+            # get_unassigned_active_own_store_for_manager_query = f"""SELECT o.store_id, o.store_name FROM own_store AS o
+            # LEFT JOIN own_store_employees e ON o.store_id = e.assigned_store_id WHERE (e.employee_id IS NULL OR e.role
+            #  <> 1 OR e.assigned_store_id = 0) AND o.status = 1 GROUP BY o.store_id"""
+
+            get_unassigned_active_own_store_for_manager_query = f"""SELECT os.store_id, os.store_name
+                    FROM own_store os
+                    LEFT JOIN own_store_employees ose ON os.store_id = ose.assigned_store_id AND ose.role = 1
+                    WHERE ose.assigned_store_id IS NULL """
+
             cursor.execute(get_unassigned_active_own_store_for_manager_query)
             stores_data = cursor.fetchall()
             for store in stores_data:

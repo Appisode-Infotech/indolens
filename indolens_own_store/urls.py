@@ -17,6 +17,8 @@ urlpatterns = [
     # manage store Employee
     path('manage_store_employees/', manageStoreEmployees, name='manage_store_employees'),
     path('manage_store_employees/view_employee/employeeId=<int:employeeId>', viewEmployees, name='view_employee'),
+
+    path('manage_store_employees/view_franchise_employee/employeeId=<int:employeeId>', viewFranchiseEmployees, name='view_franchise_employee'),
     # Manage customers
     path('view_store_customers/', viewStoreCustomers, name='view_store_customers'),
     path('view_store_customers/view_store_customer_details/customerId=<int:customerId>', viewStoreCustomerDetails,
@@ -32,6 +34,7 @@ urlpatterns = [
     path('cancelled_store_orders/', cancelledStoreOrders, name='cancelled_store_orders'),
     path('refunded_store_orders/', refundedStoreOrders, name='refunded_store_orders'),
     path('order_details_store/orderId=<str:orderId>', orderDetails, name='order_details_store'),
+    path('order_invoice_store/orderId=<str:orderId>', orderInvoice, name='order_invoice_store'),
     path('order_details_store/order_status_change/orderId=<str:orderId>/status=<str:status>', orderStatusChange,
          name='order_status_change'),
     path('order_details_store/order_payment_status_change/orderId=<str:orderId>/status=<str:status>', orderPaymentStatusChange,
@@ -50,6 +53,10 @@ urlpatterns = [
     # Make sale
     path('own_store_make_sale/', makeSaleOwnStore, name='own_store_make_sale'),
     path('all_expenses_store/', allExpenseStore, name='all_expenses_store'),
+
+    path('own_store_eye_test/', ownStoreEyeTest, name='own_store_eye_test'),
+    path('get_eye_test/', getOwnStoreEyeTest, name='get_eye_test'),
+    path('get_eye_test_by_id/testId=<int:testId>', getOwnStoreEyeTestById, name='get_eye_test_by_id'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

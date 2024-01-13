@@ -215,7 +215,8 @@
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4 address">
+                                <td class="align-middle white-space-nowrap task ps-3 py-4 address"
+                                    style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{manager.address}}</p>
                                 </td>
 
@@ -228,7 +229,7 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
-                                                class="dropdown-item">View</a>
+                                                href="{% url 'view_store_manager' manager.employee_id %}" class="dropdown-item">View</a>
                                             {% if manager.status == 1 %}
                                             {% if manager.assigned_store_id == 0 %}
                                             <a class="dropdown-item"

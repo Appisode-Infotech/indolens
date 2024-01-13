@@ -41,7 +41,7 @@
     <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
-    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
+
 
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -111,6 +111,7 @@
                         </div>
                     </div>
                 </div>
+                <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                 <div class="table-responsive scrollbar col-auto">
 
                     <table class="table fs--1 mb-0 border-top border-200" id="myTable">
@@ -237,6 +238,7 @@
                         </tbody>
                     </table>
                 </div>
+                </div>
                 <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
                     <div class="d-flex">
                         <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
@@ -278,13 +280,12 @@
                             <select class="form-select" data-choices="data-choices"
                                     data-options='{"removeItemButton":true,"placeholder":true}'
                                     name="product_id" required="required">
-                                <option value="">Select Product</option>
-
+                                <option >Select Product</option>
                                 {% for products in products %}
                                 <option value="{{products.product_id}}">{{products.product_name}}</option>
                                 {% endfor %}
                             </select>
-                            <div class="custom-error" style="color: red;"></div>
+                            <div class="invalid-feedback">This field is required.</div>
                         </div>
 
                         <div class="mb-2 col-12">
@@ -317,7 +318,7 @@
                             <h5 class="mb-3">Select Franchise Store</h5>
                             <select class="form-select" data-choices="data-choices"
                                     data-options='{"removeItemButton":true,"placeholder":true}'
-                                    name="franchise_store_id">
+                                    name="franchise_store_id" >
                                 <option value="">Choose Store to move</option>
                                 {% for store in franchise_store_list %}
                                 <option value="{{store.store_id}}">{{store.store_name}}</option>
@@ -401,9 +402,9 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
+<script src="{% static 'js/filter.js' %}"></script>
 <script src="{% static 'js/csvExport.js' %}"></script>
-<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
 
 
 <script>

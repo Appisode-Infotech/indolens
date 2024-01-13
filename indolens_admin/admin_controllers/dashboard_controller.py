@@ -1,4 +1,8 @@
 import datetime
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
 import pymysql
 import pytz
 from django.db import connection
@@ -25,9 +29,9 @@ def get_order_stats(status, store_type):
             orders_list = cursor.fetchall()
 
             return {
-                "status": True,
-                "count": len(orders_list)
-            }, 200
+                       "status": True,
+                       "count": len(orders_list)
+                   }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -48,12 +52,13 @@ def get_sales_stats(store):
             total_sale = orders_list[0] if orders_list[0] is not None else 0
 
             return {
-                "status": True,
-                "sale": total_sale
-            }, 200
+                       "status": True,
+                       "sale": total_sale
+                   }, 200
 
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+

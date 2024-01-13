@@ -5,9 +5,12 @@ from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
+from indolens_own_store.own_store_model.response_model.order_track import order_track
+from indolens_own_store.own_store_model.response_model.store_resp_model import get_store
 
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
+
 
 def get_all_orders(status, pay_status, store):
     status_conditions = {
@@ -29,8 +32,8 @@ def get_all_orders(status, pay_status, store):
     payment_status_value = payment_status_values[pay_status]
     store_values = {
         "All": "LIKE '%'",
-        "ownStores": "= 1",
-        "franchiseStores": "= 2",
+        "Own Stores": "= 1",
+        "Franchise Stores": "= 2",
     }
     store_condition = store_values[store]
     try:
@@ -67,14 +70,16 @@ def get_all_orders(status, pay_status, store):
             orders_list = cursor.fetchall()
 
             return {
-                       "status": True,
-                       "orders_list": get_sales_orders(orders_list)
-                   }, 200
+                "status": True,
+                "orders_list": get_sales_orders(orders_list),
+                "latest_orders": get_sales_orders(orders_list)[:15]
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def get_all_store_orders(store_id, store_type):
     try:
@@ -111,9 +116,9 @@ def get_all_store_orders(store_id, store_type):
             orders_list = cursor.fetchall()
 
             return {
-                       "status": True,
-                       "orders_list": get_sales_orders(orders_list)
-                   }, 200
+                "status": True,
+                "orders_list": get_sales_orders(orders_list)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -156,14 +161,15 @@ def get_all_customer_orders(customerId):
             orders_list = cursor.fetchall()
 
             return {
-                       "status": True,
-                       "orders_list": get_sales_orders(orders_list)
-                   }, 200
+                "status": True,
+                "orders_list": get_sales_orders(orders_list)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def get_order_details(orderId):
     try:
@@ -211,9 +217,9 @@ def get_order_details(orderId):
             orders_details = cursor.fetchall()
 
             return {
-                       "status": True,
-                       "orders_details": get_order_detail(orders_details)
-                   }, 200
+                "status": True,
+                "orders_details": get_order_detail(orders_details),
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -236,9 +242,57 @@ def get_order_creator_role(employeeID, storeType):
             role = cursor.fetchone()
 
             return {
-                       "status": True,
-                       "role": role[0]
-                   }, 200
+                "status": True,
+                "role": role[0]
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_store_details(storeId, storeType):
+    try:
+        with connection.cursor() as cursor:
+
+            if storeType == 1:
+                get_own_stores_query = f""" SELECT own_store.*
+                                                    FROM own_store
+                                                    WHERE own_store.store_id = '{storeId}' """
+                cursor.execute(get_own_stores_query)
+                stores_data = cursor.fetchall()
+
+            else:
+                get_franchise_stores_query = f""" SELECT franchise_store.* FROM franchise_store
+                                                    WHERE franchise_store.store_id = '{storeId}' """
+                cursor.execute(get_franchise_stores_query)
+                stores_data = cursor.fetchall()
+
+            return {
+                "status": True,
+                "store_data": get_store(stores_data)
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_order_track(orderId):
+    try:
+        with connection.cursor() as cursor:
+            get_own_stores_query = f""" SELECT ot.*
+                                        FROM order_track AS ot
+                                        WHERE ot.order_id = '{orderId}' """
+            cursor.execute(get_own_stores_query)
+            stores_data = cursor.fetchall()
+
+            return {
+                "status": True,
+                "order_track": order_track(stores_data)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
