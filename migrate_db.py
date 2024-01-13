@@ -192,7 +192,7 @@ sql_queries = [
  `store_id` int(11) AUTO_INCREMENT,
  `store_name` varchar(255),
  `store_display_name` varchar(255),
- `store_phone` int(11),
+ `store_phone` varchar(255),
  `store_gst` varchar(255),
  `store_email` varchar(255),
  `store_city` varchar(255),

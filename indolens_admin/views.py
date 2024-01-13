@@ -247,7 +247,6 @@ def createFranchiseStore(request):
         if request.method == 'POST':
             franchise_obj = franchise_store_model.franchise_store_model_from_dict(request.POST)
             response, status_code = franchise_store_controller.create_franchise_store(franchise_obj)
-            print(response)
             if status_code != 200:
                 return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html',
                               {"message": response['message']})
