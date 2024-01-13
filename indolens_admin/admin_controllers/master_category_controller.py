@@ -21,7 +21,7 @@ def add_product_category(product_cat_obj):
                 VALUES (
                     '{product_cat_obj.category_name}',
                     '{product_cat_obj.category_prefix}', '{product_cat_obj.category_description}',
-                    '{product_cat_obj.status}', '{today}',
+                    {product_cat_obj.status}, '{today}',
                     '{product_cat_obj.created_by}', '{today}',
                     '{product_cat_obj.last_updated_by}'
                 )
