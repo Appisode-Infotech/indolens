@@ -356,6 +356,7 @@ def stockRequestDeliveryStatusChange(request, requestId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.request_delivery_status_change(requestId, status,
                                                                                           request.session.get('id'))
+        print(response)
         return redirect('completed_store_stock_requests')
     else:
         return redirect('own_store_login')
