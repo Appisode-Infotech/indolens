@@ -14,11 +14,11 @@ def add_product_brand(brand_obj):
         with connection.cursor() as cursor:
             create_brand_query = f"""
                 INSERT INTO brands (
-                    brand_id, brand_name, category_id, brand_description, 
+                    brand_name, category_id, brand_description, 
                     status, created_on, created_by, last_updated_on, last_updated_by
                 ) 
                 VALUES (
-                    '{brand_obj.brand_id}', '{brand_obj.brand_name}',
+                    '{brand_obj.brand_name}',
                     '{brand_obj.category_id}', '{brand_obj.brand_description}',
                     '{brand_obj.status}', '{today}',
                     '{brand_obj.created_by}', '{today}',
