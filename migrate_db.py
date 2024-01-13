@@ -371,7 +371,7 @@ sql_queries = [
  `last_updated_on` datetime,
  `certificates` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin DEFAULT NULL,
  PRIMARY KEY (`employee_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci""",
+)""",
     """CREATE TABLE `product_categories` (
  `category_id` int(11) AUTO_INCREMENT,
  `category_name` varchar(255),
@@ -425,7 +425,7 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`request_products_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci""",
+)""",
     """CREATE TABLE `reset_password` (
  `reset_password_id` int(11) AUTO_INCREMENT,
  `email` varchar(255),
@@ -482,7 +482,7 @@ sql_queries = [
  `updated_by` int(11),
  `updated_on` datetime,
  PRIMARY KEY (`sale_item_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci""",
+)""",
     """CREATE TABLE `store_expense` (
  `store_expense_id` int(11) AUTO_INCREMENT,
  `store_id` int(11),
@@ -506,7 +506,7 @@ sql_queries = [
  `last_updated_by` int(11),
  PRIMARY KEY (`store_inventory_id`),
  UNIQUE KEY `store_product_unique` (`store_id`,`store_type`,`product_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci""",
+)""",
     """CREATE TABLE `store_manager` (
  `store_manager_id` int(11) AUTO_INCREMENT,
  `name` varchar(255),
@@ -536,7 +536,26 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`unit_id`)
-) """
+) """,
+    """CREATE TABLE eye_test (
+ eye_test_id int(11) AUTO_INCREMENT,
+ customer_id int(11),
+ power_attributes longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(power_attributes)),
+ created_by_store_id int(11),
+ created_by_store_type int(11),
+ created_by int(11),
+ created_on datetime,
+ updated_by int(11),
+ updated_on datetime,
+ PRIMARY KEY (eye_test_id)
+)""",
+    """CREATE TABLE order_track (
+ track_id int(11) AUTO_INCREMENT,
+ order_id varchar(255),
+ status int(11),
+ created_on datetime,
+ PRIMARY KEY (track_id)
+)"""
 ]
 
 connection = pymysql.connect(host=db_host, user=db_user, password=db_password, database=db_name)
