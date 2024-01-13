@@ -109,7 +109,7 @@ def dashboard(request):
         return render(request, 'indolens_admin/dashboard.html',
                       {"own_store_list": own_stores['own_stores'],
                        "franchise_store_list": franchise_store['franchise_store'],
-                       "orders_list": sales['orders_list'], "out_of_stock": len(out_of_stock['stocks_list']),
+                       "orders_list": sales['latest_orders'], "out_of_stock": len(out_of_stock['stocks_list']),
                        "own_store_new_order": own_store_new_order['count'],
                        "own_store_delivered_orders": own_store_delivered_orders['count'],
                        "franchise_store_new_order": franchise_store_new_order['count'],

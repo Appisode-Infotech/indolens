@@ -32,8 +32,8 @@ def get_all_orders(status, pay_status, store):
     payment_status_value = payment_status_values[pay_status]
     store_values = {
         "All": "LIKE '%'",
-        "ownStores": "= 1",
-        "franchiseStores": "= 2",
+        "Own Stores": "= 1",
+        "Franchise Stores": "= 2",
     }
     store_condition = store_values[store]
     try:
@@ -71,7 +71,8 @@ def get_all_orders(status, pay_status, store):
 
             return {
                 "status": True,
-                "orders_list": get_sales_orders(orders_list)
+                "orders_list": get_sales_orders(orders_list),
+                "latest_orders": get_sales_orders(orders_list)[:15]
             }, 200
 
     except pymysql.Error as e:

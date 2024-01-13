@@ -512,52 +512,7 @@
             </div>
             <div data-list='{"valueNames":["slno", "order","total","customer","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":10,"pagination":true}'
                      id="orderTable">
-                    <div class="mb-4">
-                        <div class="row g-3">
-                            <div class="col-auto">
-                                <div class="search-box">
-                                    <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
-                                        <input aria-label="Search" class="form-control search-input search"
-                                               placeholder="Search orders" type="search"/>
-                                        <span class="fas fa-search search-box-icon"></span>
-
-                                    </form>
-                                </div>
-                            </div>
-
-                            <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
-                                <div class="btn-group position-static" role="group">
-                                    <div class="col-auto scrollbar overflow-hidden-y flex-grow-1 me-4">
-                                <div class="btn-group position-static" role="group">
-                                    <div class="btn-group position-static text-nowrap">
-                                        <button id="sortStatus" aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-phoenix-secondary px-7 flex-shrink-0"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown"
-                                                type="button">{{store}}<span class="fas fa-angle-down ms-2"></span>
-                                        </button>
-                                        <ul class="dropdown-menu">
-                                            <li><a class="dropdown-item" href="{% url 'all_orders' 'All' %}">All</a>
-                                            </li>
-                                            <li><a class="dropdown-item "
-                                                   href="{% url 'all_orders' 'ownStores' %}">Own Stores</a></li>
-                                            <li><a class="dropdown-item "
-                                                   href="{% url 'all_orders' 'franchiseStores' %}">Franchise Stores </a>
-                                            </li>
-
-                                        </ul>
-                                    </div>
-                                </div>
-                            </div>
-                                    <button class="btn btn-link text-900 me-4 px-0 ms-4"><span
-                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
-                                    </button>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
+                    <h3 class="mb-3">Latest Sales</h3>
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                         <div class="table-responsive scrollbar mx-n1 px-1">
                             <table class="table table-sm fs--1 mb-0" id = "myTable">
