@@ -2430,7 +2430,8 @@ def addProductCategory(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
-            master_category_controller.add_product_category(product_cat_obj)
+            response = master_category_controller.add_product_category(product_cat_obj)
+            print(response)
             return redirect('manage_central_inventory_category')
         else:
             return render(request, 'indolens_admin/masters/addProductCategory.html')
