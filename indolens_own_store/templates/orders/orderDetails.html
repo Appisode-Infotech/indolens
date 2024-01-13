@@ -419,15 +419,38 @@
         }
     });
     document.addEventListener("DOMContentLoaded", function() {
-        var status = {{order_detail.0.order_status}};
+        var status = {{ order_detail.0.order_status }};
         var select = document.getElementById("orderStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
             if (select.options[i].value == status) {
                 select.selectedIndex = i;
-                for (var j = 0; j < i; j++) {
+
+                // Disable all options
+                for (var j = 0; j < select.options.length; j++) {
                     select.options[j].disabled = true;
                 }
+
+                // Enable the next option from the selected one
+                if (i < select.options.length - 1) {
+                    select.options[i + 1].disabled = false;
+                }
+
+                // Add event listener to update options dynamically
+                select.addEventListener("change", function() {
+                    var selectedIndex = this.selectedIndex;
+
+                    // Disable all options
+                    for (var k = 0; k < this.options.length; k++) {
+                        this.options[k].disabled = true;
+                    }
+
+                    // Enable the next option from the selected one
+                    if (selectedIndex < this.options.length - 1) {
+                        this.options[selectedIndex + 1].disabled = false;
+                    }
+                });
+
                 break;
             }
         }

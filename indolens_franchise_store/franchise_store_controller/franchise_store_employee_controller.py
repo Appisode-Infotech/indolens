@@ -60,7 +60,7 @@ def get_all_active_franchise_emp(store):
                                             LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.assigned_store_id = '{store}' AND sm.status = 1
+                                            WHERE sm.assigned_store_id = '{store}' AND sm.status = 1 AND sm.assigned_store_id != 0
                                             ORDER BY sm.employee_id DESC"""
             cursor.execute(get_store_employee_query)
             store_employees = cursor.fetchall()

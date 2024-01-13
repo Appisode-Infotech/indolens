@@ -77,7 +77,6 @@ def get_assigned_store(employee_id):
             cursor.execute(get_assigned_store)
             assigned_store = cursor.fetchone()
             return assigned_store[0]
-
     except pymysql.Error as e:
         return 0
     except Exception as e:

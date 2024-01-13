@@ -70,12 +70,22 @@ def storeEmployeeLogout(request):
         return redirect('own_store_login')
 
 
+def getAssignedStores(request):
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        assigned_store = own_store_auth_controller.get_assigned_store(request.session.get('id'))
+        if assigned_store == 0:
+            request.session.clear()
+            return assigned_store
+        else:
+            return assigned_store
+    else:
+        return redirect('own_store_login')
+
+
 # ================================= OWN STORE DASHBOARD ======================================
 def dashboard(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        print(request.session.get('id'))
-        assigned_store = own_store_auth_controller.get_assigned_store(request.session.get('id'))
-        print(assigned_store)
         own_store_new_order, status_code = own_store_dashboard_controller.get_order_stats('New', 1, assigned_store)
         own_store_delivered_orders, status_code = own_store_dashboard_controller.get_order_stats('Completed', 1,
                                                                                                  assigned_store)
@@ -95,8 +105,9 @@ def dashboard(request):
 
 # ================================= OWN STORE EMPLOYEES ======================================
 def manageStoreEmployees(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        assigned_store = own_store_auth_controller.get_assigned_store(request.session.get('id'))
+        assigned_store = assigned_store
         response, status_code = store_employee_controller.get_all_store_employee(assigned_store)
         return render(request, 'ownEmployee/manageEmployees.html',
                       {"store_employee_list": response['store_employee_list']})
@@ -105,6 +116,7 @@ def manageStoreEmployees(request):
 
 
 def viewEmployees(request, employeeId):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_employee_controller.get_store_employee_by_id(employeeId)
         return render(request, 'ownEmployee/viewEmployee.html', {"store_employee": response['store_employee']})
@@ -112,6 +124,7 @@ def viewEmployees(request, employeeId):
         return redirect('own_store_login')
 
 def viewFranchiseEmployees(request, employeeId):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_employee_controller.get_franchise_employee_by_id(employeeId)
         return render(request, 'ownEmployee/viewEmployee.html', {"store_employee": response['store_employee']})
@@ -121,79 +134,86 @@ def viewFranchiseEmployees(request, employeeId):
 
 # ================================= OWN STORE ORDER MANAGEMENT ======================================
 def allStoreOrders(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        assigned_store = own_store_auth_controller.get_assigned_store(request.session.get('id'))
         orders_list, status_code = store_orders_controller.get_all_orders('All', 'All', assigned_store)
-        print(orders_list)
         return render(request, 'orders/allStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
 
 
 def dispatchedStoreOrders(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('Dispatched', 'All',
-                                                                          own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                                                                          assigned_store)
         return render(request, 'orders/pendingStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
 
 
 def newStoreOrders(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('New', 'All',
-                                                                          own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                                                                          assigned_store)
         return render(request, 'orders/receivedStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
 
 
 def processingStoreOrders(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('Processing', 'All',
-                                                                          own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                                                                          assigned_store)
         return render(request, 'orders/processingStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
 
 
 def readyStoreOrders(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('Ready', 'All',
-                                                                          own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                                                                          assigned_store)
         return render(request, 'orders/readyStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
 
 
 def completedStoreOrders(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('Completed', 'All',
-                                                                          own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                                                                          assigned_store)
         return render(request, 'orders/deliveredStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
 
 
 def cancelledStoreOrders(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('Cancelled', 'All',
-                                                                          own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                                                                          assigned_store)
         return render(request, 'orders/cancelledStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
 
 
 def refundedStoreOrders(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('Cancelled', 'Refunded',
-                                                                          own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                                                                          assigned_store)
         return render(request, 'orders/refundedStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
 
 
 def orderDetails(request, orderId):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
         return render(request, 'orders/orderDetails.html', {"order_detail": order_detail['orders_details']})
@@ -202,6 +222,7 @@ def orderDetails(request, orderId):
 
 
 def orderInvoice(request, orderId):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
         store_data, store_status_code = orders_controller.get_store_details(
@@ -214,6 +235,7 @@ def orderInvoice(request, orderId):
 
 
 def orderStatusChange(request, orderId, status):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_update, status_code = store_orders_controller.order_status_change(orderId, status)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
@@ -223,6 +245,7 @@ def orderStatusChange(request, orderId, status):
 
 
 def orderPaymentStatusChange(request, orderId, status):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, status_code = store_orders_controller.order_payment_status_change(orderId, status)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
@@ -234,9 +257,10 @@ def orderPaymentStatusChange(request, orderId, status):
 # ================================= OWN STORE CUSTOMER MANAGEMENT ======================================
 
 def viewStoreCustomers(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_customers_controller.get_all_store_customers(
-            own_store_auth_controller.get_assigned_store(request.session.get('id')))
+            assigned_store)
         return render(request, 'customers/viewAllCustomersStore.html',
                       {"store_customers_list": response['store_customers_list']})
     else:
@@ -244,6 +268,7 @@ def viewStoreCustomers(request):
 
 
 def viewStoreCustomerDetails(request, customerId):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_customers_controller.get_customers_by_id(customerId)
         sales_data, resp_code = orders_controller.get_all_customer_orders(customerId)
@@ -266,6 +291,7 @@ def viewStoreCustomerDetails(request, customerId):
 # ================================= OWN STORE STOCK REQUESTS MANAGEMENT ======================================
 
 def createStockRequestStore(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
@@ -274,7 +300,7 @@ def createStockRequestStore(request):
             return redirect(route)
         else:
             response, status_code = store_inventory_controller.get_all_central_inventory_products(
-                own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                assigned_store)
             return render(request, 'stockRequests/createStockRequestStore.html',
                           {"product_list": response['product_list']})
     else:
@@ -282,9 +308,10 @@ def createStockRequestStore(request):
 
 
 def viewAllStockRequestsStore(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.view_all_store_stock_request(
-            own_store_auth_controller.get_assigned_store(request.session.get('id')), '%')
+            assigned_store, '%')
         return render(request, 'stockRequests/viewAllStockRequestsStore.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -292,9 +319,10 @@ def viewAllStockRequestsStore(request):
 
 
 def viewPendingStockRequestsStore(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.view_all_store_stock_request(
-            own_store_auth_controller.get_assigned_store(request.session.get('id')), '0')
+            assigned_store, '0')
         return render(request, 'stockRequests/viewPendingStockRequestsStore.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -302,9 +330,10 @@ def viewPendingStockRequestsStore(request):
 
 
 def viewCompletedStockRequestsStore(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.view_all_store_stock_request(
-            own_store_auth_controller.get_assigned_store(request.session.get('id')), '1')
+            assigned_store, '1')
         return render(request, 'stockRequests/viewCompletedStockRequestsStore.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -312,9 +341,10 @@ def viewCompletedStockRequestsStore(request):
 
 
 def viewRejectedStockRequestsStore(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.view_all_store_stock_request(
-            own_store_auth_controller.get_assigned_store(request.session.get('id')), '2')
+            assigned_store, '2')
         return render(request, 'stockRequests/viewRejectedStockRequestsStore.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -322,6 +352,7 @@ def viewRejectedStockRequestsStore(request):
 
 
 def stockRequestDeliveryStatusChange(request, requestId, status):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.request_delivery_status_change(requestId, status,
                                                                                           request.session.get('id'))
@@ -333,9 +364,10 @@ def stockRequestDeliveryStatusChange(request, requestId, status):
 # ================================= OWN STORE INVENTORY MANAGEMENT ======================================
 
 def storeInventoryProducts(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.get_all_products_for_store(
-            own_store_auth_controller.get_assigned_store(request.session.get('id')))
+            assigned_store)
         return render(request, 'inventory/storeInventoryProducts.html', {"stocks_list": response['stocks_list'],
                                                                          "categories_List": response[
                                                                              'product_category']})
@@ -344,8 +376,9 @@ def storeInventoryProducts(request):
 
 
 def inventoryOutOfStock(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        response, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15, own_store_auth_controller.get_assigned_store(request.session.get('id')))
+        response, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15, assigned_store)
         return render(request, 'inventory/inventoryOutOfStock.html', {"stocks_list": response['stocks_list'],
                                                                       "categories_List": response['product_category']})
     else:
@@ -355,13 +388,14 @@ def inventoryOutOfStock(request):
 # ================================= SALES AND EXPENSES ======================================
 
 def allExpenseStore(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
             expense_obj = store_expense_model.store_expense_model_from_dict(request.POST)
             response, status_code = expense_controller.create_store_expense(expense_obj)
             return redirect('all_expenses_store')
         else:
-            response, status_code = expense_controller.get_all_store_expense(own_store_auth_controller.get_assigned_store(request.session.get('id')),
+            response, status_code = expense_controller.get_all_store_expense(assigned_store,
                                                                              request.session.get('store_type'))
             return render(request, 'expenses/allExpenseStore.html',
                           {"stor_expense_list": response['stor_expense_list']})
@@ -370,6 +404,7 @@ def allExpenseStore(request):
 
 
 def makeSaleOwnStore(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
             cart_data = json.loads(request.POST['cartData'])
@@ -377,18 +412,18 @@ def makeSaleOwnStore(request):
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),
-                                                                   own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                                                                   assigned_store)
             url = reverse('order_details_store', kwargs={'orderId': make_order['order_id']})
             return redirect(url)
         else:
             employee_list, emp_status_code = store_employee_controller.get_all_active_store_employee(
-                own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                assigned_store)
             lab_list, lab_status_code = own_store_lab_controller.get_all_active_labs()
             store_products, status_code = store_inventory_controller.get_all_products_for_store(
-                own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                assigned_store)
             customerResponse, cust_status_code = store_customers_controller.get_all_customers()
             lens_response, lens_status_code = central_inventory_controller.get_central_inventory_lens(
-                own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                assigned_store)
             return render(request, 'expenses/makeSaleOwnStore.html',
                           {"other_products_list": store_products['stocks_list'],
                            'customers_list': customerResponse['customers_list'],
@@ -403,10 +438,11 @@ def makeSaleOwnStore(request):
 # ================================= Eye Test ======================================
 
 def ownStoreEyeTest(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
             response = own_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
-                                                       own_store_auth_controller.get_assigned_store(request.session.get('id')))
+                                                       assigned_store)
         customerResponse, cust_status_code = store_customers_controller.get_all_customers()
         return render(request, 'ownStoreEyeTest/ownStoreEyeTest.html',
                       {'customers_list': customerResponse['customers_list']})
@@ -415,6 +451,7 @@ def ownStoreEyeTest(request):
 
 
 def getOwnStoreEyeTest(request):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = own_store_eye_test_controller.get_eye_test()
         print(response)
@@ -425,6 +462,7 @@ def getOwnStoreEyeTest(request):
         return redirect('own_store_login')
 
 def getOwnStoreEyeTestById(request, testId):
+    assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = own_store_eye_test_controller.get_eye_test_by_id(testId)
         print(response)
