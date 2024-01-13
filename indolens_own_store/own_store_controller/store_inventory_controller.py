@@ -4,7 +4,6 @@ import pytz
 from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
-from indolens_own_store.own_store_model.response_model.central_inventory_product_resp_model import get_products
 from indolens_own_store.own_store_model.response_model.product_request_list_resp_model import get_request_product_list
 from indolens_own_store.own_store_model.response_model.stock_request_product_resp_model import \
     get_products_for_stock_request
@@ -12,9 +11,8 @@ from indolens_own_store.own_store_model.response_model.store_inventory_product_r
     get_store_inventory_stocks
 
 
-def getIndianTime():
-    ist = pytz.timezone('Asia/Kolkata')
-    today = datetime.datetime.now(ist)
+ist = pytz.timezone('Asia/Kolkata')
+today = datetime.datetime.now(ist)
 
 
 def get_all_out_of_stock_products_for_store(quantity, store_id):
@@ -181,7 +179,7 @@ def create_store_stock_request(stock_obj):
 
             cursor.execute(stock_req_query, (
                 stock_obj.request_from_store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
-                0, 0, 1, stock_obj.request_to_store_id, 0, getIndianTime(), stock_obj.created_by, getIndianTime(),
+                0, 0, 1, stock_obj.request_to_store_id, 0, today, stock_obj.created_by, today,
                 stock_obj.created_by,
                 stock_obj.unit_cost))
             return {
@@ -231,7 +229,7 @@ def view_all_store_stock_request(store_id, status):
 def request_delivery_status_change(request_id, status, updated_by):
     try:
         with connection.cursor() as cursor:
-            update_stock_request_query = f"""UPDATE request_products SET last_updated_on = '{getIndianTime()}', 
+            update_stock_request_query = f"""UPDATE request_products SET last_updated_on = '{today}', 
                                                 last_updated_by = {updated_by}, delivery_status = {status}
                                                 WHERE request_products_id = '{request_id}' """
             cursor.execute(update_stock_request_query)
@@ -248,12 +246,12 @@ def request_delivery_status_change(request_id, status, updated_by):
                                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                                                ON DUPLICATE KEY UPDATE
                                                product_quantity = product_quantity + {quantity}, 
-                                               last_updated_on = '{getIndianTime()}', 
+                                               last_updated_on = '{today}', 
                                                last_updated_by = {updated_by}"""
 
                 cursor.execute(update_store_Inventory,
                                (product_details[1], product_details[2], product_details[3],
-                                product_details[4], getIndianTime(), updated_by, getIndianTime(), updated_by))
+                                product_details[4], today, updated_by, today, updated_by))
 
             return {
                 "status": True,
