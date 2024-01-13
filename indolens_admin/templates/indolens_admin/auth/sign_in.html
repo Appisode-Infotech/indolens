@@ -127,7 +127,7 @@
                                 <div class="input-group mb-3">
 
                                     <input class="form-control" type="password" id="password" name="password" placeholder="Password">
-                                    <button type="button" onclick="togglePasswordVisibility()" class="input-group-text" id="basic-addon2"><i class="far fa-eye" id="togglePassword"></i></button>
+                                    <button id="togglePassword" type="button" class="input-group-text" id="basic-addon2"><i class="far fa-eye" id="togglePasswordIcon" ></i></button>
                                 </div>
                             </div>
 
@@ -375,22 +375,6 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/Phoenix.js' %}"></script>
 
-<script>
-    function togglePasswordVisibility() {
-        var passwordInput = document.getElementById('password');
-        var toggleIcon = document.getElementById('togglePassword');
-
-        if (passwordInput.type === 'password') {
-            passwordInput.type = 'text';
-            toggleIcon.classList.remove('far', 'fa-eye');
-            toggleIcon.classList.add('far', 'fa-eye-slash');
-        } else {
-            passwordInput.type = 'password';
-            toggleIcon.classList.remove('far', 'fa-eye-slash');
-            toggleIcon.classList.add('far', 'fa-eye');
-        }
-    }
-</script>
 </body>
 
 </html>
