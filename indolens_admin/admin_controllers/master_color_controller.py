@@ -21,7 +21,7 @@ def add_master_color(color_obj):
                 VALUES (
                     '{color_obj.color_code}', '{color_obj.color_name}',
                     '{color_obj.color_description}',
-                    '{color_obj.status}', '{today}',
+                    0, '{today}',
                     '{color_obj.created_by}', '{today}',
                     '{color_obj.last_updated_by}'
                 )

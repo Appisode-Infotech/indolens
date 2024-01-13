@@ -20,7 +20,7 @@ def add_frame_shape(shape_obj):
                 VALUES (
                     '{shape_obj.shape_name}',
                     '{shape_obj.shape_description}',
-                    '{shape_obj.status}', '{today}',
+                    0, '{today}',
                     '{shape_obj.created_by}', '{today}',
                     '{shape_obj.last_updated_by}'
                 )

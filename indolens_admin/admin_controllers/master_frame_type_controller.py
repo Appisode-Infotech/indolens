@@ -20,7 +20,7 @@ def add_frame_type(frame_obj):
                 VALUES (
                     '{frame_obj.frame_type_name}',
                     '{frame_obj.frame_type_description}',
-                    '{frame_obj.status}', '{today}',
+                    0, '{today}',
                     '{frame_obj.created_by}', '{today}',
                     '{frame_obj.last_updated_by}'
                 )
