@@ -640,19 +640,6 @@ def create_store_stock_request(stock_obj, store_id):
                 store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
                 1, 1, 0, 0, 0, today, stock_obj.created_by, today, stock_obj.created_by, stock_obj.comments))
 
-            update_store_Inventory = f"""INSERT INTO store_inventory 
-                                           (store_id, store_type, product_id, product_quantity, created_on, 
-                                           created_by, last_updated_on, last_updated_by) 
-                                           VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
-                                           ON DUPLICATE KEY UPDATE
-                                           product_quantity = product_quantity + {stock_obj.product_quantity}, 
-                                           last_updated_on = '{today}',  
-                                           last_updated_by = {stock_obj.created_by}"""
-
-            cursor.execute(update_store_Inventory, (store_id, stock_obj.store_type, stock_obj.product_id,
-                                                    stock_obj.product_quantity, today, stock_obj.created_by, today,
-                                                    stock_obj.created_by))
-
             update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {stock_obj.product_quantity} 
                                                                                     WHERE product_id = {stock_obj.product_id}"""
             cursor.execute(update_central_Inventory)
