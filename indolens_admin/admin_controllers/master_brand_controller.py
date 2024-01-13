@@ -19,7 +19,7 @@ def add_product_brand(brand_obj):
                 ) 
                 VALUES (
                     '{brand_obj.brand_name}',
-                    '{brand_obj.category_id}', '{brand_obj.brand_description}',
+                    0, '{brand_obj.brand_description}',
                     0, '{today}',
                     '{brand_obj.created_by}', '{today}',
                     '{brand_obj.last_updated_by}'
