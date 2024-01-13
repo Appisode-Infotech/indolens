@@ -15,7 +15,6 @@ from indolens_own_store.own_store_model.response_model.store_inventory_product_r
 def getIndianTime():
     ist = pytz.timezone('Asia/Kolkata')
     today = datetime.datetime.now(ist)
-    return today
 
 
 def get_all_out_of_stock_products_for_store(quantity, store_id):
@@ -232,7 +231,7 @@ def view_all_store_stock_request(store_id, status):
 def request_delivery_status_change(request_id, status, updated_by):
     try:
         with connection.cursor() as cursor:
-            update_stock_request_query = f"""UPDATE request_products SET last_updated_on = '{getIndianTime}', 
+            update_stock_request_query = f"""UPDATE request_products SET last_updated_on = '{getIndianTime()}', 
                                                 last_updated_by = {updated_by}, delivery_status = {status}
                                                 WHERE request_products_id = '{request_id}' """
             cursor.execute(update_stock_request_query)
