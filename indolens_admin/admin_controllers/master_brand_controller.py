@@ -42,7 +42,7 @@ def edit_product_brand(brand_obj):
             update_brand_query = f"""
                 UPDATE  brands SET
                     brand_name = '{brand_obj.brand_name}', 
-                    category_id = '{brand_obj.category_id}', brand_description = '{brand_obj.brand_description}', 
+                    brand_description = '{brand_obj.brand_description}', 
                     last_updated_on = '{today}', last_updated_by = '{brand_obj.last_updated_by}'
                     WHERE brand_id = {brand_obj.brand_id}
             """

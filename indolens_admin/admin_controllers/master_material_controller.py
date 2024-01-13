@@ -20,7 +20,7 @@ def add_master_material(material_obj):
                 VALUES (
                     '{material_obj.material_name}',
                     '{material_obj.material_description}',
-                    '{material_obj.status}', '{today}',
+                    0, '{today}',
                     '{material_obj.created_by}', '{today}',
                     '{material_obj.last_updated_by}'
                 )
