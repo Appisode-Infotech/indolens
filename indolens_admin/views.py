@@ -2478,7 +2478,7 @@ def addMastersBrands(request):
         if request.method == 'POST':
             master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
             resp = master_brand_controller.add_product_brand(master_brand_obj)
-
+            print(resp)
             return redirect('manage_central_inventory_brands')
         else:
             return render(request, 'indolens_admin/masters/addMastersBrand.html')
