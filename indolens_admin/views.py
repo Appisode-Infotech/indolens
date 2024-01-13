@@ -517,10 +517,8 @@ def editStoreManager(request, storeManagerId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(vars(file_data))
             store_manager = store_employee_model.store_employee_from_dict(request.POST)
             response = store_manager_controller.update_store_manager(store_manager, file_data)
-            print(response)
             url = reverse('view_store_manager', kwargs={'storeManagerId': storeManagerId})
             return redirect(url)
 
