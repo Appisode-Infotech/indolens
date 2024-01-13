@@ -15,13 +15,13 @@ def add_product_category(product_cat_obj):
         with connection.cursor() as cursor:
             create_category_query = f"""
                 INSERT INTO product_categories (
-                    category_id, category_name, category_prefix, category_description, 
+                    category_name, category_prefix, category_description, 
                     status, created_on, created_by, last_updated_on, last_updated_by
                 ) 
                 VALUES (
-                    '{product_cat_obj.category_id}', '{product_cat_obj.category_name}',
+                    '{product_cat_obj.category_name}',
                     '{product_cat_obj.category_prefix}', '{product_cat_obj.category_description}',
-                    '{product_cat_obj.status}', '{today}',
+                    0, '{today}',
                     '{product_cat_obj.created_by}', '{today}',
                     '{product_cat_obj.last_updated_by}'
                 )

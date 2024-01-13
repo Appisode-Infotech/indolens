@@ -99,6 +99,7 @@ def dashboard(request):
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
         sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
+        print(sales)
         own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
         own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
         own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
@@ -2429,7 +2430,8 @@ def addProductCategory(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
-            master_category_controller.add_product_category(product_cat_obj)
+            response = master_category_controller.add_product_category(product_cat_obj)
+            print(response)
             return redirect('manage_central_inventory_category')
         else:
             return render(request, 'indolens_admin/masters/addProductCategory.html')
@@ -2476,7 +2478,7 @@ def addMastersBrands(request):
         if request.method == 'POST':
             master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
             resp = master_brand_controller.add_product_brand(master_brand_obj)
-
+            print(resp)
             return redirect('manage_central_inventory_brands')
         else:
             return render(request, 'indolens_admin/masters/addMastersBrand.html')

@@ -14,13 +14,13 @@ def add_frame_type(frame_obj):
         with connection.cursor() as cursor:
             create_shape_query = f"""
                 INSERT INTO frame_types (
-                    frame_id, frame_type_name,  frame_type_description, 
+                    frame_type_name,  frame_type_description, 
                     status, created_on, created_by, last_updated_on, last_updated_by
                 ) 
                 VALUES (
-                    '{frame_obj.frame_id}', '{frame_obj.frame_type_name}',
+                    '{frame_obj.frame_type_name}',
                     '{frame_obj.frame_type_description}',
-                    '{frame_obj.status}', '{today}',
+                    0, '{today}',
                     '{frame_obj.created_by}', '{today}',
                     '{frame_obj.last_updated_by}'
                 )

@@ -14,13 +14,13 @@ def add_frame_shape(shape_obj):
         with connection.cursor() as cursor:
             create_shape_query = f"""
                 INSERT INTO frame_shapes (
-                    shape_id, shape_name,  shape_description, 
+                    shape_name,  shape_description, 
                     status, created_on, created_by, last_updated_on, last_updated_by
                 ) 
                 VALUES (
-                    '{shape_obj.shape_id}', '{shape_obj.shape_name}',
+                    '{shape_obj.shape_name}',
                     '{shape_obj.shape_description}',
-                    '{shape_obj.status}', '{today}',
+                    0, '{today}',
                     '{shape_obj.created_by}', '{today}',
                     '{shape_obj.last_updated_by}'
                 )

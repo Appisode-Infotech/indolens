@@ -14,13 +14,13 @@ def add_master_material(material_obj):
         with connection.cursor() as cursor:
             create_material_query = f"""
                 INSERT INTO product_materials (
-                    material_id, material_name,  material_description, 
+                    material_name,  material_description, 
                     status, created_on, created_by, last_updated_on, last_updated_by
                 ) 
                 VALUES (
-                    '{material_obj.material_id}', '{material_obj.material_name}',
+                    '{material_obj.material_name}',
                     '{material_obj.material_description}',
-                    '{material_obj.status}', '{today}',
+                    0, '{today}',
                     '{material_obj.created_by}', '{today}',
                     '{material_obj.last_updated_by}'
                 )
