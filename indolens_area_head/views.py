@@ -81,7 +81,7 @@ def dashboard(request):
         orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All',
                                                                                     request.session.get(
                                                                                         'assigned_stores'))
-        return render(request, 'dashboard.html', {"orders_list": orders_list['orders_list']})
+        return render(request, 'dashboard.html', {"orders_list": orders_list['dash_orders_list']})
     else:
         return redirect('login_area_head')
 

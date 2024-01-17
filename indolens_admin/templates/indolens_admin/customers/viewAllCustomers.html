@@ -88,7 +88,7 @@
                             Store</a></li>
                     </ul>
 
-                <div data-list='{"valueNames":["slno","customer","type","name","email","language","orders","total","city","last-order"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slno","customer","type","name","email","language","orders","total","city"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -151,7 +151,7 @@
 
                                     <td class="fs--1 align-middle px-0 py-3 slno"></td>
 
-                                    <td class="customer align-middle white-space-nowrap pe-5 customer"><a
+                                    <td class="align-middle white-space-nowrap pe-5 customer"><a
                                             class="d-flex align-items-center"
                                             href="{% url 'customer_details' customer.customer_id %}">
                                         <div class="avatar avatar-m">
@@ -160,14 +160,14 @@
                                         </div>
                                         <p class="mb-0 ms-3 text-1100 fw-bold name">{{customer.name}}</p>
                                     </a></td>
-                                    <td class="email align-middle white-space-nowrap pe-5 type">
+                                    <td class="align-middle white-space-nowrap pe-5 type">
                                         {% if customer.created_by_store_type == 1 %}
                                         <p class="fw-semi-bold">OWN STORE</p>
                                         {% else %}
                                         <p class="fw-semi-bold">FRANCHISE STORE</p>
                                         {% endif %}
                                     </td>
-                                    <td class="email align-middle white-space-nowrap pe-5 name">
+                                    <td class="align-middle white-space-nowrap pe-5 name">
                                         {% if customer.created_by_store_type == 1 %}
                                         <a class="fw-semi-bold" href="{% url 'view_own_store' customer.created_by_store_id %}">
                                             {{customer.store_name}}</a>
@@ -177,18 +177,18 @@
                                         {% endif %}
 
                                     </td>
-                                    <td class="email align-middle white-space-nowrap pe-5 email"><a class="fw-semi-bold">{{customer.email}}</a>
+                                    <td class="align-middle white-space-nowrap pe-5 email"><a class="fw-semi-bold">{{customer.email}}</a>
                                     </td>
-                                    <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-1000 language">
+                                    <td class="align-middle white-space-nowrap fw-semi-bold text-1000 language">
                                         {{customer.language}}
                                     </td>
-                                    <td class="total-orders align-middle white-space-nowrap fw-semi-bold text-end text-1000 orders">
+                                    <td class="align-middle white-space-nowrap fw-semi-bold text-end text-1000 orders">
                                         {{customer.total_order_counts}}
                                     </td>
-                                    <td class="total-spent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100 total">
+                                    <td class="align-middle white-space-nowrap fw-bold text-end ps-3 text-1100 total">
                                         ₹ {{customer.total_spend}}
                                     </td>
-                                    <td class="city align-middle white-space-nowrap text-1000 ps-7 city">{{customer.city}}
+                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.city}}
                                     </td>
 
                                 </tr>

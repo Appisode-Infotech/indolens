@@ -67,7 +67,8 @@ def get_all_orders(status, pay_status, store_id):
 
             return {
                 "status": True,
-                "orders_list": get_sales_orders(orders_list)
+                "orders_list": get_sales_orders(orders_list),
+                "dash_orders_list": get_sales_orders(orders_list)[:15]
             }, 200
 
     except pymysql.Error as e:

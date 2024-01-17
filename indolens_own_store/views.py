@@ -98,7 +98,7 @@ def dashboard(request):
                       {"own_store_new_order": own_store_new_order['count'],
                        "own_store_delivered_orders": own_store_delivered_orders['count'],
                        "own_store_sale": own_store_sales['sale'], "out_of_stock": len(out_of_stock['stocks_list']),
-                       "orders_list": orders_list['orders_list']})
+                       "orders_list": orders_list['dash_orders_list']})
     else:
         return redirect('own_store_login')
 

@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens Lab - Dashboard</title>
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    {% load static %}
+
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar_lab.html' %}
+
+        <div class="content">
+            <div class="pb-5">
+                <div class="row g-4">
+                    <div class="col-12 col-xxl-6">
+                        <div class="mb-8">
+                            <h2 class="mb-2">Hi {{ request.session.name }}</h2>
+                            <h5 class="text-700 fw-semi-bold">Here’s what’s going on at your business right now</h5>
+                        </div>
+
+                        <div class="row align-items-center g-4">
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
+                                        width="46"/>
+
+                                    <div class="ms-3">
+                                        <h4 class="mb-0">₹18,000 Sales</h4>
+                                        <p class="text-800 fs--1 mb-0">From Own Stores Today</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt=""
+                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
+
+                                    <div class="ms-3">
+                                        <h4 class="mb-0">₹12,000 Sales</h4>
+                                        <p class="text-800 fs--1 mb-0">From Franchise Stores Today</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt=""
+                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
+                                    <div class="ms-3">
+                                        <h4 class="mb-0">15 Orders</h4>
+                                        <p class="text-800 fs--1 mb-0">From Own Stores Today</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt=""
+                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
+                                    <div class="ms-3">
+                                        <h4 class="mb-0">5 Delivered</h4>
+                                        <p class="text-800 fs--1 mb-0">From Franchise Stores Today</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center g-4 mt-2">
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
+                                        width="46"/>
+
+                                    <div class="ms-3">
+                                        <h4 class="mb-0">>57
+                                            new orders</h4>
+                                        <p class="text-800 fs--1 mb-0">Pending orders</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt=""
+                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
+
+                                    <div class="ms-3">
+                                        <h4 class="mb-0">5 Delivered><h4>
+                                        <p class="text-800 fs--1 mb-0">Orders delivered today</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt=""
+                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
+                                    <div class="ms-3">
+                                        <h4 class="mb-0">15 products
+                                        </h4>
+                                        <p class="text-800 fs--1 mb-0">Out of stock</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row align-items-center g-4 mt-2">
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
+                                        width="46"/>
+
+                                    <div class="ms-3">
+                                        <h4 class="mb-0">9 Own stores</h4>
+                                        <p class="text-800 fs--1 mb-0">Indolens owns them</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt=""
+                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
+
+                                    <div class="ms-3">
+                                        <h4 class="mb-0">5 Franchise
+                                            stores
+                                        </h4>
+                                        <p class="text-800 fs--1 mb-0">For franchise owners</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="bg-200 mb-6 mt-4"/>
+
+                    <div class="table-responsive mx-n1 px-1 scrollbar">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
+                            <thead>
+                            <tr>
+                                <th class="sort white-space-nowrap align-middle pe-3 slno" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
+                                    style="width:5%;">ORDER ID
+                                </th>
+                                <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                    style="width:6%;">TOTAL
+                                </th>
+                                <th class="sort align-middle ps-8" data-sort="customer" scope="col"
+                                    style="width:28%; min-width: 250px;">CUSTOMER
+                                </th>
+                                <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
+                                    style="width:10%;">PAYMENT STATUS
+                                </th>
+                                <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
+                                    scope="col" style="width:12%; min-width: 200px;">ORDER
+                                    STATUS
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="created_by" scope="col"
+                                    style="width:30%;">CREATED BY
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="created_on" scope="col"
+                                    style="width:30%;">CREATED ON
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
+                                    style="width:30%;">UPDATED BY
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
+                                    style="width:30%;">UPDATED ON
+                                </th>
+
+                            </tr>
+                            </thead>
+                            <tbody class="list" id="order-table-body">
+                            {% for order in orders_list %}
+                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                <td class="align-middle white-space-nowrap py-0 slno"></td>
+                                <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                          href="{% url 'order_details_area_head' order.order_id %}">#{{order.order_id}}</a>
+                                </td>
+                                <td class="total align-middle text-end fw-semi-bold text-1000">{{order.total_cost}}</td>
+                                <td class="customer align-middle white-space-nowrap ps-8">
+                                    <a class="d-flex align-items-center"
+                                       href="{% url 'view_franchise_store_customer_details' order.customer_id %}">
+                                        <div class="avatar avatar-m">
+                                            <div class="avatar-name rounded-circle">
+                                                <span>{{order.customer_name.0}}</span></div>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
+                                    </a>
+                                </td>
+                                <td class="paymentStatus align-middle white-space-nowrap text-start fw-bold text-700">
+                                    {% if order.payment_status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                            class="badge-label">PENDING</span><span class="ms-1"
+                                                                                    data-feather="check"
+                                                                                    style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.payment_status == 2 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                            class="badge-label">COMPLETE</span><span class="ms-1"
+                                                                                     data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.payment_status == 3 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                            class="badge-label">REFUNDED</span><span class="ms-1"
+                                                                                     data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    {% endif %}
+                                </td>
+                                <td class="fulfilmentStatus align-middle white-space-nowrap text-start fw-bold text-700">
+                                    {% if order.order_status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">NEW</span><span class="ms-1" data-feather="check"
+                                                                                style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 2 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">PROCESSING</span><span class="ms-1" data-feather="check"
+                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 3 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">READY</span><span class="ms-1" data-feather="check"
+                                                                                  style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 4 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">DISPATCHED</span><span class="ms-1" data-feather="check"
+                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 5 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">DELIVERED</span><span class="ms-1" data-feather="check"
+                                                                                      style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 6 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">CANCELLED</span><span class="ms-1" data-feather="check"
+                                                                                      style="height:12.8px;width:12.8px;"></span></span>
+                                    {% endif %}
+
+                                </td>
+                                <td class="createdBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <a href="{% url 'view_employees' order.created_by %}">{{order.creator_name}}</a>
+                                </td>
+                                <td class="createdOn align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                    {{order.created_on}}
+                                </td>
+                                <td class="updatedBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <a href="{% url 'view_employees' order.updated_by %}">{{order.updater_name}}</a>
+
+                                </td>
+                                <td class="updatedOn align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                    {{order.updated_on}}
+                                </td>
+                            </tr>
+                            {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row align-items-center py-1">
+                        <div class="pagination d-none"></div>
+                        <div class="col d-flex fs--1">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
+                            all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less</a>
+                        </div>
+                        <div class="col-auto d-flex">
+
+                            <button class="btn btn-link px-1 me-1" data-list-pagination="prev" title="Previous"
+                                    type="button"><span class="fas fa-chevron-left me-2"></span>Previous
+                            </button>
+                            <button class="btn btn-link px-1 ms-1" data-list-pagination="next" title="Next"
+                                    type="button">Next<span class="fas fa-chevron-right ms-2"></span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            {% include 'footer.html' %}
+        </div>
+    </div>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'vendors/echarts/echarts.min.js' %}"></script>
+<script src="{% static 'vendors/chart/chart.min.js' %}"></script>
+<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+<script async
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6O2CG9zBAksJH4SCgCZlbx3XRWVwzY1E&callback=revenueMapInit"></script>
+<script src="{% static 'js/ecommerce-dashboard.js' %}"></script>
+
+</body>
+
+</html>
