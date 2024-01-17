@@ -61,7 +61,6 @@ def update_store_manager(store_manager, files):
                     email = '{store_manager.email}',
                     phone = '{store_manager.phone}',
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                    assigned_store_id = {store_manager.assigned_store_id},
                     address = '{store_manager.address}',
                     last_updated_by = '{store_manager.last_updated_by}',
                     last_updated_on = '{today}'
