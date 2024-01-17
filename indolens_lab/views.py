@@ -33,7 +33,7 @@ def login(request):
 
 
 def getAssignedLab(request):
-    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get('is_lab_tech_logged_in') is True:
         print(request.session.get('id'))
         assigned_lab = lab_auth_controller.get_assigned_lab(request.session.get('id'))
         print(assigned_lab)
