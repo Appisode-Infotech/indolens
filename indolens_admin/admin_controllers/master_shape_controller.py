@@ -68,7 +68,7 @@ def get_all_central_inventory_shapes():
             FROM frame_shapes AS fs 
             LEFT JOIN admin AS creator ON fs.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON fs.last_updated_by = updater.admin_id
-            ORDER BY fs.shape_id DESC
+            ORDER BY fs.shape_id ASC
             """
             cursor.execute(get_product_shape_query)
             shapes_data = cursor.fetchall()

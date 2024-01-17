@@ -70,7 +70,7 @@ def get_all_central_inventory_category():
             FROM product_categories AS pc 
             LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id 
-            ORDER BY pc.category_id DESC"""
+            ORDER BY pc.category_id ASC"""
             cursor.execute(get_product_category_query)
             stores_data = cursor.fetchall()
 
