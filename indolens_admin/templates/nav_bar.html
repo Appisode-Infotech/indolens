@@ -173,6 +173,16 @@
                                 </li>
                                 <li class="nav-item"><a aria-expanded="false"
                                                         asd="index"
+                                                        class="nav-link {% if 'add_products' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'add_products' %}">
+                                    <div class="d-flex align-items-center"><span
+                                            class="nav-link-text">Add Products</span>
+                                    </div>
+                                </a>
+                                </li>
+                                <li class="nav-item"><a aria-expanded="false"
+                                                        asd="index"
                                                         class="nav-link {% if 'manage_central_inventory_products' in request.path %}active{% endif %}"
                                                         data-bs-toggle=""
                                                         href="{% url 'manage_central_inventory_products' 'All' %}">

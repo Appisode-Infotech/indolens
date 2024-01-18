@@ -91,6 +91,12 @@
                             </h2>
                         </div>
                     </div>
+                    <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a>
+                        </li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-1">Active</a></li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-0">Inactive</a></li>
+                    </ul>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
 
                         <div class="col-12 col-sm-auto">
@@ -149,7 +155,7 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for shapes in product_shape %}
 
-                            <tr class="position-static">
+                            <tr class="position-static" data-category="{{ shapes.status }}">
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 id">
                                     {{shapes.shape_id}}
                                 </td>
@@ -283,7 +289,8 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
 <script src="{% static 'js/custom_master_view_modals.js' %}"></script>
-
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/filter.js' %}"></script>
 </body>
 
 </html>
