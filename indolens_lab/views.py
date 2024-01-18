@@ -2,8 +2,10 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
+from indolens_admin.admin_controllers import orders_controller
 from indolens_lab.lab_controllers import lab_auth_controller, lab_task_controller
 from indolens_lab.lab_models.request_model import lab_tech_model
+from indolens_own_store.own_store_controller import store_orders_controller
 
 
 def checkLogin(request):  # new
@@ -34,17 +36,14 @@ def login(request):
 
 def getAssignedLab(request):
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get('is_lab_tech_logged_in') is True:
-        print(request.session.get('id'))
         assigned_lab = lab_auth_controller.get_assigned_lab(request.session.get('id'))
-        print(assigned_lab)
-        print("++++++++++++++++++++++++++++++++++++++++++")
         if assigned_lab == 0:
             request.session.clear()
             return assigned_lab
         else:
             return assigned_lab
     else:
-        return redirect('login')
+        return redirect('lab_login')
 
 
 def labDashboard(request):
@@ -53,8 +52,32 @@ def labDashboard(request):
 
 def allTask(request):
     assigned_lab = getAssignedLab(request)
-    print(assigned_lab)
-    print("================================================")
-    all_task, task_status_code = lab_task_controller.get_all_lab_task(assigned_lab)
-    print(all_task)
-    return render(request, 'Tasks/viewAllTask.html', {"all_task": all_task['task_list']})
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        print(assigned_lab)
+        print("================================================")
+        all_task, task_status_code = lab_task_controller.get_all_lab_jobs(assigned_lab)
+        print(all_task)
+        return render(request, 'Tasks/viewAllTask.html', {"all_task": all_task['task_list']})
+    else:
+        return redirect('lab_login')
+
+def labJobDetails(request, jobId):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        job_detail, status_code = lab_task_controller.get_lab_job_details(jobId, assigned_lab)
+        return render(request, 'Tasks/jobDetails.html', {"order_detail": job_detail['orders_details']})
+    else:
+        return redirect('lab_login')
+
+
+def jobStatusChange(request, jobId, status):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        order_update, status_code = store_orders_controller.order_status_change(jobId, status)
+        url = reverse('lab_job_details', kwargs={'jobId': jobId})
+        return redirect(url)
+    else:
+        return redirect('lab_login')
