@@ -67,7 +67,7 @@ def get_all_central_inventory_frame_types():
             FROM frame_types AS ft
             LEFT JOIN admin AS creator ON ft.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON ft.last_updated_by = updater.admin_id
-            ORDER BY ft.frame_id ASCs
+            ORDER BY ft.frame_id ASC
             """
             cursor.execute(get_frame_types_query)
             frame_type_data = cursor.fetchall()
