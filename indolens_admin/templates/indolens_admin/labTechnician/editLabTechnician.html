@@ -87,7 +87,7 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'edit_lab_technician' lab_technician.lab_technician_id %}" class="row g-3
-                    needs-validation needs-password-validation" method="post" enctype="multipart/form-data"
+                    needs-validation " method="post" enctype="multipart/form-data"
                           novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
@@ -99,7 +99,7 @@
 
                         <div class="col-md-12">
                             <label class="form-label" for="profilePic">Upload profile pic</label>
-                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic" required
+                            <input accept="image/*" class="form-control" id="profilePic" name="profilePic"
                                    type="file"/>
                         </div>
 
@@ -125,7 +125,7 @@
                             <label class="form-label" for="phone">Phone</label>
 
                             <input readonly class="form-control" id="phone" name="phone" required="" type="number"
-                                   value="{{lab_technician.phone}}"/>
+                                  max="9999999999" min="1111111111" value="{{lab_technician.phone}}"/>
                             <div class="invalid-feedback">Phone Number is mandatory..</div>
                         </div>
 
