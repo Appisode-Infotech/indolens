@@ -6052,12 +6052,14 @@ document.addEventListener("DOMContentLoaded", function() {
   // Function to update serial numbers
   const updateSerialNumbers = () => {
     var table = document.getElementById("myTable");
-    var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-
+    if(table){
+     var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
     for (var i = 0; i < rows.length; i++) {
       var serialCell = rows[i].getElementsByTagName("td")[0];
       serialCell.textContent = i + 1;
     }
+    }
+
   }
 
   // Call the function to update serial numbers once the DOM is fully loaded
@@ -6090,7 +6092,7 @@ const addImagePreview = () => {
 
 const togglePassword = () => {
     const toggleEye = document.getElementById('togglePassword');
-
+    if(toggleEye){
     toggleEye.addEventListener('click', () => {
         var passwordInput = document.getElementById('password');
         var toggleIcon = document.getElementById('togglePasswordIcon');
@@ -6105,13 +6107,14 @@ const togglePassword = () => {
             toggleIcon.classList.add('far', 'fa-eye');
         }
     });
+    }
 }
 
 
 const toggleConfirmPassword = () => {
     const toggleEye = document.getElementById('toggleConfirmPassword');
-
-    toggleEye.addEventListener('click', () => {
+    if(toggleEye){
+        toggleEye.addEventListener('click', () => {
         var passwordInput = document.getElementById('confirmPassword');
         var toggleIcon = document.getElementById('toggleConfirmPasswordIcon');
 
@@ -6125,6 +6128,7 @@ const toggleConfirmPassword = () => {
             toggleIcon.classList.add('far', 'fa-eye');
         }
     });
+    }
 }
 
 const noTableData  = () => {
@@ -6142,7 +6146,9 @@ var tableRows = document.querySelectorAll('#myTable tbody tr');
             newRow.appendChild(newCell);
 
             // Append the new row to the table body
+            if(document.getElementById('myTable')){
             document.getElementById('myTable').getElementsByTagName('tbody')[0].appendChild(newRow);
+            }
         }
 }
 
