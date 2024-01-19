@@ -110,7 +110,8 @@
 
                             <label class="form-label" for="labPhone">Lab Phone</label>
 
-                            <input class="form-control" id="labPhone" name="labPhone" required="" type="text"
+                            <input class="form-control" id="labPhone" name="labPhone" required="" type="number"
+                                   pattern="\d{10}"
                                    value="{{lab.lab_phone}}"/>
                             <div class="invalid-feedback">Please provide a valid Labphone number.</div>
                         </div>
@@ -119,7 +120,8 @@
                             <label class="form-label" for="labGSTIN">Lab GSTIN</label>
 
                             <input class="form-control" id="labGSTIN" name="labGSTIN" required="" type="text"
-                                   value="{{lab.lab_gst}}"/>
+                                   minlength="15" maxlength="15"
+                                   value="{{lab.lab_gst}}" pattern="([0-9]{2}[a-z]{4}([a-z]{1}|[0-9]{1}).[0-9]{3}[a-z]{3}"/>
                             <div class="invalid-feedback">Please provide a valid Lab GSTIN.</div>
                         </div>
 
@@ -127,7 +129,7 @@
 
                             <label class="form-label" for="labEmail">Lab Email</label>
 
-                            <input class="form-control" id="labEmail" name="labEmail" required="" type="text"
+                            <input class="form-control" id="labEmail" name="labEmail" required="" type="email"
                                    value="{{lab.lab_email}}"/>
                             <div class="invalid-feedback">Please provide a valid Labemail.</div>
                         </div>
@@ -152,8 +154,8 @@
 
                             <label class="form-label" for="labZipCode">Zip</label>
 
-                            <input class="form-control" id="labZipCode" name="labZipCode" required="" type="text"
-                                   value="{{lab.lab_zip}}"/>
+                            <input class="form-control" id="labZipCode" name="labZipCode" required="" type="number"
+                                   max="999999" value="{{lab.lab_zip}}"/>
                             <div class="invalid-feedback">Please provide a valid zip.</div>
                         </div>
                         <div class="col-12">

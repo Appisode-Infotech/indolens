@@ -140,19 +140,7 @@
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="createdAt" scope="col" style="width:10%;">
-                                    CREATED ON
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="createdBy" scope="col" style="width:15%;">
-                                    CREATED BY
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="updatedAt" scope="col"
-                                    style="width:5%;">UPDATED ON
-                                </th>
 
-                                <th class="sort align-middle ps-3" data-sort="updatedBy" scope="col"
-                                    style="width:5%;">UPDATED BY
-                                </th>
 
                                 <th class="sort align-middle ps-3" data-sort="address" scope="col"
                                     style="width:5%;">ADDRESS
@@ -204,22 +192,6 @@
                                 {% elif marketing_head.status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
-                                </td>
-
-                                <td class="align-middle white-space-nowrap ps-3 py-4 createdAt">
-                                    <p class="mb-0 fs--1 text-900">{{marketing_head.created_on}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap ps-3 py-4 createdBy">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{marketing_head.creator_name}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedAt">
-                                    <p class="mb-0 fs--1 text-900">{{marketing_head.last_updated_on}}</p>
-                                </td>
-
-                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedBy">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{marketing_head.updater_name}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 address"

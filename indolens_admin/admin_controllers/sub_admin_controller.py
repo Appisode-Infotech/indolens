@@ -87,7 +87,7 @@ def get_sub_admin_by_id(said):
                                             FROM admin AS a
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id
-                                            WHERE a.role = 2 AND a.admin_id = '{said}'"""
+                                            WHERE a.admin_id = '{said}'"""
             cursor.execute(get_all_sub_admin_query)
             sub_admins = cursor.fetchall()
             return {

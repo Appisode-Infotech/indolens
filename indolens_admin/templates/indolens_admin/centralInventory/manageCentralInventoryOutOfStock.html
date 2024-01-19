@@ -222,7 +222,9 @@
                                                    data-employee-name="{{ product.product_name }}"
                                                    data-action-type="restock">Restock</a>
 
-                                                <a class="dropdown-item" href="#!">View</a>
+<!--                                                 <a class="dropdown-item view-button" data-bs-toggle="modalView"-->
+<!--                                               type="button"-->
+<!--                                               data-category-info="{{ product }}">View</a>-->
 <!--                                                <div class="dropdown-divider"></div>-->
 <!--                                                <a class="dropdown-item text-danger" href="#!">Remove</a>-->
                                             </div>
@@ -253,6 +255,8 @@
                         </div>
                     </div>
                 </div>
+                            {% include 'modal_master_view.html' %}
+
             </div>
             {% include 'footer.html' %}
             <div class="modal fade" id="restock_modal" tabindex="-1"
@@ -378,6 +382,7 @@
 
 
 </script>
+<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 
 </body>
 

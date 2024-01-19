@@ -44,7 +44,7 @@ def edit_master_units(data):
             update_master_units_query = f"""
                 UPDATE  units SET
                     unit_name = '{data['unit_name']}',  last_updated_on = '{today}',
-                    last_updated_by = '{data['updated_by']}'
+                    last_updated_by = {data['updated_by']}
                     WHERE unit_id = {data['unit_id']}
             """
 

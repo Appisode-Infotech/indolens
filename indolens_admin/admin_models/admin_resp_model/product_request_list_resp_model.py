@@ -38,9 +38,9 @@ class Product:
             'request_to_store_id': self.request_to_store_id,
             'payment_status': self.payment_status,
             'comment': self.comment,
-            'request_product_created_on': self.store_product_created_on,
+            'request_product_created_on': self.store_product_created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.store_product_created_on, datetime) else None,
             'request_product_created_by': self.store_product_created_by,
-            'request_product_last_updated_on': self.store_product_last_updated_on,
+            'request_product_last_updated_on': self.store_product_last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.store_product_last_updated_on, datetime) else None,
             'request_product_last_updated_by': self.store_product_last_updated_by,
 
             'product_id': self.product_id,
