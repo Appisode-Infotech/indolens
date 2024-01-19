@@ -153,7 +153,19 @@
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
+<!--                                <th class="sort align-middle ps-3" data-sort="createdon" scope="col" style="width:10%;">-->
+<!--                                    CREATED ON-->
+<!--                                </th>-->
+<!--                                <th class="sort align-middle ps-3" data-sort="createdby" scope="col" style="width:15%;">-->
+<!--                                    CREATED BY-->
+<!--                                </th>-->
+<!--                                <th class="sort align-middle ps-3" data-sort="updatedon" scope="col"-->
+<!--                                    style="width:5%;">UPDATED ON-->
+<!--                                </th>-->
 
+<!--                                <th class="sort align-middle ps-3" data-sort="updatedby" scope="col"-->
+<!--                                    style="width:5%;">UPDATED BY-->
+<!--                                </th>-->
 
                                 <th class="sort align-middle ps-3" data-sort="address" scope="col"
                                     style="width:5%;">ADDRESS
@@ -206,8 +218,21 @@
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap ps-3 py-4 createdon">
-                                    <p class="mb-0 fs--1 text-900">{{owner.created_on}}</p>
+<!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdon">-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{owner.created_on}}</p>-->
+<!--                                </td>-->
+<!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdby">-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{owner.creator_name}}</p>-->
+<!--                                </td>-->
+<!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedon">-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{owner.last_updated_on}}</p>-->
+<!--                                </td>-->
+<!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedby">-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{owner.updater_name}}</p>-->
+<!--                                </td>-->
+                                <td class="align-middle white-space-nowrap ps-3 py-4 address"
+                                style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{owner.address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">

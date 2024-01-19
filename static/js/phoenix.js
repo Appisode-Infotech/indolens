@@ -6052,12 +6052,14 @@ document.addEventListener("DOMContentLoaded", function() {
   // Function to update serial numbers
   const updateSerialNumbers = () => {
     var table = document.getElementById("myTable");
-    var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
-
+    if(table){
+     var rows = table.getElementsByTagName("tbody")[0].getElementsByTagName("tr");
     for (var i = 0; i < rows.length; i++) {
       var serialCell = rows[i].getElementsByTagName("td")[0];
       serialCell.textContent = i + 1;
     }
+    }
+
   }
 
   // Call the function to update serial numbers once the DOM is fully loaded
@@ -6090,7 +6092,7 @@ const addImagePreview = () => {
 
 const togglePassword = () => {
     const toggleEye = document.getElementById('togglePassword');
-
+    if(toggleEye){
     toggleEye.addEventListener('click', () => {
         var passwordInput = document.getElementById('password');
         var toggleIcon = document.getElementById('togglePasswordIcon');
@@ -6105,13 +6107,14 @@ const togglePassword = () => {
             toggleIcon.classList.add('far', 'fa-eye');
         }
     });
+    }
 }
 
 
 const toggleConfirmPassword = () => {
     const toggleEye = document.getElementById('toggleConfirmPassword');
-
-    toggleEye.addEventListener('click', () => {
+    if(toggleEye){
+        toggleEye.addEventListener('click', () => {
         var passwordInput = document.getElementById('confirmPassword');
         var toggleIcon = document.getElementById('toggleConfirmPasswordIcon');
 
@@ -6125,6 +6128,28 @@ const toggleConfirmPassword = () => {
             toggleIcon.classList.add('far', 'fa-eye');
         }
     });
+    }
+}
+
+const noTableData  = () => {
+var tableRows = document.querySelectorAll('#myTable tbody tr');
+
+        if (tableRows.length === 0) {
+            // If no rows, create a new row with a message
+            var newRow = document.createElement('tr');
+            var newCell = document.createElement('td');
+
+            newCell.colSpan = 12;
+            newCell.className = 'text-center';
+            newCell.innerHTML = '<p class="fw-bo text-900 fs--1 mb-0">No data found</p>';
+
+            newRow.appendChild(newCell);
+
+            // Append the new row to the table body
+            if(document.getElementById('myTable')){
+            document.getElementById('myTable').getElementsByTagName('tbody')[0].appendChild(newRow);
+            }
+        }
 }
 
   /* eslint-disable import/no-extraneous-dependencies */
@@ -6173,6 +6198,7 @@ const toggleConfirmPassword = () => {
   docReady(lottieInit);
   docReady(togglePassword);
   docReady(toggleConfirmPassword);
+  docReady(noTableData);
 
   var phoenix = {
     utils
