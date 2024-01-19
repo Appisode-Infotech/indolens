@@ -184,6 +184,16 @@
                                             <h5 class="text-800">Email</h5><a href="mailto:shatinon@jeemail.com">{{owner.email}}</a>
                                         </div>
                                         <h5 class="text-800">Phone</h5><a class="text-800" href="tel:+1234567890">{{owner.phone}}</a>
+                                        <h5 class="text-800 mt-3">Created On</h5>
+                                        <p class="text-800">{{owner.created_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Created By</h5>
+                                        <a href="{% url 'view_sub_admin' owner.created_by %}">{{owner.creator_name}}</a>
+                                        <h5 class="text-800 mt-3">Updated On</h5>
+                                        <p class="text-800">{{owner.last_updated_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Updated By</h5>
+                                        <a href="{% url 'view_sub_admin' owner.last_updated_by %}">{{owner.updater_name}}</a>
                                     </div>
                                 </div>
                             </div>

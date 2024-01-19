@@ -154,19 +154,7 @@
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="createdon" scope="col" style="width:10%;">
-                                    CREATED ON
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="createdby" scope="col" style="width:15%;">
-                                    CREATED BY
-                                </th>
-                                <th class="sort align-middle ps-3" data-sort="updatedon" scope="col"
-                                    style="width:5%;">UPDATED ON
-                                </th>
 
-                                <th class="sort align-middle ps-3" data-sort="updatedby" scope="col"
-                                    style="width:5%;">UPDATED BY
-                                </th>
 
                                 <th class="sort align-middle ps-3" data-sort="address" scope="col"
                                     style="width:5%;">ADDRESS
@@ -217,18 +205,7 @@
                                 {% elif opti.status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
-                                <td class="align-middle white-space-nowrap createdon ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{opti.created_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap ps-3 py-4 createdby">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{opti.creator_name}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap updatedon ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{opti.last_updated_on}}</p>
-                                </td>
-                                <td class="align-middle white-space-nowrap updatedby ps-3 py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{opti.updater_name}}</p>
-                                </td>
+
                                 <td class="align-middle white-space-nowrap address ps-3 py-4"
                                 style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{opti.address}}</p>

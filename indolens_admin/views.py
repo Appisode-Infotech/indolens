@@ -75,8 +75,11 @@ def forgotPassword(request):
 
 def resetPassword(request, code):
     if request.method == 'POST':
+        print(request.POST['password'])
+        print(request.POST['email'])
         response, status_code = admin_auth_controller.update_admin_password(request.POST['password'],
                                                                             request.POST['email'])
+        print(response)
         return render(request, 'indolens_admin/auth/reset_password.html',
                       {"code": code, "message": response['message']})
     else:

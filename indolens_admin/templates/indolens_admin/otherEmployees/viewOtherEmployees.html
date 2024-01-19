@@ -185,6 +185,16 @@
                                                 href="mailto:{{emp.email}}">{{emp.email}}</a>
                                         </div>
                                         <h5 class="text-800">Phone</h5><a class="text-800" href="tel:{{emp.phone}}">{{emp.phone}}</a>
+                                        <h5 class="text-800 mt-3">Created On</h5>
+                                        <p class="text-800">{{emp.created_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Created By</h5>
+                                        <a href="{% url 'view_sub_admin' emp.created_by %}">{{emp.creator_name}}</a>
+                                        <h5 class="text-800 mt-3">Updated On</h5>
+                                        <p class="text-800">{{emp.last_updated_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Updated By</h5>
+                                        <a href="{% url 'view_sub_admin' emp.last_updated_by %}">{{emp.updater_name}}</a>
                                     </div>
                                 </div>
                             </div>

@@ -97,7 +97,76 @@
 <!--                    </div>-->
 <!--                </div>-->
             </div>
-            <div class="row mb-3 gy-6">
+
+            <div class="col-12 col-xxl-2">
+                    <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <span
+                                            class="fs-1 fw-semi-bold text-900">{{store.store_address}}</span>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0"><b>Store Address</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <span
+                                            class="fs-1 fw-semi-bold text-900">{{store.store_gst}}</span>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0"><b>Store GSTIN</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">
+                                            {{store.created_by}}</a>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0"><b>Created By </b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <span class="fs-1 fw-semi-bold text-900">{{store.created_on}}</span>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0">Created On</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">{{store.last_updated_by}}</a>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0"><b>Updated By</b></p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <span class="fs-1 fw-semi-bold text-900">{{store.last_updated_on}}</span>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0"><b>Updated On</b></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            <div class="row mb-3 mt-3 gy-6">
                 <div class="col-12 col-xxl-2">
                     <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">
                         <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
