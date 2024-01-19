@@ -71,7 +71,7 @@ def get_all_units():
                                            FROM units AS u
                                             LEFT JOIN admin AS creator ON u.created_by = creator.admin_id
                                             LEFT JOIN admin AS updater ON u.last_updated_by = updater.admin_id
-                                            ORDER BY u.unit_id DESC
+                                            ORDER BY u.unit_id ASC
                                              """
             cursor.execute(get_units_query)
             master_units = cursor.fetchall()

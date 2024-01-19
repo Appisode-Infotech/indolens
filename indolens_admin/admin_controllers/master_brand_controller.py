@@ -14,13 +14,13 @@ def add_product_brand(brand_obj):
         with connection.cursor() as cursor:
             create_brand_query = f"""
                 INSERT INTO brands (
-                    brand_id, brand_name, category_id, brand_description, 
+                    brand_name, category_id, brand_description, 
                     status, created_on, created_by, last_updated_on, last_updated_by
                 ) 
                 VALUES (
-                    '{brand_obj.brand_id}', '{brand_obj.brand_name}',
-                    '{brand_obj.category_id}', '{brand_obj.brand_description}',
-                    '{brand_obj.status}', '{today}',
+                    '{brand_obj.brand_name}',
+                    0, '{brand_obj.brand_description}',
+                    0, '{today}',
                     '{brand_obj.created_by}', '{today}',
                     '{brand_obj.last_updated_by}'
                 )
@@ -42,7 +42,7 @@ def edit_product_brand(brand_obj):
             update_brand_query = f"""
                 UPDATE  brands SET
                     brand_name = '{brand_obj.brand_name}', 
-                    category_id = '{brand_obj.category_id}', brand_description = '{brand_obj.brand_description}', 
+                    brand_description = '{brand_obj.brand_description}', 
                     last_updated_on = '{today}', last_updated_by = '{brand_obj.last_updated_by}'
                     WHERE brand_id = {brand_obj.brand_id}
             """
@@ -65,7 +65,7 @@ def get_all_central_inventory_brand():
             FROM brands AS br 
             LEFT JOIN admin AS creator ON br.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON br.last_updated_by = updater.admin_id
-            ORDER BY br.brand_id DESC
+            ORDER BY br.brand_id ASC
             """
             cursor.execute(get_product_brand_query)
             brand_data = cursor.fetchall()

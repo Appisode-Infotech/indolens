@@ -15,13 +15,13 @@ def add_master_color(color_obj):
         with connection.cursor() as cursor:
             create_color_query = f"""
                 INSERT INTO product_colors (
-                    color_id, color_code, color_name,  color_description, 
+                    color_code, color_name,  color_description, 
                     status, created_on, created_by, last_updated_on, last_updated_by
                 ) 
                 VALUES (
-                    '{color_obj.color_id}','{color_obj.color_code}', '{color_obj.color_name}',
+                    '{color_obj.color_code}', '{color_obj.color_name}',
                     '{color_obj.color_description}',
-                    '{color_obj.status}', '{today}',
+                    0, '{today}',
                     '{color_obj.created_by}', '{today}',
                     '{color_obj.last_updated_by}'
                 )
@@ -68,7 +68,7 @@ def get_all_central_inventory_color():
             FROM product_colors AS pc
             LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id
-            ORDER BY pc.color_id DESC
+            ORDER BY pc.color_id ASC
             """
             cursor.execute(get_frame_color_query)
             frame_color_data = cursor.fetchall()
