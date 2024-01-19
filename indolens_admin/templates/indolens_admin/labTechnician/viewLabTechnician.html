@@ -176,6 +176,16 @@
                                         </div>
                                         <h5 class="text-800">Phone</h5><a class="text-800"
                                                                           href="tel:{{lab_technician.phone}}">{{lab_technician.phone}}</a>
+                                        <h5 class="text-800 mt-3">Created On</h5>
+                                        <p class="text-800">{{lab_technician.created_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Created By</h5>
+                                        <a href="{% url 'view_sub_admin' lab_technician.created_by %}">{{lab_technician.creator_name}}</a>
+                                        <h5 class="text-800 mt-3">Updated On</h5>
+                                        <p class="text-800">{{lab_technician.last_updated_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Updated By</h5>
+                                        <a href="{% url 'view_sub_admin' lab_technician.last_updated_by %}">{{lab_technician.updater_name}}</a>
                                     </div>
                                 </div>
                             </div>

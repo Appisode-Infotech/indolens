@@ -91,6 +91,8 @@
                     <h2 class="mb-2 text-1100"> {{lab.lab_name}}</h2>
                     <h5 class="text-700 fw-semi-bold">Here’s what’s going on at this lab right now</h5>
                 </div>
+
+
                 <div class="col-md-3 col-auto">
                     <div class="flatpickr-input-container">
                         <input class="form-control ps-6 datetimepicker"
@@ -101,6 +103,76 @@
                     </div>
                 </div>
             </div>
+
+            <div class="col-12 col-xxl-2">
+                    <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <span
+                                            class="fs-1 fw-semi-bold text-900">{{Address}}</span>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0">Store Address</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <span
+                                            class="fs-1 fw-semi-bold text-900">{{GSTIN}}POIUY8765TYUI</span>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0">Store GSTIN</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">
+                                            {{createdby}}poiuygf</a>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0">Created By </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <span class="fs-1 fw-semi-bold text-900">{{createdon}}</span>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0">Created On</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">{{updatedby}}poiuyt</a>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0">Updated By</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center">
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <span class="fs-1 fw-semi-bold text-900">{{updator}}</span>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0">Updated On</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
             <div class="row mb-3 gy-6">
                 <div class="col-12 col-xxl-2">
                     <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">

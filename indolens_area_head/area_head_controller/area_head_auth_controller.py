@@ -137,7 +137,7 @@ def update_area_head_password(password, email):
 
             return {
                 "status": True,
-                "message": "Password change was successfully. Please login in now"
+                "message": "Password changed successfully. Please login using new credentials"
             }, 200
 
     except pymysql.Error as e:

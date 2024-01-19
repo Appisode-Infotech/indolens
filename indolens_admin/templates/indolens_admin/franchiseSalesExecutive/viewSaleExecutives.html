@@ -188,6 +188,16 @@
                                         </div>
                                         <h5 class="text-800">Phone</h5><a class="text-800"
                                                                           href="tel:{{sales_executive.phone}}">{{sales_executive.phone}}</a>
+                                        <h5 class="text-800 mt-3">Created On</h5>
+                                        <p class="text-800">{{sales_executive.created_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Created By</h5>
+                                        <a href="{% url 'view_sub_admin' sales_executive.created_by %}">{{sales_executive.creator_name}}</a>
+                                        <h5 class="text-800 mt-3">Updated On</h5>
+                                        <p class="text-800">{{sales_executive.last_updated_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Updated By</h5>
+                                        <a href="{% url 'view_sub_admin' sales_executive.last_updated_by %}">{{sales_executive.updater_name}}</a>
                                     </div>
                                 </div>
                             </div>

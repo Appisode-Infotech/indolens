@@ -5,15 +5,18 @@ import random
 
 import bcrypt
 import pymysql
-import pytz
 import requests
 from django.db import connection
 
 from indolens_admin.admin_models.admin_req_model import admin_auth_model
 from indolens_admin.admin_models.admin_resp_model.admin_auth_resp_model import get_admin_user
 
+import pytz
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
+
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 
 def generate_random_string(length=16):
@@ -81,7 +84,7 @@ def forgot_password(email):
             elif check_email is not None and check_email[1] != 0:
                 update_pwd_code_query = f"""INSERT INTO reset_password (email, code, status, created_on) 
                                             VALUES (%s, %s, %s, %s)"""
-                cursor.execute(update_pwd_code_query, (email, pwd_code, 0, today))
+                cursor.execute(update_pwd_code_query, (email, pwd_code, 0, getIndianTime()))
 
                 url = 'https://api.emailjs.com/api/v1.0/email/send'
                 data = {
@@ -168,15 +171,13 @@ def update_admin_password(password, email):
         with connection.cursor() as cursor:
             login_query = f"""UPDATE admin SET password = %s WHERE email = '{email}'"""
             cursor.execute(login_query, (hashed_password,))
-            admin_data = cursor.fetchone()
 
             login_query = f"""UPDATE reset_password SET status = 1 WHERE email = '{email}'"""
             cursor.execute(login_query)
 
             return {
                 "status": True,
-                "message": "Password change was successfully. Please login in now",
-                "admin": admin_auth_model.admin_auth_model_from_dict(get_admin_user(admin_data))
+                "message": "Password changed successfully. Please login using new credentials",
             }, 200
 
     except pymysql.Error as e:
