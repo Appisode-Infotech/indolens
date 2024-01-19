@@ -99,7 +99,7 @@ urlpatterns = [
         enableDisableMastersMaterials, name='enable_disable_master_material'),
     path('manage_central_inventory_units/', manageMastersUnits, name='manage_central_inventory_units'),
     path('manage_central_inventory_units/add_Master_units', addMastersUnits, name='add_Master_units'),
-    path('manage_central_inventory_units/edit_master_units/unitsId=<int:unitId>', editMastersUnits,
+    path('manage_central_inventory_units/edit_master_units', editMastersUnits,
          name='edit_master_units'),
     path('manage_central_inventory_units/enable_disable_master_units/unitsId=<int:unitId>/status=<int:status>',
          enableDisableMastersUnits, name='enable_disable_master_units'),
