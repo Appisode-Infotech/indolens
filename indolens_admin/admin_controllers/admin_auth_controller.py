@@ -66,6 +66,7 @@ def forgot_password(email):
         with connection.cursor() as cursor:
             pwd_code = generate_random_string()
             reset_pwd_link = f"http://127.0.0.1:8000/admin/reset_password/code={pwd_code}"
+            print(reset_pwd_link)
 
             check_email_query = f"""SELECT email,status FROM admin WHERE email = '{email}'"""
             cursor.execute(check_email_query)
