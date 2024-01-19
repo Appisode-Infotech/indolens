@@ -248,6 +248,12 @@
                                        value="{{product_data.product_gst}}" required/>
                                 <div class="invalid-feedback">Please provide valid GST.</div>
                             </div>
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">Discount</h5>
+                                <input name="discount" class="form-control" placeholder="%" type="number"
+                                       maxlength="2" max="99" value="{{product_data.discount}}" required/>
+                                <div class="invalid-feedback">Please provide valid discount percentage.</div>
+                            </div>
                         </div>
 
                         <h4 class="mb-3">Pricing</h4>
@@ -262,6 +268,12 @@
                                 <h5 class="mb-2 text-1000">Sale price</h5>
                                 <input name="salePrice" class="form-control" placeholder="₹" type="text"
                                        value="{{product_data.sale_price}}" required/>
+                                <div class="invalid-feedback">Please provide valid sale price.</div>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">Franchise Sale price</h5>
+                                <input name="franchiseSalePrice" class="form-control" placeholder="₹" type="text"
+                                value="{{product_data.franchise_sale_price}}" required/>
                                 <div class="invalid-feedback">Please provide valid sale price.</div>
                             </div>
                         </div>

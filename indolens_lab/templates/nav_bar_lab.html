@@ -1,0 +1,134 @@
+{% load static %}
+
+<nav class="navbar navbar-vertical navbar-expand-lg">
+    <script>
+            var navbarStyle = localStorage.getItem("phoenixNavbarStyle");
+            if (navbarStyle && navbarStyle !== 'transparent') {
+              document.querySelector('body').classList.add(`navbar-${navbarStyle}`);
+            }
+
+
+    </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Find the active item
+        const activeItem = document.querySelector(".nav-link.active");
+
+        if (activeItem) {
+            // Scroll to the active item's parent element
+            const parent = activeItem.closest("li");
+            if (parent) {
+                parent.scrollIntoView();
+            }
+        }
+    });
+
+    </script>
+
+    <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
+        <!-- scrollbar removed-->
+        <div class="navbar-vertical-content">
+            <ul class="navbar-nav flex-column" id="navbarVerticalNav">
+                <!--                dashboard nav items-->
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'dashboard' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'dashboard' %}" role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="monitor"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Dashboard</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">TASK
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'all_task' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'all_task' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="shopping-bag"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">All Tasks</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'new_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'new_orders' 'All' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="check-circle"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">New Tasks</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'processing_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'processing_orders' 'All' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="activity"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Processing Tasks</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'ready_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'ready_orders' 'All' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Ready Tasks</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'Dispatched_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'Dispatched_orders' 'All' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Dispatched Tasks</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="navbar-vertical-footer">
+        <button class="btn navbar-vertical-toggle border-0 fw-semi-bold w-100 text-start white-space-nowrap">
+            <span class="uil uil-left-arrow-to-left fs-0"></span><span
+                class="uil uil-arrow-from-right fs-0"></span><span class="navbar-vertical-footer-text ms-2">Collapsed View</span>
+        </button>
+    </div>
+</nav>
+{% include 'top_bar.html' %}
+

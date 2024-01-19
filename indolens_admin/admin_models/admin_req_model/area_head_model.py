@@ -52,7 +52,7 @@ class AreaHeadModel:
         assert isinstance(obj, dict)
         created_by = from_union([from_none, lambda x: int(from_str(x))], obj.get("created_by"))
         last_updated_by = from_union([from_none, lambda x: int(from_str(x))], obj.get("last_updated_by"))
-        full_name = from_union([from_str, from_none], obj.get("fullName"))
+        full_name = from_union([from_str, from_none], obj.get("full_name"))
         email = from_union([from_str, from_none], obj.get("email"))
         phone = from_union([from_str, from_none], obj.get("phone"))
         password = from_union([from_str, from_none], obj.get("password"))

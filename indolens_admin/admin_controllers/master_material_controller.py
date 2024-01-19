@@ -14,13 +14,13 @@ def add_master_material(material_obj):
         with connection.cursor() as cursor:
             create_material_query = f"""
                 INSERT INTO product_materials (
-                    material_id, material_name,  material_description, 
+                    material_name,  material_description, 
                     status, created_on, created_by, last_updated_on, last_updated_by
                 ) 
                 VALUES (
-                    '{material_obj.material_id}', '{material_obj.material_name}',
+                    '{material_obj.material_name}',
                     '{material_obj.material_description}',
-                    '{material_obj.status}', '{today}',
+                    0, '{today}',
                     '{material_obj.created_by}', '{today}',
                     '{material_obj.last_updated_by}'
                 )
@@ -67,7 +67,7 @@ def get_all_central_inventory_materials():
             FROM product_materials AS pm
             LEFT JOIN admin AS creator ON pm.created_by = creator.admin_id
             LEFT JOIN admin AS updater ON pm.last_updated_by = updater.admin_id
-            ORDER BY pm.material_id DESC
+            ORDER BY pm.material_id ASC
             """
             cursor.execute(get_material_query)
             material_data = cursor.fetchall()

@@ -98,7 +98,7 @@ def dashboard(request):
                       {"own_store_new_order": own_store_new_order['count'],
                        "own_store_delivered_orders": own_store_delivered_orders['count'],
                        "own_store_sale": own_store_sales['sale'], "out_of_stock": len(out_of_stock['stocks_list']),
-                       "orders_list": orders_list['orders_list']})
+                       "orders_list": orders_list['dash_orders_list']})
     else:
         return redirect('own_store_login')
 
@@ -356,6 +356,7 @@ def stockRequestDeliveryStatusChange(request, requestId, status):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.request_delivery_status_change(requestId, status,
                                                                                           request.session.get('id'))
+        print(response)
         return redirect('completed_store_stock_requests')
     else:
         return redirect('own_store_login')

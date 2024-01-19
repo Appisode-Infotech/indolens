@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens admin - All Orders</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!-- Stylesheets -->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar_lab.html' %}
+
+        <div class="content">
+
+            <div class="mb-9">
+                <div class="row g-3 mb-4">
+                    <div class="col-auto">
+                        <h2 class="mb-0">All Orders</h2>
+                    </div>
+                </div>
+
+                <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
+                    <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-1">New</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-2">Processing</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-3">Ready</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-4">Dispatched</a></li>
+                </ul>
+                <div data-list='{"valueNames":["slno","order","total","customer","payment_status","fulfilment_status","createdby","created_on","updated_by","updated_on","date"],"page":10,"pagination":true}'
+                     id="orderTable">
+                    <div class="mb-4">
+                        <div class="row g-3">
+                            <div class="col-auto">
+                                <div class="search-box">
+                                    <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
+                                        <input aria-label="Search" class="form-control search-input search"
+                                               placeholder="Search orders" type="search"/>
+                                        <span class="fas fa-search search-box-icon"></span>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                                <div class="btn-group position-static" role="group">
+                                    <div class="col-auto scrollbar overflow-hidden-y flex-grow-1 me-4">
+                                        <div class="btn-group position-static" role="group">
+                                        </div>
+                                    </div>
+                                    <button id="btnExport" class="btn btn-link text-900 me-4 px-0 ms-4"><span
+                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                        <div class="table-responsive scrollbar mx-n1 px-1">
+                            <table class="table table-sm fs--1 mb-0" id="myTable">
+                                <thead>
+                                <tr>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
+                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                        style="width:150px;">JOB ID
+                                    </th>
+                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                        style="width:150px;">CATEGORY
+                                    </th>
+                                    <th class="sort align-middle ps-4" data-sort="material" scope="col"
+                                        style="width:300px;">MATERIAL
+                                    </th>
+                                    <th class="sort align-middle ps-4" data-sort="type" scope="col"
+                                        style="width:300px;">TYPE
+                                    </th>
+                                    <th class="sort align-middle text-end ps-4" data-sort="shape" scope="col"
+                                        style="width:200px;">SHAPE
+                                    </th>
+                                    <th class="sort align-middle text-end ps-4" data-sort="color" scope="col"
+                                        style="width:250px;">COLOR
+                                    </th>
+                                    <th class="sort align-middle text-end ps-4" data-sort="unit" scope="col"
+                                        style="width:250px;">UNIT
+                                    </th>
+                                    <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
+                                        style="width:250px;">BRAND
+                                    </th>
+                                    <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
+                                        style="width:250px;">JOB STATUS
+                                    </th>
+                                    <th class="sort align-middle text-end ps-4" scope="col"
+                                        style="width:250px;">
+                                    </th>
+
+                                </tr>
+                                </thead>
+                                <tbody class="list" id="order-table-body">
+                                {% for order in all_task %}
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                    data-category="{{ order.order_status }}">
+                                    <td class="fs--1 align-middle px-0 py-3 slno"></td>
+                                    <td class="products align-middle py-0">
+                                        <a class="fw-semi-bold line-clamp-2 mb-0"
+                                           href="{% url 'lab_job_details' order.order_id %}">
+                                            {{order.order_id}}
+                                        </a>
+                                    </td>
+
+                                    <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
+                                        {% if order.category_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.category_name}}
+                                        {% endif %}
+
+                                    </td>
+                                    <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                        {% if order.material_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.material_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                        {% if order.frame_type_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.frame_type_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="quantity align-middle text-end py-0 ps-4 text-700">
+                                        {% if order.shape_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.shape_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                        {% if order.color_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.color_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                        {% if order.unit_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.unit_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                        {% if order.brand_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.brand_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                        {% if order.order_status == 1 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">NEW</span><span class="ms-1" data-feather="check"
+                                                                                    style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 2 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">PROCESSING</span><span class="ms-1"
+                                                                                           data-feather="check"
+                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 3 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">READY</span><span class="ms-1" data-feather="check"
+                                                                                      style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 4 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">DISPATCHED</span><span class="ms-1"
+                                                                                           data-feather="check"
+                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 5 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">DELIVERED</span><span class="ms-1"
+                                                                                          data-feather="check"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.order_status == 6 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">CANCELLED</span><span class="ms-1"
+                                                                                          data-feather="check"
+                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                        {% endif %}
+
+                                    </td>
+
+                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                        <div class="font-sans-serif btn-reveal-trigger position-static">
+                                            <button aria-expanded="false"
+                                                    aria-haspopup="true"
+                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                    data-boundary="window"
+                                                    data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                    type="button">
+                                                <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                                <a class="dropdown-item"
+                                                   href="{% url 'lab_job_details' order.order_id %}">View Job</a>
+                                                {% if order.category_id == 2 or order.category_id == 3 %}
+                                                <a class="dropdown-item view-button" data-bs-toggle="modalView"
+                                                   type="button"
+                                                   style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                                                   data-category-info="{{ order | safe }}"
+                                                   title="{{ order.power_attribute | safe }}">View Lens Powers</a>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                            <div class="col-auto d-flex">
+                                <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                   data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
+                                                                          href="#!">View all<span
+                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                    class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                            </div>
+                            <div class="col-auto d-flex">
+                                <button class="page-link" data-list-pagination="prev"><span
+                                        class="fas fa-chevron-left"></span></button>
+                                <ul class="mb-0 pagination"></ul>
+                                <button class="page-link pe-0" data-list-pagination="next"><span
+                                        class="fas fa-chevron-right"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% include 'footer.html' %}
+
+        </div>
+    </div>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="{% static 'js/filter.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
+
+</body>
+
+</html>

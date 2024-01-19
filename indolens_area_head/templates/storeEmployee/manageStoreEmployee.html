@@ -79,7 +79,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["projectName","assigness","start","deadline","task","projectprogress","status","action"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","name","role","phone","email","store","status","createdOn","createdBy","updatedOn","updatedBy","address"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -102,44 +102,47 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
 
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="projectName"
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
                                     scope="col" style="width:30%;">NAME
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="role" scope="col" style="width:10%;">
                                     ROLE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="phone" scope="col" style="width:10%;">
                                     PHONE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="assigness" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="email" scope="col" style="width:10%;">
                                     EMAIL
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="store" scope="col"
                                     style="width:5%;">ASSIGNED TO STORE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">
-                                    CREATED AT
+                                <th class="sort align-middle ps-3" data-sort="createdOn" scope="col" style="width:10%;">
+                                    CREATED ON
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="deadline" scope="col" style="width:15%;">
+                                <th class="sort align-middle ps-3" data-sort="createdBy" scope="col" style="width:15%;">
                                     CREATED BY
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="updatedOn" scope="col"
                                     style="width:5%;">UPDATED ON
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="updatedBy" scope="col"
                                     style="width:5%;">UPDATED BY
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="address" scope="col"
                                     style="width:5%;">ADDRESS
                                 </th>
 
@@ -150,6 +153,7 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for employee in store_employees%}
                             <tr class="position-static">
+                                <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
 
                                     <div class="avatar avatar-m"><img alt=""
@@ -157,14 +161,14 @@
                                                                                width="53"/>
                                     </div>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 projectName py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_employees' employee.employee_id %}">
                                     {{employee.name}}
                                 </a>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 role">
                                     {% if employee.role == 1 %}
                                     <p class="mb-0 fs--1 text-900">MANAGER</p>
                                     {% elif employee.role == 2 %}
@@ -176,38 +180,38 @@
                                     {% endif %}
 
                                 </td>
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 phone">
                                     <p class="mb-0 fs--1 text-900">{{employee.phone}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 email">
                                     <p class="mb-0 fs--1 text-900">{{employee.email}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 store">
                                     <p class="mb-0 fs--1 text-900">{{employee.store_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end statuses">
+                                <td class="align-middle white-space-nowrap text-end status">
                                     {% if employee.status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
                                 {% elif employee.status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 createdOn">
                                     <p class="mb-0 fs--1 text-900">{{employee.created_on}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 createdBy">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{employee.creator_name}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap deadline ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedOn">
                                     <p class="mb-0 fs--1 text-900">{{employee.last_updated_on}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedOn">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{employee.updater_name}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap task ps-3 py-4">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 address">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{employee.address}}</p>
                                 </td>
 

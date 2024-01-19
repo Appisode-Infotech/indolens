@@ -99,6 +99,7 @@ def dashboard(request):
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
         sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
+        print(sales)
         own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
         own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
         own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
@@ -2429,7 +2430,8 @@ def addProductCategory(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
-            master_category_controller.add_product_category(product_cat_obj)
+            response = master_category_controller.add_product_category(product_cat_obj)
+            print(response)
             return redirect('manage_central_inventory_category')
         else:
             return render(request, 'indolens_admin/masters/addProductCategory.html')
@@ -2476,7 +2478,7 @@ def addMastersBrands(request):
         if request.method == 'POST':
             master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
             resp = master_brand_controller.add_product_brand(master_brand_obj)
-
+            print(resp)
             return redirect('manage_central_inventory_brands')
         else:
             return render(request, 'indolens_admin/masters/addMastersBrand.html')
@@ -2555,6 +2557,7 @@ def enableDisableMastersShapes(request, shapeId, status):
 def manageMastersFrameType(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_frame_type_controller.get_all_central_inventory_frame_types()
+        print(response)
         return render(request, 'indolens_admin/masters/manageMastersFrameType.html',
                       {"frame_type": response["frame_type"]})
     else:
@@ -2775,9 +2778,8 @@ def centralInventoryUpdateProductStatus(request, filter, productId, status):
 
 def centralInventoryUpdateProductImages(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
-    return render(request, 'indolens_admin/centralInventory/updateProductImages.html',
+    return render(request, 'indolens_admin/centralInventory/updateproductImages.html',
                   {'product_data': response['product_data'], 'productId': productId})
-
 
 def centralInventoryAddProducts(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -3207,47 +3209,45 @@ def deleteProductImage(request, productId, imageURL):
 def addProductImage(request, productId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print("request for adding new product image ")
-            if request.method == 'POST':
-                form_data = {}
-                file_data = {}
-                file_label_mapping = {
-                    'productImages': 'products'
-                }
+            form_data = {}
+            file_data = {}
+            file_label_mapping = {
+                'productImages': 'products'
+            }
 
-                for file_key, file_objs in request.FILES.lists():
-                    label = file_label_mapping.get(file_key, 'unknown')
-                    subdirectory = f"{label}/"
-                    file_list = []
+            for file_key, file_objs in request.FILES.lists():
+                label = file_label_mapping.get(file_key, 'unknown')
+                subdirectory = f"{label}/"
+                file_list = []
 
-                    for index, file_obj in enumerate(file_objs):
-                        file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
-                        form_data_key = f"prod_img"
-                        file_dict = {form_data_key: file_name}
+                for index, file_obj in enumerate(file_objs):
+                    file_name = f"{subdirectory}{label}_{int(time.time())}_{str(file_obj)}"
+                    form_data_key = f"prod_img"
+                    file_dict = {form_data_key: file_name}
 
-                        with default_storage.open(file_name, 'wb+') as destination:
-                            for chunk in file_obj.chunks():
-                                destination.write(chunk)
+                    with default_storage.open(file_name, 'wb+') as destination:
+                        for chunk in file_obj.chunks():
+                            destination.write(chunk)
 
-                        file_list.append(file_dict)
+                    file_list.append(file_dict)
 
-                    if len(file_list) == 1:
-                        file_data[file_key] = file_list[0]
-                    else:
-                        file_data[file_key] = file_list
+                if len(file_list) == 1:
+                    file_data[file_key] = file_list[0]
+                else:
+                    file_data[file_key] = file_list
 
-                # Combine the file data with the original form data
-                for key, value in file_data.items():
-                    form_data[key] = value
+            # Combine the file data with the original form data
+            for key, value in file_data.items():
+                form_data[key] = value
 
-                file_data = FileData(form_data)
-                print(
-                    "==========================================new file list==========================================")
-                print(file_data)
-                response, status_code = add_documents_controller.add_products_image(file_data, productId)
-                print(response)
-            url = reverse('update_product_images', kwargs={'productId': productId})
-            return redirect(url)
+            file_data = FileData(form_data)
+            print(
+                "==========================================new file list==========================================")
+            print(file_data)
+            response, status_code = add_documents_controller.add_products_image(file_data, productId)
+            print(response)
+        url = reverse('update_product_images', kwargs={'productId': productId})
+        return redirect(url)
     else:
         return redirect('login')
 
