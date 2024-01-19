@@ -1000,6 +1000,8 @@ def manageOptimetry(request, status):
         response, status_code = optimetry_controller.get_all_optimetry(status)
 
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
+        print(available_stores_response)
+        print(response)
         return render(request, 'indolens_admin/optimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
