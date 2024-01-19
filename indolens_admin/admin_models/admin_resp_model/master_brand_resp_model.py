@@ -15,7 +15,7 @@ class Brand:
             'category_id': self.category_id,
             'brand_description': self.brand_description,
             'status': self.status,
-            'created_on': self.created_on.strftime('%Y-%m-%d') if isinstance(self.created_on, datetime) else None,
+            'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on, datetime) else None,
             'created_by': self.created_by,
             'last_updated_on': self.last_updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.last_updated_on, datetime) else None,
             'last_updated_by': self.last_updated_by,

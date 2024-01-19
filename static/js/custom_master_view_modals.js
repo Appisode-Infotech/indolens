@@ -20,6 +20,10 @@ document.addEventListener('DOMContentLoaded', () => {
       // Loop through the category information object and add key-value pairs to the table
       for (const key in parsedCategoryInfo) {
         if (parsedCategoryInfo.hasOwnProperty(key)) {
+          console.log(key);
+           if (key === 'created_by' || key === 'last_updated_by') {
+            continue;
+        }
           const row = table.insertRow();
           const cell1 = row.insertCell(0);
           const cell2 = row.insertCell(1);
