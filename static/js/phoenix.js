@@ -6127,6 +6127,25 @@ const toggleConfirmPassword = () => {
     });
 }
 
+const noTableData  = () => {
+var tableRows = document.querySelectorAll('#myTable tbody tr');
+
+        if (tableRows.length === 0) {
+            // If no rows, create a new row with a message
+            var newRow = document.createElement('tr');
+            var newCell = document.createElement('td');
+
+            newCell.colSpan = 12;
+            newCell.className = 'text-center';
+            newCell.innerHTML = '<p class="fw-bo text-900 fs--1 mb-0">No data found</p>';
+
+            newRow.appendChild(newCell);
+
+            // Append the new row to the table body
+            document.getElementById('myTable').getElementsByTagName('tbody')[0].appendChild(newRow);
+        }
+}
+
   /* eslint-disable import/no-extraneous-dependencies */
 
   window.initMap = initMap;
@@ -6173,6 +6192,7 @@ const toggleConfirmPassword = () => {
   docReady(lottieInit);
   docReady(togglePassword);
   docReady(toggleConfirmPassword);
+  docReady(noTableData);
 
   var phoenix = {
     utils
