@@ -187,7 +187,8 @@ def get_lab_job(labId):
 
             return {
                        "status": True,
-                       "orders_list": get_sales_orders(orders_list)
+                       "orders_list": get_sales_orders(orders_list),
+                       "all_jobs_list": get_sales_orders(orders_list)
                    }, 200
 
     except pymysql.Error as e:
