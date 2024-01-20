@@ -296,6 +296,7 @@ def createStockRequestStore(request):
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
             response = store_inventory_controller.create_store_stock_request(stock_obj)
+            print(response)
             route = request.POST.get('route')
             return redirect(route)
         else:
