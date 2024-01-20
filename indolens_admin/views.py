@@ -2404,7 +2404,8 @@ def viewActiveJobs(request):
     return render(request, 'indolens_admin/labs/viewActiveJobs.html')
 
 
-def viewAllJobs(request):
+def viewAllJobs(request, labId):
+    lab_job, status_cde = lab_controller.get_lab_job(labId)
     return render(request, 'indolens_admin/labs/viewAllJobs.html')
 
 
@@ -3269,6 +3270,7 @@ def addOwnStoreEmployeeImage(request, employeeId):
                 'profilePic': 'profile_pic',
                 'document1': 'documents',
                 'document2': 'documents',
+                'certificates': 'certificates',
             }
 
             for file_key, file_objs in request.FILES.lists():
@@ -3332,6 +3334,7 @@ def addFranchiseStoreEmployeeImage(request, employeeId):
                 'profilePic': 'profile_pic',
                 'document1': 'documents',
                 'document2': 'documents',
+                'certificates': 'certificates',
             }
 
             for file_key, file_objs in request.FILES.lists():
