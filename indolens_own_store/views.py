@@ -294,7 +294,9 @@ def createStockRequestStore(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
+            print(request.POST)
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
+            print(vars(stock_obj))
             response = store_inventory_controller.create_store_stock_request(stock_obj)
             print(response)
             route = request.POST.get('route')
