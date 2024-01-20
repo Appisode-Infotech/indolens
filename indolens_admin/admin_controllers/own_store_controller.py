@@ -51,8 +51,11 @@ def get_all_own_stores(status):
     try:
         with connection.cursor() as cursor:
             get_own_stores_query = f"""
-                                    SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name
+                                    SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name,
+                                    creator.name, updater.name
                                     FROM own_store
+                                    LEFT JOIN admin AS creator ON own_store.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON own_store.last_updated_by = updater.admin_id
                                     LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1
                                     WHERE own_store.status {status_condition} 
                                     GROUP BY own_store.store_id
@@ -127,8 +130,11 @@ def get_active_own_stores():
 def get_own_store_by_id(sid):
     try:
         with connection.cursor() as cursor:
-            get_own_stores_query = f""" SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name
+            get_own_stores_query = f""" SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name,
+                                    creator.name, updater.name
                                     FROM own_store
+                                    LEFT JOIN admin AS creator ON own_store.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON own_store.last_updated_by = updater.admin_id
                                     LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1 
                                     WHERE own_store.store_id = '{sid}' GROUP BY own_store.store_id """
             cursor.execute(get_own_stores_query)

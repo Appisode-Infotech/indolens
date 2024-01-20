@@ -101,6 +101,8 @@ def get_all_active_types():
 
 def add_central_inventory_products(product_obj, file, power_attributes):
     power_attributes_json = json.dumps(power_attributes)
+    frame_type_id_value = product_obj.frame_type_id if product_obj.frame_type_id != '' else 0
+    frame_shape_id_value = product_obj.frame_shape_id if product_obj.frame_shape_id != '' else 0
     try:
         with connection.cursor() as cursor:
             add_product_query = f""" INSERT INTO central_inventory 
@@ -112,7 +114,7 @@ def add_central_inventory_products(product_obj, file, power_attributes):
                                                 VALUES ('{product_obj.product_title}','{product_obj.product_description}',
                                                 '{json.dumps(file.product_img)}','{product_obj.category_id}',
                                                 '{product_obj.brand_id}','{product_obj.material_id}',
-                                                '{product_obj.frame_type_id}','{product_obj.frame_shape_id}',
+                                                '{frame_type_id_value}','{frame_shape_id_value}',
                                                 '{product_obj.color_id}','{product_obj.unit_id}','{product_obj.origin}',
                                                 '{product_obj.cost_price}','{product_obj.sale_price}', 
                                                 '{product_obj.model_number}', '{product_obj.hsn_number}',

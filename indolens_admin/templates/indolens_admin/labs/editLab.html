@@ -111,7 +111,7 @@
                             <label class="form-label" for="labPhone">Lab Phone</label>
 
                             <input class="form-control" id="labPhone" name="labPhone" required="" type="number"
-                                   pattern="\d{10}"
+                                   max="9999999999" min="1111111111"
                                    value="{{lab.lab_phone}}"/>
                             <div class="invalid-feedback">Please provide a valid Labphone number.</div>
                         </div>
@@ -155,7 +155,7 @@
                             <label class="form-label" for="labZipCode">Zip</label>
 
                             <input class="form-control" id="labZipCode" name="labZipCode" required="" type="number"
-                                   max="999999" value="{{lab.lab_zip}}"/>
+                                  min="111111" max="999999" value="{{lab.lab_zip}}"/>
                             <div class="invalid-feedback">Please provide a valid zip.</div>
                         </div>
                         <div class="col-12">

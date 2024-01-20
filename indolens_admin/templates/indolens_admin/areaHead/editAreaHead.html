@@ -84,8 +84,8 @@
             <h2 class="mb-4">Edit Area Head</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_area_head' area_head.area_head_id %}" class="row g-3 needs-validation
-                    needs-password-validation" method="post" enctype="multipart/form-data"
+                    <form action="{% url 'edit_area_head' area_head.area_head_id %}" class="row g-3 needs-validation"
+                          method="post" enctype="multipart/form-data"
                           novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
@@ -123,7 +123,7 @@
                             <label class="form-label" for="phone">Phone</label>
 
                             <input class="form-control" id="phone" name="phone" required="" type="number"
-                                   value="{{area_head.phone}}"/>
+                                  max="9999999999" min="1111111111" value="{{area_head.phone}}"/>
                             <div class="invalid-feedback">Phone is mandatory.</div>
                         </div>
 

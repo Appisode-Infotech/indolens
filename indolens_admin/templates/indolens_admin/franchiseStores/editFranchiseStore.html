@@ -119,6 +119,7 @@
                             <label class="form-label" for="storePhone">Store Phone</label>
 
                             <input class="form-control" id="storePhone" name="storePhone" required="" type="text"
+                                   max="9999999999" min="1111111111"
                                    value="{{store.store_phone}}"/>
                             <div class="invalid-feedback">Please provide a valid store phone number.</div>
                         </div>
@@ -162,6 +163,7 @@
                             <label class="form-label" for="storeZipCode">Zip</label>
 
                             <input class="form-control" id="storeZipCode" name="storeZipCode" required="" type="number"
+                                   max="999999" min="111111"
                                    value="{{store.store_zip}}"/>
                             <div class="invalid-feedback">Please provide a valid zip.</div>
                         </div>
