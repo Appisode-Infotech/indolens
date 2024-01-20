@@ -345,7 +345,7 @@ def viewRejectedStockRequestsStore(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.view_all_store_stock_request(
             assigned_store, '2')
-        return render(request, 'stockRequests/viewRejectedStockRequestsStore.html',
+        return render(request, 'stockRequests/viewrejectedStockRequestsStore.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
         return redirect('own_store_login')
