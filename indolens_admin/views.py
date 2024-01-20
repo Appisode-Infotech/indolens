@@ -200,6 +200,7 @@ def enableDisableOwnStore(request, ownStoreId, status, route):
 def manageFranchiseStores(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_all_franchise_stores(status)
+        print(response)
         return render(request, 'indolens_admin/franchiseStores/manageFranchiseStores.html',
                       {"franchise_store_list": response['franchise_store'], "status": status})
     else:
@@ -209,6 +210,7 @@ def manageFranchiseStores(request, status):
 def viewFranchiseStore(request, franchiseStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_franchise_store_by_id(franchiseStoreId)
+        print(response)
         products_list, status_code = franchise_store_controller.get_all_products_for_franchise_store(franchiseStoreId)
         store_stats, status_code = franchise_store_controller.get_franchise_store_stats(franchiseStoreId)
         sales_data, status_code = orders_controller.get_all_store_orders(franchiseStoreId, 2)
@@ -2734,7 +2736,6 @@ def enableDisableMastersUnits(request, unitId, status):
 def manageCentralInventoryProducts(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_central_inventory_products(status)
-        print(response)
         return render(request, 'indolens_admin/centralInventory/manageCentralInventoryProducts.html',
                       {"product_list": response['product_list'], "categories_List": response['categoriesList'],
                        "status": status})
@@ -2823,6 +2824,8 @@ def centralInventoryAddProducts(request):
             file_data = FileData(form_data)
             product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
             power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
+            print(power_attributes)
+            print(product_obj)
             response, status_code = central_inventory_controller.add_central_inventory_products(product_obj, file_data,
                                                                                                 power_attributes)
             print(response)
