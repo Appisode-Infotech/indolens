@@ -68,6 +68,10 @@ def add_products_image(new_images, productId):
 def add_own_store_employee_image(file_data, employeeId, emp_obj):
     try:
         with connection.cursor() as cursor:
+            get_role = f""" SELECT role from own_store_employees Where employee_id = {employeeId}"""
+            cursor.execute(get_role)
+            role = cursor.fetchone()
+
             get_document1_query = f"""
                         SELECT document_1_url FROM own_store_employees Where employee_id = {employeeId}
                         """
@@ -85,13 +89,23 @@ def add_own_store_employee_image(file_data, employeeId, emp_obj):
             cursor.execute(get_document2_query)
             old_images = json.loads(cursor.fetchone()[0])
             document2 = old_images + file_data.document2
+            print("doc 2 done")
             cursor.execute(
                 f""" UPDATE own_store_employees SET document_2_url = '{json.dumps(document2)}', 
                 document_2_type = '{emp_obj.document_2_type}' WHERE employee_id = {employeeId}""")
+            print("doc2 updated")
 
-            get_role = f""" SELECT role from own_store_employees Where employee_id = {employeeId}"""
-            cursor.execute(get_role)
-            role = cursor.fetchone()
+            get_certificates_query = f"""
+                        SELECT certificates FROM own_store_employees Where employee_id = {employeeId}
+                        """
+            cursor.execute(get_certificates_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            print(old_images)
+            certificates = old_images + file_data.certificates
+            cursor.execute(
+                f""" UPDATE own_store_employees SET certificates = '{json.dumps(certificates)}'
+                WHERE employee_id = {employeeId}""")
+
 
         return {
             "status": True,
@@ -100,14 +114,18 @@ def add_own_store_employee_image(file_data, employeeId, emp_obj):
         }, 200
 
     except pymysql.Error as e:
-        return {"status": False, "message": str(e)}, 301
+        return {"status": False, "role": role[0], "message": str(e)}, 301
     except Exception as e:
-        return {"status": False, "message": str(e)}, 301
+        return {"status": False, "role": role[0], "message": str(e)}, 301
 
 
 def add_franchise_store_employee_image(file_data, employeeId, emp_obj):
     try:
         with connection.cursor() as cursor:
+            get_role = f""" SELECT role from franchise_store_employees Where employee_id = {employeeId}"""
+            cursor.execute(get_role)
+            role = cursor.fetchone()
+
             get_document1_query = f"""
                         SELECT document_1_url FROM franchise_store_employees Where employee_id = {employeeId}
                         """
@@ -129,9 +147,15 @@ def add_franchise_store_employee_image(file_data, employeeId, emp_obj):
                 f""" UPDATE franchise_store_employees SET document_2_url = '{json.dumps(document2)}', 
                 document_2_type = '{emp_obj.document_2_type}' WHERE employee_id = {employeeId}""")
 
-            get_role = f""" SELECT role from franchise_store_employees Where employee_id = {employeeId}"""
-            cursor.execute(get_role)
-            role = cursor.fetchone()
+            get_certificates_query = f"""
+                        SELECT certificates FROM franchise_store_employees Where employee_id = {employeeId}
+                        """
+            cursor.execute(get_certificates_query)
+            old_images = json.loads(cursor.fetchone()[0])
+            certificates = old_images + file_data.certificates
+            cursor.execute(
+                f""" UPDATE franchise_store_employees SET certificates = '{json.dumps(certificates)}'
+                WHERE employee_id = {employeeId}""")
 
         return {
             "status": True,
@@ -140,9 +164,9 @@ def add_franchise_store_employee_image(file_data, employeeId, emp_obj):
         }, 200
 
     except pymysql.Error as e:
-        return {"status": False, "message": str(e)}, 301
+        return {"status": False, "role": role[0], "message": str(e)}, 301
     except Exception as e:
-        return {"status": False, "message": str(e)}, 301
+        return {"status": False, "role": role[0], "message": str(e)}, 301
 
 
 def add_sub_admin_doc(file_data, subAdminId, emp_obj):

@@ -95,7 +95,7 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
         <div class="content">
-            <form action="{% url 'add_products' %}" class="mb-9 needs-validation" method="post" novalidate="novalidate"
+            <form action="{% url 'add_products' %}" class="mb-9 needs-validation" method="post" novalidate=""
                   enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="row g-3 flex-between-end mb-5">
@@ -274,13 +274,14 @@
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">GSTIN</h5>
-                                <input name="productGSTIN" class="form-control" placeholder="%" type="text" required/>
+                                <input name="productGSTIN" class="form-control" placeholder="%" type="text" required
+                                value="0"/>
                                 <div class="invalid-feedback">Please provide valid sale price.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Discount</h5>
                                 <input name="discount" class="form-control" placeholder="%" type="number"
-                                       maxlength="2" max="99" required/>
+                                       maxlength="2" max="99" required value="0"/>
                                 <div class="invalid-feedback">Please provide valid discount percentage.</div>
                             </div>
                         </div>

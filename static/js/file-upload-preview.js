@@ -149,4 +149,16 @@ document.addEventListener('DOMContentLoaded', function () {
                 createPreviewContainer(file, documentInput2, documentPreviews2);
             }
         });
+
+
+        const certificateInput = document.getElementById('certificates');
+        const certificatePreviews = document.getElementById('certificatesPreviews');
+        certificateInput.addEventListener('change', function () {
+            const files = certificateInput.files;
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                createPreviewContainer(file, certificateInput, certificatePreviews);
+            }
+        });
+
     });

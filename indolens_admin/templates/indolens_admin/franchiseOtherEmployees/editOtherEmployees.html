@@ -85,7 +85,7 @@
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'edit_franchise_other_employees' other_employee.employee_id %}"
-                          class="row g-3 needs-validation needs-password-validation" enctype="multipart/form-data" method="post"
+                          class="row g-3 needs-validation " enctype="multipart/form-data" method="post"
                           novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
@@ -99,7 +99,7 @@
                             <label class="form-label" for="profilePic">Upload profile pic</label>
                             <input accept="image/*" class="form-control" id="profilePic" name="profilePic"
                                    type="file"/>
-                            <div class="invalid-feedback">Profile pic is mandatory.</div>
+                            <div class="invalid-feedback">Profile Picture is Mandatory.</div>
                         </div>
 
                         <div class="col-md-6">
@@ -125,7 +125,7 @@
                             <label class="form-label" for="phone">Phone</label>
 
                             <input class="form-control" id="phone" name="phone" required="" type="number"
-                                   value="{{other_employee.phone}}"/>
+                                  max="9999999999" min="1111111111" value="{{other_employee.phone}}"/>
                             <div class="invalid-feedback">Phone is mandatory.</div>
                         </div>
 

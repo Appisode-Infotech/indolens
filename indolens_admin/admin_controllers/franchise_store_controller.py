@@ -51,8 +51,11 @@ def get_all_franchise_stores(status):
     status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
-            get_franchise_stores_query = f""" SELECT DISTINCT franchise_store.*, franchise_store_employees.name, franchise_store_employees.employee_id
+            get_franchise_stores_query = f""" SELECT DISTINCT franchise_store.*, franchise_store_employees.name, franchise_store_employees.employee_id,
+                                        creator.name, updater.name
                                         FROM franchise_store
+                                        LEFT JOIN admin AS creator ON franchise_store.created_by = creator.admin_id
+                                        LEFT JOIN admin AS updater ON franchise_store.last_updated_by = updater.admin_id
                                         LEFT JOIN franchise_store_employees ON franchise_store.store_id = franchise_store_employees.assigned_store_id AND franchise_store_employees.role = 1
                                         WHERE franchise_store.status {status_condition}
                                         ORDER BY franchise_store_employees.employee_id DESC
@@ -74,7 +77,10 @@ def get_franchise_store_by_id(fid):
     try:
         with connection.cursor() as cursor:
             get_franchise_stores_query = f""" SELECT franchise_store.*, franchise_store_employees.name, 
-                                        franchise_store_employees.employee_id FROM franchise_store
+                                        franchise_store_employees.employee_id,
+                                        creator.name, updater.name FROM franchise_store
+                                        LEFT JOIN admin AS creator ON franchise_store.created_by = creator.admin_id
+                                        LEFT JOIN admin AS updater ON franchise_store.last_updated_by = updater.admin_id
                                         LEFT JOIN franchise_store_employees ON 
                                         franchise_store.store_id = franchise_store_employees.assigned_store_id AND 
                                         franchise_store_employees.role = 1 WHERE franchise_store.store_id = '{fid}'
