@@ -146,12 +146,29 @@
                                                 </div>
                                             </div>
 
-
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
                                                 <h6>{{ optimetry.document_2_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
                                                     {% for doc in optimetry.document_2_url %}
+                                                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                        <div class="border border-300 p-2 rounded-2 me-2">
+                                                            <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
+                                                                <img class="rounded-2 dz-image" width="100px"
+                                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
+                                                <h6>Certificates</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <!-- Add a container for horizontal alignment -->
+                                                    {% for doc in optimetry.certificates %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">

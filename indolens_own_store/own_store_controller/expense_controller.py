@@ -91,7 +91,6 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                 `updated_on` = '{today}' """
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
-            print(customer_id)
 
             for data in cart_data:
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
@@ -102,6 +101,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
+
                     insert_len_sales_query = f""" INSERT INTO `sales_order`
                                             (`order_id`, `product_id`, `hsn`, `unit_sale_price`, `unit_type`,
                                             `purchase_quantity`, `product_total_cost`, `discount_percentage`,
@@ -128,7 +128,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
 
                 elif new_data.get('product_category_id') == '3':
                     discount_percentage = new_data.get('discount_percentage')
-                    if discount_percentage == "":
+                    if discount_percentage == "" or None:
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
                     discount_checked = new_data.get('discount_checked')
@@ -158,7 +158,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     cursor.execute(update_central_Inventory)
                 else:
                     discount_percentage = new_data.get('discount_percentage')
-                    if discount_percentage == "":
+                    if discount_percentage == "" or None:
                         discount_percentage = 0
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
