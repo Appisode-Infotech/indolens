@@ -76,6 +76,7 @@ def get_all_products_for_store(store_id):
                                     LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
                                     LEFT JOIN own_store AS os ON os.store_id = '{store_id}' 
                                     WHERE si.store_id = {store_id}  AND si.store_type = 1 AND ci.category_id != 2 
+                                    AND ci.category_id != 3
                                     ORDER BY si.store_inventory_id DESC"""
 
             cursor.execute(get_all_out_of_stock_product_query)

@@ -93,6 +93,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -104,7 +105,7 @@
 <!-- ===============================================-->
 <main class="main" id="top">
     <div class="container-fluid px-0">
-        {% include 'nav_bar_franchise.html' %}
+        {% include 'nav_bar_store.html' %}
 
         <div class="content">
             <form id="saleForm" action="{% url 'franchise_store_make_sale' %}" method="post">
@@ -172,9 +173,10 @@
                                              aria-labelledby="bootstrap-wizard-validation-tab1"
                                              id="bootstrap-wizard-validation-tab1">
                                             <form class="needs-validation" id="wizardValidationForm1"
-                                                  novalidate="novalidate" data-wizard-form="1" onchange="getProductsData()">
+                                                  novalidate="novalidate" data-wizard-form="1"
+                                                  onchange="getProductsData()">
                                                 <div id="products_container">
-<!--                                                    add product here-->
+                                                    <!--                                                    add product here-->
                                                 </div>
                                                 <div class="row">
                                                     <div class="col-12">
@@ -185,10 +187,13 @@
                                                                 Product
                                                             </button>
                                                             <div class="dropdown-menu">
-                                                                <a type="button" onclick="addLensContainer()" class="dropdown-item">Add a Lens</a>
-<!--                                                                <a type="button" onclick="addStockContactLensContainer()" class="dropdown-item">Add Stock Contact Lens</a>-->
-                                                                <a type="button" onclick="addRxContactLensContainer()" class="dropdown-item">Add Contact Lens</a>
-                                                                <a type="button" onclick="addOtherProductsContainer()" class="dropdown-item">Add Other Products</a>
+                                                                <a type="button" onclick="addLensContainer()"
+                                                                   class="dropdown-item">Add a Lens</a>
+                                                                <!--                                                                <a type="button" onclick="addStockContactLensContainer()" class="dropdown-item">Add Stock Contact Lens</a>-->
+                                                                <a type="button" onclick="addRxContactLensContainer()"
+                                                                   class="dropdown-item">Add Contact Lens</a>
+                                                                <a type="button" onclick="addOtherProductsContainer()"
+                                                                   class="dropdown-item">Add Other Products</a>
                                                             </div>
                                                         </div>
                                                     </div>
@@ -324,6 +329,15 @@
                                              id="bootstrap-wizard-validation-tab3">
                                             <form class="mb-2 needs-validation" id="wizardValidationForm3"
                                                   novalidate="novalidate" data-wizard-form="3">
+                                                <div class="row g-3 mb-3">
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Total Item:</h5>
+                                                    </div>
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Billing AMount:</h5>
+                                                    </div>
+                                                </div>
+
                                                 <div id="billing_info" class="row g-3 mb-3">
 
                                                     <div class="mb2 col-6">
@@ -335,7 +349,8 @@
                                                                 required="required">
                                                             <option value="" selected>Please select employee</option>
                                                             {% for employee in employee_list %}
-                                                            <option value="{{employee.employee_id}}">{{employee.name}}</option>
+                                                            <option value="{{employee.employee_id}}">{{employee.name}}
+                                                            </option>
                                                             {% endfor %}
                                                         </select>
                                                         <div class="invalid-feedback">This field is required.</div>
@@ -364,6 +379,15 @@
                                                                 id="datePicker" type="text" placeholder="dd/mm/yyyy"
                                                                 data-options="{&quot;disableMobile&quot;:true,&quot;dateFormat&quot;:&quot;d/m/Y&quot;}"
                                                                 readonly="readonly">
+                                                    </div>
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Advance Amount Paid</h5>
+                                                        <input
+                                                                onchange="genBillingInfoObject()"
+                                                                value="0" required
+                                                                name="amount_paid"
+                                                                class="form-control"
+                                                                type="text" placeholder="&#8377;">
                                                     </div>
 
                                                 </div>
@@ -490,6 +514,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -536,6 +561,7 @@
     // Set the default value to the input element
     estDeliveryDateInput.value = formattedDefaultDate;
   }
+
 </script>
 {{ lens_list|json_script:"lensList" }}
 {{ contact_lens_list|json_script:"contactLensList" }}
@@ -1420,6 +1446,7 @@ function addLensContainer() {
         productCard.remove();
     }
     }
+
 </script>
 
 <script>
@@ -1494,10 +1521,12 @@ function addLensContainer() {
         var assignedLabInput = document.getElementsByName("assignedLab")[0];
         var orderByEmployeeInput = document.getElementsByName("orderByEmployee")[0];
         var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
+        var amountPaidInput = document.getElementsByName("amount_paid")[0];
         var billingInfoData = {
             estDeliveryDate: estDeliveryDateInput.value,
             assignedLab: assignedLabInput.value,
             orderByEmployee: orderByEmployeeInput.value,
+            amount_paid: amountPaidInput.value,
             orderId: "ORDER"+generateRandomId()
         };
         billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
@@ -1514,6 +1543,7 @@ function generateRandomId() {
         var form = document.getElementById('saleForm');
         form.submit();
     });
+
 </script>
 
 
@@ -1816,6 +1846,7 @@ function generateRandomId() {
         });
 
     }
+
 </script>
 
 <script>
@@ -1856,6 +1887,7 @@ if (productsContainer) {
     cartDataField.value = jsonData;
   }
 }
+
 </script>
 
 
