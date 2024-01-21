@@ -449,8 +449,8 @@ def makeSaleFranchiseStore(request):
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = franchise_expense_controller.make_sale(cart_data, customerData,
-                                                                             billingDetailsData, assigned_store)
-            print(make_order)
+                                                                             billingDetailsData, request.session.get('id'),
+                                                                             assigned_store)
             url = reverse('order_details_franchise_store', kwargs={'orderId': make_order['order_id']})
             return redirect(url)
         else:
