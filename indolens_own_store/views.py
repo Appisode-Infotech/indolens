@@ -294,8 +294,11 @@ def createStockRequestStore(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
+            print(request.POST)
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
+            print(vars(stock_obj))
             response = store_inventory_controller.create_store_stock_request(stock_obj)
+            print(response)
             route = request.POST.get('route')
             return redirect(route)
         else:
@@ -345,7 +348,7 @@ def viewRejectedStockRequestsStore(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.view_all_store_stock_request(
             assigned_store, '2')
-        return render(request, 'stockRequests/viewRejectedStockRequestsStore.html',
+        return render(request, 'stockRequests/viewrejectedStockRequestsStore.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
         return redirect('own_store_login')

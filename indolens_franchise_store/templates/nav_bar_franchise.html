@@ -9,6 +9,20 @@
 
 
     </script>
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        // Find the active item
+        const activeItem = document.querySelector(".nav-link.active");
+
+        if (activeItem) {
+            // Scroll to the active item's parent element
+            const parent = activeItem.closest("li");
+            if (parent) {
+                parent.scrollIntoView();
+            }
+        }
+    });
+    </script>
     <div class="collapse navbar-collapse" id="navbarVerticalCollapse">
         <!-- scrollbar removed-->
         <div class="navbar-vertical-content">
