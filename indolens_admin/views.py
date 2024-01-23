@@ -2898,14 +2898,11 @@ def viewAllStockRequests(request):
 def viewStockRequestInvoice(request, requestId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_stock_requests_by_id(requestId)
-        print(response)
         store_data = []
         if response['stocks_request_list'].get('request_to_store_id') != 0:
             store, resp_status_code = own_store_controller.get_own_store_by_id(
                 response['stocks_request_list'].get('request_to_store_id'))
             store_data = store['own_stores'][0]
-            print("this is not from central inventory")
-            print(store_data)
         return render(request, 'indolens_admin/stockRequests/franchiseStockMovementInvoice.html',
                       {"stocks_request_list": response['stocks_request_list'], "store_data": store_data })
     else:
@@ -2969,7 +2966,6 @@ def assignManagerOwnStore(request, route):
         response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
         url = reverse('manage_store_managers', kwargs={'status': route})
         return redirect(url)
-
 
 def unAssignManagerOwnStore(request, route, empId, storeId):
     response, status_code = store_manager_controller.unAssignStore(empId, storeId)

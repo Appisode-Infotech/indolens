@@ -35,7 +35,9 @@ def create_store_manager(store_manager, files):
             # Execute the query using your cursor
             cursor.execute(insert_store_manager_query)
             subject = email_template_controller.get_employee_creation_email_subject()
-            body = email_template_controller.get_employee_creation_email_body(store_manager.name, 'Manager', store_manager.email, store_manager.password)
+            body = email_template_controller.get_employee_creation_email_body(store_manager.name, 'Manager',
+                                                                              store_manager.email,
+                                                                              store_manager.password)
             send_notification_controller.send_email(subject, body, store_manager.email)
 
             mid = cursor.lastrowid
@@ -68,6 +70,12 @@ def update_store_manager(store_manager, files):
             """
             print(update_store_manager_query)
             cursor.execute(update_store_manager_query)
+
+            subject = email_template_controller.get_employee_update_email_subject(store_manager.name)
+            body = email_template_controller.get_employee_update_email_body(store_manager.name, 'Manager',
+                                                                            store_manager.email, store_manager.phone,
+                                                                            store_manager.address)
+            send_notification_controller.send_email(subject, body, store_manager.email)
 
             return {
                 "status": True,
@@ -157,7 +165,7 @@ def enable_disable_store_manager(mid, status):
 def assignStore(empId, storeId):
     try:
         with connection.cursor() as cursor:
-            update_store_manager_query = f"""
+            assign_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
                     assigned_store_id = {storeId}
@@ -165,7 +173,27 @@ def assignStore(empId, storeId):
                     employee_id = {empId}
             """
             # Execute the update query using your cursor
-            cursor.execute(update_store_manager_query)
+            cursor.execute(assign_store_manager_query)
+            get_manager_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
+            """
+
+            # Execute the update query using your cursor
+            cursor.execute(get_manager_query)
+            manager_data = cursor.fetchone()
+
+            get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
+                                    WHERE store_id = {storeId}"""
+
+            cursor.execute(get_store_query)
+            store_data = cursor.fetchone()
+
+            subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data[0])
+            body = email_template_controller.get_employee_assigned_store_email_body(manager_data[0], 'Manager',
+                                                                                    manager_data[1], manager_data[2],
+                                                                                    store_data[0], store_data[1],
+                                                                                    store_data[2])
+
+            send_notification_controller.send_email(subject, body, manager_data[1])
 
             return {
                 "status": True,
