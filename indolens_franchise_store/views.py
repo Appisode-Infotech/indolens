@@ -39,27 +39,27 @@ def login(request):
                 })
             return redirect('franchise_store_dashboard')
         else:
-            return render(request, 'auth/lab_sign_in.html', {"message": response['message']})
+            return render(request, 'auth/franchise_sign_in.html', {"message": response['message']})
     else:
-        return render(request, 'auth/lab_sign_in.html')
+        return render(request, 'auth/franchise_sign_in.html')
 
 
 def forgotPassword(request):
     if request.method == 'POST':
         response, status_code = franchise_store_auth_controller.forgot_password(request.POST['email'])
-        return render(request, 'auth/lab_forgot_password.html', {"message": response['message']})
+        return render(request, 'auth/franchise_store_forgot_password.html', {"message": response['message']})
     else:
-        return render(request, 'auth/lab_forgot_password.html')
+        return render(request, 'auth/franchise_store_forgot_password.html')
 
 
 def resetPassword(request, code):
     if request.method == 'POST':
         response, status_code = franchise_store_auth_controller.update_store_employee_password(request.POST['password'],
                                                                                                request.POST['email'])
-        return render(request, 'auth/lab_reset_password.html', {"code": code})
+        return render(request, 'auth/franchise_store_reset_password.html', {"code": code})
     else:
         response, status_code = franchise_store_auth_controller.check_link_validity(code)
-        return render(request, 'auth/lab_reset_password.html',
+        return render(request, 'auth/franchise_store_reset_password.html',
                       {"code": code, "message": response['message'], "email": response['email']})
 
 
