@@ -124,9 +124,6 @@
                                     <th class="sort align-middle pe-5" data-sort="customer" scope="col"
                                         style="width:10%;">CUSTOMER
                                     </th>
-                                    <th class="sort align-middle pe-5" data-sort="power" scope="col" style="width:20%;">
-                                        POWER ATTRIBUTE
-                                    </th>
                                     <th class="sort align-middle pe-5" data-sort="createdBy" scope="col"
                                         style="width:20%;">
                                         CREATED BY
@@ -140,6 +137,9 @@
                                     <th class="sort align-middle ps-7" data-sort="updatedOn" scope="col"
                                         style="width:25%;">
                                         UPDATED ON
+                                    </th>
+                                    <th class="sort align-middle ps-7" scope="col"
+                                        style="width:25%;">
                                     </th>
 
                                 </tr>
@@ -161,8 +161,6 @@
                                         <p class="mb-0 ms-3 text-1100 fw-bold name">{{test.customer_name}}</p>
                                     </a></td>
 
-                                    <td class="power align-middle white-space-nowrap pe-5"><a class="fw-semi-bold">{{test.power_attributes}}</a>
-                                    </td>
                                     <td class="createdBy align-middle white-space-nowrap fw-semi-bold text-1000">
                                         <a href="{% url 'view_order_creator' test.created_by test.created_by_store_type %}">{{test.creator_name}}</a>
                                     </td>
@@ -176,6 +174,25 @@
                                     <td class="updatedOn align-middle white-space-nowrap text-1000 ps-7">
                                         {{test.updated_on}}
                                     </td>
+                                    <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                            <div class="font-sans-serif btn-reveal-trigger position-static" >
+                                                <button aria-expanded="false"
+                                                        aria-haspopup="true"
+                                                        class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                        data-boundary="window"
+                                                        data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                    <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                    <a class="dropdown-item view-button" data-bs-toggle="modalView"
+                                                       type="button"
+                                                           style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                                                       data-category-info="{{ test.power_attributes | safe }}"
+                                                    >View Lens Powers</a>
+
+                                                </div>
+                                            </div>
+                                        </td>
 
                                 </tr>
                                 {% endfor %}
@@ -200,6 +217,7 @@
                             </div>
                         </div>
                     </div>
+                    {% include 'modal_master_view.html' %}
                 </div>
             </div>
             {% include 'footer.html' %}
@@ -243,6 +261,8 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
+<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 
 </body>
 

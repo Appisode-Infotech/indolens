@@ -68,7 +68,7 @@ class SubAdminModel:
     @staticmethod
     def from_dict(obj: Any) -> 'SubAdminModel':
         assert isinstance(obj, dict)
-        admin_id = from_union([from_int, from_none], obj.get("admin_id"))
+        admin_id = from_union([from_str, from_none], obj.get("admin_id"))
         full_name = from_union([from_str, from_none], obj.get("fullName"))
         email = from_union([from_str, from_none], obj.get("email"))
         phone = from_union([from_str, from_none], obj.get("phone"))

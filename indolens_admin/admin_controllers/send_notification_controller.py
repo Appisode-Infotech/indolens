@@ -28,8 +28,8 @@ def send_email(subject, body, to_email):
 
     url = 'https://api.emailjs.com/api/v1.0/email/send'
     data = {
-        'service_id': 'default_service',
-        'template_id': 'template_ycnjmqh',
+        'service_id': 'service_7eqv3fu',
+        'template_id': 'template_1c47e6b',
         'user_id': 'qbWAgwqHOFbcgoJRF',
         'template_params': {
             'to_email': to_email,

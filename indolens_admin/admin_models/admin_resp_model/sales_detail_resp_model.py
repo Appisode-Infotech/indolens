@@ -60,7 +60,7 @@ class SalesOrder:
             'delivery_status': self.delivery_status,
             'payment_mode': self.payment_mode,
             'amount_paid': self.amount_paid,
-            'estimated_delivery_date': self.estimated_delivery_date,
+            'estimated_delivery_date': self.estimated_delivery_date.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on, datetime) else None,
             'linked_item': self.linked_item,
             'created_by_store': self.created_by_store,
             'created_by_store_type': self.created_by_store_type,
