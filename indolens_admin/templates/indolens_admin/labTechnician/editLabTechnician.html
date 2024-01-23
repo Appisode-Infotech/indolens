@@ -115,7 +115,7 @@
 
                             <label class="form-label" for="email">Email</label>
 
-                            <input class="form-control" id="email" name="email" required=""
+                            <input readonly class="form-control" id="email" name="email" required=""
                                    type="email" value="{{lab_technician.email}}"/>
                             <div class="invalid-feedback">Email is mandatory.</div>
                         </div>
@@ -124,7 +124,7 @@
 
                             <label class="form-label" for="phone">Phone</label>
 
-                            <input readonly class="form-control" id="phone" name="phone" required="" type="number"
+                            <input  class="form-control" id="phone" name="phone" required="" type="number"
                                   max="9999999999" min="1111111111" value="{{lab_technician.phone}}"/>
                             <div class="invalid-feedback">Phone Number is mandatory..</div>
                         </div>

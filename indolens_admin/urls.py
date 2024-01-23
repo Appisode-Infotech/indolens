@@ -53,6 +53,7 @@ urlpatterns = [
     path('manageMoveStocks/restock_products/status=<str:status>', restockProduct, name='restock_products'),
     path('manageMoveStocks/restockProductOutOfStock', restockProductOutOfStock, name='restockProductOutOfStock'),
     path('all_stock_requests/', viewAllStockRequests, name='all_stock_requests'),
+    path('stock_request_invoice/requestId=<int:requestId>', viewStockRequestInvoice, name='stock_request_invoice'),
     path('pending_stock_requests/', viewPendingStockRequests, name='pending_stock_requests'),
     path('completed_stock_requests/', viewCompletedStockRequests, name='completed_stock_requests'),
     path('rejected_stock_requests/', viewRejectedStockRequests, name='rejected_stock_requests'),

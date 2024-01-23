@@ -329,7 +329,7 @@ def createSubAdmin(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/subAdmin/createSubAdmin.html',
-                              {"message":"Something went wrong or email is already in use"})
+                              {"message": "Something went wrong or email is already in use"})
 
         else:
             return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
@@ -372,7 +372,6 @@ def editSubAdmin(request, subAdminId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-
             sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
             response, status_code = sub_admin_controller.edit_sub_admin(sub_admin, file_data)
             url = reverse('view_sub_admin', kwargs={'subAdminId': subAdminId})
@@ -1354,6 +1353,7 @@ def createSaleExecutives(request):
             sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = sales_executives_controller.create_own_sales_executives(sales_executives_obj,
                                                                                             file_data)
+            print(response)
             if status_code == 200:
                 url = reverse('view_sales_executives', kwargs={'ownSaleExecutivesId': response['seId']})
                 return redirect(url)
@@ -2788,6 +2788,7 @@ def centralInventoryUpdateProductImages(request, productId):
     return render(request, 'indolens_admin/centralInventory/updateproductImages.html',
                   {'product_data': response['product_data'], 'productId': productId})
 
+
 def centralInventoryAddProducts(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
@@ -2889,6 +2890,16 @@ def viewAllStockRequests(request):
         response, status_code = central_inventory_controller.get_all_stock_requests('%')
         print(response)
         return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
+                      {"stocks_request_list": response['stocks_request_list']})
+    else:
+        return redirect('login')
+
+
+def viewStockRequestInvoice(request, requestId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.get_stock_requests_by_id(requestId)
+        print(response)
+        return render(request, 'indolens_admin/stockRequests/franchiseStockMovementInvoice.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
         return redirect('login')
@@ -3654,4 +3665,3 @@ def getEyeTestById(request, testId):
 
     else:
         return redirect('login')
-
