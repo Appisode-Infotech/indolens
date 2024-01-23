@@ -121,20 +121,11 @@
                                     <div class="col-12 col-sm-6 col-lg-12">
                                         <div class="row align-items-center g-0">
                                             <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="mb-0 me-3">Invoice No :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0">#FLR978282</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
                                                 <h6 class="me-3">Invoice Date :</h6>
                                             </div>
                                             <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0" id="invoiceDate"></p>
+                                                <p class="fs--1 text-800 fw-semi-bold mb-0" id="invoiceDate">
+                                                   </p>
                                             </div>
                                         </div>
                                     </div>
@@ -145,7 +136,7 @@
                                             </div>
                                             <div class="col-auto col-lg-6 col-xl-7">
                                                 <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{order_detail.0.order_id}}</p>
+                                                    {{stocks_request_list.request_id}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -155,8 +146,11 @@
                                                 <h6 class="me-3">GST Reg No :</h6>
                                             </div>
                                             <div class="col-auto col-lg-6 col-xl-7">
+                                                {% if stocks_request_list.request_to_store_id == 0 %}
+                                                {% else %}
                                                 <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{store_data.0.store_gst}}</p>
+                                                    {{store_data.store_gst}}</p>
+                                                {% endif %}
                                             </div>
                                         </div>
                                     </div>
@@ -167,7 +161,7 @@
                                             </div>
                                             <div class="col-auto col-lg-6 col-xl-7">
                                                 <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{order_detail.0.created_on}}</p>
+                                                    {{stocks_request_list.request_product_created_on}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -177,8 +171,14 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="col-12 col-lg-4">
                                         <h6 class="mb-2 me-3">Sold by :</h6>
-                                        <p class="fs--1 text-800 fw-semi-bold mb-0">{{order_detail.0.creator_name}}<br/>
-                                            {{store_data.0.store_address}} </p>
+                                        {% if stocks_request_list.request_to_store_id == 0 %}
+                                        <p class="fs--1 text-800 fw-semi-bold mb-0">Central Inventory</p>
+                                        {% else %}
+                                        <p class="fs--1 text-800 fw-semi-bold mb-0">{{store_data.store_name}}<br/>
+                                            {{store_data.store_address}} <br/>{{store_data.store_email}}
+                                            <br/>{{store_data.store_phone}}</p>
+                                        {% endif %}
+
                                     </div>
                                 </div>
                             </div>
@@ -187,23 +187,23 @@
                                     <div class="col-12 col-lg-6">
                                         <h6 class="mb-2"> Billing Address :</h6>
                                         <div class="fs--1 text-800 fw-semi-bold mb-0">
-                                            <p class="mb-2">{{order_detail.0.customer_name}}</p>
+                                            <p class="mb-2">{{stocks_request_list.store_name}}</p>
                                             <div style="max-width: 200px;">
-                                                <p class="mb-2">{{order_detail.0.address}}</p>
+                                                <p class="mb-2">{{stocks_request_list.store_address}}</p>
                                             </div>
                                             <p class="mb-2">{{stocks_request_list.store_email}}</p>
-                                            <p class="mb-0">{{order_detail.0.phone}}</p>
+                                            <p class="mb-0">{{stocks_request_list.store_phone}}</p>
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <h6 class="mb-2"> Shipping Address :</h6>
                                         <div class="fs--1 text-800 fw-semi-bold mb-0">
-                                            <p class="mb-2">{{order_detail.0.customer_name}}</p>
+                                            <p class="mb-2">{{stocks_request_list.store_name}}</p>
                                             <div style="max-width: 200px;">
-                                                <p class="mb-2">{{order_detail.0.address}}</p>
+                                                <p class="mb-2">{{stocks_request_list.store_address}}</p>
                                             </div>
-                                            <p class="mb-2">{{order_detail.0.email}}</p>
-                                            <p class="mb-0">{{order_detail.0.phone}}</p>
+                                            <p class="mb-2">{{stocks_request_list.store_email}}</p>
+                                            <p class="mb-0">{{stocks_request_list.store_phone}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -216,63 +216,38 @@
                                 <thead class="bg-200">
                                 <tr>
                                     <th scope="col" style="width: 24px;"></th>
-                                    <th scope="col" style="min-width: 360px;">Products</th>
-                                    <th scope="col" style="width: 60px;">Quantity</th>
-                                    <th class="text-end" scope="col" style="width: 80px;">Unit Price</th>
-                                    <th class="text-end" scope="col" style="width: 100px;">Quantity</th>
-                                    <th class="text-end" scope="col" style="width: 138px;">Billing Amount</th>
+                                    <th scope="col" colspan="3">Products</th>
+                                    <th scope="col" colspan="2">Quantity</th>
+                                    <th class="text-end" colspan="2">Unit Price</th>
+                                    <th class="text-end" colspan="2">Quantity</th>
+                                    <th class="text-end" colspan="2">Billing Amount</th>
                                     <th scope="col" style="width: 24px;"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td class="align-middle">{{ loop.index }}</td>
-                                    <td class="align-middle">
-                                        <p class="line-clamp-1 mb-0 fw-semi-bold">{{stocks_request_list.product_name}}</p>
+                                    <td class="align-middle"></td>
+                                    <td class="align-middle" colspan="3">
+                                        <p class="line-clamp-1 mb-0 fw-semi-bold">
+                                            {{stocks_request_list.product_name}}</p>
                                     </td>
-                                    <td class="align-middle text-700 fw-semi-bold">{{stocks_request_list.request_product_quantity}}</td>
-                                    <td class="align-middle text-end text-1000 fw-semi-bold">
+                                    <td class="align-middle text-700 fw-semi-bold" colspan="2">
+                                        {{stocks_request_list.request_product_quantity}}</td>
+                                    <td class="align-middle text-end text-1000 fw-semi-bold" colspan="2">
                                         ₹{{stocks_request_list.request_product_unit_cost}}
                                     </td>
-                                    <td class="align-middle text-end fw-semi-bold">{{stocks_request_list.request_product_quantity}}</td>
-                                    <td class="align-middle text-end">₹{{stocks_request_list.billing_amount}}</td>
+                                    <td class="align-middle text-end fw-semi-bold" colspan="2">
+                                        {{stocks_request_list.request_product_quantity}}</td>
+                                    <td class="align-middle text-end" colspan="2">
+                                        ₹{{stocks_request_list.billing_amount}}</td>
                                     <td class="border-0"></td>
                                 </tr>
 
                                 <tr class="bg-200">
                                     <td></td>
-                                    <td class="align-middle fw-semi-bold" colspan="9">Subtotal</td>
-                                    <td class="align-middle text-end fw-bold">₹ {{order_detail.0.total_cost }}</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-0"></td>
-                                    <td colspan="6"></td>
-                                    <td class="align-middle fw-bold ps-15" colspan="2">Shipping Cost</td>
-                                    <td class="align-middle text-end fw-semi-bold" colspan="2">0</td>
-                                    <td class="border-0"></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-0"></td>
-                                    <td colspan="6"></td>
-                                    <td class="align-middle fw-bold ps-15" colspan="2">Discount</td>
-                                    <td class="align-middle text-end fw-semi-bold text-danger" colspan="2"
-                                        id="discount_amount"></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-0"></td>
-                                    <td colspan="6"></td>
-                                    <td class="align-middle fw-bold ps-15" colspan="2">Amount Paid</td>
-                                    <td class="align-middle text-end fw-semi-bold text-danger" colspan="2"
-                                        id="amount_paid">{{order_detail.0.amount_paid}}</td>
-                                    <td></td>
-                                </tr>
-                                <tr class="bg-200">
-                                    <td class="align-middle ps-4 fw-bold text-1000" colspan="3">Balance Amount</td>
-                                    <td id="totalWords" class="align-middle fw-bold text-1000" colspan="7"></td>
-                                    <td class="align-middle text-end fw-bold" id="balance">
-                                    </td>
+                                    <td class="align-middle fw-semi-bold" colspan="2">Subtotal</td>
+                                    <td class="align-middle text-end fw-bold" colspan="9">
+                                        ₹ {{stocks_request_list.billing_amount}}</td>
                                     <td></td>
                                 </tr>
 
@@ -284,18 +259,7 @@
                                                                                  alt=""/>
                             <h4>Authorized Signatory</h4>
                         </div>
-                        <div class="py-4 border-bottom border-300">
-                            <p>
-                                Terms & Conditions : <br/>
-                                1. The Order placed cannot be cancelled or exchanged.<br/>
-                                2. Fitting of old Frames / Lens is at customer's risk.<br/>
-                                3. Order must be collected within 30 days of order booking.<br/>
-                                4. Warranty on products are as per the Manufacturer's terms.<br/>
-                                5. Minimum of 50% of total order amount should be given towards advance.<br/>
-                                6. Composition Taxable Person, Not Eligible To Collect Tax On Supplies.<br/>
-                                7. All legal disputes are subjected to Nelamangala jurisdiction.<br/>
-                            </p>
-                        </div>
+
 
                     </div>
 
@@ -336,90 +300,12 @@
 
 </body>
 <script>
-    // Get the current date
     let currentDate = new Date();
 
-    // Format the date as YYYY-MM-DD
     let formattedDate = currentDate.toISOString().split('T')[0];
 
-    // Assign the formatted date to the <p> tag
     document.getElementById("invoiceDate").innerText = formattedDate;
 
-    document.addEventListener('DOMContentLoaded', function() {
-        var totalCost = {{ order_detail.0.total_cost }};
-        var discountCost = {{ order_detail.0.discount_cost }};
-        var amountPaid = {{order_detail.0.amount_paid}};
-
-        var discountedAmount = totalCost - discountCost;
-        var balanceAmount = discountCost - amountPaid;
-
-        document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
-        document.getElementById('balance').textContent = '₹ ' + balanceAmount;
-    });
-
-
 </script>
-<script>
-    const singleDigits = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
-    const twoDigits = [
-        'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'
-    ];
-    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-    const scales = ['', 'Thousand', 'Million', 'Billion', 'Trillion'];
-
-    function convertLessThanThousand(number) {
-        let words = '';
-
-        const hundreds = Math.floor(number / 100);
-        const tensUnits = number % 100;
-
-        if (hundreds !== 0) {
-            words += singleDigits[hundreds] + ' Hundred';
-            if (tensUnits !== 0) {
-                words += ' ';
-            }
-        }
-
-        if (tensUnits < 20 && tensUnits >= 10) {
-            words += twoDigits[tensUnits - 10];
-        } else if (tensUnits >= 20) {
-            words += tens[Math.floor(tensUnits / 10)];
-            if (tensUnits % 10 !== 0) {
-                words += ' ' + singleDigits[tensUnits % 10];
-            }
-        } else if (tensUnits !== 0) {
-            words += singleDigits[tensUnits];
-        }
-
-        return words.trim();
-    }
-
-    function numberToWords(number) {
-        if (number === 0) return 'Zero';
-
-        let words = '';
-        let scaleIndex = 0;
-
-        while (number > 0) {
-            if (number % 1000 !== 0) {
-                const inWords = convertLessThanThousand(number % 1000);
-                words = inWords + ' ' + scales[scaleIndex] + ' ' + words;
-            }
-            scaleIndex++;
-            number = Math.floor(number / 1000);
-        }
-
-        return words.trim();
-    }
-
-    const discountCostElement = document.getElementById('discountCost');
-    const discountCostText = discountCostElement.innerText;
-    const grandTotalInNumber = parseFloat(discountCostText.replace('₹', ''));
-
-    const totalWords = numberToWords(grandTotalInNumber);
-    document.getElementById('totalWords').innerText = totalWords + ' Rupees';
-
-</script>
-
 
 </html>
