@@ -123,6 +123,7 @@ def viewEmployees(request, employeeId):
     else:
         return redirect('own_store_login')
 
+
 def viewFranchiseEmployees(request, employeeId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
@@ -225,11 +226,14 @@ def orderInvoice(request, orderId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
+        invoice_details, inv_status_code = orders_controller.get_invoice_details(orderId)
+        print(invoice_details)
         store_data, store_status_code = orders_controller.get_store_details(
             order_detail['orders_details'][0]['created_by_store'],
             order_detail['orders_details'][0]['created_by_store_type'])
         return render(request, 'orders/store_order_invoice.html', {"order_detail": order_detail['orders_details'],
-                                                                   "store_data": store_data['store_data']})
+                                                                   "store_data": store_data['store_data'],
+                                                                   "invoice_details": invoice_details['invoice_details']})
     else:
         return redirect('own_store_login')
 
@@ -238,6 +242,7 @@ def orderStatusChange(request, orderId, status):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_update, status_code = store_orders_controller.order_status_change(orderId, status)
+        print(order_update)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:
@@ -446,7 +451,7 @@ def ownStoreEyeTest(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
             response = own_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
-                                                       assigned_store)
+                                                                  assigned_store)
         customerResponse, cust_status_code = store_customers_controller.get_all_customers()
         return render(request, 'ownStoreEyeTest/ownStoreEyeTest.html',
                       {'customers_list': customerResponse['customers_list']})
@@ -465,6 +470,7 @@ def getOwnStoreEyeTest(request):
     else:
         return redirect('own_store_login')
 
+
 def getOwnStoreEyeTestById(request, testId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
@@ -475,4 +481,3 @@ def getOwnStoreEyeTestById(request, testId):
 
     else:
         return redirect('own_store_login')
-
