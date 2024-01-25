@@ -51,6 +51,7 @@ Store Assignment Details:
 - Store Name: {store_name}
 - Location: {store_address}
 - Store Phone: {store_phone}
+
 As a team member of this store, your responsibilities will include {role} for employee: {email}. Your role is crucial to the store's success, and we believe your expertise will enhance the overall performance of the team.
 
 Thank you for your continued dedication to Indolens. We look forward to witnessing your positive impact on the assigned store.
@@ -72,6 +73,7 @@ def get_employee_unassigned_store_email_body(name, role, email, store_name, stor
     - Store Name: {store_name}
     - Location: {store_address}
     - Store Phone: {store_phone}
+    
     We anticipate your ongoing success in your future assignments.
 
     Best regards,

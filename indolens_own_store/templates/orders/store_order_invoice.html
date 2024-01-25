@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Order details</title>
+    <title>Indolens-{{order_detail.0.order_id}}</title>
     {% load static %}
 
 
@@ -120,7 +120,7 @@
                     </div>
                     <div class="bg-soft p-4 mb-4 rounded-2">
                         <div class="row g-4">
-                            <div class="col-12 col-lg-3">
+                            <div class="col-12 col-sm-12 col-lg-3 ">
                                 <div class="row g-4 g-lg-2">
                                     {% if invoice_details|length != 0 %}
                                     <div class="col-12 col-sm-6 col-lg-12">
@@ -134,7 +134,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-lg-12">
+                                    <div class="col-12 col-lg-12">
                                         <div class="row align-items-center g-0">
                                             <div class="col-auto col-lg-6 col-xl-5">
                                                 <h6 class="me-3">Invoice Date :</h6>
@@ -182,7 +182,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-12 col-lg-5">
+                            <div class="col-12 col-sm-6 col-lg-4">
                                 <div class="d-flex justify-content-center">
                                     <div class="col-12 col-lg-4">
                                         <h6 class="mb-2 me-3">Sold by :</h6>
@@ -191,7 +191,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-sm-6 col-lg-4">
+                            <div class="col-12 col-sm-6 col-lg-5">
                                 <div class="row g-4">
                                     <div class="col-12 col-lg-6">
                                         <h6 class="mb-2"> Billing Address :</h6>
@@ -204,7 +204,7 @@
                                             <p class="mb-0">{{order_detail.0.phone}}</p>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-lg-6">
+                                    <div class="col-12 col-sm-6 col-lg-6">
                                         <h6 class="mb-2"> Shipping Address :</h6>
                                         <div class="fs--1 text-800 fw-semi-bold mb-0">
                                             <p class="mb-2">{{order_detail.0.customer_name}}</p>
@@ -275,7 +275,7 @@
                                     <td class="border-0"></td>
                                     <td colspan="6"></td>
                                     <td class="align-middle fw-bold ps-15" colspan="2">Discount</td>
-                                    <td class="align-middle text-end fw-semi-bold text-danger" colspan="2"
+                                    <td class="align-middle text-end fw-semi-bold" colspan="2"
                                         id="discount_amount"></td>
                                     <td></td>
                                 </tr>
@@ -283,7 +283,7 @@
                                     <td class="border-0"></td>
                                     <td colspan="6"></td>
                                     <td class="align-middle fw-bold ps-15" colspan="2">Amount Paid</td>
-                                    <td class="align-middle text-end fw-semi-bold text-danger" colspan="2"
+                                    <td class="align-middle text-end fw-semi-bold" colspan="2"
                                         id="amount_paid">{{order_detail.0.amount_paid}}</td>
                                     <td></td>
                                 </tr>
