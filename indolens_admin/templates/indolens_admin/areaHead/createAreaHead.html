@@ -124,19 +124,27 @@
 
                             <label class="form-label" for="password">Password</label>
 
-                            <input class="form-control" id="password" name="password" required type="password"
-                                   value=""/>
-                            <div class="invalid-feedback">Password is Mandatory.</div>
+                            <div class="input-group">
+                                <input class="form-control" type="password" id="password" name="password"
+                                       placeholder="Password" required="required">
+                                <button id="togglePassword" type="button" class="input-group-text"><i
+                                        class="far fa-eye" id="togglePasswordIcon"></i></button>
+                                <div class="invalid-feedback">Password is mandatory.</div>
+                            </div>
                         </div>
 
                         <div class="col-md-12">
 
                             <label class="form-label" for="confirmPassword">Confirm Password</label>
 
-                            <input class="form-control" id="confirmPassword" name="confirmPassword" required=""
-                                   type="password"
-                                   value=""/>
-                            <div class="invalid-feedback">Passwords should match.</div>
+                            <div class="input-group">
+                                    <input class="form-control" type="password" id="confirmPassword"
+                                           name="confirmPassword"
+                                           placeholder="Confirm Password" required="required">
+                                    <button id="toggleConfirmPassword" type="button" class="input-group-text"><i
+                                            class="far fa-eye" id="toggleConfirmPasswordIcon"></i></button>
+                                    <div class="invalid-feedback">Password and Confirm Password should match.</div>
+                                </div>
                         </div>
 
                         <div class="col-12">
