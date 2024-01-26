@@ -347,9 +347,10 @@
                                             <option value="1">New</option>
                                             <option value="2">Process</option>
                                             <option value="3">Ready</option>
-                                            <option value="4">Dispatch</option>
-                                            <option value="5">Complete</option>
-                                            <option value="6">Cancel</option>
+                                            <option value="4">Dispatch to store</option>
+                                            <option value="5">Delivered to store</option>
+                                            <option value="6">Delivered to customer</option>
+                                            <option value="7">Cancel</option>
                                         </select>
                                     </div>
                                 </div>
@@ -420,6 +421,8 @@
     });
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.order_status }};
+        console.log(status);
+
         var select = document.getElementById("orderStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -434,6 +437,12 @@
                 // Enable the next option from the selected one
                 if (i < select.options.length - 1) {
                     select.options[i + 1].disabled = false;
+                    if (status != "6"){
+                    select.options[6].disabled = false;
+                    }
+                    if (status == "6"){
+                    select.options[6].disabled = true;
+                    }
                 }
 
                 // Add event listener to update options dynamically
@@ -448,6 +457,7 @@
                     // Enable the next option from the selected one
                     if (selectedIndex < this.options.length - 1) {
                         this.options[selectedIndex + 1].disabled = false;
+
                     }
                 });
 
