@@ -54,11 +54,43 @@ def allTask(request):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
-        print(assigned_lab)
-        print("================================================")
-        all_task, task_status_code = lab_task_controller.get_all_lab_jobs(assigned_lab)
-        print(all_task)
+        all_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "All")
         return render(request, 'Tasks/viewAllTask.html', {"all_task": all_task['task_list']})
+    else:
+        return redirect('lab_login')
+
+def newTask(request):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        all_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "New")
+        return render(request, 'Tasks/viewNewTask.html', {"all_task": all_task['task_list']})
+    else:
+        return redirect('lab_login')
+
+def processingTask(request):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        all_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Processing")
+        return render(request, 'Tasks/viewProcessingTask.html', {"all_task": all_task['task_list']})
+    else:
+        return redirect('lab_login')
+
+def readyTask(request):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        all_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Ready")
+        return render(request, 'Tasks/viewReadyTask.html', {"all_task": all_task['task_list']})
+    else:
+        return redirect('lab_login')
+def dispatchedTask(request):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        all_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Dispatched")
+        return render(request, 'Tasks/viewDispatchedTask.html', {"all_task": all_task['task_list']})
     else:
         return redirect('lab_login')
 
