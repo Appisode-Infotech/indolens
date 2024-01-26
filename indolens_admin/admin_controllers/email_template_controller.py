@@ -2,6 +2,9 @@
 def get_order_creation_email_subject(order_number):
     return f""" INDOLENS Order Created - {order_number} """
 
+def get_employee_creation_email_subject(name):
+    return f""" INDOLENS Account Created - {name} """
+
 def get_employee_creation_email_body(name, role, email, password):
     return f""" Dear {name},
             
