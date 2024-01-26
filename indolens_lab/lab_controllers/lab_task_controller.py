@@ -52,6 +52,7 @@ def get_lab_jobs(labId, status):
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
                 WHERE so.assigned_lab = {labId} AND so.order_status {status_condition}
+                GROUP BY so.order_id ORDER BY so.sale_item_id DESC  
                 """
             cursor.execute(get_job_details_query)
             jobs_details = cursor.fetchall()
