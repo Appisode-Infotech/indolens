@@ -9,12 +9,18 @@ import pytz
 import requests
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_franchise_store.franchise_store_model.franchise_store_resp_model.franchise_store_emp_resp_model import \
     get_franchise_store_employees
 from indolens_lab.lab_models.response_model.lab_tech_resp_model import get_lab_tech
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
+
+
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
+
 
 def generate_random_string(length=16):
     characters = string.ascii_letters + string.digits
@@ -85,14 +91,15 @@ def get_assigned_lab(lab_tech_id):
     except Exception as e:
         return 0
 
+
 def forgot_password(email):
     try:
         with connection.cursor() as cursor:
             pwd_code = generate_random_string()
-            reset_pwd_link = f"http://127.0.0.1:8000/franchise_store/franchise_store_reset_password/code={pwd_code}"
+            reset_pwd_link = f"http://127.0.0.1:8000/lab/lab_reset_password/code={pwd_code}"
             print(reset_pwd_link)
 
-            check_email_query = f"""SELECT email,status FROM franchise_store_employees WHERE email = '{email}'"""
+            check_email_query = f"""SELECT email,status, name FROM lab_technician WHERE email = '{email}'"""
             cursor.execute(check_email_query)
             check_email = cursor.fetchone()
 
@@ -105,23 +112,12 @@ def forgot_password(email):
             elif check_email is not None and check_email[1] != 0:
                 update_pwd_code_query = f"""INSERT INTO reset_password (email, code, status, created_on) 
                                             VALUES (%s, %s, %s, %s)"""
-                cursor.execute(update_pwd_code_query, (email, pwd_code, 0, today))
+                cursor.execute(update_pwd_code_query, (email, pwd_code, 0, getIndianTime()))
 
-                url = 'https://api.emailjs.com/api/v1.0/email/send'
-                data = {
-                    'service_id': 'default_service',
-                    'template_id': 'template_ycnjmqh',
-                    'user_id': 'qbWAgwqHOFbcgoJRF',
-                    'template_params': {
-                        'to_email': email,
-                        'new_password': reset_pwd_link,
-                        'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...'
-                    }
-                }
+                subject = email_template_controller.get_password_reset_email_subject(check_email[1])
+                body = email_template_controller.get_password_reset_email_body(check_email[1], reset_pwd_link, email)
+                email_response = send_notification_controller.send_email(subject, body, email)
 
-                headers = {'Content-Type': 'application/json'}
-
-                email_response = requests.post(url, data=json.dumps(data), headers=headers)
                 if email_response.status_code == 200:
                     return {
                         "status": True,
@@ -142,7 +138,6 @@ def forgot_password(email):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-
 
 
 def check_link_validity(code):
@@ -186,12 +181,11 @@ def check_link_validity(code):
         return {"status": False, "message": str(e), "email": ""}, 301
 
 
-
-def update_store_employee_password(password, email):
+def update_lab_tech_password(password, email):
     try:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         with connection.cursor() as cursor:
-            login_query = f"""UPDATE franchise_store_employees SET password = %s WHERE email = '{email}'"""
+            login_query = f"""UPDATE lab_technician SET password = %s WHERE email = '{email}'"""
             cursor.execute(login_query, (hashed_password,))
 
             login_query = f"""UPDATE reset_password SET status = 1 WHERE email = '{email}'"""
@@ -199,7 +193,7 @@ def update_store_employee_password(password, email):
 
             return {
                 "status": True,
-                "message": "Password change was successfully. Please login in now"
+                "message": "Password changed successfully. Please login using new credentials",
             }, 200
 
     except pymysql.Error as e:

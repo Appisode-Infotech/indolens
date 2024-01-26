@@ -1,9 +1,7 @@
-
-def get_order_creation_email_subject(order_number):
-    return f""" INDOLENS Order Created - {order_number} """
-
+# EMPLOYEE CREATION EMAIL
 def get_employee_creation_email_subject(name):
     return f""" INDOLENS Account Created - {name} """
+
 
 def get_employee_creation_email_body(name, role, email, password):
     return f""" Dear {name},
@@ -26,9 +24,7 @@ Best regards,
 INDOLENS """
 
 
-def get_order_status_change_email_subject(order_number):
-    return f""" INDOLENS Order status changed - {order_number} """
-
+# EMPLOYEE UPDATE EMAIL
 def get_employee_update_email_body(name, role, email, phone, address):
     return f""" Dear {name},
 
@@ -42,8 +38,10 @@ Best regards,
 INDOLENS """
 
 
+# EMPLOYEE STORE ASSIGNED
 def get_employee_assigned_store_email_subject(order_number):
     return f""" INDOLENS Store Assigned - {order_number} """
+
 
 def get_employee_assigned_store_email_body(name, role, email, store_name, store_phone, store_address):
     return f""" Hello {name},
@@ -63,8 +61,34 @@ Best regards,
 INDOLENS
 """
 
+
+# EMPLOYEE STORE ASSIGNED
+def get_password_reset_email_subject(name):
+    return f""" Password Reset for Your Indolens Account - {name} """
+
+
+def get_password_reset_email_body(name, pwd_link, email):
+    return f""" Hello {name},
+
+We received a request to reset the password for your account: {email} . 
+
+To reset your password, please click on the following link:
+
+{pwd_link}
+
+Please note that this link is time-sensitive, so we recommend completing the reset process within 15 minutes.
+
+If you have any issues or need further assistance, feel free to contact our support team at ['support'].
+
+Best regards,
+INDOLENS
+"""
+
+
+# EMPLOYEE STORE UNASSIGNED
 def get_employee_unassigned_store_email_subject(order_number):
     return f""" INDOLENS Store Assigned - {order_number} """
+
 
 def get_employee_unassigned_store_email_body(name, role, email, store_name, store_phone, store_address):
     return f""" Dear {name},
@@ -84,8 +108,9 @@ def get_employee_unassigned_store_email_body(name, role, email, store_name, stor
     """
 
 
-def get_order_payment_status_change_email_subject(order_number):
-    return f""" INDOLENS Order payment status changed - {order_number} """
+# ORDER CREATE EMAIL
+def get_order_creation_email_subject(order_number):
+    return f""" INDOLENS Order Created - {order_number} """
 
 
 def get_order_placed_email_body(customer_name, order_number, order_date, estimated_delivery_date):
@@ -106,6 +131,11 @@ INDOLENS
 """
 
 
+# ORDER STATUS CHANGE
+def get_order_status_change_email_subject(order_number):
+    return f""" INDOLENS Order status changed - {order_number} """
+
+
 def get_order_status_change_email_body(customer_name, order_number, status, date):
     return f""" Dear {customer_name},
 
@@ -120,6 +150,12 @@ Best regards,
 INDOLENS
 09980557575
 """
+
+
+# ORDER PAYMENT STATUS CHANGE
+def get_order_payment_status_change_email_subject(order_number):
+    return f""" INDOLENS Order payment status changed - {order_number} """
+
 
 def get_order_payment_status_change_email_body(customer_name, order_number, status, date):
     return f""" Dear {customer_name},

@@ -6,6 +6,9 @@ from .views import *
 urlpatterns = [
     path('', views.checkLogin, name='entry'),
     path('lab_login/', login, name='lab_login'),
+    path('lab_logout/', labLogout, name='lab_logout'),
+    path('lab_forgot_password/', labForgotPassword, name='lab_forgot_password'),
+    path('lab_reset_password/code=<str:code>', labResetPassword, name='lab_reset_password'),
     # Dashboard
     path('dashboard/', labDashboard, name='dashboard_lab'),
     path('all_task/', allTask, name='all_task'),

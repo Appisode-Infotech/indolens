@@ -35,7 +35,8 @@ def login(request):
 
 
 def getAssignedLab(request):
-    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get('is_lab_tech_logged_in') is True:
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
         assigned_lab = lab_auth_controller.get_assigned_lab(request.session.get('id'))
         if assigned_lab == 0:
             request.session.clear()
@@ -44,6 +45,37 @@ def getAssignedLab(request):
             return assigned_lab
     else:
         return redirect('lab_login')
+
+
+def labLogout(request):
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        request.session.clear()
+        return redirect(login)
+    else:
+        return redirect('lab_login')
+
+
+def labForgotPassword(request):
+    if request.method == 'POST':
+        response, status_code = lab_auth_controller.forgot_password(request.POST['email'])
+        print(response)
+        return render(request, 'auth/lab_forgot_password.html',
+                      {"message": response['message'], "status": response['status']})
+    else:
+        return render(request, 'auth/lab_forgot_password.html', {"status": False})
+
+
+def labResetPassword(request, code):
+    if request.method == 'POST':
+        response, status_code = lab_auth_controller.update_lab_tech_password(request.POST['password'],
+                                                                             request.POST['email'])
+        return render(request, 'auth/lab_reset_password.html',
+                      {"code": code, "message": response['message']})
+    else:
+        response, status_code = lab_auth_controller.check_link_validity(code)
+        return render(request, 'auth/lab_reset_password.html',
+                      {"code": code, "message": response['message'], "email": response['email']})
 
 
 def labDashboard(request):
@@ -59,6 +91,7 @@ def allTask(request):
     else:
         return redirect('lab_login')
 
+
 def newTask(request):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
@@ -67,6 +100,7 @@ def newTask(request):
         return render(request, 'Tasks/viewNewTask.html', {"all_task": all_task['task_list']})
     else:
         return redirect('lab_login')
+
 
 def processingTask(request):
     assigned_lab = getAssignedLab(request)
@@ -77,6 +111,7 @@ def processingTask(request):
     else:
         return redirect('lab_login')
 
+
 def readyTask(request):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
@@ -85,6 +120,8 @@ def readyTask(request):
         return render(request, 'Tasks/viewReadyTask.html', {"all_task": all_task['task_list']})
     else:
         return redirect('lab_login')
+
+
 def dispatchedTask(request):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
@@ -93,6 +130,7 @@ def dispatchedTask(request):
         return render(request, 'Tasks/viewDispatchedTask.html', {"all_task": all_task['task_list']})
     else:
         return redirect('lab_login')
+
 
 def labJobDetails(request, jobId):
     assigned_lab = getAssignedLab(request)
