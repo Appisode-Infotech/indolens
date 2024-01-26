@@ -33,6 +33,7 @@ def get_area_head_own_stores(status, assigned_stores):
                                         """
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
+            print(stores_data)
             return {
                 "status": True,
                 "own_stores": get_own_store(stores_data)

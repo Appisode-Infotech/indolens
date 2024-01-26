@@ -94,6 +94,8 @@ def manageOwnStores(request, status):
 
         response, status_code = stores_controller.get_area_head_own_stores(status,
                                                                            request.session.get('assigned_stores'))
+        own_stores = response.get('own_stores', [])
+        print(own_stores)
         return render(request, 'ownStore/manageOwnStores.html',
                       {"own_stores": response['own_stores'], "status": status})
     else:

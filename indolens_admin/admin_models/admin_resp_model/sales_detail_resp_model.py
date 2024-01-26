@@ -1,6 +1,7 @@
 from datetime import datetime
 import json
 
+
 class SalesOrder:
     def __init__(self, values):
         (
@@ -16,10 +17,10 @@ class SalesOrder:
             self.store_name, self.creator_name,
             self.updater_name,
             # Customer Fields
-            self.customer_id,self.customer_name, self.gender, self.age, self.phone,
+            self.customer_id, self.customer_name, self.gender, self.age, self.phone,
             self.email, self.language, self.city, self.address,
             self.created_by_employee_id, self.created_by_store_id,
-            self.created_by_store_type, self.created_on_customer,
+            self.cust_created_by_store_type, self.created_on_customer,
             self.updated_by_employee_id, self.updated_by_store_id,
             self.updated_by_store_type, self.updated_on_customer,
             # Product Fields
@@ -60,14 +61,17 @@ class SalesOrder:
             'delivery_status': self.delivery_status,
             'payment_mode': self.payment_mode,
             'amount_paid': self.amount_paid,
-            'estimated_delivery_date': self.estimated_delivery_date.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on, datetime) else None,
+            'estimated_delivery_date': self.estimated_delivery_date.strftime('%Y-%m-%d %H:%M:%S') if isinstance(
+                self.created_on, datetime) else None,
             'linked_item': self.linked_item,
             'created_by_store': self.created_by_store,
             'created_by_store_type': self.created_by_store_type,
             'created_by': self.created_by,
-            'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on, datetime) else None,
+            'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on,
+                                                                                      datetime) else None,
             'updated_by': self.updated_by,
-            'updated_on': self.updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.updated_on, datetime) else None,
+            'updated_on': self.updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.updated_on,
+                                                                                      datetime) else None,
             'total_cost': self.total_cost,
             'discount_cost': self.discount_cost,
             'store_name': self.store_name,
@@ -125,6 +129,7 @@ class SalesOrder:
             'unit_name': self.unit_name,
             'brand_name': self.brand_name,
         }
+
 
 def get_order_detail(response):
     sales_order_list = []

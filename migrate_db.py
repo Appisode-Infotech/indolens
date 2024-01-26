@@ -150,7 +150,7 @@ sql_queries = [
  UNIQUE KEY `unique_phone` (`phone`)
 ) """,
     """CREATE TABLE `django_session` (
- `session_key` varchar(40) NOT NULL,
+ `session_key` varchar(40) ,
  `session_data` longtext,
  `expire_date` datetime(6),
  PRIMARY KEY (`session_key`),
@@ -158,14 +158,14 @@ sql_queries = [
 ) """,
     """CREATE TABLE `eye_test` (
  `eye_test_id` int(11) NOT NULL AUTO_INCREMENT,
- `customer_id` int(11) NOT NULL,
+ `customer_id` int(11) ,
  `power_attributes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`power_attributes`)),
- `created_by_store_id` int(11) NOT NULL,
- `created_by_store_type` int(11) NOT NULL,
- `created_by` int(11) NOT NULL,
- `created_on` datetime NOT NULL,
- `updated_by` int(11) NOT NULL,
- `updated_on` datetime NOT NULL,
+ `created_by_store_id` int(11) ,
+ `created_by_store_type` int(11) ,
+ `created_by` int(11) ,
+ `created_on` datetime ,
+ `updated_by` int(11) ,
+ `updated_on` datetime ,
  PRIMARY KEY (`eye_test_id`)
 ) """,
     """CREATE TABLE `frame_shapes` (
@@ -298,9 +298,9 @@ sql_queries = [
 ) """,
     """CREATE TABLE `order_track` (
  `track_id` int(11) NOT NULL AUTO_INCREMENT,
- `order_id` varchar(255) NOT NULL,
- `status` int(11) NOT NULL,
- `created_on` datetime NOT NULL,
+ `order_id` varchar(255) ,
+ `status` int(11) ,
+ `created_on` datetime ,
  PRIMARY KEY (`track_id`)
 ) """,
     """CREATE TABLE `own_store` (
@@ -470,6 +470,17 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`unit_id`)
+) """,
+    """CREATE TABLE invoice (
+ invoice_id int(11) NOT NULL AUTO_INCREMENT,
+ invoice_number varchar(255) ,
+ order_id varchar(255) ,
+ store_id int(11) ,
+ store_type int(11) ,
+ invoice_status int(11) ,
+ invoice_date date ,
+ PRIMARY KEY (invoice_id),
+ UNIQUE KEY unique_order_id (order_id)
 ) """
 ]
 
