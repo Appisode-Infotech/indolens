@@ -32,14 +32,14 @@ def create_area_head(area_head, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_area_head_query)
+            ahid = cursor.lastrowid
 
-            subject = email_template_controller.get_employee_creation_email_subject()
+            subject = email_template_controller.get_employee_creation_email_subject(area_head.full_name)
             body = email_template_controller.get_employee_creation_email_body(area_head.full_name, 'Area Head',
                                                                               area_head.email,
                                                                               area_head.password)
-            send_notification_controller.send_email(subject, body, area_head.email)
-
-            ahid = cursor.lastrowid
+            resp = send_notification_controller.send_email(subject, body, area_head.email)
+            print(resp)
 
             return {
                        "status": True,

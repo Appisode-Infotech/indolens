@@ -769,6 +769,8 @@ def createAreaHead(request):
             area_head = area_head_model.area_head_model_from_dict(request.POST)
             response, status_code = area_head_controller.create_area_head(area_head, file_data)
 
+            print(response)
+
             if status_code == 200:
                 url = reverse('view_area_head', kwargs={'areaHeadId': response['areaHeadId']})
                 return redirect(url)
