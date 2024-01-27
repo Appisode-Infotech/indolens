@@ -711,7 +711,7 @@ function addLensContainer() {
                         <th scope="col">PD</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="stock_power_card_table[${productCardCount}]" id="stock_power_card_table[${productCardCount}]">
 
                     <tr>
                         <th scope="row">Right</th>
@@ -827,7 +827,7 @@ function addLensContainer() {
                         <th scope="col">PD</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody class="rx_power_card_table[${productCardCount}]" id="rx_power_card_table[${productCardCount}]">
                     <tr>
                         <th scope="row">Right</th>
                         <td class="col-6 col-lg-2">
@@ -1656,18 +1656,20 @@ function generateRandomId() {
         } else {
             discountCheckDiv.style.display = 'none';
         }
-        console.log($('.stockPowerCard input, .stockPowerCard select'));
         if (selectedProduct.power_attribute.stock_type=='stock'){
-        stockPowerCard.style.display = 'block';
-        $('.rxPowerCard input, .rxPowerCard select').prop('required', false);
-        rxPowerCard.style.display = 'none';
-        $('.stockPowerCard input, .stockPowerCard select').prop('required', true);
-        }else{
-        rxPowerCard.style.display = 'block';
-        $('.stockPowerCard input, .stockPowerCard select').prop('required', false);
-        stockPowerCard.style.display = 'none';
 
-        $('.rxPowerCard input, .rxPowerCard select').prop('required', true);
+            $('#stock_power_card_table input, #stock_power_card_table select').prop('required', true);
+            $('#rx_power_card_table input, #rx_power_card_table select').prop('required', false);
+
+
+        stockPowerCard.style.display = 'block';
+        rxPowerCard.style.display = 'none';
+        }else{
+               $('#stock_power_card_table input, #stock_power_card_table select').prop('required', false);
+            $('#rx_power_card_table input, #rx_power_card_table select').prop('required', true);
+
+        rxPowerCard.style.display = 'block';
+        stockPowerCard.style.display = 'none';
         }
 
         productPurchaseQtyField.addEventListener('input', function () {
