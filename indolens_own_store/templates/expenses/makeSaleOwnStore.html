@@ -1656,7 +1656,7 @@ function generateRandomId() {
         } else {
             discountCheckDiv.style.display = 'none';
         }
-
+        console.log($('.stockPowerCard input, .stockPowerCard select'));
         if (selectedProduct.power_attribute.stock_type=='stock'){
         stockPowerCard.style.display = 'block';
         $('.rxPowerCard input, .rxPowerCard select').prop('required', false);
