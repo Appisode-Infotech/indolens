@@ -379,17 +379,17 @@
                                                                 data-options="{&quot;disableMobile&quot;:true,&quot;dateFormat&quot;:&quot;d/m/Y&quot;}"
                                                                 readonly="readonly">
                                                     </div>
-                                                    <div class="mb2 col-6">
-                                                        <h5 class="mb-3">Advance Amount Paid</h5>
-                                                        <input
-                                                                onchange="genBillingInfoObject()"
-                                                                value="0" required
-                                                                name="amount_paid"
-                                                                class="form-control"
-                                                                type="text" placeholder="&#8377;">
+                                                    <div class="mb2 col-12">
+                                                        <h5 class="mb-3">Sale amount</h5>
+                                                        <textarea onchange="genBillingInfoObject()" name="sale_note" class="form-control" id="exampleTextarea" rows="3"></textarea>
                                                     </div>
 
+
                                                 </div>
+
+
+                                                    <div class="mb2 col-12">
+                                                    </div>
                                             </form>
                                         </div>
                                         <div class="tab-pane" role="tabpanel"
@@ -536,6 +536,7 @@
 <script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'vendors/prism/prism.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
   var estDeliveryDateInputs = document.getElementsByName('estDeliveryDate');
@@ -1574,12 +1575,14 @@ function addLensContainer() {
         var orderByEmployeeInput = document.getElementsByName("orderByEmployee")[0];
         var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
         var amountPaidInput = document.getElementsByName("amount_paid")[0];
+        var saleNoteInput = document.getElementsByName("sale_note")[0];
         var billingInfoData = {
             estDeliveryDate: estDeliveryDateInput.value,
             assignedLab: assignedLabInput.value,
             orderByEmployee: orderByEmployeeInput.value,
             amount_paid: amountPaidInput.value,
-            orderId: "ORDER"+generateRandomId()
+            orderId: "ORDER"+generateRandomId(),
+            saleNote:saleNoteInput.value
         };
         billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
     }
