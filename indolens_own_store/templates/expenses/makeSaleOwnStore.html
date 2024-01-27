@@ -1649,7 +1649,6 @@ function generateRandomId() {
         stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
         productCategoryIdField.value = selectedProduct?.category_id ?? '';
         productPurchaseQtyField.value = '';
-        productProductTotalField='';
 
         if (selectedProduct.discount > 0) {
             discountCheckDiv.style.display = 'block';
@@ -1715,7 +1714,7 @@ function generateRandomId() {
       let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
       let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
       let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
-      let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+       let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
       let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
       let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
       let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
@@ -1740,7 +1739,6 @@ function generateRandomId() {
       productUnitTypeField.value = selectedProduct?.unit_name ?? '';
       productCategoryIdField.value = selectedProduct?.category_id ?? '';
       productPurchaseQtyField.value = '';
-      productProductTotalField='';
 
       clPowerField.value = selectedProduct?.power_attribute.power ?? '';
       clBcField.value = selectedProduct?.power_attribute.bc ?? '';
@@ -1821,7 +1819,6 @@ function generateRandomId() {
       productUnitTypeField.value = selectedProduct?.unit_name ?? '';
       productCategoryIdField.value = selectedProduct?.category_id ?? '';
       productPurchaseQtyField.value = '';
-      productProductTotalField='';
 
 <!--      clPowerField.value = selectedProduct?.power_attribute.power ?? '';-->
 <!--      clBcField.value = selectedProduct?.power_attribute.bc ?? '';-->
@@ -1892,7 +1889,6 @@ function generateRandomId() {
       productUnitTypeField.value = selectedProduct?.unit_name ?? '';
       productCategoryIdField.value = selectedProduct?.category_id ?? '';
       productPurchaseQtyField.value = '';
-      productProductTotalField='';
 
 
       if (selectedProduct.discount > 0) {
