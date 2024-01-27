@@ -1643,9 +1643,13 @@ function generateRandomId() {
         if (selectedProduct.power_attribute.stock_type=='stock'){
         stockPowerCard.style.display = 'block';
         rxPowerCard.style.display = 'none';
+        $('.rxPowerCard input, .rxPowerCard select').prop('required', false);
+        $('.stockPowerCard input, .stockPowerCard select').prop('required', true);
         }else{
         rxPowerCard.style.display = 'block';
         stockPowerCard.style.display = 'none';
+        $('.rxPowerCard input, .rxPowerCard select').prop('required', true);
+        $('.stockPowerCard input, .stockPowerCard select').prop('required', false);
         }
 
         productPurchaseQtyField.addEventListener('input', function () {
