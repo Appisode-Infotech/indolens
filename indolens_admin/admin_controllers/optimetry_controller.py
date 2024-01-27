@@ -35,7 +35,7 @@ def create_optimetry(optimetry_obj, files):
             # Execute the query using your cursor
             cursor.execute(insert_optimetry_obj_query)
 
-            subject = email_template_controller.get_employee_creation_email_subject()
+            subject = email_template_controller.get_employee_creation_email_subject(optimetry_obj.name)
             body = email_template_controller.get_employee_creation_email_body(optimetry_obj.name, 'Optometry',
                                                                               optimetry_obj.email,
                                                                               optimetry_obj.password)
@@ -128,7 +128,7 @@ def create_franchise_optimetry(optimetry_obj, files):
             # Execute the query using your cursor
             cursor.execute(insert_optimetry_obj_query)
 
-            subject = email_template_controller.get_employee_creation_email_subject()
+            subject = email_template_controller.get_employee_creation_email_subject(optimetry_obj.name)
             body = email_template_controller.get_employee_creation_email_body(optimetry_obj.name, 'Optometry',
                                                                               optimetry_obj.email,
                                                                               optimetry_obj.password)

@@ -34,7 +34,7 @@ def create_store_manager(store_manager, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_store_manager_query)
-            subject = email_template_controller.get_employee_creation_email_subject()
+            subject = email_template_controller.get_employee_creation_email_subject(store_manager.name)
             body = email_template_controller.get_employee_creation_email_body(store_manager.name, 'Manager',
                                                                               store_manager.email,
                                                                               store_manager.password)
