@@ -259,8 +259,7 @@
                                             {% if stock.store_type == 2 %}
                                             <a class="dropdown-item view-button"
                                                href="{% url 'stock_request_invoice' stock.request_id %}"
-                                               type="button"
-                                               data-category-info="{{ stock }}">View Invoice</a>
+                                               type="button" target="_blank">View Invoice</a>
                                             {% endif %}
 
                                         </div>

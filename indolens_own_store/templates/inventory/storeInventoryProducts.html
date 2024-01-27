@@ -170,6 +170,12 @@
                                                      src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
                                             </div>
                                         </a>
+                                        <a href="{{ MEDIA_URL }}{{ stock.product_qr_code }}" target="_blank">
+                                            <div class="avatar avatar-m">
+                                                <img alt="" class="rounded-circle"
+                                                     src="{{ MEDIA_URL }}{{ stock.product_qr_code }}"/>
+                                            </div>
+                                        </a>
                                     </td>
 
                                     <td class="product align-middle ps-4"><a
@@ -210,10 +216,10 @@
 <!--                                                   data-bs-target-store-id="{{stock.target_store_id}}"-->
 <!--                                                   data-bs-unit-cost="{{stock.franchise_sale_price}}"-->
 <!--                                                   data-bs-toggle="modal">Request</a>-->
-                                                <a class="dropdown-item" href="#!">View</a><a
-                                                    class="dropdown-item" href="#!">Export</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Return</a>
+                                                <a class="dropdown-item" href="#!">View</a>
+<!--                                                <a class="dropdown-item" href="#!">Export</a>-->
+<!--                                                <div class="dropdown-divider"></div>-->
+<!--                                                <a class="dropdown-item text-danger" href="#!">Return</a>-->
                                             </div>
                                         </div>
                                     </td>

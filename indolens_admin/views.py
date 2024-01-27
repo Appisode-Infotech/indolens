@@ -1894,8 +1894,10 @@ def enableDisableLabTechnician(request, route, labTechnicianId, status):
 def manageOtherEmployees(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_all_other_emp(status)
+        available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         return render(request, 'indolens_admin/otherEmployees/manageOtherEmployees.html',
-                      {"other_employee_list": response['other_emp_list'], "status": status})
+                      {"other_employee_list": response['other_emp_list'],
+                       "available_stores": available_stores_response['available_stores'], "status": status})
     else:
         return redirect('login')
 
@@ -3003,15 +3005,17 @@ def unAssignSalesExecutiveOwnStore(request, route, salesExecutiveId, storeId):
 
 def assignOtherEmployeeOwnStore(request, route):
     if request.method == 'POST':
+        print(request.POST)
         response, status_code = other_employee_controller.assign_store_own_store_other_employee(request.POST['emp_id'],
                                                                                                 request.POST[
                                                                                                     'store_id'])
+        print(response)
         url = reverse('manage_store_other_employees', kwargs={'status': route})
         return redirect(url)
 
 
-def unAssignOtherEmployeeOwnStore(request, route, salesExecutiveId, storeId):
-    response, status_code = other_employee_controller.unassign_store_own_store_other_employee(salesExecutiveId, storeId)
+def unAssignOtherEmployeeOwnStore(request, route, otherEmployeeId, storeId):
+    response, status_code = other_employee_controller.unassign_store_own_store_other_employee(otherEmployeeId, storeId)
     url = reverse('manage_store_other_employees', kwargs={'status': route})
     return redirect(url)
 
