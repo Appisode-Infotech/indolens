@@ -1657,19 +1657,11 @@ function generateRandomId() {
             discountCheckDiv.style.display = 'none';
         }
         if (selectedProduct.power_attribute.stock_type=='stock'){
-
-            $('#stock_power_card_table input, #stock_power_card_table select').prop('required', true);
-            $('#rx_power_card_table input, #rx_power_card_table select').prop('required', false);
-
-
         stockPowerCard.style.display = 'block';
         rxPowerCard.style.display = 'none';
         }else{
-               $('#stock_power_card_table input, #stock_power_card_table select').prop('required', false);
-            $('#rx_power_card_table input, #rx_power_card_table select').prop('required', true);
-
-        rxPowerCard.style.display = 'block';
-        stockPowerCard.style.display = 'none';
+              rxPowerCard.style.display = 'block';
+            stockPowerCard.style.display = 'none';
         }
 
         productPurchaseQtyField.addEventListener('input', function () {
