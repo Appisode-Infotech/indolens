@@ -19,5 +19,7 @@ urlpatterns = [
     path('lab_job_details/jobId=<str:jobId>', labJobDetails, name='lab_job_details'),
     path('lab_job_details/job_status_change/jobId=<str:jobId>/status=<str:status>', jobStatusChange,
          name='job_status_change'),
+    path('my_profile/labTechnicianId=<int:labTechnicianId>', viewLabTechnician,
+         name='my_profile'),
 
 ]

@@ -2,7 +2,7 @@ from django.http import HttpResponse
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
-from indolens_admin.admin_controllers import orders_controller
+from indolens_admin.admin_controllers import orders_controller, lab_technician_controller
 from indolens_lab.lab_controllers import lab_auth_controller, lab_task_controller
 from indolens_lab.lab_models.request_model import lab_tech_model
 from indolens_own_store.own_store_controller import store_orders_controller
@@ -149,5 +149,13 @@ def jobStatusChange(request, jobId, status):
         order_update, status_code = store_orders_controller.order_status_change(jobId, status)
         url = reverse('lab_job_details', kwargs={'jobId': jobId})
         return redirect(url)
+    else:
+        return redirect('lab_login')
+
+def viewLabTechnician(request, labTechnicianId):
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get('is_lab_tech_logged_in') is True:
+        response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
+        return render(request, 'Profile/myProfile.html',
+                      {"lab_technician": response['lab_technician']})
     else:
         return redirect('lab_login')

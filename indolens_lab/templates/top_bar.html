@@ -279,9 +279,9 @@
                         </div>
                         <div class="overflow-auto scrollbar" style="height: 10rem;">
                             <ul class="nav d-flex flex-column mb-2 pb-1">
-<!--                                <li class="nav-item"><a class="nav-link px-3" href="#!"> <span-->
-<!--                                        class="me-2 text-900" data-feather="user"></span>Profile</a></li>-->
-                                <li class="nav-item"><a class="nav-link px-3" href="{% url 'dashboard' %}"><span
+                                <li class="nav-item"><a class="nav-link px-3" href="{{% url 'my_profile' request.session.id %}}"> <span
+                                        class="me-2 text-900" data-feather="user"></span>Profile</a></li>
+                                <li class="nav-item"><a class="nav-link px-3" href="{% url 'dashboard_lab' %}"><span
                                         class="me-2 text-900" data-feather="pie-chart"></span>Dashboard</a></li>
 
 <!--                                <li class="nav-item"><a class="nav-link px-3" href="#!"> <span-->

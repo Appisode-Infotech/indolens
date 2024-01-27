@@ -1,3 +1,6 @@
+base_url = "http://127.0.0.1:8000"
+
+
 # EMPLOYEE CREATION EMAIL
 def get_employee_creation_email_subject(name):
     return f""" INDOLENS Account Created - {name} """
@@ -14,7 +17,7 @@ Password: {password}
 For security reasons, we recommend that you log in to your account as soon as possible and change your password. 
 Here are the steps to access your account:
 
-Visit the Indolens: http://127.0.0.1:8000/own_store/own_store_login/
+Visit the Indolens: {base_url}/own_store/own_store_login/
 Enter your email and the temporary password provided above.
 Click on the "Login" button.
 
@@ -123,7 +126,7 @@ Below are the details of your recent purchase:
 Order Number: {order_number}
 Order Date: {order_date}
 Estimated Delivery Date: {estimated_delivery_date}
-Track Order on: http://127.0.0.1:8000/customer_order_tracking/orderId={order_number}
+Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
@@ -144,7 +147,7 @@ Kindly be informed that the status of your order has been updated. Below are the
 Order Number: {order_number}
 Order Status: {status}
 Date of Change: {date}
-Track Order on: http://127.0.0.1:8000/customer_order_tracking/orderId={order_number}
+Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
@@ -165,7 +168,7 @@ Kindly be informed that the payment status of your order has been updated. Below
 Order Number: {order_number}
 Payment Status: {status}
 Date of Change: {date}
-Track Order on: http://127.0.0.1:8000/customer_order_tracking/orderId={order_number}
+Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS

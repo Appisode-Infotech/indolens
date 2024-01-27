@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - View Accountant</title>
+    <title>Indolens admin - View Lab Technician</title>
 
     {% load static %}
 
@@ -57,15 +57,6 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -79,23 +70,22 @@
     <div class="container-fluid px-0">
 
         {% include 'nav_bar.html' %}
-        {% for accountant in accountant %}
-
+        {% for lab_technician in lab_technician%}
 
         <div class="content">
 
             <div class="mb-9">
                 <div class="row align-items-center justify-content-between g-3 mb-4">
                     <div class="col-auto">
-                        <h2 class="mb-0">Accountant Details</h2>
+                        <h2 class="mb-0">Lab Technician Details</h2>
                     </div>
                     <div class="col-auto">
                         <div class="row g-3">
                             <div class="col-auto">
-                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_accountant' accountant.accountant_id %}">
+                                <a class="btn btn-phoenix-secondary"
+                                   href="{% url 'edit_lab_technician' lab_technician.lab_technician_id %}">
                                     <span class="fas fa-refresh me-2"></span> Update
                                 </a>
-
                             </div>
                         </div>
                     </div>
@@ -109,26 +99,31 @@
                                         <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
                                             <div class="col-12 col-sm-auto mb-sm-2">
                                                 <div class="avatar avatar-5xl">
-                                                    <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{accountant.profile_pic}}"/>
+                                                    <img alt="" class="rounded-circle"
+                                                         src="{{MEDIA_URL}}{{lab_technician.profile_pic}}"/>
                                                 </div>
-
                                             </div>
-
                                             <div class="col-12 col-sm-auto flex-1">
-                                                <h3>{{accountant.name}}</h3>
-                                                <p class="text-800">Joined on - {{accountant.created_on}}</p>
+                                                <h3>{{lab_technician.name}}</h3>
+                                                <p class="text-800">Joined on {{lab_technician.created_on}}</p>
+                                                {% if lab_technician.lab_name|length != 0 %}
+                                                <p class="text-800"> Lab -
+                                                <a class="text-decoration-none fw-semi-bold fs-0"
+                                                   href="{% url 'view_lab' lab_technician.assigned_lab_id %}">
+                                                    {{lab_technician.lab_name}}
                                                 </a></p>
-                                                <p class="text-800">Accountant </p>
-
+                                                {% else %}
+                                                <p class="text-800">Assigned Labs - UNASSIGNED</p>
+                                                {% endif %}
                                             </div>
                                         </div>
                                         <div class="border-top border-dashed border-300 pt-4">
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
-                                                <h6>{{ accountant.document_1_type }}</h6>
+                                                <h6>{{ lab_technician.document_1_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in accountant.document_1_url %}
+                                                    {% for doc in lab_technician.document_1_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -145,10 +140,10 @@
 
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
-                                                <h6>{{ accountant.document_2_type }}</h6>
+                                                <h6>{{ lab_technician.document_2_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in accountant.document_2_url %}
+                                                    {% for doc in lab_technician.document_2_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -174,29 +169,29 @@
                                             <button class="btn btn-link p-0"></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
-                                        <p class="text-800">{{accountant.address}}
+                                        <p class="text-800">{{lab_technician.address}}
                                         </p>
                                         <div class="mb-3">
-                                            <h5 class="text-800">Email</h5><a href="mailto:shatinon@jeemail.com">{{accountant.email}}</a>
+                                            <h5 class="text-800">Email</h5><a href="mailto:{{lab_technician.email}}">{{lab_technician.email}}</a>
                                         </div>
-                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:+1234567890">{{accountant.phone}}</a>
+                                        <h5 class="text-800">Phone</h5><a class="text-800"
+                                                                          href="tel:{{lab_technician.phone}}">{{lab_technician.phone}}</a>
                                         <h5 class="text-800 mt-3">Created On</h5>
-                                        <p class="text-800">{{accountant.created_on}}
+                                        <p class="text-800">{{lab_technician.created_on}}
                                         </p>
                                         <h5 class="text-800 mt-3">Created By</h5>
-                                        <a href="{% url 'view_sub_admin' accountant.created_by %}">{{accountant.creator_name}}</a>
+                                        <a href="{% url 'view_sub_admin' lab_technician.created_by %}">{{lab_technician.creator_name}}</a>
                                         <h5 class="text-800 mt-3">Updated On</h5>
-                                        <p class="text-800">{{accountant.last_updated_on}}
+                                        <p class="text-800">{{lab_technician.last_updated_on}}
                                         </p>
                                         <h5 class="text-800 mt-3">Updated By</h5>
-                                        <a href="{% url 'view_sub_admin' accountant.last_updated_by %}">{{accountant.updater_name}}</a>
+                                        <a href="{% url 'view_sub_admin' lab_technician.last_updated_by %}">{{lab_technician.updater_name}}</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {% include 'footer.html' %}
-
                 </div>
             </div>
         </div>
