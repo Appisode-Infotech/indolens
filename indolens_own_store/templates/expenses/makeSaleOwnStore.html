@@ -1633,7 +1633,6 @@ function generateRandomId() {
         let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
         let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
         let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-        let purchaseQtyText = document.getElementById('purchase_qty[' + cardIndex + ']');
         let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
         let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
 
@@ -1649,7 +1648,7 @@ function generateRandomId() {
         productUnitTypeField.value = selectedProduct?.unit_name ?? '';
         stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
         productCategoryIdField.value = selectedProduct?.category_id ?? '';
-        purchaseQtyText.value = '0';
+        productPurchaseQtyField.value = '0';
 
         if (selectedProduct.discount > 0) {
             discountCheckDiv.style.display = 'block';
