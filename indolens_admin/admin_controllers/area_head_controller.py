@@ -38,8 +38,7 @@ def create_area_head(area_head, files):
             body = email_template_controller.get_employee_creation_email_body(area_head.full_name, 'Area Head',
                                                                               area_head.email,
                                                                               area_head.password)
-            resp = send_notification_controller.send_email(subject, body, area_head.email)
-            print(resp)
+            send_notification_controller.send_email(subject, body, area_head.email)
 
             return {
                        "status": True,
