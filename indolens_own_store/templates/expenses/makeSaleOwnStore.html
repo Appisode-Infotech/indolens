@@ -378,10 +378,17 @@
                                                                 id="datePicker" type="text" placeholder="dd/mm/yyyy"
                                                                 data-options="{&quot;disableMobile&quot;:true,&quot;dateFormat&quot;:&quot;d/m/Y&quot;}"
                                                                 readonly="readonly">
+                                                                                                                <div class="invalid-feedback">This field is required.</div>
                                                     </div>
-                                                    <div class="mb2 col-12">
-                                                        <h5 class="mb-3">Sale amount</h5>
-                                                        <textarea onchange="genBillingInfoObject()" name="sale_note" class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Advance Amount Paid</h5>
+                                                        <input
+                                                                onchange="genBillingInfoObject()"
+                                                                value="0" required
+                                                                name="amount_paid"
+                                                                class="form-control"
+                                                                type="text" placeholder="&#8377;">
+                                                                                                                <div class="invalid-feedback">This field is required.</div>
                                                     </div>
 
 
@@ -389,6 +396,13 @@
 
 
                                                     <div class="mb2 col-12">
+                                                       <h5 class="mb-3">Sale notes</h5>
+
+                                                           <textarea
+                                                                   required
+                                                                   onchange="genBillingInfoObject()"
+                                                                   name="sale_note" class="form-control" id="exampleTextarea" rows="3"></textarea>
+                                                                                                                <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                             </form>
                                         </div>
@@ -1582,7 +1596,7 @@ function addLensContainer() {
             orderByEmployee: orderByEmployeeInput.value,
             amount_paid: amountPaidInput.value,
             orderId: "ORDER"+generateRandomId(),
-            saleNote:saleNoteInput.value
+            "saleNote":saleNoteInput.value
         };
         billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
     }
