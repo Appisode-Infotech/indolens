@@ -1659,9 +1659,19 @@ function generateRandomId() {
         if (selectedProduct.power_attribute.stock_type=='stock'){
         stockPowerCard.style.display = 'block';
         rxPowerCard.style.display = 'none';
+         // Remove 'required' attribute from all inputs and selects in rxPowerCard
+    let rxPowerCardInputs = rxPowerCard.querySelectorAll('input, select');
+    rxPowerCardInputs.forEach(input => {
+        input.removeAttribute('required');
+    });
         }else{
               rxPowerCard.style.display = 'block';
             stockPowerCard.style.display = 'none';
+             // Add 'required' attribute to inputs and selects in rxPowerCard
+    let rxPowerCardInputs = rxPowerCard.querySelectorAll('input, select');
+    rxPowerCardInputs.forEach(input => {
+        input.setAttribute('required', 'required');
+    });
         }
 
         productPurchaseQtyField.addEventListener('input', function () {
