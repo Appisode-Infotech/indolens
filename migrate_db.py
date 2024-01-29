@@ -3,7 +3,6 @@ from datetime import datetime
 import bcrypt
 import pymysql
 
-
 # db_host = 'localhost'
 # db_user = 'root'
 # db_password = ''
@@ -11,8 +10,8 @@ import pymysql
 
 
 db_host = 'localhost'
-db_user = 'root'
-db_password = ''
+db_user = 'indoadmin'
+db_password = 'Indolens@#1234'
 db_name = 'indolens_db'
 
 super_name = input("Enter name for super admin : ")
