@@ -40,6 +40,7 @@ urlpatterns = [
     path('manage_central_inventory_products/status=<str:status>', manageCentralInventoryProducts,
          name='manage_central_inventory_products'),
     path('add_products/', centralInventoryAddProducts, name='add_products'),
+    path('view_products/productId=<int:productId>', centralInventoryViewProducts, name='view_products'),
     path('manage_central_inventory_products/update_product/productId=<str:productId>', centralInventoryUpdateProduct,
          name='update_product'),
     path('manage_central_inventory_products/update_product_images/productId=<str:productId>',

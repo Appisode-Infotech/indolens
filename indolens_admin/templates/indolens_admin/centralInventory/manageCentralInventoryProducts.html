@@ -202,7 +202,7 @@
                                     </td>
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0"
-                                            href="#!">{{product.product_name}} </a></td>
+                                            href="{% url 'view_products' product.product_id %}">{{product.product_name}} </a></td>
                                     <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         ₹{{product.sale_price}}
                                     </td>

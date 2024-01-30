@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Manage Rejected Stock requests</title>
+    <title>Indolens Store - Manage Rejected  Stock requests</title>
 
     {% load static %}
 
@@ -180,6 +180,7 @@
                                 <td class="align-middle white-space-nowrap ps-3 py-4 req_date">
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
                                 </td>
+
                                 <td class="align-middle white-space-nowrap ps-3 py-4 moved_date">
                                     {% if stock.delivery_status == 2 %}
                                     <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
@@ -187,6 +188,7 @@
                                     <p class="mb-0 fs--1 text-900">Not Delivered</p>
                                     {% endif %}
                                 </td>
+
                                 <td class="align-middle white-space-nowrap text-end approval_status">
                                     {% if stock.request_status == 0 %}
                                     <span
@@ -215,7 +217,6 @@
                                     {% endif %}
                                 </td>
 
-
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
@@ -235,8 +236,8 @@
                                     </div>
                                 </td>
                             </tr>
-                            </tbody>
                             {% endfor %}
+                            </tbody>
                         </table>
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
