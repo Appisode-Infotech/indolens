@@ -382,6 +382,7 @@ def storeInventoryProducts(request):
                                                                              'product_category']})
     else:
         return redirect('own_store_login')
+
 def viewStoreInventoryProducts(request, productId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
