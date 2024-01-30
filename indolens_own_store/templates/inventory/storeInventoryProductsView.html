@@ -1,0 +1,617 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens admin - View product</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="{% static 'vendors/dropzone/dropzone.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar_store.html' %}
+        <div class="content">
+            {% for product_data in stocks_list %}
+            <form class="mb-9 ">
+                {% csrf_token %}
+                <div class="row g-3 flex-between-end mb-5">
+                    <div class="col-auto">
+                        <h2 class="mb-2">View product</h2>
+                        <h5 class="text-700 fw-semi-bold">View product : <b>{{product_data.product_name}}</b></h5>
+                    </div>
+
+                </div>
+                <h4 class="mb-3">Product Title</h4>
+                <div class="row g-5">
+                    <div class="col-12 col-xl-8">
+                        <div class="mb-5">
+                            <input readonly class="form-control" name="productTitle"
+                                   placeholder="Write product title here..."
+                                   type="text" value="{{product_data.product_name}}" required/>
+                        </div>
+                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3 mb-6">
+                            <h4 class="mb-3"> Product Images</h4>
+                            <div class="d-flex flex-wrap">
+                                <!-- Add a container for horizontal alignment -->
+                                {% for images in product_data.product_images %}
+                                <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                    <div class="border border-300 p-2 rounded-2 me-2">
+                                        <a href="{{ MEDIA_URL }}{{ images }}" target="_blank">
+                                            <img class="rounded-2 dz-image" width="100px"
+                                                 height="100px" src="{{ MEDIA_URL }}{{ images }}"
+                                                 onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                 alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                        </a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <div class="mb-6">
+                            <h4 class="mb-3"> Product Description</h4>
+                            {{product_data.product_description|safe}}
+                        </div>
+
+                        <!--                        New code-->
+                        {% if product_data.category_id == 2 %}
+                        <div class="row mb-3 pt-3  bg-200 lens-widget ">
+
+                            <div class="row mb-3">
+                                <div class="mb-3">
+                                    <h5 class="text-1000 ">Type</h5>
+                                    <div class="col-12 col-lg-3 stockType">
+                                        <input onclick="return false;" class="form-check-input" id="stockType"
+                                               type="checkbox"
+                                               name="stockType"
+                                               value="stock"/>
+                                        <label class="form-check-label" for="stockType">Stock</label>
+                                    </div>
+                                    <div class="col-12 col-lg-3 visionType4">
+                                        <input onclick="return false;" class="form-check-input" id="visionType4"
+                                               type="checkbox"
+                                               name="stockType"
+                                               value="rx"/>
+                                        <label class="form-check-label" for="visionType4">Rx</label>
+                                    </div>
+                                </div>
+
+                                <h5 class="text-1000 ">Vision Type</h5>
+                                <div class="col-12 col-lg-3 visionType1">
+                                    <input onclick="return false;" class="form-check-input" id="visionType1"
+                                           type="checkbox"
+                                           name="visionType"
+                                           value="single_vision"/>
+                                    <label class="form-check-label" for="visionType1">Single Vision</label>
+                                </div>
+                                <div class="col-12 col-lg-3 visionType2">
+                                    <input onclick="return false;" class="form-check-input" id="visionType2"
+                                           type="checkbox"
+                                           name="visionType"
+                                           value="bifocal"/>
+                                    <label class="form-check-label" for="visionType2">Bi-Focal</label>
+                                </div>
+                                <div class="col-12 col-lg-3 visionType3">
+                                    <input onclick="return false;" class="form-check-input" id="visionType3"
+                                           type="checkbox"
+                                           name="visionType"
+                                           value="progressive"/>
+                                    <label class="form-check-label" for="visionType3">Progressive</label>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <h4 class="mb-3">Index</h4>
+                                <select disabled class="form-select" id="index" name="index" required="required">
+                                    <option value="0.1">0.1</option>
+                                    <option value="0.2">0.2</option>
+                                    <option value="0.3">0.3</option>
+                                </select>
+                            </div>
+                        </div>
+                        {% endif %}
+
+                        {% if product_data.category_id == 3 %}
+                        <div id="contactLensForm" class="row mb-3 pt-3 pb-3 bg-200 contact-lens-widget">
+                            <div class="row mb-3">
+                                <div class="mb-3">
+                                    <h5 class="text-1000 ">Type</h5>
+                                    <div class="col-12 col-lg-3 ContactLensStockType">
+                                        <input onclick="return false;" class="form-check-input"
+                                               id="ContactLensStockType" type="checkbox"
+                                               name="ContactLensStockType"
+                                               value="stock"/>
+                                        <label class="form-check-label" for="ContactLensStockType">Stock</label>
+                                    </div>
+                                    <div class="col-12 col-lg-3 ContactLensRxType">
+                                        <input onclick="return false;" class="form-check-input" id="ContactLensRxType"
+                                               type="checkbox"
+                                               name="ContactLensStockType"
+                                               value="rx"/>
+                                        <label class="form-check-label" for="ContactLensRxType">Rx</label>
+                                    </div>
+                                </div>
+                                <h5 class="text-1000 ">Contact Lens Type</h5>
+                                <div class="col-12 col-lg-3 contact_lens_type1">
+                                    <input onclick="return false;" class="form-check-input" id="contact_lens_type1"
+                                           type="checkbox"
+                                           name="contact_lens_type"
+                                           value="Soft"/>
+                                    <label class="form-check-label" for="contact_lens_type1">Soft</label>
+                                </div>
+                                <div class="col-12 col-lg-3 contact_lens_type2">
+                                    <input onclick="return false;" class="form-check-input" id="contact_lens_type2"
+                                           type="checkbox"
+                                           name="contact_lens_type"
+                                           value="Semi Soft"/>
+                                    <label class="form-check-label" for="contact_lens_type2">Semi Soft</label>
+                                </div>
+                                <div class="col-12 col-lg-3 contact_lens_type3">
+                                    <input onclick="return false;" class="form-check-input" id="contact_lens_type3"
+                                           type="checkbox"
+                                           name="contact_lens_type"
+                                           value="Hard"/>
+                                    <label class="form-check-label" for="contact_lens_type3">Hard</label>
+                                </div>
+                            </div>
+
+                            <div class="row mb-2">
+                                <h5 class="text-1000 ">Contact Lens Disposablity</h5>
+                                <div class="col-12 col-lg-3 contact_lens_disposability1">
+                                    <input onclick="return false;" class="form-check-input"
+                                           id="contact_lens_disposability1" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="Daily"/>
+                                    <label class="form-check-label" for="contact_lens_disposability1">Daily</label>
+                                </div>
+                                <div class="col-12 col-lg-3 contact_lens_disposability2">
+                                    <input onclick="return false;" class="form-check-input"
+                                           id="contact_lens_disposability2" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="1 Month"/>
+                                    <label class="form-check-label" for="contact_lens_disposability2">1 Month</label>
+                                </div>
+                                <div class="col-12 col-lg-3 contact_lens_disposability3">
+                                    <input onclick="return false;" class="form-check-input"
+                                           id="contact_lens_disposability3" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="3 Month"/>
+                                    <label class="form-check-label" for="contact_lens_disposability3">3 Month</label>
+                                </div>
+                                <div class="col-12 col-lg-3 contact_lens_disposability4">
+                                    <input onclick="return false;" class="form-check-input"
+                                           id="contact_lens_disposability4" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="6 Month"/>
+                                    <label class="form-check-label" for="contact_lens_disposability4">6 Month</label>
+                                </div>
+                                <div class="col-12 col-lg-3 contact_lens_disposability5">
+                                    <input onclick="return false;" class="form-check-input"
+                                           id="contact_lens_disposability5" type="checkbox"
+                                           name="contact_lens_disposability"
+                                           value="Yearly"/>
+                                    <label class="form-check-label" for="contact_lens_disposability5">Yearly</label>
+                                </div>
+                            </div>
+                        </div>
+                        {% endif %}
+
+
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">Quantity</h5>
+                                <input readonly name="productQuantity" class="form-control" placeholder="Quantity"
+                                       type="text"
+                                       value="{{product_data.store_product_quantity}}" required/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">GSTIN</h5>
+                                <input readonly name="productGSTIN" class="form-control" placeholder="%" type="text"
+                                       value="{{product_data.product_gst}}" required/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">Discount</h5>
+                                <input readonly name="discount" class="form-control" placeholder="%" type="number"
+                                       maxlength="2" max="99" value="{{product_data.discount}}" required/>
+                            </div>
+                        </div>
+
+                        <h4 class="mb-3">Pricing</h4>
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">Sale price</h5>
+                                <input readonly name="salePrice" class="form-control" placeholder="₹" type="text"
+                                       value="{{product_data.sale_price}}" required/>
+                            </div>
+                        </div>
+                        <h4 class="mb-3">Models Data</h4>
+                        <div class="row g-3 mb-3">
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">Model Number</h5>
+                                <input readonly name="modelNumber" class="form-control" placeholder="Model Number"
+                                       value="{{product_data.model_number}}" type="text"
+                                       required/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">HSN Number</h5>
+                                <input readonly name="hsnNumber" class="form-control" placeholder="HSN Number"
+                                       value="{{product_data.hsn}}" type="text"
+                                       required/>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-xl-4">
+                        <div class="row g-2">
+                            <div class="col-12 col-xl-12">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Organize</h4>
+                                        <div class="row g-3">
+                                            <div class="col-12 col-sm-6 col-xl-12">
+                                                <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                    <h5 class="mb-0 text-1000">Category</h5>
+
+                                                </div>
+                                                <select disabled id="categorySelect" name="categoryId" required
+                                                        aria-label="category" class="form-select mb-3"
+                                                        onchange="handleCategoryChange()">
+                                                    <option value="{{product_data.category_id}}">
+                                                        {{product_data.category_name}}
+                                                    </option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-xl-12">
+                                                <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                    <h5 class="mb-0 text-1000">Brand</h5>
+                                                </div>
+                                                <select disabled name="brandId" required aria-label="brands"
+                                                        class="form-select mb-3">
+                                                    <option value="{{product_data.brand_id}}">
+                                                        {{product_data.brand_name}}
+                                                    </option>
+                                                    {% for brand in response.product_brands %}
+                                                    <option value="{{brand.brand_id}}">{{brand.brand_name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+
+                                            <div id="only_frame_options" class="d-none">
+                                                <div class="col-12 col-sm-6 col-xl-12">
+                                                    <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                        <h5 class="text-1000">Material</h5><a class="fw-bold fs--1"
+                                                                                              href="{% url 'add_master_material' %}">Add
+                                                        new material</a>
+                                                    </div>
+                                                    <select disabled name="materialId" required
+                                                            class="form-select mb-3">
+                                                        <option value="{{product_data.material_id}}">
+                                                            {{product_data.material_name}}
+                                                        </option>
+                                                        {% for material in response.product_materials %}
+                                                        <option value="{{material.material_id}}">
+                                                            {{material.material_name}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+                                                </div>
+
+                                                <div class="col-12 col-sm-6 col-xl-12">
+                                                    <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                        <h5 class="text-1000">Frame Type</h5><a class="fw-bold fs--1"
+                                                                                                href="{% url 'add_frame_type' %}">Add
+                                                        new frame type</a>
+                                                    </div>
+                                                    <select disabled name="frameTypeId" required
+                                                            class="form-select mb-3">
+                                                        <option value="{{product_data.frame_type_id}}">
+                                                            {{product_data.frame_type_name}}
+                                                        </option>
+                                                        {% for type in response.frame_types %}
+                                                        <option value="{{type.frame_id}}">{{type.frame_type_name}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+
+                                                <div class="col-12 col-sm-6 col-xl-12">
+                                                    <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                        <h5 class="text-1000">Frame Shape</h5><a class="fw-bold fs--1"
+                                                                                                 href="{% url 'add_frame_shape' %}">Add
+                                                        new Shape</a>
+                                                    </div>
+                                                    <select disabled name="frameShapeId" required
+                                                            class="form-select mb-3">
+                                                        <option value="{{product_data.frame_shape_id}}">
+                                                            {{product_data.shape_name}}
+                                                        </option>
+                                                        {% for frame_shape in response.frame_shapes %}
+                                                        <option value="{{frame_shape.shape_id}}">
+                                                            {{frame_shape.shape_name}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-xl-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <h4 class="card-title mb-4">Variants</h4>
+                                        <div class="row g-3 g-xl-5">
+                                            <div class="col-12 col-sm-6 col-xl-12">
+                                                <div class="border-dashed-bottom pb-4 pb-xl-0">
+                                                    <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                        <h5 class="text-1000">Color</h5>
+                                                    </div>
+                                                    <select disabled name="colorId" required class="form-select">
+                                                        <option value="{{product_data.color_id}}">
+                                                            {{product_data.color_name}}
+                                                        </option>
+                                                        {% for color in response.colors %}
+                                                        <option value="{{color.color_id}}">
+                                                            {{color.color_name}} -
+                                                            {{color.color_code}}
+                                                        </option>
+                                                        {% endfor %}
+                                                    </select>
+
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-xl-12">
+                                                <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                    <h5 class="text-1000">Unit</h5>
+                                                </div>
+                                                <select disabled name="unitId" required class="form-select">
+                                                    <option value="{{product_data.unit_id}}">
+                                                        {{product_data.unit_name}}
+                                                    </option>
+                                                    {% for unit in response.master_units %}
+                                                    <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
+                                                    {% endfor %}
+                                                </select>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-xl-12">
+                                                <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                    <h5 class="mb-0 text-1000">Origin</h5>
+                                                </div>
+                                                <select disabled name="origin" required aria-label="origin"
+                                                        class="form-select">
+                                                    <option value="{{product_data.origin}}">{{product_data.origin}}
+                                                    </option>
+                                                    <option value="Indian">Indian</option>
+                                                    <option value="Foreign">Foreign</option>
+                                                    <option value="Domestic">Domestic</option>
+                                                </select>
+
+                                            </div>
+                                            <input readonly name="created_by" required type="hidden"
+
+                                                   value="{{ request.session.id }}">
+                                            <input readonly name="last_updated_by" required type="hidden"
+
+                                                   value="{{ request.session.id }}">
+
+
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+            {% endfor %}
+            {% include 'footer.html' %}
+        </div>
+    </div>
+    <script>
+        var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
+        var navbarTop = document.querySelector('.navbar-top');
+        if (navbarTopStyle === 'darker') {
+          navbarTop.classList.add('navbar-darker');
+        }
+
+        var navbarVerticalStyle = localStorage.getItem('phoenixNavbarVerticalStyle');
+        var navbarVertical = document.querySelector('.navbar-vertical');
+        if (navbarVerticalStyle === 'darker') {
+          navbarVertical.classList.add('navbar-darker');
+        }
+
+
+
+
+
+    </script>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/tinymce/tinymce.min.js' %}"></script>
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'vendors/dropzone/dropzone.min.js' %}"></script>
+<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/file-upload-preview.js' %}"></script>
+
+<script>
+    //set valuesfor lens power attribute
+    document.addEventListener("DOMContentLoaded", function() {
+        var stockData = {
+            "vision_type": "{{product_data.power_attribute.vision_type}}",
+            "stock_type": "{{product_data.power_attribute.stock_type}}",
+            "index": "{{product_data.power_attribute.index}}",
+            };
+
+        // Function to check the corresponding checkbox based on the value
+        function checkCheckbox(elementId, valueToCheck) {
+            var checkbox = document.getElementById(elementId);
+            var correspondingDiv = document.querySelector('.' + elementId);
+            console.log(elementId);
+            if (checkbox && checkbox.value === valueToCheck) {
+                checkbox.checked = true;
+                correspondingDiv.style.display = 'block';
+            } else {
+                checkbox.style.display = 'none';
+                correspondingDiv.style.display = 'none';
+            }
+
+        }
+
+        function setSelectValue(selectId, valueToSelect) {
+            var select = document.getElementById(selectId);
+            if (select) {
+                for (var i = 0; i < select.options.length; i++) {
+                    if (select.options[i].value === valueToSelect) {
+                        select.selectedIndex = i;
+                        break;
+                    }
+                }
+            }
+        }
+
+        setSelectValue("index", stockData.index);
+
+        // Check vision type checkboxes
+        checkCheckbox("visionType1", stockData.vision_type);
+        checkCheckbox("visionType2", stockData.vision_type);
+        checkCheckbox("visionType3", stockData.vision_type);
+
+        // Check stock type checkboxes
+        checkCheckbox("stockType", stockData.stock_type);
+        checkCheckbox("visionType4", stockData.stock_type);
+    });
+
+
+
+
+</script>
+
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var stockData = {
+            "stock_type": "{{product_data.power_attribute.stock_type}}",
+            "contact_lens_type": "{{product_data.power_attribute.contact_lens_type}}",
+            "contact_lens_disposability": "{{product_data.power_attribute.contact_lens_disposability}}"
+        };
+
+        // Function to set the checked attribute for checkboxes
+        function setCheckboxValue(elementId, valueToCheck) {
+            var checkbox = document.getElementById(elementId);
+            var correspondingDiv = document.querySelector('.' + elementId);
+            if (checkbox && checkbox.value === valueToCheck) {
+                checkbox.checked = true;
+                correspondingDiv.style.display = 'block';
+            }else {
+                checkbox.style.display = 'none';
+                correspondingDiv.style.display = 'none';
+            }
+        }
+
+        // Set checkbox values
+        setCheckboxValue("ContactLensStockType", stockData.stock_type);
+        setCheckboxValue("ContactLensRxType", stockData.stock_type);
+        setCheckboxValue("contact_lens_type1", stockData.contact_lens_type);
+        setCheckboxValue("contact_lens_type2", stockData.contact_lens_type);
+        setCheckboxValue("contact_lens_type3", stockData.contact_lens_type);
+        setCheckboxValue("contact_lens_disposability1", stockData.contact_lens_disposability);
+        setCheckboxValue("contact_lens_disposability2", stockData.contact_lens_disposability);
+        setCheckboxValue("contact_lens_disposability3", stockData.contact_lens_disposability);
+        setCheckboxValue("contact_lens_disposability4", stockData.contact_lens_disposability);
+        setCheckboxValue("contact_lens_disposability5", stockData.contact_lens_disposability);
+
+        });
+
+
+</script>
+
+
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
+
+</body>
+
+</html>

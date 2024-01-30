@@ -42,6 +42,7 @@ urlpatterns = [
 
     # inventory items
     path('manage_store_inventory_products/', storeInventoryProducts, name='manage_store_inventory_products'),
+    path('view_store_inventory_products/productId=<int:productId>', viewStoreInventoryProducts, name='view_store_inventory_products'),
     path('manage_store_out_of_stock/', inventoryOutOfStock, name='manage_store_out_of_stock'),
     # stock request management
     path('create_request_store/', createStockRequestStore, name='create_request_store'),

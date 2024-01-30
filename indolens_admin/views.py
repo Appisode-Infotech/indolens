@@ -2769,11 +2769,13 @@ def centralInventoryUpdateProduct(request, productId):
         product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
         response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId,
                                                                                                power_attributes)
-        print(response)
-    response, status_code = get_central_inventory_product_single(productId)
-    types, status_code = central_inventory_controller.get_all_active_types()
-    return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
-                  {'product_data': response['product_data'], 'productId': productId, "response": types})
+        url = reverse('view_products', kwargs={'productId': productId})
+        return redirect(url)
+    else:
+        response, status_code = get_central_inventory_product_single(productId)
+        types, status_code = central_inventory_controller.get_all_active_types()
+        return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
+                      {'product_data': response['product_data'], 'productId': productId, "response": types})
 
 
 def centralInventoryUpdateProductStatus(request, filter, productId, status):
@@ -2786,6 +2788,11 @@ def centralInventoryUpdateProductStatus(request, filter, productId, status):
 def centralInventoryUpdateProductImages(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
     return render(request, 'indolens_admin/centralInventory/updateproductImages.html',
+                  {'product_data': response['product_data'], 'productId': productId})
+
+def centralInventoryViewProducts(request, productId):
+    response, status_code = get_central_inventory_product_single(productId)
+    return render(request, 'indolens_admin/centralInventory/centralInventoryViewProduct.html',
                   {'product_data': response['product_data'], 'productId': productId})
 
 

@@ -65,22 +65,32 @@ def resetPassword(request, code):
                       {"code": code, "message": response['message']})
     else:
         response, status_code = area_head_auth_controller.check_link_validity(code)
-        print(response)
         return render(request, 'auth/reset_password.html',
                       {"code": code, "message": response['message'], "email": response['email']})
+
+
+def getAreaHeadAssignedStores(request):
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get('is_area_head_logged_in') is True:
+        assigned_store = area_head_auth_controller.get_area_head_assigned_store(request.session.get('id'))
+        if assigned_store == 0:
+            request.session.clear()
+            return assigned_store
+        else:
+            return f"""({assigned_store})"""
+    else:
+        return redirect('is_area_head_logged_in')
 
 
 # =================================ADMIN DASH======================================
 
 def dashboard(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         new_order, status_code = area_head_dashboard_controller.get_order_stats('New', 1)
         delivered_orders, status_code = area_head_dashboard_controller.get_order_stats('Completed', 1)
         store_sales, status_code = area_head_dashboard_controller.get_sales_stats(1)
-        orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All',
-                                                                                    request.session.get(
-                                                                                        'assigned_stores'))
+        orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All',assigned_sores)
         return render(request, 'dashboard.html', {"orders_list": orders_list['dash_orders_list']})
     else:
         return redirect('login_area_head')
@@ -89,13 +99,12 @@ def dashboard(request):
 # =================================ADMIN STORE MANAGEMENT======================================
 
 def manageOwnStores(request, status):
+    assigned_sores = getAreaHeadAssignedStores(request)
+    print(assigned_sores)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
 
-        response, status_code = stores_controller.get_area_head_own_stores(status,
-                                                                           request.session.get('assigned_stores'))
-        own_stores = response.get('own_stores', [])
-        print(own_stores)
+        response, status_code = stores_controller.get_area_head_own_stores(status, assigned_sores)
         return render(request, 'ownStore/manageOwnStores.html',
                       {"own_stores": response['own_stores'], "status": status})
     else:
@@ -121,9 +130,10 @@ def viewOwnStore(request, ownStoreId):
 # =================================ADMIN STORE MANAGERS MANAGEMENT======================================
 
 def manageEmployee(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        response, status_code = store_employee_controller.get_all_store_employee(request.session.get('assigned_stores'))
+        response, status_code = store_employee_controller.get_all_store_employee(assigned_sores)
         return render(request, 'storeEmployee/manageStoreEmployee.html',
                       {"store_employees": response['store_employees']})
     else:
@@ -412,6 +422,8 @@ def manageTask(request):
         return redirect('dashboard_area_head')
     else:
         return redirect('login_area_head')
+
+
 def manageCampaigns(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:

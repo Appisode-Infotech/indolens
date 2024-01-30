@@ -63,7 +63,7 @@ def resetPassword(request, code):
                       {"code": code, "message": response['message'], "email": response['email']})
 
 
-def franchiseOwnerLogout(request):
+def franchiseStoreLogout(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         request.session.clear()

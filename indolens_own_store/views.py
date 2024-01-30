@@ -382,6 +382,13 @@ def storeInventoryProducts(request):
                                                                              'product_category']})
     else:
         return redirect('own_store_login')
+def viewStoreInventoryProducts(request, productId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        response, status_code = store_inventory_controller.getstore_product_by_id(assigned_store, productId)
+        return render(request, 'inventory/storeInventoryProductsView.html', {"stocks_list": response['stocks_list']})
+    else:
+        return redirect('own_store_login')
 
 
 def inventoryOutOfStock(request):
