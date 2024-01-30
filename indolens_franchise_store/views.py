@@ -407,6 +407,15 @@ def franchiseInventoryProducts(request):
         return redirect('franchise_store_login')
 
 
+def viewFranchiseStoreInventoryProducts(request, productId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        response, status_code = franchise_inventory_controller.get_products_for_franchise_store_by_id(assigned_store, productId)
+        return render(request, 'inventory/franchiseStoreInventoryProductsView.html', {"stocks_list": response['stocks_list']})
+    else:
+        return redirect('franchise_store_login')
+
+
 def inventoryOutOfStockFranchise(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
@@ -449,7 +458,8 @@ def makeSaleFranchiseStore(request):
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = franchise_expense_controller.make_sale(cart_data, customerData,
-                                                                             billingDetailsData, request.session.get('id'),
+                                                                             billingDetailsData,
+                                                                             request.session.get('id'),
                                                                              assigned_store)
             url = reverse('order_details_franchise_store', kwargs={'orderId': make_order['order_id']})
             return redirect(url)

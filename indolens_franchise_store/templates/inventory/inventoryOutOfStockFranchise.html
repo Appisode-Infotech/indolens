@@ -172,8 +172,8 @@
                                         </a>
                                     </td>
 
-                                    <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!"> {{stock.product_name}}</a>
+                                    <td class="product align-middle ps-4"><a href="{% url 'view_franchise_store_inventory_products' stock.store_inventory_id %}"
+                                            class="fw-semi-bold line-clamp-3 mb-0" > {{stock.product_name}}</a>
                                     </td>
 
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
@@ -210,7 +210,7 @@
 <!--                                                   data-bs-target-store-id="{{stock.target_store_id}}"-->
 <!--                                                   data-bs-unit-cost="{{stock.franchise_sale_price}}"-->
 <!--                                                   data-bs-toggle="modal">Request</a>-->
-                                                <a class="dropdown-item" href="#!">View</a>
+                                                <a class="dropdown-item" href="{% url 'view_franchise_store_inventory_products' stock.store_inventory_id %}">View</a>
                                             </div>
                                         </div>
                                     </td>
