@@ -57,7 +57,8 @@ btnExport.addEventListener("click", () => {
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url;
-  a.download = "file.csv";
+  const pageTitle = document.title;
+  a.download = `${pageTitle}.csv`;
   a.click();
 
   setTimeout(() => {
