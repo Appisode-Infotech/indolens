@@ -4690,168 +4690,244 @@ const fromValidationInit = () => {
     button.classList[disabled ? 'add' : 'remove']('disabled');
   };
 
-  const listInit = () => {
+const listInit = () => {
     const { getData } = window.phoenix.utils;
     if (window.List) {
-      const lists = document.querySelectorAll('[data-list]');
+        const lists = document.querySelectorAll('[data-list]');
 
-      if (lists.length) {
-        lists.forEach(el => {
-          let options = getData(el, 'list');
+        if (lists.length) {
+            lists.forEach(el => {
+                let options = getData(el, 'list');
 
-          if (options.pagination) {
-            options = {
-              ...options,
-              pagination: {
-                item: `<li><button class='page' type='button'></button></li>`,
-                ...options.pagination
-              }
-            };
-          }
-
-          const paginationButtonNext = el.querySelector(
-            '[data-list-pagination="next"]'
-          );
-          const paginationButtonPrev = el.querySelector(
-            '[data-list-pagination="prev"]'
-          );
-          const viewAll = el.querySelector('[data-list-view="*"]');
-          const viewLess = el.querySelector('[data-list-view="less"]');
-          const listInfo = el.querySelector('[data-list-info]');
-          const listFilter = document.querySelector('[data-list-filter]');
-          const list = new List(el, options);
-
-          // -------fallback-----------
-
-          list.on('updated', function (item) {
-            const fallback =
-              el.querySelector('.fallback') ||
-              document.getElementById(options.fallback);
-
-            if (fallback) {
-              if (item.matchingItems.length === 0) {
-                fallback.classList.remove('d-none');
-              } else {
-                fallback.classList.add('d-none');
-              }
-            }
-          });
-
-          // ---------------------------------------
-
-          const totalItem = list.items.length;
-          const itemsPerPage = list.page;
-          const btnDropdownClose = list.listContainer.querySelector('.btn-close');
-          let pageQuantity = Math.ceil(totalItem / itemsPerPage);
-          let numberOfcurrentItems = list.visibleItems.length;
-          let pageCount = 1;
-
-          btnDropdownClose &&
-            btnDropdownClose.addEventListener('search.close', () => {
-              list.fuzzySearch('');
-            });
-
-          const updateListControls = () => {
-            listInfo &&
-              (listInfo.innerHTML = `${list.i} to ${numberOfcurrentItems} <span class='text-600'> Items of </span>${totalItem}`);
-            paginationButtonPrev &&
-              togglePaginationButtonDisable(
-                paginationButtonPrev,
-                pageCount === 1
-              );
-            paginationButtonNext &&
-              togglePaginationButtonDisable(
-                paginationButtonNext,
-                pageCount === pageQuantity
-              );
-
-            if (pageCount > 1 && pageCount < pageQuantity) {
-              togglePaginationButtonDisable(paginationButtonNext, false);
-              togglePaginationButtonDisable(paginationButtonPrev, false);
-            }
-          };
-
-          // List info
-          updateListControls();
-
-          if (paginationButtonNext) {
-            paginationButtonNext.addEventListener('click', e => {
-              e.preventDefault();
-              pageCount += 1;
-
-              const nextInitialIndex = list.i + itemsPerPage;
-              nextInitialIndex <= list.size() &&
-                list.show(nextInitialIndex, itemsPerPage);
-              numberOfcurrentItems += list.visibleItems.length;
-              updateListControls();
-            });
-          }
-
-          if (paginationButtonPrev) {
-            paginationButtonPrev.addEventListener('click', e => {
-              e.preventDefault();
-              pageCount -= 1;
-
-              numberOfcurrentItems -= list.visibleItems.length;
-              const prevItem = list.i - itemsPerPage;
-              prevItem > 0 && list.show(prevItem, itemsPerPage);
-              updateListControls();
-            });
-          }
-
-          const toggleViewBtn = () => {
-            viewLess.classList.toggle('d-none');
-            viewAll.classList.toggle('d-none');
-          };
-
-          if (viewAll) {
-            viewAll.addEventListener('click', () => {
-              list.show(1, totalItem);
-              pageQuantity = 1;
-              pageCount = 1;
-              numberOfcurrentItems = totalItem;
-              updateListControls();
-              toggleViewBtn();
-            });
-          }
-          if (viewLess) {
-            viewLess.addEventListener('click', () => {
-              list.show(1, itemsPerPage);
-              pageQuantity = Math.ceil(totalItem / itemsPerPage);
-              pageCount = 1;
-              numberOfcurrentItems = list.visibleItems.length;
-              updateListControls();
-              toggleViewBtn();
-            });
-          }
-          // numbering pagination
-          if (options.pagination) {
-            el.querySelector('.pagination').addEventListener('click', e => {
-              if (e.target.classList[0] === 'page') {
-                pageCount = Number(e.target.innerText);
-                updateListControls();
-              }
-            });
-          }
-          //filter
-          if (options.filter) {
-            const { key } = options.filter;
-            listFilter.addEventListener('change', e => {
-              list.filter(item => {
-                if (e.target.value === '') {
-                  return true;
+                if (options.pagination) {
+                    options = {
+                        ...options,
+                        pagination: {
+                            item: `<li><button class='page' type='button'></button></li>`,
+                            ...options.pagination
+                        }
+                    };
                 }
-                return item
-                  .values()
-                  [key].toLowerCase()
-                  .includes(e.target.value.toLowerCase());
-              });
+
+                const paginationButtonNext = el.querySelector(
+                    '[data-list-pagination="next"]'
+                );
+                const paginationButtonPrev = el.querySelector(
+                    '[data-list-pagination="prev"]'
+                );
+                const viewAll = el.querySelector('[data-list-view="*"]');
+                const viewLess = el.querySelector('[data-list-view="less"]');
+                const listInfo = el.querySelector('[data-list-info]');
+                const listFilter = document.querySelector('[data-list-filter]');
+                const list = new List(el, options);
+
+                // -------fallback-----------
+
+                list.on('updated', function (item) {
+                    const fallback =
+                        el.querySelector('.fallback') ||
+                        document.getElementById(options.fallback);
+
+                    if (fallback) {
+                        if (item.matchingItems.length === 0) {
+                            fallback.classList.remove('d-none');
+                        } else {
+                            fallback.classList.add('d-none');
+                        }
+                    }
+                });
+
+                // ---------------------------------------
+
+                const totalItem = list.items.length;
+                const itemsPerPage = list.page;
+                const btnDropdownClose = list.listContainer.querySelector('.btn-close');
+                let pageQuantity = Math.ceil(totalItem / itemsPerPage);
+                let numberOfcurrentItems = list.visibleItems.length;
+                let pageCount = 1;
+
+                btnDropdownClose &&
+                    btnDropdownClose.addEventListener('search.close', () => {
+                        list.fuzzySearch('');
+                    });
+
+                const updateListControls = () => {
+
+                    listInfo && (listInfo.innerHTML = `${list.i} to ${numberOfcurrentItems} <span class='text-600'> Items of </span>${totalItem}`);
+                    paginationButtonPrev &&
+                        togglePaginationButtonDisable(
+                            paginationButtonPrev,
+                            pageCount === 1
+                        );
+                    paginationButtonNext &&
+                        togglePaginationButtonDisable(
+                            paginationButtonNext,
+                            pageCount === pageQuantity
+                        );
+
+                    if (pageCount > 1 && pageCount < pageQuantity) {
+                        togglePaginationButtonDisable(paginationButtonNext, false);
+                        togglePaginationButtonDisable(paginationButtonPrev, false);
+                    }
+                };
+
+                // List info
+                updateListControls();
+
+                if (paginationButtonNext) {
+                    paginationButtonNext.addEventListener('click', e => {
+                        e.preventDefault();
+                        pageCount += 1;
+
+                        const nextInitialIndex = list.i + itemsPerPage;
+                        nextInitialIndex <= list.size() &&
+                            list.show(nextInitialIndex, itemsPerPage);
+                        numberOfcurrentItems += list.visibleItems.length;
+                        updateListControls();
+                    });
+                }
+
+                if (paginationButtonPrev) {
+                    paginationButtonPrev.addEventListener('click', e => {
+                        e.preventDefault();
+                        pageCount -= 1;
+
+                        numberOfcurrentItems -= list.visibleItems.length;
+                        const prevItem = list.i - itemsPerPage;
+                        prevItem > 0 && list.show(prevItem, itemsPerPage);
+                        updateListControls();
+                    });
+                }
+
+                const toggleViewBtn = () => {
+                    viewLess.classList.toggle('d-none');
+                    viewAll.classList.toggle('d-none');
+                };
+
+                if (viewAll) {
+                    viewAll.addEventListener('click', () => {
+                        list.show(1, totalItem);
+                        pageQuantity = 1;
+                        pageCount = 1;
+                        numberOfcurrentItems = totalItem;
+                        updateListControls();
+                        toggleViewBtn();
+                    });
+                }
+                if (viewLess) {
+                    viewLess.addEventListener('click', () => {
+                        list.show(1, itemsPerPage);
+                        pageQuantity = Math.ceil(totalItem / itemsPerPage);
+                        pageCount = 1;
+                        numberOfcurrentItems = list.visibleItems.length;
+                        updateListControls();
+                        toggleViewBtn();
+                    });
+                }
+                // numbering pagination
+                if (options.pagination) {
+                    el.querySelector('.pagination').addEventListener('click', e => {
+                        if (e.target.classList[0] === 'page') {
+                            var nextInitialIndex;
+                            if (e.target.innerHTML > 1) {
+                                nextInitialIndex = (((e.target.innerHTML) - 1) * itemsPerPage) + 1;
+
+                            } else {
+                                nextInitialIndex = 1;
+
+                            }
+                            if ((e.target.innerHTML) * itemsPerPage > totalItem) {
+                                numberOfcurrentItems = totalItem;
+                            } else {
+                                numberOfcurrentItems = (e.target.innerHTML) * itemsPerPage;
+
+                            }
+
+                            list.show(nextInitialIndex, itemsPerPage);
+
+                            updateListControls();
+                        }
+                    });
+                }
+                //filter
+                if (options.filter) {
+                    const { key } = options.filter;
+                    listFilter.addEventListener('change', e => {
+                        list.filter(item => {
+                            if (e.target.value === '') {
+                                return true;
+                            }
+                            return item
+                                .values()
+                            [key].toLowerCase()
+                                .includes(e.target.value.toLowerCase());
+                        });
+                    });
+                }
             });
-          }
-        });
-      }
+        }
     }
-  };
+};
+
+
+//filter table
+  document.addEventListener('DOMContentLoaded', function () {
+    updateCategoryDisplay();
+
+    var navLinks = document.querySelectorAll('ul.nav-links a');
+    navLinks.forEach(function (link) {
+        link.addEventListener('click', function () {
+            var selectedCategory = this.getAttribute('href').substring(8);
+            var tableRows = document.querySelectorAll('table tbody tr');
+            if (selectedCategory !== "all") {
+                tableRows.forEach(function (row) {
+                    row.style.display = 'none';
+                });
+                Array.from(tableRows).forEach(function (row) {
+                    if (row.getAttribute('data-category') === selectedCategory) {
+                        row.style.display = 'table-row';
+                    }
+                });
+            } else {
+                tableRows.forEach(function (row) {
+                    row.style.display = 'table-row';
+                });
+            }
+
+            navLinks.forEach(function (navLink) {
+                navLink.classList.remove('active');
+            });
+            this.classList.add('active');
+              updateListControlsAfterFilter();
+        });
+    });
+
+    function updateListControlsAfterFilter(){
+
+    }
+
+    function updateCategoryDisplay() {
+        var currentHash = window.location.hash.substring(8) || "all";
+        var filterLink = document.querySelector('.nav-link.filter[href="#filter-' + currentHash + '"]');
+        if (filterLink) {
+            filterLink.classList.add("active");
+        }
+
+        var tableRows = document.querySelectorAll('table tbody tr');
+        if (currentHash !== "all") {
+            tableRows.forEach(function (row) {
+                row.style.display = 'none';
+            });
+            Array.from(tableRows).forEach(function (row) {
+                if (row.getAttribute('data-category') === currentHash) {
+                    row.style.display = 'table-row';
+                }
+            });
+        }
+              updateListControlsAfterFilter();
+    }
+});
+
 
   const lottieInit = () => {
     const { getData } = window.phoenix.utils;
@@ -4883,7 +4959,6 @@ const fromValidationInit = () => {
     if ($modals) {
       $modals.forEach(modal => {
         modal.addEventListener('shown.bs.modal', () => {
-          console.log('jasdhsd');
           const $autofocusEls = modal.querySelectorAll('[autofocus=autofocus]');
           $autofocusEls.forEach(el => {
             el.focus();
