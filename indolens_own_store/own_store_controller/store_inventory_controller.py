@@ -99,6 +99,39 @@ def get_all_products_for_store(store_id):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def getstore_product_by_id(assigned_store, productId):
+    try:
+        with connection.cursor() as cursor:
+            get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
+                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
+                                    os.store_name
+                                    FROM store_inventory As si
+                                    LEFT JOIN central_inventory AS ci ON ci.product_id = si.product_id
+                                    LEFT JOIN admin AS creator ON si.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON si.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
+                                    LEFT JOIN own_store AS os ON os.store_id = '{assigned_store}' 
+                                    WHERE si.store_id = {assigned_store} AND si.store_inventory_id = {productId}
+                                    ORDER BY si.store_inventory_id DESC"""
+
+            cursor.execute(get_all_out_of_stock_product_query)
+            product_list = cursor.fetchall()
+
+            return {
+                "status": True,
+                "stocks_list": get_store_inventory_stocks(product_list),
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def get_all_central_inventory_products(store_id):
     try:

@@ -32,7 +32,7 @@ def create_sub_admin(sub_admin, files):
 
             cursor.execute(insert_admin_query)
 
-            subject = email_template_controller.get_employee_creation_email_subject()
+            subject = email_template_controller.get_employee_creation_email_subject(sub_admin.full_name)
             body = email_template_controller.get_employee_creation_email_body(sub_admin.full_name, 'Sub-Admin',
                                                                               sub_admin.email,
                                                                               sub_admin.password)

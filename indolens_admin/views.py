@@ -102,7 +102,6 @@ def dashboard(request):
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
         sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
-        print(sales)
         own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
         own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
         own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
@@ -330,7 +329,7 @@ def createSubAdmin(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/subAdmin/createSubAdmin.html',
-                              {"message":"Something went wrong or email is already in use"})
+                              {"message": "Something went wrong or email is already in use"})
 
         else:
             return render(request, 'indolens_admin/subAdmin/createSubAdmin.html')
@@ -373,7 +372,6 @@ def editSubAdmin(request, subAdminId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-
             sub_admin = sub_admin_model.sub_admin_model_from_dict(request.POST)
             response, status_code = sub_admin_controller.edit_sub_admin(sub_admin, file_data)
             url = reverse('view_sub_admin', kwargs={'subAdminId': subAdminId})
@@ -721,7 +719,6 @@ def manageAreaHead(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_all_area_head(status)
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
-        print(available_stores_response)
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
                       {"area_heads_list": response['area_heads_list'],
                        "available_stores": available_stores_response['available_stores'],
@@ -1355,6 +1352,7 @@ def createSaleExecutives(request):
             sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = sales_executives_controller.create_own_sales_executives(sales_executives_obj,
                                                                                             file_data)
+            print(response)
             if status_code == 200:
                 url = reverse('view_sales_executives', kwargs={'ownSaleExecutivesId': response['seId']})
                 return redirect(url)
@@ -1895,8 +1893,10 @@ def enableDisableLabTechnician(request, route, labTechnicianId, status):
 def manageOtherEmployees(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_all_other_emp(status)
+        available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         return render(request, 'indolens_admin/otherEmployees/manageOtherEmployees.html',
-                      {"other_employee_list": response['other_emp_list'], "status": status})
+                      {"other_employee_list": response['other_emp_list'],
+                       "available_stores": available_stores_response['available_stores'], "status": status})
     else:
         return redirect('login')
 
@@ -2770,11 +2770,13 @@ def centralInventoryUpdateProduct(request, productId):
         product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
         response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId,
                                                                                                power_attributes)
-        print(response)
-    response, status_code = get_central_inventory_product_single(productId)
-    types, status_code = central_inventory_controller.get_all_active_types()
-    return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
-                  {'product_data': response['product_data'], 'productId': productId, "response": types})
+        url = reverse('view_products', kwargs={'productId': productId})
+        return redirect(url)
+    else:
+        response, status_code = get_central_inventory_product_single(productId)
+        types, status_code = central_inventory_controller.get_all_active_types()
+        return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
+                      {'product_data': response['product_data'], 'productId': productId, "response": types})
 
 
 def centralInventoryUpdateProductStatus(request, filter, productId, status):
@@ -2788,6 +2790,12 @@ def centralInventoryUpdateProductImages(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
     return render(request, 'indolens_admin/centralInventory/updateproductImages.html',
                   {'product_data': response['product_data'], 'productId': productId})
+
+def centralInventoryViewProducts(request, productId):
+    response, status_code = get_central_inventory_product_single(productId)
+    return render(request, 'indolens_admin/centralInventory/centralInventoryViewProduct.html',
+                  {'product_data': response['product_data'], 'productId': productId})
+
 
 def centralInventoryAddProducts(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
@@ -2895,6 +2903,20 @@ def viewAllStockRequests(request):
         return redirect('login')
 
 
+def viewStockRequestInvoice(request, requestId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.get_stock_requests_by_id(requestId)
+        store_data = []
+        if response['stocks_request_list'].get('request_to_store_id') != 0:
+            store, resp_status_code = own_store_controller.get_own_store_by_id(
+                response['stocks_request_list'].get('request_to_store_id'))
+            store_data = store['own_stores'][0]
+        return render(request, 'indolens_admin/stockRequests/franchiseStockMovementInvoice.html',
+                      {"stocks_request_list": response['stocks_request_list'], "store_data": store_data })
+    else:
+        return redirect('login')
+
+
 def viewPendingStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_stock_requests('0')
@@ -2953,7 +2975,6 @@ def assignManagerOwnStore(request, route):
         url = reverse('manage_store_managers', kwargs={'status': route})
         return redirect(url)
 
-
 def unAssignManagerOwnStore(request, route, empId, storeId):
     response, status_code = store_manager_controller.unAssignStore(empId, storeId)
     url = reverse('manage_store_managers', kwargs={'status': route})
@@ -2990,15 +3011,17 @@ def unAssignSalesExecutiveOwnStore(request, route, salesExecutiveId, storeId):
 
 def assignOtherEmployeeOwnStore(request, route):
     if request.method == 'POST':
+        print(request.POST)
         response, status_code = other_employee_controller.assign_store_own_store_other_employee(request.POST['emp_id'],
                                                                                                 request.POST[
                                                                                                     'store_id'])
+        print(response)
         url = reverse('manage_store_other_employees', kwargs={'status': route})
         return redirect(url)
 
 
-def unAssignOtherEmployeeOwnStore(request, route, salesExecutiveId, storeId):
-    response, status_code = other_employee_controller.unassign_store_own_store_other_employee(salesExecutiveId, storeId)
+def unAssignOtherEmployeeOwnStore(request, route, otherEmployeeId, storeId):
+    response, status_code = other_employee_controller.unassign_store_own_store_other_employee(otherEmployeeId, storeId)
     url = reverse('manage_store_other_employees', kwargs={'status': route})
     return redirect(url)
 
@@ -3655,4 +3678,3 @@ def getEyeTestById(request, testId):
 
     else:
         return redirect('login')
-

@@ -3873,37 +3873,67 @@
   /* -------------------------------------------------------------------------- */
   /*                              Form Validation                               */
   /* -------------------------------------------------------------------------- */
-
-  const fromValidationInit = () => {
+const fromValidationInit = () => {
     const forms = document.querySelectorAll('.needs-validation, .needs-password-validation');
     forms.forEach(form => {
         form.addEventListener(
             'submit',
             event => {
-                if (!form.checkValidity()) {
-                    event.preventDefault();   // Prevent submission if the form is not valid.
-                    event.stopPropagation();  // Stop the event from propagating further.
-                }
+                let isValid = true;
 
                 // Password matching validation
                 if (form.classList.contains('needs-password-validation')) {
                     const passwordField = form.querySelector('#password');
                     const confirmPasswordField = form.querySelector('#confirmPassword');
                     if (passwordField.value !== confirmPasswordField.value) {
-                        event.preventDefault(); // Prevent form submission
-                        event.stopPropagation(); // Stop the event from propagating further.
+                        event.preventDefault();
+                        event.stopPropagation();
                         confirmPasswordField.setCustomValidity("Passwords do not match.");
+                        isValid = false;
                     } else {
                         confirmPasswordField.setCustomValidity("");
                     }
                 }
 
                 form.classList.add('was-validated');
+
+                if (form.checkValidity() && isValid) {
+                    // Create overlay element with inline styles
+                    const overlay = document.createElement('div');
+                    overlay.style.cssText = `
+                        position: fixed;
+                        top: 0;
+                        left: 0;
+                        width: 100%;
+                        height: 100%;
+                        background-color: rgba(0, 0, 0, 0.4);
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        z-index: 1000; /* Adjust the z-index as needed */
+                    `;
+                    overlay.innerHTML = `
+                         <div style="text-align: center; color: white;">
+                            <div style="border: 8px solid #f3f3f3; border-top: 8px solid #3498db; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite;"></div>
+                            <p>Loading...</p>
+                        </div>
+                    `;
+
+                    // Append overlay to the body
+                    document.body.appendChild(overlay);
+
+                    // Simulate loading delay (you can replace this with actual loading logic)
+                    form.submit();
+                }
+
+                event.preventDefault();
+                event.stopPropagation();
             },
             false
         );
     });
 };
+
 
 
   /*-----------------------------------------------

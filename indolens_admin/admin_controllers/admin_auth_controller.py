@@ -8,11 +8,14 @@ import pymysql
 import requests
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_req_model import admin_auth_model
 from indolens_admin.admin_models.admin_resp_model.admin_auth_resp_model import get_admin_user
 
 import pytz
+
 ist = pytz.timezone('Asia/Kolkata')
+
 
 def getIndianTime():
     today = datetime.datetime.now(ist)
@@ -71,7 +74,7 @@ def forgot_password(email):
             reset_pwd_link = f"http://127.0.0.1:8000/admin/reset_password/code={pwd_code}"
             print(reset_pwd_link)
 
-            check_email_query = f"""SELECT email,status FROM admin WHERE email = '{email}'"""
+            check_email_query = f"""SELECT email,status, name FROM admin WHERE email = '{email}'"""
             cursor.execute(check_email_query)
             check_email = cursor.fetchone()
 
@@ -86,21 +89,10 @@ def forgot_password(email):
                                             VALUES (%s, %s, %s, %s)"""
                 cursor.execute(update_pwd_code_query, (email, pwd_code, 0, getIndianTime()))
 
-                url = 'https://api.emailjs.com/api/v1.0/email/send'
-                data = {
-                    'service_id': 'default_service',
-                    'template_id': 'template_ycnjmqh',
-                    'user_id': 'qbWAgwqHOFbcgoJRF',
-                    'template_params': {
-                        'to_email': email,
-                        'new_password': reset_pwd_link,
-                        'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...'
-                    }
-                }
+                subject = email_template_controller.get_password_reset_email_subject(check_email[1])
+                body = email_template_controller.get_password_reset_email_body(check_email[1], reset_pwd_link, email)
+                email_response = send_notification_controller.send_email(subject, body, email)
 
-                headers = {'Content-Type': 'application/json'}
-
-                email_response = requests.post(url, data=json.dumps(data), headers=headers)
                 if email_response.status_code == 200:
                     return {
                         "status": True,

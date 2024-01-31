@@ -85,7 +85,7 @@ def get_unassigned_active_own_store_for_manager():
             get_unassigned_active_own_store_for_manager_query = f"""SELECT os.store_id, os.store_name
                     FROM own_store os
                     LEFT JOIN own_store_employees ose ON os.store_id = ose.assigned_store_id AND ose.role = 1
-                    WHERE ose.assigned_store_id IS NULL """
+                    WHERE ose.assigned_store_id IS NULL AND os.status = 1 """
 
             cursor.execute(get_unassigned_active_own_store_for_manager_query)
             stores_data = cursor.fetchall()

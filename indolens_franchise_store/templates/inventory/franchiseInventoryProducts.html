@@ -65,6 +65,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -172,8 +173,8 @@
                                         </a>
                                     </td>
 
-                                    <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!"> {{stock.product_name}}</a>
+                                    <td class="product align-middle ps-4"><a href="{% url 'view_franchise_store_inventory_products' stock.store_inventory_id %}"
+                                            class="fw-semi-bold line-clamp-3 mb-0" > {{stock.product_name}}</a>
                                     </td>
 
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
@@ -205,15 +206,13 @@
                                                     data-bs-toggle="dropdown" type="button"><span
                                                     class="fas fa-ellipsis-h fs--2"></span></button>
                                             <div class="dropdown-menu dropdown-menu-end py-2">
-                                                <a class="dropdown-item" data-bs-target="#verticallyCentered"
-                                                   data-bs-product-id="{{stock.product_id}}"
-                                                   data-bs-target-store-id="{{stock.target_store_id}}"
-                                                   data-bs-unit-cost="{{stock.franchise_sale_price}}"
-                                                   data-bs-toggle="modal">Request</a>
-                                                <a class="dropdown-item" href="#!">View</a><a
-                                                    class="dropdown-item" href="#!">Export</a>
-                                                <div class="dropdown-divider"></div>
-                                                <a class="dropdown-item text-danger" href="#!">Return</a>
+                                                <!--                                                <a class="dropdown-item" data-bs-target="#verticallyCentered"-->
+                                                <!--                                                   data-bs-product-id="{{stock.product_id}}"-->
+                                                <!--                                                   data-bs-target-store-id="{{stock.target_store_id}}"-->
+                                                <!--                                                   data-bs-unit-cost="{{stock.franchise_sale_price}}"-->
+                                                <!--                                                   data-bs-toggle="modal">Request</a>-->
+                                                <a class="dropdown-item"
+                                                   href="{% url 'view_franchise_store_inventory_products' stock.store_inventory_id %}">View</a>
                                             </div>
                                         </div>
                                     </td>
@@ -233,7 +232,8 @@
                                                 type="button"><span class="fas fa-times fs--1"></span></button>
                                     </div>
                                     <div class="p-4 code-to-copy">
-                                        <form action="{% url 'create_request_franchise_store' %}" class="row g-3 needs-validation"
+                                        <form action="{% url 'create_request_franchise_store' %}"
+                                              class="row g-3 needs-validation"
                                               method='POST'
                                               novalidate="">
                                             {% csrf_token %}
@@ -323,6 +323,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -370,6 +371,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
 
 
 

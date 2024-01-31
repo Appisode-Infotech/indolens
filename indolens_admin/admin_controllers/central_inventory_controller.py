@@ -16,6 +16,7 @@ from indolens_admin.admin_models.admin_resp_model.master_material_resp_model imp
 from indolens_admin.admin_models.admin_resp_model.master_shapes_resp_model import get_frame_shapes
 from indolens_admin.admin_models.admin_resp_model.master_units_resp_model import get_master_units
 from indolens_admin.admin_models.admin_resp_model.product_request_list_resp_model import get_request_product_list
+from indolens_admin.admin_models.admin_resp_model.stockMovementInvoice_resp_model import get_stock_movement_invoice
 from indolens_admin.admin_models.admin_resp_model.store_inventory_product_resp_model import get_store_stocks
 from indolens_own_store.own_store_model.response_model.store_inventory_product_resp_model import \
     get_store_inventory_stocks
@@ -495,6 +496,59 @@ def get_all_stock_requests(status):
             return {
                 "status": True,
                 "stocks_request_list": get_request_product_list(product_list)
+            }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_stock_requests_by_id(requestId):
+    try:
+        with connection.cursor() as cursor:
+            get_all_out_of_stock_product_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
+                                    pm.material_name, ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
+                                    CASE
+                                        WHEN rp.store_type = 1 THEN os.store_name
+                                        ELSE fstore.store_name
+                                    END AS store_name,
+                                    CASE
+                                        WHEN rp.store_type = 1 THEN os.store_email
+                                        ELSE fstore.store_email
+                                    END AS store_email,
+                                    CASE
+                                        WHEN rp.store_type = 1 THEN os.store_phone
+                                        ELSE fstore.store_phone
+                                    END AS store_phone,
+                                    CASE
+                                        WHEN rp.store_type = 1 THEN os.store_address
+                                        ELSE fstore.store_address
+                                    END AS store_address,
+                                    from_store.store_name,
+                                    (SELECT SUM(product_quantity * unit_cost) AS billing_amount FROM request_products 
+                                    WHERE request_products_id = {requestId})
+                                    FROM request_products As rp
+                                    LEFT JOIN central_inventory AS ci ON ci.product_id = rp.product_id
+                                    LEFT JOIN admin AS creator ON rp.created_by = creator.admin_id
+                                    LEFT JOIN admin AS updater ON rp.last_updated_by = updater.admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
+                                    LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
+                                    LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
+                                    LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
+                                    WHERE rp.request_status = 1 AND rp.request_products_id = {requestId}
+                                    ORDER BY rp.request_products_id DESC"""
+
+            cursor.execute(get_all_out_of_stock_product_query)
+            product_list = cursor.fetchone()
+            return {
+                "status": True,
+                "stocks_request_list": get_stock_movement_invoice(product_list)
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

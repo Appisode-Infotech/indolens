@@ -269,30 +269,26 @@
                                     <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{request.session.profile_pic}}"/>
 
                                 </div>
-                                <h6 class="mt-2 text-black">Jerry Seinfield</h6>
-                            </div>
-                            <div class="mb-3 mx-3">
-                                <input class="form-control form-control-sm" id="statusUpdateInput"
-                                       placeholder="Update your status"
-                                       type="text"/>
+                                <h6 class="mt-2 text-black">{{request.session.name}}</h6>
                             </div>
                         </div>
                         <div class="overflow-auto scrollbar" style="height: 10rem;">
                             <ul class="nav d-flex flex-column mb-2 pb-1">
-                                <li class="nav-item"><a class="nav-link px-3" href="#!"> <span
+                                <li class="nav-item"><a class="nav-link px-3"
+                                        href="{% url 'view_franchise_store_employee_details' request.session.id %}"> <span
                                         class="me-2 text-900" data-feather="user"></span>Profile</a></li>
                                 <li class="nav-item"><a class="nav-link px-3"
                                                         href="{% url 'franchise_store_dashboard' %}"><span
                                         class="me-2 text-900" data-feather="pie-chart"></span>Dashboard</a></li>
 
-                                <li class="nav-item"><a class="nav-link px-3" href="#!"> <span
-                                        class="me-2 text-900" data-feather="settings"></span>Settings </a></li>
+<!--                                <li class="nav-item"><a class="nav-link px-3" href="#!"> <span-->
+<!--                                        class="me-2 text-900" data-feather="settings"></span>Settings </a></li>-->
                             </ul>
                         </div>
                         <div class="card-footer p-0 border-top">
 
                             <div class="px-3"><a class="btn btn-phoenix-secondary d-flex flex-center w-100"
-                                                 href="{% url 'franchise_owner_logout' %}"> <span class="me-2"
+                                                 href="{% url 'franchise_store_logout' %}"> <span class="me-2"
                                                                                                   data-feather="log-out"> </span>Sign
                                 out</a></div>
                         </div>

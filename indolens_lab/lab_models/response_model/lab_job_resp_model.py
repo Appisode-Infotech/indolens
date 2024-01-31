@@ -128,7 +128,7 @@ class SalesOrder:
         }
 
 
-def get_lab_jobs(response):
+def get_lab_jobs_list(response):
     sales_order_list = []
     for values in response:
         sales_order = SalesOrder(values)

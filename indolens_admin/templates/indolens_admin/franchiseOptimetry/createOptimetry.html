@@ -95,7 +95,7 @@
                         <div class="col-md-12">
                             <label class="form-label" for="profilePic">Upload profile pic</label>
                             <input accept="image/*" class="form-control" id="profilePic" name="profilePic" required=""
-                                   type="file"/>
+                                   type="file" />
                             <div class="invalid-feedback">Profile Picture is Mandatory.</div>
                         </div>
                         <div class="col-md-6">
@@ -121,7 +121,7 @@
 
                             <input class="form-control" id="phone" name="phone" required="" type="number"
                                   max="9999999999" min="1111111111" value=""/>
-                            <div class="invalid-feedback">Phone is mandatory</div>
+                            <div class="invalid-feedback">Phone is mandatory with 10 digits</div>
                         </div>
                         <div class="col-md-6">
 
@@ -176,7 +176,7 @@
                                 multiple)</label>
 
                             <input class="form-control" id="document1" multiple="multiple" name="document1" required
-                                   type="file"/>
+                                   type="file" accept="image/*,application/pdf"/>
                             <div class="invalid-feedback">Document is mandatory</div>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
@@ -197,7 +197,7 @@
                                 multiple)</label>
 
                             <input class="form-control" id="document2" multiple="multiple" name="document2" required
-                                   type="file"/>
+                                   type="file" accept="image/*,application/pdf"/>
                             <div class="invalid-feedback">Document is mandatory</div>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="document2Previews"></div>
@@ -207,7 +207,7 @@
                                 multiple)</label>
 
                             <input class="form-control" multiple="multiple" name="certificates" id="certificates"
-                                                    required type="file"/>
+                                                    required type="file" accept="image/*,application/pdf"/>
                             <div class="invalid-feedback">Certificates is mandatory</div>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column"
@@ -254,6 +254,7 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'vendors/dropzone/dropzone.min.js' %}"></script>
 <script src="{% static 'vendors/prism/prism.js' %}"></script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>
 

@@ -1,16 +1,25 @@
 from django.urls import path
 
 from . import views
-from .views import login, labDashboard, allTask, labJobDetails, jobStatusChange
+from .views import *
 
 urlpatterns = [
     path('', views.checkLogin, name='entry'),
     path('lab_login/', login, name='lab_login'),
+    path('lab_logout/', labLogout, name='lab_logout'),
+    path('lab_forgot_password/', labForgotPassword, name='lab_forgot_password'),
+    path('lab_reset_password/code=<str:code>', labResetPassword, name='lab_reset_password'),
     # Dashboard
     path('dashboard/', labDashboard, name='dashboard_lab'),
     path('all_task/', allTask, name='all_task'),
+    path('new_task/', newTask, name='new_task'),
+    path('processing_task/', processingTask, name='processing_task'),
+    path('ready_task/', readyTask, name='ready_task'),
+    path('dispatched_task/', dispatchedTask, name='dispatched_task'),
     path('lab_job_details/jobId=<str:jobId>', labJobDetails, name='lab_job_details'),
     path('lab_job_details/job_status_change/jobId=<str:jobId>/status=<str:status>', jobStatusChange,
          name='job_status_change'),
+    path('my_profile/labTechnicianId=<int:labTechnicianId>', viewLabTechnician,
+         name='my_profile'),
 
 ]

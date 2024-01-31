@@ -83,10 +83,10 @@
                     <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
                     </p>
                     <div class="d-flex">
-                        <button class="btn pe-3 ps-0 text-900"><a
+                        <button class="btn pe-3 ps-0 text-900"><a target="_blank"
                                 href="{% url 'order_invoice' order_detail.0.order_id %}"><span
                                 class="fas fa-file-invoice"></span> Invoice</a></button>
-                        <button class="btn px-3 text-900"><a
+                        <button class="btn px-3 text-900"><a target="_blank" 
                                 href="{% url 'customer_order_tracking' order_detail.0.order_id %}"><span
                                 class="fas fa-undo me-2"></span>Track Order</a></button>
 

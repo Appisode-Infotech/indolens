@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens admin - View Lab Technician</title>
+
+    {% load static %}
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!-- Stylesheets -->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+
+        {% include 'nav_bar.html' %}
+        {% for lab_technician in lab_technician%}
+
+        <div class="content">
+
+            <div class="mb-9">
+                <div class="row align-items-center justify-content-between g-3 mb-4">
+                    <div class="col-auto">
+                        <h2 class="mb-0">Lab Technician Details</h2>
+                    </div>
+                    <div class="col-auto">
+                        <div class="row g-3">
+                            <div class="col-auto">
+                                <a class="btn btn-phoenix-secondary"
+                                   href="{% url 'edit_lab_technician' lab_technician.lab_technician_id %}">
+                                    <span class="fas fa-refresh me-2"></span> Update
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row g-5">
+                    <div class="col-12 col-xxl-4">
+                        <div class="row g-3 g-xxl-0 h-100">
+                            <div class="col-12 col-md-7 col-xxl-12 mb-xxl-3">
+                                <div class="card h-100">
+                                    <div class="card-body d-flex flex-column justify-content-between pb-3">
+                                        <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
+                                            <div class="col-12 col-sm-auto mb-sm-2">
+                                                <div class="avatar avatar-5xl">
+                                                    <img alt="" class="rounded-circle"
+                                                         src="{{MEDIA_URL}}{{lab_technician.profile_pic}}"/>
+                                                </div>
+                                            </div>
+                                            <div class="col-12 col-sm-auto flex-1">
+                                                <h3>{{lab_technician.name}}</h3>
+                                                <p class="text-800">Joined on {{lab_technician.created_on}}</p>
+                                                {% if lab_technician.lab_name|length != 0 %}
+                                                <p class="text-800"> Lab -
+                                                <a class="text-decoration-none fw-semi-bold fs-0"
+                                                   href="{% url 'view_lab' lab_technician.assigned_lab_id %}">
+                                                    {{lab_technician.lab_name}}
+                                                </a></p>
+                                                {% else %}
+                                                <p class="text-800">Assigned Labs - UNASSIGNED</p>
+                                                {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="border-top border-dashed border-300 pt-4">
+
+                                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                <h6>{{ lab_technician.document_1_type }}</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <!-- Add a container for horizontal alignment -->
+                                                    {% for doc in lab_technician.document_1_url %}
+                                                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                        <div class="border border-300 p-2 rounded-2 me-2">
+                                                            <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
+                                                                <img class="rounded-2 dz-image" width="100px"
+                                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+
+
+                                            <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
+                                                <h6>{{ lab_technician.document_2_type }}</h6>
+                                                <div class="d-flex flex-wrap">
+                                                    <!-- Add a container for horizontal alignment -->
+                                                    {% for doc in lab_technician.document_2_url %}
+                                                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
+                                                        <div class="border border-300 p-2 rounded-2 me-2">
+                                                            <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
+                                                                <img class="rounded-2 dz-image" width="100px"
+                                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                    {% endfor %}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-md-5 col-xxl-12 mb-xxl-3">
+                                <div class="card h-100">
+                                    <div class="card-body pb-3">
+                                        <div class="d-flex align-items-center mb-3">
+                                            <h3 class="me-1">Default Address</h3>
+                                            <button class="btn btn-link p-0"></button>
+                                        </div>
+                                        <h5 class="text-800">Address</h5>
+                                        <p class="text-800">{{lab_technician.address}}
+                                        </p>
+                                        <div class="mb-3">
+                                            <h5 class="text-800">Email</h5><a href="mailto:{{lab_technician.email}}">{{lab_technician.email}}</a>
+                                        </div>
+                                        <h5 class="text-800">Phone</h5><a class="text-800"
+                                                                          href="tel:{{lab_technician.phone}}">{{lab_technician.phone}}</a>
+                                        <h5 class="text-800 mt-3">Created On</h5>
+                                        <p class="text-800">{{lab_technician.created_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Created By</h5>
+                                        <a href="{% url 'view_sub_admin' lab_technician.created_by %}">{{lab_technician.creator_name}}</a>
+                                        <h5 class="text-800 mt-3">Updated On</h5>
+                                        <p class="text-800">{{lab_technician.last_updated_on}}
+                                        </p>
+                                        <h5 class="text-800 mt-3">Updated By</h5>
+                                        <a href="{% url 'view_sub_admin' lab_technician.last_updated_by %}">{{lab_technician.updater_name}}</a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% include 'footer.html' %}
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+
+</body>
+
+</html>

@@ -91,7 +91,7 @@
                         <div class="col-md-12">
                             <label class="form-label" for="profilePic">Upload profile pic</label>
                             <input accept="image/*" class="form-control" id="profilePic" name="profilePic"
-                                   type="file"/>
+                                   type="file" />
                             <div class="invalid-feedback">Profile Picture is Mandatory.</div>
                         </div>
                         <div class="col-md-6">
@@ -116,7 +116,7 @@
                             <label class="form-label" for="phone">Phone</label>
 
                             <input class="form-control" id="phone" name="phone" required="" type="number"
-                                  max="9999999999" min="1111111111" value="{{optimetry.email}}"/>
+                                  max="9999999999" min="1111111111" value="{{optimetry.phone}}"/>
                             <div class="invalid-feedback">Phone Number is mandatory.</div>
                         </div>
 
@@ -168,6 +168,7 @@
 <script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'vendors/dropzone/dropzone.min.js' %}"></script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>
 

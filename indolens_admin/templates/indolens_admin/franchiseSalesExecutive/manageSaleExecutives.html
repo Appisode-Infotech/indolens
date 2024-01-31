@@ -285,15 +285,34 @@
                                                 Documents</a>
 
                                             <div class="dropdown-divider"></div>
+
                                             {% if sales_executive.status == 0 %}
                                             <a class="dropdown-item text-success"
-                                               href="{% url 'enable_disable_franchise_sales_executive' status sales_executive.employee_id 1 %}">Make
-                                                Active</a>
+                                               type="button"
+                                               data-bs-role="Sales executive"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ sales_executive.employee_id }}"
+                                               data-employee-name="{{ sales_executive.name }}"
+                                               data-action-type="enable"
+                                               data-action-url="{% url 'enable_disable_franchise_sales_executive' status sales_executive.employee_id 1 %}">
+                                                Make Active
+                                            </a>
+
                                             {% elif sales_executive.status == 1 %}
                                             <a class="dropdown-item text-danger"
-                                               href="{% url 'enable_disable_franchise_sales_executive' status sales_executive.employee_id 0 %}">Make
-                                                Inactive</a>
+                                               type="button"
+                                               data-bs-role="Sales executive"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ sales_executive.employee_id }}"
+                                               data-employee-name="{{ sales_executive.name }}"
+                                               data-action-type="disable"
+                                               data-action-url="{% url 'enable_disable_franchise_sales_executive' status sales_executive.employee_id 0 %}">
+                                                Make Inactive
+                                            </a>
                                             {% endif %}
+
                                         </div>
                                     </div>
                                 </td>

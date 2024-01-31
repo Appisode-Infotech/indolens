@@ -39,31 +39,31 @@ def login(request):
                 })
             return redirect('franchise_store_dashboard')
         else:
-            return render(request, 'auth/lab_sign_in.html', {"message": response['message']})
+            return render(request, 'auth/franchise_sign_in.html', {"message": response['message']})
     else:
-        return render(request, 'auth/lab_sign_in.html')
+        return render(request, 'auth/franchise_sign_in.html')
 
 
 def forgotPassword(request):
     if request.method == 'POST':
         response, status_code = franchise_store_auth_controller.forgot_password(request.POST['email'])
-        return render(request, 'auth/lab_forgot_password.html', {"message": response['message']})
+        return render(request, 'auth/franchise_store_forgot_password.html', {"message": response['message']})
     else:
-        return render(request, 'auth/lab_forgot_password.html')
+        return render(request, 'auth/franchise_store_forgot_password.html')
 
 
 def resetPassword(request, code):
     if request.method == 'POST':
         response, status_code = franchise_store_auth_controller.update_store_employee_password(request.POST['password'],
                                                                                                request.POST['email'])
-        return render(request, 'auth/lab_reset_password.html', {"code": code})
+        return render(request, 'auth/franchise_store_reset_password.html', {"code": code})
     else:
         response, status_code = franchise_store_auth_controller.check_link_validity(code)
-        return render(request, 'auth/lab_reset_password.html',
+        return render(request, 'auth/franchise_store_reset_password.html',
                       {"code": code, "message": response['message'], "email": response['email']})
 
 
-def franchiseOwnerLogout(request):
+def franchiseStoreLogout(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         request.session.clear()
@@ -407,6 +407,15 @@ def franchiseInventoryProducts(request):
         return redirect('franchise_store_login')
 
 
+def viewFranchiseStoreInventoryProducts(request, productId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        response, status_code = franchise_inventory_controller.get_products_for_franchise_store_by_id(assigned_store, productId)
+        return render(request, 'inventory/franchiseStoreInventoryProductsView.html', {"stocks_list": response['stocks_list']})
+    else:
+        return redirect('franchise_store_login')
+
+
 def inventoryOutOfStockFranchise(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
@@ -449,7 +458,8 @@ def makeSaleFranchiseStore(request):
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = franchise_expense_controller.make_sale(cart_data, customerData,
-                                                                             billingDetailsData, request.session.get('id'),
+                                                                             billingDetailsData,
+                                                                             request.session.get('id'),
                                                                              assigned_store)
             url = reverse('order_details_franchise_store', kwargs={'orderId': make_order['order_id']})
             return redirect(url)

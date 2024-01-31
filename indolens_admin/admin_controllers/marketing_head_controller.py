@@ -33,7 +33,7 @@ def create_marketing_head(marketing_head, files):
             # Execute the query using your cursor
             cursor.execute(insert_marketing_head_query)
 
-            subject = email_template_controller.get_employee_creation_email_subject()
+            subject = email_template_controller.get_employee_creation_email_subject(marketing_head.fullName)
             body = email_template_controller.get_employee_creation_email_body(marketing_head.fullName, 'Marketing Head',
                                                                               marketing_head.email,
                                                                               marketing_head.password)

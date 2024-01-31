@@ -33,7 +33,7 @@ def create_accountant(accountant, files):
             # Execute the query using your cursor
             cursor.execute(insert_accountant_query)
 
-            subject = email_template_controller.get_employee_creation_email_subject()
+            subject = email_template_controller.get_employee_creation_email_subject(accountant.name)
             body = email_template_controller.get_employee_creation_email_body(accountant.name, 'Accountant',
                                                                               accountant.email,
                                                                               accountant.password)

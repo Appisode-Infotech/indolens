@@ -117,7 +117,7 @@
                                 </div>
                                 <div class="col-auto me-3"><a class="btn btn-primary px-5"
                                                          href="{% url 'create_other_employees' %}"><i
-                                        class="fa-solid fa-plus me-2"></i>Add House keeping and others</a></div>
+                                        class="fa-solid fa-plus me-2"></i>Add Housekeeping and others</a></div>
                                  <button id= "btnExport" class="btn btn-link text-900 me-4 px-0"><span
                                         class="fa-solid fa-file-export fs--1 me-2"></span>Export
                                 </button>
@@ -246,8 +246,35 @@
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
                                                                                              href="{% url 'view_other_employees' emp.employee_id %}">View</a>
 
-                                            <a class="dropdown-item" href="{% url 'edit_other_employees' emp.employee_id  %}">Allocate
-                                                Store</a>
+
+                                            {% if emp.status == 1 %}
+                                            {% if emp.assigned_store_id == 0 %}
+                                            <a class="dropdown-item"
+                                               type="button"
+                                               data-bs-role="Manager"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ emp.employee_id }}"
+                                               data-employee-name="{{ emp.name }}"
+                                               data-action-type="allocate">
+                                                Allocate Store
+                                            </a>
+                                            {% else %}
+                                            <a class="dropdown-item"
+                                               type="button"
+                                               data-bs-role="Manager"
+                                               data-bs-toggle="modal"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ emp.employee_id }}"
+                                               data-employee-name="{{ emp.name }}"
+                                               data-store-name="{{emp.store_name}}"
+                                               data-action-type="unallocate"
+                                               data-action-url="{% url 'un_assign_other_employee_own_store' status emp.employee_id emp.assigned_store_id %}">
+                                                Un allocate Store
+                                            </a>
+                                            {% endif %}
+                                            {% endif %}
+
                                             <a class="dropdown-item" href="{% url 'edit_other_employees'  emp.employee_id %}">Update Profile</a>
                                             <a class="dropdown-item"
                                                href="{% url 'update_other_employees_documents' emp.employee_id %}">Update
@@ -259,7 +286,7 @@
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable"
+                                               data-bs-target="#operations_modal"
                                                data-employee-id="{{ emp.employee_id }}"
                                                data-employee-name="{{ emp.name }}"
                                                data-action-type="enable"
@@ -271,7 +298,7 @@
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable"
+                                               data-bs-target="#operations_modal"
                                                data-employee-id="{{ emp.employee_id }}"
                                                data-employee-name="{{ emp.name }}"
                                                data-action-type="disable"
@@ -286,22 +313,44 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="modal fade" id="enable_disable" tabindex="-1"
+                        <div class="modal fade" id="operations_modal" tabindex="-1"
                              aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                                 <div class="modal-content">
                                     <div class="modal-header bg-primary">
-                                        <h5 class="modal-title text-white" id="staticBackdropLabel"></h5>
+                                        <h5 class="modal-title text-white" id="modal_title"></h5>
                                         <button class="btn p-1" type="button" data-bs-dismiss="modal"
                                                 aria-label="Close">
                                             <span class="fas fa-times fs--1 text-white"></span>
                                         </button>
                                     </div>
-                                    <div class="modal-body">
-                                        <p class="text-700 lh-lg mb-0"></p>
+                                    <div class="modal-body" id="modal_content">
+                                        <!-- Form for Allocate Store -->
+                                        <form class="row g-3 needs-validation allocate-store-form" method="post"
+                                              action="{% url 'assign_other_employee_own_store' status %}"
+                                              novalidate="novalidate">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="emp_id" id="emp_id">
+                                            <h5 class="mb-3">Select Store (Only active and unallocated stores appear
+                                                here)</h5>
+                                            <select class="form-select" data-choices="data-choices"
+                                                    data-options='{"placeholder":true}' name="store_id"
+                                                    required="required">
+                                                <option value="">Select a store</option>
+                                                {% for store in available_stores %}
+                                                <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                                {% endfor %}
+                                            </select>
+                                            <div class="custom-error" style="color: red;"></div>
+                                            <div class="modal-footer">
+                                                <button class="btn btn-primary modal-submit" type="submit">Submit
+                                                </button>
+                                            </div>
+                                        </form>
                                     </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-primary modal-submit" type="button">Confirm</a>
+                                    <div id="footer_div" class="modal-footer">
+                                        <a class="btn btn-primary modal-submit" type="button"
+                                           id="modal_submit">Confirm</a>
                                         <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
                                             Cancel
                                         </button>
@@ -366,33 +415,57 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 
+<script src="{% static 'js/csvExport.js' %}"></script>
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
-    var enableDisableButtons = document.querySelectorAll('[data-bs-target="#enable_disable"]');
-    var modal = document.getElementById('enable_disable');
-    var modalTitle = modal.querySelector('.modal-title');
-    var modalContent = modal.querySelector('.modal-body');
-    var modalSubmit = modal.querySelector('.modal-submit');
+    var operationsButtons = document.querySelectorAll('[data-bs-target="#operations_modal"]');
+    var modal = document.getElementById('operations_modal');
+    var modalTitle = document.getElementById('modal_title');
+    var modalContent = document.getElementById('modal_content');
+    var modalSubmit = document.getElementById('modal_submit');
+    var modalForm = document.querySelector('.allocate-store-form');
 
-    enableDisableButtons.forEach(function (button) {
+    operationsButtons.forEach(function (button) {
         button.addEventListener('click', function (event) {
-            var storeId = event.currentTarget.getAttribute('data-employee-id');
-            var storeName = event.currentTarget.getAttribute('data-employee-name');
+            var empId = event.currentTarget.getAttribute('data-employee-id');
+            var empName = event.currentTarget.getAttribute('data-employee-name');
             var actionType = event.currentTarget.getAttribute('data-action-type');
             var actionUrl = event.currentTarget.getAttribute('data-action-url');
+            var role = event.currentTarget.getAttribute('data-bs-role');
 
-            modalTitle.textContent = actionType === "enable" ? "Enable Employee - " + storeName : "Disable Manager - " + storeName;
-            modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${storeName}</strong> (ID: ${storeId})`;
-            modalSubmit.href = actionUrl;
+            if (actionType === 'enable' || actionType === 'disable') {
+                modalTitle.textContent = actionType === "enable" ? "Enable " +role+" - " + empName : "Disable " +role+ "- " + empName;
+                modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})`;
+                modalSubmit.href = actionUrl;
+                // Hide the form for non-"Allocate" actions
+                modalForm.style.display = 'none';
+            } else if (actionType === 'allocate') {
+                document.getElementById('footer_div').style.display = 'none';
+                modalTitle.textContent = "Allocate store for - " + empName;
+                document.getElementById('emp_id').value = empId;
+                modalSubmit.href = actionUrl;
+                // Show the form for "Allocate" action
+                modalForm.style.display = 'block';
+            } else if (actionType === 'unallocate') {
+                modalTitle.textContent = "Unallocate Store - " + empName;
+                modalContent.innerHTML = `Are you sure you want to unallocate the store <br><strong>${event.currentTarget.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong> (ID: ${empId})?`;
+                modalSubmit.href = actionUrl;
+                // Hide the form for "Unallocate" action
+                modalForm.style.display = 'none';
+            }
+
+             // Use data-bs-toggle and data-bs-target attributes to trigger the modal
+            var targetModal = event.currentTarget.getAttribute('data-bs-target');
+            var backdrop = event.currentTarget.getAttribute('data-bs-backdrop');
+            modal.setAttribute('data-bs-target', targetModal);
+            modal.setAttribute('data-bs-backdrop', backdrop);
         });
     });
 });
 
 
 </script>
-<script src="{% static 'js/csvExport.js' %}"></script>
-
 </body>
 
 </html>

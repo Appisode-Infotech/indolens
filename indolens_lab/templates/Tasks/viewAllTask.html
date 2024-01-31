@@ -87,7 +87,7 @@
                     <li class="nav-item"><a class="nav-link filter" href="#filter-3">Ready</a></li>
                     <li class="nav-item"><a class="nav-link filter" href="#filter-4">Dispatched</a></li>
                 </ul>
-                <div data-list='{"valueNames":["slno","order","total","customer","payment_status","fulfilment_status","createdby","created_on","updated_by","updated_on","date"],"page":10,"pagination":true}'
+                                <div data-list='{"valueNames":["slno","jobId","category","material","type","shape","color","unit","brand","jobStatus"],"page":10,"pagination":true}'
                      id="orderTable">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -124,7 +124,7 @@
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
                                         style="width:5%;">SL NO
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="jobId" scope="col"
                                         style="width:150px;">JOB ID
                                     </th>
                                     <th class="sort align-middle ps-4" data-sort="category" scope="col"
@@ -148,7 +148,7 @@
                                     <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
                                         style="width:250px;">BRAND
                                     </th>
-                                    <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
+                                    <th class="sort align-middle text-end ps-4" data-sort="jobStatus" scope="col"
                                         style="width:250px;">JOB STATUS
                                     </th>
                                     <th class="sort align-middle text-end ps-4" scope="col"
@@ -162,14 +162,14 @@
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                     data-category="{{ order.order_status }}">
                                     <td class="fs--1 align-middle px-0 py-3 slno"></td>
-                                    <td class="products align-middle py-0">
+                                    <td class="jobId align-middle py-0">
                                         <a class="fw-semi-bold line-clamp-2 mb-0"
                                            href="{% url 'lab_job_details' order.order_id %}">
                                             {{order.order_id}}
                                         </a>
                                     </td>
 
-                                    <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
+                                    <td class="category align-middle white-space-nowrap text-900 py-0 ps-4">
                                         {% if order.category_name == None %}
                                         N/A
                                         {% else %}
@@ -177,49 +177,49 @@
                                         {% endif %}
 
                                     </td>
-                                    <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                    <td class="material align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
                                         {% if order.material_name == None %}
                                         N/A
                                         {% else %}
                                         {{order.material_name}}
                                         {% endif %}
                                     </td>
-                                    <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                    <td class="type align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
                                         {% if order.frame_type_name == None %}
                                         N/A
                                         {% else %}
                                         {{order.frame_type_name}}
                                         {% endif %}
                                     </td>
-                                    <td class="quantity align-middle text-end py-0 ps-4 text-700">
+                                    <td class="shape align-middle text-end py-0 ps-4 text-700">
                                         {% if order.shape_name == None %}
                                         N/A
                                         {% else %}
                                         {{order.shape_name}}
                                         {% endif %}
                                     </td>
-                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                    <td class="color align-middle text-900 fw-semi-bold text-end py-0 ps-4">
                                         {% if order.color_name == None %}
                                         N/A
                                         {% else %}
                                         {{order.color_name}}
                                         {% endif %}
                                     </td>
-                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                    <td class="unit align-middle text-900 fw-semi-bold text-end py-0 ps-4">
                                         {% if order.unit_name == None %}
                                         N/A
                                         {% else %}
                                         {{order.unit_name}}
                                         {% endif %}
                                     </td>
-                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                    <td class="brand align-middle text-900 fw-semi-bold text-end py-0 ps-4">
                                         {% if order.brand_name == None %}
                                         N/A
                                         {% else %}
                                         {{order.brand_name}}
                                         {% endif %}
                                     </td>
-                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                    <td class="jobStatus align-middle text-900 fw-semi-bold text-end py-0 ps-4">
                                         {% if order.order_status == 1 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                 class="badge-label">NEW</span><span class="ms-1" data-feather="check"
@@ -300,6 +300,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             {% include 'footer.html' %}
 

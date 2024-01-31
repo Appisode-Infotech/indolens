@@ -169,9 +169,15 @@
                                                      src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
                                             </div>
                                         </a>
+                                        <a href="{{ MEDIA_URL }}{{ stock.product_qr_code }}" target="_blank">
+                                            <div class="avatar avatar-m">
+                                                <img alt="" class="rounded-circle"
+                                                     src="{{ MEDIA_URL }}{{ stock.product_qr_code }}"/>
+                                            </div>
+                                        </a>
                                     </td>
                                     <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!"> {{stock.product_name}}<br/>llll{{stock.target_store_id}}</a>
+                                            class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_store_inventory_products' stock.store_inventory_id %}"> {{stock.product_name}}</a>
                                     </td>
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
                                         {{stock.sale_price}}
@@ -207,8 +213,8 @@
 <!--                                                   data-bs-target-store-id="{{stock.target_store_id}}"-->
 <!--                                                   data-bs-unit-cost="{{stock.franchise_sale_price}}"-->
 <!--                                                   data-bs-toggle="modal">Request</a>-->
-                                                <a class="dropdown-item" href="#!">View</a><a
-                                                    class="dropdown-item" href="#!">Export</a>
+                                                <a class="dropdown-item" href="{% url 'view_store_inventory_products' stock.store_inventory_id %}">View</a>
+<!--                                                <a class="dropdown-item" href="#!">Export</a>-->
                                             </div>
                                         </div>
                                     </td>

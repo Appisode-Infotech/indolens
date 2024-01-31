@@ -117,20 +117,33 @@
                             <label class="form-label" for="phone">Phone</label>
                             <input class="form-control" id="phone" name="phone" required type="number"
                                   max="9999999999" min="1111111111" value=""/>
-                            <div class="invalid-feedback">Phone is Mandatory.</div>
+                            <div class="invalid-feedback">Phone is mandatory with 10 digits</div>
                         </div>
                         <div class="col-md-6">
+
                             <label class="form-label" for="password">Password</label>
-                            <input class="form-control" id="password" name="password" required type="password"
-                                   value=""/>
-                            <div class="invalid-feedback">Password is Mandatory.</div>
+
+                            <div class="input-group">
+                                <input class="form-control" type="password" id="password" name="password"
+                                       placeholder="Password" required="required">
+                                <button id="togglePassword" type="button" class="input-group-text"><i
+                                        class="far fa-eye" id="togglePasswordIcon"></i></button>
+                                <div class="invalid-feedback">Password is mandatory.</div>
+                            </div>
                         </div>
 
                         <div class="col-md-12">
+
                             <label class="form-label" for="confirmPassword">Confirm Password</label>
-                            <input class="form-control" id="confirmPassword" name="confirmPassword" required
-                                   type="password" value=""/>
-                            <div class="invalid-feedback">Passwords should match.</div>
+
+                            <div class="input-group">
+                                    <input class="form-control" type="password" id="confirmPassword"
+                                           name="confirmPassword"
+                                           placeholder="Confirm Password" required="required">
+                                    <button id="toggleConfirmPassword" type="button" class="input-group-text"><i
+                                            class="far fa-eye" id="toggleConfirmPasswordIcon"></i></button>
+                                    <div class="invalid-feedback">Password and Confirm Password should match.</div>
+                                </div>
                         </div>
 
                         <div class="col-12">
@@ -155,7 +168,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="document1">Document 1 Upload (Can choose multiple)</label>
                             <input class="form-control" id="document1" multiple="multiple" name="document1" required
-                                   type="file"/>
+                                   type="file" accept="image/*,application/pdf"/>
                             <div class="invalid-feedback">Document Type is Mandatory.</div>
                         </div>
 
@@ -174,7 +187,7 @@
                         <div class="mb-3">
                             <label class="form-label" for="document2">Document 2 Upload (Can choose multiple)</label>
                             <input class="form-control" id="document2" multiple="multiple" name="document2" required
-                                   type="file"/>
+                                   type="file" accept="image/*,application/pdf"/>
                             <div class="invalid-feedback">Document is Mandatory.</div>
 
                         </div>
@@ -223,6 +236,7 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>
 

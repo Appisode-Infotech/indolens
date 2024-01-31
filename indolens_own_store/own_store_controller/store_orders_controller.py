@@ -7,6 +7,7 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
 
+
 def getIndianTime():
     ist = pytz.timezone('Asia/Kolkata')
     today = datetime.datetime.now(ist)
@@ -128,7 +129,8 @@ def order_status_change(orderID, orderStatus):
         "3": "Ready",
         "4": "Dispatched to store",
         "5": "Arrived at store",
-        "6": "Cancelled"
+        "6": "Delivered to customer",
+        "7": "Cancelled"
     }
     status_condition = status_conditions[orderStatus]
 
@@ -187,6 +189,41 @@ def order_status_change(orderID, orderStatus):
             cursor.execute(get_order_details_query)
             orders_details = cursor.fetchall()
             order = get_order_detail(orders_details)
+
+            if orderStatus == "6":
+                get_last_invoice_query = f""" SELECT invoice_number
+                                                FROM invoice
+                                                WHERE store_id = {order[0]['created_by_store']} 
+                                                AND store_type = {order[0]['created_by_store_type']}
+                                                ORDER BY invoice_id DESC
+                                                LIMIT 1;
+                                                """
+                cursor.execute(get_last_invoice_query)
+                existing_invoice = cursor.fetchone()
+
+                if existing_invoice:
+                    last_invoice_number = existing_invoice[0]
+                    store_code, store_id, date_part, number_part = last_invoice_number.split('-')
+                    number_part = str(int(number_part) + 1).zfill(8)
+                    invoice_number = f"{store_code}-{store_id}-{date_part}-{number_part}"
+                else:
+                    number_part = '00000001'
+                    store_code = 'OS' if order[0]['created_by_store_type'] == 1 else 'FS'
+
+                    store_id = order[0]['created_by_store']
+                    date_part = getIndianTime().strftime('%d%m%Y')
+
+                    invoice_number = f"{store_code}-{store_id}-{date_part}-{number_part}"
+
+                create_invoice_query = f""" 
+                                            INSERT INTO invoice (invoice_number, order_id, invoice_status, invoice_date,
+                                            store_id,store_type) 
+                                            VALUES ('{invoice_number}', '{orderID}', 1, '{getIndianTime().date()}', 
+                                            {order[0]['created_by_store']},{order[0]['created_by_store_type']}) """
+                cursor.execute(create_invoice_query)
+
+            if orderStatus == "7":
+                print("Order cancelled logic if any")
 
             subject = email_template_controller.get_order_status_change_email_subject(order[0]['order_id'])
             body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
@@ -270,8 +307,9 @@ def order_payment_status_change(orderID, paymentStatus):
 
             subject = email_template_controller.get_order_payment_status_change_email_subject(order[0]['order_id'])
             body = email_template_controller.get_order_payment_status_change_email_body(order[0]['customer_name'],
-                                                                                order[0]['order_id'],
-                                                                                status_condition, getIndianTime())
+                                                                                        order[0]['order_id'],
+                                                                                        status_condition,
+                                                                                        getIndianTime())
             send_notification_controller.send_email(subject, body, order[0]['email'])
 
             return {

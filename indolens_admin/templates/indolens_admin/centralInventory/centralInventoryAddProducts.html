@@ -128,7 +128,7 @@
                             <h5 class="mb-3">Upload product images(Can choose multiple)</h5>
                             <input class="form-control" id="document1" multiple="multiple"
                                    name="productImages" required
-                                   type="file"/>
+                                   type="file" accept="image/*,application/pdf"/>
                             <div class="invalid-feedback">Please upload at least one picture.</div>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
@@ -178,14 +178,10 @@
                                 <h4 class="mb-3">Index</h4>
                                 <select class="form-select"
                                         name="index" required="required">
-                                    <option >Select Index</option>
-                                    <option value="0.1">1.50</option>
-                                    <option value="0.2">1.56</option>
-                                    <option value="0.3">1.59</option>
-                                    <option value="0.3">1.61</option>
-                                    <option value="0.3">1.64</option>
-                                    <option value="0.3">1.67</option>
-                                    <option value="0.3">1.74</option>
+                                    <option value="">Select Index</option>
+                                    <option value="0.1">0.1</option>
+                                    <option value="0.2">0.2</option>
+                                    <option value="0.3">0.3</option>
                                 </select>
                                 <div class="invalid-feedback">Please provide a valid Index.</div>
                             </div>
@@ -533,33 +529,49 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/file-upload-preview.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-
 <script>
-        function handleCategoryChange() {
-            var selectElement = document.getElementById("categorySelect");
-            var divToToggle = document.getElementById("only_frame_options");
-            var selectedValue = selectElement.value;
-             if (selectedValue === "1") {
-                divToToggle.classList.remove("d-none");
-                $('.lens-widget').addClass('d-none');
-                $('.contact-lens-widget').addClass('d-none');
-             }else if(selectedValue === "2"){
-                $('.contact-lens-widget').addClass('d-none');
-                $('.lens-widget').removeClass('d-none');
-                divToToggle.classList.add("d-none");
-             }else if(selectedValue === "3"){
-                $('.lens-widget').addClass('d-none');
-                $('.contact-lens-widget').removeClass('d-none');
-                divToToggle.classList.add("d-none");
-             }else {
-                divToToggle.classList.add("d-none");
-            }
+    function handleCategoryChange() {
+        var selectElement = document.getElementById("categorySelect");
+        var divToToggle = document.getElementById("only_frame_options");
+        var selectedValue = selectElement.value;
+
+        if (selectedValue === "1") {
+            divToToggle.classList.remove("d-none");
+            $('.lens-widget').addClass('d-none');
+            $('.contact-lens-widget').addClass('d-none');
+
+            // Add 'required' to inputs and selects inside divToToggle
+            $('#only_frame_options input, #only_frame_options select').prop('required', true);
+            $('.lens-widget input, .lens-widget select').prop('required', false);
+            $('.contact-lens-widget input, .contact-lens-widget select').prop('required', false);
+        } else if (selectedValue === "2") {
+            $('.contact-lens-widget').addClass('d-none');
+            $('.lens-widget').removeClass('d-none');
+            divToToggle.classList.add("d-none");
+
+            // Add 'required' to inputs and selects inside lens-widget
+            $('.lens-widget input, .lens-widget select').prop('required', true);
+            $('#only_frame_options input, #only_frame_options select').prop('required', false);
+            $('.contact-lens-widget input, .contact-lens-widget select').prop('required', false);
+        } else if (selectedValue === "3") {
+            $('.lens-widget').addClass('d-none');
+            $('.contact-lens-widget').removeClass('d-none');
+            divToToggle.classList.add("d-none");
+
+            // Add 'required' to inputs and selects inside contact-lens-widget
+            $('.contact-lens-widget input, .contact-lens-widget select').prop('required', true);
+            $('.lens-widget input, .lens-widget select').prop('required', false);
+            $('#only_frame_options input, #only_frame_options select').prop('required', false);
+        } else {
+            divToToggle.classList.add("d-none");
+
+            // Remove 'required' from inputs and selects inside divToToggle, lens-widget, and contact-lens-widget
+            $('#only_frame_options input, #only_frame_options select, .lens-widget input, .lens-widget select, .contact-lens-widget input, .contact-lens-widget select').prop('required', false);
         }
-
-
-
-
+    }
 </script>
+
+
 
 <script>
     // Add an event listener to the checkboxes
@@ -575,6 +587,7 @@
             visionTypeCheckboxes.forEach(otherCheckbox => {
                 if (otherCheckbox !== this) {
                     otherCheckbox.checked = false;
+                    otherCheckbox.removeAttribute('required');
                 }
             });
         });
@@ -587,6 +600,7 @@
             stockTypeCheckboxes.forEach(otherCheckbox => {
                 if (otherCheckbox !== this) {
                     otherCheckbox.checked = false;
+                    otherCheckbox.removeAttribute('required');
                 }
             });
         });
@@ -598,6 +612,7 @@
             contactLensTypeCheckboxes.forEach(otherCheckbox => {
                 if (otherCheckbox !== this) {
                     otherCheckbox.checked = false;
+                    otherCheckbox.removeAttribute('required');
                 }
             });
         });
@@ -609,6 +624,7 @@
             contactLensDisposabilityCheckboxes.forEach(otherCheckbox => {
                 if (otherCheckbox !== this) {
                     otherCheckbox.checked = false;
+                    otherCheckbox.removeAttribute('required');
                 }
             });
         });
@@ -620,16 +636,13 @@
             ContactLensStockTypeCheckboxes.forEach(otherCheckbox => {
                 if (otherCheckbox !== this) {
                     otherCheckbox.checked = false;
+                    otherCheckbox.removeAttribute('required');
                 }
             });
         });
     });
-
-
-
-
-
 </script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>
 

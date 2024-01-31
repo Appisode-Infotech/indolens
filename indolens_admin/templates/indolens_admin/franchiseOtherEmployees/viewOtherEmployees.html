@@ -91,7 +91,7 @@
                     <div class="col-auto">
                         <div class="row g-3">
                             <div class="col-auto">
-                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_other_employees' 1 %}">
+                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_franchise_other_employees' emp.employee_id %}">
                                     <span class="fas fa-refresh me-2"></span> Update
                                 </a>
 
@@ -227,6 +227,7 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>
 

@@ -5,6 +5,7 @@ from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
+from indolens_own_store.own_store_model.response_model.invoice_data_resp_model import get_invoice_detail
 from indolens_own_store.own_store_model.response_model.order_track import order_track
 from indolens_own_store.own_store_model.response_model.store_resp_model import get_store
 
@@ -219,6 +220,24 @@ def get_order_details(orderId):
             return {
                 "status": True,
                 "orders_details": get_order_detail(orders_details),
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_invoice_details(orderId):
+    try:
+        with connection.cursor() as cursor:
+            get_order_details_query = f""" SELECT * FROM invoice WHERE order_id = '{orderId}'"""
+            cursor.execute(get_order_details_query)
+            orders_details = cursor.fetchone()
+            print(orders_details)
+            return {
+                "status": True,
+                "invoice_details": get_invoice_detail(orders_details)
             }, 200
 
     except pymysql.Error as e:

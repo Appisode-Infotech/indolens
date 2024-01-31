@@ -4,13 +4,21 @@ import pytz
 from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
-from indolens_lab.lab_models.response_model.lab_job_resp_model import get_lab_jobs
+from indolens_lab.lab_models.response_model.lab_job_resp_model import get_lab_jobs_list
 
 
-def get_all_lab_jobs(labId):
+def get_lab_jobs(labId, status):
+    status_conditions = {
+        "All": "IN (1,2,3,4)",
+        "New": "= 1",
+        "Processing": "= 2",
+        "Ready": "= 3",
+        "Dispatched": "= 4",
+    }
+    status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
-            get_order_details_query = f"""
+            get_job_details_query = f"""
                 SELECT 
                     so.*,
                     CASE 
@@ -43,14 +51,15 @@ def get_all_lab_jobs(labId):
                 LEFT JOIN franchise_store_employees creator_fs ON so.created_by = creator_fs.employee_id AND so.created_by_store_type = 2
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
-                WHERE so.assigned_lab = {labId} 
+                WHERE so.assigned_lab = {labId} AND so.order_status {status_condition}
+                GROUP BY so.order_id ORDER BY so.sale_item_id DESC  
                 """
-            cursor.execute(get_order_details_query)
-            orders_details = cursor.fetchall()
+            cursor.execute(get_job_details_query)
+            jobs_details = cursor.fetchall()
 
             return {
                 "status": True,
-                "task_list": get_lab_jobs(orders_details),
+                "task_list": get_lab_jobs_list(jobs_details),
             }, 200
 
     except pymysql.Error as e:

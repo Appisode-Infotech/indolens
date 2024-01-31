@@ -294,6 +294,8 @@ def enable_disable_franchise_other_employees(empid, status):
 
 
 def assign_store_own_store_other_employee(empId, storeId):
+    print(empId)
+    print(storeId)
     try:
         with connection.cursor() as cursor:
             update_store_manager_query = f"""
@@ -303,7 +305,6 @@ def assign_store_own_store_other_employee(empId, storeId):
                 WHERE
                     employee_id = {empId}
             """
-            # Execute the update query using your cursor
             cursor.execute(update_store_manager_query)
 
             return {
