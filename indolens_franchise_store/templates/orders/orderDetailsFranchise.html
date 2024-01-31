@@ -85,7 +85,7 @@
                     <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
                     </p>
                     <div class="d-flex">
-                        <button class="btn pe-3 ps-0 text-900"><a
+                        <button class="btn pe-3 ps-0 text-900"><a target="_blank"
                                 href="{% url 'order_invoice_franchise_store' order_detail.0.order_id %}"><span
                                 class="fas fa-file-invoice"></span> Invoice</a></button>
                         <button class="btn px-3 text-900"><a
@@ -194,7 +194,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="{{order_detail.0.email}}:">{{order_detail.0.email}}</a>
+                                           href="mailto:shatinon@jeemail.com:">{{order_detail.0.email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -227,6 +227,7 @@
                                         </div>
                                         <a class="fs--1 ms-4"
                                            href="mailto:shatinon@jeemail.com:">{{order_detail.0.email}}</a>
+
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -392,6 +393,7 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 
 </body>

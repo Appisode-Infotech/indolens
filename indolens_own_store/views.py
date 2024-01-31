@@ -426,6 +426,7 @@ def makeSaleOwnStore(request):
         if request.method == 'POST':
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
+            print(customerData)
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),

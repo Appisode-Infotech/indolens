@@ -153,7 +153,7 @@
                                     </td>
                                     <td class="customer align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
-                                            href="{% url 'customer_details' test.customer_id %}">
+                                            href="{% url 'view_store_customer_details' test.customer_id %}">
                                         <div class="avatar avatar-m">
                                             <div class="avatar-name rounded-circle"><span class="first-letter"></span>
                                             </div>
@@ -162,14 +162,22 @@
                                     </a></td>
 
                                     <td class="createdBy align-middle white-space-nowrap fw-semi-bold text-1000">
-                                        <a href="{% url 'view_order_creator' test.created_by test.created_by_store_type %}">{{test.creator_name}}</a>
+                                        {% if test.created_by_store_type == 1%}
+                                        <a href="{% url 'view_employee' test.created_by %}">{{test.creator_name}}</a>
+                                        {% else %}
+                                        <a href="{% url 'view_franchise_employee' test.created_by %}">{{test.creator_name}}</a>
+                                        {% endif %}
                                     </td>
 
                                     <td class="createdOn align-middle white-space-nowrap fw-semi-bold text-end text-1000">
                                         {{test.created_on}}
                                     </td>
                                     <td class="updatedBy align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
-                                        <a href="{% url 'view_order_creator' test.created_by test.created_by_store_type %}">{{test.creator_name}}</a>
+                                        {% if test.created_by_store_type == 1%}
+                                        <a href="{% url 'view_employee' test.updated_by %}">{{test.creator_name}}</a>
+                                        {% else %}
+                                        <a href="{% url 'view_franchise_employee' test.updated_by %}">{{test.creator_name}}</a>
+                                        {% endif %}
                                     </td>
                                     <td class="updatedOn align-middle white-space-nowrap text-1000 ps-7">
                                         {{test.updated_on}}

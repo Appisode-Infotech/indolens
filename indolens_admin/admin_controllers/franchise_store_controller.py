@@ -12,6 +12,7 @@ today = datetime.datetime.now(ist)
 
 
 def create_franchise_store(franchise_obj):
+
     cleaned_str = franchise_obj.store_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
     store_lat, store_lng = map(float, cleaned_str.split(', '))
     try:

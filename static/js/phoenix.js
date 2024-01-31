@@ -3896,7 +3896,8 @@ const fromValidationInit = () => {
                 }
 
                 form.classList.add('was-validated');
-
+                console.log(form.id);
+                if(!form.id.startsWith(wizardValidationForm)){
                 if (form.checkValidity() && isValid) {
                     // Create overlay element with inline styles
                     const overlay = document.createElement('div');
@@ -3925,6 +3926,8 @@ const fromValidationInit = () => {
                     // Simulate loading delay (you can replace this with actual loading logic)
                     form.submit();
                 }
+                }
+
 
                 event.preventDefault();
                 event.stopPropagation();
