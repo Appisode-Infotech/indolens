@@ -3896,8 +3896,7 @@ const fromValidationInit = () => {
                 }
 
                 form.classList.add('was-validated');
-                console.log(form.id);
-                if(!form.id.startsWith(wizardValidationForm)){
+                if (form.id !== "wizardValidationForm1" && form.id !== "wizardValidationForm2" && form.id !== "wizardValidationForm3") {
                 if (form.checkValidity() && isValid) {
                     // Create overlay element with inline styles
                     const overlay = document.createElement('div');
@@ -3927,6 +3926,8 @@ const fromValidationInit = () => {
                     form.submit();
                 }
                 }
+
+
 
 
                 event.preventDefault();

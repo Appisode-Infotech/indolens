@@ -41,7 +41,7 @@ function createBreadcrumbsContainer(pathArray) {
     var aElement = document.createElement('a');
     aElement.href = 'javascript:void(0);';
     aElement.onclick = function() {
-    window.history.back();
+        window.location.href = document.referrer;
     };
     aElement.textContent = 'Go back'; // Update this to the actual text
     liElement.appendChild(arrowSpan);
