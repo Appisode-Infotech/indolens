@@ -193,7 +193,7 @@
                                 </td>
 
                                 <td class=" align-middle product">
-                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_products' stock.product_id %}">{{stock.product_name}}</a></td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 productId">
                                     <p class="mb-0 fs--1 text-900">{{stock.product_id}}</p>
