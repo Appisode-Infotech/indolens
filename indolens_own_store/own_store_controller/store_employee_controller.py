@@ -7,8 +7,9 @@ from indolens_admin.admin_models.admin_resp_model.area_head_resp_model import ge
 from indolens_own_store.own_store_model.response_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_all_store_employee(store_id):
     try:

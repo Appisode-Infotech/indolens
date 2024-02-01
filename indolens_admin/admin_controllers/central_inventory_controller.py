@@ -18,12 +18,11 @@ from indolens_admin.admin_models.admin_resp_model.master_units_resp_model import
 from indolens_admin.admin_models.admin_resp_model.product_request_list_resp_model import get_request_product_list
 from indolens_admin.admin_models.admin_resp_model.stockMovementInvoice_resp_model import get_stock_movement_invoice
 from indolens_admin.admin_models.admin_resp_model.store_inventory_product_resp_model import get_store_stocks
-from indolens_own_store.own_store_model.response_model.store_inventory_product_resp_model import \
-    get_store_inventory_stocks
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_all_active_types():
     try:
@@ -119,7 +118,7 @@ def add_central_inventory_products(product_obj, file, power_attributes):
                                                 '{product_obj.color_id}','{product_obj.unit_id}','{product_obj.origin}',
                                                 '{product_obj.cost_price}','{product_obj.sale_price}', 
                                                 '{product_obj.model_number}', '{product_obj.hsn_number}',
-                                                '{today}','{product_obj.created_by}','{today}',
+                                                '{getIndianTime()}','{product_obj.created_by}','{getIndianTime()}',
                                                 '{product_obj.last_updated_by}', '{product_obj.product_quantity}', 
                                                 '{product_obj.product_gstin}', {product_obj.discount}, 
                                                 {product_obj.franchise_sale_price}, '{power_attributes_json}', 0) """
@@ -220,7 +219,7 @@ def update_central_inventory_products(product_obj, productId, power_attribute):
                     sale_price = '{product_obj.sale_price}',
                     model_number = '{product_obj.model_number}',
                     hsn = '{product_obj.hsn_number}',
-                    last_updated_on = '{today}',
+                    last_updated_on = '{getIndianTime()}',
                     last_updated_by = '{product_obj.last_updated_by}',
                     product_quantity = '{product_obj.product_quantity}',
                     product_gst = '{product_obj.product_gstin}',
@@ -576,7 +575,7 @@ def change_stock_request_status(requestId, status, updator):
                 if status == 1:
                     if available_quantity >= quantity:
                         update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}', 
-                        last_updated_on = '{today}', last_updated_by = '{updator}', delivery_status = 1
+                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', delivery_status = 1
                         WHERE request_products_id = '{requestId}' """
                         cursor.execute(update_stock_request_query)
 
@@ -598,7 +597,7 @@ def change_stock_request_status(requestId, status, updator):
                         }, 200
                 else:
                     update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
-                                        last_updated_on = '{today}', last_updated_by = '{updator}', delivery_status = 3
+                                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', delivery_status = 3
                                         WHERE request_products_id = '{requestId}' """
                     cursor.execute(update_stock_request_query)
                     return {
@@ -617,7 +616,7 @@ def change_stock_request_status(requestId, status, updator):
                 if status == 1:
                     if available_quantity >= quantity:
                         update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
-                                        last_updated_on = '{today}', last_updated_by = '{updator}', delivery_status = 1
+                                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', delivery_status = 1
                                         WHERE request_products_id = '{requestId}' """
                         cursor.execute(update_stock_request_query)
 
@@ -640,7 +639,7 @@ def change_stock_request_status(requestId, status, updator):
                         }, 200
                 else:
                     update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}'
-                                                        last_updated_on = '{today}', last_updated_by = '{updator}', delivery_status = 3
+                                                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', delivery_status = 3
                                                         WHERE request_products_id = '{requestId}' """
                     cursor.execute(update_stock_request_query)
                     return {
@@ -694,7 +693,7 @@ def create_store_stock_request(stock_obj, store_id):
 
             cursor.execute(stock_req_query, (
                 store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
-                1, 1, 0, 0, 0, today, stock_obj.created_by, today, stock_obj.created_by, stock_obj.comments))
+                1, 1, 0, 0, 0, getIndianTime(), stock_obj.created_by, getIndianTime(), stock_obj.created_by, stock_obj.comments))
 
             update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {stock_obj.product_quantity} 
                                                                                     WHERE product_id = {stock_obj.product_id}"""

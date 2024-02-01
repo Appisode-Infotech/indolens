@@ -8,8 +8,9 @@ from indolens_admin.admin_models.admin_resp_model.franchise_store_resp_model imp
 from indolens_admin.admin_models.admin_resp_model.store_inventory_resp_model import get_store_inventory
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_franchise_store(franchise_obj):
 
@@ -27,7 +28,7 @@ def create_franchise_store(franchise_obj):
                                                 '{franchise_obj.store_gstin}', '{franchise_obj.store_email}', 
                                                 '{franchise_obj.store_city}', '{franchise_obj.store_state}', '{store_lat}',
                                                 '{store_lng}', '{franchise_obj.complete_address}', 1, {franchise_obj.created_by}, 
-                                                '{today}', {franchise_obj.last_updated_by}, '{today}')"""
+                                                '{getIndianTime()}', {franchise_obj.last_updated_by}, '{getIndianTime()}')"""
 
             cursor.execute(create_franchise_store_query)
             storeId = cursor.lastrowid
@@ -118,7 +119,7 @@ def edit_franchise_store_by_id(franchise_obj):
                         store_lat = '{store_lat}',
                         store_lng = '{store_lng}',
                         store_address = '{franchise_obj.complete_address}',
-                        last_updated_on = '{today}',
+                        last_updated_on = '{getIndianTime()}',
                         last_updated_by = {franchise_obj.last_updated_by}
                     WHERE store_id = {franchise_obj.store_id}
                 """

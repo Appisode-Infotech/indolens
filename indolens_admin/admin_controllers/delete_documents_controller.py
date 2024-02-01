@@ -8,8 +8,9 @@ from django.db import connection
 
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def delete_document(documenturl, document_type, table, condition, user_id):
     print("=====================================in controller")

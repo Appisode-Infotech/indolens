@@ -12,8 +12,9 @@ from django.db import connection
 from indolens_area_head.area_head_model.area_head_resp_models.area_head_resp_model import get_area_heads
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def generate_random_string(length=16):
     characters = string.ascii_letters + string.digits
@@ -87,7 +88,7 @@ def forgot_password(email):
             elif check_email is not None and check_email[1] != 0:
                 update_pwd_code_query = f"""INSERT INTO reset_password (email, code, status, created_on) 
                                             VALUES (%s, %s, %s, %s)"""
-                cursor.execute(update_pwd_code_query, (email, pwd_code, 0, today))
+                cursor.execute(update_pwd_code_query, (email, pwd_code, 0, getIndianTime()))
 
                 url = 'https://api.emailjs.com/api/v1.0/email/send'
                 data = {

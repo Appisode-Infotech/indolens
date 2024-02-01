@@ -11,8 +11,9 @@ from indolens_own_store.own_store_model.response_model.store_inventory_product_r
     get_store_inventory_stocks
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_all_out_of_stock_products_for_stores(quantity, store_id):
     try:

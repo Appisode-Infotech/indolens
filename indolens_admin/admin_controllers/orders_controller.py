@@ -10,8 +10,9 @@ from indolens_own_store.own_store_model.response_model.order_track import order_
 from indolens_own_store.own_store_model.response_model.store_resp_model import get_store
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_all_orders(status, pay_status, store):
     status_conditions = {

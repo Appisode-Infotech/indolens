@@ -555,6 +555,110 @@
                         </div>
                     </div>
                 </div>
+                 <div class="col-12 col-xxl-2">
+                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-7 border-y border-300">
+                        <div data-list='{"valueNames":["id","reason","amount","date","createdBy","createdOn"],"page":6}'>
+                            <div class="row align-items-end justify-content-between pb-5 g-3">
+                                <div class="col-auto">
+                                    <h3>Expense ({{store_expense_list|length}}) </h3>
+                                    <p class="text-700 lh-sm mb-0">expense in this Store</p>
+                                </div>
+                                <div class="col-12 col-md-auto">
+                                    <div class="row g-2 gy-3">
+                                        <div class="col-auto flex-1">
+                                            <div class="search-box">
+                                                <form class="position-relative" data-bs-display="static"
+                                                      data-bs-toggle="search">
+                                                    <input aria-label="Search"
+                                                           class="form-control search-input search form-control-sm"
+                                                           placeholder="Search" type="search"/>
+                                                    <span class="fas fa-search search-box-icon"></span>
+
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive mx-n1 px-1 scrollbar">
+                                <table class="table table-sm fs--1 mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th class="sort white-space-nowrap align-middle pe-3" data-sort="id"
+                                            scope="col"
+                                            style="width:5%;">EXPENSE ID
+                                        </th>
+                                        <th class="sort align-middle" data-sort="reason" scope="col"
+                                            style="width:6%;">REASON
+                                        </th>
+                                        <th class="sort align-middle" data-sort="amount" scope="col"
+                                            style="width:6%;">AMOUNT
+                                        </th>
+                                        <th class="sort align-middle pe-3" data-sort="date" scope="col"
+                                            style="width:10%;">DATE
+                                        </th>
+                                        <th class="sort align-middle text-start pe-3" data-sort="createdBy"
+                                            scope="col" style="width:12%; min-width: 200px;">CREATED BY
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="createdOn" scope="col"
+                                            style="width:30%;">CREATED ON
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list" id="oexpense-table-body">
+                                    {% for expense in store_expense_list %}
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                        data-category="{{ order.order_status }}">
+                                        <td class="id align-middle white-space-nowrap py-0">
+                                            #{{expense.store_expense_id}}</a>
+                                        </td>
+                                        <td class="reason align-middle fw-semi-bold text-1000">
+                                            {{expense.expense_reason}}
+                                        </td>
+                                        <td class="amount align-middle fw-semi-bold text-1000">
+                                            {{expense.expense_amount}}
+                                        </td>
+                                        <td class="date align-middle fw-semi-bold text-1000">
+                                            {{expense.expense_date}}
+                                        </td>
+                                        <td class="createdBy align-middle fw-semi-bold text-1000">
+                                            <a href="{% url 'view_order_creator' expense.created_by expense.store_type %}">
+                                                {{expense.creator_name}}</a>
+                                        </td>
+                                        <td class="createdOn align-middle fw-semi-bold text-1000">
+                                            {{expense.created_on}}
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row align-items-center py-1">
+                                <div class="pagination d-none"></div>
+                                <div class="col d-flex fs--1">
+                                    <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                       data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
+                                                                              href="#!">View
+                                    all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                        class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less</a>
+                                </div>
+                                <div class="col-auto d-flex">
+
+                                    <button class="btn btn-link px-1 me-1" data-list-pagination="prev" title="Previous"
+                                            type="button"><span class="fas fa-chevron-left me-2"></span>Previous
+                                    </button>
+                                    <button class="btn btn-link px-1 ms-1" data-list-pagination="next" title="Next"
+                                            type="button">Next<span
+                                            class="fas fa-chevron-right ms-2"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
                 {% include 'footer.html' %}
             </div>
         </div>

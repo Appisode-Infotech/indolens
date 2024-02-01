@@ -7,8 +7,9 @@ from django.db import connection
 from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def add_product_category(product_cat_obj):
     try:
@@ -21,8 +22,8 @@ def add_product_category(product_cat_obj):
                 VALUES (
                     '{product_cat_obj.category_name}',
                     '{product_cat_obj.category_prefix}', '{product_cat_obj.category_description}',
-                    0, '{today}',
-                    '{product_cat_obj.created_by}', '{today}',
+                    0, '{getIndianTime()}',
+                    '{product_cat_obj.created_by}', '{getIndianTime()}',
                     '{product_cat_obj.last_updated_by}'
                 )
             """
@@ -47,7 +48,7 @@ def edit_product_category(product_cat_obj):
                     category_name = '{product_cat_obj.category_name}', 
                     category_prefix = '{product_cat_obj.category_prefix}', 
                     category_description = '{product_cat_obj.category_description}', 
-                    last_updated_on = '{today}' , last_updated_by = '{product_cat_obj.last_updated_by}'
+                    last_updated_on = '{getIndianTime()}' , last_updated_by = '{product_cat_obj.last_updated_by}'
                     WHERE category_id = {product_cat_obj.category_id}
             """
 

@@ -10,8 +10,9 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.franchise_owner_resp_model import get_franchise_owners
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_franchise_owner(franchise_owner, files):
     try:
@@ -26,7 +27,8 @@ def create_franchise_owner(franchise_owner, files):
                     '{franchise_owner.name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{franchise_owner.address}', '{franchise_owner.document_1_type}', 
                     '{json.dumps(files.document1)}', '{franchise_owner.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{franchise_owner.created_by}', '{today}', '{franchise_owner.last_updated_by}', '{today}', 1,0
+                    1, '{franchise_owner.created_by}', '{getIndianTime()}', '{franchise_owner.last_updated_by}', 
+                    '{getIndianTime()}', 1,0
                 )
             """
 
@@ -141,7 +143,7 @@ def edit_franchise_owner(franchise_owner, files):
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{franchise_owner.address}',
                     last_updated_by = '{franchise_owner.last_updated_by}',
-                    last_updated_on = '{today}'
+                    last_updated_on = '{getIndianTime()}'
                 WHERE employee_id = {franchise_owner.employee_id}
             """
 

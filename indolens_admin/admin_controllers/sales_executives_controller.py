@@ -10,8 +10,9 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_own_sales_executives(sales_executives, files):
     try:
@@ -27,7 +28,7 @@ def create_own_sales_executives(sales_executives, files):
                     '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
-                    '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3, 0
+                    '{sales_executives.created_by}', '{getIndianTime()}', '{sales_executives.last_updated_by}', '{getIndianTime()}', 3, 0
                 )
             """
 
@@ -65,7 +66,7 @@ def update_own_sales_executives(sales_executives, files):
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{sales_executives.address}',
                     last_updated_by = '{sales_executives.last_updated_by}',
-                    last_updated_on = '{today}'
+                    last_updated_on = '{getIndianTime()}'
                 WHERE employee_id = {sales_executives.employee_id}
             """
 
@@ -96,7 +97,7 @@ def update_franchise_sales_executives(sales_executives, files):
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{sales_executives.address}',
                     last_updated_by = '{sales_executives.last_updated_by}',
-                    last_updated_on = '{today}'
+                    last_updated_on = '{getIndianTime()}'
                 WHERE employee_id = {sales_executives.employee_id}
             """
 
@@ -129,7 +130,7 @@ def create_franchise_sales_executives(sales_executives, files):
                     '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
-                    '{sales_executives.created_by}', '{today}', '{sales_executives.last_updated_by}', '{today}', 3,0
+                    '{sales_executives.created_by}', '{getIndianTime()}', '{sales_executives.last_updated_by}', '{getIndianTime()}', 3,0
                 )
             """
 
