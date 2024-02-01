@@ -2835,11 +2835,8 @@ def centralInventoryAddProducts(request):
             file_data = FileData(form_data)
             product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
             power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
-            print(power_attributes)
-            print(product_obj)
             response, status_code = central_inventory_controller.add_central_inventory_products(product_obj, file_data,
                                                                                                 power_attributes)
-            print(response)
             url = reverse('manage_central_inventory_products', kwargs={'status': 'All'})
             return redirect(url)
         else:

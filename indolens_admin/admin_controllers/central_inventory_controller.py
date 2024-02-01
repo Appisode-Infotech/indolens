@@ -224,6 +224,7 @@ def update_central_inventory_products(product_obj, productId, power_attribute):
                     product_quantity = '{product_obj.product_quantity}',
                     product_gst = '{product_obj.product_gstin}',
                     discount = '{product_obj.discount}',
+                    franchise_sale_price = {product_obj.franchise_sale_price},
                     power_attribute = '{power_attributes_json}'
                 WHERE product_id = '{productId}'
             """
