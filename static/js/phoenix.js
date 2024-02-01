@@ -4871,7 +4871,8 @@ const listInit = () => {
 
 
 //filter table
-  document.addEventListener('DOMContentLoaded', function () {
+// Filter table
+document.addEventListener('DOMContentLoaded', function () {
     updateCategoryDisplay();
 
     var navLinks = document.querySelectorAll('ul.nav-links a');
@@ -4883,11 +4884,16 @@ const listInit = () => {
                 tableRows.forEach(function (row) {
                     row.style.display = 'none';
                 });
+                var found = false;
                 Array.from(tableRows).forEach(function (row) {
                     if (row.getAttribute('data-category') === selectedCategory) {
                         row.style.display = 'table-row';
+                        found = true;
                     }
                 });
+                if (!found) {
+                    addNoDataRowToTable();
+                }
             } else {
                 tableRows.forEach(function (row) {
                     row.style.display = 'table-row';
@@ -4898,13 +4904,30 @@ const listInit = () => {
                 navLink.classList.remove('active');
             });
             this.classList.add('active');
-              updateListControlsAfterFilter();
         });
     });
 
-    function updateListControlsAfterFilter(){
+    function addNoDataRowToTable() {
+    var table = document.querySelector('table');
+    var noDataRow = document.createElement('tr');
+    var noDataCell = document.createElement('td');
+    noDataCell.className = 'text-center';
+    noDataCell.setAttribute('colspan', table.rows[0].cells.length); // Set colspan to the total number of columns in the first row
+    noDataCell.innerHTML = '<p class="fw-bo text-900 fs--1 mb-0">No data found</p>';
+    noDataRow.appendChild(noDataCell);
 
+    // Remove existing no data row if present
+    var existingNoDataRow = table.querySelector('.no-data-row');
+    if (existingNoDataRow) {
+        existingNoDataRow.remove();
     }
+
+    // Add class to the new row for styling purposes
+    noDataRow.classList.add('no-data-row');
+
+    table.appendChild(noDataRow);
+}
+
 
     function updateCategoryDisplay() {
         var currentHash = window.location.hash.substring(8) || "all";
@@ -4923,10 +4946,13 @@ const listInit = () => {
                     row.style.display = 'table-row';
                 }
             });
+            if (document.querySelectorAll('table tbody tr[style="display: table-row;"]').length === 0) {
+                addNoDataRowToTable();
+            }
         }
-              updateListControlsAfterFilter();
     }
 });
+
 
 
   const lottieInit = () => {
@@ -6251,7 +6277,7 @@ var tableRows = document.querySelectorAll('#myTable tbody tr');
             newCell.colSpan = 12;
             newCell.className = 'text-center';
             newCell.innerHTML = '<p class="fw-bo text-900 fs--1 mb-0">No data found</p>';
-
+            newCell.classList.add('no-data-row');
             newRow.appendChild(newCell);
 
             // Append the new row to the table body
