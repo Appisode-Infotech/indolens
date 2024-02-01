@@ -83,7 +83,7 @@
         {% include 'nav_bar.html' %}
         <div class="content">
             {% for lab in lab_data %}
-            <h2 class="mb-4">Edit a Lab</h2>
+            <h2 class="mb-4">Edit Lab</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'edit_lab' lab.lab_id %}" class="row g-3 needs-validation" method="post"
