@@ -1,6 +1,8 @@
 document.addEventListener('DOMContentLoaded', function () {
         // Function to create a preview container for a file
         function createPreviewContainer(file, inputElement, previewsElement) {
+
+
             const previewContainer = document.createElement('div');
             previewContainer.classList.add('d-flex', 'mb-3', 'pb-3', 'border-bottom', 'media');
 
@@ -86,7 +88,14 @@ document.addEventListener('DOMContentLoaded', function () {
             removeFileItem.dataset.dzRemove = 'data-dz-remove';
             removeFileItem.textContent = 'Remove File';
 
+            const previewFileItem = document.createElement('a');
+            previewFileItem.classList.add('dropdown-item');
+            previewFileItem.href = '#!';
+            previewFileItem.dataset.dzRemove = 'data-dz-remove';
+            previewFileItem.textContent = 'Preview File';
+
             dropdownMenu.appendChild(removeFileItem);
+            dropdownMenu.appendChild(previewFileItem);
 
             dropdownContainer.appendChild(dropdownButton);
             dropdownContainer.appendChild(dropdownMenu);
@@ -115,6 +124,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 }
             });
 
+            // Add a click event to remove the file preview
+            previewFileItem.addEventListener('click', function () {
+            const imageUrl = URL.createObjectURL(file);
+
+            // Open the image in a new tab
+            window.open(imageUrl, '_blank');
+
+            });
+
             previewsElement.appendChild(previewContainer);
         }
 
@@ -134,6 +152,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const documentPreviews1 = document.getElementById('documentPreviews');
         documentInput1.addEventListener('change', function () {
             const files = documentInput1.files;
+            clearPreviewContainer(documentPreviews1);
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
                 createPreviewContainer(file, documentInput1, documentPreviews1);
@@ -144,6 +163,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const documentPreviews2 = document.getElementById('document2Previews');
         documentInput2.addEventListener('change', function () {
             const files = documentInput2.files;
+            clearPreviewContainer(documentPreviews2);
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
                 createPreviewContainer(file, documentInput2, documentPreviews2);
@@ -155,10 +175,19 @@ document.addEventListener('DOMContentLoaded', function () {
         const certificatePreviews = document.getElementById('certificatesPreviews');
         certificateInput.addEventListener('change', function () {
             const files = certificateInput.files;
+            clearPreviewContainer(certificatePreviews);
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];
                 createPreviewContainer(file, certificateInput, certificatePreviews);
             }
         });
+
+
+        function clearPreviewContainer(previewsElement) {
+        // Remove all child elements from the previews container
+        while (previewsElement.firstChild) {
+            previewsElement.removeChild(previewsElement.firstChild);
+        }
+    }
 
     });
