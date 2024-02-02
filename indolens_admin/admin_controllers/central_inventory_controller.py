@@ -450,7 +450,8 @@ def get_all_moved_stocks_list(status):
                                     LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
                                     LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
                                     LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
-                                    WHERE rp.request_status LIKE '{status}' """
+                                    WHERE rp.request_status LIKE '{status}' 
+                                    ORDER BY rp.request_products_id DESC"""
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()

@@ -118,12 +118,12 @@
                                                 <p class="text-800">Joined on {{sales_executive.created_on}}
                                                 </p>
                                                 {% if sales_executive.store_name|length != 0 %}
-                                                <p class="text-800">Manager - <a
+                                                <p class="text-800">Sales Executive - <a
                                                         href="{%url 'view_franchise_store' sales_executive.assigned_store_id %}">
                                                     {{sales_executive.store_name}}
                                                 </a></p>
                                                 {% else %}
-                                                <p class="text-800">Store - Unassigned</p>
+                                                <p class="text-800">Sales Executive - UNASSIGNED</p>
                                                 {% endif %}
 
 

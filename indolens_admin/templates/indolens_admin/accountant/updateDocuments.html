@@ -72,6 +72,19 @@
         {% for accountant in accountant %}
         <div class="content">
 
+            <nav aria-label="breadcrumb">
+                <!-- Breadcrumbs List -->
+                <ol class="breadcrumb mb-3">
+                    <!-- Back Button -->
+                    <li class="breadcrumb-item">
+                        <span>&#9664; </span>
+                        <a href="{% url 'manage_accountant' 'All' %}">
+                            Go back
+                        </a>
+                    </li>
+                </ol>
+            </nav>
+
             <h2 class="mb-4">Update documents - Accountant</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
@@ -277,7 +290,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 </script>
-<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>
 

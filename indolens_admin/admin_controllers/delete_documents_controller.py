@@ -61,9 +61,6 @@ def delete_product_image(imageURL, productId):
         folder_name = parts[0]
         file_name = parts[-1]
         file_path = os.path.join("media", folder_name, file_name)
-        print(folder_name)
-        print(file_name)
-        print(file_path)
 
         if os.path.exists(file_path):
             print("file found")
