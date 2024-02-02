@@ -570,7 +570,7 @@ def enableDisableStoreManager(request, route, storeManagerId, status):
 def manageFranchiseOwners(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_all_franchise_owner(status)
-        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_unassigned_franchise_stores()
         return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
                       {"franchise_owners": response['franchise_owners'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1159,7 +1159,7 @@ def enableDisableOptimetry(request, route, ownOptimetryId, status):
 def manageFranchiseOptimetry(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_all_franchise_optimetry(status)
-        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
         return render(request, 'indolens_admin/franchiseOptimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1460,7 +1460,7 @@ def enableDisableSaleExecutives(request, route, ownSaleExecutivesId, status):
 def manageFranchiseSaleExecutives(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sales_executives_controller.get_all_franchise_sales_executive(status)
-        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
         return render(request, 'indolens_admin/franchiseSalesExecutive/manageSaleExecutives.html',
                       {"franchise_sales_executive_list": response['franchise_sales_executive_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -2046,7 +2046,7 @@ def enableDisableOtherEmployees(request, route, ownEmployeeId, status):
 def manageFranchiseOtherEmployees(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_all_franchise_other_emp(status)
-        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
         return render(request, 'indolens_admin/franchiseOtherEmployees/manageOtherEmployees.html',
                       {"other_employee_list": response['other_emp_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})

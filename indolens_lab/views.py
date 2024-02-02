@@ -79,7 +79,13 @@ def labResetPassword(request, code):
 
 
 def labDashboard(request):
-    return render(request, 'lab_dashboard.html')
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        latest_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "All")
+        return render(request, 'lab_dashboard.html', {"latest_task": latest_task['task_list'][:10]})
+    else:
+        return redirect('lab_login')
 
 
 def allTask(request):
