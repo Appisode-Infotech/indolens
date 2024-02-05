@@ -241,7 +241,7 @@ def update_central_inventory_products(product_obj, productId, power_attribute):
         return {"status": False, "message": str(e)}, 301
 
 
-def restock_central_inventory_products(productId, product_quantity):
+def restock_central_inventory_products(productId, product_quantity, created_by):
     try:
         with connection.cursor() as cursor:
             restock_product_query = f"""
@@ -251,6 +251,13 @@ def restock_central_inventory_products(productId, product_quantity):
             """
 
             cursor.execute(restock_product_query)
+
+            restock_log_query = f""" INSERT INTO central_inventory_restock_log 
+                                                (product_id, quantity, created_by, created_on) 
+                                                VALUES ({productId}, {product_quantity},{created_by},{getIndianTime()}) """
+
+            cursor.execute(restock_log_query)
+
             return {
                 "status": True
             }, 200

@@ -2748,7 +2748,7 @@ def manageCentralInventoryProducts(request, status):
 def restockProduct(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.restock_central_inventory_products(
-            request.POST['productId'], request.POST['productQty'], )
+            request.POST['productId'], request.POST['productQty'], request.session.get('id'))
         url = reverse('manage_central_inventory_products', kwargs={'status': status})
         return redirect(url)
     else:
@@ -2758,7 +2758,7 @@ def restockProduct(request, status):
 def restockProductOutOfStock(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.restock_central_inventory_products(
-            request.POST['productId'], request.POST['productQty'], )
+            request.POST['productId'], request.POST['productQty'], request.session.get('id'))
         return redirect('manage_out_of_stock')
     else:
         return redirect('login')
