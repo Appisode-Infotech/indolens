@@ -254,7 +254,7 @@ def restock_central_inventory_products(productId, product_quantity, created_by):
 
             restock_log_query = f""" INSERT INTO central_inventory_restock_log 
                                                 (product_id, quantity, created_by, created_on) 
-                                                VALUES ({productId}, {product_quantity},{created_by},{getIndianTime()}) """
+                                                VALUES ({productId}, {product_quantity},{created_by},'{getIndianTime()}') """
 
             cursor.execute(restock_log_query)
 
