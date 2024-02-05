@@ -16,6 +16,7 @@ from indolens_admin.admin_models.admin_resp_model.master_material_resp_model imp
 from indolens_admin.admin_models.admin_resp_model.master_shapes_resp_model import get_frame_shapes
 from indolens_admin.admin_models.admin_resp_model.master_units_resp_model import get_master_units
 from indolens_admin.admin_models.admin_resp_model.product_request_list_resp_model import get_request_product_list
+from indolens_admin.admin_models.admin_resp_model.product_restock_logs_resp_model import get_restock_logs
 from indolens_admin.admin_models.admin_resp_model.stockMovementInvoice_resp_model import get_stock_movement_invoice
 from indolens_admin.admin_models.admin_resp_model.store_inventory_product_resp_model import get_store_stocks
 
@@ -359,6 +360,25 @@ def get_central_inventory_product_single(productId):
             return {
                 "status": True,
                 "product_data": get_products(product_list)[0],
+            }, 200
+        except pymysql.Error as e:
+            return {"status": False, "message": str(e)}, 301
+        except Exception as e:
+            return {"status": False, "message": str(e)}, 301
+
+def get_central_inventory_product_restoc_log(productId):
+    with connection.cursor() as cursor:
+        try:
+            get_all_product_query = f""" SELECT logs.*, ci.product_name, creator.name
+                                            FROM central_inventory_restock_log AS logs
+                                            LEFT JOIN admin AS creator ON logs.created_by = creator.admin_id
+                                            LEFT JOIN central_inventory As ci ON ci.product_id = logs.product_id
+                                            WHERE logs.product_id= {productId} """
+            cursor.execute(get_all_product_query)
+            product_list = cursor.fetchall()
+            return {
+                "status": True,
+                "restock_logs": get_restock_logs(product_list),
             }, 200
         except pymysql.Error as e:
             return {"status": False, "message": str(e)}, 301

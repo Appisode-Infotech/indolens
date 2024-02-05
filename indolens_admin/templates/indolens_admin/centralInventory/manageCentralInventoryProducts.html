@@ -248,6 +248,9 @@
                                                    data-action-type="restock">Restock</a>
 
                                                 <a class="dropdown-item"
+                                                   href="{% url 'view_product_restock_logs' product.product_id %}">
+                                                    Restock Log</a>
+                                                <a class="dropdown-item"
                                                    href="{% url 'update_product' product.product_id %}">Update Product
                                                     Info</a>
                                                 <a class="dropdown-item"

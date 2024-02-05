@@ -14,7 +14,8 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
     customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller, \
     orders_controller, store_expenses, dashboard_controller, eye_test_controller
-from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
+from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single, \
+    get_central_inventory_product_restoc_log
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
     accountant_model, lab_technician_model, lab_model, \
@@ -225,7 +226,7 @@ def viewFranchiseStore(request, franchiseStoreId):
                        "sales_data": sales_data['orders_list'], "store_expense": store_expense['store_expense'],
                        "revenue_generated": sum(item['total_cost'] for item in sales_data['orders_list']),
                        "net_income": sum(item['total_cost'] for item in sales_data['orders_list']) - store_expense[
-                           'store_expense'],  "store_expense_list": store_expense_list['store_expense']})
+                           'store_expense'], "store_expense_list": store_expense_list['store_expense']})
 
     else:
         return redirect('login')
@@ -2796,6 +2797,13 @@ def centralInventoryViewProducts(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
     return render(request, 'indolens_admin/centralInventory/centralInventoryViewProduct.html',
                   {'product_data': response['product_data'], 'productId': productId})
+
+
+def centralInventoryViewProductRestockLogs(request, productId):
+    response, status_code = get_central_inventory_product_restoc_log(productId)
+    print(response)
+    return render(request, 'indolens_admin/centralInventory/centralInventoryProductLogs.html',
+                  {"restock_logs": response['restock_logs']})
 
 
 def centralInventoryAddProducts(request):
