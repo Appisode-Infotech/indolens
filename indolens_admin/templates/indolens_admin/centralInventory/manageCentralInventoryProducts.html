@@ -147,11 +147,11 @@
                                     <th class="sort white-space-nowrap align-middle ps-0" data-sort="slno"
                                         scope="col" style="width:350px;">SL NO
                                     </th>
-                                    <th class="white-space-nowrap fs--1 align-middle"
-                                        style="max-width:20px; width:18px;">
+                                    <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
+                                        scope="col" style="width:400px;">PRODUCT IMAGE
                                     </th>
-                                    <th class="sort white-space-nowrap align-middle fs--2" scope="col"
-                                        style="width:70px;">IMAGE
+                                    <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
+                                        scope="col" style="width:350px;">PRODUCT QR
                                     </th>
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                         scope="col" style="width:350px;">PRODUCT NAME
@@ -186,15 +186,15 @@
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                     data-category="{{ product.category_name }}">
                                     <td class="order align-middle white-space-nowrap py-0 slno"></td>
-                                    <td class="fs--1 align-middle">
-                                    </td>
-                                    <td class="align-middle white-space-nowrap py-0">
+                                    <td class="align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
                                             <div class="avatar avatar-m">
                                                 <img alt="..." data-dz-thumbnail="data-dz-thumbnail" class="rounded-circle"  onerror="this.src = 'http://via.placeholder.com/100x100';"
                                                      src="{{ MEDIA_URL }}{{ product.product_images.0 }}"/>
                                             </div>
                                         </a>
+                                    </td>
+                                    <td class="align-middle white-space-nowrap fw-bold text-700 ps-4 ">
                                         <a href="{{ MEDIA_URL }}{{ product.product_qr_code }}" target="_blank">
                                             <div class="avatar avatar-m">
                                                 <img alt="" class="rounded-circle"

@@ -188,6 +188,12 @@ def add_central_inventory_products(product_obj, file, power_attributes):
             update_qr_sql = f"UPDATE central_inventory SET product_qr_code = '{image_url}' WHERE product_id = {productId}"
             cursor.execute(update_qr_sql)
 
+            restock_log_query = f""" INSERT INTO central_inventory_restock_log 
+                                                            (product_id, quantity, created_by, created_on) 
+                                                            VALUES ({productId}, {product_obj.product_quantity},
+                                                            {product_obj.created_by},'{getIndianTime()}') """
+            cursor.execute(restock_log_query)
+
             return {
                 "status": True,
                 "productId": productId

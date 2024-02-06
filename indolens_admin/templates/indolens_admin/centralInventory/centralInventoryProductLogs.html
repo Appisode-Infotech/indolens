@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Manage Products</title>
+    <title>Indolens admin - Product Restock</title>
     {% load static %}
 
 
@@ -75,7 +75,7 @@
             <div class="mb-1">
                 <div class="row g-3 mb-4">
                     <div class="col-auto">
-                        <h2 class="mb-0">Products</h2>
+                        <h2 class="mb-0">Product Restock Log</h2>
                     </div>
                 </div>
 
@@ -137,8 +137,9 @@
                                     <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         {{log.quantity}}
                                     </td>
+
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 ">
-                                        {{log.creator_name}}
+                                        <a href="{% url 'view_sub_admin' log.created_by %}">{{log.creator_name}}</a>
                                     </td>
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{log.created_on}}
