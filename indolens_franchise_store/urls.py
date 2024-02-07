@@ -44,6 +44,8 @@ urlpatterns = [
          name='manage_franchise_store_inventory_products'),
     path('view_franchise_store_inventory_products/productId=<int:productId>', viewFranchiseStoreInventoryProducts,
          name='view_franchise_store_inventory_products'),
+    path('view_franchise_central_inventory_products/productId=<int:productId>', viewFranchiseCentralStoreInventoryProducts,
+         name='view_franchise_central_inventory_products'),
 
     path('manage_franchise_store_out_of_stock/', inventoryOutOfStockFranchise,
          name='manage_franchise_store_out_of_stock'),

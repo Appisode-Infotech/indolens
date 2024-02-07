@@ -1383,7 +1383,7 @@ function addLensContainer() {
                 name="product" required="required">
             <option value="">Select Product</option>
             {% for product in other_products_list %}
-            <option value="{{product.store_inventory_id}}">
+            <option value="{{product.product_id}}">
                 {{product.product_name}}
             </option>
             {% endfor %}
