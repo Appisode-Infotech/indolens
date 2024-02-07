@@ -111,16 +111,19 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             `is_discount_applied`, `power_attribute`, `assigned_lab`, `customer_id`,
                                             `order_status`, `payment_status`, `delivery_status`, `payment_mode`,
                                             `amount_paid`, `estimated_delivery_date`, `created_by_store`,
-                                            `created_by`, `created_on`, `updated_by`, `updated_on`, `created_by_store_type`)
+                                            `created_by`, `created_on`, `updated_by`, `updated_on`, 
+                                            `created_by_store_type`, sales_note)
                                             VALUES
-                                            ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
+                                            ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, 
+                                            '{new_data.get('product_hsn')}', 
                                             {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                             {discount_percentage}, {is_discount_applied}, 
                                             '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
                                             {customer_id}, 1, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
-                                            '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, '{getIndianTime()}', 1) """
+                                            '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
+                                            '{getIndianTime()}', 1, '{billingDetailsData.get('saleNote')}') """
 
                     cursor.execute(insert_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
@@ -144,16 +147,21 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 `is_discount_applied`, `power_attribute`, `assigned_lab`, `customer_id`,
                                                                 `order_status`, `payment_status`, `delivery_status`, `payment_mode`,
                                                                 `amount_paid`, `estimated_delivery_date`, `created_by_store`,
-                                                                `created_by`, `created_on`, `updated_by`, `updated_on`, `created_by_store_type`)
+                                                                `created_by`, `created_on`, `updated_by`, `updated_on`, 
+                                                                `created_by_store_type`, `sales_note`)
                                                                 VALUES
-                                                                ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
+                                                                ('{billingDetailsData.get('orderId')}', 
+                                                                {new_data.get('product')}, '{new_data.get('product_hsn')}', 
                                                                 '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
                                                                 {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                                 {discount_percentage}, {is_discount_applied}, 
                                                                 '{json.dumps(power_attributes)}', 1, 
-                                                                {customer_id}, {billingDetailsData.get('assignedLab')}, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
+                                                                {customer_id}, {billingDetailsData.get('assignedLab')}, 
+                                                                1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                                                 {store_id}, {billingDetailsData.get('orderByEmployee')}, 
-                                                                '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, '{getIndianTime()}', 1) """
+                                                                '{getIndianTime()}', 
+                                                                {billingDetailsData.get('orderByEmployee')}, 
+                                                                '{getIndianTime()}', 1, '{billingDetailsData.get('saleNote')}') """
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
 
@@ -177,14 +185,19 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             `is_discount_applied`, `assigned_lab`, `customer_id`,
                                                             `order_status`, `payment_status`, `delivery_status`, `payment_mode`,
                                                             `amount_paid`, `estimated_delivery_date`, `created_by_store`,
-                                                            `created_by`, `created_on`, `updated_by`, `updated_on`, `power_attribute`, `created_by_store_type`)
+                                                            `created_by`, `created_on`, `updated_by`, `updated_on`, 
+                                                            `power_attribute`, `created_by_store_type`, `sales_note`)
                                                             VALUES
                                                             ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
                                                             {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
                                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                             {discount_percentage}, {is_discount_applied}, 
-                                                            {billingDetailsData.get('assignedLab')}, {customer_id}, 1, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
-                                                            {store_id}, {billingDetailsData.get('orderByEmployee')}, '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, '{getIndianTime()}', '{power_attributes}', 1 )
+                                                            {billingDetailsData.get('assignedLab')}, {customer_id}, 1, 
+                                                            1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
+                                                            {store_id}, {billingDetailsData.get('orderByEmployee')}, 
+                                                            '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
+                                                            '{getIndianTime()}', '{power_attributes}', 1 , 
+                                                            '{billingDetailsData.get('saleNote')}')
                                                         """
 
                     cursor.execute(insert_contact_len_sales_query,

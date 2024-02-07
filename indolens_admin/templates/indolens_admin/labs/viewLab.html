@@ -294,53 +294,35 @@
 
                                         <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                             {% if job.payment_status == 1 %}
-                                            <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                    class="badge-label">PENDING</span><span class="ms-1"
-                                                                                            data-feather="plus"
-                                                                                            style="height:12.8px;width:12.8px;"></span></span>
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                    class="badge-label">PENDING</span></span>
                                             {% elif job.payment_status == 2 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                    class="badge-label">COMPLETE</span><span class="ms-1"
-                                                                                             data-feather="check"
-                                                                                             style="height:12.8px;width:12.8px;"></span></span>
+                                                    class="badge-label">COMPLETE</span></span>
                                             {% elif job.payment_status == 3 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                    class="badge-label">REFUNDED</span><span class="ms-1"
-                                                                                             data-feather="x"
-                                                                                             style="height:12.8px;width:12.8px;"></span></span>
+                                                    class="badge-label">REFUNDED</span></span>
                                             {% endif %}
                                         </td>
                                         <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                             {% if job.order_status == 1 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">NEW</span><span class="ms-1"
-                                                                                        data-feather="plus"
-                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                                    class="badge-label">NEW</span></span>
                                             {% elif job.order_status == 2 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">PROCESSING</span><span class="ms-1"
-                                                                                               data-feather="clock"
-                                                                                               style="height:12.8px;width:12.8px;"></span></span>
+                                                    class="badge-label">PROCESSING</span></span>
                                             {% elif job.order_status == 3 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">READY</span><span class="ms-1"
-                                                                                          data-feather="bell"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                                    class="badge-label">READY</span></span>
                                             {% elif job.order_status == 4 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">DISPATCHED</span><span class="ms-1"
-                                                                                               data-feather="truck"
-                                                                                               style="height:12.8px;width:12.8px;"></span></span>
+                                                    class="badge-label">DISPATCHED</span></span>
                                             {% elif job.order_status == 5 %}
-                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">DELIVERED</span><span class="ms-1"
-                                                                                              data-feather="check"
-                                                                                              style="height:12.8px;width:12.8px;"></span></span>
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                    class="badge-label">DELIVERED</span></span>
                                             {% elif job.order_status == 6 %}
-                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">CANCELLED</span><span class="ms-1"
-                                                                                              data-feather="x"
-                                                                                              style="height:12.8px;width:12.8px;"></span></span>
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                    class="badge-label">CANCELLED</span></span>
                                             {% endif %}
 
                                         </td>

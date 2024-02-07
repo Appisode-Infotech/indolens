@@ -83,7 +83,7 @@
                     </div>
                 </div>
 
-                <div data-list='{"valueNames":["slNo","customer","power","createdBy","createdOn","updatedBy","updatedOn"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slNo","testid", "customer","customerphone", "createdBy","createdOn"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -116,27 +116,23 @@
                                 <thead>
                                 <tr>
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="slNo" scope="col"
-                                        style="width:5%;">SL NO
+                                        style="width:10%;">SL NO
                                     </th>
-                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slNo" scope="col"
-                                        style="width:5%;">Test NO
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="testid" scope="col"
+                                        style="width:10%;">Test NO
                                     </th>
                                     <th class="sort align-middle pe-5" data-sort="customer" scope="col"
-                                        style="width:10%;">CUSTOMER
+                                        style="width:20%;">CUSTOMER NAME
+                                    </th>
+                                    <th class="sort align-middle pe-5" data-sort="customerphone" scope="col"
+                                        style="width:20%;">CUSTOMER PHONE
                                     </th>
                                     <th class="sort align-middle pe-5" data-sort="createdBy" scope="col"
                                         style="width:20%;">
                                         CREATED BY
                                     </th>
                                     <th class="sort align-middle text-end" data-sort="createdOn" scope="col"
-                                        style="width:10%">CREATED ON
-                                    </th>
-                                    <th class="sort align-middle text-end ps-3" data-sort="updatedBy" scope="col"
-                                        style="width:10%">UPDATED BY
-                                    </th>
-                                    <th class="sort align-middle ps-7" data-sort="updatedOn" scope="col"
-                                        style="width:25%;">
-                                        UPDATED ON
+                                        style="width:20%">CREATED ON
                                     </th>
                                     <th class="sort text-end align-middle pe-0 ps-4" scope="col">ACTION</th>
 
@@ -147,32 +143,32 @@
                                 {% for test in eye_test_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                     <td class="fs--1 align-middle px-0 py-3 slNo"></td>
-                                    <td class="fs--1 align-middle px-0 py-3 "><a
-                                            href="{% url 'eye_test_by_id' test.eye_test_id %}">#{{test.eye_test_id}}</a>
+                                    <td class="testid fs--1 align-middle px-0 py-3 "><a
+                                            href="{% url 'eye_test_by_id' test.eye_test_id %}">TEST{{test.eye_test_id}}</a>
                                     </td>
                                     <td class="customer align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
-                                            href="{% url 'customer_details' test.customer_id %}">
+                                            href="{% url 'view_franchise_store_customer_details' test.customer_id %}">
                                         <div class="avatar avatar-m">
                                             <div class="avatar-name rounded-circle"><span class="first-letter"></span>
                                             </div>
                                         </div>
                                         <p class="mb-0 ms-3 text-1100 fw-bold name">{{test.customer_name}}</p>
                                     </a></td>
+                                    <td class="customerphone align-middle white-space-nowrap pe-5">{{test.customer_phone}}</td>
 
                                     <td class="createdBy align-middle white-space-nowrap fw-semi-bold text-1000">
-                                        <a href="{% url 'view_order_creator' test.created_by test.created_by_store_type %}">{{test.creator_name}}</a>
+                                        {% if test.created_by_store_type == 1 %}
+                                        <a href="{% url 'view_own_store_employee_details' test.created_by %}">{{test.creator_name}}</a>
+                                        {% else %}
+                                        <a href="{% url 'view_franchise_store_employee_details' test.created_by %}">{{test.creator_name}}</a>
+                                        {% endif %}
                                     </td>
 
                                     <td class="createdOn align-middle white-space-nowrap fw-semi-bold text-end text-1000">
                                         {{test.created_on}}
                                     </td>
-                                    <td class="updatedBy align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
-                                        <a href="{% url 'view_order_creator' test.created_by test.created_by_store_type %}">{{test.creator_name}}</a>
-                                    </td>
-                                    <td class="updatedOn align-middle white-space-nowrap text-1000 ps-7">
-                                        {{test.updated_on}}
-                                    </td>
+
                                     <td class="align-middle text-end white-space-nowrap pe-0 action">
                                             <div class="font-sans-serif btn-reveal-trigger position-static" >
                                                 <button aria-expanded="false"

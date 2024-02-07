@@ -506,7 +506,6 @@ def getfranchiseStoreEyeTest(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_store_eye_test_controller.get_eye_test()
-        print(response)
         return render(request, 'franchiseStoreEyeTest/viewAllStoreEyeTest.html',
                       {'eye_test_list': response['eye_test_list']})
 
