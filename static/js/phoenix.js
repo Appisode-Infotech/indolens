@@ -6287,6 +6287,33 @@ var tableRows = document.querySelectorAll('#myTable tbody tr');
         }
 }
 
+ document.addEventListener('DOMContentLoaded', function() {
+      // Get all input elements with type "text"
+      var textInputFields = document.querySelectorAll('input[type="text"]');
+
+      // Loop through each input field and add the pattern attribute
+      textInputFields.forEach(function(input) {
+        input.setAttribute('pattern', '[^ ].*');
+      });
+    });
+
+
+      document.addEventListener('DOMContentLoaded', function() {
+      // Get all textarea elements
+      var textareaFields = document.querySelectorAll('textarea');
+
+      // Loop through each textarea and add a custom validation
+      textareaFields.forEach(function(textarea) {
+        textarea.addEventListener('input', function() {
+          var value = textarea.value.trim();
+          if (value === '') {
+            textarea.setCustomValidity('Textarea cannot be empty or contain only whitespace.');
+          } else {
+            textarea.setCustomValidity('');
+          }
+        });
+      });
+    });
   /* eslint-disable import/no-extraneous-dependencies */
 
   window.initMap = initMap;
