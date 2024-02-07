@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import central_inventory_controller, orders_controller
+from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller, store_orders_controller, \
     own_store_dashboard_controller, own_store_lab_controller, own_store_eye_test_controller
@@ -388,6 +389,16 @@ def viewStoreInventoryProducts(request, productId):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.getstore_product_by_id(assigned_store, productId)
         return render(request, 'inventory/storeInventoryProductsView.html', {"stocks_list": response['stocks_list']})
+    else:
+        return redirect('own_store_login')
+
+def viewCentralInventoryProducts(request, productId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        print(productId)
+        response, status_code = get_central_inventory_product_single(productId)
+        print(response['product_data'])
+        return render(request, 'inventory/centralInventoryProductsView.html', {"product_data": response['product_data']})
     else:
         return redirect('own_store_login')
 

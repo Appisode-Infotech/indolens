@@ -134,8 +134,13 @@
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
+                                            {% if order.category_id == 2 or order.category_id == 3 %}
+                                            <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_central_inventory_products' order.product_id %}">
+                                                {{order.product_name}}</a>
+                                            {% else %}
                                             <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_store_inventory_products' order.product_id %}">
                                                 {{order.product_name}}</a>
+                                            {% endif %}
                                         </td>
                                         <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
                                             {{order.unit_sale_price}}
