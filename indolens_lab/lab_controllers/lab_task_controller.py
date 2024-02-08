@@ -123,3 +123,70 @@ def get_lab_job_details(orderId, assigned_lab):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+
+def get_lab_job_stats(labId):
+    try:
+        with connection.cursor() as cursor:
+            get_new_job_details_query = f"""
+                                        SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
+                                        FROM (
+                                            SELECT COUNT(DISTINCT order_id) AS total_count
+                                            FROM sales_order
+                                            WHERE assigned_lab = {labId} AND order_status = 1
+                                            GROUP BY order_id
+                                        ) AS subquery
+                                        """
+
+            cursor.execute(get_new_job_details_query)
+            new_jobs = cursor.fetchone()
+
+            get_processing_job_details_query = f"""
+                                        SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
+                                        FROM (
+                                            SELECT COUNT(DISTINCT order_id) AS total_count
+                                            FROM sales_order
+                                            WHERE assigned_lab = {labId} AND order_status = 2
+                                            GROUP BY order_id
+                                        ) AS subquery
+                                        """
+            cursor.execute(get_processing_job_details_query)
+            processing_jobs = cursor.fetchone()
+
+            get_ready_job_details_query = f"""
+                                        SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
+                                        FROM (
+                                            SELECT COUNT(DISTINCT order_id) AS total_count
+                                            FROM sales_order
+                                            WHERE assigned_lab = {labId} AND order_status = 3
+                                            GROUP BY order_id
+                                        ) AS subquery
+                                        """
+            cursor.execute(get_ready_job_details_query)
+            ready_jobs = cursor.fetchone()
+
+            get_dispatched_job_details_query = f"""
+                                        SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
+                                        FROM (
+                                            SELECT COUNT(DISTINCT order_id) AS total_count
+                                            FROM sales_order
+                                            WHERE assigned_lab = {labId} AND order_status = 4
+                                            GROUP BY order_id
+                                        ) AS subquery
+                                        """
+
+            cursor.execute(get_dispatched_job_details_query)
+            dispatched_jobs = cursor.fetchone()
+
+            return {
+                "status": True,
+                "new_jobs": new_jobs[0],
+                "processing_jobs": processing_jobs[0],
+                "ready_jobs": ready_jobs[0],
+                "dispatched_jobs": dispatched_jobs[0],
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

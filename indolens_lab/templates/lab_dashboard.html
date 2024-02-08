@@ -82,7 +82,7 @@
                 <div class="row g-4">
                     <div class="col-12 col-xxl-6">
                         <div class="mb-8">
-                            <h2 class="mb-2">Hi {{ request.session.name }}</h2>
+                            <h2 class="mb-2">Hi {{ request.session.name }} </h2>
                             <h5 class="text-700 fw-semi-bold">Here’s what’s going on at your business right now</h5>
                         </div>
 
@@ -92,9 +92,9 @@
                                         alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
                                         width="46"/>
 
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">₹18,000 Sales</h4>
-                                        <p class="text-800 fs--1 mb-0">From Own Stores Today</p>
+                                    <div class="ms-3"><h4 class="mb-0"><a href="{% url 'new_task' %}">
+                                        {{lab_stats.new_jobs}} New</a></h4>
+                                        <p class="text-800 fs--1 mb-0">New Store Jobs</p>
                                     </div>
                                 </div>
                             </div>
@@ -103,94 +103,29 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
 
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">₹12,000 Sales</h4>
-                                        <p class="text-800 fs--1 mb-0">From Franchise Stores Today</p>
+                                    <div class="ms-3"><h4 class="mb-0"><a href="{% url 'processing_task' %}">
+                                        {{lab_stats.processing_jobs}} Processing</a> </h4>
+                                        <p class="text-800 fs--1 mb-0">Processing Store Jobs</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt=""
-                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">15 Orders</h4>
-                                        <p class="text-800 fs--1 mb-0">From Own Stores Today</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt=""
-                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">5 Delivered</h4>
-                                        <p class="text-800 fs--1 mb-0">From Franchise Stores Today</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center g-4 mt-2">
                             <div class="col-12 col-md-auto">
                                 <div class="d-flex align-items-center"><img
                                         alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
                                         width="46"/>
-
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">>57
-                                            new orders</h4>
-                                        <p class="text-800 fs--1 mb-0">Pending orders</p>
+                                    <div class="ms-3"><h4 class="mb-0"> <a href="{% url 'ready_task' %}">
+                                        {{lab_stats.ready_jobs}} Ready</a></h4>
+                                        <p class="text-800 fs--1 mb-0">Reday Store Jobs</p>
                                     </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt=""
-                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
-
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">5 Delivered></h4>
-                                        <p class="text-800 fs--1 mb-0">Orders delivered today</p>
-                                    </div>
-
                                 </div>
                             </div>
                             <div class="col-12 col-md-auto">
                                 <div class="d-flex align-items-center"><img
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">15 products
-                                        </h4>
-                                        <p class="text-800 fs--1 mb-0">Out of stock</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row align-items-center g-4 mt-2">
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
-                                        width="46"/>
-
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">9 Own stores</h4>
-                                        <p class="text-800 fs--1 mb-0">Indolens owns them</p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-md-auto">
-                                <div class="d-flex align-items-center"><img
-                                        alt=""
-                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
-
-                                    <div class="ms-3">
-                                        <h4 class="mb-0">5 Franchise
-                                            stores
-                                        </h4>
-                                        <p class="text-800 fs--1 mb-0">For franchise owners</p>
+                                    <div class="ms-3"> <h4 class="mb-0"> <a href="{% url 'dispatched_task' %}">
+                                        {{lab_stats.dispatched_jobs}} Dispatched </a> </h4>
+                                        <p class="text-800 fs--1 mb-0">Dispatched Store Jobs</p>
                                     </div>
                                 </div>
                             </div>

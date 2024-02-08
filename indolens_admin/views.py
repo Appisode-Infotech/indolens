@@ -143,7 +143,6 @@ def viewOwnStore(request, ownStoreId):
         sales_data, sale_status_code = orders_controller.get_all_store_orders(ownStoreId, 1)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(ownStoreId, 1)
         store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(ownStoreId, 1)
-        print(store_expense_list)
 
         return render(request, 'indolens_admin/ownStore/ownStore.html',
                       {"store_data": response['own_stores'], "products_list": products_list['products_list'],
