@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens store - Customer details</title>
+    <title>Indolens {{request.session.store_name}} - Customer details</title>
     {% load static %}
 
 
@@ -153,11 +153,6 @@
                                     <table class="table table-sm fs--1 mb-0">
                                         <thead>
                                         <tr>
-                                            <th class="white-space-nowrap fs--1 align-middle ps-0" style="width:26px;">
-                                                <div class="form-check mb-0 fs-0">
-                                                    <input class="form-check-input" type="checkbox"/>
-                                                </div>
-                                            </th>
                                             <th class="sort white-space-nowrap align-middle pe-3" data-sort="order"
                                                 scope="col"
                                                 style="width:5%;">ORDER ID
@@ -197,11 +192,6 @@
                                         <tbody class="list" id="order-table-body">
                                         {% for order in sales_data %}
                                         <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                            <td class="fs--1 align-middle px-0 py-3">
-                                                <div class="form-check mb-0 fs-0">
-                                                    <input class="form-check-input" type="checkbox"/>
-                                                </div>
-                                            </td>
                                             <td class="order align-middle white-space-nowrap py-0"><a
                                                     class="fw-semi-bold"
                                                     href="{% url 'order_details_store' order.order_id %}">#{{order.order_id}}</a>

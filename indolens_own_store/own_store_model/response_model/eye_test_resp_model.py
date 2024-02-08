@@ -5,7 +5,8 @@ class EyeTest:
     def __init__(self, values):
         (
             self.eye_test_id, self.customer_id, power_attributes, self.created_by_store_id, self.created_by_store_type,
-            self.created_by, self.created_on, self.updated_by, self.updated_on, self.customer_name, self.creator_name,
+            self.created_by, self.created_on, self.updated_by, self.updated_on, self.customer_name, self.customer_phone,
+            self.creator_name,
             self.updater_name
         ) = values
 
@@ -24,6 +25,7 @@ class EyeTest:
             'updated_by': self.updated_by,
             'updated_on': self.updated_on,
             'customer_name': self.customer_name,
+            'customer_phone': self.customer_phone,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name,
         }

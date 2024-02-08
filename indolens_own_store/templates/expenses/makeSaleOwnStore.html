@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Make sale - own store</title>
+    <title>INDOLENS {{request.session.store_name}} - Make sale</title>
     {% load static %}
 
 
@@ -224,7 +224,7 @@
                                                             <h5 class="mb-3">Customer Name</h5>
                                                             <input class="form-control"
                                                                    name="customer_name"
-                                                                   placeholder="Name"
+                                                                   placeholder="Name" maxlength="70"
                                                                    required="required"
                                                                    onchange="genCustomerObject()"
                                                                    type="text" value=""/>

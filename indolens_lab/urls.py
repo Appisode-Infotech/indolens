@@ -10,7 +10,7 @@ urlpatterns = [
     path('lab_forgot_password/', labForgotPassword, name='lab_forgot_password'),
     path('lab_reset_password/code=<str:code>', labResetPassword, name='lab_reset_password'),
     # Dashboard
-    path('dashboard/', labDashboard, name='dashboard_lab'),
+    path('dashboard_lab/', labDashboard, name='dashboard_lab'),
     path('all_task/', allTask, name='all_task'),
     path('new_task/', newTask, name='new_task'),
     path('processing_task/', processingTask, name='processing_task'),
@@ -21,5 +21,8 @@ urlpatterns = [
          name='job_status_change'),
     path('my_profile/labTechnicianId=<int:labTechnicianId>', viewLabTechnician,
          name='my_profile'),
+
+    path('view_products/productId=<int:productId>', viewLabCentralInventoryProducts,
+         name='view_lab_central_inventory_products'),
 
 ]

@@ -8,8 +8,9 @@ from django.db import connection
 from indolens_admin.admin_models.admin_resp_model.master_units_resp_model import get_master_units
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def add_masters_units(data):
     try:
@@ -19,7 +20,7 @@ def add_masters_units(data):
                     unit_name,  status, created_on, created_by,  last_updated_on,
                     last_updated_by
                 ) VALUES (
-                    '{data['unit_name']}', 0,  '{today}','{data['created_by']}',  '{today}', '{data['created_by']}'
+                    '{data['unit_name']}', 0,  '{getIndianTime()}','{data['created_by']}',  '{getIndianTime()}', '{data['created_by']}'
                 )
             """
 
@@ -43,7 +44,7 @@ def edit_master_units(data):
         with connection.cursor() as cursor:
             update_master_units_query = f"""
                 UPDATE  units SET
-                    unit_name = '{data['unit_name']}',  last_updated_on = '{today}',
+                    unit_name = '{data['unit_name']}',  last_updated_on = '{getIndianTime()}',
                     last_updated_by = {data['updated_by']}
                     WHERE unit_id = {data['unit_id']}
             """

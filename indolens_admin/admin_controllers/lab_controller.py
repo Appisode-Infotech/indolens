@@ -8,7 +8,9 @@ from indolens_admin.admin_models.admin_resp_model.lab_resp_model import get_labs
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 
 def create_lab(lab_obj):
@@ -26,7 +28,7 @@ def create_lab(lab_obj):
                                             '{lab_obj.lab_email}', '{lab_obj.lab_city}', 
                                             '{lab_obj.lab_state}', '{lab_obj.lab_zip_code}', '{lab_lat}',
                                             '{lab_lng}', '{lab_obj.complete_address}', 1, {lab_obj.created_by}, 
-                                            '{today}', {lab_obj.last_updated_by}, '{today}')"""
+                                            '{getIndianTime()}', {lab_obj.last_updated_by}, '{getIndianTime()}')"""
 
             cursor.execute(create_lab_query)
             lab_id = cursor.lastrowid
@@ -134,7 +136,7 @@ def edit_lab_by_id(lab_obj):
                     lab_lat = '{lab_lat}',
                     lab_lng = '{lab_lng}',
                     lab_address = '{lab_obj.complete_address}',
-                    last_updated_on = '{today}',
+                    last_updated_on = '{getIndianTime()}',
                     last_updated_by = {lab_obj.last_updated_by}
                 WHERE lab_id = {lab_obj.lab_id}
             """

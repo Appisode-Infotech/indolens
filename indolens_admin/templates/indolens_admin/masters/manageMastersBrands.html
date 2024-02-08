@@ -118,7 +118,7 @@
                         </div>
                     </div>
                     <div class="table-responsive scrollbar col-auto">
-                        <table class="table fs--1 mb-0 border-top border-200">
+                        <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
 
@@ -159,9 +159,7 @@
                                     {% if brand.status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
                                 {% elif brand.status == 1 %}
-                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active<span>
-                                                </span><span class="ms-1" data-feather="check"
-                                                             style="height:12.8px;width:12.8px;"></span></span>
+                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
                                 </td>
 
@@ -277,7 +275,7 @@
 <script src="{% static 'js/custom_modals.js' %}"></script>
 <script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/filter.js' %}"></script>
+
 
 </body>
 

@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Create Frame Shape</title>
+    <title>Indolens admin - Edit Frame Shape</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -76,7 +76,7 @@
         {% for shape in product_shape %}
         <div class="content">
 
-            <h2 class="mb-4">Create a Frame Shape</h2>
+            <h2 class="mb-4">Edit Frame Shape</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'edit_frame_shape' shape.shape_id %}"

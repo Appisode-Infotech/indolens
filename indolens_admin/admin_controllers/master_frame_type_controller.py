@@ -6,8 +6,9 @@ import pytz
 from indolens_admin.admin_models.admin_resp_model.master_frame_type_resp_model import get_frame_types
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def add_frame_type(frame_obj):
     try:
@@ -20,8 +21,8 @@ def add_frame_type(frame_obj):
                 VALUES (
                     '{frame_obj.frame_type_name}',
                     '{frame_obj.frame_type_description}',
-                    0, '{today}',
-                    '{frame_obj.created_by}', '{today}',
+                    0, '{getIndianTime()}',
+                    '{frame_obj.created_by}', '{getIndianTime()}',
                     '{frame_obj.last_updated_by}'
                 )
             """
@@ -44,7 +45,7 @@ def edit_frame_type(frame_obj):
                 UPDATE  frame_types SET
                     frame_type_name = '{frame_obj.frame_type_name}',  
                     frame_type_description = '{frame_obj.frame_type_description}', 
-                    last_updated_on = '{today}', last_updated_by = '{frame_obj.last_updated_by}'
+                    last_updated_on = '{getIndianTime()}', last_updated_by = '{frame_obj.last_updated_by}'
                     WHERE frame_id = {frame_obj.frame_id}
             """
 

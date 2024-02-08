@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Job details</title>
+    <title>Indolens {{request.session.lab_name}} - Job details</title>
     {% load static %}
 
 
@@ -54,6 +54,7 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
 
 
 
@@ -122,13 +123,10 @@
 
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
-                                            <div class="border rounded-2"><img
-                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}"
-                                                    width="53"/>
-                                            </div>
                                         </td>
                                         <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0">
+                                            <a class="fw-semi-bold line-clamp-2 mb-0"
+                                               href="{% url 'view_lab_central_inventory_products' order.product_id %}">
                                                 {{order.product_name}}
                                             </a>
                                         </td>
@@ -184,7 +182,7 @@
                                         </td>
                                         {% if order.category_id == 2 or order.category_id == 3 %}
                                         <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                            <div class="font-sans-serif btn-reveal-trigger position-static" >
+                                            <div class="font-sans-serif btn-reveal-trigger position-static">
                                                 <button aria-expanded="false"
                                                         aria-haspopup="true"
                                                         class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
@@ -195,7 +193,7 @@
                                                 <div class="dropdown-menu dropdown-menu-end py-2">
                                                     <a class="dropdown-item view-button" data-bs-toggle="modalView"
                                                        type="button"
-                                                           style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
+                                                       style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
                                                        data-category-info="{{ order.power_attribute | safe }}"
                                                     >View Lens Powers</a>
 
@@ -401,6 +399,7 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
 <script src="{% static 'js/custom_master_view_modals.js' %}"></script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 
 </body>
@@ -419,7 +418,8 @@
 
 
 
-    </script>
+
+</script>
 <script>
     function changeOrderStatus(statusWidget, order_id) {
         console.log(statusWidget.value);
@@ -465,5 +465,6 @@
             }
         }
     });
+
 </script>
 </html>

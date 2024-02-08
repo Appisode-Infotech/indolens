@@ -71,7 +71,7 @@
         {% include 'nav_bar.html' %}
         <div class="content">
 
-            <h2 class="mb-4">Create a sub admin</h2>
+            <h2 class="mb-4">Create sub admin</h2>
             {% if message %}
                     <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
                         <strong>{{message}}</strong>
@@ -103,7 +103,7 @@
 
                         <div class="col-md-6">
                             <label class="form-label" for="fullName">Name</label>
-                            <input class="form-control" id="fullName" name="fullName" required type="text" value=""/>
+                            <input class="form-control" id="fullName" name="fullName" maxlength="70" required type="text" value=""/>
                             <div class="invalid-feedback">Name is Mandatory.</div>
                         </div>
                         <div class="col-md-6">

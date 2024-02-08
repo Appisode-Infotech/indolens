@@ -1,18 +1,15 @@
 document.addEventListener('DOMContentLoaded', () => {
-    const viewButtons = document.querySelectorAll('.view-button');
-    const viewModal = document.getElementById('viewModal');
-    const modal = new bootstrap.Modal(viewModal);
-    const viewCategoryID = document.getElementById('viewCategoryID');
+    document.body.addEventListener('click', (event) => {
+        const target = event.target;
+        // Check if the clicked element is a view button
+        if (target.classList.contains('view-button')) {
+            const viewModal = document.getElementById('viewModal');
+            const modal = new bootstrap.Modal(viewModal);
+            const viewCategoryID = document.getElementById('viewCategoryID');
 
-    viewButtons.forEach((button) => {
-        button.addEventListener('click', (event) => {
-            const categoryInfo = event.currentTarget.getAttribute('data-category-info');
-            console.log(categoryInfo);
-            console.log(typeof categoryInfo);
-              const sanitizedCategoryInfo = categoryInfo.replace(/None/g, '""');
-
-        const parsedCategoryInfo = JSON.parse(sanitizedCategoryInfo.replace(/'/g, '"'));
-
+            const categoryInfo = target.getAttribute('data-category-info');
+            const sanitizedCategoryInfo = categoryInfo.replace(/None/g, '""');
+            const parsedCategoryInfo = JSON.parse(sanitizedCategoryInfo.replace(/'/g, '"'));
 
             viewCategoryID.innerHTML = '';
 
@@ -23,7 +20,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Loop through the category information object and add key-value pairs to the table
             for (const key in parsedCategoryInfo) {
                 if (parsedCategoryInfo.hasOwnProperty(key)) {
-                    if (key === 'created_by' || key === 'last_updated_by' || parsedCategoryInfo[key] =='' ) {
+                    if (key === 'created_by' || key === 'last_updated_by' || parsedCategoryInfo[key] == '') {
                         continue;
                     }
                     const row = table.insertRow();
@@ -41,7 +38,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
             viewCategoryID.appendChild(table);
             modal.show();
-        });
+        }
     });
 
     function formatKey(key) {

@@ -92,7 +92,7 @@
         {% include 'nav_bar.html' %}
         <div class="content">
 
-            <h2 class="mb-4">Create a Lab</h2>
+            <h2 class="mb-4">Create Lab</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form class="row g-3 needs-validation" action="{% url 'create_lab' %}" method="post" novalidate="">
@@ -102,7 +102,7 @@
                             <label class="form-label" for="labName">Lab name</label>
 
                             <input class="form-control" id="labName" name="labName" required="" type="text"
-                                   value=""/>
+                                   maxlength="70" value=""/>
                             <div class="invalid-feedback">Lab Name is mandatory.</div>
                         </div>
                         <div class="col-md-6">
@@ -110,7 +110,7 @@
                             <label class="form-label" for="labDisplayName">Lab Display Name</label>
 
                             <input class="form-control" id="labDisplayName" name="labDisplayName" required=""
-                                   type="text" value=""/>
+                                  type="text" maxlength="70" value=""/>
                             <div class="invalid-feedback">Lab Display Name is mandatory.</div>
                         </div>
 

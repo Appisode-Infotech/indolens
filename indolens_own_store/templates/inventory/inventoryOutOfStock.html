@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens Admin - Manage Out Of Stock</title>
+    <title>Indolens {{request.session.store_name}} - Manage Out Of Stock</title>
     {% load static %}
 
 
@@ -132,15 +132,16 @@
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="SlNo" scope="col"
                                         style="width:5%;">SL NO
                                     </th>
-                                    <th class="sort white-space-nowrap align-middle fs--2" scope="col"
-                                        style="width:70px;"></th>
-                                    <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
-                                        scope="col" style="width:350px;">PRODUCT NAME
-                                    </th>
-                                    <th class="sort align-middle text-end ps-4" data-sort="price" scope="col"
+                                    <th class="sort white-space-nowrap align-middle fs--1" scope="col"
+                                        style="width:70px;">PRODUCT IMAGE</th>
+                                    <th class="sort white-space-nowrap align-middle fs--1" scope="col"
+                                        style="width:70px;">PRODUCT QR</th>
+                                    <th class="sort white-space-nowrap align-middle fs--1" scope="col"
+                                        style="width:70px;">PRODUCT NAME</th>
+                                    <th class="sort white-space-nowrap align-middle ps-4" data-sort="price" scope="col"
                                         style="width:150px;">PRICE
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                    <th class="sort white-space-nowrap align-middle fs--1" data-sort="category" scope="col"
                                         style="width:150px;">CATEGORY
                                     </th>
                                     <th class="sort align-middle ps-4" data-sort="brand" scope="col"
@@ -153,7 +154,7 @@
                                     <th class="sort align-middle ps-4" data-sort="publishedOn" scope="col"
                                         style="width:50px;">PUBLISHED ON
                                     </th>
-                                    <th class="sort text-end align-middle pe-0 ps-4" scope="col"></th>
+                                    <th class="sort text-end align-middle pe-0 ps-4" scope="col">ACTION</th>
                                 </tr>
                                 </thead>
                                 <tbody class="list" id="products-table-body">
@@ -162,24 +163,28 @@
                                     data-category="{{ stock.category_name }}">
                                     <td class="align-middle white-space-nowrap py-0 SlNo"></td>
 
-                                    <td class="align-middle white-space-nowrap py-0">
+                                    <td class="align-middle white-space-nowrap fw-bold text-700 ps-4 ">
                                         <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
                                             <div class="avatar avatar-m">
                                                 <img alt="" class="rounded-circle"
                                                      src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
                                             </div>
                                         </a>
-                                        <a href="{{ MEDIA_URL }}{{ stock.product_qr_code }}" target="_blank">
+
+                                    </td>
+                                    <td class="align-middle white-space-nowrap fw-bold text-700 ps-4 ">
+                                         <a href="{{ MEDIA_URL }}{{ stock.product_qr_code }}" target="_blank">
                                             <div class="avatar avatar-m">
                                                 <img alt="" class="rounded-circle"
                                                      src="{{ MEDIA_URL }}{{ stock.product_qr_code }}"/>
                                             </div>
                                         </a>
+
                                     </td>
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_store_inventory_products' stock.store_inventory_id %}"> {{stock.product_name}}</a>
                                     </td>
-                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                    <td class="price align-middle ps-4">
                                         {{stock.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
@@ -343,7 +348,7 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/filter.js' %}"></script>
+
 <script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
 </body>

@@ -107,13 +107,13 @@
                                                 <h3>{{lab_technician.name}}</h3>
                                                 <p class="text-800">Joined on {{lab_technician.created_on}}</p>
                                                 {% if lab_technician.lab_name|length != 0 %}
-                                                <p class="text-800"> Lab -
+                                                <p class="text-800"> Assigned Lab -
                                                 <a class="text-decoration-none fw-semi-bold fs-0"
                                                    href="{% url 'view_lab' lab_technician.assigned_lab_id %}">
                                                     {{lab_technician.lab_name}}
                                                 </a></p>
                                                 {% else %}
-                                                <p class="text-800">Assigned Labs - UNASSIGNED</p>
+                                                <p class="text-800">Assigned Lab - UNASSIGNED</p>
                                                 {% endif %}
                                             </div>
                                         </div>

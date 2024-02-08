@@ -10,7 +10,9 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.accountant_resp_model import get_accountants
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 
 def create_accountant(accountant, files):
@@ -26,7 +28,7 @@ def create_accountant(accountant, files):
                     '{accountant.name}', '{accountant.email}', '{accountant.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{accountant.address}', '{accountant.document_1_type}', 
                     '{json.dumps(files.document1)}', '{accountant.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{accountant.created_by}', '{today}', '{accountant.last_updated_by}', '{today}'
+                    1, '{accountant.created_by}', '{getIndianTime()}', '{accountant.last_updated_by}', '{getIndianTime()}'
                 )
             """
 
@@ -121,7 +123,7 @@ def edit_accountant(accountant_obj, files):
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{accountant_obj.address}',
                                     last_updated_by = '{accountant_obj.last_updated_by}',
-                                    last_updated_on = '{today}'
+                                    last_updated_on = '{getIndianTime()}'
                                 WHERE accountant_id = {accountant_obj.accountant_id}
                             """
             cursor.execute(update_accountant_obj_query)

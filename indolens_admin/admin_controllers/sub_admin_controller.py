@@ -10,8 +10,9 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.sub_admin_resp_model import get_sub_admin
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_sub_admin(sub_admin, files):
     try:
@@ -26,7 +27,7 @@ def create_sub_admin(sub_admin, files):
                     '{sub_admin.full_name}', '{sub_admin.email}', '{sub_admin.phone}', '{hashed_password}', 2, 
                     '{files.profile_pic}', '{sub_admin.complete_address}', '{sub_admin.document_1_type}', 
                     '{json.dumps(files.document1)}', '{sub_admin.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, {int(sub_admin.created_by)}, '{today}', {int(sub_admin.last_updated_by)}, '{today}'
+                    1, {int(sub_admin.created_by)}, '{getIndianTime()}', {int(sub_admin.last_updated_by)}, '{getIndianTime()}'
                 )
             """
 
@@ -114,7 +115,7 @@ def edit_sub_admin(sub_admin, files):
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{sub_admin.complete_address}',
                     last_updated_by = '{sub_admin.last_updated_by}',
-                    last_updated_on = '{today}'
+                    last_updated_on = '{getIndianTime()}'
                 WHERE
                     admin_id = {sub_admin.admin_id}
             """

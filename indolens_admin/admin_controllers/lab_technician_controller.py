@@ -9,8 +9,9 @@ from django.db import connection
 from indolens_admin.admin_models.admin_resp_model.lab_technician_resp_model import get_lab_technicians
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_lab_technician(lab_technician, files):
     try:
@@ -25,7 +26,7 @@ def create_lab_technician(lab_technician, files):
                     '{lab_technician.name}', '{lab_technician.email}', '{lab_technician.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{lab_technician.address}', '{lab_technician.document_1_type}', 
                     '{json.dumps(files.document1)}', '{lab_technician.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{lab_technician.created_by}', '{today}', '{lab_technician.last_updated_by}', '{today}', 0
+                    1, '{lab_technician.created_by}', '{getIndianTime()}', '{lab_technician.last_updated_by}', '{getIndianTime()}', 0
                 )
             """
 
@@ -112,7 +113,7 @@ def edit_lab_technician(lab_tech_obj, files):
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{lab_tech_obj.address}',
                                     last_updated_by = '{lab_tech_obj.last_updated_by}',
-                                    last_updated_on = '{today}'
+                                    last_updated_on = '{getIndianTime()}'
                                 WHERE lab_technician_id = {lab_tech_obj.lab_technician_id}
                             """
             cursor.execute(update_lab_tech_obj_query)

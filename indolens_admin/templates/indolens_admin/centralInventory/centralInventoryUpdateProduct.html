@@ -238,20 +238,20 @@
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Quantity</h5>
-                                <input name="productQuantity" class="form-control" placeholder="Quantity" type="text"
-                                       value="{{product_data.product_quantity}}" required/>
+                                <input name="productQuantity" class="form-control" placeholder="Quantity" type="number"
+                                       min="1" value="{{product_data.product_quantity}}" required/>
                                 <div class="invalid-feedback">Please provide valid quantity.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">GSTIN</h5>
-                                <input name="productGSTIN" class="form-control" placeholder="%" type="text"
-                                       value="{{product_data.product_gst}}" required/>
+                                <input name="productGSTIN" class="form-control" placeholder="%" type="number"
+                                       min="0" value="{{product_data.product_gst}}" required/>
                                 <div class="invalid-feedback">Please provide valid GST.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Discount</h5>
                                 <input name="discount" class="form-control" placeholder="%" type="number"
-                                       maxlength="2" max="99" value="{{product_data.discount}}" required/>
+                                       min="0" maxlength="2" max="99" value="{{product_data.discount}}" required/>
                                 <div class="invalid-feedback">Please provide valid discount percentage.</div>
                             </div>
                         </div>
@@ -261,19 +261,19 @@
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Cost price</h5>
                                 <input name="costPrice" class="form-control" placeholder="₹"
-                                       value="{{product_data.cost_price}}" type="text" required/>
+                                       value="{{product_data.cost_price}}" type="number" min="1" required/>
                                 <div class="invalid-feedback">Please provide valid cost price.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Sale price</h5>
-                                <input name="salePrice" class="form-control" placeholder="₹" type="text"
-                                       value="{{product_data.sale_price}}" required/>
+                                <input name="salePrice" class="form-control" placeholder="₹" type="number"
+                                       value="{{product_data.sale_price}}" min="1" required/>
                                 <div class="invalid-feedback">Please provide valid sale price.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Franchise Sale price</h5>
-                                <input name="franchiseSalePrice" class="form-control" placeholder="₹" type="text"
-                                value="{{product_data.franchise_sale_price}}" required/>
+                                <input name="franchiseSalePrice" class="form-control" placeholder="₹" type="number"
+                                min="1" value="{{product_data.franchise_sale_price}}" required/>
                                 <div class="invalid-feedback">Please provide valid sale price.</div>
                             </div>
                         </div>

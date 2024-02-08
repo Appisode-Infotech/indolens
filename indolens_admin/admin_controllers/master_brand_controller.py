@@ -6,7 +6,9 @@ import pytz
 from indolens_admin.admin_models.admin_resp_model.master_brand_resp_model import get_brands
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 
 def add_product_brand(brand_obj):
@@ -20,8 +22,8 @@ def add_product_brand(brand_obj):
                 VALUES (
                     '{brand_obj.brand_name}',
                     0, '{brand_obj.brand_description}',
-                    0, '{today}',
-                    '{brand_obj.created_by}', '{today}',
+                    0, '{getIndianTime()}',
+                    '{brand_obj.created_by}', '{getIndianTime()}',
                     '{brand_obj.last_updated_by}'
                 )
             """
@@ -43,7 +45,7 @@ def edit_product_brand(brand_obj):
                 UPDATE  brands SET
                     brand_name = '{brand_obj.brand_name}', 
                     brand_description = '{brand_obj.brand_description}', 
-                    last_updated_on = '{today}', last_updated_by = '{brand_obj.last_updated_by}'
+                    last_updated_on = '{getIndianTime()}', last_updated_by = '{brand_obj.last_updated_by}'
                     WHERE brand_id = {brand_obj.brand_id}
             """
 

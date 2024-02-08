@@ -4,6 +4,7 @@ from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import central_inventory_controller
+from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
     franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller, \
     franchise_store_employee_controller, franchise_store_orders_controller, franchise_store_dashboard_controller, \
@@ -195,7 +196,6 @@ def orderDetailsFranchise(request, orderId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         order_detail, status_code = franchise_store_orders_controller.get_order_details(orderId)
-        print(order_detail)
         return render(request, 'orders/orderDetailsFranchise.html', {"order_detail": order_detail['orders_details']})
     else:
         return redirect('franchise_store_login')
@@ -409,9 +409,24 @@ def franchiseInventoryProducts(request):
 
 def viewFranchiseStoreInventoryProducts(request, productId):
     assigned_store = getAssignedStores(request)
-    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
-        response, status_code = franchise_inventory_controller.get_products_for_franchise_store_by_id(assigned_store, productId)
-        return render(request, 'inventory/franchiseStoreInventoryProductsView.html', {"stocks_list": response['stocks_list']})
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        response, status_code = franchise_inventory_controller.get_products_for_franchise_store_by_id(assigned_store,
+                                                                                                      productId)
+        return render(request, 'inventory/franchiseStoreInventoryProductsView.html',
+                      {"stocks_list": response['stocks_list']})
+    else:
+        return redirect('franchise_store_login')
+
+
+def viewFranchiseCentralStoreInventoryProducts(request, productId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        response, status_code = get_central_inventory_product_single(productId)
+        print(response)
+        return render(request, 'inventory/franchiseCentralInventoryProductsView.html',
+                      {"product_data": response['product_data']})
     else:
         return redirect('franchise_store_login')
 
@@ -506,7 +521,6 @@ def getfranchiseStoreEyeTest(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_store_eye_test_controller.get_eye_test()
-        print(response)
         return render(request, 'franchiseStoreEyeTest/viewAllStoreEyeTest.html',
                       {'eye_test_list': response['eye_test_list']})
 

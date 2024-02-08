@@ -14,7 +14,8 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
     customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller, \
     orders_controller, store_expenses, dashboard_controller, eye_test_controller
-from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
+from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single, \
+    get_central_inventory_product_restoc_log
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
     accountant_model, lab_technician_model, lab_model, \
@@ -140,7 +141,9 @@ def viewOwnStore(request, ownStoreId):
         products_list, prod_status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
         store_stats, store_stats_status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
         sales_data, sale_status_code = orders_controller.get_all_store_orders(ownStoreId, 1)
-        store_expense, store_exp_status_code = store_expenses.get_store_expense(ownStoreId, 1)
+        store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(ownStoreId, 1)
+        store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(ownStoreId, 1)
+
         return render(request, 'indolens_admin/ownStore/ownStore.html',
                       {"store_data": response['own_stores'], "products_list": products_list['products_list'],
                        "total_employee_count": store_stats['total_employee_count'],
@@ -148,7 +151,7 @@ def viewOwnStore(request, ownStoreId):
                        "sales_data": sales_data['orders_list'], "store_expense": store_expense['store_expense'],
                        "revenue_generated": sum(item['total_cost'] for item in sales_data['orders_list']),
                        "net_income": sum(item['total_cost'] for item in sales_data['orders_list']) - store_expense[
-                           'store_expense']})
+                           'store_expense'], "store_expense_list": store_expense_list['store_expense']})
     else:
         return redirect('login')
 
@@ -209,11 +212,12 @@ def manageFranchiseStores(request, status):
 def viewFranchiseStore(request, franchiseStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_franchise_store_by_id(franchiseStoreId)
-        print(response)
         products_list, status_code = franchise_store_controller.get_all_products_for_franchise_store(franchiseStoreId)
         store_stats, status_code = franchise_store_controller.get_franchise_store_stats(franchiseStoreId)
         sales_data, status_code = orders_controller.get_all_store_orders(franchiseStoreId, 2)
-        store_expense, store_exp_status_code = store_expenses.get_store_expense(franchiseStoreId, 2)
+        store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(franchiseStoreId, 2)
+        store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(franchiseStoreId, 2)
+        print(store_expense_list)
         return render(request, 'indolens_admin/franchiseStores/franchiseStore.html',
                       {"franchise_store": response['franchise_store'], "products_list": products_list['products_list'],
                        "total_employee_count": store_stats['total_employee_count'],
@@ -221,7 +225,7 @@ def viewFranchiseStore(request, franchiseStoreId):
                        "sales_data": sales_data['orders_list'], "store_expense": store_expense['store_expense'],
                        "revenue_generated": sum(item['total_cost'] for item in sales_data['orders_list']),
                        "net_income": sum(item['total_cost'] for item in sales_data['orders_list']) - store_expense[
-                           'store_expense']})
+                           'store_expense'], "store_expense_list": store_expense_list['store_expense']})
 
     else:
         return redirect('login')
@@ -566,7 +570,7 @@ def enableDisableStoreManager(request, route, storeManagerId, status):
 def manageFranchiseOwners(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_all_franchise_owner(status)
-        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_unassigned_franchise_stores()
         return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
                       {"franchise_owners": response['franchise_owners'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1155,7 +1159,7 @@ def enableDisableOptimetry(request, route, ownOptimetryId, status):
 def manageFranchiseOptimetry(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_all_franchise_optimetry(status)
-        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
         return render(request, 'indolens_admin/franchiseOptimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1456,7 +1460,7 @@ def enableDisableSaleExecutives(request, route, ownSaleExecutivesId, status):
 def manageFranchiseSaleExecutives(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sales_executives_controller.get_all_franchise_sales_executive(status)
-        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
         return render(request, 'indolens_admin/franchiseSalesExecutive/manageSaleExecutives.html',
                       {"franchise_sales_executive_list": response['franchise_sales_executive_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -2042,7 +2046,7 @@ def enableDisableOtherEmployees(request, route, ownEmployeeId, status):
 def manageFranchiseOtherEmployees(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_all_franchise_other_emp(status)
-        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_own_stores()
+        available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
         return render(request, 'indolens_admin/franchiseOtherEmployees/manageOtherEmployees.html',
                       {"other_employee_list": response['other_emp_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -2287,9 +2291,6 @@ def viewOrderCreator(request, employeeID, storeType):
         order_detail, status_code = orders_controller.get_order_creator_role(employeeID, storeType)
         role = order_detail['role']
         role_urls = {}
-        print(role)
-        print(storeType)
-        print(type(employeeID))
         if storeType == 1:
             role_urls = {
                 1: ('view_store_manager', 'storeManagerId'),
@@ -2747,7 +2748,7 @@ def manageCentralInventoryProducts(request, status):
 def restockProduct(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.restock_central_inventory_products(
-            request.POST['productId'], request.POST['productQty'], )
+            request.POST['productId'], request.POST['productQty'], request.session.get('id'))
         url = reverse('manage_central_inventory_products', kwargs={'status': status})
         return redirect(url)
     else:
@@ -2757,7 +2758,7 @@ def restockProduct(request, status):
 def restockProductOutOfStock(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.restock_central_inventory_products(
-            request.POST['productId'], request.POST['productQty'], )
+            request.POST['productId'], request.POST['productQty'], request.session.get('id'))
         return redirect('manage_out_of_stock')
     else:
         return redirect('login')
@@ -2790,10 +2791,18 @@ def centralInventoryUpdateProductImages(request, productId):
     return render(request, 'indolens_admin/centralInventory/updateproductImages.html',
                   {'product_data': response['product_data'], 'productId': productId})
 
+
 def centralInventoryViewProducts(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
     return render(request, 'indolens_admin/centralInventory/centralInventoryViewProduct.html',
                   {'product_data': response['product_data'], 'productId': productId})
+
+
+def centralInventoryViewProductRestockLogs(request, productId):
+    response, status_code = get_central_inventory_product_restoc_log(productId)
+    print(response)
+    return render(request, 'indolens_admin/centralInventory/centralInventoryProductLogs.html',
+                  {"restock_logs": response['restock_logs']})
 
 
 def centralInventoryAddProducts(request):
@@ -2833,11 +2842,8 @@ def centralInventoryAddProducts(request):
             file_data = FileData(form_data)
             product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
             power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
-            print(power_attributes)
-            print(product_obj)
             response, status_code = central_inventory_controller.add_central_inventory_products(product_obj, file_data,
                                                                                                 power_attributes)
-            print(response)
             url = reverse('manage_central_inventory_products', kwargs={'status': 'All'})
             return redirect(url)
         else:
@@ -2906,7 +2912,7 @@ def viewStockRequestInvoice(request, requestId):
                 response['stocks_request_list'].get('request_to_store_id'))
             store_data = store['own_stores'][0]
         return render(request, 'indolens_admin/stockRequests/franchiseStockMovementInvoice.html',
-                      {"stocks_request_list": response['stocks_request_list'], "store_data": store_data })
+                      {"stocks_request_list": response['stocks_request_list'], "store_data": store_data})
     else:
         return redirect('login')
 
@@ -2968,6 +2974,7 @@ def assignManagerOwnStore(request, route):
         response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
         url = reverse('manage_store_managers', kwargs={'status': route})
         return redirect(url)
+
 
 def unAssignManagerOwnStore(request, route, empId, storeId):
     response, status_code = store_manager_controller.unAssignStore(empId, storeId)

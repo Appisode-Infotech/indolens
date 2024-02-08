@@ -10,8 +10,9 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_optimetry(optimetry_obj, files):
     try:
@@ -27,7 +28,7 @@ def create_optimetry(optimetry_obj, files):
                     '{optimetry_obj.name}', '{optimetry_obj.email}', '{optimetry_obj.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{optimetry_obj.address}', '{optimetry_obj.document_1_type}', 
                     '{json.dumps(files.document1)}', '{optimetry_obj.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, 
+                    0, '{optimetry_obj.created_by}', '{getIndianTime()}', '{optimetry_obj.last_updated_by}', '{getIndianTime()}', 2, 
                     '{json.dumps(files.certificates)}', 0
                 )
             """
@@ -67,7 +68,7 @@ def update_optimetry(optimetry_obj, files):
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{optimetry_obj.address}',
                                     last_updated_by = '{optimetry_obj.last_updated_by}',
-                                    last_updated_on = '{today}'
+                                    last_updated_on = '{getIndianTime()}'
                                 WHERE employee_id = {optimetry_obj.employee_id}
                             """
             cursor.execute(update_optimetry_obj_query)
@@ -121,7 +122,7 @@ def create_franchise_optimetry(optimetry_obj, files):
                     '{optimetry_obj.name}', '{optimetry_obj.email}', '{optimetry_obj.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{optimetry_obj.address}', '{optimetry_obj.document_1_type}', 
                     '{json.dumps(files.document1)}', '{optimetry_obj.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{optimetry_obj.created_by}', '{today}', '{optimetry_obj.last_updated_by}', '{today}', 2, '{json.dumps(files.certificates)}',0
+                    0, '{optimetry_obj.created_by}', '{getIndianTime()}', '{optimetry_obj.last_updated_by}', '{getIndianTime()}', 2, '{json.dumps(files.certificates)}',0
                 )
             """
 
@@ -259,7 +260,7 @@ def edit_franchise_optimetry(optimetry_obj, files):
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{optimetry_obj.address}',
                                     last_updated_by = '{optimetry_obj.last_updated_by}',
-                                    last_updated_on = '{today}'
+                                    last_updated_on = '{getIndianTime()}'
                                 WHERE employee_id = {optimetry_obj.employee_id}
                             """
             cursor.execute(update_optimetry_obj_query)

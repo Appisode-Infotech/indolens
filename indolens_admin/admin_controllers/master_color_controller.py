@@ -7,8 +7,9 @@ from django.db import connection
 from indolens_admin.admin_models.admin_resp_model.master_color_resp_model import get_product_colors
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def add_master_color(color_obj):
     try:
@@ -21,8 +22,8 @@ def add_master_color(color_obj):
                 VALUES (
                     '{color_obj.color_code}', '{color_obj.color_name}',
                     '{color_obj.color_description}',
-                    0, '{today}',
-                    '{color_obj.created_by}', '{today}',
+                    0, '{getIndianTime()}',
+                    '{color_obj.created_by}', '{getIndianTime()}',
                     '{color_obj.last_updated_by}'
                 )
             """
@@ -45,7 +46,7 @@ def edit_master_color(color_obj):
                 UPDATE  product_colors SET
                     color_code = '{color_obj.color_code}', 
                     color_name = '{color_obj.color_name}',  color_description = '{color_obj.color_description}', 
-                    last_updated_on = '{today}', last_updated_by = '{color_obj.last_updated_by}'
+                    last_updated_on = '{getIndianTime()}', last_updated_by = '{color_obj.last_updated_by}'
                     WHERE color_id = {color_obj.color_id}
             """
 

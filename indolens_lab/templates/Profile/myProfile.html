@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - View Lab Technician</title>
+    <title>Indolens {{request.session.lab_name}} - View Lab Technician</title>
 
     {% load static %}
 
@@ -69,7 +69,7 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
 
-        {% include 'nav_bar.html' %}
+        {% include 'nav_bar_lab.html' %}
         {% for lab_technician in lab_technician%}
 
         <div class="content">
@@ -78,16 +78,6 @@
                 <div class="row align-items-center justify-content-between g-3 mb-4">
                     <div class="col-auto">
                         <h2 class="mb-0">Lab Technician Details</h2>
-                    </div>
-                    <div class="col-auto">
-                        <div class="row g-3">
-                            <div class="col-auto">
-                                <a class="btn btn-phoenix-secondary"
-                                   href="{% url 'edit_lab_technician' lab_technician.lab_technician_id %}">
-                                    <span class="fas fa-refresh me-2"></span> Update
-                                </a>
-                            </div>
-                        </div>
                     </div>
                 </div>
                 <div class="row g-5">

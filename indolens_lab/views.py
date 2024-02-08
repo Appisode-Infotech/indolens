@@ -3,6 +3,7 @@ from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import orders_controller, lab_technician_controller
+from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_lab.lab_controllers import lab_auth_controller, lab_task_controller
 from indolens_lab.lab_models.request_model import lab_tech_model
 from indolens_own_store.own_store_controller import store_orders_controller
@@ -79,7 +80,16 @@ def labResetPassword(request, code):
 
 
 def labDashboard(request):
-    return render(request, 'lab_dashboard.html')
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        latest_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "All")
+        lab_stats, lab_stats_code = lab_task_controller.get_lab_job_stats(assigned_lab)
+        print(lab_stats)
+        return render(request, 'lab_dashboard.html', {"latest_task": latest_task['task_list'][:10],
+                                                      "lab_stats": lab_stats})
+    else:
+        return redirect('lab_login')
 
 
 def allTask(request):
@@ -96,8 +106,8 @@ def newTask(request):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
-        all_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "New")
-        return render(request, 'Tasks/viewNewTask.html', {"all_task": all_task['task_list']})
+        new_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "New")
+        return render(request, 'Tasks/viewNewTask.html', {"all_task": new_task['task_list']})
     else:
         return redirect('lab_login')
 
@@ -106,8 +116,8 @@ def processingTask(request):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
-        all_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Processing")
-        return render(request, 'Tasks/viewProcessingTask.html', {"all_task": all_task['task_list']})
+        processing_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Processing")
+        return render(request, 'Tasks/viewProcessingTask.html', {"all_task": processing_task['task_list']})
     else:
         return redirect('lab_login')
 
@@ -116,8 +126,8 @@ def readyTask(request):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
-        all_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Ready")
-        return render(request, 'Tasks/viewReadyTask.html', {"all_task": all_task['task_list']})
+        ready_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Ready")
+        return render(request, 'Tasks/viewReadyTask.html', {"all_task": ready_task['task_list']})
     else:
         return redirect('lab_login')
 
@@ -126,8 +136,8 @@ def dispatchedTask(request):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
-        all_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Dispatched")
-        return render(request, 'Tasks/viewDispatchedTask.html', {"all_task": all_task['task_list']})
+        dispatched_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Dispatched")
+        return render(request, 'Tasks/viewDispatchedTask.html', {"all_task": dispatched_task['task_list']})
     else:
         return redirect('lab_login')
 
@@ -152,10 +162,25 @@ def jobStatusChange(request, jobId, status):
     else:
         return redirect('lab_login')
 
+
 def viewLabTechnician(request, labTechnicianId):
-    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get('is_lab_tech_logged_in') is True:
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
         response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
         return render(request, 'Profile/myProfile.html',
                       {"lab_technician": response['lab_technician']})
+    else:
+        return redirect('lab_login')
+
+
+def viewLabCentralInventoryProducts(request, productId):
+    # assigned_store = getAssignedStores(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        print(productId)
+        response, status_code = get_central_inventory_product_single(productId)
+        print(response['product_data'])
+        return render(request, 'inventory/labCentralInventoryProductsView.html',
+                      {"product_data": response['product_data']})
     else:
         return redirect('lab_login')

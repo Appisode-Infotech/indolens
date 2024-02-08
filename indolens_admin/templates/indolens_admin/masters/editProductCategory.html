@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Create Product Category</title>
+    <title>Indolens admin - Edit Product Category</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -76,7 +76,7 @@
         {% for category in product_category %}
         <div class="content">
 
-            <h2 class="mb-4">Create a category</h2>
+            <h2 class="mb-4">Edit category</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'edit_product_category' category.category_id %}"

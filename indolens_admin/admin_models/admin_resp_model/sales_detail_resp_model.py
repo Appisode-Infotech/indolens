@@ -11,7 +11,7 @@ class SalesOrder:
             self.is_discount_applied, self.power_attribute, self.assigned_lab,
             self.customer_id, self.order_status, self.payment_status,
             self.delivery_status, self.payment_mode, self.amount_paid,
-            self.estimated_delivery_date, self.linked_item, self.created_by_store,
+            self.estimated_delivery_date, self.linked_item, self.sales_note, self.created_by_store,
             self.created_by_store_type, self.created_by, self.created_on,
             self.updated_by, self.updated_on, self.total_cost, self.discount_cost,
             self.store_name, self.creator_name,
@@ -64,6 +64,7 @@ class SalesOrder:
             'estimated_delivery_date': self.estimated_delivery_date.strftime('%Y-%m-%d %H:%M:%S') if isinstance(
                 self.created_on, datetime) else None,
             'linked_item': self.linked_item,
+            'sales_note': self.sales_note,
             'created_by_store': self.created_by_store,
             'created_by_store_type': self.created_by_store_type,
             'created_by': self.created_by,

@@ -7,8 +7,9 @@ from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 def get_all_orders(status, pay_status, store_id):
     print(store_id)
     status_conditions = {

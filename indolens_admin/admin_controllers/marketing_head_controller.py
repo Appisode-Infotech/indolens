@@ -10,7 +10,9 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.marketing_head_resp_model import get_marketing_heads
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 
 def create_marketing_head(marketing_head, files):
@@ -26,7 +28,7 @@ def create_marketing_head(marketing_head, files):
                     '{marketing_head.fullName}', '{marketing_head.email}', '{marketing_head.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{marketing_head.completeAddress}', '{marketing_head.document_1_type}', 
                     '{json.dumps(files.document1)}', '{marketing_head.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{marketing_head.created_by}', '{today}', '{marketing_head.last_updated_by}', '{today}', 0
+                    1, '{marketing_head.created_by}', '{getIndianTime()}', '{marketing_head.last_updated_by}', '{getIndianTime()}', 0
                 )
             """
 
@@ -122,7 +124,7 @@ def edit_marketing_head(marketing_head_obj, files):
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{marketing_head_obj.completeAddress}',
                                     last_updated_by = '{marketing_head_obj.last_updated_by}',
-                                    last_updated_on = '{today}'
+                                    last_updated_on = '{getIndianTime()}'
                                 WHERE marketing_head_id = {marketing_head_obj.marketing_head_id}
                             """
             cursor.execute(update_marketing_head_obj_query)

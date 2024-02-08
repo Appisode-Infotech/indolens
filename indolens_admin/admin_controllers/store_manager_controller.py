@@ -10,8 +10,9 @@ from indolens_admin.admin_controllers import send_notification_controller, email
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_store_manager(store_manager, files):
     try:
@@ -28,7 +29,7 @@ def create_store_manager(store_manager, files):
                     '{files.profile_pic}', 0, '{store_manager.address}', 
                     '{store_manager.document_1_type}', '{json.dumps(files.document1)}', 
                     '{store_manager.document_2_type}', '{json.dumps(files.document2)}', 1, '{store_manager.created_by}', 
-                    '{today}', '{store_manager.last_updated_by}', '{today}', 1
+                    '{getIndianTime()}', '{store_manager.last_updated_by}', '{getIndianTime()}', 1
                 )
             """
 
@@ -65,7 +66,7 @@ def update_store_manager(store_manager, files):
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{store_manager.address}',
                     last_updated_by = '{store_manager.last_updated_by}',
-                    last_updated_on = '{today}'
+                    last_updated_on = '{getIndianTime()}'
                 WHERE employee_id = {store_manager.employee_id} 
             """
             print(update_store_manager_query)

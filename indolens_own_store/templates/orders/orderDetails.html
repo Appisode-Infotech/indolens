@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Order details</title>
+    <title>Indolens {{request.session.store_name}} - Order details</title>
     {% load static %}
 
 
@@ -134,9 +134,8 @@
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0">
-                                                {{order.product_name}}
-                                            </a>
+                                            <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_central_inventory_products' order.product_id %}">
+                                                {{order.product_name}}</a>
                                         </td>
                                         <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
                                             {{order.unit_sale_price}}

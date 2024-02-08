@@ -6,8 +6,9 @@ from django.db import connection
 from indolens_admin.admin_models.admin_resp_model.store_inventory_resp_model import get_store_inventory
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_all_products_for_own_store(store_id):
     try:

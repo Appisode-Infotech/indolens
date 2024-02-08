@@ -6,8 +6,9 @@ import pytz
 from indolens_admin.admin_models.admin_resp_model.master_shapes_resp_model import get_frame_shapes
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def add_frame_shape(shape_obj):
     try:
@@ -20,8 +21,8 @@ def add_frame_shape(shape_obj):
                 VALUES (
                     '{shape_obj.shape_name}',
                     '{shape_obj.shape_description}',
-                    0, '{today}',
-                    '{shape_obj.created_by}', '{today}',
+                    0, '{getIndianTime()}',
+                    '{shape_obj.created_by}', '{getIndianTime()}',
                     '{shape_obj.last_updated_by}'
                 )
             """
@@ -44,7 +45,7 @@ def edit_frame_shape(shape_obj):
                 UPDATE  frame_shapes SET
                     shape_name = '{shape_obj.shape_name}',  
                     shape_description = '{shape_obj.shape_description}', 
-                    last_updated_on = '{today}', last_updated_by = '{shape_obj.last_updated_by}'
+                    last_updated_on = '{getIndianTime()}', last_updated_by = '{shape_obj.last_updated_by}'
                     WHERE shape_id = {shape_obj.shape_id}
                 
             """

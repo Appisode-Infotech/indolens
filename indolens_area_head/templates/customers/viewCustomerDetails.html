@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens Area Head - Customer details</title>
+    <title>Indolens Area head - Customer details</title>
     {% load static %}
 
 
@@ -152,9 +152,6 @@
                             <thead>
                             <tr>
                                 <th class="white-space-nowrap fs--1 align-middle ps-0" style="width:26px;">
-                                    <div class="form-check mb-0 fs-0">
-                                        <input class="form-check-input" type="checkbox"/>
-                                    </div>
                                 </th>
                                 <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
                                     style="width:5%;">ORDER ID
@@ -191,9 +188,6 @@
                             {% for order in orders_list %}
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                 <td class="fs--1 align-middle px-0 py-3">
-                                    <div class="form-check mb-0 fs-0">
-                                        <input class="form-check-input" type="checkbox"/>
-                                    </div>
                                 </td>
                                 <td class="order align-middle white-space-nowrap py-0">#{{order.order_id}}
                                 </td>

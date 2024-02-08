@@ -10,8 +10,9 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.area_head_resp_model import get_area_heads
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_area_head(area_head, files):
     try:
@@ -26,7 +27,7 @@ def create_area_head(area_head, files):
                     '{area_head.full_name}', '{area_head.email}', '{area_head.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{area_head.complete_address}', '{area_head.document1_type}', 
                     '{json.dumps(files.document1)}', '{area_head.document2_type}', '{json.dumps(files.document2)}', 
-                    1, '{area_head.created_by}', '{today}', '{area_head.last_updated_by}', '{today}',0
+                    1, '{area_head.created_by}', '{getIndianTime()}', '{area_head.last_updated_by}', '{getIndianTime()}',0
                 )
             """
 
@@ -121,7 +122,7 @@ def edit_area_head(area_head, files):
                                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                                     address = '{area_head.complete_address}',
                                     last_updated_by = '{area_head.last_updated_by}',
-                                    last_updated_on = '{today}'
+                                    last_updated_on = '{getIndianTime()}'
                                 WHERE area_head_id = {area_head.area_head_id}
                             """
             cursor.execute(update_area_head_query)
