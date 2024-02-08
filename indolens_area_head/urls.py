@@ -34,6 +34,8 @@ urlpatterns = [
     path('manage_employees/', manageEmployee, name='manage_employees'),
     path('manage_employees/view_employees/employeeId=<int:employeeId>', viewEmployee,
          name='view_employees'),
+    path('my_profile/areaHeadId=<int:areaHeadId>', viewAreaHeadProfile,
+         name='area_head_view_my_profile'),
 
     # manage lab tech
     path('manage_lab_technician/', manageLabTechnician, name='manage_lab_technician_area_head'),

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 
 from indolens_admin.admin_controllers import own_store_controller, \
     lab_technician_controller, lab_controller, \
-    stores_inventory_controller, central_inventory_controller, customers_controller
+    stores_inventory_controller, central_inventory_controller, customers_controller, area_head_controller
 from indolens_area_head.area_head_controller import area_head_auth_controller, stores_controller, \
     area_stores_inventory_controller, area_head_customers_controller, store_employee_controller, \
     area_head_store_orders_controller, area_head_dashboard_controller
@@ -143,12 +143,22 @@ def manageEmployee(request):
 def viewEmployee(request, employeeId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
+        print(employeeId)
         response, status_code = store_employee_controller.get_store_employee_by_id(employeeId)
+        print(response)
         return render(request, 'storeEmployee/viewStoreEmployee.html',
                       {"store_employee": response['store_employee']})
     else:
         return redirect('login_area_head')
 
+
+def viewAreaHeadProfile(request, areaHeadId):
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get('is_area_head_logged_in') is True:
+        response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
+        return render(request, 'areaHead/viewAreaHeadProfile.html',
+                      {"area_head": response['area_head']})
+    else:
+        return redirect('login_area_head')
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
