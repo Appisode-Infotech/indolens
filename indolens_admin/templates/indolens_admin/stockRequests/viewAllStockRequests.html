@@ -226,31 +226,31 @@
                                     <p class="mb-0 fs--1 text-900">Not Delivered</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end approval_status">
+                                <td class="align-middle white-space-nowrap text-end approvalStatus">
                                     {% if stock.request_status == 0 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
                                     {% elif stock.request_status == 1 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
                                     {% else %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end delivery_status">
+                                <td class="align-middle white-space-nowrap text-end deliveryStatus">
                                     {% if stock.delivery_status == 0 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>
                                     {% elif stock.delivery_status == 1 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">DISPATCHED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-primary">DISPATCHED</span>
                                     {% elif stock.delivery_status == 2 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
                                     {% elif stock.delivery_status == 3 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
 

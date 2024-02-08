@@ -12,7 +12,7 @@ def getIndianTime():
 def get_eye_test():
     try:
         with connection.cursor() as cursor:
-            get_eye_test_query = f""" SELECT et.*, c.name, 
+            get_eye_test_query = f""" SELECT et.*, c.name, c.phone, 
                                             CASE 
                                                 WHEN et.created_by_store_type = 1 THEN creator_os.name 
                                                 ELSE creator_fs.name 

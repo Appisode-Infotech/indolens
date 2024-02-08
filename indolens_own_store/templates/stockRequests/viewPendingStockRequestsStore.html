@@ -161,7 +161,9 @@
                                 </td>
 
                                 <td class="product align-middle">
-                                    <p class="fw-semi-bold line-clamp-3 mb-0" >{{stock.product_name}}</p></td>
+                                    <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_central_inventory_products' stock.product_id %}">
+                                                {{stock.product_name}}</a>
+                                </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 productId">
                                     <p class="mb-0 fs--1 text-900">{{stock.product_id}}</p>
@@ -187,10 +189,10 @@
                                     {% endif %}
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end approval_status">
+                                <td class="align-middle white-space-nowrap text-end approvalStatus">
                                     {% if stock.request_status == 0 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">PENDING</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
                                     {% elif stock.request_status == 1 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
@@ -199,19 +201,19 @@
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end delivery_status">
+                                <td class="align-middle white-space-nowrap text-end deliveryStatus">
                                     {% if stock.delivery_status == 0 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">NOT DELIVERED YET</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>
                                     {% elif stock.delivery_status == 1 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">DISPATCHED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-primary">DISPATCHED</span>
                                     {% elif stock.delivery_status == 2 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">DELIVERED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
                                     {% elif stock.delivery_status == 3 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
 
@@ -224,7 +226,9 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2">
-                                            <a class="dropdown-item">View</a>
+                                            <a class="dropdown-item view-button" data-bs-toggle="modalView"
+                                               type="button"
+                                               data-category-info="{{ stock }}">View</a>
                                             {% if stock.request_status == 1 %}
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item text-success"
@@ -255,6 +259,7 @@
                         </div>
                     </div>
                 </div>
+                {% include 'modal_master_view.html' %}
             </div>
             {% include 'footer.html' %}
         </div>
@@ -299,6 +304,8 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
+
 
 </body>
 
