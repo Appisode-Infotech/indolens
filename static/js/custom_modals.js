@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     var modalTitle = document.querySelector('#modal_title');
     var modalContent = document.querySelector('#modal_content');
     var modalSubmit = document.querySelector('#modal_submit');
-    var modalForm = document.querySelector('.allocate-store-form'); // Select the existing form
 
     document.body.addEventListener('click', function (event) {
         if (event.target.matches('[data-bs-target="#operations_modal"]')) {
@@ -13,18 +12,22 @@ document.addEventListener("DOMContentLoaded", function () {
             var actionUrl = event.target.getAttribute('data-action-url');
             var role = event.target.getAttribute('data-bs-role');
 
+            // Clear previous content
+            modalContent.innerHTML = '';
+
             if (actionType === 'enable' || actionType === 'disable') {
                 modalTitle.textContent = actionType === "enable" ? "Enable " + role + " - " + empName : "Disable " + role + " - " + empName;
                 modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})`;
                 modalSubmit.href = actionUrl;
                 // Hide the form for non-"Allocate" actions
-            } else if (actionType === 'allocate') {
-                document.getElementById('footer_div').style.display = 'none';
-                modalTitle.textContent = "Allocate store for - " + empName;
-                document.getElementById('emp_id').value = empId;
+
+            } else if (actionType === 'accept' || actionType === 'reject') {
+                modalTitle.textContent = actionType === "accept" ? "" + role + " - " + empName : "" + role + " - " + empName;
+                modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})<br>Requested by store : <strong>${event.target.getAttribute('data-action-by')}</strong><br>Requested by store type : <strong>${event.target.getAttribute('data-action-store-type') === "1" ? 'Own store' : 'Franchise store'}</strong>`;
                 modalSubmit.href = actionUrl;
-                // Show the form for "Allocate" action
-            } else if (actionType === 'unallocate') {
+                // Hide the form for non-"Allocate" actions
+
+            }  else if (actionType === 'unallocate') {
                 modalTitle.textContent = "Unallocate Store - " + empName;
                 modalContent.innerHTML = `Are you sure you want to unallocate the store <br><strong>${event.target.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong> (ID: ${empId})?`;
                 modalSubmit.href = actionUrl;

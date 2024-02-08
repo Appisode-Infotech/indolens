@@ -207,10 +207,11 @@
                                             {% if store.status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
+                                               data-bs-role="Own Store"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable_store"
-                                               data-store-id="{{ store.store_id }}"
-                                               data-store-name="{{ store.store_name }}"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ store.store_id }}"
+                                               data-employee-name="{{ store.store_name }}"
                                                data-action-type="enable"
                                                data-action-url="{% url 'enable_disable_own_store' store.store_id 1 status %}">
                                                 Make Active
@@ -219,11 +220,11 @@
                                             {% elif store.status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
-                                               href="{% url 'enable_disable_own_store' store.store_id 1 status%}"
+                                               data-bs-role="Own Store"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable_store"
-                                               data-store-id="{{ store.store_id }}"
-                                               data-store-name="{{ store.store_name }}"
+                                               data-bs-target="#operations_modal"
+                                               data-employee-id="{{ store.store_id }}"
+                                               data-employee-name="{{ store.store_name }}"
                                                data-action-type="disable"
                                                data-action-url="{% url 'enable_disable_own_store' store.store_id 0 status %}">
                                                 Make Inactive
@@ -236,30 +237,6 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="modal fade" id="enable_disable_store" tabindex="-1"
-                             aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-primary">
-                                        <h5 class="modal-title text-white" id="staticBackdropLabel"></h5>
-                                        <button class="btn p-1" type="button" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                            <span class="fas fa-times fs--1 text-white"></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="text-700 lh-lg mb-0"></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-primary modal-submit" type="button">Confirm</a>
-                                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
 
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
@@ -279,6 +256,7 @@
                         </div>
                     </div>
                 </div>
+                                {% include 'modal_warning.html' %}
             </div>
             {% include 'footer.html' %}
         </div>
@@ -295,11 +273,6 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
-
-
-
-
-
     </script>
 </main>
 <!-- ===============================================-->
@@ -322,30 +295,7 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/csvExport.js' %}"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    var enableDisableButtons = document.querySelectorAll('[data-bs-target="#enable_disable_store"]');
-    var modal = document.getElementById('enable_disable_store');
-    var modalTitle = modal.querySelector('.modal-title');
-    var modalContent = modal.querySelector('.modal-body');
-    var modalSubmit = modal.querySelector('.modal-submit');
-
-    enableDisableButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            var storeId = event.currentTarget.getAttribute('data-store-id');
-            var storeName = event.currentTarget.getAttribute('data-store-name');
-            var actionType = event.currentTarget.getAttribute('data-action-type');
-            var actionUrl = event.currentTarget.getAttribute('data-action-url');
-
-            modalTitle.textContent = actionType === "enable" ? "Enable Store - " + storeName : "Disable Store - " + storeName;
-            modalContent.innerHTML = `Are you sure you want to ${actionType} the store?<br><strong>${storeName}</strong> (ID: ${storeId})`;
-            modalSubmit.href = actionUrl;
-        });
-    });
-});
-
-</script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
 </body>
 
 </html>
