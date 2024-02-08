@@ -194,7 +194,7 @@ sql_queries = [
  `store_id` int(11) NOT NULL AUTO_INCREMENT,
  `store_name` varchar(255),
  `store_display_name` varchar(255),
- `store_phone` int(11),
+ `store_phone` varchar(255),
  `store_gst` varchar(255),
  `store_email` varchar(255),
  `store_city` varchar(255),
@@ -238,7 +238,7 @@ sql_queries = [
  `lab_id` int(11) NOT NULL AUTO_INCREMENT,
  `lab_name` varchar(255),
  `lab_display_name` varchar(255),
- `lab_phone` int(11),
+ `lab_phone` varchar(255),
  `lab_gst` varchar(255),
  `lab_email` varchar(255),
  `lab_city` varchar(255),
@@ -481,7 +481,15 @@ sql_queries = [
  invoice_date date ,
  PRIMARY KEY (invoice_id),
  UNIQUE KEY unique_order_id (order_id)
-) """
+) """,
+    """CREATE TABLE central_inventory_restock_log (
+ restock_id int(11) NOT NULL AUTO_INCREMENT,
+ product_id int(11),
+ quantity int(11) ,
+ created_by int(11) ,
+ created_on datetime ,
+ PRIMARY KEY (restock_id)
+)"""
 ]
 
 connection = pymysql.connect(host=db_host, user=db_user, password=db_password, database=db_name)
