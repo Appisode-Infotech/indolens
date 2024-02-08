@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens Franchise - Manage Employees</title>
+    <title>Indolens {{request.session.store_name}} - Manage Employees</title>
 
     {% load static %}
 
@@ -107,7 +107,7 @@
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="SlNo"
                                     scope="col" style="width:10%;">SL NO
                                     </th>
-                                <th class="sort align-middle text-end" scope="col" style="width:30%;"></th>
+                                <th class="sort align-middle text-end" scope="col" style="width:10%;">PROFILE</th>
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
                                     scope="col" style="width:30%;">NAME
@@ -143,7 +143,7 @@
                                 </th>
 
 
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
+                                <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">

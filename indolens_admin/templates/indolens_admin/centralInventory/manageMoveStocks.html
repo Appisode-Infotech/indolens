@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Manage Stock Movements</title>
+    <title>Indolens admin - Manage All Stock requests</title>
 
     {% load static %}
 
@@ -27,7 +27,6 @@
     <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
     <script src="{% static 'js/config.js' %}"></script>
-    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
 
     <!-- ===============================================-->
     <!--    Stylesheets-->
@@ -42,7 +41,6 @@
     <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
-
 
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -62,6 +60,13 @@
 
 
 
+
+
+
+
+
+
+
     </script>
 </head>
 
@@ -74,48 +79,51 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
+
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["slno","storeName","storeType","productName","category","quantity","price","requestDate","movedDate","movementType","deliveredFrom"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","storeName","storeType","productName","category","quantity","price","requestDate","movedDate","movementType","deliverFrom","deliverStatus","action"],"page":6,"pagination":true}'
                      id="projectSummary">
-                    <div class="row mb-4 gx-6 gy-3 align-items-center">
+                    {% if message %}
+                    <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
+                        <strong>{{message}}</strong>
+
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+                    </div>
+                    {% endif %}
+                    <div class="row mb-3 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Stock Movements<span class="fw-normal text-700 ms-3">({{moved_stocks|length}})</span>
+                            <h2 class="mb-0">All Stock requests<span class="fw-normal text-700 ms-3">({{stocks_request_list|length}})</span>
                             </h2>
                         </div>
                     </div>
-                    <div class="mb-4">
+                    <div class="row g-3 justify-content-between align-items-end mb-4">
 
-                        <div class="row g-3">
-                            <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                        <div class="col-12 col-sm-auto">
+                            <div class="d-flex align-items-center">
                                 <div class="search-box me-3">
                                     <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
                                         <input aria-label="Search" class="form-control search-input search"
-                                               placeholder="Search Stock" type="search"/>
+                                               placeholder="Search Store or products" type="search"/>
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
                                 </div>
+
                             </div>
-                            <div class="col-auto"><a class="btn btn-primary px-5"
-                                                     href="{% url 'add_products' %}"
-                                                     data-bs-target="#verticallyCentered"
-                                                     data-bs-toggle="modal" type="button"><i
-                                    class="fa-solid fa-plus me-2"></i>Move Stock</a></div>
-
-
-                            <div class="col-auto ms-3">
-                                <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
-                                        class="fa-solid fa-file-export fs--1 me-2"></span>Export
-                                </button>
-                            </div>
-
+                        </div>
+                        <div class="col-auto"><a class="btn btn-primary px-5"
+                                                 href="{% url 'add_products' %}"
+                                                 data-bs-target="#verticallyCentered"
+                                                 data-bs-toggle="modal" type="button"><i
+                                class="fa-solid fa-plus me-2"></i>Move Stock</a></div>
+                        <div class="col-auto">
+                            <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                    class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                            </button>
                         </div>
                     </div>
-                </div>
-                <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
-                    <div class="table-responsive scrollbar col-auto">
-
+                    <div class="table-responsive scrollbar">
                         <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
@@ -153,11 +161,16 @@
                                     style="width:5%;">MOVEMENT TYPE
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="delivereFrom" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="deliverFrom" scope="col"
                                     style="width:5%;">DELIVERED FROM
                                 </th>
+                                <th class="sort align-middle ps-3" data-sort="deliverStatus" scope="col"
+                                    style="width:5%;">DELIVERY STATUS
+                                </th>
+                                <th class="sort align-middle ps-3" data-sort="action" scope="col"
+                                    style="width:5%;">ACTION
+                                </th>
 
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
@@ -185,7 +198,7 @@
                                 </td>
 
                                 <td class="align-middle productName">
-                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_products' stock.product_id %}">{{stock.product_name}}</a></td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 categoryName">
                                     <p class="mb-0 fs--1 text-900">{{stock.category_name}}</p>
@@ -200,7 +213,12 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 requestDate">
+                                    {% if stock.is_requested == 1 %}
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">NOT APPLICABLE</p>
+                                    {% endif %}
+
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 movedDate">
                                     <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
@@ -212,12 +230,27 @@
                                     <p class="mb-0 fs--1 text-900">SELF</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end deliveredFrom">
+                                <td class="align-middle white-space-nowrap text-end deliverFrom">
                                     {% if stock.sender_store != None %}
                                     <a class="fw-semi-bold line-clamp-3 mb-0"
                                        href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</a>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle white-space-nowrap text-end deliverStatus">
+                                    {% if stock.delivery_status == 0 %}
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
+                                    {% elif stock.delivery_status == 1 %}
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">DISPATCHED</span>
+                                    {% elif stock.delivery_status == 2 %}
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
+                                    {% elif stock.delivery_status == 3 %}
+                                    <span
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
 
@@ -242,135 +275,133 @@
                             </tbody>
                         </table>
                     </div>
+                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
+                        <div class="d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
+                            all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                        </div>
+                        <div class="d-flex">
+                            <button class="page-link" data-list-pagination="prev"><span
+                                    class="fas fa-chevron-left"></span></button>
+                            <ul class="mb-0 pagination"></ul>
+                            <button class="page-link pe-0" data-list-pagination="next"><span
+                                    class="fas fa-chevron-right"></span></button>
+                        </div>
+                    </div>
                 </div>
-                <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
-                    <div class="d-flex">
-                        <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
-                           data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
-                        all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
-                            class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
-                            class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                {% include 'modal_master_view.html' %}
+            </div>
+            {% include 'footer.html' %}
+        </div>
+        <div aria-hidden="true" aria-labelledby="verticallyCenteredModalLabel"
+             class="modal fade"
+             id="verticallyCentered" tabindex="-1">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="verticallyCenteredModalLabel">Move a
+                            product</h5>
+                        <button aria-label="Close" class="btn p-1" data-bs-dismiss="modal"
+                                type="button"><span class="fas fa-times fs--1"></span></button>
                     </div>
-                    <div class="d-flex">
-                        <button class="page-link" data-list-pagination="prev"><span
-                                class="fas fa-chevron-left"></span></button>
-                        <ul class="mb-0 pagination"></ul>
-                        <button class="page-link pe-0" data-list-pagination="next"><span
-                                class="fas fa-chevron-right"></span></button>
+                    <div class="p-4 code-to-copy">
+                        <form action="{% url 'manageMoveStocks' %}"
+                              class="row g-3 needs-validation"
+                              method='POST' novalidate="">
+                            {% csrf_token %}
+                            <div class="mb2 col-12">
+                                <h5 class="mb-3">Select Product</h5>
+                                <select class="form-select" data-choices="data-choices"
+                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                        name="product_id" required="required">
+                                    <option value="">Select Product</option>
+                                    {% for products in products %}
+                                    <option value="{{products.product_id}}">{{products.product_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="invalid-feedback">This field is required.</div>
+                            </div>
+
+                            <div class="mb-2 col-12">
+                                <h5 class="mb-3 ">Select Store Type</h5>
+                                <select class="form-select"
+                                        id="storeType"
+                                        name="store_type"
+                                        required="required">
+                                    <option value="">Select Store Type</option>
+                                    <option value="1">Own Store</option>
+                                    <option value="2">Franchise</option>
+                                </select>
+                                <div class="invalid-feedback">This field is required.</div>
+                            </div>
+
+                            <div class="mb2 col-12" id="ownStoreSelectDiv">
+                                <h5 class="mb-3">Select Own Store</h5>
+                                <select class="form-select" data-choices="data-choices" id="ownStoreSelect"
+                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                        name="own_store_id">
+                                    <option value="">Choose Store to move</option>
+                                    {% for store in own_store_list %}
+                                    <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="custom-error" style="color: red;"></div>
+                            </div>
+
+                            <div class="mb2 col-12" id="franchiseStoreSelectDiv">
+                                <h5 class="mb-3">Select Franchise Store</h5>
+                                <select class="form-select" data-choices="data-choices"
+                                        data-options='{"removeItemButton":true,"placeholder":true}'
+                                        name="franchise_store_id" id="franchiseStoreSelect">
+                                    <option value="">Choose Store to move</option>
+                                    {% for store in franchise_store_list %}
+                                    <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                    {% endfor %}
+                                </select>
+                                <div class="custom-error" style="color: red;"></div>
+                            </div>
+
+                            <div class="col-12">
+
+                                <h5 class="mb-3">Quantity</h5>
+
+                                <input class="form-control" id="qty" maxlength="256" required name="product_quantity"
+                                       type="number"
+                                       value="" max="100">
+                                <div class="invalid-feedback">Enter Valid Quantity!</div>
+                            </div>
+
+                            <div class="col-12">
+
+                                <h5 class="mb-3">Comments</h5>
+
+                                <input class="form-control" id="expense_reason" maxlength="256"
+                                       required="" name="comments"
+                                       type="text" value=""/>
+                                <div class="invalid-feedback">Enter any comments!</div>
+                            </div>
+
+                            <input name="created_by" required type="hidden"
+                                   value="{{ request.session.id }}">
+
+                            <div class="modal-footer">
+                                <button class="btn btn-primary" type="submit">Submit</button>
+                                <button class="btn btn-outline-primary" data-bs-dismiss="modal"
+                                        type="reset">
+                                    Cancel
+                                </button>
+                            </div>
+                        </form>
                     </div>
+
                 </div>
             </div>
-            {% include 'modal_master_view.html' %}
-
         </div>
-        {% include 'footer.html' %}
+
     </div>
-    <div aria-hidden="true" aria-labelledby="verticallyCenteredModalLabel"
-         class="modal fade"
-         id="verticallyCentered" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="verticallyCenteredModalLabel">Move a
-                        product</h5>
-                    <button aria-label="Close" class="btn p-1" data-bs-dismiss="modal"
-                            type="button"><span class="fas fa-times fs--1"></span></button>
-                </div>
-                <div class="p-4 code-to-copy">
-                    <form action="{% url 'manageMoveStocks' %}"
-                          class="row g-3 needs-validation"
-                          method='POST' novalidate="">
-                        {% csrf_token %}
-                        <div class="mb2 col-12">
-                            <h5 class="mb-3">Select Product</h5>
-                            <select class="form-select" data-choices="data-choices"
-                                    data-options='{"removeItemButton":true,"placeholder":true}'
-                                    name="product_id" required="required">
-                                <option value="">Select Product</option>
-                                {% for products in products %}
-                                <option value="{{products.product_id}}">{{products.product_name}}</option>
-                                {% endfor %}
-                            </select>
-                            <div class="invalid-feedback">This field is required.</div>
-                        </div>
-
-                        <div class="mb-2 col-12">
-                            <h5 class="mb-3 ">Select Store Type</h5>
-                            <select class="form-select"
-                                    id="storeType"
-                                    name="store_type"
-                                    required="required">
-                                <option value="">Select Store Type</option>
-                                <option value="1">Own Store</option>
-                                <option value="2">Franchise</option>
-                            </select>
-                            <div class="invalid-feedback">This field is required.</div>
-                        </div>
-
-                        <div class="mb2 col-12" id="ownStoreSelectDiv">
-                            <h5 class="mb-3">Select Own Store</h5>
-                            <select class="form-select" data-choices="data-choices"
-                                    data-options='{"removeItemButton":true,"placeholder":true}'
-                                    name="own_store_id">
-                                <option value="">Choose Store to move</option>
-                                {% for store in own_store_list %}
-                                <option value="{{store.store_id}}">{{store.store_name}}</option>
-                                {% endfor %}
-                            </select>
-                            <div class="custom-error" style="color: red;"></div>
-                        </div>
-
-                        <div class="mb2 col-12" id="franchiseStoreSelectDiv">
-                            <h5 class="mb-3">Select Franchise Store</h5>
-                            <select class="form-select" data-choices="data-choices"
-                                    data-options='{"removeItemButton":true,"placeholder":true}'
-                                    name="franchise_store_id">
-                                <option value="">Choose Store to move</option>
-                                {% for store in franchise_store_list %}
-                                <option value="{{store.store_id}}">{{store.store_name}}</option>
-                                {% endfor %}
-                            </select>
-                            <div class="custom-error" style="color: red;"></div>
-                        </div>
-
-                        <div class="col-12">
-
-                            <h5 class="mb-3">Quantity</h5>
-
-                            <input class="form-control" id="qty" maxlength="256" required name="product_quantity"
-                                   type="number"
-                                   value="" max="100">
-                            <div class="invalid-feedback">Enter Valid Quantity!</div>
-                        </div>
-
-                        <div class="col-12">
-
-                            <h5 class="mb-3">Comments</h5>
-
-                            <input class="form-control" id="expense_reason" maxlength="256"
-                                   required="" name="comments"
-                                   type="text" value=""/>
-                            <div class="invalid-feedback">Enter any comments!</div>
-                        </div>
-
-                        <input name="created_by" required type="hidden"
-                               value="{{ request.session.id }}">
-
-                        <div class="modal-footer">
-                            <button class="btn btn-primary" type="submit">Submit</button>
-                            <button class="btn btn-outline-primary" data-bs-dismiss="modal"
-                                    type="button">
-                                Cancel
-                            </button>
-                        </div>
-                    </form>
-                </div>
-
-            </div>
-        </div>
-    </div>
-    </div>
-
     <script>
         var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
         var navbarTop = document.querySelector('.navbar-top');
@@ -383,8 +414,6 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
-
-
 
 
     </script>
@@ -409,10 +438,9 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/filter.js' %}"></script>
-<script src="{% static 'js/csvExport.js' %}"></script>
-<script src="{% static 'js/custom_modals.js' %}"></script>
 
+<script src="{% static 'js/csvExport.js' %}"></script>
+<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 
 <script>
 $(document).ready(function() {
@@ -426,12 +454,18 @@ $(document).ready(function() {
         if (selectedValue === '1') {
             $('#ownStoreSelectDiv').show();
             $('#franchiseStoreSelectDiv').hide();
+            $('#ownStoreSelect').prop('required', true);
+            $('#franchiseStoreSelect').prop('required', false);
         } else if (selectedValue === '2') {
             $('#ownStoreSelectDiv').hide();
             $('#franchiseStoreSelectDiv').show();
+             $('#franchiseStoreSelect').prop('required', true);
+            $('#ownStoreSelect').prop('required', false);
         } else {
             $('#ownStoreSelectDiv').hide();
             $('#franchiseStoreSelectDiv').hide();
+            $('#ownStoreSelect').prop('required', false);
+            $('#franchiseStoreSelect').prop('required', false);
         }
     });
 
@@ -443,8 +477,6 @@ $(document).ready(function() {
 
 
 </script>
-<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
-<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 
 
 </body>

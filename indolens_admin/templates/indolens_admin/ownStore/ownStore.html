@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Store view</title>
+    <title>Indolens admin - View Own Stores</title>
 
     {% load static %}
 
@@ -68,6 +68,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -86,75 +87,76 @@
                 <div class="col-md-9 col-auto">
                     <h2 class="mb-2 text-1100">{{store.store_display_name}} - {{store.store_name}}</h2>
                     <h5 class="text-700 fw-semi-bold mb-3 mt-3"><b>Address: </b>{{store.store_address}}</h5>
-<!--                    <h5 class="text-700 fw-semi-bold">Here’s what’s going on at this store right now</h5>-->
+                    <!--                    <h5 class="text-700 fw-semi-bold">Here’s what’s going on at this store right now</h5>-->
                 </div>
-<!--                <div class="col-md-3 col-auto">-->
-<!--                    <div class="flatpickr-input-container">-->
-<!--                        <input class="form-control ps-6 datetimepicker"-->
-<!--                               data-options='{"dateFormat":"M j, Y","disableMobile":true,"defaultDate":"Mar 1, 2022"}'-->
-<!--                               id="datepicker"-->
-<!--                               type="text"/><span-->
-<!--                            class="uil uil-calendar-alt flatpickr-icon text-700"></span>-->
-<!--                    </div>-->
-<!--                </div>-->
+                <!--                <div class="col-md-3 col-auto">-->
+                <!--                    <div class="flatpickr-input-container">-->
+                <!--                        <input class="form-control ps-6 datetimepicker"-->
+                <!--                               data-options='{"dateFormat":"M j, Y","disableMobile":true,"defaultDate":"Mar 1, 2022"}'-->
+                <!--                               id="datepicker"-->
+                <!--                               type="text"/><span-->
+                <!--                            class="uil uil-calendar-alt flatpickr-icon text-700"></span>-->
+                <!--                    </div>-->
+                <!--                </div>-->
             </div>
 
             <div class="col-12 col-xxl-2">
-                    <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">
-                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
-                            <div class="d-flex align-items-center">
-                                <div class="ms-2">
-                                    <div class="d-flex align-items-end">
+                <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
                                         <span
-                                            class="fs-1 fw-semi-bold text-900">{{store.store_gst}}</span>
-                                    </div>
-                                    <p class="text-800 fs--1 mb-0"><b>Store GSTIN</b></p>
+                                                class="fs-1 fw-semi-bold text-900">{{store.store_gst}}</span>
                                 </div>
+                                <p class="text-800 fs--1 mb-0"><b>Store GSTIN</b></p>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
-                            <div class="d-flex align-items-center">
-                                <div class="ms-2">
-                                    <div class="d-flex align-items-end">
-                                        <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">
-                                            {{store.creator}}</a>
-                                    </div>
-                                    <p class="text-800 fs--1 mb-0"><b>Created By </b></p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">
+                                        {{store.creator}}</a>
                                 </div>
+                                <p class="text-800 fs--1 mb-0"><b>Created By </b></p>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
-                            <div class="d-flex align-items-center">
-                                <div class="ms-2">
-                                    <div class="d-flex align-items-end">
-                                        <span class="fs-1 fw-semi-bold text-900">{{store.created_on}}</span>
-                                    </div>
-                                    <p class="text-800 fs--1 mb-0"><b>Created On</b></p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <span class="fs-1 fw-semi-bold text-900">{{store.created_on}}</span>
                                 </div>
+                                <p class="text-800 fs--1 mb-0"><b>Created On</b></p>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
-                            <div class="d-flex align-items-center">
-                                <div class="ms-2">
-                                    <div class="d-flex align-items-end">
-                                        <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">{{store.updater}}</a>
-                                    </div>
-                                    <p class="text-800 fs--1 mb-0"><b>Updated By</b></p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <a href="{% url 'view_sub_admin' 1 %}"
+                                       class="fs-1 fw-semi-bold ">{{store.updater}}</a>
                                 </div>
+                                <p class="text-800 fs--1 mb-0"><b>Updated By</b></p>
                             </div>
                         </div>
-                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
-                            <div class="d-flex align-items-center">
-                                <div class="ms-2">
-                                    <div class="d-flex align-items-end">
-                                        <span class="fs-1 fw-semi-bold text-900">{{store.last_updated_on}}</span>
-                                    </div>
-                                    <p class="text-800 fs--1 mb-0"><b>Updated On</b></p>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <span class="fs-1 fw-semi-bold text-900">{{store.last_updated_on}}</span>
                                 </div>
+                                <p class="text-800 fs--1 mb-0"><b>Updated On</b></p>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
             <div class="row mb-3 mt-3 gy-6">
                 <div class="col-12 col-xxl-2">
@@ -295,74 +297,75 @@
                         </div>
                         <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                             <div class="table-responsive scrollbar mx-n1 px-1">
-                                <table class="table fs--1 mb-0" >
-                                <thead>
-                                <tr>
-                                    <th class="sort white-space-nowrap align-middle fs--2" scope="col"
-                                        style="width:70px;"></th>
-                                    <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
-                                        scope="col" style="width:350px;">PRODUCT NAME
-                                    </th>
-                                    <th class="sort align-middle text-end ps-4" data-sort="price" scope="col"
-                                        style="width:150px;">PRICE
-                                    </th>
-                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
-                                        style="width:150px;">CATEGORY
-                                    </th>
-                                    <th class="sort align-middle ps-4" data-sort="brand" scope="col"
-                                        style="width:150px;">BRAND
-                                    </th>
+                                <table class="table fs--1 mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th class="sort white-space-nowrap align-middle fs--2" scope="col"
+                                            style="width:70px;"></th>
+                                        <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
+                                            scope="col" style="width:350px;">PRODUCT NAME
+                                        </th>
+                                        <th class="sort align-middle text-end ps-4" data-sort="price" scope="col"
+                                            style="width:150px;">PRICE
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                            style="width:150px;">CATEGORY
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="brand" scope="col"
+                                            style="width:150px;">BRAND
+                                        </th>
 
-                                    <th class="sort align-middle ps-4" data-sort="inStock" scope="col"
-                                        style="width:250px;">IN STOCK
-                                    </th>
-                                    <th class="sort align-middle ps-4" data-sort="publishedOn" scope="col"
-                                        style="width:50px;">PUBLISHED ON
-                                    </th>
-                                </tr>
-                                </thead>
-                                <tbody class="list" id="products-table-body">
-                                {% for stock in products_list %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
-                                    data-category="{{ stock.category_name }}">
-                                    <td class="align-middle white-space-nowrap py-0">
-                                        <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
-                                            <div class="avatar avatar-m">
-                                                <img alt="" class="rounded-circle"
-                                                     src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
-                                            </div>
-                                        </a>
-                                    </td>
+                                        <th class="sort align-middle ps-4" data-sort="inStock" scope="col"
+                                            style="width:250px;">IN STOCK
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="publishedOn" scope="col"
+                                            style="width:50px;">PUBLISHED ON
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list" id="products-table-body">
+                                    {% for stock in products_list %}
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                        data-category="{{ stock.category_name }}">
+                                        <td class="align-middle white-space-nowrap py-0">
+                                            <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
+                                                <div class="avatar avatar-m">
+                                                    <img alt="" class="rounded-circle"
+                                                         src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
+                                                </div>
+                                            </a>
+                                        </td>
 
-                                    <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!"> {{stock.product_name}}</a>
-                                    </td>
+                                        <td class="product align-middle ps-4"><a
+                                                class="fw-semi-bold line-clamp-3 mb-0" href="#!">
+                                            {{stock.product_name}}</a>
+                                        </td>
 
-                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                        {{stock.sale_price}}
-                                    </td>
-                                    <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        {{stock.category_name}}
-                                    </td>
-                                    <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        {{stock.brand_name}}
-                                    </td>
+                                        <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                            {{stock.sale_price}}
+                                        </td>
+                                        <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                            {{stock.category_name}}
+                                        </td>
+                                        <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                            {{stock.brand_name}}
+                                        </td>
 
-                                    <td class="inStock align-middle white-space-nowrap  fw-bold text-700 ps-4">
-                                        {% if stock.store_product_quantity == None%}
-                                        0
-                                        {% else %}
-                                        {{stock.store_product_quantity}}
-                                        {% endif %}
-                                    </td>
+                                        <td class="inStock align-middle white-space-nowrap  fw-bold text-700 ps-4">
+                                            {% if stock.store_product_quantity == None%}
+                                            0
+                                            {% else %}
+                                            {{stock.store_product_quantity}}
+                                            {% endif %}
+                                        </td>
 
-                                    <td class="publishedOn align-middle white-space-nowrap text-600 ps-4">
-                                        {{stock.store_product_created_on}}
-                                    </td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
+                                        <td class="publishedOn align-middle white-space-nowrap text-600 ps-4">
+                                            {{stock.store_product_created_on}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
                                 <div class="col-auto d-flex">
@@ -411,127 +414,236 @@
                                 </div>
                             </div>
                             <div class="table-responsive mx-n1 px-1 scrollbar">
-                                <table class="table table-sm fs--1 mb-0" >
-                                <thead>
-                                <tr>
-                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
-                                        style="width:5%;">ORDER ID
-                                    </th>
-                                    <th class="sort align-middle text-end" data-sort="total" scope="col"
-                                        style="width:6%;">TOTAL
-                                    </th>
-                                    <th class="sort align-middle ps-8" data-sort="customer" scope="col"
-                                        style="width:28%; min-width: 250px;">CUSTOMER
-                                    </th>
-                                    <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
-                                        style="width:10%;">PAYMENT STATUS
-                                    </th>
-                                    <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
-                                        scope="col" style="width:12%; min-width: 200px;">ORDER
-                                        STATUS
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="createdby" scope="col"
-                                        style="width:30%;">CREATED BY
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="created_on" scope="col"
-                                        style="width:30%;">CREATED ON
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
-                                        style="width:30%;">UPDATED BY
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
-                                        style="width:30%;">UPDATED ON
-                                    </th>
+                                <table class="table table-sm fs--1 mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th class="sort white-space-nowrap align-middle pe-3" data-sort="order"
+                                            scope="col"
+                                            style="width:5%;">ORDER ID
+                                        </th>
+                                        <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                            style="width:6%;">TOTAL
+                                        </th>
+                                        <th class="sort align-middle ps-8" data-sort="customer" scope="col"
+                                            style="width:28%; min-width: 250px;">CUSTOMER
+                                        </th>
+                                        <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
+                                            style="width:10%;">PAYMENT STATUS
+                                        </th>
+                                        <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
+                                            scope="col" style="width:12%; min-width: 200px;">ORDER
+                                            STATUS
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="createdby" scope="col"
+                                            style="width:30%;">CREATED BY
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="created_on" scope="col"
+                                            style="width:30%;">CREATED ON
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
+                                            style="width:30%;">UPDATED BY
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
+                                            style="width:30%;">UPDATED ON
+                                        </th>
 
-                                </tr>
-                                </thead>
-                                <tbody class="list" id="order-table-body">
-                                {% for order in sales_data %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
-                                data-category="{{ order.order_status }}">
-                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                              href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
-                                    </td>
-                                    <td class="total align-middle text-end fw-semi-bold text-1000">
-                                        {{order.total_cost}}
-                                    </td>
-                                    <td class="customer align-middle white-space-nowrap ps-8">
-                                        <a class="d-flex align-items-center" href="{% url 'customer_details' order.customer_id %}">
-                                            <div class="avatar avatar-m">
-                                                <div class="avatar-name rounded-circle">
-                                                    <span>{{order.customer_name.0}}</span></div>
-                                            </div>
-                                            <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
-                                        </a>
-                                    </td>
-                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        {% if order.payment_status == 1 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">PENDING</span><span class="ms-1"
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list" id="order-table-body">
+                                    {% for order in sales_data %}
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                        data-category="{{ order.order_status }}">
+                                        <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                                  href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
+                                        </td>
+                                        <td class="total align-middle text-end fw-semi-bold text-1000">
+                                            {{order.total_cost}}
+                                        </td>
+                                        <td class="customer align-middle white-space-nowrap ps-8">
+                                            <a class="d-flex align-items-center"
+                                               href="{% url 'customer_details' order.customer_id %}">
+                                                <div class="avatar avatar-m">
+                                                    <div class="avatar-name rounded-circle">
+                                                        <span>{{order.customer_name.0}}</span></div>
+                                                </div>
+                                                <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
+                                            </a>
+                                        </td>
+                                        <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                            {% if order.payment_status == 1 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                    class="badge-label">PENDING</span><span class="ms-1"
+                                                                                            data-feather="check"
+                                                                                            style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif order.payment_status == 2 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                    class="badge-label">COMPLETE</span><span class="ms-1"
+                                                                                             data-feather="check"
+                                                                                             style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif order.payment_status == 3 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                                    class="badge-label">REFUNDED</span><span class="ms-1"
+                                                                                             data-feather="check"
+                                                                                             style="height:12.8px;width:12.8px;"></span></span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                            {% if order.order_status == 1 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                    class="badge-label">NEW</span><span class="ms-1"
                                                                                         data-feather="check"
                                                                                         style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.payment_status == 2 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">COMPLETE</span><span class="ms-1"
-                                                                                         data-feather="check"
-                                                                                         style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.payment_status == 3 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
-                                                class="badge-label">REFUNDED</span><span class="ms-1"
-                                                                                         data-feather="check"
-                                                                                         style="height:12.8px;width:12.8px;"></span></span>
-                                        {% endif %}
-                                    </td>
-                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        {% if order.order_status == 1 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">NEW</span><span class="ms-1" data-feather="check"
-                                                                                    style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 2 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PROCESSING</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 3 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">READY</span><span class="ms-1" data-feather="check"
-                                                                                      style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 4 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DISPATCHED</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 5 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">DELIVERED</span><span class="ms-1"
+                                            {% elif order.order_status == 2 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                    class="badge-label">PROCESSING</span><span class="ms-1"
+                                                                                               data-feather="check"
+                                                                                               style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif order.order_status == 3 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                    class="badge-label">READY</span><span class="ms-1"
                                                                                           data-feather="check"
                                                                                           style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 6 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">CANCELLED</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
-                                        {% endif %}
+                                            {% elif order.order_status == 4 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                    class="badge-label">DISPATCHED</span><span class="ms-1"
+                                                                                               data-feather="check"
+                                                                                               style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif order.order_status == 5 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                    class="badge-label">DELIVERED</span><span class="ms-1"
+                                                                                              data-feather="check"
+                                                                                              style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif order.order_status == 6 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                    class="badge-label">CANCELLED</span><span class="ms-1"
+                                                                                              data-feather="check"
+                                                                                              style="height:12.8px;width:12.8px;"></span></span>
+                                            {% endif %}
 
-                                    </td>
-                                    <td class="createdby align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
-                                    </td>
-                                    <td class="created_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
-                                        {{order.created_on}}
-                                    </td>
-                                    <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
-                                            {{order.updater_name}} </a>
-                                    </td>
-                                    <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
-                                        {{order.updated_on}}
-                                    </td>
-                                </tr>
-                                {% endfor %}
+                                        </td>
+                                        <td class="createdby align-middle white-space-nowrap text-900 fs--1 text-start">
+                                            <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
+                                        </td>
+                                        <td class="created_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                            {{order.created_on}}
+                                        </td>
+                                        <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                            <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
+                                                {{order.updater_name}} </a>
+                                        </td>
+                                        <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                            {{order.updated_on}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
 
-                                </tbody>
-                            </table>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="row align-items-center py-1">
+                                <div class="pagination d-none"></div>
+                                <div class="col d-flex fs--1">
+                                    <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                       data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
+                                                                              href="#!">View
+                                    all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                        class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less</a>
+                                </div>
+                                <div class="col-auto d-flex">
+
+                                    <button class="btn btn-link px-1 me-1" data-list-pagination="prev" title="Previous"
+                                            type="button"><span class="fas fa-chevron-left me-2"></span>Previous
+                                    </button>
+                                    <button class="btn btn-link px-1 ms-1" data-list-pagination="next" title="Next"
+                                            type="button">Next<span
+                                            class="fas fa-chevron-right ms-2"></span>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-xxl-2">
+                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-7 border-y border-300">
+                        <div data-list='{"valueNames":["id","reason","amount","date","createdBy","createdOn"],"page":6}'>
+                            <div class="row align-items-end justify-content-between pb-5 g-3">
+                                <div class="col-auto">
+                                    <h3>Expense ({{store_expense_list|length}}) </h3>
+                                    <p class="text-700 lh-sm mb-0">expense in this Store</p>
+                                </div>
+                                <div class="col-12 col-md-auto">
+                                    <div class="row g-2 gy-3">
+                                        <div class="col-auto flex-1">
+                                            <div class="search-box">
+                                                <form class="position-relative" data-bs-display="static"
+                                                      data-bs-toggle="search">
+                                                    <input aria-label="Search"
+                                                           class="form-control search-input search form-control-sm"
+                                                           placeholder="Search" type="search"/>
+                                                    <span class="fas fa-search search-box-icon"></span>
+
+                                                </form>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="table-responsive mx-n1 px-1 scrollbar">
+                                <table class="table table-sm fs--1 mb-0">
+                                    <thead>
+                                    <tr>
+                                        <th class="sort white-space-nowrap align-middle pe-3" data-sort="id"
+                                            scope="col"
+                                            style="width:10%;">EXPENSE ID
+                                        </th>
+                                        <th class="sort align-middle" data-sort="reason" scope="col"
+                                            style="width:20%;">REASON
+                                        </th>
+                                        <th class="sort align-middle" data-sort="amount" scope="col"
+                                            style="width:20%;">AMOUNT
+                                        </th>
+                                        <th class="sort align-middle pe-3" data-sort="date" scope="col"
+                                            style="width:15%;">DATE
+                                        </th>
+                                        <th class="sort align-middle text-start pe-3" data-sort="createdBy"
+                                            scope="col" style="width:20%;">CREATED BY
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="createdOn" scope="col"
+                                            style="width:20%;">CREATED ON
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list" id="oexpense-table-body">
+                                    {% for expense in store_expense_list %}
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                        data-category="{{ order.order_status }}">
+                                        <td class="id align-middle white-space-nowrap py-0">
+                                            #{{expense.store_expense_id}}</a>
+                                        </td>
+                                        <td class="reason align-middle fw-semi-bold text-1000">
+                                            {{expense.expense_reason}}
+                                        </td>
+                                        <td class="amount align-middle fw-semi-bold text-1000">
+                                            {{expense.expense_amount}}
+                                        </td>
+                                        <td class="date align-middle fw-semi-bold text-1000">
+                                            {{expense.expense_date}}
+                                        </td>
+                                        <td class="createdBy align-middle fw-semi-bold text-1000">
+                                            <a href="{% url 'view_order_creator' expense.created_by expense.store_type %}">
+                                                {{expense.creator_name}}</a>
+                                        </td>
+                                        <td class="createdOn align-middle fw-semi-bold text-1000">
+                                            {{expense.created_on}}
+                                        </td>
+
+                                    </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="row align-items-center py-1">
                                 <div class="pagination d-none"></div>
@@ -582,6 +694,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -608,7 +721,7 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/projectmanagement-dashboard.js' %}"></script>
 <script src="{% static 'js/csvExport.js' %}"></script>
-<script src="{% static 'js/filter.js' %}"></script>
+
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>

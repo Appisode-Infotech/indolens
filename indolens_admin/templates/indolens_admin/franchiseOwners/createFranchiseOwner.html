@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Create Franchise Manager</title>
+    <title>Indolens admin - Create Franchise Owner</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -74,7 +74,7 @@
         {% include 'nav_bar.html' %}
         <div class="content">
 
-            <h2 class="mb-4">Create a Franchise Manager</h2>
+            <h2 class="mb-4">Create Franchise Owner</h2>
             {% if message %}
                     <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
                         <strong>{{message}}</strong>
@@ -105,7 +105,8 @@
 
                         <div class="col-md-6">
                             <label class="form-label" for="fullName">Name</label>
-                            <input class="form-control" id="fullName" name="name" required type="text" value=""/>
+                            <input class="form-control" id="fullName" name="name" required type="text" maxlength="70"
+                                   value=""/>
                             <div class="invalid-feedback">Name is mandatory</div>
                         </div>
                         <div class="col-md-6">

@@ -6,8 +6,9 @@ import pytz
 from indolens_admin.admin_models.admin_resp_model.master_material_resp_model import get_product_materials
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def add_master_material(material_obj):
     try:
@@ -20,8 +21,8 @@ def add_master_material(material_obj):
                 VALUES (
                     '{material_obj.material_name}',
                     '{material_obj.material_description}',
-                    0, '{today}',
-                    '{material_obj.created_by}', '{today}',
+                    0, '{getIndianTime()}',
+                    '{material_obj.created_by}', '{getIndianTime()}',
                     '{material_obj.last_updated_by}'
                 )
             """
@@ -44,7 +45,7 @@ def edit_master_material(material_obj):
                 UPDATE  product_materials SET
                     material_name = '{material_obj.material_name}',  
                     material_description = '{material_obj.material_description}', 
-                    last_updated_on = '{today}', last_updated_by = '{material_obj.last_updated_by}'
+                    last_updated_on = '{getIndianTime()}', last_updated_by = '{material_obj.last_updated_by}'
                     WHERE material_id = {material_obj.material_id}
                 
             """

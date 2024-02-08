@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Create Color</title>
+    <title>Indolens admin - Edit Color</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -76,7 +76,7 @@
         {% for color in frame_color %}
         <div class="content">
 
-            <h2 class="mb-4">Create a Color</h2>
+            <h2 class="mb-4">Edit Color</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'edit_master_color' color.color_id %}"

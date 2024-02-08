@@ -169,7 +169,7 @@
 
 
 
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;"></th>
+                                <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
@@ -200,7 +200,7 @@
                                 </td>
 
                                 <td class="product align-middle">
-                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="#!">{{stock.product_name}}</a></td>
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_products' stock.product_id %}">{{stock.product_name}}</a></td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 productId">
                                     <p class="mb-0 fs--1 text-900">{{stock.product_id}}</p>
@@ -224,31 +224,31 @@
                                     <p class="mb-0 fs--1 text-900">Not Delivered</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end approval_status">
+                                <td class="align-middle white-space-nowrap text-end approvalStatus">
                                     {% if stock.request_status == 0 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
                                     {% elif stock.request_status == 1 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
                                     {% else %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end delivery_status">
+                                <td class="align-middle white-space-nowrap text-end deliveryStatus">
                                     {% if stock.delivery_status == 0 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>
                                     {% elif stock.delivery_status == 1 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">DISPATCHED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-primary">DISPATCHED</span>
                                     {% elif stock.delivery_status == 2 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
                                     {% elif stock.delivery_status == 3 %}
                                     <span
-                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
+                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
 
@@ -260,8 +260,10 @@
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                            <div class="dropdown-menu dropdown-menu-end py-2"><a
-                                                class="dropdown-item">View</a>
+                                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                                <a class="dropdown-item view-button" data-bs-toggle="modalView"
+                                               type="button"
+                                               data-category-info="{{ stock }}">View</a>
                                             {% if stock.request_status == 0 %}
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item text-success"
@@ -343,7 +345,7 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/filter.js' %}"></script>
+
 <script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 

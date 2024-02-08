@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Create Frame Types</title>
+    <title>Indolens admin - Edit Frame Types</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -76,7 +76,7 @@
         {% for type in frame_type %}
         <div class="content">
 
-            <h2 class="mb-4">Create a Frame Types</h2>
+            <h2 class="mb-4">Edit Frame Types</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'edit_frame_type' type.frame_id %}"

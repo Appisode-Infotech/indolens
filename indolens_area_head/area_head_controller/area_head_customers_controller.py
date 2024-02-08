@@ -9,8 +9,9 @@ from django.db import connection
 from indolens_admin.admin_models.admin_resp_model.customer_resp_model import get_customers
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_all_area_stores_customers(assigned_stores):
     try:

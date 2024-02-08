@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Create Store Manager</title>
+    <title>Indolens admin - Update Franchise Owner Document</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -72,7 +72,20 @@
         {% for franchise_owner in franchise_owner %}
         <div class="content">
 
-            <h2 class="mb-4">Update documents - Store Manager</h2>
+            <nav aria-label="breadcrumb">
+                <!-- Breadcrumbs List -->
+                <ol class="breadcrumb mb-3">
+                    <!-- Back Button -->
+                    <li class="breadcrumb-item">
+                        <span>&#9664; </span>
+                        <a href="{% url 'manage_franchise_owners' 'All' %}">
+                            Go back
+                        </a>
+                    </li>
+                </ol>
+            </nav>
+
+            <h2 class="mb-4">Update documents - Franchise Owner</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'add_franchise_store_employee_image' franchise_owner.franchise_owner_id %}"  class="row g-3" method="post" enctype="multipart/form-data">
@@ -250,7 +263,6 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'vendors/dropzone/dropzone.min.js' %}"></script>
 <script src="{% static 'js/file-upload-preview.js' %}"></script>
-<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 
 <script>

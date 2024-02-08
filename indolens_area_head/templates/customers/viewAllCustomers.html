@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Customers</title>
+    <title>Indolens Area head - Customers</title>
 
     {% load static %}
 
@@ -159,13 +159,8 @@
                                         {% endif %}
                                     </td>
                                     <td class="email align-middle white-space-nowrap pe-5 name">
-                                        {% if customer.created_by_store_type == 1 %}
-                                        <a class="fw-semi-bold" href="{% url 'view_own_store' customer.created_by_store_id %}">
+                                        <a class="fw-semi-bold" href="{% url 'view_own_store_area_head' customer.created_by_store_id %}">
                                             {{customer.store_name}}</a>
-                                        {% else %}
-                                        <a class="fw-semi-bold" href="{% url 'view_franchise_store' customer.created_by_store_id %}">
-                                            {{customer.store_name}}</a>
-                                        {% endif %}
 
                                     </td>
                                     <td class="align-middle white-space-nowrap pe-5 email"><a class="fw-semi-bold">{{customer.email}}</a>

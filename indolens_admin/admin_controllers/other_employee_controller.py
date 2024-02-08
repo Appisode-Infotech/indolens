@@ -9,8 +9,9 @@ from django.db import connection
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_other_employee(other_emp, files):
     try:
@@ -26,7 +27,7 @@ def create_other_employee(other_emp, files):
                     '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{other_emp.address}', '{other_emp.document_1_type}', 
                     '{json.dumps(files.document1)}', '{other_emp.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{other_emp.created_by}', '{today}', '{other_emp.last_updated_by}', '{today}', 4,0
+                    0, '{other_emp.created_by}', '{getIndianTime()}', '{other_emp.last_updated_by}', '{getIndianTime()}', 4,0
                 )
             """
 
@@ -58,7 +59,7 @@ def update_other_employee(other_emp, files):
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{other_emp.address}',
                     last_updated_by = '{other_emp.last_updated_by}',
-                    last_updated_on = '{today}'
+                    last_updated_on = '{getIndianTime()}'
                 WHERE employee_id = {other_emp.employee_id}
             """
 
@@ -89,7 +90,7 @@ def update_franchise_other_employee(other_emp, files):
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{other_emp.address}',
                     last_updated_by = '{other_emp.last_updated_by}',
-                    last_updated_on = '{today}'
+                    last_updated_on = '{getIndianTime()}'
                 WHERE employee_id = {other_emp.employee_id}
             """
             # Execute the update query using your cursor
@@ -121,7 +122,7 @@ def create_franchise_other_employee(other_emp, files):
                     '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{other_emp.address}', '{other_emp.document_1_type}', 
                     '{json.dumps(files.document1)}', '{other_emp.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{other_emp.created_by}', '{today}', '{other_emp.last_updated_by}', '{today}', 4,0
+                    0, '{other_emp.created_by}', '{getIndianTime()}', '{other_emp.last_updated_by}', '{getIndianTime()}', 4,0
                 )
             """
 

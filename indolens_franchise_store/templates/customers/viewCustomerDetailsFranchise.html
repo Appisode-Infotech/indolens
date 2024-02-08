@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens store - Customer details</title>
+    <title>Indolens {{request.session.store_name}} - Customer details</title>
     {% load static %}
 
 
@@ -27,6 +27,7 @@
     <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
     <script src="{% static 'js/config.js' %}"></script>
+    <script src="{% static 'js/breadcrumbs.js' %}"></script>
 
     <!-- ===============================================-->
     <!--    Stylesheets-->

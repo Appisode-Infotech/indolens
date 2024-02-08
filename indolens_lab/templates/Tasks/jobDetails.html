@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Job details</title>
+    <title>Indolens {{request.session.lab_name}} - Job details</title>
     {% load static %}
 
 
@@ -401,6 +401,7 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
 <script src="{% static 'js/custom_master_view_modals.js' %}"></script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 
 </body>

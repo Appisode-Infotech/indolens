@@ -116,11 +116,11 @@
                                                 <h3>{{optimetry.name}}</h3>
                                                 <p class="text-800">{{optimetry.created_on}}</p>
                                                 {% if optimetry.assigned_store_id != 0 %}
-                                                <p class="text-800">Manager - <a href="{%url 'view_own_store' optimetry.assigned_store_id %}">
+                                                <p class="text-800">Optometry - <a href="{%url 'view_own_store' optimetry.assigned_store_id %}">
                                                     {{optimetry.store_name}}
                                                 </a></p>
                                                 {% else %}
-                                                <p class="text-800">Store - UNASSIGNED</p>
+                                                <p class="text-800">Optometry - UNASSIGNED</p>
                                                 {% endif %}
 
                                             </div>

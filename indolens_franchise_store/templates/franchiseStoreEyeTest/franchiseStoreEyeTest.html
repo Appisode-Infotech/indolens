@@ -13,18 +13,11 @@
     }
 
 
-
-
-
-
-
-
-
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Create Own Stores</title>
+    <title>Indolens {{request.session.store_name}} - Create Own Stores</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -76,11 +69,6 @@
 
 
 
-
-
-
-
-
     </script>
 </head>
 
@@ -124,7 +112,7 @@
                                         <input class="form-control"
                                                name="customer_name"
                                                placeholder="Name"
-                                               required="required"
+                                               required="required" maxlength="70"
                                                onchange="genCustomerObject()"
                                                type="text" value=""/>
                                         <div class="invalid-feedback">This field is required.</div>

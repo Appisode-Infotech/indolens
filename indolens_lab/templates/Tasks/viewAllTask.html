@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - All Orders</title>
+    <title>Indolens {{request.session.lab_name}} - All Jobs</title>
     {% load static %}
 
 
@@ -76,7 +76,7 @@
             <div class="mb-9">
                 <div class="row g-3 mb-4">
                     <div class="col-auto">
-                        <h2 class="mb-0">All Orders</h2>
+                        <h2 class="mb-0">All Jobs</h2>
                     </div>
                 </div>
 
@@ -152,7 +152,7 @@
                                         style="width:250px;">JOB STATUS
                                     </th>
                                     <th class="sort align-middle text-end ps-4" scope="col"
-                                        style="width:250px;">
+                                        style="width:250px;">ACTION
                                     </th>
 
                                 </tr>
@@ -222,34 +222,23 @@
                                     <td class="jobStatus align-middle text-900 fw-semi-bold text-end py-0 ps-4">
                                         {% if order.order_status == 1 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">NEW</span><span class="ms-1" data-feather="check"
-                                                                                    style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">NEW</span></span>
                                         {% elif order.order_status == 2 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PROCESSING</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">PROCESSING</span></span>
                                         {% elif order.order_status == 3 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">READY</span><span class="ms-1" data-feather="check"
-                                                                                      style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">READY</span></span>
                                         {% elif order.order_status == 4 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DISPATCHED</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">DISPATCHED</span></span>
                                         {% elif order.order_status == 5 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">DELIVERED</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">DELIVERED</span></span>
                                         {% elif order.order_status == 6 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">CANCELLED</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">CANCELLED</span></span>
                                         {% endif %}
-
                                     </td>
 
                                     <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
@@ -327,7 +316,7 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script src="{% static 'js/filter.js' %}"></script>
+
 <script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
 

@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens store - Customer details</title>
+    <title>Indolens {{request.session.store_name}} - Customer details</title>
     {% load static %}
 
 
@@ -125,8 +125,7 @@
                                     <div class="card-body pb-3">
                                         <div class="d-flex align-items-center mb-3">
                                             <h3 class="me-1">Default Address</h3>
-                                            <button class="btn btn-link p-0"><span
-                                                    class="fas fa-pen fs-0 ms-3 text-500"></span></button>
+                                            <button class="btn btn-link p-0"></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
                                         <p class="text-800">{{customer.address}}
@@ -154,11 +153,6 @@
                                     <table class="table table-sm fs--1 mb-0">
                                         <thead>
                                         <tr>
-                                            <th class="white-space-nowrap fs--1 align-middle ps-0" style="width:26px;">
-                                                <div class="form-check mb-0 fs-0">
-                                                    <input class="form-check-input" type="checkbox"/>
-                                                </div>
-                                            </th>
                                             <th class="sort white-space-nowrap align-middle pe-3" data-sort="order"
                                                 scope="col"
                                                 style="width:5%;">ORDER ID
@@ -198,11 +192,6 @@
                                         <tbody class="list" id="order-table-body">
                                         {% for order in sales_data %}
                                         <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                            <td class="fs--1 align-middle px-0 py-3">
-                                                <div class="form-check mb-0 fs-0">
-                                                    <input class="form-check-input" type="checkbox"/>
-                                                </div>
-                                            </td>
                                             <td class="order align-middle white-space-nowrap py-0"><a
                                                     class="fw-semi-bold"
                                                     href="{% url 'order_details_store' order.order_id %}">#{{order.order_id}}</a>
@@ -352,6 +341,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>
 

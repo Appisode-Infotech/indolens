@@ -4,8 +4,9 @@ import pytz
 from django.db import connection
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_order_stats(status, store_type):
     status_conditions = {

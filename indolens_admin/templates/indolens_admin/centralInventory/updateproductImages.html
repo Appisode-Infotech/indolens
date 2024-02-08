@@ -77,7 +77,20 @@
 
         <div class="content">
 
-            <h2 class="mb-4">Update documents - Store Manager</h2>
+            <nav aria-label="breadcrumb">
+                <!-- Breadcrumbs List -->
+                <ol class="breadcrumb mb-3">
+                    <!-- Back Button -->
+                    <li class="breadcrumb-item">
+                        <span>&#9664; </span>
+                        <a href="{% url 'manage_central_inventory_products' 'All' %}">
+                            Go back
+                        </a>
+                    </li>
+                </ol>
+            </nav>
+
+            <h2 class="mb-4">Update documents - Product</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <div class="border-top border-dashed border-300 pt-4">
@@ -85,7 +98,7 @@
                             <div class="d-flex flex-wrap">
                                 <label></label>
                                 {% for image in product_data.product_images %}
-                                <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3">
+                                <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3" style="max-width:125px">
                                     <div class="border border-300 p-2 rounded-2 me-2 mb-2">
                                         <a href="{{ MEDIA_URL }}{{ image }}" target="_blank">
                                             <img class="rounded-2 dz-image" width="100px"
@@ -94,6 +107,9 @@
                                                  alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                         </a>
                                     </div>
+                                    {% if product_data.product_images.1|length == 0 %}
+                                    <p style="color: red; text-align: center;"> One image is Mandatory </p>
+                                    {% else %}
                                     <a data-bs-toggle="modal"
                                        data-bs-target="#delete_document"
                                        data-employee-id="{{ manager.employee_id }}"
@@ -104,6 +120,8 @@
                                        class="btn btn-soft-danger me-1 mb-5" type="button">
                                         <i class="fa fa-trash me-1"></i> Delete
                                     </a>
+                                    {% endif %}
+
                                 </div>
                                 {% endfor %}
                             </div>
@@ -210,7 +228,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 </script>
-<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>
 

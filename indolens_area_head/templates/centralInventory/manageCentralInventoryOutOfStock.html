@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens Admin - Manage Out Of Stock</title>
+    <title>Indolens Area head - Manage Out Of Stock</title>
     {% load static %}
 
 
@@ -94,7 +94,7 @@
                     <li class="nav-item"><a class="nav-link" href="#">Accessories<span
                             class="text-700 fw-semi-bold">(810)</span></a></li>
                 </ul>
-                <div data-list='{"valueNames":["product","price","category","tags","vendor","time"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["product","price","category","brand","quantity","time"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -155,11 +155,11 @@
                                     <th class="sort align-middle ps-4" data-sort="category" scope="col"
                                         style="width:150px;">CATEGORY
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                    <th class="sort align-middle ps-4" data-sort="brand" scope="col"
                                         style="width:150px;">BRAND
                                     </th>
 
-                                    <th class="sort align-middle ps-3" data-sort="tags" scope="col"
+                                    <th class="sort align-middle ps-3" data-sort="quantity" scope="col"
                                         style="width:250px;">IN STOCK
                                     </th>
                                     <th class="sort align-middle ps-4" data-sort="time" scope="col"
@@ -188,11 +188,10 @@
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{product.category_name}}
                                     </td>
-                                    <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                    <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{product.brand_name}}
                                     </td>
-
-                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                    <td class="quantity align-middle white-space-nowrap text-600  fw-bold ps-4">
                                         {{product.store_product_quantity}}
                                     </td>
                                     <td class="time align-middle white-space-nowrap text-600 ps-4">

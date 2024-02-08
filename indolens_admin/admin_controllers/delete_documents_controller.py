@@ -8,8 +8,9 @@ from django.db import connection
 
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def delete_document(documenturl, document_type, table, condition, user_id):
     print("=====================================in controller")
@@ -60,9 +61,6 @@ def delete_product_image(imageURL, productId):
         folder_name = parts[0]
         file_name = parts[-1]
         file_path = os.path.join("media", folder_name, file_name)
-        print(folder_name)
-        print(file_name)
-        print(file_path)
 
         if os.path.exists(file_path):
             print("file found")

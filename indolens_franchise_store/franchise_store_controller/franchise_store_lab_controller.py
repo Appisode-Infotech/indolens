@@ -7,8 +7,9 @@ from django.db import connection
 from indolens_admin.admin_models.admin_resp_model.lab_resp_model import get_labs
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_all_active_labs():
     try:

@@ -41,6 +41,7 @@ urlpatterns = [
          name='manage_central_inventory_products'),
     path('add_products/', centralInventoryAddProducts, name='add_products'),
     path('view_products/productId=<int:productId>', centralInventoryViewProducts, name='view_products'),
+    path('view_product_restock_logs/productId=<int:productId>', centralInventoryViewProductRestockLogs, name='view_product_restock_logs'),
     path('manage_central_inventory_products/update_product/productId=<str:productId>', centralInventoryUpdateProduct,
          name='update_product'),
     path('manage_central_inventory_products/update_product_images/productId=<str:productId>',

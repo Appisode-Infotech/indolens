@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Stock request - store</title>
+    <title>Indolens {{request.session.store_name}} - Create Stock request</title>
     {% load static %}
 
 
@@ -82,7 +82,7 @@
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Create a stock request<span class="fw-normal text-700 ms-3">({{product_list|length}})</span></h2>
+                            <h2 class="mb-0">Create stock request<span class="fw-normal text-700 ms-3">({{product_list|length}})</span></h2>
                         </div>
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -149,8 +149,10 @@
                                         </div>
                                     </a>
                                 </td>
-                                <td class="product align-middle ps-4"><a
-                                        class="fw-semi-bold line-clamp-3 mb-0">{{product.product_name}} </a>
+                                <td class="product align-middle ps-4">
+                                    <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_central_inventory_products' product.product_id %}">
+                                                {{product.product_name}}</a>
+
                                 </td>
                                 <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
                                     ₹{{product.sale_price}}

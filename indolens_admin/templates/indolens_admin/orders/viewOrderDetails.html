@@ -134,7 +134,7 @@
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0">
+                                            <a class="fw-semi-bold line-clamp-2 mb-0" href="{% url 'view_products' order.product_id %}">
                                                 {{order.product_name}}
                                             </a>
                                         </td>
@@ -368,6 +368,7 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 
 </body>
@@ -410,4 +411,5 @@
     });
 
 </script>
+
 </html>

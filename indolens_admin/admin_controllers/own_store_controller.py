@@ -7,8 +7,9 @@ from django.db import connection
 from indolens_admin.admin_models.admin_resp_model.own_store_resp_model import get_own_store
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_own_store(store_obj):
     cleaned_str = store_obj.store_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
@@ -25,7 +26,7 @@ def create_own_store(store_obj):
                                             '{store_obj.store_gstin}', '{store_obj.store_email}', 
                                             '{store_obj.store_city}', '{store_obj.store_state}', '{store_lat}',
                                             '{store_lng}', '{store_obj.complete_address}', 1, {store_obj.created_by}, 
-                                            '{today}', {store_obj.last_updated_by}, '{today}')"""
+                                            '{getIndianTime()}', {store_obj.last_updated_by}, '{getIndianTime()}')"""
 
             cursor.execute(create_own_store_query)
             storeId = cursor.lastrowid
@@ -169,7 +170,7 @@ def edit_own_store_by_id(store_obj):
                     store_lat = '{store_lat}',
                     store_lng = '{store_lng}',
                     store_address = '{store_obj.complete_address}',
-                    last_updated_on = '{today}',
+                    last_updated_on = '{getIndianTime()}',
                     last_updated_by = {store_obj.last_updated_by}
                 WHERE store_id = {store_obj.store_id}
             """

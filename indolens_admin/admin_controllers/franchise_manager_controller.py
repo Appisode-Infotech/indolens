@@ -10,8 +10,9 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.franchise_owner_resp_model import get_franchise_owners
 
 ist = pytz.timezone('Asia/Kolkata')
-today = datetime.datetime.now(ist)
-
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    return today
 
 def create_franchise_owner(franchise_owner, files):
     try:
@@ -26,7 +27,8 @@ def create_franchise_owner(franchise_owner, files):
                     '{franchise_owner.name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{franchise_owner.address}', '{franchise_owner.document_1_type}', 
                     '{json.dumps(files.document1)}', '{franchise_owner.document_2_type}', '{json.dumps(files.document2)}', 
-                    1, '{franchise_owner.created_by}', '{today}', '{franchise_owner.last_updated_by}', '{today}', 1,0
+                    1, '{franchise_owner.created_by}', '{getIndianTime()}', '{franchise_owner.last_updated_by}', 
+                    '{getIndianTime()}', 1,0
                 )
             """
 
@@ -141,7 +143,7 @@ def edit_franchise_owner(franchise_owner, files):
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{franchise_owner.address}',
                     last_updated_by = '{franchise_owner.last_updated_by}',
-                    last_updated_on = '{today}'
+                    last_updated_on = '{getIndianTime()}'
                 WHERE employee_id = {franchise_owner.employee_id}
             """
 
@@ -207,12 +209,35 @@ def unassign_store_franchise_owner(FranchiseOwnerId, storeId):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_active_own_stores():
+def get_active_franchise_stores():
     try:
         with connection.cursor() as cursor:
             unassigned_stores = []
             get_unassigned_active_own_store_for_manager_query = f"""SELECT f.store_id, f.store_name FROM franchise_store f 
             WHERE f.status = 1;"""
+            cursor.execute(get_unassigned_active_own_store_for_manager_query)
+            stores_data = cursor.fetchall()
+            for store in stores_data:
+                unassigned_stores.append({
+                    "store_id": store[0],
+                    "store_name": store[1]
+                })
+            return {
+                       "status": True,
+                       "available_stores": unassigned_stores
+                   }, 200
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def get_active_unassigned_franchise_stores():
+    try:
+        with connection.cursor() as cursor:
+            unassigned_stores = []
+            get_unassigned_active_own_store_for_manager_query = f"""SELECT f.store_id, f.store_name FROM franchise_store f 
+                    LEFT JOIN franchise_store_employees fse ON f.store_id = fse.assigned_store_id AND fse.role = 1
+                    WHERE fse.assigned_store_id IS NULL AND f.status = 1 """
             cursor.execute(get_unassigned_active_own_store_for_manager_query)
             stores_data = cursor.fetchall()
             for store in stores_data:
