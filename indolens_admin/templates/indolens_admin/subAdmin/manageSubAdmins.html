@@ -57,6 +57,7 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
+
     </script>
 </head>
 
@@ -75,7 +76,8 @@
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Sub Admins<span class="fw-normal text-700 ms-3">({{sub_admin_list|length}})</span></h2>
+                            <h2 class="mb-0">Sub Admins<span
+                                    class="fw-normal text-700 ms-3">({{sub_admin_list|length}})</span></h2>
                         </div>
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -100,12 +102,17 @@
                                                     type="button">{{status}}<span class="fas fa-angle-down ms-2"></span>
                                             </button>
                                             <ul class="dropdown-menu">
-                                                <li><a class="dropdown-item" href="{% url 'manage_sub_admins' 'All' %}">All</a></li>
+                                                <li><a class="dropdown-item" href="{% url 'manage_sub_admins' 'All' %}">All</a>
+                                                </li>
                                                 <li>
                                                     <hr class="dropdown-divider"/>
                                                 </li>
-                                                <li><a class="dropdown-item text-success" href="{% url 'manage_sub_admins' 'Active' %}">Active Only</a></li>
-                                                <li><a class="dropdown-item text-danger" href="{% url 'manage_sub_admins' 'Inactive' %}">Inactive Only</a></li>
+                                                <li><a class="dropdown-item text-success"
+                                                       href="{% url 'manage_sub_admins' 'Active' %}">Active Only</a>
+                                                </li>
+                                                <li><a class="dropdown-item text-danger"
+                                                       href="{% url 'manage_sub_admins' 'Inactive' %}">Inactive Only</a>
+                                                </li>
 
                                             </ul>
                                         </div>
@@ -122,8 +129,8 @@
                             <thead>
                             <tr>
                                 <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
-                                        style="width:5%;">SL NO
-                                    </th>
+                                    style="width:5%;">SL NO
+                                </th>
                                 <th class="sort align-middle text-end" scope="col" style="width:5%;">PROFILE</th>
 
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
@@ -138,20 +145,20 @@
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
-<!--                                <th class="sort align-middle ps-3" data-sort="createdDate" scope="col"-->
-<!--                                    style="width:10%;">-->
-<!--                                    CREATED ON-->
-<!--                                </th>-->
-<!--                                <th class="sort align-middle ps-3" data-sort="createdBy" scope="col" style="width:15%;">-->
-<!--                                    CREATED BY-->
-<!--                                </th>-->
-<!--                                <th class="sort align-middle ps-3" data-sort="updatedDate" scope="col"-->
-<!--                                    style="width:5%;">UPDATED ON-->
-<!--                                </th>-->
+                                <!--                                <th class="sort align-middle ps-3" data-sort="createdDate" scope="col"-->
+                                <!--                                    style="width:10%;">-->
+                                <!--                                    CREATED ON-->
+                                <!--                                </th>-->
+                                <!--                                <th class="sort align-middle ps-3" data-sort="createdBy" scope="col" style="width:15%;">-->
+                                <!--                                    CREATED BY-->
+                                <!--                                </th>-->
+                                <!--                                <th class="sort align-middle ps-3" data-sort="updatedDate" scope="col"-->
+                                <!--                                    style="width:5%;">UPDATED ON-->
+                                <!--                                </th>-->
 
-<!--                                <th class="sort align-middle ps-3" data-sort="updatedBy" scope="col"-->
-<!--                                    style="width:5%;">UPDATED BY-->
-<!--                                </th>-->
+                                <!--                                <th class="sort align-middle ps-3" data-sort="updatedBy" scope="col"-->
+                                <!--                                    style="width:5%;">UPDATED BY-->
+                                <!--                                </th>-->
 
                                 <th class="sort align-middle ps-3" data-sort="address" scope="col"
                                     style="width:5%;">ADDRESS
@@ -169,10 +176,11 @@
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
                                     <a href="{{MEDIA_URL}}{{sub_admin.profile_pic}}" target="_blank">
-                                    <div class="avatar avatar-m">
-                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{sub_admin.profile_pic}}"/>
-                                    </div>
-                                        </a>
+                                        <div class="avatar avatar-m">
+                                            <img alt="" class="rounded-circle"
+                                                 src="{{MEDIA_URL}}{{sub_admin.profile_pic}}"/>
+                                        </div>
+                                    </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
@@ -191,24 +199,24 @@
                                 <td class="align-middle white-space-nowrap text-end status">
                                     {% if sub_admin.status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
-                                {% elif sub_admin.status == 1 %}
-                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
-                                {% endif %}
+                                    {% elif sub_admin.status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                    {% endif %}
                                 </td>
-<!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdDate">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{sub_admin.created_on}}</p>-->
-<!--                                </td>-->
-<!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdBy">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{sub_admin.creator_name}}</p>-->
-<!--                                </td>-->
-<!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedDate">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{sub_admin.last_updated_on}}</p>-->
-<!--                                </td>-->
-<!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedBy">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{sub_admin.updater_name}}</p>-->
-<!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdDate">-->
+                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{sub_admin.created_on}}</p>-->
+                                <!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdBy">-->
+                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{sub_admin.creator_name}}</p>-->
+                                <!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedDate">-->
+                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{sub_admin.last_updated_on}}</p>-->
+                                <!--                                </td>-->
+                                <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedBy">-->
+                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{sub_admin.updater_name}}</p>-->
+                                <!--                                </td>-->
                                 <td class="align-middle white-space-nowrap ps-3 py-4 address"
-                                style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
+                                    style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{sub_admin.address}}</p>
                                 </td>
 
@@ -225,15 +233,17 @@
                                             <a class="dropdown-item"
                                                href="{% url 'edit_sub_admin' sub_admin.admin_id %}">Update Profile</a>
                                             <a class="dropdown-item"
-                                               href="{% url 'update_sub_admin_documents' sub_admin.admin_id %}">Update Document </a>
+                                               href="{% url 'update_sub_admin_documents' sub_admin.admin_id %}">Update
+                                                Document </a>
                                             <div class="dropdown-divider"></div>
 
 
-                                              {% if sub_admin.status == 0 %}
+                                            {% if sub_admin.status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
+                                               data-bs-role="Sub admin"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable"
+                                               data-bs-target="#operations_modal"
                                                data-employee-id="{{ sub_admin.admin_id }}"
                                                data-employee-name="{{ sub_admin.name }}"
                                                data-action-type="enable"
@@ -245,7 +255,8 @@
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#enable_disable"
+                                               data-bs-role="Sub admin"
+                                               data-bs-target="#operations_modal"
                                                data-employee-id="{{ sub_admin.admin_id }}"
                                                data-employee-name="{{ sub_admin.name }}"
                                                data-action-type="disable"
@@ -260,29 +271,6 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="modal fade" id="enable_disable" tabindex="-1"
-                             aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-primary">
-                                        <h5 class="modal-title text-white" id="staticBackdropLabel"></h5>
-                                        <button class="btn p-1" type="button" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                            <span class="fas fa-times fs--1 text-white"></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="text-700 lh-lg mb-0"></p>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <a class="btn btn-primary modal-submit" type="button">Confirm</a>
-                                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
                         <div class="d-flex">
@@ -301,6 +289,7 @@
                         </div>
                     </div>
                 </div>
+                {% include 'modal_warning.html' %}
             </div>
             {% include 'footer.html' %}
         </div>
@@ -317,6 +306,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
     </script>
 </main>
@@ -339,30 +329,8 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
-
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    var enableDisableButtons = document.querySelectorAll('[data-bs-target="#enable_disable"]');
-    var modal = document.getElementById('enable_disable');
-    var modalTitle = modal.querySelector('.modal-title');
-    var modalContent = modal.querySelector('.modal-body');
-    var modalSubmit = modal.querySelector('.modal-submit');
-
-    enableDisableButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            var storeId = event.currentTarget.getAttribute('data-employee-id');
-            var storeName = event.currentTarget.getAttribute('data-employee-name');
-            var actionType = event.currentTarget.getAttribute('data-action-type');
-            var actionUrl = event.currentTarget.getAttribute('data-action-url');
-
-            modalTitle.textContent = actionType === "enable" ? "Enable Sub admin - " + storeName : "Disable Sub admin - " + storeName;
-            modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${storeName}</strong> (ID: ${storeId})`;
-            modalSubmit.href = actionUrl;
-        });
-    });
-});
-</script>
+<script src="{% static 'js/csvExport.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
 
 </body>
 

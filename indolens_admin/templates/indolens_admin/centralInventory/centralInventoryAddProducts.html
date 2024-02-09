@@ -565,7 +565,8 @@
             $('#only_frame_options input, #only_frame_options select').prop('required', false);
         } else {
             divToToggle.classList.add("d-none");
-
+            $('.lens-widget').addClass('d-none');
+            $('.contact-lens-widget').addClass('d-none');
             // Remove 'required' from inputs and selects inside divToToggle, lens-widget, and contact-lens-widget
             $('#only_frame_options input, #only_frame_options select, .lens-widget input, .lens-widget select, .contact-lens-widget input, .contact-lens-widget select').prop('required', false);
         }
