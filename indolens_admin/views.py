@@ -13,7 +13,7 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
     customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller, \
-    orders_controller, store_expenses, dashboard_controller, eye_test_controller
+    orders_controller, store_expenses, dashboard_controller, eye_test_controller, admin_setting_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single, \
     get_central_inventory_product_restoc_log
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
@@ -3676,6 +3676,23 @@ def getEyeTestById(request, testId):
         response, status_code = eye_test_controller.get_eye_test_by_id(testId)
         return render(request, 'indolens_admin/eyeTest/viewAllEyeTest.html',
                       {'eye_test_list': response['eye_test']})
+
+    else:
+        return redirect('login')
+
+
+def indolensAdminSetting(request):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            print(request.POST)
+            response, status_code = admin_setting_controller.admin_setting(request.POST)
+            print(response)
+            return render(request, 'indolens_admin/settings/IndolensAdminSetting.html')
+        else:
+            response, status_code = admin_setting_controller.get_admin_setting()
+            print(response['admin_setting'])
+            return render(request, 'indolens_admin/settings/IndolensAdminSetting.html',
+                          {"admin_setting": response['admin_setting']})
 
     else:
         return redirect('login')
