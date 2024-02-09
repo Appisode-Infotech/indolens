@@ -229,6 +229,21 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var nameElements = document.querySelectorAll(".name");
+    nameElements.forEach(function (nameElement) {
+        var testName = nameElement.textContent;
+        var firstLetter = testName[0].toUpperCase();
+        var firstLetterElement = nameElement.previousElementSibling.querySelector(".first-letter");
+        if (firstLetterElement) {
+            firstLetterElement.textContent = firstLetter;
+        }
+    });
+});
+
+
+</script>
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>

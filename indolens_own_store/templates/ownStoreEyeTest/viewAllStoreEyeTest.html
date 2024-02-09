@@ -171,6 +171,7 @@
                                     <td class="createdOn align-middle white-space-nowrap fw-semi-bold text-1000">
                                         {{test.created_on}}
                                     </td>
+
                                     <td class="align-middle text-end white-space-nowrap pe-0 action">
                                         <div class="font-sans-serif btn-reveal-trigger position-static">
                                             <button aria-expanded="false"
@@ -186,6 +187,7 @@
                                                    style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
                                                    data-category-info="{{ test.power_attributes | safe }}"
                                                 >View Lens Powers</a>
+
                                                 <a class="dropdown-item view-button" target="_blank"
                                                    href="{% url 'own_store_eye_test_print' test.eye_test_id %}"
                                                    type="button">Print Eye Test</a>
@@ -234,6 +236,21 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var nameElements = document.querySelectorAll(".name");
+    nameElements.forEach(function (nameElement) {
+        var testName = nameElement.textContent;
+        var firstLetter = testName[0].toUpperCase();
+        var firstLetterElement = nameElement.previousElementSibling.querySelector(".first-letter");
+        if (firstLetterElement) {
+            firstLetterElement.textContent = firstLetter;
+        }
+    });
+});
+
+
+</script>
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
@@ -247,6 +264,8 @@
 <script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
+<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
+
 
 </body>
 

@@ -3651,6 +3651,15 @@ def getEyeTestById(request, testId):
     else:
         return redirect('login')
 
+def eyeTestPrint(request, testId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = eye_test_controller.get_eye_test_by_id(testId)
+        return render(request, 'indolens_admin/eyeTest/adminEyeTestPrint.html',
+                      {'eye_test_list': response['eye_test']})
+
+    else:
+        return redirect('login')
+
 
 def indolensAdminSetting(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
