@@ -24,5 +24,7 @@ urlpatterns = [
 
     path('view_products/productId=<int:productId>', viewLabCentralInventoryProducts,
          name='view_lab_central_inventory_products'),
+    path('job_authenticity_card/saleId=<str:saleId>', viewJobAuthenticityCard,
+         name='job_authenticity_card'),
 
 ]

@@ -62,6 +62,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -104,17 +105,20 @@
                                         <th class="sort align-middle ps-4" data-sort="type" scope="col"
                                             style="width:300px;">TYPE
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="shape" scope="col"
+                                        <th class="sort align-middle ps-4" data-sort="shape" scope="col"
                                             style="width:200px;">SHAPE
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="color" scope="col"
+                                        <th class="sort align-middle ps-4" data-sort="color" scope="col"
                                             style="width:250px;">COLOR
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="unit" scope="col"
+                                        <th class="sort align-middle  ps-4" data-sort="unit" scope="col"
                                             style="width:250px;">UNIT
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
+                                        <th class="sort align-middle  ps-4" data-sort="brand" scope="col"
                                             style="width:250px;">BRAND
+                                        </th>
+                                        <th class="sort align-middle  ps-4" data-sort="brand" scope="col"
+                                            style="width:250px;"> ACTION
                                         </th>
                                     </tr>
                                     </thead>
@@ -152,36 +156,37 @@
                                             {{order.frame_type_name}}
                                             {% endif %}
                                         </td>
-                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">
+                                        <td class="quantity align-middle  py-0 ps-4 text-700">
                                             {% if order.shape_name == None %}
                                             N/A
                                             {% else %}
                                             {{order.shape_name}}
                                             {% endif %}
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4">
                                             {% if order.color_name == None %}
                                             N/A
                                             {% else %}
                                             {{order.color_name}}
                                             {% endif %}
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4">
                                             {% if order.unit_name == None %}
                                             N/A
                                             {% else %}
                                             {{order.unit_name}}
                                             {% endif %}
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4">
                                             {% if order.brand_name == None %}
                                             N/A
                                             {% else %}
                                             {{order.brand_name}}
                                             {% endif %}
                                         </td>
-                                        {% if order.category_id == 2 or order.category_id == 3 %}
-                                        <td class="align-middle text-end white-space-nowrap pe-0 action">
+
+                                        <td class="align-middle  white-space-nowrap pe-0 action text-end">
+                                            {% if order.category_id == 2 or order.category_id == 3 %}
                                             <div class="font-sans-serif btn-reveal-trigger position-static">
                                                 <button aria-expanded="false"
                                                         aria-haspopup="true"
@@ -194,13 +199,18 @@
                                                     <a class="dropdown-item view-button" data-bs-toggle="modalView"
                                                        type="button"
                                                        style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                                                       data-category-info="{{ order.power_attribute | safe }}"
-                                                    >View Lens Powers</a>
+                                                       data-category-info="{{ order.power_attribute | safe }}">
+                                                        View Lens Powers</a>
+                                                    <a class="dropdown-item view-button"
+                                                       type="button" target="_blank"
+                                                       href="{% url 'job_authenticity_card' order.sale_item_id %}">
+                                                        Print Authenticity Card</a>
 
                                                 </div>
                                             </div>
+                                            {% endif %}
                                         </td>
-                                        {% endif %}
+
                                     </tr>
                                     {% endfor %}
 
@@ -419,6 +429,7 @@
 
 
 
+
 </script>
 <script>
     function changeOrderStatus(statusWidget, order_id) {
@@ -465,6 +476,7 @@
             }
         }
     });
+
 
 </script>
 </html>
