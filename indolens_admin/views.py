@@ -3680,12 +3680,19 @@ def getEyeTestById(request, testId):
     else:
         return redirect('login')
 
+
 def indolensAdminSetting(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        print(request.POST)
-        # response, status_code = admin_setting_controller.admin_setting(request.POST)
-
-        return render(request, 'indolens_admin/settings/IndolensAdminSetting.html')
+        if request.method == 'POST':
+            print(request.POST)
+            response, status_code = admin_setting_controller.admin_setting(request.POST)
+            print(response)
+            return render(request, 'indolens_admin/settings/IndolensAdminSetting.html')
+        else:
+            response, status_code = admin_setting_controller.get_admin_setting()
+            print(response['admin_setting'])
+            return render(request, 'indolens_admin/settings/IndolensAdminSetting.html',
+                          {"admin_setting": response['admin_setting']})
 
     else:
         return redirect('login')

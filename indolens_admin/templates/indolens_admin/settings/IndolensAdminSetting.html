@@ -105,9 +105,7 @@
                                                name="base_url"
                                                placeholder="Base Url"
                                                required="required"
-                                               onchange="genCustomerObject()"
-
-                                               type="text" value=""/>
+                                               type="text" value="{{admin_setting.base_url}}"/>
                                         <div class="invalid-feedback">Base URL is mandatory.</div>
                                     </div>
                                 <h5 class="mb-3 mt-3">Email Notification Settings</h5>
@@ -115,46 +113,46 @@
                                     <div class="mb2 col-6">
                                         <h5 class="mb-3">EmailJS URL</h5>
                                         <input class="form-control"
-                                               name="email_js_url"
+                                               name="emailjs_url"
                                                placeholder="EmailJS Url"
                                                required="required"
-                                               type="text" value=""/>
+                                               type="text" value="{{admin_setting.emailjs_attribute.emailjs_url}}"/>
                                         <div class="invalid-feedback">EmailJS URL is mandatory.</div>
                                     </div>
                                     <div class="mb2 col-6">
                                         <h5 class="mb-3">EmailJS Service Id</h5>
                                         <input class="form-control"
-                                               name="service_id"
+                                               name="emailjs_service_id"
                                                placeholder="EmailJS Service Id"
                                                required="required"
-                                               type="text" value=""/>
+                                               type="text" value="{{admin_setting.emailjs_attribute.emailjs_service_id}}"/>
                                         <div class="invalid-feedback">EmailJS Service Id is mandatory.</div>
                                     </div>
                                     <div class="mb2 col-6">
                                         <h5 class="mb-3">EmailJS Template Id</h5>
                                         <input class="form-control"
-                                               name="template_id"
+                                               name="emailjs_template_id"
                                                placeholder="EmailJS Template Id"
                                                required="required"
-                                               type="text" value=""/>
+                                               type="text" value="{{admin_setting.emailjs_attribute.emailjs_template_id}}"/>
                                         <div class="invalid-feedback">EmailJS Template Id is mandatory.</div>
                                     </div>
                                     <div class="mb2 col-6">
                                         <h5 class="mb-3">EmailJS User Id</h5>
                                         <input class="form-control"
-                                               name="user_id"
+                                               name="emailjs_user_id"
                                                placeholder="EmailJS User Id"
                                                required="required"
-                                               type="text" value=""/>
+                                               type="text" value="{{admin_setting.emailjs_attribute.emailjs_user_id}}"/>
                                         <div class="invalid-feedback">EmailJS User Id is mandatory.</div>
                                     </div>
                                     <div class="mb2 col-6">
                                         <h5 class="mb-3">EmailJS Recaptcha Response</h5>
                                         <input class="form-control"
-                                               name="g-recaptcha-response"
+                                               name="emailjs_recaptcha"
                                                placeholder="EmailJS Recaptcha Response"
                                                required="required"
-                                               type="text" value=""/>
+                                               type="text" value="{{admin_setting.emailjs_attribute.emailjs_recaptcha}}"/>
                                         <div class="invalid-feedback">EmailJS Recaptcha Response is mandatory.</div>
                                     </div>
 
