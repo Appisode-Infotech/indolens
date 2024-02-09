@@ -582,14 +582,14 @@
 {{ rx_contact_lens_list|json_script:"rxContactLensList" }}
 {{ other_products_list|json_script:"otherProductsList" }}
 {{ customers_list|json_script:"customersList" }}
-
 <script>
+
 let productCardCount = 1;
-    var lens_list = JSON.parse(document.getElementById('lensList').textContent);
-    var contact_lens_list = JSON.parse(document.getElementById('contactLensList').textContent);
-    var rx_contact_lens_list = JSON.parse(document.getElementById('rxContactLensList').textContent);
-    var other_products_list = JSON.parse(document.getElementById('otherProductsList').textContent);
-    var customers_list = JSON.parse(document.getElementById('customersList').textContent);
+var lens_list = JSON.parse(document.getElementById('lensList').textContent);
+var contact_lens_list = JSON.parse(document.getElementById('contactLensList').textContent);
+var rx_contact_lens_list = JSON.parse(document.getElementById('rxContactLensList').textContent);
+var other_products_list = JSON.parse(document.getElementById('otherProductsList').textContent);
+var customers_list = JSON.parse(document.getElementById('customersList').textContent);
 
 function addLensContainer() {
     let lensProductCard = document.createElement("div");
@@ -901,7 +901,7 @@ function addLensContainer() {
 }
 
 
-    function addStockContactLensContainer(){
+function addStockContactLensContainer() {
     let contactLensProductCard = document.createElement("div");
     contactLensProductCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
     contactLensProductCard.innerHTML = `
@@ -1123,11 +1123,11 @@ function addLensContainer() {
 
     productCardCount++;
 
-    }
+}
 
 
 
-    function addRxContactLensContainer(){
+function addRxContactLensContainer() {
     let contactLensProductCard = document.createElement("div");
     contactLensProductCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
     contactLensProductCard.innerHTML = `
@@ -1363,11 +1363,11 @@ function addLensContainer() {
 
     productCardCount++;
 
-    }
+}
 
 
-    function addOtherProductsContainer(){
-     let contactLensProductCard = document.createElement("div");
+function addOtherProductsContainer() {
+    let contactLensProductCard = document.createElement("div");
     contactLensProductCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
     contactLensProductCard.innerHTML = `
     <div class="col text-end">
@@ -1495,7 +1495,7 @@ function addLensContainer() {
         </div>
     </div>`;
 
-     document.querySelector("#products_container").appendChild(contactLensProductCard);
+    document.querySelector("#products_container").appendChild(contactLensProductCard);
     let choicesInstance = new Choices(contactLensProductCard.querySelector("[name='product']"), {
         // Pass any necessary options for Choices.js
         removeItemButton: true,
@@ -1504,114 +1504,112 @@ function addLensContainer() {
 
     productCardCount++;
 
-    }
+}
 
-    function removeProductCard(removeButton) {
+function removeProductCard(removeButton) {
     // Find the parent product card and remove it
     let productCard = removeButton.closest(".product_widget");
     if (productCard) {
         productCard.remove();
     }
-    }
+}
 
 </script>
-
 <script>
+function updateCustomerFields(selectCustomerField) {
+    var customers_list = JSON.parse(document.getElementById('customersList').textContent);
+    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
 
-    function updateCustomerFields(selectCustomerField) {
-        var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-        let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
+    var customerNameInput = document.getElementsByName("customer_name")[0];
+    var customerEmailInput = document.getElementsByName("customer_email")[0];
+    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+    var customerAgeInput = document.getElementsByName("customer_age")[0];
+    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+    var customerCityInput = document.getElementsByName("customer_city")[0];
+    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+    //customerDataField
+    var customerDataTextarea = document.getElementsByName("customerData")[0];
 
-        var customerNameInput = document.getElementsByName("customer_name")[0];
-        var customerEmailInput = document.getElementsByName("customer_email")[0];
-        var customerPhoneInput = document.getElementsByName("customer_phone")[0];
-        var customerAgeInput = document.getElementsByName("customer_age")[0];
-        var customerGenderSelect = document.getElementsByName("customer_gender")[0];
-        var customerCityInput = document.getElementsByName("customer_city")[0];
-        var customerLanguageSelect = document.getElementsByName("customer_language")[0];
-        var customerAddressTextarea = document.getElementsByName("customer_address")[0];
-        //customerDataField
-        var customerDataTextarea = document.getElementsByName("customerData")[0];
+    customerNameInput.value = selectCustomer.name;
+    customerEmailInput.value = selectCustomer.email;
+    customerPhoneInput.value = selectCustomer.phone;
+    customerAgeInput.value = selectCustomer.age;
+    customerGenderSelect.value = selectCustomer.gender;
+    customerCityInput.value = selectCustomer.city;
+    customerLanguageSelect.value = selectCustomer.language;
+    customerAddressTextarea.value = selectCustomer.address;
+    customerDataTextarea.value = selectCustomer.address;
 
-        customerNameInput.value = selectCustomer.name;
-        customerEmailInput.value = selectCustomer.email;
-        customerPhoneInput.value = selectCustomer.phone;
-        customerAgeInput.value = selectCustomer.age;
-        customerGenderSelect.value = selectCustomer.gender;
-        customerCityInput.value = selectCustomer.city;
-        customerLanguageSelect.value = selectCustomer.language;
-        customerAddressTextarea.value = selectCustomer.address;
-        customerDataTextarea.value = selectCustomer.address;
+    var customerdata = {
+        name: selectCustomer.name,
+        email: selectCustomer.email,
+        phone: selectCustomer.phone,
+        age: selectCustomer.age,
+        gender: selectCustomer.gender,
+        city: selectCustomer.city,
+        language: selectCustomer.language,
+        address: selectCustomer.address
+    };
 
-        var customerdata = {
-            name: selectCustomer.name,
-            email: selectCustomer.email,
-            phone: selectCustomer.phone,
-            age: selectCustomer.age,
-            gender: selectCustomer.gender,
-            city: selectCustomer.city,
-            language: selectCustomer.language,
-            address: selectCustomer.address
-        };
+    // Convert customerdata to JSON string and assign it to customerDataTextarea
+    customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
+}
 
-        // Convert customerdata to JSON string and assign it to customerDataTextarea
-        customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
-    }
+function genCustomerObject() {
+    var customerNameInput = document.getElementsByName("customer_name")[0];
+    var customerEmailInput = document.getElementsByName("customer_email")[0];
+    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+    var customerAgeInput = document.getElementsByName("customer_age")[0];
+    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+    var customerCityInput = document.getElementsByName("customer_city")[0];
+    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+    //customerDataField
+    var customerDataTextarea = document.getElementsByName("customerData")[0];
 
-    function genCustomerObject() {
-        var customerNameInput = document.getElementsByName("customer_name")[0];
-        var customerEmailInput = document.getElementsByName("customer_email")[0];
-        var customerPhoneInput = document.getElementsByName("customer_phone")[0];
-        var customerAgeInput = document.getElementsByName("customer_age")[0];
-        var customerGenderSelect = document.getElementsByName("customer_gender")[0];
-        var customerCityInput = document.getElementsByName("customer_city")[0];
-        var customerLanguageSelect = document.getElementsByName("customer_language")[0];
-        var customerAddressTextarea = document.getElementsByName("customer_address")[0];
-        //customerDataField
-        var customerDataTextarea = document.getElementsByName("customerData")[0];
+    var customerData = {
+        name: customerNameInput.value,
+        email: customerEmailInput.value,
+        phone: customerPhoneInput.value,
+        age: customerAgeInput.value,
+        gender: customerGenderSelect.value,
+        city: customerCityInput.value,
+        language: customerLanguageSelect.value,
+        address: customerAddressTextarea.value
+    };
+    customerDataTextarea.value = JSON.stringify(customerData, null, 2);
+}
 
-        var customerData = {
-            name: customerNameInput.value,
-            email: customerEmailInput.value,
-            phone: customerPhoneInput.value,
-            age: customerAgeInput.value,
-            gender: customerGenderSelect.value,
-            city: customerCityInput.value,
-            language: customerLanguageSelect.value,
-            address: customerAddressTextarea.value
-        };
-        customerDataTextarea.value = JSON.stringify(customerData, null, 2);
-    }
-
-    function genBillingInfoObject() {
-        var estDeliveryDateInput = document.getElementsByName("estDeliveryDate")[0];
-        var assignedLabInput = document.getElementsByName("assignedLab")[0];
-        var orderByEmployeeInput = document.getElementsByName("orderByEmployee")[0];
-        var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
-        var amountPaidInput = document.getElementsByName("amount_paid")[0];
-        var saleNoteInput = document.getElementsByName("sale_note")[0];
-        var billingInfoData = {
-            estDeliveryDate: estDeliveryDateInput.value,
-            assignedLab: assignedLabInput.value,
-            orderByEmployee: orderByEmployeeInput.value,
-            amount_paid: amountPaidInput.value,
-            orderId: "ORDER"+generateRandomId(),
-            "saleNote":saleNoteInput.value
-        };
-        billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
-    }
+function genBillingInfoObject() {
+    var estDeliveryDateInput = document.getElementsByName("estDeliveryDate")[0];
+    var assignedLabInput = document.getElementsByName("assignedLab")[0];
+    var orderByEmployeeInput = document.getElementsByName("orderByEmployee")[0];
+    var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
+    var amountPaidInput = document.getElementsByName("amount_paid")[0];
+    var saleNoteInput = document.getElementsByName("sale_note")[0];
+    var billingInfoData = {
+        estDeliveryDate: estDeliveryDateInput.value,
+        assignedLab: assignedLabInput.value,
+        orderByEmployee: orderByEmployeeInput.value,
+        amount_paid: amountPaidInput.value,
+        orderId: "ORDER" + generateRandomId(),
+        "saleNote": saleNoteInput.value
+    };
+    billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
+}
 
 function generateRandomId() {
-  const epochTime = new Date().getTime(); // Get current epoch time
-  const randomNum = Math.floor(Math.random() * 10000); // Generate a random number
-  const randomId = `${epochTime}${randomNum}`;
-  return randomId;
+    const epochTime = new Date().getTime(); // Get current epoch time
+    const randomNum = Math.floor(Math.random() * 10000); // Generate a random number
+    const randomId = `${epochTime}${randomNum}`;
+    return randomId;
 }
-    document.getElementById('confirmSale').addEventListener('click', function () {
-        // Assuming you have input fields within the form, adjust as needed
-        var form = document.getElementById('saleForm');
-        const overlay = document.createElement('div');
-                    overlay.style.cssText = `
+document.getElementById('confirmSale').addEventListener('click', function () {
+    // Assuming you have input fields within the form, adjust as needed
+    var form = document.getElementById('saleForm');
+    const overlay = document.createElement('div');
+    overlay.style.cssText = `
                         position: fixed;
                         top: 0;
                         left: 0;
@@ -1623,379 +1621,376 @@ function generateRandomId() {
                         align-items: center;
                         z-index: 1000; /* Adjust the z-index as needed */
                     `;
-                    overlay.innerHTML = `
+    overlay.innerHTML = `
                          <div style="text-align: center; color: white;">
                             <div style="border: 8px solid #f3f3f3; border-top: 8px solid #3498db; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite;"></div>
                             <p>Loading...</p>
                         </div>
                     `;
 
-                    // Append overlay to the body
-                    document.body.appendChild(overlay);
+    // Append overlay to the body
+    document.body.appendChild(overlay);
 
-                    // Simulate loading delay (you can replace this with actual loading logic)
-                    form.submit();
-    });
-
+    // Simulate loading delay (you can replace this with actual loading logic)
+    form.submit();
+});
 </script>
-
 
 <script>
 
-    function updateLensProductFields(selectElement, cardIndex){
-        let selectedProduct = lens_list.find(product => product.product_id == selectElement.value);
-        let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
-        let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
-        let stockTypeField = document.querySelector(`[name='stock_type[${cardIndex}]']`);
-        let productLensTypeField = document.querySelector(`[name='lens_type[${cardIndex}]']`);
-        let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
-        let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
-        let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
-        let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-        let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
-        let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
-        let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-        let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
-        let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-        let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
-        let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
 
-        let stockPowerCard =  document.getElementById('stock_power_card[' + cardIndex + ']');
-        let rxPowerCard =  document.getElementById('rx_power_card[' + cardIndex + ']');
+function updateLensProductFields(selectElement, cardIndex) {
+    let selectedProduct = lens_list.find(product => product.product_id == selectElement.value);
+    let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
+    let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
+    let stockTypeField = document.querySelector(`[name='stock_type[${cardIndex}]']`);
+    let productLensTypeField = document.querySelector(`[name='lens_type[${cardIndex}]']`);
+    let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
+    let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
+    let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
+    let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
+    let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
+    let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+    let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
+    let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
+    let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
+    let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
 
-        productBrandField.value = selectedProduct?.brand_name ?? '';
-        productLensTypeField.value = selectedProduct?.power_attribute.vision_type ?? '';
-        productHsnField.value = selectedProduct?.hsn ?? '';
-        productAvailableQtyField.value = selectedProduct?.product_quantity ?? '';
-        productUnitPriceField.value = selectedProduct?.sale_price ?? '';
-        productUnitPriceField.value = selectedProduct?.sale_price ?? '';
-        productUnitTypeField.value = selectedProduct?.unit_name ?? '';
-        stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
-        productCategoryIdField.value = selectedProduct?.category_id ?? '';
-        productPurchaseQtyField.value = '';
+    let stockPowerCard = document.getElementById('stock_power_card[' + cardIndex + ']');
+    let rxPowerCard = document.getElementById('rx_power_card[' + cardIndex + ']');
 
-        if (selectedProduct.discount > 0) {
-            discountCheckDiv.style.display = 'block';
-            discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-            discountValueField.value = selectedProduct.discount;
-        } else {
-            discountCheckDiv.style.display = 'none';
-        }
-        if (selectedProduct.power_attribute.stock_type=='stock'){
+    productBrandField.value = selectedProduct?.brand_name ?? '';
+    productLensTypeField.value = selectedProduct?.power_attribute.vision_type ?? '';
+    productHsnField.value = selectedProduct?.hsn ?? '';
+    productAvailableQtyField.value = selectedProduct?.product_quantity ?? '';
+    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
+    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
+    productUnitTypeField.value = selectedProduct?.unit_name ?? '';
+    stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
+    productCategoryIdField.value = selectedProduct?.category_id ?? '';
+    productPurchaseQtyField.value = '';
+
+    if (selectedProduct.discount > 0) {
+        discountCheckDiv.style.display = 'block';
+        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueField.value = selectedProduct.discount;
+    } else {
+        discountCheckDiv.style.display = 'none';
+    }
+    if (selectedProduct.power_attribute.stock_type == 'stock') {
         stockPowerCard.style.display = 'block';
         rxPowerCard.style.display = 'none';
-         // Remove 'required' attribute from all inputs and selects in rxPowerCard
-    let rxPowerCardInputs = rxPowerCard.querySelectorAll('input, select');
-    rxPowerCardInputs.forEach(input => {
-        input.removeAttribute('required');
+        // Remove 'required' attribute from all inputs and selects in rxPowerCard
+        let rxPowerCardInputs = rxPowerCard.querySelectorAll('input, select');
+        let stockPowerCardInputs = stockPowerCard.querySelectorAll('input, select');
+
+        rxPowerCardInputs.forEach(input => {
+            input.removeAttribute('required');
+        });
+        stockPowerCardInputs.forEach(input => {
+            input.setAttribute('required', 'required');
+        });
+    } else {
+        rxPowerCard.style.display = 'block';
+        stockPowerCard.style.display = 'none';
+        // Add 'required' attribute to inputs and selects in rxPowerCard
+        let rxPowerCardInputs = rxPowerCard.querySelectorAll('input, select');
+        let stockPowerCardInputs = stockPowerCard.querySelectorAll('input, select');
+
+        stockPowerCardInputs.forEach(input => {
+            input.removeAttribute('required');
+        });
+        rxPowerCardInputs.forEach(input => {
+            input.setAttribute('required', 'required');
+        });
+    }
+
+    productPurchaseQtyField.addEventListener('input', function () {
+        let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
+        let productTotal;
+        if (discountCheckbox.checked) {
+            // Apply discount if the checkbox is checked
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productTotal = purchaseQty * discountedPrice;
+        } else {
+            // No discount, use the original sale price
+            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+        }
+        productProductTotalField.value = productTotal.toFixed(2);
     });
-        }else{
-              rxPowerCard.style.display = 'block';
-            stockPowerCard.style.display = 'none';
-             // Add 'required' attribute to inputs and selects in rxPowerCard
-    let rxPowerCardInputs = rxPowerCard.querySelectorAll('input, select');
-    rxPowerCardInputs.forEach(input => {
-        input.setAttribute('required', 'required');
+
+    discountCheckbox.addEventListener('change', function () {
+        let isChecked = discountCheckbox.checked;
+        if (isChecked) {
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+        } else {
+            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+            productProductTotalField.innerHTML = '';
+        }
     });
-        }
-
-        productPurchaseQtyField.addEventListener('input', function () {
-            let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
-            let productTotal;
-            if (discountCheckbox.checked) {
-                // Apply discount if the checkbox is checked
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productTotal = purchaseQty * discountedPrice;
-            } else {
-                // No discount, use the original sale price
-                productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
-            }
-            productProductTotalField.value = productTotal.toFixed(2);
-        });
-
-        discountCheckbox.addEventListener('change', function () {
-            let isChecked = discountCheckbox.checked;
-            if (isChecked) {
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
-            } else {
-                productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
-                productProductTotalField.innerHTML = '';
-            }
-        });
-    }
-
-    function updateContactLensProductFields(selectElement, cardIndex){
-      let selectedProduct = contact_lens_list.find(product => product.product_id == selectElement.value);
-      let lensTypeField = document.querySelector(`[name='lens_type[${cardIndex}]']`);
-      let lensPhysicalityField = document.querySelector(`[name='lens_physicality[${cardIndex}]']`);
-      let lensDisposablilityField = document.querySelector(`[name='lens_disposablility[${cardIndex}]']`);
-      let lensVisionTypeField = document.querySelector(`[name='vision_type[${cardIndex}]']`);
-      let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
-      let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
-      let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
-      let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
-       let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
-      let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-      let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
-      let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-      let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
-      let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-      let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
-      let clPowerField = document.querySelector(`[name='cl_power[${cardIndex}]']`);
-      let clBcField = document.querySelector(`[name='cl_bc[${cardIndex}]']`);
-      let clDiaField = document.querySelector(`[name='cl_dia[${cardIndex}]']`);
-      let clCylField = document.querySelector(`[name='cl_cylinder[${cardIndex}]']`);
-      let clAxisField = document.querySelector(`[name='cl_axis[${cardIndex}]']`);
-      let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
-
-      lensTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
-      lensPhysicalityField.value = selectedProduct?.power_attribute.contact_lens_type ?? '';
-      lensDisposablilityField.value = selectedProduct?.power_attribute.contact_lens_disposability ?? '';
-<!--      lensVisionTypeField.value = selectedProduct?.vision_type ?? '';-->
-      productHsnField.value = selectedProduct?.hsn ?? '';
-      productAvailableQtyField.value = selectedProduct?.store_product_quantity ?? '';
-      productBrandField.value = selectedProduct?.brand_name ?? '';
-      productUnitPriceField.value = selectedProduct?.sale_price ?? '';
-      productUnitTypeField.value = selectedProduct?.unit_name ?? '';
-      productCategoryIdField.value = selectedProduct?.category_id ?? '';
-      productPurchaseQtyField.value = '';
-
-      clPowerField.value = selectedProduct?.power_attribute.power ?? '';
-      clBcField.value = selectedProduct?.power_attribute.bc ?? '';
-      clDiaField.value = selectedProduct?.power_attribute.dia ?? '';
-      clCylField.value = selectedProduct?.power_attribute.cyl ?? '';
-      clAxisField.value = selectedProduct?.power_attribute.axis ?? '';
-
-      if (selectedProduct.discount > 0) {
-            discountCheckDiv.style.display = 'block';
-            discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-            discountValueField.value = selectedProduct.discount;
-        } else {
-            discountCheckDiv.style.display = 'none';
-        }
-
-        productPurchaseQtyField.addEventListener('input', function () {
-            let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
-            let productTotal;
-            if (discountCheckbox.checked) {
-                // Apply discount if the checkbox is checked
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productTotal = purchaseQty * discountedPrice;
-            } else {
-                // No discount, use the original sale price
-                productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
-            }
-            productProductTotalField.value = productTotal.toFixed(2);
-        });
-
-        discountCheckbox.addEventListener('change', function () {
-            let isChecked = discountCheckbox.checked;
-            if (isChecked) {
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
-            } else {
-                productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
-                productProductTotalField.innerHTML = '';
-            }
-        });
-    }
-
-
-    function updateRxContactLensProductFields(selectElement, cardIndex){
-      let selectedProduct = contact_lens_list.find(product => product.product_id == selectElement.value);
-      console.log(selectedProduct);
-      let stockTypeField = document.querySelector(`[name='ContactLensStockType[${cardIndex}]']`);
-      let lensPhysicalityField = document.querySelector(`[name='lens_physicality[${cardIndex}]']`);
-      let lensDisposablilityField = document.querySelector(`[name='lens_disposablility[${cardIndex}]']`);
-      let lensVisionTypeField = document.querySelector(`[name='vision_type[${cardIndex}]']`);
-      let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
-      let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
-      let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
-      let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);        let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
-      let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-      let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
-      let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-      let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
-      let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-      let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
-      let clPowerField = document.querySelector(`[name='cl_power[${cardIndex}]']`);
-      let clBcField = document.querySelector(`[name='cl_bc[${cardIndex}]']`);
-      let clDiaField = document.querySelector(`[name='cl_dia[${cardIndex}]']`);
-      let clCylField = document.querySelector(`[name='cl_cylinder[${cardIndex}]']`);
-      let clAxisField = document.querySelector(`[name='cl_axis[${cardIndex}]']`);
-      let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
-
-      stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
-      lensPhysicalityField.value = selectedProduct?.power_attribute.contact_lens_type ?? '';
-      lensDisposablilityField.value = selectedProduct?.power_attribute.contact_lens_disposability ?? '';
-<!--      lensVisionTypeField.value = selectedProduct?.vision_type ?? '';-->
-      productHsnField.value = selectedProduct?.hsn ?? '';
-      productAvailableQtyField.value = selectedProduct?.product_quantity ?? '';
-      productBrandField.value = selectedProduct?.brand_name ?? '';
-      productUnitPriceField.value = selectedProduct?.sale_price ?? '';
-      productUnitTypeField.value = selectedProduct?.unit_name ?? '';
-      productCategoryIdField.value = selectedProduct?.category_id ?? '';
-      productPurchaseQtyField.value = '';
-
-<!--      clPowerField.value = selectedProduct?.power_attribute.power ?? '';-->
-<!--      clBcField.value = selectedProduct?.power_attribute.bc ?? '';-->
-<!--      clDiaField.value = selectedProduct?.power_attribute.dia ?? '';-->
-<!--      clCylField.value = selectedProduct?.power_attribute.cyl ?? '';-->
-<!--      clAxisField.value = selectedProduct?.power_attribute.axis ?? '';-->
-
-      if (selectedProduct.discount > 0) {
-            discountCheckDiv.style.display = 'block';
-            discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-            discountValueField.value = selectedProduct.discount;
-        } else {
-            discountCheckDiv.style.display = 'none';
-        }
-
-        productPurchaseQtyField.addEventListener('input', function () {
-            let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
-            let productTotal;
-            if (discountCheckbox.checked) {
-                // Apply discount if the checkbox is checked
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productTotal = purchaseQty * discountedPrice;
-            } else {
-                // No discount, use the original sale price
-                productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
-            }
-            productProductTotalField.value = productTotal.toFixed(2);
-        });
-
-        discountCheckbox.addEventListener('change', function () {
-            let isChecked = discountCheckbox.checked;
-            if (isChecked) {
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
-            } else {
-                productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
-                productProductTotalField.innerHTML = '';
-            }
-        });
-    }
-
-
-    function updateOtherProductFields(selectElement, cardIndex){
-      let selectedProduct = other_products_list.find(product => product.product_id == selectElement.value);
-      let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
-      let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
-      let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
-
-      let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
-      let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
-      let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-      let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
-      let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
-      let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-      let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
-      let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-      let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
-      let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-      let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
-
-      productCategoryField.value = selectedProduct?.category_name ?? '';
-      productHsnField.value = selectedProduct?.hsn ?? '';
-      productAvailableQtyField.value = selectedProduct?.store_product_quantity ?? '';
-      productBrandField.value = selectedProduct?.brand_name ?? '';
-      productUnitPriceField.value = selectedProduct?.sale_price ?? '';
-      productUnitTypeField.value = selectedProduct?.unit_name ?? '';
-      productCategoryIdField.value = selectedProduct?.category_id ?? '';
-      productPurchaseQtyField.value = '';
-
-
-      if (selectedProduct.discount > 0) {
-            discountCheckDiv.style.display = 'block';
-            discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-            discountValueField.value = selectedProduct.discount;
-        } else {
-            discountCheckDiv.style.display = 'none';
-        }
-
-        productPurchaseQtyField.addEventListener('input', function () {
-            let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
-            let productTotal;
-            if (discountCheckbox.checked) {
-                // Apply discount if the checkbox is checked
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productTotal = purchaseQty * discountedPrice;
-            } else {
-                // No discount, use the original sale price
-                productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
-            }
-            productProductTotalField.value = productTotal.toFixed(2);
-        });
-
-        discountCheckbox.addEventListener('change', function () {
-            let isChecked = discountCheckbox.checked;
-            if (isChecked) {
-                let discountPercentage = parseFloat(discountValueField.value) || 0;
-                let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-                productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
-            } else {
-                productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
-                productProductTotalField.innerHTML = '';
-            }
-        });
-
-    }
-
-</script>
-
-<script>
-    function getProductsData(){
-        // Assuming products_container is the parent container
-var productsContainer = document.getElementById('products_container');
-
-// Check if the container exists
-if (productsContainer) {
-    // Get all product_widget elements inside products_container
-    var productWidgets = productsContainer.getElementsByClassName('product_widget');
-
-    // Initialize an array to store the product data
-    var productsArray = [];
-
-    // Loop through each product_widget element
-    for (var i = 0; i < productWidgets.length; i++) {
-        var productWidget = productWidgets[i];
-        var productData = {};
-
-        // Get all form elements (input, select, textarea) inside the current product_widget
-        var formElements = productWidget.querySelectorAll('input, select, textarea');
-
-        // Loop through each form element and extract key-value pairs
-        formElements.forEach(function(formElement) {
-            // Use the element's name attribute as the key and its value as the value
-            productData[formElement.name] = formElement.value.trim();
-        });
-
-        // Add the product data to the array
-        productsArray.push(productData);
-    }
-
-    let cartDataField = document.querySelector(`[name='cartData']`);
-    // Now, productsArray contains the data of form elements inside all product_widgets
-    console.log(productsArray);
-    let jsonData = JSON.stringify(productsArray);
-    cartDataField.value = jsonData;
-  }
 }
 
+function updateContactLensProductFields(selectElement, cardIndex) {
+    let selectedProduct = contact_lens_list.find(product => product.product_id == selectElement.value);
+    let lensTypeField = document.querySelector(`[name='lens_type[${cardIndex}]']`);
+    let lensPhysicalityField = document.querySelector(`[name='lens_physicality[${cardIndex}]']`);
+    let lensDisposablilityField = document.querySelector(`[name='lens_disposablility[${cardIndex}]']`);
+    let lensVisionTypeField = document.querySelector(`[name='vision_type[${cardIndex}]']`);
+    let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
+    let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
+    let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
+    let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
+    let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
+    let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+    let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
+    let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
+    let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
+    let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
+    let clPowerField = document.querySelector(`[name='cl_power[${cardIndex}]']`);
+    let clBcField = document.querySelector(`[name='cl_bc[${cardIndex}]']`);
+    let clDiaField = document.querySelector(`[name='cl_dia[${cardIndex}]']`);
+    let clCylField = document.querySelector(`[name='cl_cylinder[${cardIndex}]']`);
+    let clAxisField = document.querySelector(`[name='cl_axis[${cardIndex}]']`);
+    let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
+
+    lensTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
+    lensPhysicalityField.value = selectedProduct?.power_attribute.contact_lens_type ?? '';
+    lensDisposablilityField.value = selectedProduct?.power_attribute.contact_lens_disposability ?? '';
+    productHsnField.value = selectedProduct?.hsn ?? '';
+    productAvailableQtyField.value = selectedProduct?.store_product_quantity ?? '';
+    productBrandField.value = selectedProduct?.brand_name ?? '';
+    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
+    productUnitTypeField.value = selectedProduct?.unit_name ?? '';
+    productCategoryIdField.value = selectedProduct?.category_id ?? '';
+    productPurchaseQtyField.value = '';
+
+    clPowerField.value = selectedProduct?.power_attribute.power ?? '';
+    clBcField.value = selectedProduct?.power_attribute.bc ?? '';
+    clDiaField.value = selectedProduct?.power_attribute.dia ?? '';
+    clCylField.value = selectedProduct?.power_attribute.cyl ?? '';
+    clAxisField.value = selectedProduct?.power_attribute.axis ?? '';
+
+    if (selectedProduct.discount > 0) {
+        discountCheckDiv.style.display = 'block';
+        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueField.value = selectedProduct.discount;
+    } else {
+        discountCheckDiv.style.display = 'none';
+    }
+
+    productPurchaseQtyField.addEventListener('input', function () {
+        let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
+        let productTotal;
+        if (discountCheckbox.checked) {
+            // Apply discount if the checkbox is checked
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productTotal = purchaseQty * discountedPrice;
+        } else {
+            // No discount, use the original sale price
+            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+        }
+        productProductTotalField.value = productTotal.toFixed(2);
+    });
+
+    discountCheckbox.addEventListener('change', function () {
+        let isChecked = discountCheckbox.checked;
+        if (isChecked) {
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+        } else {
+            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+            productProductTotalField.innerHTML = '';
+        }
+    });
+}
+
+
+function updateRxContactLensProductFields(selectElement, cardIndex) {
+    let selectedProduct = contact_lens_list.find(product => product.product_id == selectElement.value);
+    console.log(selectedProduct);
+    let stockTypeField = document.querySelector(`[name='ContactLensStockType[${cardIndex}]']`);
+    let lensPhysicalityField = document.querySelector(`[name='lens_physicality[${cardIndex}]']`);
+    let lensDisposablilityField = document.querySelector(`[name='lens_disposablility[${cardIndex}]']`);
+    let lensVisionTypeField = document.querySelector(`[name='vision_type[${cardIndex}]']`);
+    let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
+    let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
+    let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
+    let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
+    let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`); let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+    let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
+    let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
+    let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
+    let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
+    let clPowerField = document.querySelector(`[name='cl_power[${cardIndex}]']`);
+    let clBcField = document.querySelector(`[name='cl_bc[${cardIndex}]']`);
+    let clDiaField = document.querySelector(`[name='cl_dia[${cardIndex}]']`);
+    let clCylField = document.querySelector(`[name='cl_cylinder[${cardIndex}]']`);
+    let clAxisField = document.querySelector(`[name='cl_axis[${cardIndex}]']`);
+    let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
+
+    stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
+    lensPhysicalityField.value = selectedProduct?.power_attribute.contact_lens_type ?? '';
+    lensDisposablilityField.value = selectedProduct?.power_attribute.contact_lens_disposability ?? '';
+    productHsnField.value = selectedProduct?.hsn ?? '';
+    productAvailableQtyField.value = selectedProduct?.product_quantity ?? '';
+    productBrandField.value = selectedProduct?.brand_name ?? '';
+    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
+    productUnitTypeField.value = selectedProduct?.unit_name ?? '';
+    productCategoryIdField.value = selectedProduct?.category_id ?? '';
+    productPurchaseQtyField.value = '';
+
+    if (selectedProduct.discount > 0) {
+        discountCheckDiv.style.display = 'block';
+        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueField.value = selectedProduct.discount;
+    } else {
+        discountCheckDiv.style.display = 'none';
+    }
+
+    productPurchaseQtyField.addEventListener('input', function () {
+        let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
+        let productTotal;
+        if (discountCheckbox.checked) {
+            // Apply discount if the checkbox is checked
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productTotal = purchaseQty * discountedPrice;
+        } else {
+            // No discount, use the original sale price
+            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+        }
+        productProductTotalField.value = productTotal.toFixed(2);
+    });
+
+    discountCheckbox.addEventListener('change', function () {
+        let isChecked = discountCheckbox.checked;
+        if (isChecked) {
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+        } else {
+            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+            productProductTotalField.innerHTML = '';
+        }
+    });
+}
+
+
+function updateOtherProductFields(selectElement, cardIndex) {
+    let selectedProduct = other_products_list.find(product => product.product_id == selectElement.value);
+    let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
+    let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
+    let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
+
+    let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
+    let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
+    let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
+    let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
+    let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
+    let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
+    let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
+    let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
+    let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
+
+    productCategoryField.value = selectedProduct?.category_name ?? '';
+    productHsnField.value = selectedProduct?.hsn ?? '';
+    productAvailableQtyField.value = selectedProduct?.store_product_quantity ?? '';
+    productBrandField.value = selectedProduct?.brand_name ?? '';
+    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
+    productUnitTypeField.value = selectedProduct?.unit_name ?? '';
+    productCategoryIdField.value = selectedProduct?.category_id ?? '';
+    productPurchaseQtyField.value = '';
+
+
+    if (selectedProduct.discount > 0) {
+        discountCheckDiv.style.display = 'block';
+        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueField.value = selectedProduct.discount;
+    } else {
+        discountCheckDiv.style.display = 'none';
+    }
+
+    productPurchaseQtyField.addEventListener('input', function () {
+        let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
+        let productTotal;
+        if (discountCheckbox.checked) {
+            // Apply discount if the checkbox is checked
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productTotal = purchaseQty * discountedPrice;
+        } else {
+            // No discount, use the original sale price
+            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+        }
+        productProductTotalField.value = productTotal.toFixed(2);
+    });
+
+    discountCheckbox.addEventListener('change', function () {
+        let isChecked = discountCheckbox.checked;
+        if (isChecked) {
+            let discountPercentage = parseFloat(discountValueField.value) || 0;
+            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+        } else {
+            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+            productProductTotalField.innerHTML = '';
+        }
+    });
+
+}
 </script>
+<script>
 
+function getProductsData() {
+    // Assuming products_container is the parent container
+    var productsContainer = document.getElementById('products_container');
 
+    // Check if the container exists
+    if (productsContainer) {
+        // Get all product_widget elements inside products_container
+        var productWidgets = productsContainer.getElementsByClassName('product_widget');
+
+        // Initialize an array to store the product data
+        var productsArray = [];
+
+        // Loop through each product_widget element
+        for (var i = 0; i < productWidgets.length; i++) {
+            var productWidget = productWidgets[i];
+            var productData = {};
+
+            // Get all form elements (input, select, textarea) inside the current product_widget
+            var formElements = productWidget.querySelectorAll('input, select, textarea');
+
+            // Loop through each form element and extract key-value pairs
+            formElements.forEach(function (formElement) {
+                // Use the element's name attribute as the key and its value as the value
+                productData[formElement.name] = formElement.value.trim();
+            });
+
+            // Add the product data to the array
+            productsArray.push(productData);
+        }
+
+        let cartDataField = document.querySelector(`[name='cartData']`);
+        // Now, productsArray contains the data of form elements inside all product_widgets
+        console.log(productsArray);
+        let jsonData = JSON.stringify(productsArray);
+        cartDataField.value = jsonData;
+    }
+}
+</script>
 </body>
 
 </html>
