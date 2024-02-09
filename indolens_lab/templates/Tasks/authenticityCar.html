@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <style>
+    #map {
+        width: 100%;
+        height: 400px; /* Adjust the height as needed */
+    }
+
+
+
+    </style>
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>{{order_detail.0.order_id}}-Authenticity_Card</title>
+
+    {% load static %}
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <!-- Favicon and Manifest -->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+
+    <!-- JavaScript Dependencies -->
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- Stylesheets -->
+    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+    </script>
+    <style>
+    @media print {
+        body, html {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        .btn {
+            display: none;
+        }
+        table {
+            width: 100%;
+        }
+
+        th, td {
+            padding: 8px; /* Adjust padding as needed */
+        }
+        /* Show all table columns when printing */
+        @page {
+            size: auto;
+            margin: 0;
+        }
+
+        table {
+            page-break-inside: auto;
+        }
+
+        tr {
+            page-break-inside: avoid;
+            page-break-after: auto;
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        <div class="content">
+
+            <h2 class="mb-4">Authentication Card</h2>
+            <div class="row mb-4">
+                <div class="col-xl-9">
+                    <form >
+                        {% csrf_token %}
+                        <div class="tab-pane" role="tabpanel"
+                             aria-labelledby="bootstrap-wizard-validation-tab2"
+                             id="bootstrap-wizard-validation-tab2">
+                            <div>
+                                <div id="customer_info" class="row g-3 mb-3">
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Store Name</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{order_detail.0.store_name}}"/>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Date</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="email" value="{{order_detail.0.created_on}}"/>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Customer Name</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{order_detail.0.customer_name}}"/>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Bill Number</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{order_detail.0.order_id}}"/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 mt-3 mb-3">
+                            <div class="col-12">
+                                {% if order_detail.0.category_id == 2 %}
+                                <table class="table mb-0 border-top border-200">
+                                    <thead>
+                                    <tr>
+                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                            scope="col"></th>
+                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                            scope="col">SPH
+                                        </th>
+                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                            scope="col">CYL
+                                        </th>
+                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                            scope="col">AXIS
+                                        </th>
+                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                            scope="col">ADD
+                                        </th>
+                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                            scope="col">IPD
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    {% if order_detail.0.power_attribute.stock_type == 'stock' %}
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">R</th>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensSphStock}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensCylStock}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAxisStock}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAddStock}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensPdStock}}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">L</th>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensSphStock}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensCylStock}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAxisStock}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-3">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAddStock}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-3">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensPdStock}}"/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    {% else %}
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">R</th>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensSphRx}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensCylRx}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAxisRx}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAddRx}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.leftLensPdRx}}"/>
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">L</th>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensSphRx}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensCylRx}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAxisRx}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-3">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAddRx}}"/>
+                                        </td>
+                                        <td class="col-6 col-lg-3">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{order_detail.0.power_attribute.rightLensPdRx}}"/>
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                    {% endif %}
+                                </table>
+                                {% endif %}
+
+                                {% if order_detail.0.category_id == 3 %}
+                                <label>Contact Lens</label>
+                                {% endif %}
+
+
+                                <div class="row g-3 mt-3 mb-3">
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Frame</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value=""/>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Lens</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{order_detail.0.product_name}}"/>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                            <button class="btn btn-phoenix-secondary" onclick="window.print()"><span
+                                    class="fa-solid fa-print me-sm-2"></span><span class="d-none d-sm-inline-block">Print</span>
+                            </button>
+                        </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6O2CG9zBAksJH4SCgCZlbx3XRWVwzY1E&libraries=places&callback=initMap"></script>
+
+</body>
+
+{{ customers_list|json_script:"customersList" }}
+
+<script>
+
+    function updateCustomerFields(selectCustomerField) {
+        var customers_list = JSON.parse(document.getElementById('customersList').textContent);
+        let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
+
+        var customerNameInput = document.getElementsByName("customer_name")[0];
+        var customerEmailInput = document.getElementsByName("customer_email")[0];
+        var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+        var customerAgeInput = document.getElementsByName("customer_age")[0];
+        var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+        var customerCityInput = document.getElementsByName("customer_city")[0];
+        var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+        var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+        //customerDataField
+        var customerDataTextarea = document.getElementsByName("customerData")[0];
+
+        customerNameInput.value = selectCustomer.name;
+        customerEmailInput.value = selectCustomer.email;
+        customerPhoneInput.value = selectCustomer.phone;
+        customerAgeInput.value = selectCustomer.age;
+        customerGenderSelect.value = selectCustomer.gender;
+        customerCityInput.value = selectCustomer.city;
+        customerLanguageSelect.value = selectCustomer.language;
+        customerAddressTextarea.value = selectCustomer.address;
+        customerDataTextarea.value = selectCustomer.address;
+
+
+    }
+
+
+
+
+
+
+
+
+
+
+</script>
+</html>

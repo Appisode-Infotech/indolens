@@ -266,13 +266,13 @@
                                 <h5 class="mb-2 text-1000">Quantity</h5>
                                 <input name="productQuantity" class="form-control" placeholder="Quantity" type="number"
                                 min="1" required/>
-                                <div class="invalid-feedback">Please provide valid cost price.</div>
+                                <div class="invalid-feedback">Please provide valid quantity.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">GSTIN</h5>
                                 <input name="productGSTIN" class="form-control" placeholder="%" type="number" required
                                 min="0" value=""/>
-                                <div class="invalid-feedback">Please provide valid sale price.</div>
+                                <div class="invalid-feedback">Please provide valid GST.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Discount</h5>
@@ -293,14 +293,14 @@
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Retail Sale price</h5>
-                                <input name="salePrice" class="form-control" placeholder="₹" type="text" min="1" required/>
+                                <input name="salePrice" class="form-control" placeholder="₹" type="number" min="1" required/>
                                 <div class="invalid-feedback">Please provide valid sale price.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Franchise Sale price</h5>
-                                <input name="franchiseSalePrice" class="form-control" placeholder="₹" type="text"
+                                <input name="franchiseSalePrice" class="form-control" placeholder="₹" type="number"
                                  min="1" required/>
-                                <div class="invalid-feedback">Please provide valid sale price.</div>
+                                <div class="invalid-feedback">Please provide valid Franchise sale price.</div>
                             </div>
                         </div>
                         <h4 class="mb-3">Models Data</h4>
@@ -565,7 +565,8 @@
             $('#only_frame_options input, #only_frame_options select').prop('required', false);
         } else {
             divToToggle.classList.add("d-none");
-
+            $('.lens-widget').addClass('d-none');
+            $('.contact-lens-widget').addClass('d-none');
             // Remove 'required' from inputs and selects inside divToToggle, lens-widget, and contact-lens-widget
             $('#only_frame_options input, #only_frame_options select, .lens-widget input, .lens-widget select, .contact-lens-widget input, .contact-lens-widget select').prop('required', false);
         }

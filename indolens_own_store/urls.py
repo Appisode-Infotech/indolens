@@ -59,6 +59,7 @@ urlpatterns = [
     path('own_store_eye_test/', ownStoreEyeTest, name='own_store_eye_test'),
     path('get_eye_test/', getOwnStoreEyeTest, name='get_eye_test'),
     path('get_eye_test_by_id/testId=<int:testId>', getOwnStoreEyeTestById, name='get_eye_test_by_id'),
+    path('print_eye_test/testId=<int:testId>', ownStoreEyeTestPrint, name='own_store_eye_test_print'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
