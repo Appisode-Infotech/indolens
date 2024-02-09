@@ -61,6 +61,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -185,6 +186,9 @@
                                                    style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
                                                    data-category-info="{{ test.power_attributes | safe }}"
                                                 >View Lens Powers</a>
+                                                <a class="dropdown-item view-button" target="_blank"
+                                                   href="{% url 'own_store_eye_test_print' test.eye_test_id %}"
+                                                   type="button">Print Eye Test</a>
 
                                             </div>
                                         </div>
@@ -242,6 +246,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 
 
 
