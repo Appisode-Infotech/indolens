@@ -3687,7 +3687,7 @@ def indolensAdminSetting(request):
             print(request.POST)
             response, status_code = admin_setting_controller.admin_setting(request.POST)
             print(response)
-            return render(request, 'indolens_admin/settings/IndolensAdminSetting.html')
+            return redirect('indolens_admin_setting')
         else:
             response, status_code = admin_setting_controller.get_admin_setting()
             print(response['admin_setting'])
