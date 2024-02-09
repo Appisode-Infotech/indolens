@@ -6118,9 +6118,18 @@ document.addEventListener('DOMContentLoaded', function () {
         });
       });
 
-      nextButton.addEventListener(events.CLICK, () => {
-        tabs[count + 1].show();
-      });
+        nextButton.addEventListener(events.CLICK, () => {
+            if (count == 0) {
+                if (document.querySelector("#products_container").childElementCount != 0) {
+                    tabs[count + 1].show();
+                } else {
+                    alert("Please add a product to proceed further !");
+
+                }
+            } else {
+                tabs[count + 1].show();
+            }
+        });
 
       prevButton.addEventListener(events.CLICK, () => {
         count -= 1;
