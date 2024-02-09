@@ -6166,7 +6166,6 @@ document.addEventListener('DOMContentLoaded', function () {
 //              wizardFooter.classList.remove('d-none');
 //            }
             // prev-button removing
-            console.log(count);
             if(count==3){
             nextButton.classList.add('d-none');
             }else{

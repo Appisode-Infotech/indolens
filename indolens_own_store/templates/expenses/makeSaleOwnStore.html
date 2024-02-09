@@ -330,10 +330,10 @@
                                                   novalidate="novalidate" data-wizard-form="3">
                                                 <div class="row g-3 mb-3">
                                                     <div class="mb2 col-6">
-                                                        <h5 class="mb-3">Total Item:</h5>
+                                                        <h5 id="totalProducts" class="mb-3">Total Items:</h5>
                                                     </div>
                                                     <div class="mb2 col-6">
-                                                        <h5 class="mb-3">Billing AMount:</h5>
+                                                        <h5 id="totalSum" class="mb-3">Billing Amount:</h5>
                                                     </div>
                                                 </div>
 
@@ -1511,6 +1511,7 @@ function removeProductCard(removeButton) {
     let productCard = removeButton.closest(".product_widget");
     if (productCard) {
         productCard.remove();
+        getProductsData();
     }
 }
 
@@ -1988,6 +1989,24 @@ function getProductsData() {
         console.log(productsArray);
         let jsonData = JSON.stringify(productsArray);
         cartDataField.value = jsonData;
+
+
+        const totalSum = productsArray.reduce((sum, product) => {
+    for (const key in product) {
+        if (key.startsWith("product_total[") && key.endsWith("]")) {
+            const productTotal = parseFloat(product[key]);
+            sum += isNaN(productTotal) ? 0 : productTotal;
+        }
+    }
+    return sum;
+}, 0);
+
+   // Display total sum in the <p> element with id 'totalSum'
+        document.getElementById('totalSum').textContent = "Billing amount: " + totalSum.toFixed(2);
+
+        // Display total number of products in the <p> element with id 'totalProducts'
+        document.getElementById('totalProducts').textContent = "Total Products: " + productsArray.length;
+
     }
 }
 </script>
