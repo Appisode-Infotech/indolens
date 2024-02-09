@@ -154,7 +154,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
                                                                 {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                                 {discount_percentage}, {is_discount_applied}, 
-                                                                '{json.dumps(power_attributes)}', 1, 
+                                                                '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
                                                                 {customer_id}, {billingDetailsData.get('assignedLab')}, 
                                                                 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                                                 {store_id}, {billingDetailsData.get('orderByEmployee')}, 
