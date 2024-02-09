@@ -503,3 +503,14 @@ def getOwnStoreEyeTestById(request, testId):
 
     else:
         return redirect('own_store_login')
+
+def ownStoreEyeTestPrint(request, testId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        response, status_code = own_store_eye_test_controller.get_eye_test_by_id(testId)
+        print(response)
+        return render(request, 'ownStoreEyeTest/ownStoreEyeTestPrint.html',
+                      {'eye_test_list': response['eye_test']})
+
+    else:
+        return redirect('own_store_login')

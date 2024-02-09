@@ -100,7 +100,7 @@ def get_eye_test():
 def get_eye_test_by_id(testId):
     try:
         with connection.cursor() as cursor:
-            get_eye_test_by_id_query = f""" SELECT et.*, c.name, 
+            get_eye_test_by_id_query = f""" SELECT et.*, c.name, c.phone, 
                                             CASE 
                                                 WHEN et.created_by_store_type = 1 THEN creator_os.name 
                                                 ELSE creator_fs.name 
