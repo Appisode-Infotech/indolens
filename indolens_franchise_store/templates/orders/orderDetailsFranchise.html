@@ -140,7 +140,8 @@
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
                                             <div class="border rounded-2"><img
-                                                    alt="" src="{% static 'img/products/1.png' %}" width="53"/>
+                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}"
+                                                    width="53"/>
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">

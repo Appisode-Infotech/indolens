@@ -110,8 +110,7 @@
                             </div>
                         </div>
                     </div>
-                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
-                        <div class="table-responsive scrollbar-overlay mx-n1 px-1">
+                    <div class="table-responsive scrollbar">
                             <table class="table table-sm fs--1 mb-0" id="myTable">
                                 <thead>
                                 <tr>
@@ -144,8 +143,7 @@
                                 {% for test in eye_test_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                     <td class="fs--1 align-middle px-0 py-3 slNo"></td>
-                                    <td class="fs--1 align-middle px-0 py-3 "><a
-                                            href="{% url 'eye_test_by_id' test.eye_test_id %}">#{{test.eye_test_id}}</a>
+                                    <td class="fs--1 align-middle px-0 py-3 ">#{{test.eye_test_id}}
                                     </td>
                                     <td class="customer align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
@@ -182,7 +180,7 @@
                                                            style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
                                                        data-category-info="{{ test.power_attributes | safe }}"
                                                     >View Lens Powers</a>
-                                                    <a class="dropdown-item view-button"
+                                                    <a class="dropdown-item view-button" target="_blank"
                                                        href="{% url 'eye_test_print' test.eye_test_id %}"
                                                        type="button">Print Eye Test</a>
 
@@ -194,7 +192,6 @@
                                 {% endfor %}
                                 </tbody>
                             </table>
-                        </div>
                         <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
                             <div class="col-auto d-flex">
                                 <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"

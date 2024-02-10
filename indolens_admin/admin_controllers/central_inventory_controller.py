@@ -122,7 +122,7 @@ def add_central_inventory_products(product_obj, file, power_attributes):
                                                 '{getIndianTime()}','{product_obj.created_by}','{getIndianTime()}',
                                                 '{product_obj.last_updated_by}', '{product_obj.product_quantity}', 
                                                 '{product_obj.product_gstin}', {product_obj.discount}, 
-                                                {product_obj.franchise_sale_price}, '{power_attributes_json}', 0) """
+                                                {product_obj.franchise_sale_price}, '{power_attributes_json}', 1) """
 
             cursor.execute(add_product_query)
 

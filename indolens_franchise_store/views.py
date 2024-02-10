@@ -3,7 +3,7 @@ import json
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
-from indolens_admin.admin_controllers import central_inventory_controller
+from indolens_admin.admin_controllers import central_inventory_controller, eye_test_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
     franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller, \
@@ -535,6 +535,18 @@ def getfranchiseStoreEyeTestById(request, testId):
         response, status_code = franchise_store_eye_test_controller.get_eye_test_by_id(testId)
         print(response)
         return render(request, 'franchiseStoreEyeTest/viewAllStoreEyeTest.html',
+                      {'eye_test_list': response['eye_test']})
+
+    else:
+        return redirect('franchise_store_login')
+
+def franchiseStoreEyeTestPrint(request, testId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        response, status_code = eye_test_controller.get_eye_test_by_id(testId)
+        print(response)
+        return render(request, 'franchiseStoreEyeTest/franchiseStoreEyeTestPrint.html',
                       {'eye_test_list': response['eye_test']})
 
     else:

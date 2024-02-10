@@ -6,7 +6,7 @@ urlpatterns = [
     # start
     path('', index, name='franchise_store_index'),
     # auth
-    path('login/', login, name='franchise_store_login'),
+    path('franchise_store_login/', login, name='franchise_store_login'),
     path('franchise_store_forgot_password/', forgotPassword, name='franchise_store_forgot_password'),
     path('franchise_store_reset_password/code=<str:code>', resetPassword, name='franchise_store_reset_password'),
     path('franchise_store_logout/', franchiseStoreLogout, name='franchise_store_logout'),
@@ -68,4 +68,6 @@ urlpatterns = [
     path('franchise_store_eye_test/', franchiseStoreEyeTest, name='franchise_store_eye_test'),
     path('get_franchise_eye_test/', getfranchiseStoreEyeTest, name='get_franchise_eye_test'),
     path('get_franchise_eye_test_by_id/testId=<int:testId>', getfranchiseStoreEyeTestById, name='get_franchise_eye_test_by_id'),
+    path('print_eye_test/testId=<int:testId>', franchiseStoreEyeTestPrint, name='franchise_store_eye_test_print'),
+
 ]
