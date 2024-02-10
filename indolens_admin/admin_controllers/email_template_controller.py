@@ -1,4 +1,7 @@
-base_url = "http://127.0.0.1:8000"
+# base_url = "http://127.0.0.1:8000"
+from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
+
+base_url = get_base_url()
 
 
 # EMPLOYEE CREATION EMAIL

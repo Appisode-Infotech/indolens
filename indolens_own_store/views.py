@@ -474,9 +474,11 @@ def ownStoreEyeTest(request):
         if request.method == 'POST':
             response = own_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
                                                                   assigned_store)
-        customerResponse, cust_status_code = store_customers_controller.get_all_customers()
-        return render(request, 'ownStoreEyeTest/ownStoreEyeTest.html',
-                      {'customers_list': customerResponse['customers_list']})
+            return redirect('get_eye_test')
+        else:
+            customerResponse, cust_status_code = store_customers_controller.get_all_customers()
+            return render(request, 'ownStoreEyeTest/ownStoreEyeTest.html',
+                          {'customers_list': customerResponse['customers_list']})
     else:
         return redirect('own_store_login')
 

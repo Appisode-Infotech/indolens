@@ -14,8 +14,11 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
     customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller, \
     orders_controller, store_expenses, dashboard_controller, eye_test_controller, admin_setting_controller
+from indolens_admin.admin_controllers.admin_setting_controller import get_admin_setting, get_emailjs_attribute, \
+    get_base_url
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single, \
     get_central_inventory_product_restoc_log
+from indolens_admin.admin_controllers.send_notification_controller import send_email
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
     accountant_model, lab_technician_model, lab_model, \
@@ -3652,6 +3655,7 @@ def getEyeTestById(request, testId):
     else:
         return redirect('login')
 
+
 def eyeTestPrint(request, testId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = eye_test_controller.get_eye_test_by_id(testId)
@@ -3666,10 +3670,9 @@ def indolensAdminSetting(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             response, status_code = admin_setting_controller.admin_setting(request.POST)
-            return render(request, 'indolens_admin/settings/IndolensAdminSetting.html')
+            return redirect('indolens_admin_setting')
         else:
             response, status_code = admin_setting_controller.get_admin_setting()
-            print(response['admin_setting'])
             return render(request, 'indolens_admin/settings/IndolensAdminSetting.html',
                           {"admin_setting": response['admin_setting']})
 

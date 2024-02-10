@@ -7,6 +7,7 @@ import pymysql
 from django.db import connection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
+from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_admin.admin_models.admin_req_model import admin_auth_model
 from indolens_admin.admin_models.admin_resp_model.admin_auth_resp_model import get_admin_user
 
@@ -69,7 +70,7 @@ def forgot_password(email):
     try:
         with connection.cursor() as cursor:
             pwd_code = generate_random_string()
-            reset_pwd_link = f"http://127.0.0.1:8000/admin/reset_password/code={pwd_code}"
+            reset_pwd_link = f"{get_base_url()}/admin/reset_password/code={pwd_code}"
             print(reset_pwd_link)
 
             check_email_query = f"""SELECT email,status, name FROM admin WHERE email = '{email}'"""

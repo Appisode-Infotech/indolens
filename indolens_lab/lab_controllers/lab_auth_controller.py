@@ -10,6 +10,7 @@ import requests
 from django.db import connection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
+from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_franchise_store.franchise_store_model.franchise_store_resp_model.franchise_store_emp_resp_model import \
     get_franchise_store_employees
 from indolens_lab.lab_models.response_model.lab_tech_resp_model import get_lab_tech
@@ -96,7 +97,7 @@ def forgot_password(email):
     try:
         with connection.cursor() as cursor:
             pwd_code = generate_random_string()
-            reset_pwd_link = f"http://127.0.0.1:8000/lab/lab_reset_password/code={pwd_code}"
+            reset_pwd_link = f"{get_base_url()}/lab/lab_reset_password/code={pwd_code}"
             print(reset_pwd_link)
 
             check_email_query = f"""SELECT email,status, name FROM lab_technician WHERE email = '{email}'"""

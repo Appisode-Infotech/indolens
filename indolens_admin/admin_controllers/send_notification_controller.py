@@ -4,6 +4,9 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 import requests
 
+from indolens_admin.admin_controllers.admin_setting_controller import get_admin_setting, get_emailjs_attribute
+
+
 def send_email(subject, body, to_email):
     # smtp_server = "smtppro.zoho.in"
     # smtp_port = 465  # This might vary, check with your email provider
@@ -26,20 +29,33 @@ def send_email(subject, body, to_email):
     #
     # print("Email sent successfully.")
 
-    url = 'https://api.emailjs.com/api/v1.0/email/send'
-    data = {
-        'service_id': 'service_7eqv3fu',
-        'template_id': 'template_1c47e6b',
-        'user_id': 'qbWAgwqHOFbcgoJRF',
-        'template_params': {
-            'to_email': to_email,
-            'subject': subject,
-            'body': body,
-            'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...'
+    emailjs = get_emailjs_attribute()
+    if any(emailjs.values()):
+        print("Data is present")
+        print(emailjs.get('emailjs_url'))
+        print(emailjs.get('emailjs_template_id'))
+        print(emailjs.get('emailjs_user_id'))
+        print(emailjs.get('emailjs_recaptcha'))
+
+        url = emailjs.get('emailjs_url')
+        data = {
+            'service_id': emailjs.get('emailjs_service_id'),
+            'template_id': emailjs.get('emailjs_template_id'),
+            'user_id': emailjs.get('emailjs_user_id'),
+            'template_params': {
+                'to_email': to_email,
+                'subject': subject,
+                'body': body,
+                'g-recaptcha-response': emailjs.get('emailjs_recaptcha')
+            }
         }
-    }
 
-    headers = {'Content-Type': 'application/json'}
+        headers = {'Content-Type': 'application/json'}
 
-    email_response = requests.post(url, data=json.dumps(data), headers=headers)
-    return email_response
+        email_response = requests.post(url, data=json.dumps(data), headers=headers)
+        return email_response
+    else:
+        print("Data is empty")
+        return "no email js credentials found"
+
+
