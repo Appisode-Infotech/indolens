@@ -1,9 +1,5 @@
 import datetime
 import json
-import string
-import random
-
-import bcrypt
 import pymysql
 from django.db import connection
 
@@ -25,7 +21,6 @@ def admin_setting(data):
             admin_setting_check = f""" SELECT COUNT(*) FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
-            print(admin_check)
 
             emailjs_attributes = {
                 'emailjs_url': data.get('emailjs_url', ''),
@@ -68,9 +63,35 @@ def get_admin_setting():
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
             return {"status": True,
-                    "message": "Update Success",
-                    "admin_setting": admin_setting_response(admin_check)
+                    "message": "fetch Success",
+                    "admin_setting": admin_setting_response(admin_check) if admin_check is not None else {}
                     }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_emailjs_attribute():
+    try:
+        with connection.cursor() as cursor:
+            admin_setting_check = f""" SELECT emailjs_attribute FROM admin_setting """
+            cursor.execute(admin_setting_check)
+            admin_check = cursor.fetchone()
+            return json.loads(admin_check[0]) if admin_check is not None else {}
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+def get_base_url():
+    try:
+        with connection.cursor() as cursor:
+            admin_setting_check = f""" SELECT base_url FROM admin_setting """
+            cursor.execute(admin_setting_check)
+            admin_check = cursor.fetchone()
+            return admin_check[0] if admin_check is not None else {}
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

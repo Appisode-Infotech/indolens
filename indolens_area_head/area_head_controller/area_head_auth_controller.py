@@ -9,6 +9,7 @@ import pytz
 import requests
 from django.db import connection
 
+from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_area_head.area_head_model.area_head_resp_models.area_head_resp_model import get_area_heads
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -71,7 +72,7 @@ def forgot_password(email):
     try:
         with connection.cursor() as cursor:
             pwd_code = generate_random_string()
-            reset_pwd_link = f"http://127.0.0.1:8000/area_head/reset_password/code={pwd_code}"
+            reset_pwd_link = f"{get_base_url()}/area_head/reset_password/code={pwd_code}"
             print(reset_pwd_link)
 
             check_email_query = f"""SELECT email,status FROM area_head WHERE email = '{email}'"""

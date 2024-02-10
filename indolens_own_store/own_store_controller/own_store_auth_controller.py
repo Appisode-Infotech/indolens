@@ -10,6 +10,7 @@ import requests
 from django.db import connection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
+from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_own_store.own_store_model.response_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -88,7 +89,7 @@ def forgot_password(email):
     try:
         with connection.cursor() as cursor:
             pwd_code = generate_random_string()
-            reset_pwd_link = f"http://127.0.0.1:8000/own_store/reset_password/code={pwd_code}"
+            reset_pwd_link = f"{get_base_url()}/own_store/reset_password/code={pwd_code}"
             print(reset_pwd_link)
 
             check_email_query = f"""SELECT email,status, name FROM own_store_employees WHERE email = '{email}'"""
