@@ -80,7 +80,6 @@ def resetPassword(request, code):
         print(request.POST['email'])
         response, status_code = admin_auth_controller.update_admin_password(request.POST['password'],
                                                                             request.POST['email'])
-        print(response)
         return render(request, 'indolens_admin/auth/reset_password.html',
                       {"code": code, "message": response['message']})
     else:
@@ -202,7 +201,6 @@ def enableDisableOwnStore(request, ownStoreId, status, route):
 def manageFranchiseStores(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_all_franchise_stores(status)
-        print(response)
         return render(request, 'indolens_admin/franchiseStores/manageFranchiseStores.html',
                       {"franchise_store_list": response['franchise_store'], "status": status})
     else:
@@ -217,7 +215,6 @@ def viewFranchiseStore(request, franchiseStoreId):
         sales_data, status_code = orders_controller.get_all_store_orders(franchiseStoreId, 2)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(franchiseStoreId, 2)
         store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(franchiseStoreId, 2)
-        print(store_expense_list)
         return render(request, 'indolens_admin/franchiseStores/franchiseStore.html',
                       {"franchise_store": response['franchise_store'], "products_list": products_list['products_list'],
                        "total_employee_count": store_stats['total_employee_count'],
@@ -482,7 +479,6 @@ def createStoreManager(request):
 def viewStoreManager(request, storeManagerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_store_manager_by_id(storeManagerId)
-        print(response)
         return render(request, 'indolens_admin/storeManagers/viewStoreManager.html',
                       {"store_manager": response['store_manager']})
     else:
@@ -1006,8 +1002,6 @@ def manageOptimetry(request, status):
         response, status_code = optimetry_controller.get_all_optimetry(status)
 
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
-        print(available_stores_response)
-        print(response)
         return render(request, 'indolens_admin/optimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1355,7 +1349,6 @@ def createSaleExecutives(request):
             sales_executives_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = sales_executives_controller.create_own_sales_executives(sales_executives_obj,
                                                                                             file_data)
-            print(response)
             if status_code == 200:
                 url = reverse('view_sales_executives', kwargs={'ownSaleExecutivesId': response['seId']})
                 return redirect(url)
@@ -1875,7 +1868,6 @@ def viewLabTechnician(request, labTechnicianId):
 def updateLabTechnicianDocuments(request, labTechnicianId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_technician_controller.get_lab_technician_by_id(labTechnicianId)
-        print(response)
         return render(request, 'indolens_admin/labTechnician/updateDocuments.html',
                       {"lab_technician": response['lab_technician']})
     else:
@@ -2016,7 +2008,6 @@ def viewOtherEmployees(request, ownEmployeeId):
 def updateOtherEmployeesDocuments(request, ownEmployeeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_other_emp_by_id(ownEmployeeId)
-        print(response)
         return render(request, 'indolens_admin/otherEmployees/updateDocuments.html',
                       {"other_employee": response['other_employee']})
     else:
@@ -2194,7 +2185,6 @@ def enableDisableFranchiseOtherEmployees(request, route, franchiseEmployeeId, st
 def viewAllOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = orders_controller.get_all_orders('All', 'All', store)
-        print(response)
         return render(request, 'indolens_admin/orders/viewAllOrders.html',
                       {"orders_list": response['orders_list'], "store": store})
     else:
@@ -2267,7 +2257,6 @@ def viewRefundedOrders(request, store):
 def viewOrderDetails(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
-        print(order_detail)
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
                       {"order_detail": order_detail['orders_details']})
     else:
@@ -2307,7 +2296,6 @@ def viewOrderCreator(request, employeeID, storeType):
         if role in role_urls:
             url_name, id_key = role_urls[role]
             url = reverse(url_name, kwargs={id_key: employeeID})
-            print(url)
             return redirect(url)
         else:
             return redirect('dashboard')
@@ -2352,7 +2340,6 @@ def viewCustomerDetails(request, customerId):
 def manageLabs(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_controller.get_all_labs()
-        print(response)
         return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
     else:
         return redirect('login')
@@ -2412,7 +2399,6 @@ def viewAllJobs(request, labId):
 
 def jobDetails(request, jobId):
     job_detail, status_code = orders_controller.get_order_details(jobId)
-    print(job_detail)
     return render(request, 'indolens_admin/labs/jobDetails.html', {"order_detail": job_detail['orders_details']})
 
 
@@ -2440,7 +2426,6 @@ def addProductCategory(request):
         if request.method == 'POST':
             product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
             response = master_category_controller.add_product_category(product_cat_obj)
-            print(response)
             return redirect('manage_central_inventory_category')
         else:
             return render(request, 'indolens_admin/masters/addProductCategory.html')
@@ -2487,7 +2472,6 @@ def addMastersBrands(request):
         if request.method == 'POST':
             master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
             resp = master_brand_controller.add_product_brand(master_brand_obj)
-            print(resp)
             return redirect('manage_central_inventory_brands')
         else:
             return render(request, 'indolens_admin/masters/addMastersBrand.html')
@@ -2566,7 +2550,6 @@ def enableDisableMastersShapes(request, shapeId, status):
 def manageMastersFrameType(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_frame_type_controller.get_all_central_inventory_frame_types()
-        print(response)
         return render(request, 'indolens_admin/masters/manageMastersFrameType.html',
                       {"frame_type": response["frame_type"]})
     else:
@@ -2781,7 +2764,6 @@ def centralInventoryUpdateProduct(request, productId):
 
 def centralInventoryUpdateProductStatus(request, filter, productId, status):
     response, status_code = central_inventory_controller.change_product_status(productId, status)
-    print(response)
     url = reverse('manage_central_inventory_products', kwargs={'status': filter})
     return redirect(url)
 
@@ -2800,7 +2782,6 @@ def centralInventoryViewProducts(request, productId):
 
 def centralInventoryViewProductRestockLogs(request, productId):
     response, status_code = get_central_inventory_product_restoc_log(productId)
-    print(response)
     return render(request, 'indolens_admin/centralInventory/centralInventoryProductLogs.html',
                   {"restock_logs": response['restock_logs']})
 
@@ -2896,7 +2877,6 @@ def manageMoveAStock(request):
 def viewAllStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_stock_requests('%')
-        print(response)
         return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -3012,11 +2992,9 @@ def unAssignSalesExecutiveOwnStore(request, route, salesExecutiveId, storeId):
 
 def assignOtherEmployeeOwnStore(request, route):
     if request.method == 'POST':
-        print(request.POST)
         response, status_code = other_employee_controller.assign_store_own_store_other_employee(request.POST['emp_id'],
                                                                                                 request.POST[
                                                                                                     'store_id'])
-        print(response)
         url = reverse('manage_store_other_employees', kwargs={'status': route})
         return redirect(url)
 
@@ -3032,15 +3010,11 @@ def assignFranchiseStoreOwner(request, route):
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
                                                                                           request.POST[
                                                                                               'store_id'])
-        print(response)
         url = reverse('manage_franchise_owners', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignFranchiseStoreOwner(request, route, FranchiseOwnerId, storeId):
-    print("unassign===============================================")
-    print(FranchiseOwnerId)
-    print(storeId)
     response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOwnerId, storeId)
     url = reverse('manage_franchise_owners', kwargs={'status': route})
     return redirect(url)
@@ -3099,7 +3073,6 @@ def assignAreaHeadOwnStore(request):
         print(','.join(request.POST.getlist('store_id')))
         response, status_code = area_head_controller.assignStore(request.POST['emp_id'],
                                                                  ','.join(request.POST.getlist('store_id')))
-        print(response)
     url = reverse('manage_area_head', kwargs={'status': 'All'})
     return redirect(url)
 
@@ -3183,8 +3156,7 @@ def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_T
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'own_store_employees', 'employee_id',
                                                                             employeeId)
-        print("=================================response========================")
-        print(response)
+
         role = response['role']
 
         # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3210,7 +3182,6 @@ def deleteFranchiseStoreEmployeeDocuments(request, employeeId, documentURL, docu
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'franchise_store_employees', 'employee_id',
                                                                             employeeId)
-        print(response)
         role = response['role']
 
         # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3680,14 +3651,21 @@ def getEyeTestById(request, testId):
     else:
         return redirect('login')
 
+def eyeTestPrint(request, testId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = eye_test_controller.get_eye_test_by_id(testId)
+        return render(request, 'indolens_admin/eyeTest/adminEyeTestPrint.html',
+                      {'eye_test_list': response['eye_test']})
+
+    else:
+        return redirect('login')
+
 
 def indolensAdminSetting(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
             response, status_code = admin_setting_controller.admin_setting(request.POST)
-            print(response)
-            return redirect('indolens_admin_setting')
+            return render(request, 'indolens_admin/settings/IndolensAdminSetting.html')
         else:
             response, status_code = admin_setting_controller.get_admin_setting()
             print(response['admin_setting'])

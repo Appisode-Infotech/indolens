@@ -182,6 +182,9 @@
                                                            style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
                                                        data-category-info="{{ test.power_attributes | safe }}"
                                                     >View Lens Powers</a>
+                                                    <a class="dropdown-item view-button"
+                                                       href="{% url 'eye_test_print' test.eye_test_id %}"
+                                                       type="button">Print Eye Test</a>
 
                                                 </div>
                                             </div>
