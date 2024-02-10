@@ -453,6 +453,9 @@ urlpatterns = [
 
     path('eye_test/', ViewAllEyeTest, name='eye_test'),
     path('eye_test_by_id/testId=<int:testId>', getEyeTestById, name='eye_test_by_id'),
+    path('eye_test/testId=<int:testId>', eyeTestPrint, name='eye_test_print'),
+
+    path('indolens_admin_setting/', indolensAdminSetting, name='indolens_admin_setting'),
 
 
 

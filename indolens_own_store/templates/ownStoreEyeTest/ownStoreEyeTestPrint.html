@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+    <style>
+    #map {
+        width: 100%;
+        height: 400px; /* Adjust the height as needed */
+    }
+
+
+    </style>
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens {{request.session.store_name}} - Create Eye Test</title>
+
+    {% load static %}
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <!-- Favicon and Manifest -->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+
+    <!-- JavaScript Dependencies -->
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- Stylesheets -->
+    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% for test in eye_test_list %}
+        <div class="content">
+
+            <h2 class="mb-4">Eye Testing for Customers  </h2>
+            <div class="row mb-4">
+                <div class="col-xl-9">
+                    <form  class="row g-3 needs-validation" >
+                        {% csrf_token %}
+                        <div class="tab-pane" role="tabpanel"
+                             aria-labelledby="bootstrap-wizard-validation-tab2"
+                             id="bootstrap-wizard-validation-tab2">
+                            <div>
+                                <div id="customer_info" class="row g-3 mb-3">
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Customer Name</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{test.customer_name}}"/>
+                                        
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Date</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="email" value="{{test.created_on}}"/>
+                                        
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Customer Phone</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{test.customer_phone}}"/>
+                                        
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Customer Age</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{test.customer_age}}"/>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row mb-3 stock_power_card[${productCardCount}]"
+                             id="stock_power_card[${productCardCount}]">
+                            <div class="col-12">
+                                <h5 class="mb-3">Right Eye Test Data</h5>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">SPH</th>
+                                        <th scope="col">CYL</th>
+                                        <th scope="col">AXIS</th>
+                                        <th scope="col">VISION</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">D/V</th>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.RightDvSph}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.RightDvCyl}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.RightDvAxis}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.RightDvVision}}"/>
+                                            
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">N/V</th>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.RightNvSph}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.RightNvCyl}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.RightNvAxis}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-3">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.RightNvVision}}"/>
+                                            
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                                <h5 class="mb-3">Left Eye Test Data</h5>
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col"></th>
+                                        <th scope="col">SPH</th>
+                                        <th scope="col">CYL</th>
+                                        <th scope="col">AXIS</th>
+                                        <th scope="col">VISION</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <th scope="row">D/V</th>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.LeftDvSph}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.LeftDvCyl}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.LeftDvAxis}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-3">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.LeftDvVision}}"/>
+                                            
+                                        </td>
+
+                                    </tr>
+
+                                    <tr>
+                                        <th scope="row">N/V</th>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.LeftNvSph}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.LeftNvCyl}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.LeftNvAxis}}"/>
+                                            
+                                        </td>
+                                        <td class="col-6 col-lg-3">
+                                            <input disabled class="form-control" style="color: black;"
+                                                   type="text" value="{{test.power_attributes.LeftNvVision}}"/>
+                                            
+                                        </td>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="mb-3 ">
+                            <div class="row mb-3 pt-3 ">
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="unifocal"
+                                           value="1"/>
+                                    <label class="form-check-label">UNIFOCAL</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="bifocal"
+                                           value="1"/>
+                                    <label class="form-check-label">BIFOCAL</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="progressive"
+                                           value="1"/>
+                                    <label class="form-check-label">PROGRESSIVE</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="cr39"
+                                           value="1"/>
+                                    <label class="form-check-label">CR39</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="arc"
+                                           value="1"/>
+                                    <label class="form-check-label">ARC</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <label class="form-label">PDR</label>
+                                    <input disabled class="form-control" type="text"
+                                           name="pdr"/>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <label class="form-label">PDL</label>
+                                    <input disabled class="form-control" type="text"
+                                           name="pdl"/>
+                                </div>
+
+                            </div>
+                            <div class="row mb-3 pt-3 ">
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="glass"
+                                           value="1"/>
+                                    <label class="form-check-label">GLASS</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="highIndex"
+                                           value="1"/>
+                                    <label class="form-check-label">HIGH INDEX</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="pg"
+                                           value="1"/>
+                                    <label class="form-check-label">PG</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="constant"
+                                           value="1"/>
+                                    <label class="form-check-label">CONSTANT</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="distance"
+                                           value="1"/>
+                                    <label class="form-check-label">DISTANCE</label>
+                                </div>
+                                <div class="col-12 col-lg-3">
+                                    <input disabled class="form-check-input" type="checkbox"
+                                           name="near"
+                                           value="1"/>
+                                    <label class="form-check-label">NEAR</label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div>
+                            <button class="btn btn-phoenix-secondary" onclick="window.print()"><span
+                                    class="fa-solid fa-print me-sm-2"></span><span class="d-none d-sm-inline-block">Print</span>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+
+        </div>
+        {% endfor %}
+    </div>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6O2CG9zBAksJH4SCgCZlbx3XRWVwzY1E&libraries=places&callback=initMap"></script>
+
+</body>
+
+{{ customers_list|json_script:"customersList" }}
+
+<script>
+
+    function updateCustomerFields(selectCustomerField) {
+        var customers_list = JSON.parse(document.getElementById('customersList').textContent);
+        let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
+
+        var customerNameInput = document.getElementsByName("customer_name")[0];
+        var customerEmailInput = document.getElementsByName("customer_email")[0];
+        var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+        var customerAgeInput = document.getElementsByName("customer_age")[0];
+        var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+        var customerCityInput = document.getElementsByName("customer_city")[0];
+        var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+        var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+        //customerDataField
+        var customerDataTextarea = document.getElementsByName("customerData")[0];
+
+        customerNameInput.value = selectCustomer.name;
+        customerEmailInput.value = selectCustomer.email;
+        customerPhoneInput.value = selectCustomer.phone;
+        customerAgeInput.value = selectCustomer.age;
+        customerGenderSelect.value = selectCustomer.gender;
+        customerCityInput.value = selectCustomer.city;
+        customerLanguageSelect.value = selectCustomer.language;
+        customerAddressTextarea.value = selectCustomer.address;
+        customerDataTextarea.value = selectCustomer.address;
+
+
+    }
+
+
+
+
+
+
+</script>
+</html>

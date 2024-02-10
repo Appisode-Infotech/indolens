@@ -96,10 +96,12 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
             for data in cart_data:
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
                 if new_data.get('product_category_id') == '2':
+                    print(new_data)
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "":
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
+                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     print("is_discount_applied")
@@ -155,7 +157,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
                                                                 {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                                 {discount_percentage}, {is_discount_applied}, 
-                                                                '{json.dumps(power_attributes)}', 1, 
+                                                                '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
                                                                 {customer_id}, {billingDetailsData.get('assignedLab')}, 
                                                                 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                                                 {store_id}, {billingDetailsData.get('orderByEmployee')}, 

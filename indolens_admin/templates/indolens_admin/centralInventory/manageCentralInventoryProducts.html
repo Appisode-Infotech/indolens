@@ -238,7 +238,7 @@
                                                     class="fas fa-ellipsis-h fs--2"></span></button>
 
                                             <div class="dropdown-menu dropdown-menu-end py-2">
-                                                <a class="dropdown-item" href="#!">View</a>
+                                                <a class="dropdown-item" href="{% url 'view_products' product.product_id %}">View</a>
                                                 <a class="dropdown-item" type="button"
                                                    data-bs-role="Product"
                                                    data-bs-toggle="modal"
@@ -417,31 +417,31 @@
 <script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
 
+
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    var operationsButtons = document.querySelectorAll('[data-bs-target="#restock_modal"]');
+  document.addEventListener("DOMContentLoaded", function () {
     var modal = document.getElementById('restock_modal');
     var modalTitle = document.getElementById('modal_title_restock');
 
-    operationsButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            var empId = event.currentTarget.getAttribute('data-employee-id');
-            var empName = event.currentTarget.getAttribute('data-employee-name');
-            var actionType = event.currentTarget.getAttribute('data-action-type');
-            var role = event.currentTarget.getAttribute('data-bs-role');
+    document.body.addEventListener('click', function (event) {
+        if (event.target.matches('[data-bs-target="#restock_modal"]')) {
+            var empId = event.target.getAttribute('data-employee-id');
+            var empName = event.target.getAttribute('data-employee-name');
+            var actionType = event.target.getAttribute('data-action-type');
+            var role = event.target.getAttribute('data-bs-role');
+
             document.getElementById('productId').value = empId;
             document.getElementById('productName').value = empName;
             modalTitle.textContent = "Restock " + "- " + empName;
-             // Use data-bs-toggle and data-bs-target attributes to trigger the modal
-            var targetModal = event.currentTarget.getAttribute('data-bs-target');
-            var backdrop = event.currentTarget.getAttribute('data-bs-backdrop');
+
+            // Use data-bs-toggle and data-bs-target attributes to trigger the modal
+            var targetModal = event.target.getAttribute('data-bs-target');
+            var backdrop = event.target.getAttribute('data-bs-backdrop');
             modal.setAttribute('data-bs-target', targetModal);
             modal.setAttribute('data-bs-backdrop', backdrop);
-        });
+        }
     });
 });
-
-
 
 </script>
 </body>

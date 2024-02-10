@@ -6,14 +6,6 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <style>
-    #map {
-        width: 100%;
-        height: 400px; /* Adjust the height as needed */
-    }
-
-
-    </style>
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
@@ -487,47 +479,5 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'vendors/choices/choices.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
-<script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6O2CG9zBAksJH4SCgCZlbx3XRWVwzY1E&libraries=places&callback=initMap"></script>
 
-</body>
-
-{{ customers_list|json_script:"customersList" }}
-
-<script>
-
-    function updateCustomerFields(selectCustomerField) {
-        var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-        let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
-
-        var customerNameInput = document.getElementsByName("customer_name")[0];
-        var customerEmailInput = document.getElementsByName("customer_email")[0];
-        var customerPhoneInput = document.getElementsByName("customer_phone")[0];
-        var customerAgeInput = document.getElementsByName("customer_age")[0];
-        var customerGenderSelect = document.getElementsByName("customer_gender")[0];
-        var customerCityInput = document.getElementsByName("customer_city")[0];
-        var customerLanguageSelect = document.getElementsByName("customer_language")[0];
-        var customerAddressTextarea = document.getElementsByName("customer_address")[0];
-        //customerDataField
-        var customerDataTextarea = document.getElementsByName("customerData")[0];
-
-        customerNameInput.value = selectCustomer.name;
-        customerEmailInput.value = selectCustomer.email;
-        customerPhoneInput.value = selectCustomer.phone;
-        customerAgeInput.value = selectCustomer.age;
-        customerGenderSelect.value = selectCustomer.gender;
-        customerCityInput.value = selectCustomer.city;
-        customerLanguageSelect.value = selectCustomer.language;
-        customerAddressTextarea.value = selectCustomer.address;
-        customerDataTextarea.value = selectCustomer.address;
-
-
-    }
-
-
-
-
-
-
-</script>
 </html>

@@ -259,9 +259,10 @@
                                                type="button"
                                                data-bs-role="Optimetry"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#operations_modal"
+                                               data-bs-target="#allocate_store_modal"
                                                data-employee-id="{{ opti.employee_id }}"
                                                data-employee-name="{{ opti.name }}"
+                                               data-bs-action="{% url 'assign_optimetry_own_store' status %}"
                                                data-action-type="allocate">
                                                 Allocate Store
                                             </a>
@@ -323,50 +324,6 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="modal fade" id="operations_modal" tabindex="-1"
-                             aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-primary">
-                                        <h5 class="modal-title text-white" id="modal_title"></h5>
-                                        <button class="btn p-1" type="button" data-bs-dismiss="modal"
-                                                aria-label="Close">
-                                            <span class="fas fa-times fs--1 text-white"></span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body" id="modal_content">
-                                        <!-- Form for Allocate Store -->
-                                        <form class="row g-3 needs-validation allocate-store-form" method="post"
-                                              action="{% url 'assign_optimetry_own_store' status %}" novalidate="novalidate">
-                                            {% csrf_token %}
-                                            <input type="hidden" name="emp_id" id="emp_id">
-                                            <h5 class="mb-3">Select Store (Only active and unallocated stores appear
-                                                here)</h5>
-                                            <select class="form-select" data-choices="data-choices"
-                                                    data-options='{"placeholder":true}' name="store_id"
-                                                    required="required">
-                                                <option value="">Select a store</option>
-                                                {% for store in available_stores %}
-                                                <option value="{{store.store_id}}">{{store.store_name}}</option>
-                                                {% endfor %}
-                                            </select>
-                                            <div class="custom-error" style="color: red;"></div>
-                                            <div class="modal-footer">
-                                                <button class="btn btn-primary modal-submit" type="submit">Submit
-                                                </button>
-                                            </div>
-                                        </form>
-                                    </div>
-                                    <div id="footer_div" class="modal-footer">
-                                        <a class="btn btn-primary modal-submit" type="button"
-                                           id="modal_submit">Confirm</a>
-                                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
-                                            Cancel
-                                        </button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     </div>
                     <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
                         <div class="d-flex">
@@ -385,6 +342,11 @@
                         </div>
                     </div>
                 </div>
+
+                {% include 'modal_warning.html' %}
+
+                {% include 'modal_allocate_store.html' %}
+
             </div>
             {% include 'footer.html' %}
         </div>
@@ -422,55 +384,9 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
-
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    var operationsButtons = document.querySelectorAll('[data-bs-target="#operations_modal"]');
-    var modal = document.getElementById('operations_modal');
-    var modalTitle = document.getElementById('modal_title');
-    var modalContent = document.getElementById('modal_content');
-    var modalSubmit = document.getElementById('modal_submit');
-    var modalForm = document.querySelector('.allocate-store-form'); // Select the existing form
-
-    operationsButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            var empId = event.currentTarget.getAttribute('data-employee-id');
-            var empName = event.currentTarget.getAttribute('data-employee-name');
-            var actionType = event.currentTarget.getAttribute('data-action-type');
-            var actionUrl = event.currentTarget.getAttribute('data-action-url');
-            var role = event.currentTarget.getAttribute('data-bs-role');
-
-            if (actionType === 'enable' || actionType === 'disable') {
-                modalTitle.textContent = actionType === "enable" ? "Enable " +role+" - " + empName : "Disable " +role+ "- " + empName;
-                modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})`;
-                modalSubmit.href = actionUrl;
-                // Hide the form for non-"Allocate" actions
-                modalForm.style.display = 'none';
-            } else if (actionType === 'allocate') {
-                document.getElementById('footer_div').style.display = 'none';
-                modalTitle.textContent = "Allocate store for - " + empName;
-                document.getElementById('emp_id').value = empId;
-                modalSubmit.href = actionUrl;
-                // Show the form for "Allocate" action
-                modalForm.style.display = 'block';
-            } else if (actionType === 'unallocate') {
-                modalTitle.textContent = "Unallocate Store - " + empName;
-                modalContent.innerHTML = `Are you sure you want to unallocate the store <br><strong>${event.currentTarget.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong> (ID: ${empId})?`;
-                modalSubmit.href = actionUrl;
-                // Hide the form for "Unallocate" action
-                modalForm.style.display = 'none';
-            }
-
-             // Use data-bs-toggle and data-bs-target attributes to trigger the modal
-            var targetModal = event.currentTarget.getAttribute('data-bs-target');
-            var backdrop = event.currentTarget.getAttribute('data-bs-backdrop');
-            modal.setAttribute('data-bs-target', targetModal);
-            modal.setAttribute('data-bs-backdrop', backdrop);
-        });
-    });
-});
-</script>
 <script src="{% static 'js/csvExport.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
+<script src="{% static 'js/allocate_store_modals.js' %}"></script>
 
 </body>
 
