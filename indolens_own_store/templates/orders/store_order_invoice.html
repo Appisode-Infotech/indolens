@@ -58,44 +58,22 @@
     </script>
     <style>
     @media print {
-         body, html {
-        width: auto;
-    }
-
-@media print {
-    table {
-        page-break-inside: avoid;
-    }
-}
-
-@media print {
-    body {
-        width: 100%;
-    }
-}
-
-@media print {
-    .btn {
-        display: inline !important;
-    }
-}
-
-        .btn {
-            display: none;
-        }
-        table {
-            width: 100%;
+        /* Adjust the alignment of order-related information */
+        .order-info, .address-info {
+            display: flex;
+            flex-wrap: wrap;
         }
 
-        th, td {
-            padding: 8px; /* Adjust padding as needed */
-        }
-        /* Show all table columns when printing */
-        @page {
-            size: auto;
-            margin: 0;
+        .order-info > div, .address-info > div {
+            width: 50%;
         }
 
+        /* Ensure content fits within the printable area */
+        .container-small {
+            max-width: 100%;
+        }
+
+        /* Additional styles for preventing page breaks inside elements */
         table {
             page-break-inside: auto;
         }
@@ -105,7 +83,26 @@
             page-break-after: auto;
         }
 
-    </style>
+        /* Ensure buttons are visible when printing */
+        .btn {
+            display: inline !important;
+        }
+
+        /* Reset default margin and padding for body and html */
+        body, html {
+            width: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Show all table columns when printing */
+        @page {
+            size: auto;
+            margin: 0;
+        }
+    }
+</style>
+
 </head>
 
 
