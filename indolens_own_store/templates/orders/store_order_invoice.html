@@ -56,52 +56,38 @@
       }
 
     </script>
-    <style>
-    @media print {
-        /* Adjust the alignment of order-related information */
-        .order-info, .address-info {
-            display: flex;
-            flex-wrap: wrap;
-        }
-
-        .order-info > div, .address-info > div {
-            width: 50%;
-        }
-
-        /* Ensure content fits within the printable area */
-        .container-small {
-            max-width: 100%;
-        }
-
-        /* Additional styles for preventing page breaks inside elements */
-        table {
-            page-break-inside: auto;
-        }
-
-        tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
-        }
-
-        /* Ensure buttons are visible when printing */
-        .btn {
-            display: inline !important;
-        }
-
-        /* Reset default margin and padding for body and html */
-        body, html {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        /* Show all table columns when printing */
-        @page {
-            size: auto;
-            margin: 0;
-        }
+   <style>
+       @media print {
+    /* Add or modify styles as needed */
+    body, html {
+        width: 100%;
+        margin: 0;
+        padding: 0;
     }
-</style>
+
+    /* Additional styles for preventing page breaks inside elements */
+    .container-small {
+        max-width: 100%;
+    }
+
+    table {
+        page-break-inside: auto;
+    }
+
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+
+    /* Ensure buttons are visible when printing */
+    .btn {
+        display: inline !important;
+    }
+
+    /* ... (other print styles) */
+}
+
+   </style>
 
 </head>
 
