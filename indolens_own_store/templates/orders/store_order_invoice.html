@@ -61,6 +61,7 @@
 
 
 
+
     </script>
 
     <style>
@@ -150,6 +151,7 @@ body {
 
 
 
+
     </style>
 </head>
 
@@ -172,7 +174,7 @@ body {
                         <h2 class="mt-2">Indolens</h2>
                     </div>
 
-                    {% if invoice_details|length == 0 %}
+                    {% if invoice_details.invoice_number|length != 0 %}
                     <h2 class="mb-0">Draft Invoice</h2>
                     {% else %}
                     <h2 class="mb-0">Invoice</h2>
@@ -383,6 +385,7 @@ body {
 
 
 
+
 </script>
 <script>
     const singleDigits = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
@@ -444,6 +447,7 @@ body {
     const totalWords = numberToWords(grandTotalInNumber);
     console.log(totalWords):
     document.getElementById('totalWords').innerText = totalWords + ' Rupees';
+
 
 
 
