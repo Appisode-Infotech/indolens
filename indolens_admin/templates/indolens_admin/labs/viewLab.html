@@ -92,17 +92,6 @@
                     <h5 class="text-700 fw-semi-bold mb-3 mt-3"><b>Address: </b>{{lab.lab_address}}</h5>
                     <h5 class="text-700 fw-semi-bold">Here’s what’s going on at this lab right now</h5>
                 </div>
-
-
-                <div class="col-md-3 col-auto">
-                    <div class="flatpickr-input-container">
-                        <input class="form-control ps-6 datetimepicker"
-                               data-options='{"dateFormat":"M j, Y","disableMobile":true,"defaultDate":"Mar 1, 2022"}'
-                               id="datepicker"
-                               type="text"/><span
-                            class="uil uil-calendar-alt flatpickr-icon text-700"></span>
-                    </div>
-                </div>
             </div>
 
             <div class="col-12 col-xxl-2">
@@ -230,9 +219,10 @@
                         <li class="nav-item"><a class="nav-link filter" href="#filter-1">New</a></li>
                         <li class="nav-item"><a class="nav-link filter" href="#filter-2">Processing</a></li>
                         <li class="nav-item"><a class="nav-link filter" href="#filter-3">Ready</a></li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-4">Dispatched</a></li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-5">Delivered</a></li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-6">Cancelled</a></li>
+                        <li class="nav-item"><a class="nav-link filter" href="#filter-4">Dispatched </a></li>
+                        <li class="nav-item"><a class="nav-link filter" href="#filter-5">Delivered Store</a></li>
+                        <li class="nav-item"><a class="nav-link filter" href="#filter-6">Delivered Customer</a></li>
+                        <li class="nav-item"><a class="nav-link filter" href="#filter-7">Cancelled</a></li>
                     </ul>
                     <div data-list='{"valueNames":["order","total","customer","payment_status","fulfilment_status","delivery_type","date"],"page":10,"pagination":true}'
                          id="orderTable">
