@@ -334,7 +334,8 @@
                                     </td>
 
                                     <td class="product align-middle ps-4"><a
-                                            class="fw-semi-bold line-clamp-3 mb-0" href="#!"> {{stock.product_name}}</a>
+                                            class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_products' stock.product_id %}">
+                                        {{stock.product_name}}</a>
                                     </td>
 
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">

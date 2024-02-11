@@ -9,11 +9,11 @@ from indolens_lab.lab_models.response_model.lab_job_resp_model import get_lab_jo
 
 def get_lab_jobs(labId, status):
     status_conditions = {
-        "All": "IN (1,2,3,4)",
+        "All": "IN (1,2,3,4,5,6,7)",
         "New": "= 1",
         "Processing": "= 2",
         "Ready": "= 3",
-        "Dispatched": "= 4",
+        "Dispatched": "= 4,5,6,7",
     }
     status_condition = status_conditions[status]
     try:
