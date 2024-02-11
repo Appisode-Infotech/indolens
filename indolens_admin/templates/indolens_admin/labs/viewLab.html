@@ -171,10 +171,10 @@
                                     class="fs-4 lh-1 uil uil-books text-primary-500"></span>
                                 <div class="ms-2">
                                     <div class="d-flex align-items-end">
-                                        <h2 class="mb-0 me-2">1,232</h2><span
+                                        <h2 class="mb-0 me-2">{{lab_stats.total_jobs}}</h2><span
                                             class="fs-1 fw-semi-bold text-900">Jobs</span>
                                     </div>
-                                    <p class="text-800 fs--1 mb-0">Jobs completed</p>
+                                    <p class="text-800 fs--1 mb-0">Total Jobs</p>
                                 </div>
                             </div>
                         </div>
@@ -183,7 +183,19 @@
                                     class="fs-4 lh-1 uil uil-users-alt text-success-500"></span>
                                 <div class="ms-2">
                                     <div class="d-flex align-items-end">
-                                        <h2 class="mb-0 me-2">12</h2><span
+                                        <h2 class="mb-0 me-2">{{lab_stats.new_jobs}}</h2><span
+                                            class="fs-1 fw-semi-bold text-900">New</span>
+                                    </div>
+                                    <p class="text-800 fs--1 mb-0">New Jobs</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                            <div class="d-flex align-items-center"><span
+                                    class="fs-4 lh-1 uil uil-users-alt text-success-500"></span>
+                                <div class="ms-2">
+                                    <div class="d-flex align-items-end">
+                                        <h2 class="mb-0 me-2">{{lab_stats.active_jobs}}</h2><span
                                             class="fs-1 fw-semi-bold text-900">Active</span>
                                     </div>
                                     <p class="text-800 fs--1 mb-0">Active Jobs</p>
@@ -195,10 +207,10 @@
                                     class="fs-4 lh-1 uil uil-invoice text-warning-500"></span>
                                 <div class="ms-2">
                                     <div class="d-flex align-items-end">
-                                        <h2 class="mb-0 me-2">23</h2><span
+                                        <h2 class="mb-0 me-2">{{lab_stats.completed_jobs}}</h2><span
                                             class="fs-1 fw-semi-bold text-900">Closed Jobs</span>
                                     </div>
-                                    <p class="text-800 fs--1 mb-0">Finished till now</p>
+                                    <p class="text-800 fs--1 mb-0">Completed Jobs</p>
                                 </div>
                             </div>
                         </div>
@@ -319,8 +331,11 @@
                                                     class="badge-label">DISPATCHED</span></span>
                                             {% elif job.order_status == 5 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                    class="badge-label">DELIVERED</span></span>
+                                                    class="badge-label">DELIVERED STORE</span></span>
                                             {% elif job.order_status == 6 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                    class="badge-label">DELIVERED CUSTOMER</span></span>
+                                            {% elif job.order_status == 7 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
                                                     class="badge-label">CANCELLED</span></span>
                                             {% endif %}
