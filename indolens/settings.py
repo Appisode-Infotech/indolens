@@ -88,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'indolens_db',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'indolensadmin',
+        'PASSWORD': 'Indolens@#1234',
         'HOST': 'localhost',
         'PORT': '3306',
     }
