@@ -45,6 +45,47 @@
     <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
 
+    <style>
+     table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th, td {
+      border: 1px solid #dddddd;
+      text-align: left;
+      padding: 8px;
+    }
+
+    th {
+      background-color: #f2f2f2;
+    }
+
+    #preview {
+      margin-top: 20px;
+    }
+
+        /* Add some basic styling to the table */
+.product-category-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 10px; /* Add some margin to separate tables */
+}
+
+/* Style for table header cells */
+.product-category-table th {
+    border: 1px solid #ddd;
+    padding: 8px;
+    text-align: left;
+}
+
+/* Style for table data cells */
+.product-category-table td {
+    border: 1px solid #ddd;
+    padding: 8px;
+}
+
+    </style>
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
       if (isRTL) {
@@ -112,8 +153,9 @@
                 {% csrf_token %}
 
                 <input type="hidden" name="cartData">
-                <input type="hidden" name="customerData">
-                <input type="hidden" name="billingDetailsData">
+                <input type="hidden"  name="customerData">
+                <input type="hidden"  name="billingDetailsData">
+                <input type="hidden"  id="linkedData" name="linkedData">
             </form>
             <div class="col-12 col-xxl-6">
                 <div class="card shadow-none border border-300 my-4" data-component-card="data-component-card">
@@ -396,8 +438,10 @@
 
                                                 </div>
 
+                                                                <div id="category1Container"></div>
 
-                                                    <div class="mb2 col-12">
+
+                                                    <div class="mb2 col-12 mt-3">
                                                        <h5 class="mb-3">Sale notes</h5>
 
                                                            <textarea
@@ -413,83 +457,11 @@
                                              id="bootstrap-wizard-validation-tab4">
                                             <h5 class="mb-3">Draft Invoice</h5>
                                             <!--                                            customer details start-->
-                                            <div class="bg-soft p-4 mb-4 rounded-2">
-                                                <div class="row g-4">
-                                                    <div class="col-12 col-lg-6">
-                                                        <div class="row g-4 g-lg-2">
-                                                            <div class="col-12 col-sm-6 col-lg-12">
-                                                                <div class="row align-items-center g-0">
-                                                                    <div class="d-flex align-items-center"><img
-                                                                            alt="phoenix"
-                                                                            src="{% static 'img/icons/logo.png' %}"
-                                                                            width="50"/>
+                                            <div id="preview"></div>
 
-                                                                        <p class="logo-text ms-2 d-none d-sm-block">
-                                                                            Indolens</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="col-12 col-sm-6 col-lg-12">
-                                                                <div class="row align-items-center g-0">
-                                                                    <div class="col-auto col-lg-6 col-xl-5">
-                                                                        <h6 class="me-3">Invoice Date :</h6>
-                                                                    </div>
-                                                                    <div class="col-auto col-lg-6 col-xl-7">
-                                                                        <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                                            19/06/2023</p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row align-items-center g-0">
-                                                                    <div class="col-auto col-lg-6 col-xl-5">
-                                                                        <h6 class="me-3">Email :</h6>
-                                                                    </div>
-                                                                    <div class="col-auto col-lg-6 col-xl-7">
-                                                                        <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                                            indolensstore@indlens.com</p>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="row align-items-center g-0">
-                                                                    <div class="col-auto col-lg-6 col-xl-5">
-                                                                        <h6 class="me-3">Phone :</h6>
-                                                                    </div>
-                                                                    <div class="col-auto col-lg-6 col-xl-7">
-                                                                        <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                                            1234567890</p>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-12 col-sm-6 col-lg-6">
-                                                        <div class="row g-4 gy-lg-5">
-                                                            <div class="col-12 col-lg-8">
-                                                                <h6 class="mb-2 me-3">Draft invoice by :</h6>
-                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                                    store name<br/>Store Address Goes Here
-                                                                </p>
-                                                            </div>
-                                                            <div class="col-12 col-lg-4">
-                                                                <h6 class="mb-2"> PAN No :</h6>
-                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                                    XVCJ9637820</p>
-                                                            </div>
-                                                            <div class="col-12 col-lg-4">
-                                                                <h6 class="mb-2"> GST Reg No :</h6>
-                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                                    IX9878123TC</p>
-                                                            </div>
-                                                            <div class="col-12 col-lg-4">
-                                                                <h6 class="mb-2"> Order Date :</h6>
-                                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                                    19/06/2023</p>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
                                             <!--                                            customer details end-->
 
-                                            <button id="confirmSale">Confirm Sale</button>
+                                            <button class="mt-3 btn btn-primary w-100 mb-3" id="confirmSale">Confirm Sale</button>
 
                                         </div>
 
@@ -615,6 +587,7 @@ function addLensContainer() {
         </select>
         <div class="custom-error" style="color: red;"></div>
     </div>
+    <input name ="product_category[${productCardCount}]" id="product_category" type="hidden"/>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
             <h5 class="mb-3">Lens Type</h5>
@@ -671,6 +644,12 @@ function addLensContainer() {
         <input class="form-control"
                    name="product_category_id[${productCardCount}]"
                    placeholder="Category"
+                   required="required"
+                   hidden
+                   type="text" value="" readonly/>
+        <input class="form-control"
+                   name="product_name[${productCardCount}]"
+                   placeholder="Name"
                    required="required"
                    hidden
                    type="text" value="" readonly/>
@@ -949,6 +928,13 @@ function addStockContactLensContainer() {
                    hidden
 
                    type="text" value="" readonly/>
+        <input class="form-control"
+                   name="product_name[${productCardCount}]"
+                   placeholder="Name"
+                   required="required"
+                   hidden
+                   type="text" value="" readonly/>
+
         <div class="mb2 col-4">
             <h5 class="mb-3">Contact Lens Physicality</h5>
             <input class="form-control"
@@ -1174,6 +1160,19 @@ function addRxContactLensContainer() {
                    required="required"
                    hidden
 
+                   type="text" value="" readonly/>
+        <input class="form-control"
+                   name="product_category[${productCardCount}]"
+                   placeholder="Category"
+                   required="required"
+                   hidden
+
+                   type="text" value="" readonly/>
+        <input class="form-control"
+                   name="product_name[${productCardCount}]"
+                   placeholder="Name"
+                   required="required"
+                   hidden
                    type="text" value="" readonly/>
         <div class="mb2 col-4">
             <h5 class="mb-3">Contact Lens Physicality</h5>
@@ -1408,6 +1407,12 @@ function addOtherProductsContainer() {
                    placeholder="Category"
                    hidden
                    required="required"
+                   type="text" value="" readonly/>
+        <input class="form-control"
+                   name="product_name[${productCardCount}]"
+                   placeholder="Name"
+                   required="required"
+                   hidden
                    type="text" value="" readonly/>
         <div class="mb2 col-4">
             <h5 class="mb-3">Product Brand</h5>
@@ -1646,6 +1651,7 @@ function updateLensProductFields(selectElement, cardIndex) {
     let selectedProduct = lens_list.find(product => product.product_id == selectElement.value);
     let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
     let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
+    let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
     let stockTypeField = document.querySelector(`[name='stock_type[${cardIndex}]']`);
     let productLensTypeField = document.querySelector(`[name='lens_type[${cardIndex}]']`);
     let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
@@ -1659,6 +1665,7 @@ function updateLensProductFields(selectElement, cardIndex) {
     let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
     let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
     let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
+    let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
 
     let stockPowerCard = document.getElementById('stock_power_card[' + cardIndex + ']');
     let rxPowerCard = document.getElementById('rx_power_card[' + cardIndex + ']');
@@ -1672,6 +1679,8 @@ function updateLensProductFields(selectElement, cardIndex) {
     productUnitTypeField.value = selectedProduct?.unit_name ?? '';
     stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
     productCategoryIdField.value = selectedProduct?.category_id ?? '';
+    productNameField.value = selectedProduct?.product_name ?? '';
+    productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
 
     if (selectedProduct.discount > 0) {
@@ -1761,6 +1770,8 @@ function updateContactLensProductFields(selectElement, cardIndex) {
     let clCylField = document.querySelector(`[name='cl_cylinder[${cardIndex}]']`);
     let clAxisField = document.querySelector(`[name='cl_axis[${cardIndex}]']`);
     let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
+    let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
+    let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
 
     lensTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
     lensPhysicalityField.value = selectedProduct?.power_attribute.contact_lens_type ?? '';
@@ -1771,6 +1782,8 @@ function updateContactLensProductFields(selectElement, cardIndex) {
     productUnitPriceField.value = selectedProduct?.sale_price ?? '';
     productUnitTypeField.value = selectedProduct?.unit_name ?? '';
     productCategoryIdField.value = selectedProduct?.category_id ?? '';
+    productNameField.value = selectedProduct?.product_name ?? '';
+    productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
 
     clPowerField.value = selectedProduct?.power_attribute.power ?? '';
@@ -1840,6 +1853,8 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
     let clCylField = document.querySelector(`[name='cl_cylinder[${cardIndex}]']`);
     let clAxisField = document.querySelector(`[name='cl_axis[${cardIndex}]']`);
     let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
+    let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
+    let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
 
     stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
     lensPhysicalityField.value = selectedProduct?.power_attribute.contact_lens_type ?? '';
@@ -1850,6 +1865,8 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
     productUnitPriceField.value = selectedProduct?.sale_price ?? '';
     productUnitTypeField.value = selectedProduct?.unit_name ?? '';
     productCategoryIdField.value = selectedProduct?.category_id ?? '';
+    productNameField.value = selectedProduct?.product_name ?? '';
+    productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
 
     if (selectedProduct.discount > 0) {
@@ -1906,6 +1923,7 @@ function updateOtherProductFields(selectElement, cardIndex) {
     let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
     let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
     let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
+    let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
 
     productCategoryField.value = selectedProduct?.category_name ?? '';
     productHsnField.value = selectedProduct?.hsn ?? '';
@@ -1914,6 +1932,7 @@ function updateOtherProductFields(selectElement, cardIndex) {
     productUnitPriceField.value = selectedProduct?.sale_price ?? '';
     productUnitTypeField.value = selectedProduct?.unit_name ?? '';
     productCategoryIdField.value = selectedProduct?.category_id ?? '';
+    productNameField.value = selectedProduct?.product_name ?? '';
     productPurchaseQtyField.value = '';
 
 
@@ -1988,29 +2007,212 @@ function getProductsData() {
 
         let cartDataField = document.querySelector(`[name='cartData']`);
         // Now, productsArray contains the data of form elements inside all product_widgets
-        console.log(productsArray);
         let jsonData = JSON.stringify(productsArray);
         cartDataField.value = jsonData;
 
 
         const totalSum = productsArray.reduce((sum, product) => {
-    for (const key in product) {
-        if (key.startsWith("product_total[") && key.endsWith("]")) {
-            const productTotal = parseFloat(product[key]);
-            sum += isNaN(productTotal) ? 0 : productTotal;
-        }
-    }
-    return sum;
-}, 0);
+            for (const key in product) {
+                if (key.startsWith("product_total[") && key.endsWith("]")) {
+                    const productTotal = parseFloat(product[key]);
+                    sum += isNaN(productTotal) ? 0 : productTotal;
+                }
+            }
+            return sum;
+        }, 0);
 
-   // Display total sum in the <p> element with id 'totalSum'
+        // Display total sum in the <p> element with id 'totalSum'
         document.getElementById('totalSum').textContent = "Billing amount: " + totalSum.toFixed(2);
 
         // Display total number of products in the <p> element with id 'totalProducts'
         document.getElementById('totalProducts').textContent = "Total Products: " + productsArray.length;
 
+
+        //for generating preview table
+
+
+        var tableHtml = '<table>';
+        tableHtml += '<thead><tr><th>Sl. No</th><th>Product Name</th><th>Category</th><th>Purchase Qty</th><th>Product Total</th></tr></thead>';
+        tableHtml += '<tbody>';
+
+        var grandTotal = 0;
+
+        productsArray.forEach(function (product, index) {
+            var slNo = index + 1;
+
+            // Find properties that start with 'product_name'
+            var productNameKey = Object.keys(product).find(key => key.startsWith('product_name['));
+            var categoryKey = Object.keys(product).find(key => key.startsWith('product_category['));
+            var purchaseQtyKey = Object.keys(product).find(key => key.startsWith('purchase_qty['));
+            var productTotalKey = Object.keys(product).find(key => key.startsWith('product_total['));
+
+            var productName = product[productNameKey];
+            var category = product[categoryKey];
+            var purchaseQty = product[purchaseQtyKey];
+            var productTotal = parseFloat(product[productTotalKey]);
+            grandTotal += productTotal;
+
+            tableHtml += '<tr>';
+            tableHtml += '<td>' + slNo + '</td>';
+            tableHtml += '<td>' + productName + '</td>';
+            tableHtml += '<td>' + category + '</td>';
+            tableHtml += '<td>' + purchaseQty + '</td>';
+            tableHtml += '<td>' + productTotal.toFixed(2) + '</td>';
+            tableHtml += '</tr>';
+        });
+
+        tableHtml += '</tbody>';
+        tableHtml += '<tfoot><tr><td colspan="4">Grand Total</td><td>' + grandTotal.toFixed(2) + '</td></tr></tfoot>';
+        tableHtml += '</table>';
+
+        document.getElementById('preview').innerHTML = tableHtml;
+
+
+
+        // for generating linked items ui
+        let category1Products = [];
+        let category2Products = [];
+
+        productsArray.forEach(product => {
+            // Extracting the keys dynamically
+            const keys = Object.keys(product);
+
+            // Check if there is a key starting with "product_category_id"
+            const categoryIdKey = keys.find(key => key.startsWith("product_category_id"));
+
+            // If the key exists and the value is "1" or "2", categorize the product
+            if (categoryIdKey && (product[categoryIdKey] === "1" || product[categoryIdKey] === "2")) {
+                if (product[categoryIdKey] === "1") {
+                    category1Products.push(product);
+                } else if (product[categoryIdKey] === "2") {
+                    category2Products.push(product);
+                }
+            }
+        });
+        var category1Container = document.getElementById('category1Container');
+        var productCategoryDiv = document.createElement('div');
+        productCategoryDiv.className = 'product-category';
+
+        productCategoryDiv.innerHTML = '';
+        category1Container.innerHTML = '';
+        var heading = document.createElement('h2');
+        heading.textContent = 'Link items';
+        category1Container.appendChild(heading);
+        // Display the separated lists
+        // console.log('Category 1 Products:', category1Products);
+        // console.log('Category 2 Products:', category2Products);
+
+
+
+        category1Products.forEach((product, index) => {
+            const keys = Object.keys(product);
+            const purchaseQtyKey = keys.find(key => key.startsWith("purchase_qty"));
+            const productNameKey = keys.find(key => key.startsWith("product_name"));
+
+            // Create a table for each product category
+            var table = document.createElement('table');
+            table.className = 'product-category-table';
+
+            // Create the table header
+            var headerRow = table.insertRow();
+            var slnoHeader = headerRow.insertCell(0);
+            slnoHeader.textContent = 'Sl. No';
+
+            var frameHeader = headerRow.insertCell(1);
+            frameHeader.textContent = 'Frame';
+
+            var optionHeader = headerRow.insertCell(2);
+            optionHeader.textContent = 'Options';
+
+            for (let i = 1; i <= parseInt(product[purchaseQtyKey]); i++) {
+                // Create a row for each frame
+                var row = table.insertRow();
+
+                // Sl. No column
+                var slnoCell = row.insertCell(0);
+                slnoCell.textContent = i;
+
+                // Frame column
+                var frameCell = row.insertCell(1);
+                frameCell.textContent = product[productNameKey];
+
+                // Options column
+                var optionCell = row.insertCell(2);
+                optionCell.className = 'linked-item-cell';
+
+                // Create a dropdown for each frame
+                var dropdown = document.createElement('select');
+                dropdown.className = 'form-select linkedItemSelect';
+                dropdown.name = product[productNameKey] + '--' + productNameKey + "--" + product.product;
+
+                // Add an initial option to represent no linked item
+                var noLinkedItemOption = document.createElement('option');
+                noLinkedItemOption.value = '';
+                noLinkedItemOption.textContent = 'No Linked Item';
+                dropdown.appendChild(noLinkedItemOption);
+
+                // Populate the dropdown with options from category2Products
+                category2Products.forEach(category2Product => {
+                    const keys = Object.keys(category2Product);
+                    const purchaseQtyLensKey = keys.find(key => key.startsWith("purchase_qty"));
+                    const productNameLensKey = keys.find(key => key.startsWith("product_name"));
+
+                    for (let j = 1; j <= parseInt(category2Product[purchaseQtyLensKey]); j++) {
+                        var option = document.createElement('option');
+                        option.value = category2Product[productNameLensKey] + "--" + j + "--" + productNameLensKey + "--" + category2Product.product; // Set the actual value based on your data
+                        option.textContent = category2Product[productNameLensKey] + "-" + j; // Set the actual text based on your data
+                        dropdown.appendChild(option);
+                    }
+                });
+                dropdown.addEventListener('change', handleDropdownChange);
+
+                // Append the dropdown to the option cell
+                optionCell.appendChild(dropdown);
+            }
+
+            // Append the table to the productCategoryDiv
+            productCategoryDiv.appendChild(table);
+        });
+
+        function handleDropdownChange(event) {
+            const selectedValue = event.target.value;
+            console.log(selectedValue);
+
+            // Create an array to store the linked items in JSON format
+            const linkJsonList = [];
+
+            // Get all selects with class name 'linkedItemSelect'
+            const linkedItemSelects = document.querySelectorAll('.linkedItemSelect');
+
+            linkedItemSelects.forEach((select, index) => {
+                const [frameName, frameIndexKey, frameId] = select.name.split('--');
+                const [lensName, lensLinkedCount, attachedFrameIndexKey, lensId] = select.value.split('--');
+
+                linkJsonList.push({
+                    "frameName": frameName,
+                    "frameIndexKey": frameIndexKey,
+                    "lensName": lensName,
+                    "lensLinkedCount": lensLinkedCount,
+                    "frameId": frameId,
+                    "lensId": lensId
+                });
+            });
+
+            const jsonString = JSON.stringify(linkJsonList);
+
+            // Set the value of the input field with ID 'linkedData'
+            const linkedDataInput = document.getElementById('linkedData');
+            linkedDataInput.value = jsonString;
+            console.log(linkJsonList);
+        }
+
+
+        // Append the productCategoryDiv to the main container
+        category1Container.appendChild(productCategoryDiv);
     }
 }
+
+
 </script>
 </body>
 
