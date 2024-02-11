@@ -2057,12 +2057,12 @@ function getProductsData() {
             tableHtml += '<td>' + productName + '</td>';
             tableHtml += '<td>' + category + '</td>';
             tableHtml += '<td>' + purchaseQty + '</td>';
-            tableHtml += '<td>' + productTotal.toFixed(2) + '</td>';
+            tableHtml += '<td>₹' + productTotal.toFixed(2) + '</td>';
             tableHtml += '</tr>';
         });
 
         tableHtml += '</tbody>';
-        tableHtml += '<tfoot><tr><td colspan="4">Grand Total</td><td>' + grandTotal.toFixed(2) + '</td></tr></tfoot>';
+        tableHtml += '<tfoot><tr><td colspan="4">Grand Total</td><td>₹' + grandTotal.toFixed(2) + '</td></tr></tfoot>';
         tableHtml += '</table>';
 
         document.getElementById('preview').innerHTML = tableHtml;
