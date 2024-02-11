@@ -2,7 +2,8 @@ from django.shortcuts import render, redirect
 
 from indolens_admin.admin_controllers import own_store_controller, \
     lab_technician_controller, lab_controller, \
-    stores_inventory_controller, central_inventory_controller, customers_controller, area_head_controller
+    stores_inventory_controller, central_inventory_controller, customers_controller, area_head_controller, \
+    orders_controller
 from indolens_area_head.area_head_controller import area_head_auth_controller, stores_controller, \
     area_stores_inventory_controller, area_head_customers_controller, store_employee_controller, \
     area_head_store_orders_controller, area_head_dashboard_controller
@@ -70,7 +71,8 @@ def resetPassword(request, code):
 
 
 def getAreaHeadAssignedStores(request):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get('is_area_head_logged_in') is True:
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
+            'is_area_head_logged_in') is True:
         assigned_store = area_head_auth_controller.get_area_head_assigned_store(request.session.get('id'))
         if assigned_store == 0:
             request.session.clear()
@@ -90,7 +92,7 @@ def dashboard(request):
         new_order, status_code = area_head_dashboard_controller.get_order_stats('New', 1)
         delivered_orders, status_code = area_head_dashboard_controller.get_order_stats('Completed', 1)
         store_sales, status_code = area_head_dashboard_controller.get_sales_stats(1)
-        orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All',assigned_sores)
+        orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All', assigned_sores)
         return render(request, 'dashboard.html', {"orders_list": orders_list['dash_orders_list']})
     else:
         return redirect('login_area_head')
@@ -122,7 +124,8 @@ def viewOwnStore(request, ownStoreId):
                       {"store_data": response['own_stores'], "products_list": products_list['products_list'],
                        "total_employee_count": store_stats['total_employee_count'],
                        "total_customer_count": store_stats['total_customer_count'],
-                       "orders_list": orders_list['orders_list']})
+                       "orders_list": orders_list['orders_list'], "sales_data": orders_list['orders_list'],
+                       "revenue_generated": sum(item['total_cost'] for item in orders_list['orders_list']), })
     else:
         return redirect('login_area_head')
 
@@ -153,12 +156,14 @@ def viewEmployee(request, employeeId):
 
 
 def viewAreaHeadProfile(request, areaHeadId):
-    if request.session.get('is_area_head_logged_in') is not None and request.session.get('is_area_head_logged_in') is True:
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
+            'is_area_head_logged_in') is True:
         response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
         return render(request, 'areaHead/viewAreaHeadProfile.html',
                       {"area_head": response['area_head']})
     else:
         return redirect('login_area_head')
+
 
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 

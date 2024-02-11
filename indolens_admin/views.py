@@ -141,7 +141,6 @@ def viewOwnStore(request, ownStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, resp_status_code = own_store_controller.get_own_store_by_id(ownStoreId)
         products_list, prod_status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
-        print(products_list)
         store_stats, store_stats_status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
         sales_data, sale_status_code = orders_controller.get_all_store_orders(ownStoreId, 1)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(ownStoreId, 1)

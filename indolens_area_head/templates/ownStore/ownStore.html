@@ -83,19 +83,76 @@
             <div class="row gy-3 mb-6 justify-content-between">
                 <div class="col-md-9 col-auto">
                     <h2 class="mb-2 text-1100">{{store.store_display_name}} - {{store.store_name}}</h2>
-                    <h5 class="text-700 fw-semi-bold">Here’s what’s going on at this store right now</h5>
+                    <h5 class="text-700 fw-semi-bold mb-3 mt-3"><b>Address: </b>{{store.store_address}}</h5>
                 </div>
-                <div class="col-md-3 col-auto">
-                    <div class="flatpickr-input-container">
-                        <input class="form-control ps-6 datetimepicker"
-                               data-options='{"dateFormat":"M j, Y","disableMobile":true,"defaultDate":"Mar 1, 2022"}'
-                               id="datepicker"
-                               type="text"/><span
-                            class="uil uil-calendar-alt flatpickr-icon text-700"></span>
+<!--                <div class="col-md-3 col-auto">-->
+<!--                    <div class="flatpickr-input-container">-->
+<!--                        <input class="form-control ps-6 datetimepicker"-->
+<!--                               data-options='{"dateFormat":"M j, Y","disableMobile":true,"defaultDate":"Mar 1, 2022"}'-->
+<!--                               id="datepicker"-->
+<!--                               type="text"/><span-->
+<!--                            class="uil uil-calendar-alt flatpickr-icon text-700"></span>-->
+<!--                    </div>-->
+<!--                </div>-->
+            </div>
+            <div class="col-12 col-xxl-2">
+                <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                        <span
+                                                class="fs-1 fw-semi-bold text-900">{{store.store_gst}}</span>
+                                </div>
+                                <p class="text-800 fs--1 mb-0"><b>Store GSTIN</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">
+                                        {{store.creator}}</a>
+                                </div>
+                                <p class="text-800 fs--1 mb-0"><b>Created By </b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <span class="fs-1 fw-semi-bold text-900">{{store.created_on}}</span>
+                                </div>
+                                <p class="text-800 fs--1 mb-0"><b>Created On</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <a href="{% url 'view_sub_admin' 1 %}"
+                                       class="fs-1 fw-semi-bold ">{{store.updater}}</a>
+                                </div>
+                                <p class="text-800 fs--1 mb-0"><b>Updated By</b></p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <span class="fs-1 fw-semi-bold text-900">{{store.last_updated_on}}</span>
+                                </div>
+                                <p class="text-800 fs--1 mb-0"><b>Updated On</b></p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-            <div class="row mb-3 gy-6">
+            <div class="row mb-3 mt-3 gy-6">
                 <div class="col-12 col-xxl-2">
                     <div class="row align-items-center g-3 g-xxl-0 h-100 align-content-between">
                         <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
@@ -103,7 +160,7 @@
                                     class="fs-4 lh-1 uil uil-books text-primary-500"></span>
                                 <div class="ms-2">
                                     <div class="d-flex align-items-end">
-                                        <h2 class="mb-0 me-2">1,232</h2><span
+                                        <h2 class="mb-0 me-2">{{sales_data|length}}</h2><span
                                             class="fs-1 fw-semi-bold text-900">Sales</span>
                                     </div>
                                     <p class="text-800 fs--1 mb-0">Sales completed</p>
@@ -139,7 +196,7 @@
                                     class="fs-4 lh-1 uil uil-refresh text-danger-500"></span>
                                 <div class="ms-2">
                                     <div class="d-flex align-items-end">
-                                        <h2 class="mb-0 me-2">₹3,00,012</h2><span
+                                        <h2 class="mb-0 me-2">₹{{revenue_generated}}</h2><span
                                             class="fs-1 fw-semi-bold text-900"></span>
                                     </div>
                                     <p class="text-800 fs--1 mb-0">Revenue generated</p>
