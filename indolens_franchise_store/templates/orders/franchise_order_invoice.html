@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens {{order_detail.0.order_id}}</title>
+    <title>Indolens-{{order_detail.0.order_id}}</title>
     {% load static %}
 
 
@@ -27,6 +27,8 @@
     <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
     <script src="{% static 'js/config.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -35,10 +37,10 @@
           rel="stylesheet">
     <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
     <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
-    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+    <!--    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">-->
+    <!--    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">-->
+    <!--    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">-->
+    <!--    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">-->
 
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -55,39 +57,100 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
+
+
+
+
+
     </script>
+
     <style>
-    @media print {
-        body, html {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
+        /* Reset some default styles */
+body, h1, h2, h3, p, table {
+    margin: 0;
+    padding: 0;
+}
 
-        .btn {
-            display: none;
-        }
-        table {
-            width: 100%;
-        }
+body {
+    font-family: 'Arial', sans-serif;
+}
 
-        th, td {
-            padding: 8px; /* Adjust padding as needed */
-        }
-        /* Show all table columns when printing */
-        @page {
-            size: auto;
-            margin: 0;
-        }
+/* Main container styling */
+.main {
+    background-color: #f4f4f4;
+}
 
-        table {
-            page-break-inside: auto;
-        }
+/* Header section styling */
+.content {
+    padding: 20px;
+}
 
-        tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
-        }
+/* Invoice details section styling */
+.container-small {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+/* Button styling */
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Authorized Signatory section styling */
+.text-end h4 {
+    margin-top: 20px;
+}
+
+/* Terms & Conditions section styling */
+.py-4 p {
+    line-height: 1.5;
+}
+
+/* Footer styling */
+.d-flex.justify-content-center.mb-3 {
+    margin-top: 20px;
+}
+
+/* Adjustments for responsiveness */
+@media (max-width: 768px) {
+    .container-small {
+        padding: 15px;
+    }
+
+    .table th, .table td {
+        padding: 8px;
+    }
+}
+
+
+
+
+
 
     </style>
 </head>
@@ -103,225 +166,182 @@
 
         <div class="content">
 
-            <section class="pt-5 pb-9 bg-white border-top border-300">
 
-                <div class="container-small">
-                    <div class="d-flex justify-content-between align-items-end mb-4">
-                        <h2 class="mb-0">Invoice</h2>
-                        <div>
-                            <button class="btn btn-phoenix-secondary" onclick="window.print()"><span
-                                    class="fa-solid fa-print me-sm-2"></span><span class="d-none d-sm-inline-block">Print</span>
-                            </button>
-                        </div>
-                    </div>
-                    <div class="bg-soft p-4 mb-4 rounded-2">
-                        <div class="row g-4">
-                            <div class="col-12 col-lg-3">
-                                <div class="row g-4 g-lg-2">
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="mb-0 me-3">Invoice No :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0">#FLR978282</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="me-3">Invoice Date :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0" id="invoiceDate"></p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="me-3">Order No :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{order_detail.0.order_id}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="me-3">GST Reg No :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{store_data.0.store_gst}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="me-3">Order Date :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{order_detail.0.created_on}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-lg-5">
-                                <div class="d-flex justify-content-center">
-                                    <div class="col-12 col-lg-4">
-                                        <h6 class="mb-2 me-3">Sold by :</h6>
-                                        <p class="fs--1 text-800 fw-semi-bold mb-0">{{order_detail.0.creator_name}}<br/>
-                                            {{store_data.0.store_address}} </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="row g-4">
-                                    <div class="col-12 col-lg-6">
-                                        <h6 class="mb-2"> Billing Address :</h6>
-                                        <div class="fs--1 text-800 fw-semi-bold mb-0">
-                                            <p class="mb-2">{{order_detail.0.customer_name}}</p>
-                                            <div style="max-width: 200px;">
-                                                <p class="mb-2">{{order_detail.0.address}}</p>
-                                            </div>
-                                            <p class="mb-2">{{order_detail.0.email}}</p>
-                                            <p class="mb-0">{{order_detail.0.phone}}</p>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <h6 class="mb-2"> Shipping Address :</h6>
-                                        <div class="fs--1 text-800 fw-semi-bold mb-0">
-                                            <p class="mb-2">{{order_detail.0.customer_name}}</p>
-                                            <div style="max-width: 200px;">
-                                                <p class="mb-2">{{order_detail.0.address}}</p>
-                                            </div>
-                                            <p class="mb-2">{{order_detail.0.email}}</p>
-                                            <p class="mb-0">{{order_detail.0.phone}}</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="px-0">
-                        <div class="table-responsive scrollbar">
-                            <table class="table fs--1 text-900 mb-0">
-                                <thead class="bg-200">
-                                <tr>
-                                    <th scope="col" style="width: 24px;"></th>
-                                    <th scope="col" style="min-width: 60px;">SL NO.</th>
-                                    <th scope="col" style="min-width: 360px;">Products</th>
-                                    <th class="ps-5" scope="col" style="min-width: 150px;">HSN Number</th>
-                                    <th scope="col" style="width: 60px;">Quantity</th>
-                                    <th class="text-end" scope="col" style="width: 80px;">Unit Price</th>
-                                    <th class="text-end" scope="col" style="width: 100px;">Discount</th>
-                                    <th class="text-end" scope="col" style="width: 138px;">Total Price</th>
-                                    <th scope="col" style="width: 24px;"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                {% for order in order_detail %}
-                                <tr>
-                                    <td class="border-0"></td>
-                                    <td class="align-middle">{{ loop.index }}</td>
-                                    <td class="align-middle">
-                                        <p class="line-clamp-1 mb-0 fw-semi-bold">{{order.product_name}}</p>
-                                    </td>
-                                    <td class="align-middle ps-5">
-                                        {% if order.hsn_product == None %}
-                                        N/A
-                                        {% else %}
-                                        {{order.hsn_product}}
-                                        {% endif %}
-                                    </td>
-                                    <td class="align-middle text-700 fw-semi-bold">{{order.purchase_quantity}}</td>
-                                    <td class="align-middle text-end text-1000 fw-semi-bold">
-                                        ₹{{order.unit_sale_price}}
-                                    </td>
-                                    <td class="align-middle text-end fw-semi-bold">{{order.discount_percentage}}%</td>
-                                    <td class="align-middle text-end">₹{{order.product_total_cost}}</td>
-                                    <td class="border-0"></td>
-                                </tr>
-                                {% endfor %}
-
-                                <tr class="bg-200">
-                                    <td></td>
-                                    <td class="align-middle fw-semi-bold" colspan="9">Subtotal</td>
-                                    <td class="align-middle text-end fw-bold">₹ {{order_detail.0.total_cost }}</td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-0"></td>
-                                    <td colspan="6"></td>
-                                    <td class="align-middle fw-bold ps-15" colspan="2">Shipping Cost</td>
-                                    <td class="align-middle text-end fw-semi-bold" colspan="2">0</td>
-                                    <td class="border-0"></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-0"></td>
-                                    <td colspan="6"></td>
-                                    <td class="align-middle fw-bold ps-15" colspan="2">Discount</td>
-                                    <td class="align-middle text-end fw-semi-bold text-danger" colspan="2"
-                                        id="discount_amount"></td>
-                                    <td></td>
-                                </tr>
-                                <tr>
-                                    <td class="border-0"></td>
-                                    <td colspan="6"></td>
-                                    <td class="align-middle fw-bold ps-15" colspan="2">Amount Paid</td>
-                                    <td class="align-middle text-end fw-semi-bold text-danger" colspan="2"
-                                        id="amount_paid">{{order_detail.0.amount_paid}}</td>
-                                    <td></td>
-                                </tr>
-                                <tr class="bg-200">
-                                    <td class="align-middle ps-4 fw-bold text-1000" colspan="3">Balance Amount</td>
-                                    <td id="totalWords" class="align-middle fw-bold text-1000" colspan="7"></td>
-                                    <td class="align-middle text-end fw-bold" id="balance">
-                                    </td>
-                                    <td></td>
-                                </tr>
-
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="text-end py-9 border-bottom border-300"><img class="mb-3"
-                                                                                 src="../../../assets/img/logos/phoenix-mart.png"
-                                                                                 alt=""/>
-                            <h4>Authorized Signatory</h4>
-                        </div>
-                        <div class="py-4 border-bottom border-300">
-                            <p>
-                                Terms & Conditions : <br/>
-                                1. The Order placed cannot be cancelled or exchanged.<br/>
-                                2. Fitting of old Frames / Lens is at customer's risk.<br/>
-                                3. Order must be collected within 30 days of order booking.<br/>
-                                4. Warranty on products are as per the Manufacturer's terms.<br/>
-                                5. Minimum of 50% of total order amount should be given towards advance.<br/>
-                                6. Composition Taxable Person, Not Eligible To Collect Tax On Supplies.<br/>
-                                7. All legal disputes are subjected to Nelamangala jurisdiction.<br/>
-                            </p>
-                        </div>
-
+            <div class="container-small">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div class="d-flex flex-column align-items-center">
+                        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 40px;">
+                        <h2 class="mt-2">Indolens</h2>
                     </div>
 
-                    <div class="d-flex justify-content-center mt-3">
-                        <div class="d-flex justify-content-center mb-3">
-                            <button class="btn btn-phoenix-secondary"><span
-                                    class="fa-solid fa-print me-sm-2"></span><span class="d-none d-sm-inline-block">Print</span>
-                            </button>
-                        </div>
+                    {% if invoice_details.invoice_number|length != 0 %}
+                    <h2 class="mb-0">Draft Invoice</h2>
+                    {% else %}
+                    <h2 class="mb-0">Invoice</h2>
+                    {% endif %}
+                    <div>
+                        <button class="btn btn-phoenix-secondary" onclick="window.print()">
+                            <span class="fa-solid fa-print me-sm-2"></span>
+                            <span class="d-none d-sm-inline-block">Print</span>
+                        </button>
                     </div>
                 </div>
-                <!-- end of .container-->
 
-            </section>
+                <div id="invoice_details" class="bg-soft p-4 mb-4 rounded-2">
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <tbody>
+                            {% if invoice_details.invoice_number|length != 0 %}
+                            <tr>
+                                <th scope="row" class="align-middle">Invoice No</th>
+                                <td class="align-middle"><b>{{invoice_details.invoice_number}}</b></td>
+                                <th scope="row" class="align-middle">Invoice Date</th>
+                                <td class="align-middle">{{invoice_details.invoice_date}}</td>
+                            </tr>
+                            {% endif %}
+                            <tr>
+                                <th scope="row" class="align-middle">Order No</th>
+                                <td class="align-middle"><b>{{order_detail.0.order_id}}</b></td>
+                                <th scope="row" class="align-middle">GST Reg No</th>
+                                <td class="align-middle">{{store_data.0.store_gst}}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="align-middle">Order Date</th>
+                                <td class="align-middle">{{order_detail.0.created_on}}</td>
+                                <th scope="row" class="align-middle">Sold by</th>
+                                <td class="align-middle" colspan="3">{{order_detail.0.creator_name}}<br/>{{store_data.0.store_address}}
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="align-middle">Billing Address</th>
+                                <td class="align-middle" colspan="3">
+                                    <p>{{order_detail.0.customer_name}}</p>
+                                    <p>{{order_detail.0.address}}</p>
+                                    <p>{{order_detail.0.email}}</p>
+                                    <p>{{order_detail.0.phone}}</p>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="align-middle">Shipping Address :</th>
+                                <td class="align-middle" colspan="3">
+                                    <p>{{order_detail.0.customer_name}}</p>
+                                    <p>{{order_detail.0.address}}</p>
+                                    <p>{{order_detail.0.email}}</p>
+                                    <p>{{order_detail.0.phone}}</p>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="px-0">
+                    <div class="table-responsive scrollbar">
+                        <table class="table fs--1 text-900 mb-0">
+                            <thead class="bg-200">
+                            <tr>
+                                <th scope="col" colspan="2">Products</th>
+                                <th class="ps-5" colspan="2">HSN Number</th>
+                                <th scope="col" colspan="1">Quantity</th>
+                                <th class="text-end" colspan="2">Unit Price</th>
+                                <th class="text-end" colspan="1">Discount</th>
+                                <th class="text-end" colspan="2">Total Price</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% for order in order_detail %}
+                            <tr>
+                                <td class="align-middle" colspan="2">
+                                    <p class="line-clamp-1 mb-0 fw-semi-bold">{{order.product_name}}</p>
+                                </td>
+                                <td class="align-middle ps-5" colspan="2">
+                                    {% if order.hsn_product == None %}
+                                    N/A
+                                    {% else %}
+                                    {{order.hsn_product}}
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle text-700 fw-semi-bold" colspan="1">{{order.purchase_quantity}}
+                                </td>
+                                <td class="align-middle text-end text-1000 fw-semi-bold" colspan="2">
+                                    ₹{{order.unit_sale_price}}
+                                </td>
+                                <td class="align-middle text-end fw-semi-bold" colspan="1">
+                                    {{order.discount_percentage}}%
+                                </td>
+                                <td class="align-middle text-end" colspan="2">₹{{order.product_total_cost}}</td>
+                            </tr>
+                            {% endfor %}
+
+                            <tr class="bg-200">
+                                <td></td>
+                                <td class="align-middle fw-semi-bold" colspan="8">Subtotal</td>
+                                <td class="align-middle text-end fw-bold">₹ {{order_detail.0.total_cost }}</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0"></td>
+                                <td colspan="6"></td>
+                                <td class="align-middle fw-bold ps-15" colspan="2">Shipping Cost</td>
+                                <td class="align-middle text-end fw-semi-bold" colspan="1">₹0</td>
+                            </tr>
+                            <tr>
+                                <td class="border-0"></td>
+                                <td colspan="6"></td>
+                                <td class="align-middle fw-bold ps-15" colspan="2">Discount</td>
+                                <td class="align-middle text-end fw-semi-bold" colspan="1"
+                                    id="discount_amount"></td>
+                            </tr>
+                            {% if invoice_details.invoice_number|length == 0 %}
+                            <tr>
+                                <td class="border-0"></td>
+                                <td colspan="6"></td>
+                                <td class="align-middle fw-bold ps-15" colspan="2">Amount Paid</td>
+                                <td class="align-middle text-end fw-semi-bold" colspan="1"
+                                    id="amount_paid">₹{{order_detail.0.amount_paid}}
+                                </td>
+                            </tr>
+                            {% endif %}
+                            {% if invoice_details.invoice_number|length == 0 %}
+                            <tr class="bg-200">
+                                <td class="align-middle ps-4 fw-bold text-1000" colspan="3">Balance Amount</td>
+                                <td id="totalWords" class="align-middle fw-bold text-1000" colspan="6"></td>
+                                <td class="align-middle text-end fw-bold" id="balance">
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr class="bg-200">
+                                <td class="align-middle ps-4 fw-bold text-1000" colspan="3">Billing Amount</td>
+                                <td class="align-middle fw-bold text-1000" colspan="6"></td>
+                                <td class="align-middle text-end fw-bold">₹{{order_detail.0.discount_cost}}
+                                </td>
+                            </tr>
+                            {% endif %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="text-end py-9 border-bottom border-300"><img class="mb-3"
+                                                                             src="../../../assets/img/logos/phoenix-mart.png"
+                                                                             alt=""/>
+                        <h4>Authorized Signatory</h4>
+                    </div>
+                    <div class="py-4 border-bottom border-300">
+                        <p>
+                            Terms & Conditions : <br/>
+                            1. The Order placed cannot be cancelled or exchanged.<br/>
+                            2. Fitting of old Frames / Lens is at customer's risk.<br/>
+                            3. Order must be collected within 30 days of order booking.<br/>
+                            4. Warranty on products are as per the Manufacturer's terms.<br/>
+                            5. Minimum of 50% of total order amount should be given towards advance.<br/>
+                            6. Composition Taxable Person, Not Eligible To Collect Tax On Supplies.<br/>
+                            7. All legal disputes are subjected to Nelamangala jurisdiction.<br/>
+                        </p>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- end of .container-->
+
 
         </div>
     </div>
@@ -348,15 +368,6 @@
 
 </body>
 <script>
-    // Get the current date
-    let currentDate = new Date();
-
-    // Format the date as YYYY-MM-DD
-    let formattedDate = currentDate.toISOString().split('T')[0];
-
-    // Assign the formatted date to the <p> tag
-    document.getElementById("invoiceDate").innerText = formattedDate;
-
     document.addEventListener('DOMContentLoaded', function() {
         var totalCost = {{ order_detail.0.total_cost }};
         var discountCost = {{ order_detail.0.discount_cost }};
@@ -368,6 +379,11 @@
         document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
         document.getElementById('balance').textContent = '₹ ' + balanceAmount;
     });
+
+
+
+
+
 
 
 </script>
@@ -429,7 +445,13 @@
     const grandTotalInNumber = parseFloat(discountCostText.replace('₹', ''));
 
     const totalWords = numberToWords(grandTotalInNumber);
+    console.log(totalWords):
     document.getElementById('totalWords').innerText = totalWords + ' Rupees';
+
+
+
+
+
 
 </script>
 

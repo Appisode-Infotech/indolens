@@ -57,7 +57,11 @@ def get_eye_test_by_id(testId):
                                             CASE
                                                 WHEN et.created_by_store_type = 1 THEN os.store_name
                                                 WHEN et.created_by_store_type = 2 THEN fs.store_name
-                                            END AS store_name
+                                            END AS store_name,
+                                            CASE
+                                                WHEN et.created_by_store_type = 1 THEN os.store_address
+                                                WHEN et.created_by_store_type = 2 THEN fs.store_address
+                                            END AS store_address
                                             FROM eye_test as et
                                             LEFT JOIN own_store os ON et.created_by_store_id = os.store_id AND et.created_by_store_type = 1
                                             LEFT JOIN franchise_store fs ON et.created_by_store_id = fs.store_id AND et.created_by_store_type = 2

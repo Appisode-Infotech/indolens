@@ -63,6 +63,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -86,22 +87,9 @@
                     </p>
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><a target="_blank"
-                                href="{% url 'order_invoice_franchise_store' order_detail.0.order_id %}"><span
+                                                                  href="{% url 'order_invoice_franchise_store' order_detail.0.order_id %}"><span
                                 class="fas fa-file-invoice"></span> Invoice</a></button>
-                        <button class="btn px-3 text-900"><a
-                                href="{% url 'franchise_payment_status_change' order_detail.0.order_id '3' %}"><span
-                                class="fas fa-undo me-2"></span>Refund</a></button>
-                        <div class="dropdown">
-                            <button aria-expanded="false"
-                                    class="btn text-900 dropdown-toggle dropdown-caret-none ps-3 pe-0"
-                                    data-bs-toggle="dropdown" type="button">More action<span
-                                    class="fas fa-chevron-down ms-2"></span></button>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                <li><a class="dropdown-item">Action</a></li>
-                                <li><a class="dropdown-item">Another action</a></li>
-                                <li><a class="dropdown-item">Something else here</a></li>
-                            </ul>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="row g-5 gy-7">
@@ -145,7 +133,8 @@
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_franchise_central_inventory_products' order.product_id %}">
+                                            <a class="fw-semi-bold line-clamp-2 mb-0 "
+                                               href="{% url 'view_franchise_central_inventory_products' order.product_id %}">
                                                 {{order.product_name}}</a>
                                         </td>
                                         <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
@@ -414,6 +403,7 @@
 }
 
 
+
 </script>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
@@ -478,6 +468,7 @@
         document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
         document.getElementById('balance').textContent = '₹ ' + balanceAmount;
     });
+
 
 </script>
 </html>

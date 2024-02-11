@@ -7,7 +7,7 @@ class EyeTest:
         (
             self.eye_test_id, self.customer_id, power_attributes, self.created_by_store_id, self.created_by_store_type,
             self.created_by, self.created_on, self.updated_by, self.updated_on, self.customer_name, self.customer_phone,
-            self.customer_age, self.creator_name, self.updater_name, self.store_name
+            self.customer_age, self.creator_name, self.updater_name, self.store_name, self.store_address
         ) = values
 
         # Parse document URLs from JSON strings to lists
@@ -30,6 +30,7 @@ class EyeTest:
             'creator_name': self.creator_name,
             'updater_name': self.updater_name,
             'store_name': self.store_name,
+            'store_address': self.store_address,
         }
 
 
