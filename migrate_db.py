@@ -535,7 +535,7 @@ sql_queries = [
  `payment_mode` int(11),
  `amount_paid` int(11),
  `estimated_delivery_date` date,
- `linked_item` int(11),
+ `linked_item` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`linked_item`)),
  `sales_note` longtext,
  `created_by_store` int(11),
  `created_by_store_type` int(11),
