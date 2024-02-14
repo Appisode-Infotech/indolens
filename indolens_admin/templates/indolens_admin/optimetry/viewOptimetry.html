@@ -114,7 +114,7 @@
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3>{{optimetry.name}}</h3>
-                                                <p class="text-800">{{optimetry.created_on}}</p>
+                                                <p class="text-800">Joined on: {{optimetry.created_on}}</p>
                                                 {% if optimetry.assigned_store_id != 0 %}
                                                 <p class="text-800">Optometry - <a href="{%url 'view_own_store' optimetry.assigned_store_id %}">
                                                     {{optimetry.store_name}}
