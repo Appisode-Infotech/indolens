@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Edit Sub Admin</title>
+    <title>Indolens admin - Edit Admin</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -83,7 +83,7 @@
         {% for admin in sub_admin %}
         <div class="content">
 
-            <h2 class="mb-4">Edit sub admin {{ request.session.id }}</h2>
+            <h2 class="mb-4">Edit admin {{ request.session.id }}</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
                     <form action="{% url 'edit_sub_admin' admin.admin_id %}" enctype="multipart/form-data"
