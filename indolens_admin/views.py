@@ -1751,7 +1751,7 @@ def enableDisableAccountant(request, route, accountantId, status):
 def manageLabTechnician(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_technician_controller.get_all_lab_technician(status)
-        lab_list, status_code = lab_controller.get_all_labs()
+        lab_list, status_code = lab_controller.get_all_active_labs()
         return render(request, 'indolens_admin/labTechnician/manageLabTechnician.html',
                       {"lab_technician_list": response['lab_technician_list'], "lab_list": lab_list['lab_list'],
                        "status": status})
