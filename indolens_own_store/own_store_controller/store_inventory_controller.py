@@ -264,8 +264,7 @@ def view_all_store_stock_request(store_id, status):
 def request_delivery_status_change(request_id, status, updated_by):
     try:
         with connection.cursor() as cursor:
-            update_stock_request_query = f"""UPDATE request_products SET last_updated_on = '{getIndianTime()}', 
-                                                last_updated_by = {updated_by}, delivery_status = {status}
+            update_stock_request_query = f"""UPDATE request_products SET delivery_status = {status}
                                                 WHERE request_products_id = '{request_id}' """
             cursor.execute(update_stock_request_query)
             if status == 2:
