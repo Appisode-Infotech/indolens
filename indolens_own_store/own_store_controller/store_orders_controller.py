@@ -191,6 +191,13 @@ def order_status_change(orderID, orderStatus):
             order = get_order_detail(orders_details)
 
             if orderStatus == "6":
+
+                payment_status_change_query = f"""
+                                UPDATE sales_order SET payment_status = 2
+                                WHERE order_id = '{orderID}'
+                                """
+                cursor.execute(payment_status_change_query)
+
                 get_last_invoice_query = f""" SELECT invoice_number
                                                 FROM invoice
                                                 WHERE store_id = {order[0]['created_by_store']} 
