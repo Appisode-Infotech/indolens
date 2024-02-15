@@ -135,9 +135,6 @@
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="product"
                                     scope="col" style="width:30%;">PRODUCT NAME
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="productId" scope="col" style="width:10%;">
-                                    PRODUCT ID
-                                </th>
                                 <th class="sort align-middle ps-3" data-sort="quantity" scope="col" style="width:10%;">
                                     QUANTITY
                                 </th>
@@ -161,7 +158,7 @@
 
 
 
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>
+<!--                                <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>-->
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
@@ -194,10 +191,6 @@
 
                                 <td class="product align-middle">
                                     <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_products' stock.product_id %}">{{stock.product_name}}</a></td>
-
-                                <td class="align-middle white-space-nowrap ps-3 py-4 productId">
-                                    <p class="mb-0 fs--1 text-900">{{stock.product_id}}</p>
-                                </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 quantity">
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
@@ -244,21 +237,21 @@
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                    <div class="font-sans-serif btn-reveal-trigger position-static">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
-                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2">
-                                            <a class="dropdown-item view-button" data-bs-toggle="modalView"
-                                               type="button"
-                                               data-category-info="{{ stock }}">View</a>
-                                        </div>
-                                    </div>
-                                </td>
+<!--                                <td class="align-middle text-end white-space-nowrap pe-0 action">-->
+<!--                                    <div class="font-sans-serif btn-reveal-trigger position-static">-->
+<!--                                        <button aria-expanded="false"-->
+<!--                                                aria-haspopup="true"-->
+<!--                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs&#45;&#45;2"-->
+<!--                                                data-boundary="window"-->
+<!--                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">-->
+<!--                                            <span class="fas fa-ellipsis-h fs&#45;&#45;2"></span></button>-->
+<!--                                        <div class="dropdown-menu dropdown-menu-end py-2">-->
+<!--                                            <a class="dropdown-item view-button" data-bs-toggle="modalView"-->
+<!--                                               type="button"-->
+<!--                                               data-category-info="{{ stock }}">View</a>-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </td>-->
                             </tr>
                             {% endfor %}
                             </tbody>
