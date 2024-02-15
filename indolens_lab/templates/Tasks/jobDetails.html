@@ -441,6 +441,8 @@
     }
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.order_status }};
+        console.log(status);
+
         var select = document.getElementById("orderStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -455,6 +457,12 @@
                 // Enable the next option from the selected one
                 if (i < select.options.length - 1) {
                     select.options[i + 1].disabled = false;
+                    if (status != "6"){
+                    select.options[4].disabled = false;
+                    }
+                    if (status == "6"){
+                    select.options[4].disabled = true;
+                    }
                 }
 
                 // Add event listener to update options dynamically
@@ -469,6 +477,7 @@
                     // Enable the next option from the selected one
                     if (selectedIndex < this.options.length - 1) {
                         this.options[selectedIndex + 1].disabled = false;
+
                     }
                 });
 
