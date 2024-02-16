@@ -228,7 +228,6 @@ def update_central_inventory_products(product_obj, productId, power_attribute):
                     hsn = '{product_obj.hsn_number}',
                     last_updated_on = '{getIndianTime()}',
                     last_updated_by = '{product_obj.last_updated_by}',
-                    product_quantity = '{product_obj.product_quantity}',
                     product_gst = '{product_obj.product_gstin}',
                     discount = '{product_obj.discount}',
                     franchise_sale_price = {product_obj.franchise_sale_price},
