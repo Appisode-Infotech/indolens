@@ -19,8 +19,9 @@ def get_all_orders(status, pay_status, store_id):
         "Processing": "= 2",
         "Ready": "= 3",
         "Dispatched": "= 4",
-        "Completed": "= 5",
-        "Cancelled": "= 6",
+        "Delivered Store": "= 5",
+        "Delivered Customer": "= 6",
+        "Cancelled": "= 7",
     }
     status_condition = status_conditions[status]
     payment_status_values = {

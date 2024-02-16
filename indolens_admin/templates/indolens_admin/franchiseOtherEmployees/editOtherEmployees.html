@@ -107,7 +107,7 @@
                             <label class="form-label" for="name">Name</label>
 
                             <input class="form-control" id="name" name="name" required="" type="text"
-                                   value="{{other_employee.name}}"/>
+                                   value="{{other_employee.name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Name is mandatory.</div>
 
                         </div>

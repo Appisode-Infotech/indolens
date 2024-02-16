@@ -106,7 +106,7 @@
                                                placeholder="Name"
                                                required="required" maxlength="70"
                                                onchange="genCustomerObject()"
-                                               type="text" value=""/>
+                                               type="text" value="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                         <div class="invalid-feedback">This field is required.</div>
                                     </div>
                                     <div class="mb2 col-6">
@@ -163,7 +163,7 @@
                                                required="required"
                                                onchange="genCustomerObject()"
 
-                                               type="text" value=""/>
+                                               type="text" value="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                         <div class="invalid-feedback">This field is required.</div>
                                     </div>
                                     <div class="mb2 col-12">

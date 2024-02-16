@@ -11,7 +11,7 @@ def getIndianTime():
 def get_order_stats(status, store_type, store_id):
     status_conditions = {
         "New": "= 1",
-        "Completed": "= 5",
+        "Completed": "= 6",
     }
     status_condition = status_conditions[status]
     try:
@@ -43,6 +43,7 @@ def get_sales_stats(store_type, store_id):
                                 SELECT IFNULL(SUM(product_total_cost), 0) AS total_sale
                                 FROM sales_order
                                 WHERE created_by_store_type = {store_type} AND created_by_store = {store_id}
+                                AND order_status != 7
                                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchone()

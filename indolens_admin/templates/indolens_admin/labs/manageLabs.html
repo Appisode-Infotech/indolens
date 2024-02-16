@@ -144,9 +144,7 @@
                                     {{lab.lab_name}}
                                 </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 py-4 jobs"><a
-                                        class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_active_jobs'  %}">{{lab.job_count}}</a>
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 jobs">{{lab.job_count}}
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 labTech">
                                     {% if lab.lab_technician_name != None %}

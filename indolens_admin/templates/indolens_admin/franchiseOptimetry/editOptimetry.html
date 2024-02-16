@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Edit Optimetry</title>
+    <title>Indolens admin - Edit Optometry</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -73,7 +73,7 @@
         {% for optimetry in optimetry %}
         <div class="content">
 
-            <h2 class="mb-4">Edit Optimetry</h2>
+            <h2 class="mb-4">Edit Optometry</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
 
@@ -99,7 +99,7 @@
                             <label class="form-label" for="name">Name</label>
 
                             <input class="form-control" id="name" name="name" required="" type="text"
-                                   value="{{optimetry.name}}"/>
+                                   value="{{optimetry.name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Name is mandatory.</div>
                         </div>
                         <div class="col-md-6">

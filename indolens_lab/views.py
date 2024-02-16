@@ -85,7 +85,6 @@ def labDashboard(request):
             'is_lab_tech_logged_in') is True:
         latest_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "All")
         lab_stats, lab_stats_code = lab_task_controller.get_lab_job_stats(assigned_lab)
-        print(lab_stats)
         return render(request, 'lab_dashboard.html', {"latest_task": latest_task['task_list'][:10],
                                                       "lab_stats": lab_stats})
     else:
@@ -137,6 +136,7 @@ def dispatchedTask(request):
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
         dispatched_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Dispatched")
+        print(dispatched_task)
         return render(request, 'Tasks/viewDispatchedTask.html', {"all_task": dispatched_task['task_list']})
     else:
         return redirect('lab_login')

@@ -134,7 +134,9 @@
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
                                                                 <img class="rounded-2 dz-image" width="100px"
                                                                      height="100px" src="{{ MEDIA_URL }}{{ doc }}"
-                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     onerror="if(this.src.endsWith('.pdf'))
+                                                     { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
+                                                     else { this.src = 'http://via.placeholder.com/100x100'; }"
                                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                                             </a>
                                                         </div>
@@ -154,7 +156,9 @@
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
                                                                 <img class="rounded-2 dz-image" width="100px"
                                                                      height="100px" src="{{ MEDIA_URL }}{{ doc }}"
-                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     onerror="if(this.src.endsWith('.pdf'))
+                                                     { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
+                                                     else { this.src = 'http://via.placeholder.com/100x100'; }"
                                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                                             </a>
                                                         </div>

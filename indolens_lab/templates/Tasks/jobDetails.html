@@ -86,7 +86,7 @@
                 </div>
                 <div class="row g-5 gy-7">
                     <div class="col-12 col-xl-8 col-xxl-9">
-                        <div data-list='{"valueNames":["products","category","material","type","shape","color","unit","brand"],"page":10}'
+                        <div data-list='{"valueNames":["products","quantity","category","material","type","shape","color","unit","brand"],"page":10}'
                              id="orderTable">
                             <div class="table-responsive scrollbar">
                                 <table class="table fs--1 mb-0 border-top border-200">
@@ -95,6 +95,9 @@
                                         <th class="sort white-space-nowrap align-middle fs--2" scope="col"></th>
                                         <th class="sort white-space-nowrap align-middle" data-sort="products"
                                             scope="col" style="min-width:200px;">PRODUCTS
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="quantity"
+                                            scope="col" style="width:150px;">QUANTITY
                                         </th>
                                         <th class="sort align-middle ps-4" data-sort="category" scope="col"
                                             style="width:150px;">CATEGORY
@@ -133,6 +136,9 @@
                                                href="{% url 'view_lab_central_inventory_products' order.product_id %}">
                                                 {{order.product_name}}
                                             </a>
+                                        </td>
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
+                                            {{order.purchase_quantity}}
                                         </td>
                                         <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
                                             {% if order.category_name == None %}
@@ -441,6 +447,8 @@
     }
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.order_status }};
+        console.log(status);
+
         var select = document.getElementById("orderStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -455,6 +463,12 @@
                 // Enable the next option from the selected one
                 if (i < select.options.length - 1) {
                     select.options[i + 1].disabled = false;
+                    if (status != "6"){
+                    select.options[4].disabled = false;
+                    }
+                    if (status == "6"){
+                    select.options[4].disabled = true;
+                    }
                 }
 
                 // Add event listener to update options dynamically
@@ -469,6 +483,7 @@
                     // Enable the next option from the selected one
                     if (selectedIndex < this.options.length - 1) {
                         this.options[selectedIndex + 1].disabled = false;
+
                     }
                 });
 

@@ -128,17 +128,13 @@
 
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
-                                            <div class="border rounded-2"><img
-                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}"
-                                                    width="53"/>
-                                            </div>
                                         </td>
                                         <td class="products align-middle py-0">
                                             <a class="fw-semi-bold line-clamp-2 mb-0" href="{% url 'view_products' order.product_id %}">
                                                 {{order.product_name}}
                                             </a>
                                         </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">₹
                                             {{order.unit_sale_price}}
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">

@@ -104,7 +104,10 @@
                                         <a href="{{ MEDIA_URL }}{{ images }}" target="_blank">
                                             <img class="rounded-2 dz-image" width="100px"
                                                  height="100px" src="{{ MEDIA_URL }}{{ images }}"
-                                                 onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                 onerror="if(this.src.endsWith('.pdf'))
+                                                     { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
+                                                     else { this.src = 'http://via.placeholder.com/100x100'; }"
+
                                                  alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                         </a>
                                     </div>
@@ -268,7 +271,7 @@
                                        value="{{product_data.store_product_quantity}}" required/>
                             </div>
                             <div class="col-12 col-lg-6">
-                                <h5 class="mb-2 text-1000">GSTIN</h5>
+                                <h5 class="mb-2 text-1000">GST</h5>
                                 <input readonly name="productGSTIN" class="form-control" placeholder="%" type="text"
                                        value="{{product_data.product_gst}}" required/>
                             </div>

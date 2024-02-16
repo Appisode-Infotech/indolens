@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - View Sub Admin</title>
+    <title>Indolens admin - View Admin</title>
 
     {% load static %}
 
@@ -85,7 +85,7 @@
             <div class="mb-9">
                 <div class="row align-items-center justify-content-between g-3 mb-4">
                     <div class="col-auto">
-                        <h2 class="mb-0">Sub Admin Details</h2>
+                        <h2 class="mb-0">Admin Details</h2>
                     </div>
                     <div class="col-auto">
                         <div class="row g-3">
@@ -129,7 +129,10 @@
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
                                                                 <img class="rounded-2 dz-image" width="100px"
                                                                      height="100px" src="{{ MEDIA_URL }}{{ doc }}"
-                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     onerror="if(this.src.endsWith('.pdf'))
+                                                     { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
+                                                     else { this.src = 'http://via.placeholder.com/100x100'; }"
+
                                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                                             </a>
                                                         </div>
@@ -149,7 +152,10 @@
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
                                                                 <img class="rounded-2 dz-image" width="100px"
                                                                      height="100px" src="{{ MEDIA_URL }}{{ doc }}"
-                                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                                     onerror="if(this.src.endsWith('.pdf'))
+                                                     { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
+                                                     else { this.src = 'http://via.placeholder.com/100x100'; }"
+
                                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                                             </a>
                                                         </div>

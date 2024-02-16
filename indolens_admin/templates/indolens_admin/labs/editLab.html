@@ -139,7 +139,7 @@
                             <label class="form-label" for="labCity">City</label>
 
                             <input class="form-control" id="labCity" name="labCity" required="" type="text"
-                                   value="{{lab.lab_city}}"/>
+                                   value="{{lab.lab_city}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Please provide a valid city.</div>
                         </div>
                         <div class="col-md-4">
@@ -147,7 +147,7 @@
                             <label class="form-label" for="labState">State</label>
 
                             <input class="form-control" id="labState" name="labState" required="" type="text"
-                                   value="{{lab.lab_state}}"/>
+                                   value="{{lab.lab_state}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Please provide a valid state.</div>
                         </div>
                         <div class="col-md-4">

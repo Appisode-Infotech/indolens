@@ -113,7 +113,6 @@
                             </div>
                         </div>
                         <div class="col-auto"><a class="btn btn-primary px-5"
-                                                 href="{% url 'add_products' %}"
                                                  data-bs-target="#verticallyCentered"
                                                  data-bs-toggle="modal" type="button"><i
                                 class="fa-solid fa-plus me-2"></i>Move Stock</a></div>
@@ -319,12 +318,14 @@
                                         name="product_id" required="required">
                                     <option value="">Select Product</option>
                                     {% for products in products %}
-                                    <option value="{{products.product_id}}">{{products.product_name}}</option>
+<!--                                    <option value="{{products.product_id}}">{{products.product_name}}</option>-->
+                                    <option value="{{ products.product_id }}" data-quantity="{{ products.product_quantity }}">{{ products.product_name }}</option>
+
                                     {% endfor %}
                                 </select>
                                 <div class="invalid-feedback">This field is required.</div>
                             </div>
-
+                            <span id="availableQuantity" data-gantt-scale="mt-2"></span>
                             <div class="mb-2 col-12">
                                 <h5 class="mb-3 ">Select Store Type</h5>
                                 <select class="form-select"
@@ -371,7 +372,7 @@
                                 <input class="form-control" id="qty" maxlength="256" required name="product_quantity"
                                        type="number"
                                        value="" min="1">
-                                <div class="invalid-feedback">Enter Valid Quantity!</div>
+                                <div class="invalid-feedback">Enter Valid available Quantity!</div>
                             </div>
 
                             <div class="col-12">
@@ -477,7 +478,25 @@ $(document).ready(function() {
 
 
 </script>
+<script>
+    // Get references to relevant elements
+    var productSelect = document.querySelector('[name="product_id"]');
+    var quantityInput = document.getElementById('qty');
+    var availableQuantityElement = document.getElementById('availableQuantity');
 
+    // Event listener for product selection change
+    productSelect.addEventListener('change', function () {
+        // Get the selected product quantity
+        var selectedProduct = document.querySelector('[name="product_id"] option:checked');
+        var availableQuantity = selectedProduct.getAttribute('data-quantity');
+
+        // Update the available quantity display
+        availableQuantityElement.textContent = 'Available Quantity: ' + availableQuantity;
+
+        // Enforce the constraint on the quantity input field
+        quantityInput.setAttribute('max', availableQuantity);
+    });
+</script>
 
 </body>
 

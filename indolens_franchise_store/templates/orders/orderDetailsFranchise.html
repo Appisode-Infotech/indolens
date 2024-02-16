@@ -127,17 +127,13 @@
 
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
-                                            <div class="border rounded-2"><img
-                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}"
-                                                    width="53"/>
-                                            </div>
                                         </td>
                                         <td class="products align-middle py-0">
                                             <a class="fw-semi-bold line-clamp-2 mb-0 "
                                                href="{% url 'view_franchise_central_inventory_products' order.product_id %}">
                                                 {{order.product_name}}</a>
                                         </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">₹
                                             {{order.unit_sale_price}}
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
@@ -345,11 +341,12 @@
                                         <select onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')"
                                                 aria-label="delivery type" class="form-select" id="orderStatusSelect">
                                             <option value="1">New</option>
-                                            <option value="2">Process</option>
+                                            <option value="2">Processing</option>
                                             <option value="3">Ready</option>
-                                            <option value="4">Dispatch</option>
-                                            <option value="5">Complete</option>
-                                            <option value="6">Cancel</option>
+                                            <option value="4">Dispatch to store</option>
+                                            <option value="5">Delivered to store</option>
+                                            <option value="6">Delivered to customer</option>
+                                            <option value="7">Cancel</option>
                                         </select>
                                     </div>
                                 </div>
@@ -405,6 +402,7 @@
 
 
 </script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var status = "{{order_detail.0.payment_status}}";
@@ -422,6 +420,8 @@
     });
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.order_status }};
+        console.log(status);
+
         var select = document.getElementById("orderStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -436,6 +436,12 @@
                 // Enable the next option from the selected one
                 if (i < select.options.length - 1) {
                     select.options[i + 1].disabled = false;
+                    if (status != "6"){
+                    select.options[6].disabled = false;
+                    }
+                    if (status == "6"){
+                    select.options[6].disabled = true;
+                    }
                 }
 
                 // Add event listener to update options dynamically
@@ -450,6 +456,7 @@
                     // Enable the next option from the selected one
                     if (selectedIndex < this.options.length - 1) {
                         this.options[selectedIndex + 1].disabled = false;
+
                     }
                 });
 
@@ -467,8 +474,11 @@
 
         document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
         document.getElementById('balance').textContent = '₹ ' + balanceAmount;
-    });
 
+
+
+
+    });
 
 </script>
 </html>

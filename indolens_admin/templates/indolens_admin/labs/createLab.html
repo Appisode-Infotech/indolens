@@ -144,14 +144,16 @@
 
                             <label class="form-label" for="labCity">City</label>
 
-                            <input class="form-control" id="labCity" name="labCity" required="" type="text"/>
+                            <input class="form-control" id="labCity" name="labCity" required="" type="text"
+                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">City is mandatory.</div>
                         </div>
                         <div class="col-md-4">
 
                             <label class="form-label" for="labState">State</label>
 
-                            <input class="form-control" id="labState" name="labState" required="" type="text"/>
+                            <input class="form-control" id="labState" name="labState" required="" type="text"
+                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">State is mandatory.</div>
                         </div>
                         <div class="col-md-4">

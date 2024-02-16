@@ -187,7 +187,17 @@ def readyStoreOrders(request):
 def completedStoreOrders(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        orders_list, status_code = store_orders_controller.get_all_orders('Completed', 'All',
+        orders_list, status_code = store_orders_controller.get_all_orders('Delivered Customer', 'All',
+                                                                          assigned_store)
+        return render(request, 'orders/deliveredStoreOrders.html', {"orders_list": orders_list["orders_list"]})
+    else:
+        return redirect('own_store_login')
+
+
+def DeliveredStoreOrders(request):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        orders_list, status_code = store_orders_controller.get_all_orders('Delivered Store', 'All',
                                                                           assigned_store)
         return render(request, 'orders/deliveredStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:

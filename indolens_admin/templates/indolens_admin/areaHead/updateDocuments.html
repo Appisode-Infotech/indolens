@@ -124,12 +124,17 @@
                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3">
                                         <div class="border border-300 p-2 rounded-2 me-2 mb-2">
                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
-                                                <img class="rounded-2 dz-image" width="100px"
-                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
-                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                <img class="rounded-2 dz-image" width="150px"
+                                                     height="150px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                     onerror="if(this.src.endsWith('.pdf'))
+                                                     { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
+                                                     else { this.src = 'http://via.placeholder.com/100x100'; }"
                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                             </a>
                                         </div>
+                                        {% if area_head.document_1_url.1|length == 0 %}
+                                        <p style="color: red; text-align: center;"> One image is Mandatory </p>
+                                        {% else %}
                                         <a data-bs-toggle="modal"
                                            data-bs-target="#delete_document"
                                            data-employee-id="{{ area_head.area_head_id }}"
@@ -140,6 +145,7 @@
                                            class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
                                         </a>
+                                        {% endif %}
                                     </div>
                                     {% endfor %}
                                 </div>
@@ -173,12 +179,17 @@
                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3">
                                         <div class="border border-300 p-2 rounded-2 me-2 mb-2">
                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
-                                                <img class="rounded-2 dz-image" width="100px"
-                                                     height="100px" src="{{ MEDIA_URL }}{{ doc }}"
-                                                     onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                <img class="rounded-2 dz-image" width="150px"
+                                                     height="150px" src="{{ MEDIA_URL }}{{ doc }}"
+                                                     onerror="if(this.src.endsWith('.pdf'))
+                                                     { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
+                                                     else { this.src = 'http://via.placeholder.com/100x100'; }"
                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                             </a>
                                         </div>
+                                        {% if area_head.document_2_url.1|length == 0 %}
+                                        <p style="color: red; text-align: center;"> One image is Mandatory </p>
+                                        {% else %}
                                         <a data-bs-toggle="modal"
                                            data-bs-target="#delete_document"
                                            data-employee-id="{{ area_head.area_head_id }}"
@@ -189,6 +200,7 @@
                                            class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
                                         </a>
+                                        {% endif %}
                                     </div>
                                     {% endfor %}
                                 </div>

@@ -108,7 +108,7 @@
                             <label class="form-label" for="name">Name</label>
 
                             <input class="form-control" id="name" name="name" required type="text"
-                                   maxlength="70" value=""/>
+                                   maxlength="70" value="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Name is mandatory.</div>
                         </div>
                         <div class="col-md-6">
@@ -134,10 +134,10 @@
 
                             <div class="input-group">
                                 <input class="form-control" type="password" id="password" name="password"
-                                       placeholder="Password" required="required">
+                                       placeholder="Password" required="required" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,120}$">
                                 <button id="togglePassword" type="button" class="input-group-text"><i
                                         class="far fa-eye" id="togglePasswordIcon"></i></button>
-                                <div class="invalid-feedback">Password is mandatory.</div>
+                                <div class="invalid-feedback">Password should have 8 characters with at least 1 uppercase, 1 lowercase, and 1 special character.</div>
                             </div>
                         </div>
 

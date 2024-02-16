@@ -21,8 +21,9 @@ def get_all_orders(status, pay_status, store_id):
         "Processing": "= 2",
         "Ready": "= 3",
         "Dispatched": "= 4",
-        "Completed": "= 5",
-        "Cancelled": "= 6",
+        "Delivered Store": "= 5",
+        "Delivered Customer": "= 6",
+        "Cancelled": "= 7",
     }
     status_condition = status_conditions[status]
     payment_status_values = {
@@ -191,6 +192,13 @@ def order_status_change(orderID, orderStatus):
             order = get_order_detail(orders_details)
 
             if orderStatus == "6":
+
+                payment_status_change_query = f"""
+                                UPDATE sales_order SET payment_status = 2
+                                WHERE order_id = '{orderID}'
+                                """
+                cursor.execute(payment_status_change_query)
+
                 get_last_invoice_query = f""" SELECT invoice_number
                                                 FROM invoice
                                                 WHERE store_id = {order[0]['created_by_store']} 

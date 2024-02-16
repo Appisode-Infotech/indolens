@@ -13,7 +13,7 @@ def get_lab_jobs(labId, status):
         "New": "= 1",
         "Processing": "= 2",
         "Ready": "= 3",
-        "Dispatched": "= 4,5,6,7",
+        "Dispatched": "IN (4,5,6,7)",
     }
     status_condition = status_conditions[status]
     try:
@@ -223,7 +223,7 @@ def get_lab_job_stats(labId):
                                         FROM (
                                             SELECT COUNT(DISTINCT order_id) AS total_count
                                             FROM sales_order
-                                            WHERE assigned_lab = {labId} AND order_status = 4
+                                            WHERE assigned_lab = {labId} AND order_status IN (4,5,6,7)
                                             GROUP BY order_id
                                         ) AS subquery
                                         """

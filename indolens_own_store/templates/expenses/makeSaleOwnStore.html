@@ -271,7 +271,8 @@
                                                                    placeholder="Name" maxlength="70"
                                                                    required="required"
                                                                    onchange="genCustomerObject()"
-                                                                   type="text" value=""/>
+                                                                   type="text" value=""
+                                                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
                                                         <div class="mb2 col-6">
@@ -326,7 +327,7 @@
                                                                    placeholder="City"
                                                                    required="required"
                                                                    onchange="genCustomerObject()"
-
+                                                                   oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
@@ -405,7 +406,7 @@
                                                                 name="assignedLab" class="form-select"
                                                                 aria-label="Default select example"
                                                                 required="required">
-                                                            <option value="" selected>Please select lab</option>
+                                                            <option value="0" selected>Please select lab</option>
                                                             {% for lab in lab_list %}
                                                             <option value="{{lab.lab_id}}">{{lab.lab_name}}</option>
                                                             {% endfor %}
@@ -431,8 +432,8 @@
                                                                 value="0" required
                                                                 name="amount_paid"
                                                                 class="form-control"
-                                                                type="text" placeholder="&#8377;">
-                                                                                                                <div class="invalid-feedback">This field is required.</div>
+                                                                type="number" min="1" placeholder="&#8377;">
+                                                        <div class="invalid-feedback">This field is required.</div>
                                                     </div>
 
 

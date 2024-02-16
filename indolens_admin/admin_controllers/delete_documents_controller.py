@@ -13,7 +13,6 @@ def getIndianTime():
     return today
 
 def delete_document(documenturl, document_type, table, condition, user_id):
-    print("=====================================in controller")
     try:
         parts = documenturl.split('/')
         folder_name = parts[0]
@@ -30,7 +29,6 @@ def delete_document(documenturl, document_type, table, condition, user_id):
                 documents.remove(documenturl)
                 cursor.execute(f""" UPDATE {table} SET {document_type} = '{json.dumps(documents)}' WHERE {condition} = {user_id} """)
                 get_role = f""" SELECT role from {table} Where {condition} = {user_id}"""
-                print(get_role)
                 cursor.execute(get_role)
                 role = cursor.fetchone()
             return {

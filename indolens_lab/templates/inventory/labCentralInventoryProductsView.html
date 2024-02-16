@@ -74,7 +74,7 @@
 <!-- ===============================================-->
 <main class="main" id="top">
     <div class="container-fluid px-0">
-        {% include 'nav_bar_store.html' %}
+        {% include 'nav_bar_lab.html' %}
         <div class="content">
             <form class="mb-9 ">
                 {% csrf_token %}
@@ -103,7 +103,10 @@
                                         <a href="{{ MEDIA_URL }}{{ images }}" target="_blank">
                                             <img class="rounded-2 dz-image" width="100px"
                                                  height="100px" src="{{ MEDIA_URL }}{{ images }}"
-                                                 onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                                 onerror="if(this.src.endsWith('.pdf'))
+                                                     { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
+                                                     else { this.src = 'http://via.placeholder.com/100x100'; }"
+
                                                  alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                         </a>
                                     </div>
