@@ -140,7 +140,7 @@
                             <label class="form-label" for="storeCity">City</label>
 
                             <input class="form-control" id="storeCity" name="storeCity" required="" type="text"
-                                   value="{{store.store_city}}"/>
+                                   value="{{store.store_city}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                                         <div class="invalid-feedback">City is mandatory.</div>
 
                         </div>
@@ -149,7 +149,7 @@
                             <label class="form-label" for="storeState">State</label>
 
                             <input class="form-control" id="storeState" name="storeState" required="" type="text"
-                                   value="{{store.store_state}}"/>
+                                   value="{{store.store_state}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                                         <div class="invalid-feedback">State is mandatory.</div>
 
                         </div>
