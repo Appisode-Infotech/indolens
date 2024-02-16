@@ -350,7 +350,7 @@
                                                      data-bs-toggle="" href="{% url 'ready_orders' 'All' %}" role="button">
                         <div class="d-flex align-items-center"><span class="nav-link-icon"><span
                                 data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
-                                class="nav-link-text">Ready Orders</span></span>
+                                class="nav-link-text">Ready Orders in Lab</span></span>
                         </div>
                     </a>
                     </div>
@@ -370,6 +370,19 @@
                     </div>
                 </li>
 
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'store_delivered_orders' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'store_delivered_orders' 'All' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="check"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Reday Order in Store</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <!-- parent pages-->
                     <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"

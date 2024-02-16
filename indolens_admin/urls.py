@@ -288,6 +288,7 @@ urlpatterns = [
     path('new_orders/store=<str:store>', viewNewOrders, name='new_orders'),
     path('processing_orders/store=<str:store>', viewProcessingOrders, name='processing_orders'),
     path('ready_orders/store=<str:store>', viewReadyOrders, name='ready_orders'),
+    path('store_delivered_orders/store=<str:store>', viewStoreReadyOrders, name='store_delivered_orders'),
     path('completed_orders/store=<str:store>', viewCompletedOrders, name='completed_orders'),
     path('cancelled_orders/store=<str:store>', viewCancelledOrders, name='cancelled_orders'),
     path('refunded_orders/store=<str:store>', viewRefundedOrders, name='refunded_orders'),

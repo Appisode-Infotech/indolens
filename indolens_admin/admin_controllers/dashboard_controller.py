@@ -11,7 +11,7 @@ today = datetime.datetime.now(ist)
 def get_order_stats(status, store_type):
     status_conditions = {
         "New": "= 1",
-        "Completed": "= 5",
+        "Completed": "= 6",
     }
     status_condition = status_conditions[status]
     try:
@@ -42,7 +42,7 @@ def get_sales_stats(store):
             get_order_query = f"""
                                 SELECT IFNULL(SUM(product_total_cost), 0) AS total_sale
                                 FROM sales_order
-                                WHERE created_by_store_type = {store} 
+                                WHERE created_by_store_type = {store} AND order_status != 7
                                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchone()

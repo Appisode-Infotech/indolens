@@ -88,6 +88,7 @@ def getAssignedStores(request):
 
 # ================================= FRANCHISE STORE DASHBOARD ======================================
 def dashboard(request):
+
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
@@ -159,12 +160,21 @@ def readyFranchiseOrders(request):
     else:
         return redirect('franchise_store_login')
 
+def storeDeliverdFranchiseOrders(request):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        orders_list, status_code = franchise_store_orders_controller.get_all_orders('Delivered Store', 'All', assigned_store)
+        return render(request, 'orders/readyFranchiseOrders.html', {"orders_list": orders_list["orders_list"]})
+    else:
+        return redirect('franchise_store_login')
+
 
 def deliveredFranchiseOrders(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        orders_list, status_code = franchise_store_orders_controller.get_all_orders('Completed', 'All', assigned_store)
+        orders_list, status_code = franchise_store_orders_controller.get_all_orders('Delivered Customer', 'All', assigned_store)
         return render(request, 'orders/deliveredFranchiseOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('franchise_store_login')

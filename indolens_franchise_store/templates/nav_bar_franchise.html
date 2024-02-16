@@ -215,6 +215,7 @@
                                     <!-- more inner pages-->
                                 </li>
 
+
                                 <li class="nav-item"><a aria-expanded="false" asd="index"
                                                         class="nav-link {% if 'completed_franchise_store_stock_requests' in request.path %}active{% endif %}"
                                                         data-bs-toggle=""
@@ -320,6 +321,18 @@
                     </a>
                     </div>
                 </li>
+
+                <li class="nav-item"><a aria-expanded="false" asd="index"
+                                                        class="nav-link {% if 'store_delivered_franchise_store_orders' in request.path %}active{% endif %}"
+                                                        data-bs-toggle=""
+                                                        href="{% url 'store_delivered_franchise_store_orders' %}">
+                                    <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="check-square"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Ready Orders in Store</span></span>
+                        </div>
+                                </a>
+                                    <!-- more inner pages-->
+                                </li>
 
                 <li class="nav-item">
                     <!-- parent pages-->

@@ -21,8 +21,9 @@ def get_all_orders(status, pay_status, store):
         "Processing": "= 2",
         "Ready": "= 3",
         "Dispatched": "= 4",
-        "Completed": "= 5",
-        "Cancelled": "= 6",
+        "Delivered Store": "= 5",
+        "Delivered Customer": "= 6",
+        "Cancelled": "= 7",
     }
     status_condition = status_conditions[status]
     payment_status_values = {
@@ -111,7 +112,7 @@ def get_all_store_orders(store_id, store_type):
                 LEFT JOIN franchise_store_employees creator_fs ON so.created_by = creator_fs.employee_id AND so.created_by_store_type = 2
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
-                WHERE so.created_by_store = {store_id} AND so.created_by_store_type = {store_type}
+                WHERE so.created_by_store = {store_id} AND so.created_by_store_type = {store_type} AND so.order_status != 7
                 GROUP BY so.order_id          
                 """
             cursor.execute(get_order_query)

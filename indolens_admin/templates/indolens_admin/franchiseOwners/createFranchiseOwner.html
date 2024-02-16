@@ -128,7 +128,7 @@
 
                             <div class="input-group">
                                 <input class="form-control" type="password" id="password" name="password"
-                                       placeholder="Password" required="required">
+                                       placeholder="Password" required="required" pattern="^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9]).{8,120}$">
                                 <button id="togglePassword" type="button" class="input-group-text"><i
                                         class="far fa-eye" id="togglePasswordIcon"></i></button>
                                 <div class="invalid-feedback">Password is mandatory.</div>

@@ -31,6 +31,7 @@ urlpatterns = [
     path('processing_store_orders/', processingStoreOrders, name='processing_store_orders'),
     path('ready_store_orders/', readyStoreOrders, name='ready_store_orders'),
     path('completed_store_orders/', completedStoreOrders, name='completed_store_orders'),
+    path('delivered_to_store_orders/', DeliveredStoreOrders, name='delivered_to_store_orders'),
     path('cancelled_store_orders/', cancelledStoreOrders, name='cancelled_store_orders'),
     path('refunded_store_orders/', refundedStoreOrders, name='refunded_store_orders'),
     path('order_details_store/orderId=<str:orderId>', orderDetails, name='order_details_store'),
