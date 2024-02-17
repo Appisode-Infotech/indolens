@@ -1,5 +1,6 @@
-from django.http import HttpResponse
-from django.shortcuts import render, redirect
+from django.http import HttpResponse, JsonResponse
+from django.shortcuts import render
+from rest_framework.decorators import api_view
 
 from indolens_admin.admin_controllers import orders_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
@@ -20,3 +21,19 @@ def customerOrderTracking(request, orderId):
 def viewProductDetsils(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
     return render(request, 'Products/viewProductDetails.html', {"product_data": response['product_data']})
+
+
+@api_view(['POST'])
+def get_franchise_vs_ownStore_sale(request):
+    print("case1")
+    response = {
+        "ownStoreSales": [
+            100, 200, 300, 300, 300, 250, 200, 200, 200, 200, 200, 500, 500, 500, 600,
+            700, 800, 900, 1000, 100, 850, 600, 600, 600, 400, 200, 200, 300, 300, 300, 500
+        ],
+        "franchiseStoreSales": [
+            200, 200, 100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 200, 400, 600,
+            600, 600, 800, 1000, 700, 400, 450, 500, 600, 700, 650, 600, 550, 200
+        ]
+    }
+    return JsonResponse(response, status=200)

@@ -460,8 +460,5 @@ urlpatterns = [
 
     path('indolens_admin_setting/', indolensAdminSetting, name='indolens_admin_setting'),
 
-
-
-
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

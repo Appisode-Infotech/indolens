@@ -42,6 +42,8 @@
     <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet"/>
+
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
       if (isRTL) {
@@ -56,6 +58,8 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
+
 
 
 
@@ -114,7 +118,8 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'new_orders' 'Own Stores' %}">{{own_store_new_order}} new orders</a></h4>
+                                        <h4 class="mb-0"><a href="{% url 'new_orders' 'Own Stores' %}">{{own_store_new_order}}
+                                            new orders</a></h4>
                                         <p class="text-800 fs--1 mb-0">From Own Stores </p>
                                     </div>
                                 </div>
@@ -124,7 +129,8 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'Own Stores' %}">{{own_store_delivered_orders}} Delivered</a></h4>
+                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'Own Stores' %}">{{own_store_delivered_orders}}
+                                            Delivered</a></h4>
                                         <p class="text-800 fs--1 mb-0">From Own Stores </p>
                                     </div>
                                 </div>
@@ -150,7 +156,8 @@
                                         height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'Franchise Stores' %}">{{franchise_store_delivered_orders}} Delivered</a></h4>
+                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'Franchise Stores' %}">{{franchise_store_delivered_orders}}
+                                            Delivered</a></h4>
                                         <p class="text-800 fs--1 mb-0">From Franchise Stores </p>
                                     </div>
                                 </div>
@@ -160,7 +167,8 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'manage_out_of_stock' %}">{{out_of_stock}} products</a>
+                                        <h4 class="mb-0"><a href="{% url 'manage_out_of_stock' %}">{{out_of_stock}}
+                                            products</a>
                                         </h4>
                                         <p class="text-800 fs--1 mb-0">Out of stock</p>
                                     </div>
@@ -175,7 +183,8 @@
                                         width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'manage_own_stores' 'All' %}">{{own_store_list|length}} Own stores</a>
+                                        <h4 class="mb-0"><a href="{% url 'manage_own_stores' 'All' %}">{{own_store_list|length}}
+                                            Own stores</a>
                                         </h4>
                                         <p class="text-800 fs--1 mb-0">Indolens owns them</p>
                                     </div>
@@ -187,7 +196,8 @@
                                         height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'manage_Franchise_stores' 'All' %}">{{franchise_store_list|length}} Franchise
+                                        <h4 class="mb-0"><a href="{% url 'manage_Franchise_stores' 'All' %}">{{franchise_store_list|length}}
+                                            Franchise
                                             stores</a>
                                         </h4>
                                         <p class="text-800 fs--1 mb-0">For franchise owners</p>
@@ -203,11 +213,15 @@
                                 <p class="text-700 lh-sm mb-0">Payment received across all channels</p>
                             </div>
                             <div class="col-8 col-sm-4">
-                                <select class="form-select form-select-sm mt-2" id="select-gross-revenue-month">
-                                    <option>Mar 1 - 31, 2022</option>
-                                    <option>April 1 - 30, 2022</option>
-                                    <option>May 1 - 31, 2022</option>
-                                </select>
+
+
+                                <input class="form-control mt-2 datetimepicker flatpickr-input" id="timepicker2"
+                                       type="text" placeholder="dd/mm/yyyy to dd/mm/yyyy"
+                                       onchange="callApiForSalesGraph(this.value);"
+                                       data-options="{&quot;mode&quot;:&quot;range&quot;,&quot;dateFormat&quot;:&quot;d/m/y&quot;,&quot;disableMobile&quot;:true}"
+                                       readonly="readonly">
+
+
                             </div>
                         </div>
                         <div class="echart-total-sales-chart" data-echart-responsive="data-echart-responsive"
@@ -511,160 +525,161 @@
                 </div>
             </div>
             <div data-list='{"valueNames":["slno", "order","total","customer","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":10,"pagination":true}'
-                     id="orderTable">
-                    <h3 class="mb-3">Latest Sales</h3>
-                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
-                        <div class="table-responsive scrollbar mx-n1 px-1">
-                            <table class="table table-sm fs--1 mb-0" id = "myTable">
-                                <thead>
-                                <tr>
-                                    <th class="sort white-space-nowrap align-middle pe-3 slno" data-sort="order" scope="col"
-                                        style="width:5%;">SL NO
-                                    </th>
-                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
-                                        style="width:5%;">ORDER ID
-                                    </th>
-                                    <th class="sort align-middle text-end" data-sort="total" scope="col"
-                                        style="width:6%;">TOTAL
-                                    </th>
-                                    <th class="sort align-middle ps-8" data-sort="customer" scope="col"
-                                        style="width:28%; min-width: 250px;">CUSTOMER
-                                    </th>
-                                    <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
-                                        style="width:10%;">PAYMENT STATUS
-                                    </th>
-                                    <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
-                                        scope="col" style="width:12%; min-width: 200px;">ORDER
-                                        STATUS
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="created_by" scope="col"
-                                        style="width:30%;">CREATED BY
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="created_on" scope="col"
-                                        style="width:30%;">CREATED ON
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
-                                        style="width:30%;">UPDATED BY
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
-                                        style="width:30%;">UPDATED ON
-                                    </th>
+                 id="orderTable">
+                <h3 class="mb-3">Latest Sales</h3>
+                <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                    <div class="table-responsive scrollbar mx-n1 px-1">
+                        <table class="table table-sm fs--1 mb-0" id="myTable">
+                            <thead>
+                            <tr>
+                                <th class="sort white-space-nowrap align-middle pe-3 slno" data-sort="order" scope="col"
+                                    style="width:5%;">SL NO
+                                </th>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
+                                    style="width:5%;">ORDER ID
+                                </th>
+                                <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                    style="width:6%;">TOTAL
+                                </th>
+                                <th class="sort align-middle ps-8" data-sort="customer" scope="col"
+                                    style="width:28%; min-width: 250px;">CUSTOMER
+                                </th>
+                                <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
+                                    style="width:10%;">PAYMENT STATUS
+                                </th>
+                                <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
+                                    scope="col" style="width:12%; min-width: 200px;">ORDER
+                                    STATUS
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="created_by" scope="col"
+                                    style="width:30%;">CREATED BY
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="created_on" scope="col"
+                                    style="width:30%;">CREATED ON
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
+                                    style="width:30%;">UPDATED BY
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
+                                    style="width:30%;">UPDATED ON
+                                </th>
 
-                                </tr>
-                                </thead>
-                                <tbody class="list" id="order-table-body">
-                                {% for order in orders_list %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                            </tr>
+                            </thead>
+                            <tbody class="list" id="order-table-body">
+                            {% for order in orders_list %}
+                            <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                 data-category="{{ order.order_status }}">
-                                    <td class="order align-middle white-space-nowrap py-0 slno"></td>
-                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                              href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
-                                    </td>
-                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        ₹{{order.total_cost}}
-                                    </td>
-                                    <td class="customer align-middle white-space-nowrap ps-8">
-                                        <a class="d-flex align-items-center" href="{% url 'customer_details' order.customer_id %}">
-                                            <div class="avatar avatar-m">
-                                                <div class="avatar-name rounded-circle">
-                                                    <span>{{order.customer_name.0}}</span></div>
-                                            </div>
-                                            <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
-                                        </a>
-                                    </td>
-                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        {% if order.payment_status == 1 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">PENDING</span><span class="ms-1"
-                                                                                        data-feather="check"
-                                                                                        style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.payment_status == 2 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">COMPLETE</span><span class="ms-1"
-                                                                                         data-feather="check"
-                                                                                         style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.payment_status == 3 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">REFUNDED</span><span class="ms-1"
-                                                                                         data-feather="check"
-                                                                                         style="height:12.8px;width:12.8px;"></span></span>
-                                        {% endif %}
-                                    </td>
-                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        {% if order.order_status == 1 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">NEW</span><span class="ms-1" data-feather="check"
+                                <td class="order align-middle white-space-nowrap py-0 slno"></td>
+                                <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                          href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
+                                </td>
+                                <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                    ₹{{order.total_cost}}
+                                </td>
+                                <td class="customer align-middle white-space-nowrap ps-8">
+                                    <a class="d-flex align-items-center"
+                                       href="{% url 'customer_details' order.customer_id %}">
+                                        <div class="avatar avatar-m">
+                                            <div class="avatar-name rounded-circle">
+                                                <span>{{order.customer_name.0}}</span></div>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
+                                    </a>
+                                </td>
+                                <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                    {% if order.payment_status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                            class="badge-label">PENDING</span><span class="ms-1"
+                                                                                    data-feather="check"
                                                                                     style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 2 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PROCESSING</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 3 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">READY</span><span class="ms-1" data-feather="check"
+                                    {% elif order.payment_status == 2 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                            class="badge-label">COMPLETE</span><span class="ms-1"
+                                                                                     data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.payment_status == 3 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                            class="badge-label">REFUNDED</span><span class="ms-1"
+                                                                                     data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    {% endif %}
+                                </td>
+                                <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                    {% if order.order_status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">NEW</span><span class="ms-1" data-feather="check"
+                                                                                style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 2 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">PROCESSING</span><span class="ms-1"
+                                                                                       data-feather="check"
+                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 3 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">READY</span><span class="ms-1" data-feather="check"
+                                                                                  style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 4 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">DISPATCHED</span><span class="ms-1"
+                                                                                       data-feather="check"
+                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 5 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">DELIVERED STORE</span><span class="ms-1"
+                                                                                            data-feather="check"
+                                                                                            style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 6 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
+                                                                                               data-feather="check"
+                                                                                               style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 7 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">CANCELLED</span><span class="ms-1"
+                                                                                      data-feather="check"
                                                                                       style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 4 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DISPATCHED</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 5 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DELIVERED STORE</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 6 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 7 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">CANCELLED</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
-                                        {% endif %}
+                                    {% endif %}
 
-                                    </td>
-                                    <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
-                                    </td>
-                                    <td class="created_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
-                                        {{order.created_on}}
-                                    </td>
-                                    <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
-                                            {{order.updater_name}} </a>
-                                    </td>
-                                    <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
-                                        {{order.updated_on}}
-                                    </td>
-                                </tr>
-                                {% endfor %}
+                                </td>
+                                <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
+                                </td>
+                                <td class="created_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                    {{order.created_on}}
+                                </td>
+                                <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
+                                        {{order.updater_name}} </a>
+                                </td>
+                                <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                    {{order.updated_on}}
+                                </td>
+                            </tr>
+                            {% endfor %}
 
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                        <div class="col-auto d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
+                                                                      href="#!">View all<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
                         </div>
-                        <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
-                            <div class="col-auto d-flex">
-                                <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
-                                   data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
-                                                                          href="#!">View all<span
-                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
-                                    class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
-                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                            </div>
-                            <div class="col-auto d-flex">
-                                <button class="page-link" data-list-pagination="prev"><span
-                                        class="fas fa-chevron-left"></span></button>
-                                <ul class="mb-0 pagination"></ul>
-                                <button class="page-link pe-0" data-list-pagination="next"><span
-                                        class="fas fa-chevron-right"></span></button>
-                            </div>
+                        <div class="col-auto d-flex">
+                            <button class="page-link" data-list-pagination="prev"><span
+                                    class="fas fa-chevron-left"></span></button>
+                            <ul class="mb-0 pagination"></ul>
+                            <button class="page-link pe-0" data-list-pagination="next"><span
+                                    class="fas fa-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
+            </div>
             {% include 'footer.html' %}
         </div>
     </div>
@@ -677,6 +692,7 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
+
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
@@ -690,10 +706,288 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'vendors/echarts/echarts.min.js' %}"></script>
 <script src="{% static 'vendors/chart/chart.min.js' %}"></script>
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6O2CG9zBAksJH4SCgCZlbx3XRWVwzY1E&callback=revenueMapInit"></script>
-<script src="{% static 'js/ecommerce-dashboard.js' %}"></script>
+<!--<script src="{% static 'js/ecommerce-dashboard.js' %}"></script>-->
+<script>
 
+document.addEventListener("DOMContentLoaded", function () {
+    var today = new Date();
+    var thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(today.getDate() - 30);
+
+    var todayFormatted = today.toLocaleDateString('en-GB');
+    var thirtyDaysAgoFormatted = thirtyDaysAgo.toLocaleDateString('en-GB');
+
+    flatpickr("#timepicker2", {
+        mode: "range",
+        dateFormat: "d/m/Y",
+        disableMobile: true,
+        maxDate: "today",
+        defaultDate: [thirtyDaysAgoFormatted, todayFormatted]
+    });
+    var formattedToday = `${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}/${today.getFullYear()}`;
+    var formattedToDate = `${(thirtyDaysAgo.getMonth() + 1).toString().padStart(2, '0')}/${thirtyDaysAgo.getDate().toString().padStart(2, '0')}/${thirtyDaysAgo.getFullYear()}`;
+    const apiEndpoint = '{% url 'get_franchise_vs_ownStore_sale' %}';
+    const requestBody = {
+        toDate: formattedToday,
+        fromDate: formattedToDate,
+        intervalInDays: 30
+    };
+
+    fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Add any additional headers if needed
+        },
+        body: JSON.stringify(requestBody)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // Assuming the response is in JSON format
+        })
+        .then(data => {
+            setUpChart(formattedToday, formattedToDate, 30, data.ownStoreSales, data.franchiseStoreSales);
+            console.log('API Response:', data);
+            // You can use the data here as needed
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+});
+
+
+function setUpChart(fromDate, toDate, interval, ownStoreData, franchiseStoreData) {
+    const { getColor, getData, getDates, getItemFromStore, resize } = window.phoenix.utils;
+    const $totalSalesChart = document.querySelector('.echart-total-sales-chart');
+
+    const dates = getDates(
+        new Date(toDate),
+        new Date(fromDate),
+        1000 * 60 * 60 * 24
+    );
+
+    const tooltipFormatter = params => {
+        const currentDate = window.dayjs(params[0].axisValue);
+        const prevDate = window.dayjs(params[0].axisValue).subtract(1, 'month');
+
+        const result = params.map((param, index) => ({
+            value: param.value,
+            date: index > 0 ? prevDate : currentDate,
+            color: param.color
+        }));
+
+        let tooltipItem = ``;
+        result.forEach((el, index) => {
+            tooltipItem += `<h6 class="fs--1 text-700 ${index > 0 && 'mb-0'
+                }"><span class="fas fa-circle me-2" style="color:${el.color}"></span>
+      ${el.date.format('MMM DD')} : ${el.value}
+    </h6>`;
+        });
+        return `<div class='ms-1'>
+              ${tooltipItem}
+            </div>`;
+    };
+
+    if ($totalSalesChart) {
+        const userOptions = getData($totalSalesChart, 'echarts');
+        const chart = window.echarts.init($totalSalesChart);
+
+        const getDefaultOptions = () => ({
+            color: [getColor('primary'), getColor('info')],
+            tooltip: {
+                trigger: 'axis',
+                padding: 10,
+                backgroundColor: getColor('gray-100'),
+                borderColor: getColor('gray-300'),
+                textStyle: { color: getColor('dark') },
+                borderWidth: 1,
+                transitionDuration: 0,
+                axisPointer: {
+                    type: 'none'
+                },
+                formatter: tooltipFormatter
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: dates,
+                    axisLabel: {
+                        formatter: value => window.dayjs(value).format('DD MMM'),
+                        interval: 13,
+                        showMinLabel: true,
+                        showMaxLabel: false,
+                        color: getColor('gray-800'),
+                        align: 'left',
+                        fontFamily: 'Nunito Sans',
+                        fontWeight: 600,
+                        fontSize: 12.8
+                    },
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: getColor('gray-200')
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: true,
+                        interval: 0,
+                        lineStyle: {
+                            color:
+                                getItemFromStore('phoenixTheme') === 'dark'
+                                    ? getColor('gray-100')
+                                    : getColor('gray-200')
+                        }
+                    },
+                    boundaryGap: false
+                },
+                {
+                    type: 'category',
+                    position: 'bottom',
+                    data: dates,
+                    axisLabel: {
+                        formatter: value => window.dayjs(value).format('DD MMM'),
+                        interval: 130,
+                        showMaxLabel: true,
+                        showMinLabel: false,
+                        color: getColor('gray-800'),
+                        align: 'right',
+                        fontFamily: 'Nunito Sans',
+                        fontWeight: 600,
+                        fontSize: 12.8
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    boundaryGap: false
+                }
+            ],
+            yAxis: {
+                position: 'right',
+                axisPointer: { type: 'none' },
+                axisTick: 'none',
+                splitLine: {
+                    show: false
+                },
+                axisLine: { show: false },
+                axisLabel: { show: false }
+            },
+            series: [
+                {
+                    name: 'd',
+                    type: 'line',
+                    // data: Array.from(Array(30).keys()).map(() =>
+                    //   getRandomNumber(100, 300)
+                    // ),
+                    data: ownStoreData,
+                    showSymbol: false,
+                    symbol: 'circle'
+                },
+                {
+                    name: 'e',
+                    type: 'line',
+                    // data: Array.from(Array(30).keys()).map(() =>
+                    //   getRandomNumber(100, 300)
+                    // ),
+                    data: franchiseStoreData,
+                    // symbol: 'none',
+                    lineStyle: {
+                        type: 'dashed',
+                        width: 1,
+                        color: getColor('info')
+                    },
+                    showSymbol: false,
+                    symbol: 'circle'
+                }
+            ],
+            grid: {
+                right: 2,
+                left: 5,
+                bottom: '20px',
+                top: '2%',
+                containLabel: false
+            },
+            animation: false
+        });
+
+        echartSetOption(chart, userOptions, getDefaultOptions);
+
+        resize(() => {
+            chart.resize();
+        });
+    }
+}
+const { merge } = window._;
+
+const echartSetOption = (chart, userOptions, getDefaultOptions) => {
+    const themeController = document.body;
+    chart.setOption(merge(getDefaultOptions(), userOptions));
+    themeController.addEventListener(
+        'clickControl',
+        ({ detail: { control } }) => {
+            if (control === 'phoenixTheme') {
+                chart.setOption(window._.merge(getDefaultOptions(), userOptions));
+            }
+        }
+    );
+};
+
+
+function callApiForSalesGraph(value) {
+
+    const dateParts = value.split(" to ");
+    const fromDate = formatDate(dateParts[0]);
+    const toDate = formatDate(dateParts[1]);
+    const intervalInMilliseconds = new Date(toDate) - new Date(fromDate);
+    const intervalInDays = Math.floor(intervalInMilliseconds / (1000 * 60 * 60 * 24));
+    const apiEndpoint = '{% url 'get_franchise_vs_ownStore_sale' %}';
+    const requestBody = {
+        toDate: toDate,
+        fromDate: fromDate,
+        intervalInDays: intervalInDays
+    };
+
+    fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Add any additional headers if needed
+        },
+        body: JSON.stringify(requestBody)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // Assuming the response is in JSON format
+        })
+        .then(data => {
+            setUpChart(toDate, fromDate, intervalInDays, data.ownStoreSales, data.franchiseStoreSales);
+            console.log('API Response:', data);
+            // You can use the data here as needed
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+}
+
+function formatDate(inputDate) {
+    const [day, month, year] = inputDate.split("/");
+    const formattedDate = `${month.padStart(2, '0')}/${day.padStart(2, '0')}/${year}`;
+    return formattedDate;
+}
+</script>
 </body>
 </html>
