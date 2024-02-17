@@ -419,8 +419,10 @@
                                                         <input
                                                                 onchange="genBillingInfoObject()"
                                                                 name="estDeliveryDate"
+                                                                min="new Date().toISOString().split('T')[0];"
                                                                 class="form-control datetimepicker flatpickr-input"
                                                                 id="datePicker" type="text" placeholder="dd/mm/yyyy"
+                                                                onfocus="this.minDate = new Date().toISOString().split('T')[0];"
                                                                 data-options="{&quot;disableMobile&quot;:true,&quot;dateFormat&quot;:&quot;d/m/Y&quot;}"
                                                                 readonly="readonly">
                                                                                                                 <div class="invalid-feedback">This field is required.</div>
