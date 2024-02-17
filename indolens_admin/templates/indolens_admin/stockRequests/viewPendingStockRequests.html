@@ -270,7 +270,7 @@
                                             <a class="dropdown-item text-danger"
                                                data-bs-role="Reject request"
                                                data-bs-toggle="modal"
-                                               data-bs-target="#operations_modal"
+                                               data-bs-target="#reject_modal"
                                                data-employee-id="{{ stock.request_id }}"
                                                data-employee-name="{{ stock.product_name }}"
                                                data-action-type="reject"
@@ -306,6 +306,46 @@
                         </div>
                     </div>
                 </div>
+
+                <div class="modal fade" id="reject_modal" tabindex="-1"
+                     aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+                            <div class="modal-header bg-primary">
+                                <h5 class="modal-title text-white" id="modal_title2">Reject request</h5>
+                                <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                                        aria-label="Close">
+                                    <span class="fas fa-times fs--1 text-white"></span>
+                                </button>
+                            </div>
+                            <div class="modal-body">
+                                <p id="modal_content2"></p>
+                                <!-- Form for Allocate Store -->
+                                <form id="reject_request_form" class="row g-3 needs-validation reject_request_form" method="post"
+                                      novalidate="novalidate">
+                                    {% csrf_token %}
+                                    <div class="mb2 col-12 mt-3">
+                                        <h5 class="mb-3">Reason</h5>
+
+                                        <textarea
+                                                required
+                                                name="reject_reason" class="form-control" id="exampleTextarea"
+                                                rows="3"></textarea>
+                                        <div class="invalid-feedback">This field is required.</div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button class="btn btn-primary modal-submit" type="submit">Submit
+                                        </button>
+                                        <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
+                                            Cancel
+                                        </button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
                                                                 {% include 'modal_warning.html' %}
 
                                                             {% include 'modal_master_view.html' %}
@@ -360,6 +400,29 @@
 <script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 <script src="{% static 'js/custom_modals.js' %}"></script>
 
+<script>
+ document.addEventListener("DOMContentLoaded", function () {
+    var modal = document.querySelector('#reject_modal');
+    var modalTitle = document.querySelector('#modal_title2');
+    var modalContent = document.querySelector('#modal_content2');
+
+    document.body.addEventListener('click', function (event) {
+        if (event.target.matches('[data-bs-target="#reject_modal"]')) {
+            var empId = event.target.getAttribute('data-employee-id');
+            var empName = event.target.getAttribute('data-employee-name');
+            var actionType = event.target.getAttribute('data-action-type');
+            var actionUrl = event.target.getAttribute('data-action-url');
+            var role = event.target.getAttribute('data-bs-role');
+
+            modalTitle.textContent = actionType === "accept" ? "" + role + " - " + empName : "" + role + " - " + empName;
+            modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})<br>Requested by store : <strong>${event.target.getAttribute('data-action-by')}</strong><br>Requested by store type : <strong>${event.target.getAttribute('data-action-store-type') === "1" ? 'Own store' : 'Franchise store'}</strong>`;
+
+            document.getElementById('reject_request_form').action = actionUrl;
+        }
+    });
+});
+
+</script>
 </body>
 
 </html>
