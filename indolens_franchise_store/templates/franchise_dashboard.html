@@ -83,7 +83,18 @@
                     <div class="col-12 col-xxl-6">
                         <div class="mb-4">
                             <h2 class="mb-2">Hi {{request.session.name}}</h2>
-                            <h5 class="text-700 fw-semi-bold">Here’s what’s going on at your business right now</h5>
+                            <h5 class="text-700 fw-semi-bold">
+                                {% if request.session.role == 1 %}
+                                Store Manager
+                                {% elif request.session.role == 2 %}
+                                Store Optometry
+                                {% elif request.session.role == 3 %}
+                                Sales Executive
+                                {% else %}
+                                Unknown Role
+                                {% endif %}
+                                : {{request.session.store_name}}
+                            </h5>
                         </div>
 
                         <div class="row align-items-center g-4 mt-2">
