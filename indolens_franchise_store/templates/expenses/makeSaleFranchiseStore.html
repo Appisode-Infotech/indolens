@@ -85,6 +85,8 @@
     padding: 8px;
 }
 
+
+
     </style>
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -100,6 +102,8 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
+
 
 
 
@@ -153,9 +157,9 @@
                 {% csrf_token %}
 
                 <input type="hidden" name="cartData">
-                <input type="hidden"  name="customerData">
-                <input type="hidden"  name="billingDetailsData">
-                <input type="hidden"  id="linkedData" name="linkedData">
+                <input type="hidden" name="customerData">
+                <input type="hidden" name="billingDetailsData">
+                <input type="hidden" id="linkedData" name="linkedData">
             </form>
             <div class="col-12 col-xxl-6">
                 <div class="card shadow-none border border-300 my-4" data-component-card="data-component-card">
@@ -171,7 +175,7 @@
                             <div class="card theme-wizard mb-5" data-theme-wizard="data-theme-wizard">
                                 <div class="card-header bg-100 pt-3 pb-2 border-bottom-0">
                                     <ul class="nav justify-content-between nav-wizard">
-<!--                                                                commented in a tag below                                        data-bs-toggle="tab"-->
+                                        <!--                                                                commented in a tag below                                        data-bs-toggle="tab"-->
 
                                         <li class="nav-item"><a class="nav-link active fw-semi-bold"
                                                                 href="#bootstrap-wizard-validation-tab1"
@@ -184,7 +188,7 @@
 
                                         <li class="nav-item"><a class="nav-link fw-semi-bold"
                                                                 href="#bootstrap-wizard-validation-tab2"
-                                                               data-wizard-step="2">
+                                                                data-wizard-step="2">
                                             <div class="text-center d-inline-block"><span
                                                     class="nav-item-circle-parent"><span class="nav-item-circle"><span
                                                     class="fas fa-user"></span></span></span><span
@@ -271,7 +275,8 @@
                                                                    placeholder="Name" maxlength="70"
                                                                    required="required"
                                                                    onchange="genCustomerObject()"
-                                                                   type="text" value=""/>
+                                                                   type="text" value=""
+                                                                   oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
                                                         <div class="mb2 col-6">
@@ -326,7 +331,7 @@
                                                                    placeholder="City"
                                                                    required="required"
                                                                    onchange="genCustomerObject()"
-
+                                                                   oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"
                                                                    type="text" value=""/>
                                                             <div class="invalid-feedback">This field is required.</div>
                                                         </div>
@@ -405,7 +410,7 @@
                                                                 name="assignedLab" class="form-select"
                                                                 aria-label="Default select example"
                                                                 required="required">
-                                                            <option value="" selected>Please select lab</option>
+                                                            <option value="0" selected>Please select lab</option>
                                                             {% for lab in lab_list %}
                                                             <option value="{{lab.lab_id}}">{{lab.lab_name}}</option>
                                                             {% endfor %}
@@ -419,37 +424,41 @@
                                                                 onchange="genBillingInfoObject()"
                                                                 name="estDeliveryDate"
                                                                 class="form-control datetimepicker flatpickr-input"
-                                                                id="datePicker" type="text" placeholder="dd/mm/yyyy"
+                                                                id="datePicker"
+                                                                type="text"
+                                                                placeholder="dd/mm/yyyy"
                                                                 data-options="{&quot;disableMobile&quot;:true,&quot;dateFormat&quot;:&quot;d/m/Y&quot;}"
-                                                                readonly="readonly">
-                                                                                                                <div class="invalid-feedback">This field is required.</div>
+                                                                readonly="readonly"
+                                                        >
+                                                        <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                                     <div class="mb2 col-6">
-                                                        <h5 class="mb-3">Advance Amount Paid</h5>
+                                                        <h5 class="mb-3">Advance Amount Paid(₹)</h5>
                                                         <input
                                                                 onchange="genBillingInfoObject()"
                                                                 value="0" required
                                                                 name="amount_paid"
                                                                 class="form-control"
-                                                                type="text" placeholder="&#8377;">
-                                                                                                                <div class="invalid-feedback">This field is required.</div>
+                                                                type="number" min="1" placeholder="&#8377;">
+                                                        <div class="invalid-feedback">This field is required.</div>
                                                     </div>
 
 
                                                 </div>
 
-                                                                <div id="category1Container"></div>
+                                                <div id="category1Container"></div>
 
 
-                                                    <div class="mb2 col-12 mt-3">
-                                                       <h5 class="mb-3">Sale notes</h5>
+                                                <div class="mb2 col-12 mt-3">
+                                                    <h5 class="mb-3">Sale notes</h5>
 
-                                                           <textarea
-                                                                   required
-                                                                   onchange="genBillingInfoObject()"
-                                                                   name="sale_note" class="form-control" id="exampleTextarea" rows="3"></textarea>
-                                                                                                                <div class="invalid-feedback">This field is required.</div>
-                                                    </div>
+                                                    <textarea
+                                                            required
+                                                            onchange="genBillingInfoObject()"
+                                                            name="sale_note" class="form-control" id="exampleTextarea"
+                                                            rows="3"></textarea>
+                                                    <div class="invalid-feedback">This field is required.</div>
+                                                </div>
                                             </form>
                                         </div>
                                         <div class="tab-pane" role="tabpanel"
@@ -461,7 +470,9 @@
 
                                             <!--                                            customer details end-->
 
-                                            <button class="mt-3 btn btn-primary w-100 mb-3" id="confirmSale">Confirm Sale</button>
+                                            <button class="mt-3 btn btn-primary w-100 mb-3" id="confirmSale">Confirm
+                                                Sale
+                                            </button>
 
                                         </div>
 
@@ -502,6 +513,8 @@
           navbarVertical.classList.add('navbar-darker');
         }
 
+
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -527,30 +540,16 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-  var estDeliveryDateInputs = document.getElementsByName('estDeliveryDate');
-
-  // Check if there are elements with the specified name
-  if (estDeliveryDateInputs.length > 0) {
-    var estDeliveryDateInput = estDeliveryDateInputs[0];
-
-    // Get the current date
-    var currentDate = new Date();
-
-    // Calculate the date 3 days from today
-    var defaultDate = new Date();
-    defaultDate.setDate(currentDate.getDate() + 3);
-
-    // Format the default date as dd/mm/yyyy
-    var day = ('0' + defaultDate.getDate()).slice(-2);
-    var month = ('0' + (defaultDate.getMonth() + 1)).slice(-2);
-    var year = defaultDate.getFullYear();
-    var formattedDefaultDate = day + '/' + month + '/' + year;
-
-    // Set the default value to the input element
-    estDeliveryDateInput.value = formattedDefaultDate;
-  }
-
+    document.addEventListener('DOMContentLoaded', function () {
+        flatpickr("#datePicker", {
+            dateFormat: "d/m/Y",
+            disableMobile: true,
+            minDate: "today",
+            defaultDate: new Date().fp_incr(3)
+        });
+    });
 </script>
+
 {{ lens_list|json_script:"lensList" }}
 {{ contact_lens_list|json_script:"contactLensList" }}
 {{ rx_contact_lens_list|json_script:"rxContactLensList" }}
@@ -619,7 +618,7 @@ function addLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price</h5>
+            <h5 class="mb-3">Unit Price(₹)</h5>
             <input class="form-control" name="unit_price[${productCardCount}]" placeholder="Unit Price" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
@@ -656,7 +655,7 @@ function addLensContainer() {
         <div class="mb2 col-4">
             <h5 class="mb-3">Purchase Quantity</h5>
             <input class="form-control" name="purchase_qty[${productCardCount}]" placeholder="Purchase quantity" required="required" min="1"
-                type="text" value="" />
+                type="number" value="" />
             <div class="invalid-feedback">This field should be 1 in
                 minimum and should be less than available quantity.
             </div>
@@ -812,27 +811,32 @@ function addLensContainer() {
                     <tr>
                         <th scope="row">Right</th>
                         <td class="col-6 col-lg-2">
-                            <input required name="rightLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input required name="rightLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input required name="rightLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input required name="rightLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input required name="rightLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input required name="rightLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input required name="rightLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input required name="rightLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input required name="rightLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input required name="rightLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
@@ -840,27 +844,32 @@ function addLensContainer() {
                      <tr>
                         <th scope="row">Left</th>
                         <td class="col-6 col-lg-2">
-                            <input required name="leftLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input required name="leftLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input required name="leftLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example">
+                            <input required name="leftLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input required name="leftLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input required name="leftLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input required name="leftLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input required name="leftLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input required name="leftLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example" />
+                            <input required name="leftLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
                         </td>
                     </tr>
@@ -997,7 +1006,7 @@ function addStockContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price</h5>
+            <h5 class="mb-3">Unit Price(₹)</h5>
             <input class="form-control"
                    name="unit_price[${productCardCount}]"
                    placeholder="Unit Price"
@@ -1023,7 +1032,7 @@ function addStockContactLensContainer() {
                    placeholder="Purchase quantity"
                    required="required"
                    min="1"
-                   type="text" value=""/>
+                   type="number" value=""/>
             <div class="invalid-feedback">This field should be 1 in
                 minimum and should be less than available quantity.
             </div>
@@ -1072,26 +1081,30 @@ function addStockContactLensContainer() {
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_power[${productCardCount}]"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_bc[${productCardCount}]"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example">
                     </td>
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_dia[${productCardCount}]"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_cylinder[${productCardCount}]"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_axis[${productCardCount}]"
-
+                        oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                class="form-control"
                                aria-label="Default select example"/>
                     </td>
@@ -1236,7 +1249,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price</h5>
+            <h5 class="mb-3">Unit Price(₹)</h5>
             <input class="form-control"
                    name="unit_price[${productCardCount}]"
                    placeholder="Unit Price"
@@ -1262,7 +1275,7 @@ function addRxContactLensContainer() {
                    placeholder="Purchase quantity"
                    required="required"
                    min="1"
-                   type="text" value=""/>
+                   type="number" value=""/>
             <div class="invalid-feedback">This field should be 1 in
                 minimum and should be less than available quantity.
             </div>
@@ -1446,7 +1459,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price</h5>
+            <h5 class="mb-3">Unit Price(₹)</h5>
             <input class="form-control"
                    name="unit_price[${productCardCount}]"
                    placeholder="Unit Price"
@@ -1472,7 +1485,7 @@ function addOtherProductsContainer() {
                    placeholder="Purchase quantity"
                    required="required"
                    min="1"
-                   type="text" value=""/>
+                   type="number" value=""/>
             <div class="invalid-feedback">This field should be 1 in
                 minimum and should be less than available quantity.
             </div>
@@ -1521,6 +1534,8 @@ function removeProductCard(removeButton) {
         getProductsData();
     }
 }
+
+
 
 </script>
 <script>
@@ -1642,6 +1657,8 @@ document.getElementById('confirmSale').addEventListener('click', function () {
     // Simulate loading delay (you can replace this with actual loading logic)
     form.submit();
 });
+
+
 </script>
 
 <script>
@@ -1682,6 +1699,7 @@ function updateLensProductFields(selectElement, cardIndex) {
     productNameField.value = selectedProduct?.product_name ?? '';
     productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct?.product_quantity;
 
     if (selectedProduct.discount > 0) {
         discountCheckDiv.style.display = 'block';
@@ -1785,6 +1803,7 @@ function updateContactLensProductFields(selectElement, cardIndex) {
     productNameField.value = selectedProduct?.product_name ?? '';
     productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct?.store_product_quantity;
 
     clPowerField.value = selectedProduct?.power_attribute.power ?? '';
     clBcField.value = selectedProduct?.power_attribute.bc ?? '';
@@ -1868,6 +1887,7 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
     productNameField.value = selectedProduct?.product_name ?? '';
     productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct?.product_quantity;
 
     if (selectedProduct.discount > 0) {
         discountCheckDiv.style.display = 'block';
@@ -1934,6 +1954,7 @@ function updateOtherProductFields(selectElement, cardIndex) {
     productCategoryIdField.value = selectedProduct?.category_id ?? '';
     productNameField.value = selectedProduct?.product_name ?? '';
     productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct?.store_product_quantity;
 
 
     if (selectedProduct.discount > 0) {
@@ -1972,6 +1993,8 @@ function updateOtherProductFields(selectElement, cardIndex) {
     });
 
 }
+
+
 </script>
 <script>
 
@@ -2022,7 +2045,7 @@ function getProductsData() {
         }, 0);
 
         // Display total sum in the <p> element with id 'totalSum'
-        document.getElementById('totalSum').textContent = "Billing amount: " + totalSum.toFixed(2);
+        document.getElementById('totalSum').textContent = "Billing amount: ₹" + totalSum.toFixed(2);
 
         // Display total number of products in the <p> element with id 'totalProducts'
         document.getElementById('totalProducts').textContent = "Total Products: " + productsArray.length;
@@ -2211,6 +2234,8 @@ function getProductsData() {
         category1Container.appendChild(productCategoryDiv);
     }
 }
+
+
 
 
 </script>

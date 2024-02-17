@@ -35,8 +35,10 @@ urlpatterns = [
     path(
         'manage_Franchise_stores/enable_disable_franchise_store/storeId=<int:franchiseStoreId>/status=<int:status>/route=<str:route>',
         enableDisableFranchiseStore, name='enable_disable_franchise_store'),
+
     # inventory management
     path('manage_out_of_stock/', manageCentralInventoryOutOfStock, name='manage_out_of_stock'),
+    path('download_product_catalog/', DownloadCentralInventoryProductsCatalog, name='download_product_catalog'),
     path('manage_central_inventory_products/status=<str:status>', manageCentralInventoryProducts,
          name='manage_central_inventory_products'),
     path('add_products/', centralInventoryAddProducts, name='add_products'),

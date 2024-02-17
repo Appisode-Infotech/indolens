@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens Products Catalog</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!--    Stylesheets-->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <!--    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">-->
+    <!--    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">-->
+    <!--    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">-->
+    <!--    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">-->
+
+
+    <style>
+        /* Reset some default styles */
+body, h1, h2, h3, p, table {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+}
+
+/* Main container styling */
+.main {
+    background-color: #f4f4f4;
+}
+
+/* Header section styling */
+.content {
+    padding: 20px;
+}
+
+/* Invoice details section styling */
+.container-small {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+/* Button styling */
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Authorized Signatory section styling */
+.text-end h4 {
+    margin-top: 20px;
+}
+
+/* Terms & Conditions section styling */
+.py-4 p {
+    line-height: 1.5;
+}
+
+/* Footer styling */
+.d-flex.justify-content-center.mb-3 {
+    margin-top: 20px;
+}
+
+/* Adjustments for responsiveness */
+@media (max-width: 768px) {
+    .container-small {
+        padding: 15px;
+    }
+
+    .table th, .table td {
+        padding: 8px;
+    }
+}
+
+
+
+
+
+
+
+
+
+    </style>
+
+
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main>
+    <div class="container-fluid px-3">
+        <div class="mb-3 mt-3">
+
+            <div style="display: flex; justify-content: space-between; align-items: center; padding: 20px;">
+                <div>
+                    <h2 style="margin: 0;">Products Catalog</h2>
+                </div>
+                <div>
+                    <button style="background-color: #3498db; color: #fff; padding: 10px; border: none; cursor: pointer;"
+                            onclick="window.print()">
+                        <span style="font-size: 1.5em;" class="fa-solid fa-print me-sm-2"></span>
+                        <span style="display: none; font-size: 1.2em;">Print</span>
+                    </button>
+                </div>
+
+            </div>
+
+
+            <div>
+                <div>
+                    <table class="table fs--1 mb-0">
+                        <thead>
+                        <tr>
+                            <th class="sort white-space-nowrap align-middle ps-0 text-center" data-sort="slno"
+                                scope="col" style="width:350px;">PRODUCT ID
+                            </th>
+                            <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
+                                scope="col" style="width:350px;">PRODUCT QR
+                            </th>
+                            <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
+                                scope="col" style="width:350px;">PRODUCT NAME
+                            </th>
+                            <th class="sort align-middle ps-4" data-sort="price" scope="col"
+                                style="width:150px;">SALE PRICE
+                            </th>
+                            <th class="sort align-middle ps-4" data-sort="price" scope="col"
+                                style="width:150px;">FRANCHISE SALE PRICE
+                            </th>
+                            <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                style="width:150px;">CATEGORY
+                            </th>
+                            <th class="sort align-middle ps-4" data-sort="brand" scope="col"
+                                style="width:150px;">BRAND
+                            </th>
+                        </tr>
+                        </thead>
+                        <tbody class="list" id="products-table-body">
+
+                        {% for product in product_list %}
+                        <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                            data-category="{{ product.category_name }}">
+                            <td class="order align-middle white-space-nowrap py-0 text-center slno">
+                                {{product.product_id}}
+                            </td>
+                            <td class="align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                <a href="{{ MEDIA_URL }}{{ product.product_qr_code }}" target="_blank">
+                                    <div class="avatar avatar-m">
+                                        <img alt="..." data-dz-thumbnail="data-dz-thumbnail"
+                                             onerror="this.src = 'http://via.placeholder.com/100x100';"
+                                             src="{{ MEDIA_URL }}{{ product.product_qr_code }}"
+                                             style="width: 70px; height: 70px;"/>
+                                    </div>
+                                </a>
+                            </td>
+
+                            <td class="product align-middle ps-4"><a
+                                    class="fw-semi-bold line-clamp-3 mb-0"
+                                    href="{% url 'view_products' product.product_id %}">{{product.product_name}} </a>
+                            </td>
+                            <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                ₹{{product.sale_price}}
+                            </td>
+                            <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                ₹{{product.franchise_sale_price}}
+                            </td>
+                            <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                {{product.category_name}}
+                            </td>
+                            <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                {{product.brand_name}}
+                            </td>
+                        </tr>
+                        {% endfor %}
+
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+</body>
+</html>

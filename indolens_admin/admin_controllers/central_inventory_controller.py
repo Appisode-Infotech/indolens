@@ -6,6 +6,7 @@ import pytz
 from PIL import ImageFont
 from django.db import connection
 
+from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_admin.admin_controllers.master_category_controller import get_all_central_inventory_category
 from indolens_admin.admin_models.admin_resp_model.central_inventory_product_resp_model import get_products
 from indolens_admin.admin_models.admin_resp_model.master_brand_resp_model import get_brands
@@ -154,8 +155,9 @@ def add_central_inventory_products(product_obj, file, power_attributes):
             logo_resized = logo_with_white_background.resize(
                 (basewidth, hsize), Image.ANTIALIAS)
 
+            QRdata = f""" {get_base_url()}/view_product_detail/productId={productId}"""
             QRcode = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H)
-            QRcode.add_data(productId)
+            QRcode.add_data(QRdata)
             QRcode.make()
             QRcolor = '#000000'
 
