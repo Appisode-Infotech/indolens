@@ -62,6 +62,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -98,7 +99,8 @@
                             <div class="d-flex flex-wrap">
                                 <label></label>
                                 {% for image in product_data.product_images %}
-                                <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3" style="max-width:125px">
+                                <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3"
+                                     style="max-width:125px">
                                     <div class="border border-300 p-2 rounded-2 me-2 mb-2">
                                         <a href="{{ MEDIA_URL }}{{ image }}" target="_blank">
                                             <img class="rounded-2 dz-image" width="100px"
@@ -132,46 +134,24 @@
                     </div>
                 </div>
 
-                <form action="{% url 'add_product_image' product_data.product_id %}" class="mb-9 needs-validation" method="post" novalidate="novalidate"
-                  enctype="multipart/form-data">
-                {% csrf_token %}
+                <form action="{% url 'add_product_image' product_data.product_id %}" class="mb-9 needs-validation"
+                      method="post" novalidate="novalidate"
+                      enctype="multipart/form-data">
+                    {% csrf_token %}
                     <h4 class="mb-3">Upload Images</h4>
-                        <div class="mb-3 col-9">
-                            <h5 class="mb-3">Upload product images(Can choose multiple)</h5>
-                            <input  required class="form-control" id="document1" multiple="multiple"
-                                   name="productImages"
-                                   type="file" accept="image/*"/>
-                            <div class="invalid-feedback">Please upload at least one picture.</div>
-                        </div>
-                        <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
+                    <div class="mb-3 col-9">
+                        <h5 class="mb-3">Upload product images(Can choose multiple)</h5>
+                        <input required class="form-control" id="document1" multiple="multiple"
+                               name="productImages"
+                               type="file" accept="image/*"/>
+                        <div class="invalid-feedback">Please upload at least one picture.</div>
+                    </div>
+                    <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column" id="documentPreviews"></div>
                     <button class="btn btn-primary mb-2 mb-sm-0" type="submit">Upload</button>
                 </form>
 
 
-
-                <div class="modal fade" id="delete_document" tabindex="-1"
-                     aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header bg-primary">
-                                <h5 class="modal-title text-white" id="staticBackdropLabel"></h5>
-                                <button class="btn p-1" type="button" data-bs-dismiss="modal"
-                                        aria-label="Close">
-                                    <span class="fas fa-times fs--1 text-white"></span>
-                                </button>
-                            </div>
-                            <div class="modal-body">
-                                <p class="text-700 lh-lg mb-0"></p>
-                            </div>
-                            <div class="modal-footer">
-                                <a class="btn btn-primary modal-submit" type="button">Confirm</a>
-                                <button class="btn btn-outline-primary" type="button" data-bs-dismiss="modal">
-                                    Cancel
-                                </button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% include 'delete_document_modal.html' %}
             </div>
             {% include 'footer.html' %}
 
@@ -225,6 +205,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
 
 
 

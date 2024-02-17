@@ -332,17 +332,18 @@ document.addEventListener("DOMContentLoaded", function () {
     var productIdField = modal.querySelector('#product_id');
     var targetStoreField = modal.querySelector('#request_to_store_id');
     var unitCostField = modal.querySelector('#unit_cost');
+    document.body.addEventListener('click', function (event) {
+        enableDisableButtons.forEach(function (button) {
+            button.addEventListener('click', function (event) {
 
-    enableDisableButtons.forEach(function (button) {
-        button.addEventListener('click', function (event) {
+                var productId = event.currentTarget.getAttribute('data-bs-product-id');
+                var targetStore = event.currentTarget.getAttribute('data-bs-target-store-id');
+                var unitCost = event.currentTarget.getAttribute('data-bs-unit-cost');
 
-            var productId = event.currentTarget.getAttribute('data-bs-product-id');
-            var targetStore = event.currentTarget.getAttribute('data-bs-target-store-id');
-            var unitCost = event.currentTarget.getAttribute('data-bs-unit-cost');
-
-            productIdField.value = productId;
-            targetStoreField.value = targetStore;
-            unitCostField.value = unitCost;
+                productIdField.value = productId;
+                targetStoreField.value = targetStore;
+                unitCostField.value = unitCost;
+            });
         });
     });
 });
