@@ -1083,26 +1083,30 @@ function addStockContactLensContainer() {
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_power[${productCardCount}]"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_bc[${productCardCount}]"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example">
                     </td>
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_dia[${productCardCount}]"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_cylinder[${productCardCount}]"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
                     <td class="col-4 col-lg-2">
                         <input readonly name="cl_axis[${productCardCount}]"
-
+                        oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                class="form-control"
                                aria-label="Default select example"/>
                     </td>
