@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en-US" dir="ltr">
 
-  <head>
+<head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -53,158 +53,288 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
+
     </script>
-  </head>
+</head>
 
 
-  <body>
+<body>
 
-    <!-- ===============================================-->
-    <!--    Main Content-->
-    <!-- ===============================================-->
-    <main class="main" id="top">
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
 
 
-      <!-- ============================================-->
-      <!-- <section> begin ============================-->
-      <section class="pt-5 pb-9">
+    <!-- ============================================-->
+    <!-- <section> begin ============================-->
+    <section class="pt-5 pb-9">
 
         <div class="container-small cart">
-          <div class="d-flex flex-wrap justify-content-between align-items-end mb-5">
-            <div>
-              <h2>Order {{order_detail.0.order_id}} Status</h2>
-              <p class="text-800 mb-0">Order Date: <span class="ms-sm-1">{{order_detail.0.created_on}}</span></p>
+            <div class="d-flex flex-wrap justify-content-between align-items-end mb-5">
+                <div>
+                    <h2>Order {{order_detail.0.order_id}} Status</h2>
+                    <p class="text-800 mb-0">Order Date: <span class="ms-sm-1">{{order_detail.0.created_on}}</span></p>
+                </div>
+                <button class="btn btn-outline-primary mt-3"><span class="fa-solid fa-phone me-2"></span>Call Support
+                </button>
             </div>
-            <button class="btn btn-outline-primary mt-3"><span class="fa-solid fa-phone me-2"></span>Call Support</button>
-          </div>
-          <div class="row g-9">
-            <div class="col-12 col-lg-6">
-              <div class="border border-300 rounded-3 overflow-hidden h-100">
-                <div class="googlemap h-100 min-vh-50" data-googlemap data-latlng="40.7228022,-74.0020158" data-scrollwheel="false" data-zoom="15"></div>
-              </div>
-            </div>
+            <div class="row g-9">
+                <div class="col-12 col-lg-6">
+                    <div class="border border-300 rounded-3 overflow-hidden h-100">
+                        <div class="googlemap h-100 min-vh-50" data-googlemap data-latlng="40.7228022,-74.0020158"
+                             data-scrollwheel="false" data-zoom="15"></div>
+                    </div>
+                </div>
 
-            <div class="col-12 col-lg-6">
-              <div class="timeline-vertical">
-                <div class="timeline-item">
-                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
-                    <div class="col-12 col-md-auto d-flex">
-                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
-                        <p class="fs--2 fw-semi-bold text-700 mb-0">23 August, 2023<br class="d-none d-md-block"> 10:30 AM</p>
-                      </div>
-                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
-                        <div class="icon-item icon-item-sm bg-success dark__bg-success"><span class="fa-solid fa-check text-white dark__text-white fs--2"></span></div><span class="timeline-bar border-end border-success"></span>
-                      </div>
+                <div class="col-12 col-lg-6">
+                    <div id="timelineDiv" class="timelineDiv timeline-vertical">
+                        <!--                        <div class="timeline-item">-->
+                        <!--                            <div class="row g-md-3 align-items-center mb-8 mb-lg-10">-->
+                        <!--                                <div class="col-12 col-md-auto d-flex">-->
+                        <!--                                    <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">-->
+                        <!--                                        <p class="fs&#45;&#45;2 fw-semi-bold text-700 mb-0">23 August, 2023<br-->
+                        <!--                                                class="d-none d-md-block"> 10:30 AM</p>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">-->
+                        <!--                                        <div class="icon-item icon-item-sm bg-success dark__bg-success"><span-->
+                        <!--                                                class="fa-solid fa-check text-white dark__text-white fs&#45;&#45;2"></span>-->
+                        <!--                                        </div>-->
+                        <!--                                        <span class="timeline-bar border-end border-success"></span>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col">-->
+                        <!--                                    <div class="timeline-item-content ps-6 ps-md-3">-->
+                        <!--                                        <h4>Order is processing</h4>-->
+                        <!--                                        <p class="fs&#45;&#45;1 text-800 mb-0">Your package is ready for the seller to-->
+                        <!--                                            prepare.</p>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="timeline-item">-->
+                        <!--                            <div class="row g-md-3 align-items-center mb-8 mb-lg-10">-->
+                        <!--                                <div class="col-12 col-md-auto d-flex">-->
+                        <!--                                    <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">-->
+                        <!--                                        <p class="fs&#45;&#45;2 fw-semi-bold text-700 mb-0">25 August, 2023<br-->
+                        <!--                                                class="d-none d-md-block"> 11:30 AM</p>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">-->
+                        <!--                                        <div class="icon-item icon-item-sm bg-success dark__bg-success"><span-->
+                        <!--                                                class="fa-solid fa-check text-white dark__text-white fs&#45;&#45;2"></span>-->
+                        <!--                                        </div>-->
+                        <!--                                        <span class="timeline-bar border-end border-warning"></span>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col">-->
+                        <!--                                    <div class="timeline-item-content ps-6 ps-md-3">-->
+                        <!--                                        <h4>Picked Up</h4>-->
+                        <!--                                        <p class="fs&#45;&#45;1 text-800 mb-0">Your package has been picked up from the-->
+                        <!--                                            seller.</p>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="timeline-item">-->
+                        <!--                            <div class="row g-md-3 align-items-center mb-8 mb-lg-10">-->
+                        <!--                                <div class="col-12 col-md-auto d-flex">-->
+                        <!--                                    <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">-->
+                        <!--                                        <p class="fs&#45;&#45;2 fw-semi-bold text-700 mb-0">27 August, 2023<br-->
+                        <!--                                                class="d-none d-md-block"> 6:30 AM</p>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">-->
+                        <!--                                        <div class="icon-item icon-item-sm bg-warning dark__bg-warning"><span-->
+                        <!--                                                class="fa-solid fa-truck-ramp-box text-white dark__text-white fs&#45;&#45;2"></span>-->
+                        <!--                                        </div>-->
+                        <!--                                        <span class="timeline-bar border-end border-dashed border-400"></span>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col">-->
+                        <!--                                    <div class="timeline-item-content ps-6 ps-md-3">-->
+                        <!--                                        <h4>Ready to Ship</h4>-->
+                        <!--                                        <p class="fs&#45;&#45;1 text-800 mb-0">Your package is now ready to be shipped.</p>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="timeline-item">-->
+                        <!--                            <div class="row g-md-3 align-items-center mb-8 mb-lg-10">-->
+                        <!--                                <div class="col-12 col-md-auto d-flex">-->
+                        <!--                                    <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">-->
+                        <!--                                        <p class="fs&#45;&#45;2 fw-semi-bold text-700 mb-0">Estimated time<br-->
+                        <!--                                                class="d-none d-md-block"> 29 August, 2023</p>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">-->
+                        <!--                                        <div class="icon-item icon-item-sm bg-400"><span-->
+                        <!--                                                class="fa-solid fa-truck text-white dark__text-white fs&#45;&#45;2"></span>-->
+                        <!--                                        </div>-->
+                        <!--                                        <span class="timeline-bar border-end border-dashed border-400"></span>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col">-->
+                        <!--                                    <div class="timeline-item-content ps-6 ps-md-3">-->
+                        <!--                                        <h4>Shipped</h4>-->
+                        <!--                                        <p class="fs&#45;&#45;1 text-800 mb-0">Pending</p>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
+                        <!--                        <div class="timeline-item">-->
+                        <!--                            <div class="row g-md-3 align-items-center">-->
+                        <!--                                <div class="col-12 col-md-auto d-flex">-->
+                        <!--                                    <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">-->
+                        <!--                                        <p class="fs&#45;&#45;2 fw-semi-bold text-700 mb-0">Estimated time<br-->
+                        <!--                                                class="d-none d-md-block"> 30 August, 2023</p>-->
+                        <!--                                    </div>-->
+                        <!--                                    <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">-->
+                        <!--                                        <div class="icon-item icon-item-sm bg-400"><span-->
+                        <!--                                                class="fa-solid fa-truck-fast text-white dark__text-white fs&#45;&#45;2"></span>-->
+                        <!--                                        </div>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                                <div class="col">-->
+                        <!--                                    <div class="timeline-item-content ps-6 ps-md-3">-->
+                        <!--                                        <h4>Delivered</h4>-->
+                        <!--                                        <p class="fs&#45;&#45;1 text-800 mb-0">Pending</p>-->
+                        <!--                                    </div>-->
+                        <!--                                </div>-->
+                        <!--                            </div>-->
+                        <!--                        </div>-->
                     </div>
-                    <div class="col">
-                      <div class="timeline-item-content ps-6 ps-md-3">
-                        <h4>Order is processing</h4>
-                        <p class="fs--1 text-800 mb-0">Your package is ready for the seller to prepare.</p>
-                      </div>
-                    </div>
-                  </div>
                 </div>
-                <div class="timeline-item">
-                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
-                    <div class="col-12 col-md-auto d-flex">
-                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
-                        <p class="fs--2 fw-semi-bold text-700 mb-0">25 August, 2023<br class="d-none d-md-block"> 11:30 AM</p>
-                      </div>
-                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
-                        <div class="icon-item icon-item-sm bg-success dark__bg-success"><span class="fa-solid fa-check text-white dark__text-white fs--2"></span></div><span class="timeline-bar border-end border-warning"></span>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="timeline-item-content ps-6 ps-md-3">
-                        <h4>Picked Up</h4>
-                        <p class="fs--1 text-800 mb-0">Your package has been picked up from the seller.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="timeline-item">
-                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
-                    <div class="col-12 col-md-auto d-flex">
-                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
-                        <p class="fs--2 fw-semi-bold text-700 mb-0">27 August, 2023<br class="d-none d-md-block"> 6:30 AM</p>
-                      </div>
-                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
-                        <div class="icon-item icon-item-sm bg-warning dark__bg-warning"><span class="fa-solid fa-truck-ramp-box text-white dark__text-white fs--2"></span></div><span class="timeline-bar border-end border-dashed border-400"></span>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="timeline-item-content ps-6 ps-md-3">
-                        <h4>Ready to Ship</h4>
-                        <p class="fs--1 text-800 mb-0">Your package is now ready to be shipped.</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="timeline-item">
-                  <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
-                    <div class="col-12 col-md-auto d-flex">
-                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
-                        <p class="fs--2 fw-semi-bold text-700 mb-0">Estimated time<br class="d-none d-md-block"> 29 August, 2023</p>
-                      </div>
-                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
-                        <div class="icon-item icon-item-sm bg-400"><span class="fa-solid fa-truck text-white dark__text-white fs--2"></span></div><span class="timeline-bar border-end border-dashed border-400"></span>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="timeline-item-content ps-6 ps-md-3">
-                        <h4>Shipped</h4>
-                        <p class="fs--1 text-800 mb-0">Pending</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div class="timeline-item">
-                  <div class="row g-md-3 align-items-center">
-                    <div class="col-12 col-md-auto d-flex">
-                      <div class="timeline-item-date text-end order-1 order-md-0 me-md-4">
-                        <p class="fs--2 fw-semi-bold text-700 mb-0">Estimated time<br class="d-none d-md-block"> 30 August, 2023</p>
-                      </div>
-                      <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
-                        <div class="icon-item icon-item-sm bg-400"><span class="fa-solid fa-truck-fast text-white dark__text-white fs--2"></span></div>
-                      </div>
-                    </div>
-                    <div class="col">
-                      <div class="timeline-item-content ps-6 ps-md-3">
-                        <h4>Delivered</h4>
-                        <p class="fs--1 text-800 mb-0">Pending</p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
 
-          </div>
+            </div>
         </div>
 
-      </section>
-    </main>
-    <!-- ===============================================-->
-    <!--    End of Main Content-->
-    <!-- ===============================================-->
+    </section>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
 
 
-    <!-- ===============================================-->
-    <!--    JavaScripts-->
-    <!-- ===============================================-->
-  <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
-  <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
-  <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
-  <script src="{% static 'vendors/is/is.min.js' %}"></script>
-  <script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
-  <script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
-  <script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-  <script src="{% static 'vendors/list.js/list.min.js' %}"></script>
-  <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
-  <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
-  <script src="{% static 'js/phoenix.js' %}"></script>
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARdVcREeBK44lIWnv5-iPijKqvlSAVwbw&callback=initMap" async></script>
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyARdVcREeBK44lIWnv5-iPijKqvlSAVwbw&callback=initMap"
+        async></script>
 
-  </body>
+<script>
+var orderList = {{ order_track | safe}};
 
+// Function to check if a given status is present in the list
+function isStatusPresent(status) {
+    return orderList.some(item => item.status === status);
+}
+
+// Function to get the item with a specific status
+function getItemByStatus(status) {
+    return orderList.find(item => item.status === status);
+}
+
+
+for(let i = 1;i<8;i++){
+let status;
+let description;
+    switch (i) {
+        case 1:
+            status = "Order placed";
+            description = "Order placed at store";
+            break;
+        case 2:
+            status = "Order processing in lab";
+            description = "Order is being processed in lab";
+            break;
+        case 3:
+            status = "Order is ready in lab";
+            description = "Order completed process in lab";
+            break;
+        case 4:
+            status = "Order shipped from lab";
+            description = "Order is shipped from lab";
+            break;
+        case 5:
+            status = "Order ready in store";
+            description = "Order arrived at store,you can pick your order to complete";
+            break;
+        case 6:
+            status = "Order delivered to customer";
+            description = "Order has been delivered to customer";
+            break;
+        case 7:
+            status = "Order cancelled";
+            description = "Order has been cancelled";
+            break;
+        default:
+            status = "UNKNOWN";
+    }
+    if(isStatusPresent(i)){
+    const item = getItemByStatus(i);
+    let timeLineItem = document.createElement("div");
+    timeLineItem.classList.add("timeline-item");
+    timeLineItem.innerHTML = `<div class="timeline-item">
+                            <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                                <div class="col-12 col-md-auto d-flex">
+                                    <div class="timeline-item-date text-end order-1 order-md-0 me-md-4" style="width: 100px;">
+                                    <p class="fs--2 fw-semi-bold text-700 mb-0"><b>Time</b><br>${item.created_on}</p>
+                                    </div>
+                                    <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
+                                        <div class="icon-item icon-item-sm bg-success dark__bg-success"><span
+                                                class="fa-solid fa-check text-white dark__text-white fs--2"></span>
+                                        </div>
+                                        <span class="timeline-bar border-end border-success"></span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="timeline-item-content ps-6 ps-md-3">
+                                        <h4>${status}</h4>
+                                        <p class="fs--1 text-800 mb-0">${description}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+    document.querySelector("#timelineDiv").appendChild(timeLineItem);
+}else{
+    let timeLineItem = document.createElement("div");
+    timeLineItem.classList.add("timeline-item");
+    timeLineItem.innerHTML = `<div class="timeline-item">
+                            <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
+                                <div class="col-12 col-md-auto d-flex">
+                                    <div class="timeline-item-date text-end order-1 order-md-0 me-md-4" style="width: 100px;">
+                                    <p class="fs--2 fw-semi-bold text-700 mb-0"></p>
+                                    </div>
+                                    <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
+                                        <div class="icon-item icon-item-sm bg-400"><span
+                                                class="fa-solid fa-truck text-white dark__text-white fs--2"></span>
+                                        </div>
+                                        <span class="timeline-bar border-end border-dashed border-400"></span>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="timeline-item-content ps-6 ps-md-3">
+                                        <h4>${status}</h4>
+                                        <p class="fs--1 text-800 mb-0">${description}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`
+    document.querySelector("#timelineDiv").appendChild(timeLineItem);
+}
+}
+
+
+</script>
+</body>
 </html>

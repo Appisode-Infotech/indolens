@@ -18,7 +18,7 @@ def customerOrderTracking(request, orderId):
                                                                   "order_track": order_track['order_track']})
 
 
-def viewProductDetsils(request, productId):
+def viewProductDetails(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
     return render(request, 'Products/viewProductDetails.html', {"product_data": response['product_data']})
 
