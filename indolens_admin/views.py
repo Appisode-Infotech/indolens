@@ -2230,6 +2230,7 @@ def viewReadyOrders(request, store):
     else:
         return redirect('login')
 
+
 def viewStoreReadyOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = orders_controller.get_all_orders('Delivered Store', 'All', store)
@@ -2741,6 +2742,7 @@ def manageCentralInventoryProducts(request, status):
     else:
         return redirect('login')
 
+
 def DownloadCentralInventoryProductsCatalog(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_central_inventory_products('All')
@@ -2948,8 +2950,21 @@ def viewRejectedStockRequests(request):
 
 def changeStockRequestStatus(request, route, requestId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = central_inventory_controller.change_stock_request_status(requestId, status,
-                                                                                         request.session.get('id'))
+        if request.POST:
+            # Data is present in POST
+            print("Data in POST:", request.POST['reject_reason'])
+            response, status_code = central_inventory_controller.change_stock_request_status_with_reason(requestId,
+                                                                                                         status,
+                                                                                                         request.session.get(
+                                                                                                             'id'),
+                                                                                                         request.POST[
+                                                                                                             'reject_reason'])
+            print(response)
+
+        else:
+            response, status_code = central_inventory_controller.change_stock_request_status(requestId, status,
+                                                                                             request.session.get('id'))
+
         if route == 'All':
             if response['status']:
                 return redirect('all_stock_requests')

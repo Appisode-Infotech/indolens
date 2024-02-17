@@ -688,6 +688,120 @@ def change_stock_request_status(requestId, status, updator):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+def change_stock_request_status_with_reason(requestId, status, updator, comments):
+    print(comments)
+    try:
+        with connection.cursor() as cursor:
+            fetch_req_product_query = f"""SELECT * FROM request_products 
+                        WHERE request_products_id = '{requestId}'"""
+            cursor.execute(fetch_req_product_query)
+            product_details = cursor.fetchone()
+            quantity = product_details[4]
+            dispenser_inventory = product_details[9]
+
+            # requested products from centre inventory
+            if dispenser_inventory == 0:
+                fetch_inventory_product_query = f"""SELECT product_quantity FROM central_inventory 
+                            WHERE product_id = {product_details[3]} """
+                cursor.execute(fetch_inventory_product_query)
+                available_quantity = cursor.fetchone()[0]
+
+                if status == 1:
+                    if available_quantity >= quantity:
+                        update_stock_request_query = f"""UPDATE request_products SET request_status = {status}, 
+                        last_updated_on = '{getIndianTime()}', last_updated_by = {updator}, delivery_status = 1,
+                        comment = '{comments}'
+                        WHERE request_products_id = {requestId} """
+                        # cursor.execute(update_stock_request_query)
+                        try:
+                            cursor.execute(update_stock_request_query)
+                            connection.commit()
+                            print("Update successful")
+                        except Exception as e:
+                            print(f"Error during update: {e}")
+                            connection.rollback()
+                        finally:
+                            cursor.close()
+                            connection.close()
+
+                        update_central_Inventory = f"""UPDATE central_inventory SET 
+                                                        product_quantity = product_quantity - {quantity} 
+                                                        WHERE product_id = {product_details[3]}"""
+                        cursor.execute(update_central_Inventory)
+
+
+
+                        return {
+                            "status": True,
+                            "message": "Status Changed"
+                        }, 200
+
+                    else:
+                        return {
+                            "status": False,
+                            "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in inventory"
+                        }, 200
+                else:
+                    update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
+                                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', 
+                                        delivery_status = 3, comment = '{comments}'
+                                        WHERE request_products_id = '{requestId}' """
+                    cursor.execute(update_stock_request_query)
+                    return {
+                        "status": True,
+                        "message": "Status Changed"
+                    }, 200
+
+
+            else:
+                fetch_inventory_product_query = f"""SELECT product_quantity FROM store_inventory 
+                                            WHERE product_id = {product_details[3]} AND store_id = {dispenser_inventory} 
+                                            AND store_type = 1 """
+                cursor.execute(fetch_inventory_product_query)
+                available_quantity = cursor.fetchone()[0]
+
+                if status == 1:
+                    if available_quantity >= quantity:
+                        update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
+                                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', 
+                                        delivery_status = 1, comment = '{comments}'
+                                        WHERE request_products_id = '{requestId}' """
+                        cursor.execute(update_stock_request_query)
+
+                        update_central_Inventory = f"""UPDATE store_inventory SET 
+                                                        product_quantity = product_quantity - {quantity} 
+                                                        WHERE product_id = {product_details[3]} AND 
+                                                        store_id = {dispenser_inventory} AND store_type = 1"""
+                        cursor.execute(update_central_Inventory)
+
+                        return {
+                            "status": True,
+                            "message": "Status Changed"
+                        }, 200
+
+                    else:
+                        print("yes7")
+                        return {
+                            "status": False,
+                            "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in inventory"
+                        }, 200
+                else:
+                    update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}'
+                                                        last_updated_on = '{getIndianTime()}', 
+                                                        last_updated_by = '{updator}', delivery_status = 3, 
+                                                        comment = '{comments}'
+                                                        WHERE request_products_id = '{requestId}' """
+                    cursor.execute(update_stock_request_query)
+                    return {
+                        "status": True,
+                        "message": "Status Changed"
+                    }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
 
 def change_product_status(productId, status):
     try:

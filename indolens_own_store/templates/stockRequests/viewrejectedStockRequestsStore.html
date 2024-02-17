@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens {{request.session.store_name}} - Manage Rejected  Stock requests</title>
+    <title>Indolens {{request.session.store_name}} - Manage Rejected Stock requests</title>
 
     {% load static %}
 
@@ -63,6 +63,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -108,8 +109,8 @@
                             <thead>
                             <tr>
                                 <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
-                                        style="width:5%;">SL NO
-                                    </th>
+                                    style="width:5%;">SL NO
+                                </th>
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
                                     scope="col" style="width:30%;">STORE NAME
                                 </th>
@@ -125,24 +126,25 @@
                                 </th>
 
 
-                                <th class="sort align-middle ps-3" data-sort="price" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="price" scope="col" style="width:5%;">
                                     PRICE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="req_date" scope="col" style="width:10%;">
                                     REQUESTED DATE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="moved_date" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3" data-sort="moved_date" scope="col"
+                                    style="width:10%;">
                                     MOVED DATE
                                 </th>
 
                                 <th class="sort align-middle ps-3" data-sort="approvalStatus" scope="col"
                                     style="width:5%;">APPROVAL STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="deliveryStatus" scope="col"
-                                    style="width:5%;">DELIVERY STATUS
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="deliveryStatus" scope="col"
+                                    style="width:50%;">COMMENTS
                                 </th>
 
-<!--                                <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>-->
+                                <!--                                <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>-->
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
@@ -152,7 +154,7 @@
 
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 name">
                                     <p
-                                        class="text-decoration-none fw-bold fs-0">{{stock.store_name}}</p>
+                                            class="text-decoration-none fw-bold fs-0">{{stock.store_name}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap py-4 type">
@@ -160,10 +162,10 @@
                                 </td>
 
                                 <td class="product align-middle">
-                                    <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_central_inventory_products' stock.product_id %}">
-                                                {{stock.product_name}}</a>
-                                    </td>
-
+                                    <a class="fw-semi-bold line-clamp-2 mb-0 "
+                                       href="{% url 'view_central_inventory_products' stock.product_id %}">
+                                        {{stock.product_name}}</a>
+                                </td>
 
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 quantity">
@@ -189,47 +191,37 @@
                                 <td class="align-middle white-space-nowrap text-end approvalStatus">
                                     {% if stock.request_status == 0 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
                                     {% elif stock.request_status == 1 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
                                     {% else %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end deliveryStatus">
-                                    {% if stock.delivery_status == 0 %}
-                                    <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>
-                                    {% elif stock.delivery_status == 1 %}
-                                    <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-primary">DISPATCHED</span>
-                                    {% elif stock.delivery_status == 2 %}
-                                    <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
-                                    {% elif stock.delivery_status == 3 %}
-                                    <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
-                                    {% endif %}
+                                <td class="align-middle white-space-nowrap deliveryStatus"
+                                    style="max-width: 350px;min-width: 300px; word-wrap: break-word; overflow: hidden; white-space: normal;">
+                                    {{stock.comment}}
                                 </td>
-<!--                                {% if stock.request_status == 1 and stock.delivery_status != 2 %}-->
-<!--                                <td class="align-middle text-end white-space-nowrap pe-0 action">-->
-<!--                                    <div class="font-sans-serif btn-reveal-trigger position-static">-->
-<!--                                        <button aria-expanded="false"-->
-<!--                                                aria-haspopup="true"-->
-<!--                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs&#45;&#45;2"-->
-<!--                                                data-boundary="window"-->
-<!--                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">-->
-<!--                                            <span class="fas fa-ellipsis-h fs&#45;&#45;2"></span></button>-->
-<!--                                        <div class="dropdown-menu dropdown-menu-end py-2">-->
-<!--                                            <a class="dropdown-item text-success"-->
-<!--                                               href="{% url 'request_delivery_status_change' stock.request_products_id 2 %}">DELIVERED</a>-->
 
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </td>-->
-<!--                                {% endif %}-->
+                                <!--                                {% if stock.request_status == 1 and stock.delivery_status != 2 %}-->
+                                <!--                                <td class="align-middle text-end white-space-nowrap pe-0 action">-->
+                                <!--                                    <div class="font-sans-serif btn-reveal-trigger position-static">-->
+                                <!--                                        <button aria-expanded="false"-->
+                                <!--                                                aria-haspopup="true"-->
+                                <!--                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs&#45;&#45;2"-->
+                                <!--                                                data-boundary="window"-->
+                                <!--                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">-->
+                                <!--                                            <span class="fas fa-ellipsis-h fs&#45;&#45;2"></span></button>-->
+                                <!--                                        <div class="dropdown-menu dropdown-menu-end py-2">-->
+                                <!--                                            <a class="dropdown-item text-success"-->
+                                <!--                                               href="{% url 'request_delivery_status_change' stock.request_products_id 2 %}">DELIVERED</a>-->
+
+                                <!--                                        </div>-->
+                                <!--                                    </div>-->
+                                <!--                                </td>-->
+                                <!--                                {% endif %}-->
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -269,6 +261,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
 
