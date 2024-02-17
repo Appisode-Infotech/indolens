@@ -1,9 +1,9 @@
-import json
 import time
 
 from django.core.files.storage import default_storage
 from django.http import JsonResponse
 from django.shortcuts import render, redirect
+from rest_framework.decorators import api_view
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import admin_auth_controller, own_store_controller, franchise_store_controller, \
@@ -14,18 +14,14 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
     customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller, \
     orders_controller, store_expenses, dashboard_controller, eye_test_controller, admin_setting_controller
-from indolens_admin.admin_controllers.admin_setting_controller import get_admin_setting, get_emailjs_attribute, \
-    get_base_url
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single, \
     get_central_inventory_product_restoc_log
-from indolens_admin.admin_controllers.send_notification_controller import send_email
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
     sub_admin_model, area_head_model, marketing_head_model, \
     accountant_model, lab_technician_model, lab_model, \
     product_category_model, master_brand_model, master_shape_model, master_frame_type_model, master_color_model, \
     master_material_model, store_employee_model, central_inventory_products_model
 from indolens_admin.admin_models.admin_req_model.files_model import FileData
-from indolens_own_store.own_store_controller import store_inventory_controller
 from indolens_own_store.own_store_model.request_model import store_create_stock_request_model
 
 
@@ -2230,6 +2226,7 @@ def viewReadyOrders(request, store):
     else:
         return redirect('login')
 
+
 def viewStoreReadyOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = orders_controller.get_all_orders('Delivered Store', 'All', store)
@@ -3689,3 +3686,4 @@ def indolensAdminSetting(request):
 
     else:
         return redirect('login')
+

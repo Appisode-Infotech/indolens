@@ -42,7 +42,7 @@
     <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
-    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet" />
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet"/>
 
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
@@ -58,6 +58,7 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
 
 
 
@@ -216,7 +217,7 @@
 
                                 <input class="form-control mt-2 datetimepicker flatpickr-input" id="timepicker2"
                                        type="text" placeholder="dd/mm/yyyy to dd/mm/yyyy"
-                                       onchange="console.log(this.value);"
+                                       onchange="callApiForSalesGraph(this.value);"
                                        data-options="{&quot;mode&quot;:&quot;range&quot;,&quot;dateFormat&quot;:&quot;d/m/y&quot;,&quot;disableMobile&quot;:true}"
                                        readonly="readonly">
 
@@ -705,19 +706,17 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'vendors/echarts/echarts.min.js' %}"></script>
 <script src="{% static 'vendors/chart/chart.min.js' %}"></script>
-<script src="{% static 'js/ecommerce-dashboard.js' %}"></script>
+<!--<script src="{% static 'js/ecommerce-dashboard.js' %}"></script>-->
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
-    // Get current date and 30 days back
+
+document.addEventListener("DOMContentLoaded", function () {
     var today = new Date();
     var thirtyDaysAgo = new Date();
     thirtyDaysAgo.setDate(today.getDate() - 30);
 
-    // Format dates as dd/mm/yyyy
     var todayFormatted = today.toLocaleDateString('en-GB');
     var thirtyDaysAgoFormatted = thirtyDaysAgo.toLocaleDateString('en-GB');
 
-    // Set default date range
     flatpickr("#timepicker2", {
         mode: "range",
         dateFormat: "d/m/Y",
@@ -725,7 +724,270 @@
         maxDate: "today",
         defaultDate: [thirtyDaysAgoFormatted, todayFormatted]
     });
+    var formattedToday = `${(today.getMonth() + 1).toString().padStart(2, '0')}/${today.getDate().toString().padStart(2, '0')}/${today.getFullYear()}`;
+    var formattedToDate = `${(thirtyDaysAgo.getMonth() + 1).toString().padStart(2, '0')}/${thirtyDaysAgo.getDate().toString().padStart(2, '0')}/${thirtyDaysAgo.getFullYear()}`;
+    const apiEndpoint = '{% url 'get_franchise_vs_ownStore_sale' %}';
+    const requestBody = {
+        toDate: formattedToday,
+        fromDate: formattedToDate,
+        intervalInDays: 30
+    };
+
+    fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Add any additional headers if needed
+        },
+        body: JSON.stringify(requestBody)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // Assuming the response is in JSON format
+        })
+        .then(data => {
+            setUpChart(formattedToday, formattedToDate, 30, data.ownStoreSales, data.franchiseStoreSales);
+            console.log('API Response:', data);
+            // You can use the data here as needed
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
 });
+
+
+function setUpChart(fromDate, toDate, interval, ownStoreData, franchiseStoreData) {
+    const { getColor, getData, getDates, getItemFromStore, resize } = window.phoenix.utils;
+    const $totalSalesChart = document.querySelector('.echart-total-sales-chart');
+
+    const dates = getDates(
+        new Date(toDate),
+        new Date(fromDate),
+        1000 * 60 * 60 * 24
+    );
+
+    const tooltipFormatter = params => {
+        const currentDate = window.dayjs(params[0].axisValue);
+        const prevDate = window.dayjs(params[0].axisValue).subtract(1, 'month');
+
+        const result = params.map((param, index) => ({
+            value: param.value,
+            date: index > 0 ? prevDate : currentDate,
+            color: param.color
+        }));
+
+        let tooltipItem = ``;
+        result.forEach((el, index) => {
+            tooltipItem += `<h6 class="fs--1 text-700 ${index > 0 && 'mb-0'
+                }"><span class="fas fa-circle me-2" style="color:${el.color}"></span>
+      ${el.date.format('MMM DD')} : ${el.value}
+    </h6>`;
+        });
+        return `<div class='ms-1'>
+              ${tooltipItem}
+            </div>`;
+    };
+
+    if ($totalSalesChart) {
+        const userOptions = getData($totalSalesChart, 'echarts');
+        const chart = window.echarts.init($totalSalesChart);
+
+        const getDefaultOptions = () => ({
+            color: [getColor('primary'), getColor('info')],
+            tooltip: {
+                trigger: 'axis',
+                padding: 10,
+                backgroundColor: getColor('gray-100'),
+                borderColor: getColor('gray-300'),
+                textStyle: { color: getColor('dark') },
+                borderWidth: 1,
+                transitionDuration: 0,
+                axisPointer: {
+                    type: 'none'
+                },
+                formatter: tooltipFormatter
+            },
+            xAxis: [
+                {
+                    type: 'category',
+                    data: dates,
+                    axisLabel: {
+                        formatter: value => window.dayjs(value).format('DD MMM'),
+                        interval: 13,
+                        showMinLabel: true,
+                        showMaxLabel: false,
+                        color: getColor('gray-800'),
+                        align: 'left',
+                        fontFamily: 'Nunito Sans',
+                        fontWeight: 600,
+                        fontSize: 12.8
+                    },
+                    axisLine: {
+                        show: true,
+                        lineStyle: {
+                            color: getColor('gray-200')
+                        }
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: true,
+                        interval: 0,
+                        lineStyle: {
+                            color:
+                                getItemFromStore('phoenixTheme') === 'dark'
+                                    ? getColor('gray-100')
+                                    : getColor('gray-200')
+                        }
+                    },
+                    boundaryGap: false
+                },
+                {
+                    type: 'category',
+                    position: 'bottom',
+                    data: dates,
+                    axisLabel: {
+                        formatter: value => window.dayjs(value).format('DD MMM'),
+                        interval: 130,
+                        showMaxLabel: true,
+                        showMinLabel: false,
+                        color: getColor('gray-800'),
+                        align: 'right',
+                        fontFamily: 'Nunito Sans',
+                        fontWeight: 600,
+                        fontSize: 12.8
+                    },
+                    axisLine: {
+                        show: false
+                    },
+                    axisTick: {
+                        show: false
+                    },
+                    splitLine: {
+                        show: false
+                    },
+                    boundaryGap: false
+                }
+            ],
+            yAxis: {
+                position: 'right',
+                axisPointer: { type: 'none' },
+                axisTick: 'none',
+                splitLine: {
+                    show: false
+                },
+                axisLine: { show: false },
+                axisLabel: { show: false }
+            },
+            series: [
+                {
+                    name: 'd',
+                    type: 'line',
+                    // data: Array.from(Array(30).keys()).map(() =>
+                    //   getRandomNumber(100, 300)
+                    // ),
+                    data: ownStoreData,
+                    showSymbol: false,
+                    symbol: 'circle'
+                },
+                {
+                    name: 'e',
+                    type: 'line',
+                    // data: Array.from(Array(30).keys()).map(() =>
+                    //   getRandomNumber(100, 300)
+                    // ),
+                    data: franchiseStoreData,
+                    // symbol: 'none',
+                    lineStyle: {
+                        type: 'dashed',
+                        width: 1,
+                        color: getColor('info')
+                    },
+                    showSymbol: false,
+                    symbol: 'circle'
+                }
+            ],
+            grid: {
+                right: 2,
+                left: 5,
+                bottom: '20px',
+                top: '2%',
+                containLabel: false
+            },
+            animation: false
+        });
+
+        echartSetOption(chart, userOptions, getDefaultOptions);
+
+        resize(() => {
+            chart.resize();
+        });
+    }
+}
+const { merge } = window._;
+
+const echartSetOption = (chart, userOptions, getDefaultOptions) => {
+    const themeController = document.body;
+    chart.setOption(merge(getDefaultOptions(), userOptions));
+    themeController.addEventListener(
+        'clickControl',
+        ({ detail: { control } }) => {
+            if (control === 'phoenixTheme') {
+                chart.setOption(window._.merge(getDefaultOptions(), userOptions));
+            }
+        }
+    );
+};
+
+
+function callApiForSalesGraph(value) {
+
+    const dateParts = value.split(" to ");
+    const fromDate = formatDate(dateParts[0]);
+    const toDate = formatDate(dateParts[1]);
+    const intervalInMilliseconds = new Date(toDate) - new Date(fromDate);
+    const intervalInDays = Math.floor(intervalInMilliseconds / (1000 * 60 * 60 * 24));
+    const apiEndpoint = '{% url 'get_franchise_vs_ownStore_sale' %}';
+    const requestBody = {
+        toDate: toDate,
+        fromDate: fromDate,
+        intervalInDays: intervalInDays
+    };
+
+    fetch(apiEndpoint, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            // Add any additional headers if needed
+        },
+        body: JSON.stringify(requestBody)
+    })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json(); // Assuming the response is in JSON format
+        })
+        .then(data => {
+            setUpChart(toDate, fromDate, intervalInDays, data.ownStoreSales, data.franchiseStoreSales);
+            console.log('API Response:', data);
+            // You can use the data here as needed
+        })
+        .catch(error => {
+            console.error('Error fetching data:', error);
+        });
+
+}
+
+function formatDate(inputDate) {
+    const [day, month, year] = inputDate.split("/");
+    const formattedDate = `${month.padStart(2, '0')}/${day.padStart(2, '0')}/${year}`;
+    return formattedDate;
+}
 </script>
 </body>
 </html>
