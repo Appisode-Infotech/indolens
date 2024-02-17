@@ -426,7 +426,7 @@
                                                                                                                 <div class="invalid-feedback">This field is required.</div>
                                                     </div>
                                                     <div class="mb2 col-6">
-                                                        <h5 class="mb-3">Advance Amount Paid</h5>
+                                                        <h5 class="mb-3">Advance Amount Paid(₹)</h5>
                                                         <input
                                                                 onchange="genBillingInfoObject()"
                                                                 value="0" required
@@ -2041,7 +2041,7 @@ function getProductsData() {
         }, 0);
 
         // Display total sum in the <p> element with id 'totalSum'
-        document.getElementById('totalSum').textContent = "Billing amount: " + totalSum.toFixed(2);
+        document.getElementById('totalSum').textContent = "Billing amount: ₹" + totalSum.toFixed(2);
 
         // Display total number of products in the <p> element with id 'totalProducts'
         document.getElementById('totalProducts').textContent = "Total Products: " + productsArray.length;
