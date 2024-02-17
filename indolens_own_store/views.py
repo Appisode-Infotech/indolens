@@ -36,6 +36,7 @@ def login(request):
                     'store_type': '1',
                     'assigned_store_id': data['assigned_store_id'],
                     'profile_pic': data['profile_pic'],
+                    'role': data['role'],
                 })
             return redirect('own_store_dashboard')
         else:

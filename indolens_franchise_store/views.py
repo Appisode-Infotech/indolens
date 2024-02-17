@@ -37,6 +37,7 @@ def login(request):
                     'store_type': '2',
                     'assigned_store_id': data['assigned_store_id'],
                     'profile_pic': data['profile_pic'],
+                    'role': data['role'],
                 })
             return redirect('franchise_store_dashboard')
         else:
