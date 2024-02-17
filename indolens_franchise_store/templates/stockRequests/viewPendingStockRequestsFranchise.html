@@ -142,7 +142,7 @@
                                     style="width:5%;">DELIVERY STATUS
                                 </th>
 
-                                <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>
+<!--                                <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>-->
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
@@ -214,26 +214,26 @@
                                     {% endif %}
                                 </td>
 
-                                <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                    <div class="font-sans-serif btn-reveal-trigger position-static">
-                                        <button aria-expanded="false"
-                                                aria-haspopup="true"
-                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                data-boundary="window"
-                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
-                                            <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        <div class="dropdown-menu dropdown-menu-end py-2">
-                                            <a class="dropdown-item view-button" data-bs-toggle="modalView"
-                                               type="button"
-                                               data-category-info="{{ stock }}">View</a>
-                                            {% if stock.request_status == 1 %}
-                                            <div class="dropdown-divider"></div>
-                                            <a class="dropdown-item text-success"
-                                               href="{% url 'franchise_request_delivery_status_change' stock.request_products_id 2 %}">DELIVERED</a>
-                                            {% endif %}
-                                        </div>
-                                    </div>
-                                </td>
+<!--                                <td class="align-middle text-end white-space-nowrap pe-0 action">-->
+<!--                                    <div class="font-sans-serif btn-reveal-trigger position-static">-->
+<!--                                        <button aria-expanded="false"-->
+<!--                                                aria-haspopup="true"-->
+<!--                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs&#45;&#45;2"-->
+<!--                                                data-boundary="window"-->
+<!--                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">-->
+<!--                                            <span class="fas fa-ellipsis-h fs&#45;&#45;2"></span></button>-->
+<!--                                        <div class="dropdown-menu dropdown-menu-end py-2">-->
+<!--                                            <a class="dropdown-item view-button" data-bs-toggle="modalView"-->
+<!--                                               type="button"-->
+<!--                                               data-category-info="{{ stock }}">View</a>-->
+<!--                                            {% if stock.request_status == 1 %}-->
+<!--                                            <div class="dropdown-divider"></div>-->
+<!--                                            <a class="dropdown-item text-success"-->
+<!--                                               href="{% url 'franchise_request_delivery_status_change' stock.request_products_id 2 %}">DELIVERED</a>-->
+<!--                                            {% endif %}-->
+<!--                                        </div>-->
+<!--                                    </div>-->
+<!--                                </td>-->
 
                             </tr>
                             {% endfor %}
