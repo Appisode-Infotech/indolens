@@ -391,17 +391,17 @@ document.addEventListener("DOMContentLoaded", function () {
     var editUnitButton = document.querySelectorAll('[data-bs-target="#updateUnit"]');
     var unitIdField = document.getElementById('edit_unit_id');
     var unitNameField = document.getElementById('edit_unit_name');
-
-    editUnitButton.forEach(function (button) {
-        button.addEventListener('click', function (event) {
-            var unitId = event.currentTarget.getAttribute('data-unit-id');
-            var unitName = event.currentTarget.getAttribute('data-unit-name');
-            unitIdField.value = unitId;
-            unitNameField.value = unitName;
+    document.body.addEventListener('click', function (event) {
+        editUnitButton.forEach(function (button) {
+            button.addEventListener('click', function (event) {
+                var unitId = event.currentTarget.getAttribute('data-unit-id');
+                var unitName = event.currentTarget.getAttribute('data-unit-name');
+                unitIdField.value = unitId;
+                unitNameField.value = unitName;
+            });
         });
     });
 });
-
 </script>
 </body>
 
