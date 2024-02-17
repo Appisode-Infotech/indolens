@@ -4870,7 +4870,6 @@ const listInit = () => {
 };
 
 
-//filter table
 // Filter table
 document.addEventListener('DOMContentLoaded', function () {
     updateCategoryDisplay();
@@ -4878,6 +4877,12 @@ document.addEventListener('DOMContentLoaded', function () {
     var navLinks = document.querySelectorAll('ul.nav-links a');
     navLinks.forEach(function (link) {
         link.addEventListener('click', function () {
+            // Remove existing no data row if present
+            var table = document.querySelector('table');
+            var existingNoDataRow = table.querySelector('.no-data-row');
+            if (existingNoDataRow) {
+                existingNoDataRow.remove();
+            }
             var selectedCategory = this.getAttribute('href').substring(8);
             var tableRows = document.querySelectorAll('table tbody tr');
             if (selectedCategory !== "all") {
