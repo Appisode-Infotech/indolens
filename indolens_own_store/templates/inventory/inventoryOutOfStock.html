@@ -135,8 +135,6 @@
                                     <th class="sort white-space-nowrap align-middle fs--1" scope="col"
                                         style="width:70px;">PRODUCT IMAGE</th>
                                     <th class="sort white-space-nowrap align-middle fs--1" scope="col"
-                                        style="width:70px;">PRODUCT QR</th>
-                                    <th class="sort white-space-nowrap align-middle fs--1" scope="col"
                                         style="width:70px;">PRODUCT NAME</th>
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="price" scope="col"
                                         style="width:150px;">PRICE
@@ -172,15 +170,7 @@
                                         </a>
 
                                     </td>
-                                    <td class="align-middle white-space-nowrap fw-bold text-700 ps-4 ">
-                                         <a href="{{ MEDIA_URL }}{{ stock.product_qr_code }}" target="_blank">
-                                            <div class="avatar avatar-m">
-                                                <img alt="" class="rounded-circle"
-                                                     src="{{ MEDIA_URL }}{{ stock.product_qr_code }}"/>
-                                            </div>
-                                        </a>
 
-                                    </td>
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_store_inventory_products' stock.store_inventory_id %}"> {{stock.product_name}}</a>
                                     </td>
