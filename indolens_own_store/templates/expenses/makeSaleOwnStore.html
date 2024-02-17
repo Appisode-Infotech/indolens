@@ -528,7 +528,7 @@
 <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
 
 <script>
-  var estDeliveryDateInputs = document.getElementsByName('estDeliveryDate');
+   var estDeliveryDateInputs = document.getElementsByName('estDeliveryDate');
 
   // Check if there are elements with the specified name
   if (estDeliveryDateInputs.length > 0) {
@@ -657,7 +657,7 @@ function addLensContainer() {
         <div class="mb2 col-4">
             <h5 class="mb-3">Purchase Quantity</h5>
             <input class="form-control" name="purchase_qty[${productCardCount}]" placeholder="Purchase quantity" required="required" min="1"
-                type="text" value="" />
+                type="number" value="" />
             <div class="invalid-feedback">This field should be 1 in
                 minimum and should be less than available quantity.
             </div>
@@ -1034,7 +1034,7 @@ function addStockContactLensContainer() {
                    placeholder="Purchase quantity"
                    required="required"
                    min="1"
-                   type="text" value=""/>
+                   type="number" value=""/>
             <div class="invalid-feedback">This field should be 1 in
                 minimum and should be less than available quantity.
             </div>
@@ -1273,7 +1273,7 @@ function addRxContactLensContainer() {
                    placeholder="Purchase quantity"
                    required="required"
                    min="1"
-                   type="text" value=""/>
+                   type="number" value=""/>
             <div class="invalid-feedback">This field should be 1 in
                 minimum and should be less than available quantity.
             </div>
@@ -1483,7 +1483,7 @@ function addOtherProductsContainer() {
                    placeholder="Purchase quantity"
                    required="required"
                    min="1"
-                   type="text" value=""/>
+                   type="number" value=""/>
             <div class="invalid-feedback">This field should be 1 in
                 minimum and should be less than available quantity.
             </div>
@@ -1693,6 +1693,7 @@ function updateLensProductFields(selectElement, cardIndex) {
     productNameField.value = selectedProduct?.product_name ?? '';
     productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct?.product_quantity;
 
     if (selectedProduct.discount > 0) {
         discountCheckDiv.style.display = 'block';
@@ -1796,6 +1797,7 @@ function updateContactLensProductFields(selectElement, cardIndex) {
     productNameField.value = selectedProduct?.product_name ?? '';
     productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct?.store_product_quantity;
 
     clPowerField.value = selectedProduct?.power_attribute.power ?? '';
     clBcField.value = selectedProduct?.power_attribute.bc ?? '';
@@ -1879,6 +1881,7 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
     productNameField.value = selectedProduct?.product_name ?? '';
     productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct?.product_quantity;
 
     if (selectedProduct.discount > 0) {
         discountCheckDiv.style.display = 'block';
@@ -1945,6 +1948,7 @@ function updateOtherProductFields(selectElement, cardIndex) {
     productCategoryIdField.value = selectedProduct?.category_id ?? '';
     productNameField.value = selectedProduct?.product_name ?? '';
     productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct?.store_product_quantity;
 
 
     if (selectedProduct.discount > 0) {
