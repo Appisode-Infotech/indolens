@@ -4553,9 +4553,9 @@ const fromValidationInit = () => {
         };
 
         const map = new window.google.maps.Map(mapElement, mapOptions);
-        const infoWindow = new window.google.maps.InfoWindow({
-          content: markerPopup
-        });
+//        const infoWindow = new window.google.maps.InfoWindow({
+//          content: markerPopup
+//        });
 
         // Create the DIV to hold the control.
         const controlDiv = document.createElement('div');
