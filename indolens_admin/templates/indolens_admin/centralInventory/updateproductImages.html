@@ -118,7 +118,7 @@
                                     <a data-bs-toggle="modal"
                                        data-bs-target="#delete_document"
                                        data-employee-id="{{ manager.employee_id }}"
-                                       data-employee-name="{{ manager.name }}"
+                                       data-employee-name="{{ product_data.product_name }}"
                                        data-document-preview="{{ MEDIA_URL }}{{ image }}"
                                        data-action-type="delete"
                                        data-action-href="{% url 'delete_product_image' product_data.product_id image %}"
