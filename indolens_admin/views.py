@@ -2847,7 +2847,7 @@ def centralInventoryAddProducts(request):
             power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
             response, status_code = central_inventory_controller.add_central_inventory_products(product_obj, file_data,
                                                                                                 power_attributes)
-            url = reverse('manage_central_inventory_products', kwargs={'status': 'All'})
+            url = reverse('view_products', kwargs={'productId': response['productId']})
             return redirect(url)
         else:
             response, status_code = central_inventory_controller.get_all_active_types()
