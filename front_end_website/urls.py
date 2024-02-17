@@ -1,7 +1,7 @@
 from django.urls import path
 
 from . import views
-from .views import customerOrderTracking
+from .views import *
 
 urlpatterns = [
     path('', views.index, name='entry'),
