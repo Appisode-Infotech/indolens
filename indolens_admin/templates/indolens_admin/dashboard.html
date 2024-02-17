@@ -42,6 +42,8 @@
     <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
     <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet" />
+
     <script>
       var isRTL = JSON.parse(localStorage.getItem('isRTL'));
       if (isRTL) {
@@ -56,6 +58,7 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
 
 
 
@@ -114,7 +117,8 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'new_orders' 'Own Stores' %}">{{own_store_new_order}} new orders</a></h4>
+                                        <h4 class="mb-0"><a href="{% url 'new_orders' 'Own Stores' %}">{{own_store_new_order}}
+                                            new orders</a></h4>
                                         <p class="text-800 fs--1 mb-0">From Own Stores </p>
                                     </div>
                                 </div>
@@ -124,7 +128,8 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'Own Stores' %}">{{own_store_delivered_orders}} Delivered</a></h4>
+                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'Own Stores' %}">{{own_store_delivered_orders}}
+                                            Delivered</a></h4>
                                         <p class="text-800 fs--1 mb-0">From Own Stores </p>
                                     </div>
                                 </div>
@@ -150,7 +155,8 @@
                                         height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'Franchise Stores' %}">{{franchise_store_delivered_orders}} Delivered</a></h4>
+                                        <h4 class="mb-0"><a href="{% url 'completed_orders' 'Franchise Stores' %}">{{franchise_store_delivered_orders}}
+                                            Delivered</a></h4>
                                         <p class="text-800 fs--1 mb-0">From Franchise Stores </p>
                                     </div>
                                 </div>
@@ -160,7 +166,8 @@
                                         alt=""
                                         height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'manage_out_of_stock' %}">{{out_of_stock}} products</a>
+                                        <h4 class="mb-0"><a href="{% url 'manage_out_of_stock' %}">{{out_of_stock}}
+                                            products</a>
                                         </h4>
                                         <p class="text-800 fs--1 mb-0">Out of stock</p>
                                     </div>
@@ -175,7 +182,8 @@
                                         width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'manage_own_stores' 'All' %}">{{own_store_list|length}} Own stores</a>
+                                        <h4 class="mb-0"><a href="{% url 'manage_own_stores' 'All' %}">{{own_store_list|length}}
+                                            Own stores</a>
                                         </h4>
                                         <p class="text-800 fs--1 mb-0">Indolens owns them</p>
                                     </div>
@@ -187,7 +195,8 @@
                                         height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
 
                                     <div class="ms-3">
-                                        <h4 class="mb-0"><a href="{% url 'manage_Franchise_stores' 'All' %}">{{franchise_store_list|length}} Franchise
+                                        <h4 class="mb-0"><a href="{% url 'manage_Franchise_stores' 'All' %}">{{franchise_store_list|length}}
+                                            Franchise
                                             stores</a>
                                         </h4>
                                         <p class="text-800 fs--1 mb-0">For franchise owners</p>
@@ -203,11 +212,15 @@
                                 <p class="text-700 lh-sm mb-0">Payment received across all channels</p>
                             </div>
                             <div class="col-8 col-sm-4">
-                                <select class="form-select form-select-sm mt-2" id="select-gross-revenue-month">
-                                    <option>Mar 1 - 31, 2022</option>
-                                    <option>April 1 - 30, 2022</option>
-                                    <option>May 1 - 31, 2022</option>
-                                </select>
+
+
+                                <input class="form-control mt-2 datetimepicker flatpickr-input" id="timepicker2"
+                                       type="text" placeholder="dd/mm/yyyy to dd/mm/yyyy"
+                                       onchange="console.log(this.value);"
+                                       data-options="{&quot;mode&quot;:&quot;range&quot;,&quot;dateFormat&quot;:&quot;d/m/y&quot;,&quot;disableMobile&quot;:true}"
+                                       readonly="readonly">
+
+
                             </div>
                         </div>
                         <div class="echart-total-sales-chart" data-echart-responsive="data-echart-responsive"
@@ -511,160 +524,161 @@
                 </div>
             </div>
             <div data-list='{"valueNames":["slno", "order","total","customer","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":10,"pagination":true}'
-                     id="orderTable">
-                    <h3 class="mb-3">Latest Sales</h3>
-                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
-                        <div class="table-responsive scrollbar mx-n1 px-1">
-                            <table class="table table-sm fs--1 mb-0" id = "myTable">
-                                <thead>
-                                <tr>
-                                    <th class="sort white-space-nowrap align-middle pe-3 slno" data-sort="order" scope="col"
-                                        style="width:5%;">SL NO
-                                    </th>
-                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
-                                        style="width:5%;">ORDER ID
-                                    </th>
-                                    <th class="sort align-middle text-end" data-sort="total" scope="col"
-                                        style="width:6%;">TOTAL
-                                    </th>
-                                    <th class="sort align-middle ps-8" data-sort="customer" scope="col"
-                                        style="width:28%; min-width: 250px;">CUSTOMER
-                                    </th>
-                                    <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
-                                        style="width:10%;">PAYMENT STATUS
-                                    </th>
-                                    <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
-                                        scope="col" style="width:12%; min-width: 200px;">ORDER
-                                        STATUS
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="created_by" scope="col"
-                                        style="width:30%;">CREATED BY
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="created_on" scope="col"
-                                        style="width:30%;">CREATED ON
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
-                                        style="width:30%;">UPDATED BY
-                                    </th>
-                                    <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
-                                        style="width:30%;">UPDATED ON
-                                    </th>
+                 id="orderTable">
+                <h3 class="mb-3">Latest Sales</h3>
+                <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                    <div class="table-responsive scrollbar mx-n1 px-1">
+                        <table class="table table-sm fs--1 mb-0" id="myTable">
+                            <thead>
+                            <tr>
+                                <th class="sort white-space-nowrap align-middle pe-3 slno" data-sort="order" scope="col"
+                                    style="width:5%;">SL NO
+                                </th>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
+                                    style="width:5%;">ORDER ID
+                                </th>
+                                <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                    style="width:6%;">TOTAL
+                                </th>
+                                <th class="sort align-middle ps-8" data-sort="customer" scope="col"
+                                    style="width:28%; min-width: 250px;">CUSTOMER
+                                </th>
+                                <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
+                                    style="width:10%;">PAYMENT STATUS
+                                </th>
+                                <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
+                                    scope="col" style="width:12%; min-width: 200px;">ORDER
+                                    STATUS
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="created_by" scope="col"
+                                    style="width:30%;">CREATED BY
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="created_on" scope="col"
+                                    style="width:30%;">CREATED ON
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
+                                    style="width:30%;">UPDATED BY
+                                </th>
+                                <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
+                                    style="width:30%;">UPDATED ON
+                                </th>
 
-                                </tr>
-                                </thead>
-                                <tbody class="list" id="order-table-body">
-                                {% for order in orders_list %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                            </tr>
+                            </thead>
+                            <tbody class="list" id="order-table-body">
+                            {% for order in orders_list %}
+                            <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                 data-category="{{ order.order_status }}">
-                                    <td class="order align-middle white-space-nowrap py-0 slno"></td>
-                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                              href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
-                                    </td>
-                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        ₹{{order.total_cost}}
-                                    </td>
-                                    <td class="customer align-middle white-space-nowrap ps-8">
-                                        <a class="d-flex align-items-center" href="{% url 'customer_details' order.customer_id %}">
-                                            <div class="avatar avatar-m">
-                                                <div class="avatar-name rounded-circle">
-                                                    <span>{{order.customer_name.0}}</span></div>
-                                            </div>
-                                            <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
-                                        </a>
-                                    </td>
-                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        {% if order.payment_status == 1 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">PENDING</span><span class="ms-1"
-                                                                                        data-feather="check"
-                                                                                        style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.payment_status == 2 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">COMPLETE</span><span class="ms-1"
-                                                                                         data-feather="check"
-                                                                                         style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.payment_status == 3 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">REFUNDED</span><span class="ms-1"
-                                                                                         data-feather="check"
-                                                                                         style="height:12.8px;width:12.8px;"></span></span>
-                                        {% endif %}
-                                    </td>
-                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                        {% if order.order_status == 1 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">NEW</span><span class="ms-1" data-feather="check"
+                                <td class="order align-middle white-space-nowrap py-0 slno"></td>
+                                <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                          href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
+                                </td>
+                                <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                    ₹{{order.total_cost}}
+                                </td>
+                                <td class="customer align-middle white-space-nowrap ps-8">
+                                    <a class="d-flex align-items-center"
+                                       href="{% url 'customer_details' order.customer_id %}">
+                                        <div class="avatar avatar-m">
+                                            <div class="avatar-name rounded-circle">
+                                                <span>{{order.customer_name.0}}</span></div>
+                                        </div>
+                                        <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
+                                    </a>
+                                </td>
+                                <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                    {% if order.payment_status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                            class="badge-label">PENDING</span><span class="ms-1"
+                                                                                    data-feather="check"
                                                                                     style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 2 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PROCESSING</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 3 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">READY</span><span class="ms-1" data-feather="check"
+                                    {% elif order.payment_status == 2 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                            class="badge-label">COMPLETE</span><span class="ms-1"
+                                                                                     data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.payment_status == 3 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                            class="badge-label">REFUNDED</span><span class="ms-1"
+                                                                                     data-feather="check"
+                                                                                     style="height:12.8px;width:12.8px;"></span></span>
+                                    {% endif %}
+                                </td>
+                                <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                    {% if order.order_status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">NEW</span><span class="ms-1" data-feather="check"
+                                                                                style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 2 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">PROCESSING</span><span class="ms-1"
+                                                                                       data-feather="check"
+                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 3 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">READY</span><span class="ms-1" data-feather="check"
+                                                                                  style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 4 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">DISPATCHED</span><span class="ms-1"
+                                                                                       data-feather="check"
+                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 5 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">DELIVERED STORE</span><span class="ms-1"
+                                                                                            data-feather="check"
+                                                                                            style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 6 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
+                                                                                               data-feather="check"
+                                                                                               style="height:12.8px;width:12.8px;"></span></span>
+                                    {% elif order.order_status == 7 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                            class="badge-label">CANCELLED</span><span class="ms-1"
+                                                                                      data-feather="check"
                                                                                       style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 4 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DISPATCHED</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 5 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DELIVERED STORE</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 6 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
-                                        {% elif order.order_status == 7 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">CANCELLED</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
-                                        {% endif %}
+                                    {% endif %}
 
-                                    </td>
-                                    <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
-                                    </td>
-                                    <td class="created_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
-                                        {{order.created_on}}
-                                    </td>
-                                    <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
-                                            {{order.updater_name}} </a>
-                                    </td>
-                                    <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
-                                        {{order.updated_on}}
-                                    </td>
-                                </tr>
-                                {% endfor %}
+                                </td>
+                                <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
+                                </td>
+                                <td class="created_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                    {{order.created_on}}
+                                </td>
+                                <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
+                                        {{order.updater_name}} </a>
+                                </td>
+                                <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                    {{order.updated_on}}
+                                </td>
+                            </tr>
+                            {% endfor %}
 
-                                </tbody>
-                            </table>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                        <div class="col-auto d-flex">
+                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
+                                                                      href="#!">View all<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
                         </div>
-                        <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
-                            <div class="col-auto d-flex">
-                                <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
-                                   data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
-                                                                          href="#!">View all<span
-                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
-                                    class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
-                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                            </div>
-                            <div class="col-auto d-flex">
-                                <button class="page-link" data-list-pagination="prev"><span
-                                        class="fas fa-chevron-left"></span></button>
-                                <ul class="mb-0 pagination"></ul>
-                                <button class="page-link pe-0" data-list-pagination="next"><span
-                                        class="fas fa-chevron-right"></span></button>
-                            </div>
+                        <div class="col-auto d-flex">
+                            <button class="page-link" data-list-pagination="prev"><span
+                                    class="fas fa-chevron-left"></span></button>
+                            <ul class="mb-0 pagination"></ul>
+                            <button class="page-link pe-0" data-list-pagination="next"><span
+                                    class="fas fa-chevron-right"></span></button>
                         </div>
                     </div>
                 </div>
+            </div>
             {% include 'footer.html' %}
         </div>
     </div>
@@ -677,6 +691,7 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
+
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>
 <script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
 <script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
@@ -690,10 +705,27 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'vendors/echarts/echarts.min.js' %}"></script>
 <script src="{% static 'vendors/chart/chart.min.js' %}"></script>
-<script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
-<script async
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6O2CG9zBAksJH4SCgCZlbx3XRWVwzY1E&callback=revenueMapInit"></script>
 <script src="{% static 'js/ecommerce-dashboard.js' %}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+    // Get current date and 30 days back
+    var today = new Date();
+    var thirtyDaysAgo = new Date();
+    thirtyDaysAgo.setDate(today.getDate() - 30);
 
+    // Format dates as dd/mm/yyyy
+    var todayFormatted = today.toLocaleDateString('en-GB');
+    var thirtyDaysAgoFormatted = thirtyDaysAgo.toLocaleDateString('en-GB');
+
+    // Set default date range
+    flatpickr("#timepicker2", {
+        mode: "range",
+        dateFormat: "d/m/Y",
+        disableMobile: true,
+        maxDate: "today",
+        defaultDate: [thirtyDaysAgoFormatted, todayFormatted]
+    });
+});
+</script>
 </body>
 </html>
