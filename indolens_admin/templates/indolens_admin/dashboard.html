@@ -857,7 +857,7 @@ function setUpChart(fromDate, toDate, interval, ownStoreData, franchiseStoreData
 
         const result = params.map((param, index) => ({
             value: param.value,
-            date: index > 0 ? prevDate : currentDate,
+            date: index > 0 ? 'FRANCHISE' :'OWN',
             color: param.color
         }));
 
@@ -865,7 +865,7 @@ function setUpChart(fromDate, toDate, interval, ownStoreData, franchiseStoreData
         result.forEach((el, index) => {
             tooltipItem += `<h6 class="fs--1 text-700 ${index > 0 && 'mb-0'
                 }"><span class="fas fa-circle me-2" style="color:${el.color}"></span>
-      ${el.date.format('MMM DD')} : ${el.value}
+      ${el.date} : ${el.value}
     </h6>`;
         });
         return `<div class='ms-1'>
@@ -1121,7 +1121,7 @@ function makeApiCallForCustomers(value) {
             return response.json(); // Assuming the response is in JSON format
         })
         .then(data => {
-            setupCustomersChart(30, data.franchiseStoreSales);
+            setupCustomersChart(30, data.list);
             console.log('API Response:', data);
             // You can use the data here as needed
         })
@@ -1131,10 +1131,6 @@ function makeApiCallForCustomers(value) {
 
 }
 
-data = [
-    38911, 29452, 31894, 47876, 31302, 27731, 25490, 30355, 27176, 30393
-];
-setupCustomersChart(7, data);
 function setupCustomersChart(interval, data) {
     const $projectionVsActualChartEl = document.querySelector(
         '.echart-projection-actual'
@@ -1321,7 +1317,7 @@ function makeApiCallForOrders(value) {
             return response.json(); // Assuming the response is in JSON format
         })
         .then(data => {
-            setupOrderAnalytics(30, data.franchiseStoreSales);
+            setupOrderAnalytics(30, data);
             console.log('API Response:', data);
             // You can use the data here as needed
         })
@@ -1332,8 +1328,6 @@ function makeApiCallForOrders(value) {
 }
 
 
-data = [40, 78, 60, 78, 60, 20, 60, 40, 60, 40, 20, 78]
-setupOrderAnalytics(12, data);
 function setupOrderAnalytics(interval, data) {
 
     const dates = getPastDates(interval);

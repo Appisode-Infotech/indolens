@@ -1,7 +1,8 @@
+from datetime import datetime
+
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view
-from datetime import datetime
 
 from indolens_admin.admin_controllers import orders_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
@@ -27,6 +28,32 @@ def viewProductDetails(request, productId):
 
 @api_view(['POST'])
 def get_franchise_vs_ownStore_sale(request):
+    start_date = datetime.strptime(request.data['fromDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
+    end_date = datetime.strptime(request.data['toDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
+    Controller_response, status_code = get_own_vs_franchise_sales_stats(start_date, end_date)
+
+    response = {
+        "ownStoreSales": Controller_response['own_store_sale_stats'],
+        "franchiseStoreSales": Controller_response['franchise_store_sale_stats']
+    }
+    return JsonResponse(response, status=200)
+
+
+@api_view(['POST'])
+def get_customer_analytics(request):
+    start_date = datetime.strptime(request.data['fromDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
+    end_date = datetime.strptime(request.data['toDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
+    Controller_response, status_code = get_own_vs_franchise_sales_stats(start_date, end_date)
+
+    response = {
+        "ownStoreSales": Controller_response['own_store_sale_stats'],
+        "franchiseStoreSales": Controller_response['franchise_store_sale_stats']
+    }
+    return JsonResponse(response, status=200)
+
+
+@api_view(['POST'])
+def get_order_analytics(request):
     start_date = datetime.strptime(request.data['fromDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
     end_date = datetime.strptime(request.data['toDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
     Controller_response, status_code = get_own_vs_franchise_sales_stats(start_date, end_date)
