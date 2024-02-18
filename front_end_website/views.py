@@ -1,9 +1,11 @@
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view
+from datetime import datetime
 
 from indolens_admin.admin_controllers import orders_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
+from indolens_admin.admin_controllers.graphs_and_statistics import get_own_vs_franchise_sales_stats
 
 
 def index(request):  # new
@@ -25,15 +27,12 @@ def viewProductDetails(request, productId):
 
 @api_view(['POST'])
 def get_franchise_vs_ownStore_sale(request):
-    print("case1")
+    start_date = datetime.strptime(request.data['fromDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
+    end_date = datetime.strptime(request.data['toDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
+    Controller_response, status_code = get_own_vs_franchise_sales_stats(start_date, end_date)
+
     response = {
-        "ownStoreSales": [
-            100, 200, 300, 300, 300, 250, 200, 200, 200, 200, 200, 500, 500, 500, 600,
-            700, 800, 900, 1000, 100, 850, 600, 600, 600, 400, 200, 200, 300, 300, 300, 500
-        ],
-        "franchiseStoreSales": [
-            200, 200, 100, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 200, 400, 600,
-            600, 600, 800, 1000, 700, 400, 450, 500, 600, 700, 650, 600, 550, 200
-        ]
+        "ownStoreSales": Controller_response['own_store_sale_stats'],
+        "franchiseStoreSales": Controller_response['franchise_store_sale_stats']
     }
     return JsonResponse(response, status=200)

@@ -210,6 +210,11 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                 store_id = {store_id} AND store_type = 1"""
                     cursor.execute(update_central_Inventory)
 
+            add_order_track_query = f""" 
+                                        INSERT INTO order_track (order_id, status, created_on) 
+                                        VALUES ('{billingDetailsData.get('orderId')}', 1, '{getIndianTime()}' ) """
+            cursor.execute(add_order_track_query)
+
             subject = email_template_controller.get_order_creation_email_subject(billingDetailsData.get('orderId'))
             body = email_template_controller.get_order_placed_email_body(customerData.get('name'),
                                                                          billingDetailsData.get('orderId'), getIndianTime(),

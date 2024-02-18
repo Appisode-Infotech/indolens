@@ -80,9 +80,22 @@
         <div class="content">
 
             <div class="mb-9">
-                <div class="d-flex flex-wrap flex-between-center mb-1">
+                <div class="d-flex flex-wrap flex-between-center mb-3 mt-3">
                     <p class="text-800 lh-sm mb-0">Job ID : <a class="fw-bold" href="#!">
                         {{order_detail.0.order_id}}</a></p>
+                    <p class="text-800 lh-sm me-3">Store :
+                    {% if order_detail.0.created_by_store_type == 1%}
+                    <a class="fw-semi-bold"
+                       href="{% url 'view_own_store' order_detail.0.created_by_store %}">
+                        {{order_detail.0.store_name}}
+                    </a>
+                    {% else %}
+                    <a class="fw-semi-bold"
+                       href="{% url 'view_franchise_store' order_detail.0.created_by_store %}">
+                        {{order_detail.0.store_name}}
+                    </a>
+                    {% endif %}
+                    </p>
                 </div>
                 <div class="row g-5 gy-7">
                     <div class="col-12 col-xl-8 col-xxl-9">
@@ -94,33 +107,33 @@
                                     <tr>
                                         <th class="sort white-space-nowrap align-middle fs--2" scope="col"></th>
                                         <th class="sort white-space-nowrap align-middle" data-sort="products"
-                                            scope="col" style="min-width:200px;">PRODUCTS
+                                            scope="col" style="min-width:150px;">PRODUCTS
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="quantity"
+                                        <th class="sort align-middle " data-sort="quantity"
                                             scope="col" style="width:150px;">QUANTITY
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                        <th class="sort align-middle " data-sort="category" scope="col"
                                             style="width:150px;">CATEGORY
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="material" scope="col"
+                                        <th class="sort align-middle " data-sort="material" scope="col"
                                             style="width:300px;">MATERIAL
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="type" scope="col"
+                                        <th class="sort align-middle " data-sort="type" scope="col"
                                             style="width:300px;">TYPE
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="shape" scope="col"
+                                        <th class="sort align-middle " data-sort="shape" scope="col"
                                             style="width:200px;">SHAPE
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="color" scope="col"
+                                        <th class="sort align-middle " data-sort="color" scope="col"
                                             style="width:250px;">COLOR
                                         </th>
-                                        <th class="sort align-middle  ps-4" data-sort="unit" scope="col"
+                                        <th class="sort align-middle  " data-sort="unit" scope="col"
                                             style="width:250px;">UNIT
                                         </th>
-                                        <th class="sort align-middle  ps-4" data-sort="brand" scope="col"
+                                        <th class="sort align-middle  " data-sort="brand" scope="col"
                                             style="width:250px;">BRAND
                                         </th>
-                                        <th class="sort align-middle  ps-4" data-sort="brand" scope="col"
+                                        <th class="sort align-middle  " data-sort="brand" scope="col"
                                             style="width:250px;"> ACTION
                                         </th>
                                     </tr>
@@ -137,10 +150,10 @@
                                                 {{order.product_name}}
                                             </a>
                                         </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 ">
                                             {{order.purchase_quantity}}
                                         </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 ">
                                             {% if order.category_name == None %}
                                             N/A
                                             {% else %}
@@ -148,42 +161,42 @@
                                             {% endif %}
 
                                         </td>
-                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ">
                                             {% if order.material_name == None %}
                                             N/A
                                             {% else %}
                                             {{order.material_name}}
                                             {% endif %}
                                         </td>
-                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ">
                                             {% if order.frame_type_name == None %}
                                             N/A
                                             {% else %}
                                             {{order.frame_type_name}}
                                             {% endif %}
                                         </td>
-                                        <td class="quantity align-middle  py-0 ps-4 text-700">
+                                        <td class="quantity align-middle  py-0  text-700">
                                             {% if order.shape_name == None %}
                                             N/A
                                             {% else %}
                                             {{order.shape_name}}
                                             {% endif %}
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4">
+                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ">
                                             {% if order.color_name == None %}
                                             N/A
                                             {% else %}
                                             {{order.color_name}}
                                             {% endif %}
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4">
+                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ">
                                             {% if order.unit_name == None %}
                                             N/A
                                             {% else %}
                                             {{order.unit_name}}
                                             {% endif %}
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4">
+                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ">
                                             {% if order.brand_name == None %}
                                             N/A
                                             {% else %}

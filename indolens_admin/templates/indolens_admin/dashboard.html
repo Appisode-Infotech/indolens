@@ -222,8 +222,6 @@
                                        onchange="callApiForSalesGraph(this.value);"
                                        data-options="{&quot;mode&quot;:&quot;range&quot;,&quot;dateFormat&quot;:&quot;d/m/y&quot;,&quot;disableMobile&quot;:true}"
                                        readonly="readonly">
-
-
                             </div>
                         </div>
                         <div class="echart-total-sales-chart" data-echart-responsive="data-echart-responsive"
@@ -266,11 +264,11 @@
                                             <th class="border-top border-200 align-middle" scope="col"
                                                 style="width:17%">SALES
                                             </th>
-                                            <th class="border-top border-200 text-end align-middle" scope="col"
+                                            <th class="border-top border-200  align-middle" scope="col"
                                                 style="width:16%">
                                                 EXPENSES
                                             </th>
-                                            <th class="border-top border-200 text-end align-middle" scope="col"
+                                            <th class="border-top border-200  align-middle" scope="col"
                                                 style="width:20%">
                                                 NET BALANCE
                                             </th>
@@ -286,10 +284,10 @@
                                                 <h4 class="mb-0 fw-normal">₹22,367</h4>
 
                                             </td>
-                                            <td class="align-middle text-end py-4">
+                                            <td class="align-middle  py-4">
                                                 <h4 class="mb-0 fw-normal">₹2,367</h4>
                                             </td>
-                                            <td class="align-middle text-end py-4">
+                                            <td class="align-middle  py-4">
                                                 <h4 class="mb-0 fw-normal">₹15,758</h4>
                                             </td>
                                         </tr>
@@ -310,11 +308,11 @@
                                                 <h6 class="mb-0">92896<span
                                                         class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
                                             </td>
-                                            <td class="align-middle text-end" style="width:17%">
+                                            <td class="align-middle " style="width:17%">
                                                 <h6 class="mb-0">67<span
                                                         class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
                                             </td>
-                                            <td class="align-middle text-end" style="width:17%">
+                                            <td class="align-middle " style="width:17%">
                                                 <h6 class="mb-0">₹7560<span
                                                         class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
                                             </td>
@@ -367,11 +365,11 @@
                                             <th class="border-top border-200 align-middle" scope="col"
                                                 style="width:17%">SALES
                                             </th>
-                                            <th class="border-top border-200 text-end align-middle" scope="col"
+                                            <th class="border-top border-200  align-middle" scope="col"
                                                 style="width:16%">
                                                 EXPENSES
                                             </th>
-                                            <th class="border-top border-200 text-end align-middle" scope="col"
+                                            <th class="border-top border-200  align-middle" scope="col"
                                                 style="width:20%">
                                                 NET BALANCE
                                             </th>
@@ -386,10 +384,10 @@
                                             <td class="align-middle py-4">
                                                 <h4 class="mb-0 fw-normal">₹377,620</h4>
                                             </td>
-                                            <td class="align-middle text-end py-4">
+                                            <td class="align-middle  py-4">
                                                 <h4 class="mb-0 fw-normal">₹2,367</h4>
                                             </td>
-                                            <td class="align-middle text-end py-4">
+                                            <td class="align-middle  py-4">
                                                 <h4 class="mb-0 fw-normal">₹15,758</h4>
                                             </td>
                                         </tr>
@@ -410,11 +408,11 @@
                                                 <h6 class="mb-0">92896<span
                                                         class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
                                             </td>
-                                            <td class="align-middle text-end" style="width:17%">
+                                            <td class="align-middle " style="width:17%">
                                                 <h6 class="mb-0">67<span
                                                         class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
                                             </td>
-                                            <td class="align-middle text-end" style="width:17%">
+                                            <td class="align-middle " style="width:17%">
                                                 <h6 class="mb-0">₹7560<span
                                                         class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
                                             </td>
@@ -587,7 +585,7 @@
                     <!--                    </div>-->
                 </div>
             </div>
-            <div data-list='{"valueNames":["slno", "order","total","customer","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":10,"pagination":true}'
+            <div data-list='{"valueNames":["slno", "order","total","customer","store","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":10,"pagination":true}'
                  id="orderTable">
                 <h3 class="mb-3">Latest Sales</h3>
                 <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
@@ -601,11 +599,14 @@
                                 <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
                                     style="width:5%;">ORDER ID
                                 </th>
-                                <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                <th class="sort align-middle " data-sort="total" scope="col"
                                     style="width:6%;">TOTAL
                                 </th>
-                                <th class="sort align-middle ps-8" data-sort="customer" scope="col"
+                                <th class="sort align-middle " data-sort="customer" scope="col"
                                     style="width:28%; min-width: 250px;">CUSTOMER
+                                </th>
+                                <th class="sort align-middle " data-sort="store" scope="col"
+                                    style="width:28%; min-width: 250px;">STORE
                                 </th>
                                 <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
                                     style="width:10%;">PAYMENT STATUS
@@ -640,7 +641,7 @@
                                 <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                     ₹{{order.total_cost}}
                                 </td>
-                                <td class="customer align-middle white-space-nowrap ps-8">
+                                <td class="customer align-middle white-space-nowrap ">
                                     <a class="d-flex align-items-center"
                                        href="{% url 'customer_details' order.customer_id %}">
                                         <div class="avatar avatar-m">
@@ -649,6 +650,19 @@
                                         </div>
                                         <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
                                     </a>
+                                </td>
+                                <td class="store align-middle white-space-nowrap ">
+                                    {% if order.created_by_store_type == 1%}
+                                    <a class="fw-semi-bold"
+                                       href="{% url 'view_own_store' order.created_by_store %}">
+                                        {{order.store_name}}
+                                    </a>
+                                    {% else %}
+                                    <a class="fw-semi-bold"
+                                       href="{% url 'view_franchise_store' order.created_by_store %}">
+                                        {{order.store_name}}
+                                    </a>
+                                    {% endif %}
                                 </td>
                                 <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                     {% if order.payment_status == 1 %}
@@ -708,14 +722,14 @@
                                 <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
                                 </td>
-                                <td class="created_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                <td class="created_on align-middle white-space-nowrap text-700 fs--1  ">
                                     {{order.created_on}}
                                 </td>
                                 <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
                                         {{order.updater_name}} </a>
                                 </td>
-                                <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                <td class="updated_on align-middle white-space-nowrap text-700 fs--1  ">
                                     {{order.updated_on}}
                                 </td>
                             </tr>
