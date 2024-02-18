@@ -70,6 +70,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -786,6 +787,7 @@
 <script src="{% static 'vendors/chart/chart.min.js' %}"></script>
 <script>
        const { getColor, getData, getPastDates, resize } = window.phoenix.utils;
+
 </script>
 
 <script>
@@ -857,13 +859,16 @@ function setUpChart(fromDate, toDate, interval, ownStoreData, franchiseStoreData
 
         const result = params.map((param, index) => ({
             value: param.value,
-            date: index > 0 ? 'FRANCHISE STORES' :'OWN STORES',
-            color: param.color
+            date: index > 0 ? 'FRANCHISE STORES' : 'OWN STORES',
+            color: param.color,
+            currentDate: currentDate
         }));
 
         let tooltipItem = ``;
         result.forEach((el, index) => {
-            tooltipItem += `<h6 class="fs--1 text-700 ${index > 0 && 'mb-0'
+            tooltipItem += `<div class='ms-1'>
+        <h6 class="text-700">${el.currentDate.format('DD MMM')}</h6>
+    </div><h6 class="fs--1 text-700 ${index > 0 && 'mb-0'
                 }"><span class="fas fa-circle me-2" style="color:${el.color}"></span>
       ${el.date} : ${el.value}
     </h6>`;
@@ -1152,8 +1157,10 @@ function setupCustomersChart(interval, data) {
         let tooltipItem = ``;
         result.forEach((el, index) => {
             tooltipItem += `<h6 class="fs--1 text-700 ${index > 0 && 'mb-0'
-                }"><span class="fas fa-circle me-2" style="color:${el.color}"></span>
-      ${el.date.format('MMM DD')} : ${el.value}
+                }"><div class='ms-1'>
+        <h6 class="text-700">${el.date.format('MMM DD')}</h6>
+    </div><span class="fas fa-circle me-2" style="color:${el.color}"></span>
+      Customers : ${el.value}
     </h6>`;
         });
         return `<div class='ms-1'>
@@ -1317,7 +1324,7 @@ function makeApiCallForOrders(value) {
             return response.json(); // Assuming the response is in JSON format
         })
         .then(data => {
-            setupOrderAnalytics(30, data);
+            setupOrderAnalytics(data.interval, data.list);
             console.log('API Response:', data);
             // You can use the data here as needed
         })
@@ -1331,25 +1338,32 @@ function makeApiCallForOrders(value) {
 function setupOrderAnalytics(interval, data) {
 
     const dates = getPastDates(interval);
+    console.log(dates)
 
 
-    const tooltipFormatter = (params, dateFormatter = 'MMM DD') => {
-        let tooltipItem = ``;
+    const tooltipFormatter2 = (params, dateFormatter = 'MMM DD') => {
+        const date = new Date(params[0].axisValue);
+        const formattedDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+
+        let tooltipItem = `<div class='ms-1'>
+        <h6 class="text-700">${formattedDate}</h6>
+    </div>`;
+
         params.forEach(el => {
             tooltipItem += `<div class='ms-1'>
-        <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${el.borderColor ? el.borderColor : el.color
-                }"></span>
-          ${el.seriesName} : ${typeof el.value === 'object' ? el.value[1] : el.value
-                }
-        </h6>
-      </div>`;
+            <h6 class="text-700"><span class="fas fa-circle me-1 fs--2" style="color:${el.borderColor ? el.borderColor : el.color}"></span>
+                ${el.seriesName} : ${typeof el.value === 'object' ? el.value[1] : el.value}
+            </h6>
+        </div>`;
         });
+
         return `<div>
-            <p class='mb-2 text-600'>
-            </p>
-            ${tooltipItem}
-          </div>`;
+        <p class='mb-2 text-600'>
+        </p>
+        ${tooltipItem}
+    </div>`;
     };
+
 
 
     const { echarts: echarts$2 } = window;
@@ -1400,7 +1414,7 @@ function setupOrderAnalytics(interval, data) {
                 textStyle: { color: getColor('dark') },
                 borderWidth: 1,
                 transitionDuration: 0,
-                formatter: tooltipFormatter
+                formatter: tooltipFormatter2
             },
             xAxis: {
                 type: 'category',
@@ -1419,7 +1433,11 @@ function setupOrderAnalytics(interval, data) {
                     showMinLabel: false,
                     showMaxLabel: false,
                     color: getColor('gray-800'),
-                    formatter: value => value.slice(0, 3),
+                    formatter: value => {
+                        const date = new Date(value);
+                        const formattedDate = date.toLocaleDateString('en-US', { day: 'numeric', month: 'short' });
+                        return formattedDate;
+                    },
                     fontFamily: 'Nunito Sans',
                     fontWeight: 600,
                     fontSize: 12.8
@@ -1478,6 +1496,7 @@ function setupOrderAnalytics(interval, data) {
         });
     }
 }
+
 </script>
 </body>
 </html>
