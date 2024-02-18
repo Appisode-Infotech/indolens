@@ -181,7 +181,7 @@ def get_orders_stats(days):
                                     FROM DateRange
                                     WHERE DATE_ADD(date, INTERVAL 1 DAY) <= '{end_date}'
                                 )
-                                SELECT DateRange.date AS report_date, COALESCE(COUNT(s.order_id), 0) AS total_order
+                                SELECT DateRange.date AS report_date, COALESCE(COUNT(DISTINCT s.order_id), 0) AS total_order
                                 FROM DateRange
                                 LEFT JOIN sales_order s
                                 ON DATE(s.created_on) = DateRange.date
@@ -216,7 +216,7 @@ def get_store_orders_stats(days, store_type, store_id):
                                     FROM DateRange
                                     WHERE DATE_ADD(date, INTERVAL 1 DAY) <= '{end_date}'
                                 )
-                                SELECT DateRange.date AS report_date, COALESCE(COUNT(s.order_id), 0) AS total_order
+                                SELECT DateRange.date AS report_date, COALESCE(COUNT(DISTINCT s.order_id), 0) AS total_order
                                 FROM DateRange
                                 LEFT JOIN sales_order s
                                 ON DATE(s.created_on) = DateRange.date AND s.created_by_store_type = {store_type} 
