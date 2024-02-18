@@ -229,60 +229,53 @@
                 </div>
 
 
-                <div class="col-12 col-xl-12 col-xxl-5">
+                 <div class="col-12 col-xl-12 col-xxl-5">
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-7 pb-3 border-y border-300">
                         <div class="row">
-                            <div class="col-12 col-xl-7 col-xxl-6">
-                                <div class="row g-3 mb-3">
-                                    <div class="col-12 col-md-6">
-                                        <h3 class="text-1100 text-nowrap">Economics</h3>
-                                        <p class="text-700 mb-md-7">Analytics of this store from past 1 month</p>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <p class="mb-0 fw-bold">Type </p>
-                                            <p class="mb-0 fw-bold">Amount </p>
-                                        </div>
-                                        <hr class="bg-200 mb-2 mt-2"/>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <p class="mb-0 fw-semi-bold text-900"><img alt=""
-                                                                                       class="me-2"
-                                                                                       height="8"
-                                                                                       src="../assets/img/icons/green.png"
-                                                                                       width="16"/>Sales
-                                            </p>
-                                            <h5 style="color:green">₹{{revenue_generated}}</h5>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <p class="mb-0 fw-semi-bold text-900"><img alt=""
-                                                                                       class="me-2"
-                                                                                       height="8"
-                                                                                       src="../assets/img/icons/blue.png"
-                                                                                       width="16"/>Expenses
-                                            </p>
-                                            <h5 style="color:red">₹{{store_expense}}</h5>
-                                        </div>
-                                        <hr class="bg-200 mb-2 mt-2"/>
-
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <p class="mb-0 fw-semi-bold text-900"><img alt=""
-                                                                                       class="me-2"
-                                                                                       height="8"
-                                                                                       src="../assets/img/icons/blue.png"
-                                                                                       width="16"/>Net
-                                                Income
-                                            </p>
-                                            <h5 style="color:green">₹{{net_income}}</h5>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="position-relative mb-sm-4 mb-xl-0">
-                                            <div class="echart-issue-chart" style="min-height:390px;width:100%"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-12 col-xl-6 col-xxl-6">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-1100 text-nowrap">Economics</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="2" class="text-700 mb-md-7">Analytics of this store
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mb-0 fw-bold">Type</td>
+                                        <td class="mb-0 fw-bold">Amount</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mb-0 fw-semi-bold text-900">
+                                            <img alt="" height="8" src="../assets/img/icons/green.png"/>
+                                            Sales
+                                        </td>
+                                        <td style="color:green">₹{{revenue_generated}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mb-0 fw-semi-bold text-900">
+                                            <img alt="" height="8" src="../assets/img/icons/blue.png"/>
+                                            Expenses
+                                        </td>
+                                        <td style="color:red">₹{{store_expense}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mb-0 fw-semi-bold text-900">
+                                            <img alt="" height="8" src="../assets/img/icons/blue.png"/>
+                                            Net Income
+                                        </td>
+                                        <td style="color:green">₹{{net_income}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="col-12 col-xl-5 col-xxl-6">
-                                <div class="echart-zero-burnout-chart" style="min-height:320px;width:100%"></div>
+                            <div class="col-12 col-md-6">
+                                <div class="position-relative mb-sm-4 mb-xl-0">
+                                    <div class="echart-issue-chart" style="min-height:390px;width:100%"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -727,10 +720,109 @@
 <script src="{% static 'vendors/echarts/echarts.min.js' %}"></script>
 <script src="{% static 'vendors/dhtmlx-gantt/dhtmlxgantt.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
-<script src="{% static 'js/projectmanagement-dashboard.js' %}"></script>
+<!--<script src="{% static 'js/projectmanagement-dashboard.js' %}"></script>-->
 <script src="{% static 'js/csvExport.js' %}"></script>
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
 
+<script>
+      const { merge } = window._;
+
+  // form config.js
+  const echartSetOption = (chart, userOptions, getDefaultOptions) => {
+    const themeController = document.body;
+    // Merge user options with lodash
+    chart.setOption(merge(getDefaultOptions(), userOptions));
+
+    themeController.addEventListener(
+      'clickControl',
+      ({ detail: { control } }) => {
+        if (control === 'phoenixTheme') {
+          chart.setOption(window._.merge(getDefaultOptions(), userOptions));
+        }
+      }
+    );
+  };
+</script>
+<script>
+    const { getColor, getData, resize } = window.phoenix.utils;
+    const issuesDiscoveredChartEl = document.querySelector('.echart-issue-chart');
+
+    const userOptions = getData(issuesDiscoveredChartEl, 'echarts');
+      const chart = window.echarts.init(issuesDiscoveredChartEl);
+
+      const getDefaultOptions = () => ({
+        color: [
+          getColor('info-300'),
+          getColor('warning-300'),
+          getColor('danger-300'),
+          getColor('success-300'),
+          getColor('primary')
+        ],
+        tooltip: {
+          trigger: 'item'
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+
+        series: [
+          {
+<!--            name: 'Tasks assigned to me',-->
+            type: 'pie',
+            radius: ['48%', '90%'],
+            startAngle: 30,
+            avoidLabelOverlap: false,
+            // label: {
+            //   show: false,
+            //   position: 'center'
+            // },
+
+            label: {
+              show: false,
+              position: 'center',
+              formatter: '{x|{d}%} \n {y|{b}}',
+              rich: {
+                x: {
+                  fontSize: 31.25,
+                  fontWeight: 800,
+                  color: getColor('gray-700'),
+                  padding: [0, 0, 5, 15]
+                },
+                y: {
+                  fontSize: 12.8,
+                  color: getColor('gray-700'),
+                  fontWeight: 600
+                }
+              }
+            },
+            emphasis: {
+              label: {
+                show: true
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: {{store_expense}}, name: 'Expenses' },
+              { value: {{net_income}}, name: 'Net income' },
+            ]
+          }
+        ],
+        grid: {
+          bottom: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          containLabel: false
+        }
+      });
+
+      echartSetOption(chart, userOptions, getDefaultOptions);
+
+      resize(() => {
+        chart.resize();
+      });
+</script>
 </body>
 
 </html>
