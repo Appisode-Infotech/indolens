@@ -80,7 +80,7 @@
                     </div>
                 </div>
 
-                <div data-list='{"valueNames":["slno","jobId","category","material","type","shape","color","unit","brand","jobStatus"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slno","jobId","store","category","material","type","shape","color","unit","brand","jobStatus"],"page":10,"pagination":true}'
                      id="orderTable">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -119,6 +119,9 @@
                                     </th>
                                     <th class="sort align-middle ps-4" data-sort="jobId" scope="col"
                                         style="width:150px;">JOB ID
+                                    </th>
+                                    <th class="sort align-middle" data-sort="store" scope="col"
+                                        style="width:150px;">STORE
                                     </th>
                                     <th class="sort align-middle ps-4" data-sort="category" scope="col"
                                         style="width:150px;">CATEGORY
@@ -161,7 +164,9 @@
                                             {{order.order_id}}
                                         </a>
                                     </td>
-
+                                    <td class="store align-middle white-space-nowrap ">
+                                        {{order.store_name}}
+                                    </td>
                                     <td class="category align-middle white-space-nowrap text-900 py-0 ps-4">
                                         {% if order.category_name == None %}
                                         N/A
