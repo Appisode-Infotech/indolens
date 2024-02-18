@@ -277,7 +277,7 @@ let description;
             break;
         case 5:
             status = "Order ready in store";
-            description = "Order arrived at store,you can pick your order to complete";
+            description = "Order arrived at store, customer can pick the order to complete";
             break;
         case 6:
             status = "Order delivered to customer";
@@ -298,7 +298,7 @@ let description;
                             <div class="row g-md-3 align-items-center mb-8 mb-lg-10">
                                 <div class="col-12 col-md-auto d-flex">
                                     <div class="timeline-item-date text-end order-1 order-md-0 me-md-4" style="width: 100px;">
-                                    <p class="fs--2 fw-semi-bold text-700 mb-0"><b>Time</b><br>${item.created_on}</p>
+                                    <p class="fs--2 fw-semi-bold text-700 mb-0"><b>Date</b><br>${item.created_on}</p>
                                     </div>
                                     ${i !== 7 ? '<div class="timeline-item-bar position-relative me-3 me-md-0 border-400"><div class="icon-item icon-item-sm bg-success dark__bg-success"><span class="fa-solid fa-check text-white dark__text-white fs--2"></span></div>'
                                         :
