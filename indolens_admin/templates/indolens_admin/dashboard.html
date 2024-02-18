@@ -1121,7 +1121,7 @@ function makeApiCallForCustomers(value) {
             return response.json(); // Assuming the response is in JSON format
         })
         .then(data => {
-            setupCustomersChart(30, data.list);
+            setupCustomersChart(data.interval, data.list);
             console.log('API Response:', data);
             // You can use the data here as needed
         })

@@ -14,8 +14,6 @@ def getIndianTime():
 
 
 def get_own_vs_franchise_sales_stats(start_date, end_date):
-    print(start_date)
-    print(end_date)
     try:
         with connection.cursor() as cursor:
             get_own_store_sales_stats_query = f"""
@@ -65,9 +63,10 @@ def get_own_vs_franchise_sales_stats(start_date, end_date):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def get_customer_stats(days):
     end_date = datetime.now().strftime('%Y-%m-%d')
-    start_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d')
+    start_date = (datetime.now() - timedelta(days=days-1)).strftime('%Y-%m-%d')
     try:
         with connection.cursor() as cursor:
             get_customer_stats_query = f"""
@@ -92,6 +91,41 @@ def get_customer_stats(days):
                 "status": True,
                 "message": "stats fetched",
                 "customer_stats": customer_stats_list,
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_orders_stats(days):
+    end_date = datetime.now().strftime('%Y-%m-%d')
+    start_date = (datetime.now() - timedelta(days=days-1)).strftime('%Y-%m-%d')
+    try:
+        with connection.cursor() as cursor:
+            get_order_stats_query = f"""
+                                WITH RECURSIVE DateRange AS (
+                                    SELECT '{start_date}' AS date
+                                    UNION ALL
+                                    SELECT DATE_ADD(date, INTERVAL 1 DAY)
+                                    FROM DateRange
+                                    WHERE DATE_ADD(date, INTERVAL 1 DAY) <= '{end_date}'
+                                )
+                                SELECT DateRange.date AS report_date, COALESCE(COUNT(s.order_id), 0) AS total_order
+                                FROM DateRange
+                                LEFT JOIN sales_order s
+                                ON DATE(s.created_on) = DateRange.date
+                                GROUP BY DateRange.date"""
+
+            cursor.execute(get_order_stats_query)
+            order_stats = cursor.fetchall()
+
+            order_stats_list = [total_cost for _, total_cost in order_stats]
+            return {
+                "status": True,
+                "message": "stats fetched",
+                "order_stats": order_stats_list,
             }, 200
 
     except pymysql.Error as e:
