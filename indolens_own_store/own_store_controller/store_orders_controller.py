@@ -265,7 +265,7 @@ def order_payment_status_change(orderID, paymentStatus):
 
             if paymentStatus == "3":
                 order_status_change_query = f"""
-                                UPDATE sales_order SET order_status = 6
+                                UPDATE sales_order SET order_status = 7
                                 WHERE order_id = '{orderID}'
                                 """
                 cursor.execute(order_status_change_query)
