@@ -7,7 +7,7 @@ from rest_framework.decorators import api_view
 from indolens_admin.admin_controllers import orders_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_admin.admin_controllers.graphs_and_statistics import get_own_vs_franchise_sales_stats, get_customer_stats, \
-    get_orders_stats, get_store_sales_stats, get_store_customer_stats
+    get_orders_stats, get_store_sales_stats, get_store_customer_stats, get_store_orders_stats
 
 
 def index(request):  # new
