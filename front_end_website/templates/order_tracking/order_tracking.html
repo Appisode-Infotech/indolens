@@ -246,6 +246,16 @@ function getItemByStatus(status) {
 
 
 for(let i = 1;i<8;i++){
+var assignedLab=1;
+
+if(i==3 && assignedLab==0){
+continue;
+}
+
+if(i==4 && assignedLab==0){
+continue;
+}
+
 let status;
 let description;
     switch (i) {
@@ -254,8 +264,8 @@ let description;
             description = "Order placed at store";
             break;
         case 2:
-            status = "Order processing in lab";
-            description = "Order is being processed in lab";
+            status = "Order processing";
+            description = "Order is being processed";
             break;
         case 3:
             status = "Order is ready in lab";
@@ -290,10 +300,10 @@ let description;
                                     <div class="timeline-item-date text-end order-1 order-md-0 me-md-4" style="width: 100px;">
                                     <p class="fs--2 fw-semi-bold text-700 mb-0"><b>Time</b><br>${item.created_on}</p>
                                     </div>
-                                    <div class="timeline-item-bar position-relative me-3 me-md-0 border-400">
-                                        <div class="icon-item icon-item-sm bg-success dark__bg-success"><span
-                                                class="fa-solid fa-check text-white dark__text-white fs--2"></span>
-                                        </div>
+                                    ${i !== 7 ? '<div class="timeline-item-bar position-relative me-3 me-md-0 border-400"><div class="icon-item icon-item-sm bg-success dark__bg-success"><span class="fa-solid fa-check text-white dark__text-white fs--2"></span></div>'
+                                        :
+                                        '<div class="timeline-item-bar position-relative me-3 me-md-0 border-400"><div class="icon-item icon-item-sm bg-danger dark__bg-success"><span class="fa-solid fa-check text-white dark__text-white fs--2"></span></div>'}
+
                     ${i !== 7 ? '<span class="timeline-bar border-end border-success"></span>' : ''}
                                     </div>
                                 </div>
