@@ -1,4 +1,5 @@
 import datetime
+from datetime import datetime, timedelta
 
 import pymysql
 import pytz
@@ -57,6 +58,40 @@ def get_own_vs_franchise_sales_stats(start_date, end_date):
                 "message": "stats fetched",
                 "own_store_sale_stats": own_store_stats_list,
                 "franchise_store_sale_stats": franchise_store_stats_list,
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def get_customer_stats(days):
+    end_date = datetime.now().strftime('%Y-%m-%d')
+    start_date = (datetime.now() - timedelta(days=days)).strftime('%Y-%m-%d')
+    try:
+        with connection.cursor() as cursor:
+            get_customer_stats_query = f"""
+                                WITH RECURSIVE DateRange AS (
+                                    SELECT '{start_date}' AS date
+                                    UNION ALL
+                                    SELECT DATE_ADD(date, INTERVAL 1 DAY)
+                                    FROM DateRange
+                                    WHERE DATE_ADD(date, INTERVAL 1 DAY) <= '{end_date}'
+                                )
+                                SELECT DateRange.date AS report_date, COALESCE(COUNT(c.customer_id), 0) AS total_customer
+                                FROM DateRange
+                                LEFT JOIN customers c
+                                ON DATE(c.created_on) = DateRange.date
+                                GROUP BY DateRange.date"""
+
+            cursor.execute(get_customer_stats_query)
+            customer_stats = cursor.fetchall()
+
+            customer_stats_list = [total_cost for _, total_cost in customer_stats]
+            return {
+                "status": True,
+                "message": "stats fetched",
+                "customer_stats": customer_stats_list,
             }, 200
 
     except pymysql.Error as e:

@@ -6,7 +6,7 @@ from rest_framework.decorators import api_view
 
 from indolens_admin.admin_controllers import orders_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
-from indolens_admin.admin_controllers.graphs_and_statistics import get_own_vs_franchise_sales_stats
+from indolens_admin.admin_controllers.graphs_and_statistics import get_own_vs_franchise_sales_stats, get_customer_stats
 
 
 def index(request):  # new
@@ -41,25 +41,26 @@ def get_franchise_vs_ownStore_sale(request):
 
 @api_view(['POST'])
 def get_customer_analytics(request):
-    start_date = datetime.strptime(request.data['fromDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
-    end_date = datetime.strptime(request.data['toDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
-    Controller_response, status_code = get_own_vs_franchise_sales_stats(start_date, end_date)
+    print(request.data)
+    days = 60
+    Controller_response, status_code = get_customer_stats(days)
+    print(Controller_response['customer_stats'])
 
     response = {
-        "ownStoreSales": Controller_response['own_store_sale_stats'],
-        "franchiseStoreSales": Controller_response['franchise_store_sale_stats']
+        "list": [1, 2, 3, 4, 5],
+        "interval": 60
     }
     return JsonResponse(response, status=200)
 
 
 @api_view(['POST'])
 def get_order_analytics(request):
-    start_date = datetime.strptime(request.data['fromDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
-    end_date = datetime.strptime(request.data['toDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
-    Controller_response, status_code = get_own_vs_franchise_sales_stats(start_date, end_date)
+    # start_date = datetime.strptime(request.data['fromDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
+    # end_date = datetime.strptime(request.data['toDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
+    # Controller_response, status_code = get_own_vs_franchise_sales_stats(start_date, end_date)
 
     response = {
-        "ownStoreSales": Controller_response['own_store_sale_stats'],
-        "franchiseStoreSales": Controller_response['franchise_store_sale_stats']
+        "ownStoreSales": [1, 2, 3, 4, 5],
+        "franchiseStoreSales": [1, 2, 3, 4, 5]
     }
     return JsonResponse(response, status=200)
