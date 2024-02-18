@@ -211,7 +211,7 @@
                         <hr class="bg-200 mb-6 mt-4"/>
                         <div class="row flex-between-center mb-4 g-3">
                             <div class="col-auto">
-                                <h3>Total sells Own Stores v/s Franchise</h3>
+                                <h3>Total revenue Own Stores v/s Franchise stores</h3>
                                 <p class="text-700 lh-sm mb-0">Payment received across all channels</p>
                             </div>
                             <div class="col-8 col-sm-4">
@@ -857,7 +857,7 @@ function setUpChart(fromDate, toDate, interval, ownStoreData, franchiseStoreData
 
         const result = params.map((param, index) => ({
             value: param.value,
-            date: index > 0 ? 'FRANCHISE' :'OWN',
+            date: index > 0 ? 'FRANCHISE STORES' :'OWN STORES',
             color: param.color
         }));
 
