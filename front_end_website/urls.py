@@ -11,5 +11,8 @@ urlpatterns = [
     path('get_franchise_vs_ownStore_sale/', get_franchise_vs_ownStore_sale_analytics, name='get_franchise_vs_ownStore_sale'),
     path('get_customer_analytics/', get_customer_analytics, name='get_customer_analytics'),
     path('get_order_analytics/', get_order_analytics, name='get_order_analytics'),
+    path('get_store_sale_analytics/', get_store_sale_analytics, name='get_store_sale_analytics'),
+    path('get_store_customer_analytics/', get_store_customer_analytics, name='get_store_customer_analytics'),
+    path('get_store_order_analytics/', get_store_order_analytics, name='get_store_order_analytics'),
 
 ]

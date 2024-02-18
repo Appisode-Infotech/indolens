@@ -39,6 +39,7 @@ def get_franchise_vs_ownStore_sale_analytics(request):
     }
     return JsonResponse(response, status=200)
 
+
 @api_view(['POST'])
 def get_store_sale_analytics(request):
     start_date = datetime.strptime(request.data['fromDate'], '%m/%d/%Y').strftime('%Y-%m-%d')
@@ -63,6 +64,7 @@ def get_customer_analytics(request):
         "interval": days
     }
     return JsonResponse(response, status=200)
+
 
 @api_view(['POST'])
 def get_store_customer_analytics(request):
@@ -90,6 +92,7 @@ def get_order_analytics(request):
     }
     return JsonResponse(response, status=200)
 
+
 @api_view(['POST'])
 def get_store_order_analytics(request):
     days = int(request.data['type'])
@@ -103,4 +106,3 @@ def get_store_order_analytics(request):
         "interval": days
     }
     return JsonResponse(response, status=200)
-
