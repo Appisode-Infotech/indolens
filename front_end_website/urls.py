@@ -8,7 +8,7 @@ urlpatterns = [
     path('customer_order_tracking/orderId=<str:orderId>', customerOrderTracking, name='customer_order_tracking'),
     path('view_product_detail/productId=<str:productId>', viewProductDetails, name='view_product_detail'),
     # apis
-    path('get_franchise_vs_ownStore_sale/', get_franchise_vs_ownStore_sale, name='get_franchise_vs_ownStore_sale'),
+    path('get_franchise_vs_ownStore_sale/', get_franchise_vs_ownStore_sale_analytics, name='get_franchise_vs_ownStore_sale'),
     path('get_customer_analytics/', get_customer_analytics, name='get_customer_analytics'),
     path('get_order_analytics/', get_order_analytics, name='get_order_analytics'),
 
