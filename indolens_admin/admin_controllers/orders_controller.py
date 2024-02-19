@@ -310,9 +310,45 @@ def get_order_track(orderId):
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
 
+            get_order_store_details_query = f"""
+                SELECT 
+                    CASE 
+                        WHEN so.created_by_store_type = 1 THEN os.store_name 
+                        ELSE fs.store_name 
+                    END AS store_name,
+                    CASE 
+                        WHEN so.created_by_store_type = 1 THEN os.store_address 
+                        ELSE fs.store_address 
+                    END AS store_address,
+                    CASE 
+                        WHEN so.created_by_store_type = 1 THEN os.store_lat 
+                        ELSE fs.store_lat 
+                    END AS store_lat,
+                    CASE 
+                        WHEN so.created_by_store_type = 1 THEN os.store_lng 
+                        ELSE fs.store_lng 
+                    END AS store_lng
+                FROM sales_order AS so
+                LEFT JOIN own_store os ON so.created_by_store = os.store_id AND so.created_by_store_type = 1
+                LEFT JOIN franchise_store fs ON so.created_by_store = fs.store_id AND so.created_by_store_type = 2
+                WHERE so.order_id = '{orderId}' 
+                GROUP BY so.sale_item_id  
+            """
+            cursor.execute(get_order_store_details_query)
+
+            store_deta = cursor.fetchone()
+            store_details = {
+                "store_name":store_deta[0],
+                "store_address":store_deta[1],
+                "store_lat":store_deta[2],
+                "store_lng":store_deta[3],
+
+            }
+
             return {
                 "status": True,
-                "order_track": order_track(stores_data)
+                "order_track": order_track(stores_data),
+                "store_details": store_details
             }, 200
 
     except pymysql.Error as e:

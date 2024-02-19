@@ -150,7 +150,9 @@ document.addEventListener('DOMContentLoaded', function () {
         // Attach event listeners for both input elements
         const documentInput1 = document.getElementById('document1');
         const documentPreviews1 = document.getElementById('documentPreviews');
-        documentInput1.addEventListener('change', function () {
+
+        if(documentInput1){
+         documentInput1.addEventListener('change', function () {
             const files = documentInput1.files;
             clearPreviewContainer(documentPreviews1);
             for (let i = 0; i < files.length; i++) {
@@ -159,8 +161,13 @@ document.addEventListener('DOMContentLoaded', function () {
             }
         });
 
+        }
+
+
         const documentInput2 = document.getElementById('document2');
         const documentPreviews2 = document.getElementById('document2Previews');
+
+        if(documentInput2){
         documentInput2.addEventListener('change', function () {
             const files = documentInput2.files;
             clearPreviewContainer(documentPreviews2);
@@ -169,11 +176,15 @@ document.addEventListener('DOMContentLoaded', function () {
                 createPreviewContainer(file, documentInput2, documentPreviews2);
             }
         });
+        }
+
 
 
         const certificateInput = document.getElementById('certificates');
         const certificatePreviews = document.getElementById('certificatesPreviews');
-        certificateInput.addEventListener('change', function () {
+
+        if(certificateInput){
+              certificateInput.addEventListener('change', function () {
             const files = certificateInput.files;
             clearPreviewContainer(certificatePreviews);
             for (let i = 0; i < files.length; i++) {
@@ -181,6 +192,8 @@ document.addEventListener('DOMContentLoaded', function () {
                 createPreviewContainer(file, certificateInput, certificatePreviews);
             }
         });
+        }
+
 
 
         function clearPreviewContainer(previewsElement) {

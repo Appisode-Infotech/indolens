@@ -55,6 +55,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -73,17 +74,27 @@
 
         <div class="container-small cart">
             <div class="d-flex flex-wrap justify-content-between align-items-end mb-5">
+
+
                 <div>
-                    <h2>Order {{order_detail.0.order_id}} Status</h2>
-                    <p class="text-800 mb-0">Order Date: <span class="ms-sm-1">{{order_detail.0.created_on}}</span></p>
+                    <div class="d-flex flex-column align-items-start mb-3">
+                        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 40px;">
+                        <h1 class="mt-2">Indolens</h1>
+                    </div>
+                    <h3>Order {{order_detail.0.order_id}} Status</h3>
+                    <p class="text-800 mb-1">Order Date: <span class="ms-sm-1">{{order_detail.0.created_on}}</span></p>
+                    <p class="text-800 mb-1">Store Name: <span class="ms-sm-1">{{store_details.store_name}}</span></p>
+                    <p class="text-800 mb-0">Store Address: <span class="ms-sm-1">{{store_details.store_address}}</span>
+                    </p>
                 </div>
-<!--                <button class="btn btn-outline-primary mt-3"><span class="fa-solid fa-phone me-2"></span>Call Support-->
-<!--                </button>-->
+                <!--                <button class="btn btn-outline-primary mt-3"><span class="fa-solid fa-phone me-2"></span>Call Support-->
+                <!--                </button>-->
             </div>
             <div class="row g-9">
                 <div class="col-12 col-lg-6">
                     <div class="border border-300 rounded-3 overflow-hidden h-100">
-                        <div class="googlemap h-100 min-vh-50" data-googlemap data-latlng="13.11438989256401, 77.38976854618004"
+                        <div class="googlemap h-100 min-vh-50" data-googlemap
+                             data-latlng="{{store_details.store_lat}}, {{store_details.store_lng}}"
                              data-scrollwheel="false" data-zoom="14"></div>
                     </div>
                 </div>
@@ -246,7 +257,7 @@ function getItemByStatus(status) {
 
 
 for(let i = 1;i<8;i++){
-var assignedLab=1;
+var assignedLab={{order_detail.0.assigned_lab}};
 
 if(i==3 && assignedLab==0){
 continue;
@@ -343,6 +354,7 @@ let description;
     document.querySelector("#timelineDiv").appendChild(timeLineItem);
 }
 }
+
 
 
 </script>
