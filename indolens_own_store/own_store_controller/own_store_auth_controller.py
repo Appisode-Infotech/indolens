@@ -31,7 +31,7 @@ def login(store_ob):
                                 LEFT JOIN own_store AS os ON ose.assigned_store_id = os.store_id
                                 LEFT JOIN admin AS creator ON ose.created_by = creator.admin_id
                                 LEFT JOIN admin AS updater ON ose.last_updated_by = updater.admin_id
-                                WHERE ose.email = '{store_ob.email}'"""
+                                WHERE ose.email = '{store_ob.email}' AND ose.role != 4 """
             cursor.execute(login_query)
             admin_data = cursor.fetchall()
 

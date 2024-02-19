@@ -31,10 +31,9 @@ def login(store_ob):
                                 LEFT JOIN franchise_store AS fs ON fse.assigned_store_id = fs.store_id
                                 LEFT JOIN admin AS creator ON fse.created_by = creator.admin_id
                                 LEFT JOIN admin AS updater ON fse.last_updated_by = updater.admin_id
-                                WHERE fse.email = '{store_ob.email}'"""
+                                WHERE fse.email = '{store_ob.email}' AND fs.role != 4 """
             cursor.execute(login_query)
             admin_data = cursor.fetchall()
-            print(admin_data)
             if not admin_data:
                 return {
                     "status": False,
@@ -115,7 +114,6 @@ def forgot_password(email):
         with connection.cursor() as cursor:
             pwd_code = generate_random_string()
             reset_pwd_link = f"{get_base_url()}/franchise_store/franchise_store_reset_password/code={pwd_code}"
-            print(reset_pwd_link)
 
             check_email_query = f"""SELECT email,status, name FROM franchise_store_employees WHERE email = '{email}'"""
             cursor.execute(check_email_query)
