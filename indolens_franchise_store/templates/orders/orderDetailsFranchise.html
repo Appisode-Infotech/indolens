@@ -338,16 +338,46 @@
                                         </select>
 
                                         <h6 class="mb-2">Order status</h6>
+                                        {% if order_detail.0.assigned_lab == 0 %}
                                         <select onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')"
                                                 aria-label="delivery type" class="form-select" id="orderStatusSelect">
                                             <option value="1">New</option>
                                             <option value="2">Processing</option>
                                             <option value="3">Ready</option>
-                                            <option value="4">Dispatch to store</option>
-                                            <option value="5">Delivered to store</option>
                                             <option value="6">Delivered to customer</option>
                                             <option value="7">Cancel</option>
                                         </select>
+                                        {% else %}
+                                        <select onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')"
+                                                aria-label="delivery type" class="form-select" id="orderStatusSelect1">
+                                            <option value="1" style="display:none;"
+                                                    {% if order_detail.0.order_status == 1 %}selected{% endif %}>
+                                                New
+                                            </option>
+                                            <option value="2" style="display:none;"
+                                                    {% if order_detail.0.order_status == 2 %}selected{% endif %}>
+                                                Processing
+                                            </option>
+                                            <option value="3" style="display:none;"
+                                                    {% if order_detail.0.order_status == 3 %}selected{% endif %}>Ready
+                                            </option>
+                                            <option value="4" style="display:none;"
+                                                    {% if order_detail.0.order_status == 4 %}selected{% endif %}>
+                                                Dispatched to store
+                                            </option>
+                                            <option value="5"
+                                                    {% if order_detail.0.order_status == 5 %}selected{% endif %}>
+                                                Delivered to store
+                                            </option>
+                                            <option value="6"
+                                                    {% if order_detail.0.order_status == 6 %}selected{% endif %}>
+                                                Delivered to customer
+                                            </option>
+                                            <option value="7"
+                                                    {% if order_detail.0.order_status == 7 %}selected{% endif %}>Cancel
+                                            </option>
+                                        </select>
+                                        {% endif %}
                                     </div>
                                 </div>
                             </div>
@@ -437,10 +467,10 @@
                 if (i < select.options.length - 1) {
                     select.options[i + 1].disabled = false;
                     if (status != "6"){
-                    select.options[6].disabled = false;
+                    select.options[4].disabled = false;
                     }
                     if (status == "6"){
-                    select.options[6].disabled = true;
+                    select.options[4].disabled = true;
                     }
                 }
 
@@ -462,6 +492,33 @@
 
                 break;
             }
+        }
+    });
+
+    document.addEventListener("DOMContentLoaded", function () {
+        var orderStatusSelect = document.getElementById("orderStatusSelect1");
+        var orderStatus = {{ order_detail.0.order_status }};
+
+        // Disable all options by default
+        for (var i = 0; i < orderStatusSelect.options.length; i++) {
+            orderStatusSelect.options[i].disabled = true;
+        }
+
+        // Enable the next option based on the order status
+        if (orderStatus <= 3) {
+            // Enable options based on order status
+            for (var i = 0; i < orderStatusSelect.options.length; i++) {
+                var optionValue = parseInt(orderStatusSelect.options[i].value);
+                if (optionValue <= orderStatus) {
+                    orderStatusSelect.options[i].disabled = false;
+                }
+            }
+        } else if (orderStatus === 4) {
+            orderStatusSelect.options[4].disabled = false;
+            orderStatusSelect.options[6].disabled = false;
+        } else if (orderStatus === 5) {
+            orderStatusSelect.options[5].disabled = false;
+            orderStatusSelect.options[6].disabled = false;
         }
     });
     document.addEventListener('DOMContentLoaded', function() {
