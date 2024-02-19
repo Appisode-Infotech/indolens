@@ -2278,8 +2278,9 @@ def orderInvoice(request, orderId):
         store_data, store_status_code = orders_controller.get_store_details(
             order_detail['orders_details'][0]['created_by_store'],
             order_detail['orders_details'][0]['created_by_store_type'])
-        return render(request, 'orders/store_order_invoice.html', {"order_detail": order_detail['orders_details'],
-                                                                   "store_data": store_data['store_data']})
+        return render(request, 'indolens_admin/orders/order_invoice.html',
+                      {"order_detail": order_detail['orders_details'],
+                       "store_data": store_data['store_data']})
     else:
         return redirect('login')
 
@@ -3708,4 +3709,3 @@ def indolensAdminSetting(request):
 
     else:
         return redirect('login')
-

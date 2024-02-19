@@ -114,8 +114,11 @@
 <!-- ===============================================-->
 <main class="main p-5" id="top">
     {% for test in eye_test_list %}
-
-    <h2 class="mb-4" style="text-align: center;">Eye Test Report</h2>
+    <div class="d-flex flex-column align-items-center">
+        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 40px;">
+        <h1 class="mt-2">Indolens</h1>
+    </div>
+    <h3 class="mb-3 mt-2" style="text-align: center;">Eye Test Report</h3>
     <h5 class="mb-4" style="text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
         {{test.store_address}} </h5>
 <!--    <h5 class="mb-4" style="text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">-->
