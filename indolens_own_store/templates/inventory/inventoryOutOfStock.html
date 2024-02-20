@@ -136,8 +136,8 @@
                                         style="width:70px;">PRODUCT IMAGE</th>
                                     <th class="sort white-space-nowrap align-middle fs--1" scope="col"
                                         style="width:70px;">PRODUCT NAME</th>
-                                    <th class="sort white-space-nowrap align-middle ps-4" data-sort="price" scope="col"
-                                        style="width:150px;">PRICE
+                                    <th class="sort white-space-nowrap align-middle text-end" data-sort="price" scope="col"
+                                        style="width:100px;">PRICE
                                     </th>
                                     <th class="sort white-space-nowrap align-middle fs--1" data-sort="category" scope="col"
                                         style="width:150px;">CATEGORY
@@ -146,8 +146,8 @@
                                         style="width:150px;">BRAND
                                     </th>
 
-                                    <th class="sort align-middle ps-4" data-sort="inStock" scope="col"
-                                        style="width:250px;">IN STOCK
+                                    <th class="sort align-middle text-end" data-sort="inStock" scope="col"
+                                        style="width:100px;">IN STOCK
                                     </th>
                                     <th class="sort align-middle ps-4" data-sort="publishedOn" scope="col"
                                         style="width:50px;">PUBLISHED ON
@@ -183,7 +183,7 @@
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.brand_name}}
                                     </td>
-                                    <td class="inStock align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                    <td class="inStock align-middle white-space-nowrap text-end fw-bold text-700 ">
                                         {% if stock.store_product_quantity == None%}
                                         0
                                         {% else %}
