@@ -6328,9 +6328,40 @@ var tableRows = document.querySelectorAll('#myTable tbody tr');
       });
     });
   /* eslint-disable import/no-extraneous-dependencies */
+  function formatIndianNumberingSystem(number) {
+    number = number.toString();
+    var lastThree = number.substring(number.length - 3);
+    var otherNumbers = number.substring(0, number.length - 3);
+    if (otherNumbers !== '') {
+        lastThree = ',' + lastThree;
+    }
+    var formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+    return formattedNumber;
+}
+
+const interpolateTextNodes = () => {
+    var walker = document.createTreeWalker(
+        document.body,
+        NodeFilter.SHOW_TEXT,
+        null,
+        false
+    );
+
+    while (walker.nextNode()) {
+        var textNode = walker.currentNode;
+        var match = textNode.nodeValue.match(/₹\s?(\d+)/);
+        if (match) {
+            var currentAmount = parseInt(match[1]);
+            var formattedAmount = formatIndianNumberingSystem(currentAmount);
+            textNode.nodeValue = textNode.nodeValue.replace(/₹\s?(\d+)/, "₹" + formattedAmount);
+        }
+    }
+}
+
 
   window.initMap = initMap;
   docReady(detectorInit);
+  docReady(interpolateTextNodes);
   docReady(addImagePreview);
   docReady(simpleBarInit);
   docReady(toastInit);
