@@ -14,7 +14,7 @@ class CentralInventoryRestockLog:
             'product_id': self.product_id,
             'quantity': self.quantity,
             'created_by': self.created_by,
-            'created_on': self.created_on.strftime('%d-%m-%Y %I:%M %p') if isinstance(self.created_on, datetime) else None,
+            'created_on': self.created_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.created_on, datetime) else None,
             'product_name': self.product_name,
             'creator_name': self.creator_name,
         }

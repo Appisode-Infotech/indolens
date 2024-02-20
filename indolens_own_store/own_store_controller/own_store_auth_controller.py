@@ -44,13 +44,13 @@ def login(store_ob):
             elif admin_data[0][12] == 0:
                 return {
                     "status": False,
-                    "message": "You Account is locked, please contact you Admin",
+                    "message": "Your Account is locked, please contact your Admin",
                     "store": None
                 }, 301
             elif admin_data[0][6] == 0:
                 return {
                     "status": False,
-                    "message": "You Account is not assigned to any store, please contact you Admin",
+                    "message": "Your Account is not assigned to any store, please contact your Admin",
                     "store": None
                 }, 301
             elif bcrypt.checkpw(store_ob.password.encode('utf-8'), admin_data[0][4].encode('utf-8')):
@@ -63,7 +63,7 @@ def login(store_ob):
                 if assigned_store_status[0] == 0:
                     return {
                         "status": False,
-                        "message": "You Account is assigned to inactive store, please contact you Admin",
+                        "message": "Your Account is assigned to an inactive store, please contact your Admin",
                         "store": store
                     }, 200
                 else:

@@ -41,7 +41,6 @@ def lab_login(lab_obj):
                         """
             cursor.execute(login_query)
             lab_tech_data = cursor.fetchall()
-            print(lab_tech_data)
             if not lab_tech_data:
                 return {
                     "status": False,
@@ -51,21 +50,32 @@ def lab_login(lab_obj):
             elif lab_tech_data[0][12] == 0:
                 return {
                     "status": False,
-                    "message": "You Account is locked, please contact you Admin",
+                    "message": "Your Account is locked, please contact your Admin",
                     "lab_tech": None
                 }, 301
             elif lab_tech_data[0][6] == 0:
                 return {
                     "status": False,
-                    "message": "You Account is not assigned to any store, please contact you Admin",
+                    "message": "Your Account is not assigned to any Lab, please contact your Admin",
                     "lab_tech": None
                 }, 301
             elif bcrypt.checkpw(lab_obj.password.encode('utf-8'), lab_tech_data[0][4].encode('utf-8')):
-                return {
-                    "status": True,
-                    "message": "user login successfull",
-                    "lab_tech": get_lab_tech(lab_tech_data)
-                }, 200
+                lab = get_lab_tech(lab_tech_data)
+                get_lab_query = f""" SELECT status FROM lab WHERE lab_id = '{lab[0]['assigned_lab_id']}'"""
+                cursor.execute(get_lab_query)
+                assigned_lab_status = cursor.fetchone()
+                if assigned_lab_status[0] == 0:
+                    return {
+                        "status": False,
+                        "message": "Your Account is assigned to an inactive lab, please contact your Admin",
+                        "store": lab
+                    }, 200
+                else:
+                    return {
+                        "status": True,
+                        "message": "user login successfull",
+                        "lab_tech": lab
+                    }, 200
             else:
                 return {
                     "status": False,

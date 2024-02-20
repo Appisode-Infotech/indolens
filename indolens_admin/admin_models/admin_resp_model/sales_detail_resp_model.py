@@ -61,17 +61,17 @@ class SalesOrder:
             'delivery_status': self.delivery_status,
             'payment_mode': self.payment_mode,
             'amount_paid': self.amount_paid,
-            'estimated_delivery_date': self.estimated_delivery_date.strftime('%d-%m-%Y %I:%M %p') if isinstance(
+            'estimated_delivery_date': self.estimated_delivery_date.strftime('%d/%m/%Y %I:%M %p') if isinstance(
                 self.created_on, datetime) else None,
             'linked_item': self.linked_item,
             'sales_note': self.sales_note,
             'created_by_store': self.created_by_store,
             'created_by_store_type': self.created_by_store_type,
             'created_by': self.created_by,
-            'created_on': self.created_on.strftime('%d-%m-%Y %I:%M %p') if isinstance(self.created_on,
+            'created_on': self.created_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.created_on,
                                                                                       datetime) else None,
             'updated_by': self.updated_by,
-            'updated_on': self.updated_on.strftime('%d-%m-%Y %I:%M %p') if isinstance(self.updated_on,
+            'updated_on': self.updated_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.updated_on,
                                                                                       datetime) else None,
             'total_cost': self.total_cost,
             'discount_cost': self.discount_cost,
@@ -116,10 +116,10 @@ class SalesOrder:
             'product_gst': self.product_gst,
             'status': self.status,
             'discount_product': self.discount_product,
-            'created_on_product': self.created_on_product.strftime('%d-%m-%Y %I:%M %p') if isinstance(
+            'created_on_product': self.created_on_product.strftime('%d/%m/%Y %I:%M %p') if isinstance(
                 self.created_on_product, datetime) else None,
             'created_by_product': self.created_by_product,
-            'last_updated_on_product': self.last_updated_on_product.strftime('%d-%m-%Y %I:%M %p') if isinstance(
+            'last_updated_on_product': self.last_updated_on_product.strftime('%d/%m/%Y %I:%M %p') if isinstance(
                 self.last_updated_on_product, datetime) else None,
             'last_updated_by_product': self.last_updated_by_product,
             'category_name': self.category_name,

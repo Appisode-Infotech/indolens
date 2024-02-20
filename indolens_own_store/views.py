@@ -188,7 +188,7 @@ def readyStoreOrders(request):
 def completedStoreOrders(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        orders_list, status_code = store_orders_controller.get_all_orders('Delivered Customer', 'All',
+        orders_list, status_code = store_orders_controller.get_completed_orders('Delivered Customer', 'All',
                                                                           assigned_store)
         return render(request, 'orders/deliveredStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
@@ -446,13 +446,14 @@ def makeSaleOwnStore(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
+            order_id = f"""OS-{assigned_store}-{expense_controller.get_current_epoch_time()}"""
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),
-                                                                   assigned_store)
-            url = reverse('order_details_store', kwargs={'orderId': make_order['order_id']})
+                                                                   assigned_store, order_id)
+            url = reverse('order_details_store', kwargs={'orderId': order_id})
             return redirect(url)
         else:
             employee_list, emp_status_code = store_employee_controller.get_all_active_store_employee(

@@ -41,13 +41,13 @@ def login(area_head):
             elif area_head_data[0][12] == 0:
                 return {
                     "status": False,
-                    "message": "You Account is locked, please contact you Admin",
+                    "message": "Your Account is locked, please contact your Admin",
                     "area_head": None
                 }, 301
             elif area_head_data[0][6] == "0":
                 return {
                     "status": False,
-                    "message": "You Account is not assigned to any store, please contact you Admin",
+                    "message": "Your Account is not assigned to any store, please contact your Admin",
                     "area_head": None
                 }, 301
             elif bcrypt.checkpw(area_head.password.encode('utf-8'), area_head_data[0][4].encode('utf-8')):

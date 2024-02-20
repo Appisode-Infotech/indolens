@@ -84,7 +84,7 @@
                     </div>
                 </div>
 
-                <div data-list='{"valueNames":["slno","order","total","customer","store","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slno","order","invoice","total","customer","store","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":10,"pagination":true}'
                      id="orderTable">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -146,6 +146,9 @@
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
                                         style="width:5%;">ORDER ID
                                     </th>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="invoice" scope="col"
+                                        style="width:5%;">INVOICE NUMBER
+                                    </th>
                                     <th class="sort align-middle " data-sort="total" scope="col"
                                         style="width:6%;">TOTAL
                                     </th>
@@ -183,6 +186,14 @@
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details' order.order_id %}">{{order.order_id}}</a>
                                     </td>
+                                    <td class="invoice align-middle white-space-nowrap py-0">
+                                    {% if order.invoice_number == None %}
+                                    NOT GENERATED
+                                    {% else %}
+                                    <a class="fw-semi-bold" target="_blank"
+                                      href="{% url 'order_invoice' order.order_id %}">{{order.invoice_number}}</a>
+                                    {% endif %}
+                                    </td>
                                     <td class="total align-middle  fw-semi-bold text-1000 text-end">₹{{order.total_cost}}</td>
                                     <td class="customer align-middle white-space-nowrap ps-8">
                                         <a class="d-flex align-items-center" href="{% url 'customer_details' order.customer_id%}">
@@ -214,6 +225,11 @@
                                         {% elif order.payment_status == 2 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
                                                 class="badge-label">COMPLETE</span><span class="ms-1"
+                                                                                         data-feather="check"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.payment_status == 3 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">REFUNDED</span><span class="ms-1"
                                                                                          data-feather="check"
                                                                                          style="height:12.8px;width:12.8px;"></span></span>
                                         {% endif %}

@@ -13,7 +13,7 @@ class SalesOrder:
             self.created_by_store_type, self.created_by, self.created_on,
             self.updated_by, self.updated_on, self.customer_name,
             self.total_cost, self.store_name, self.creator_name,
-            self.updater_name
+            self.updater_name, self.invoice_number
         ) = values
 
     def to_dict(self):
@@ -49,10 +49,11 @@ class SalesOrder:
             'total_cost': self.total_cost,
             'store_name': self.store_name,
             'creator_name': self.creator_name,
-            'updater_name': self.updater_name
+            'updater_name': self.updater_name,
+            'invoice_number': self.invoice_number
         }
 
-def get_sales_orders(response):
+def get_completed_sales_orders(response):
     sales_order_list = []
     for values in response:
         sales_order = SalesOrder(values)

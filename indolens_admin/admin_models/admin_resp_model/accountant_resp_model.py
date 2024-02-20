@@ -33,7 +33,7 @@ class Accountant:
             'created_by': self.created_by,
             'created_on': self.created_on.strftime('%d-%m-%Y') if isinstance(self.created_on, datetime) else None,
             'last_updated_by': self.last_updated_by,
-            'last_updated_on': self.last_updated_on.strftime('%d-%m-%Y %I:%M %p') if isinstance(self.last_updated_on,
+            'last_updated_on': self.last_updated_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.last_updated_on,
                                                                                                 datetime) else None,
             'creator_name': self.creator_name,
             'updater_name': self.updater_name,
