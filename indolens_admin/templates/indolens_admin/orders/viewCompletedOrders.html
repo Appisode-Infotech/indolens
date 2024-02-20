@@ -84,7 +84,7 @@
                     </div>
                 </div>
 
-                <div data-list='{"valueNames":["slno","order","total","customer","store","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slno","order","invoice","total","customer","store","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":10,"pagination":true}'
                      id="orderTable">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -146,7 +146,7 @@
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
                                         style="width:5%;">ORDER ID
                                     </th>
-                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="invoice" scope="col"
                                         style="width:5%;">INVOICE NUMBER
                                     </th>
                                     <th class="sort align-middle " data-sort="total" scope="col"
@@ -186,7 +186,7 @@
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details' order.order_id %}">{{order.order_id}}</a>
                                     </td>
-                                    <td class="order align-middle white-space-nowrap py-0">
+                                    <td class="invoice align-middle white-space-nowrap py-0">
                                     {% if order.invoice_number == None %}
                                     NOT GENERATED
                                     {% else %}

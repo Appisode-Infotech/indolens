@@ -1,5 +1,5 @@
 import datetime
-
+import time
 import json
 import re
 
@@ -19,6 +19,10 @@ def getIndianTime():
 def convert_to_db_date_format(date_str):
     date_obj = datetime.datetime.strptime(date_str, "%d/%m/%Y")
     return date_obj.date()
+
+def get_current_epoch_time():
+    epoch_time = int(time.time())
+    return epoch_time
 
 
 def create_store_expense(expense_obj):
@@ -64,7 +68,7 @@ def get_all_store_expense(store_id, store_type):
         return {"status": False, "message": str(e)}, 301
 
 
-def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id):
+def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id, order_id):
     try:
         with connection.cursor() as cursor:
             create_update_customer = f"""INSERT INTO `customers`(`name`, `gender`, `age`, `phone`, `email`,
@@ -116,7 +120,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             `created_by`, `created_on`, `updated_by`, `updated_on`, 
                                             `created_by_store_type`, sales_note)
                                             VALUES
-                                            ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, 
+                                            ('{order_id}', {new_data.get('product')}, 
                                             '{new_data.get('product_hsn')}', 
                                             {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
@@ -152,7 +156,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 `created_by`, `created_on`, `updated_by`, `updated_on`, 
                                                                 `created_by_store_type`, `sales_note`)
                                                                 VALUES
-                                                                ('{billingDetailsData.get('orderId')}', 
+                                                                ('{order_id}', 
                                                                 {new_data.get('product')}, '{new_data.get('product_hsn')}', 
                                                                 '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
                                                                 {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
@@ -190,7 +194,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             `created_by`, `created_on`, `updated_by`, `updated_on`, 
                                                             `power_attribute`, `created_by_store_type`, `sales_note`)
                                                             VALUES
-                                                            ('{billingDetailsData.get('orderId')}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
+                                                            ('{order_id}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
                                                             {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
                                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                             {discount_percentage}, {is_discount_applied}, 
@@ -212,19 +216,19 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
 
             add_order_track_query = f""" 
                                         INSERT INTO order_track (order_id, status, created_on) 
-                                        VALUES ('{billingDetailsData.get('orderId')}', 1, '{getIndianTime()}' ) """
+                                        VALUES ('{order_id}', 1, '{getIndianTime()}' ) """
             cursor.execute(add_order_track_query)
 
-            subject = email_template_controller.get_order_creation_email_subject(billingDetailsData.get('orderId'))
+            subject = email_template_controller.get_order_creation_email_subject(order_id)
             body = email_template_controller.get_order_placed_email_body(customerData.get('name'),
-                                                                         billingDetailsData.get('orderId'), getIndianTime(),
+                                                                         order_id, getIndianTime(),
                                                                          convert_to_db_date_format(billingDetailsData.get('estDeliveryDate')))
             send_notification_controller.send_email(subject, body, customerData.get('email'))
 
             return {
                 "status": True,
                 "message": "success",
-                "order_id": billingDetailsData.get('orderId')
+                "order_id": order_id
             }, 200
 
     except pymysql.Error as e:
