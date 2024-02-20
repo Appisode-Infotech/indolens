@@ -12,7 +12,7 @@ class OrderTrack:
             'track_id': self.track_id,
             'order_id': self.order_id,
             'status': self.status,
-            'created_on': self.created_on.strftime('%Y-%m-%d') if isinstance(self.created_on,
+            'created_on': self.created_on.strftime('%d-%m-%Y') if isinstance(self.created_on,
                                                                              datetime) else None,
         }
 

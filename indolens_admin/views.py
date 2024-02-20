@@ -91,12 +91,6 @@ def resetPassword(request, code):
 
 def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        # Replace the placeholders with your email and SMTP server details
-        # subject = "Hello, this is a test email"
-        # body = "This is the body of the email."
-        # to_email = "devsandy12@gmail.com"
-
-        # dashboard_controller.send_email(subject, body, to_email)
 
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
@@ -144,7 +138,6 @@ def viewOwnStore(request, ownStoreId):
         store_stats, store_stats_status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
         sales_data, sale_status_code = orders_controller.get_all_store_orders(ownStoreId, 1)
         revenue_generated, sale_status_code = orders_controller.get_store_sales(ownStoreId, 1)
-        print(revenue_generated)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(ownStoreId, 1)
         store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(ownStoreId, 1)
 

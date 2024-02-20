@@ -26,7 +26,7 @@ class Store:
             'store_address': self.store_address,
             'status': self.status,
             'created_by': self.created_by,
-            'created_on': self.created_on.strftime('%Y-%m-%d') if isinstance(self.created_on,
+            'created_on': self.created_on.strftime('%d-%m-%Y') if isinstance(self.created_on,
                                                                              datetime) else None,
         }
 

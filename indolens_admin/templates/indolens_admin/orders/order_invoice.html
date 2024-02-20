@@ -141,6 +141,9 @@ body {
     .container-small {
         padding: 15px;
     }
+    .print-button {
+            display: none;
+        }
 
     .table th, .table td {
         padding: 8px;
@@ -175,12 +178,12 @@ body {
                     </div>
 
                     {% if invoice_details.invoice_number|length != 0 %}
-                    <h2 class="mb-0">Draft Invoice</h2>
-                    {% else %}
                     <h2 class="mb-0">Invoice</h2>
+                    {% else %}
+                    <h2 class="mb-0">Draft Invoice</h2>
                     {% endif %}
                     <div>
-                        <button class="btn btn-phoenix-secondary" onclick="window.print()">
+                        <button class="btn btn-phoenix-secondary print-button" onclick="window.print()">
                             <span class="fa-solid fa-print me-sm-2"></span>
                             <span class="d-none d-sm-inline-block">Print</span>
                         </button>
@@ -202,7 +205,7 @@ body {
                             <tr>
                                 <th scope="row" class="align-middle">Order No</th>
                                 <td class="align-middle"><b>{{order_detail.0.order_id}}</b></td>
-                                <th scope="row" class="align-middle">GST Reg No</th>
+                                <th scope="row" class="align-middle">GSTIN</th>
                                 <td class="align-middle">{{store_data.0.store_gst}}</td>
                             </tr>
                             <tr>
@@ -260,9 +263,9 @@ body {
                                     {{order.hsn_product}}
                                     {% endif %}
                                 </td>
-                                <td class="align-middle text-700 fw-semi-bold" colspan="1">{{order.purchase_quantity}}
+                                <td class="align-middle text-700 fw-semi-bold text-end" colspan="1">{{order.purchase_quantity}}
                                 </td>
-                                <td class="align-middle text-end text-1000 fw-semi-bold" colspan="2">
+                                <td class="align-middle text-end text-1000 fw-semi-bold text-end" colspan="2">
                                     ₹{{order.unit_sale_price}}
                                 </td>
                                 <td class="align-middle text-end fw-semi-bold" colspan="1">

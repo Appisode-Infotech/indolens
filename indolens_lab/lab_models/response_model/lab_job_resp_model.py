@@ -67,10 +67,10 @@ class SalesOrder:
             'created_by_store': self.created_by_store,
             'created_by_store_type': self.created_by_store_type,
             'created_by': self.created_by,
-            'created_on': self.created_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.created_on,
+            'created_on': self.created_on.strftime('%d-%m-%Y %H:%M') if isinstance(self.created_on,
                                                                                       datetime) else None,
             'updated_by': self.updated_by,
-            'updated_on': self.updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.updated_on,
+            'updated_on': self.updated_on.strftime('%d-%m-%Y %H:%M') if isinstance(self.updated_on,
                                                                                       datetime) else None,
             'store_name': self.store_name,
             'creator_name': self.creator_name,
@@ -113,10 +113,10 @@ class SalesOrder:
             'product_gst': self.product_gst,
             'status': self.status,
             'discount_product': self.discount_product,
-            'created_on_product': self.created_on_product.strftime('%Y-%m-%d %H:%M:%S') if isinstance(
+            'created_on_product': self.created_on_product.strftime('%d-%m-%Y %H:%M') if isinstance(
                 self.created_on_product, datetime) else None,
             'created_by_product': self.created_by_product,
-            'last_updated_on_product': self.last_updated_on_product.strftime('%Y-%m-%d %H:%M:%S') if isinstance(
+            'last_updated_on_product': self.last_updated_on_product.strftime('%d-%m-%Y %H:%M') if isinstance(
                 self.last_updated_on_product, datetime) else None,
             'last_updated_by_product': self.last_updated_by_product,
             'category_name': self.category_name,
