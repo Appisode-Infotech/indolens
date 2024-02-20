@@ -484,14 +484,15 @@ def makeSaleFranchiseStore(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         if request.method == 'POST':
+            order_id = f"""fs-{assigned_store}-{franchise_expense_controller.get_current_epoch_time()}"""
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = franchise_expense_controller.make_sale(cart_data, customerData,
                                                                              billingDetailsData,
                                                                              request.session.get('id'),
-                                                                             assigned_store)
-            url = reverse('order_details_franchise_store', kwargs={'orderId': make_order['order_id']})
+                                                                             assigned_store, order_id)
+            url = reverse('order_details_franchise_store', kwargs={'orderId': order_id})
             return redirect(url)
         else:
             employee_list, emp_status_code = franchise_store_employee_controller.get_all_active_franchise_emp(
