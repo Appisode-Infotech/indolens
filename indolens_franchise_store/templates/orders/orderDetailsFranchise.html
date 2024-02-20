@@ -81,7 +81,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <h2 class="mb-0"><span>{{order_detail.0.order_id}}</span></h2>
+                <h2 class="mb-0">Order: <span>{{order_detail.0.order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
                     <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
                     </p>
@@ -113,11 +113,11 @@
                                         <th class="sort align-middle ps-4" data-sort="size" scope="col"
                                             style="width:300px;">GST
                                         </th>
-                                        <th class="sort align-middle  ps-4" data-sort="quantity" scope="col"
+                                        <th class="sort align-middle text-end" data-sort="quantity" scope="col"
                                             style="width:200px;">QUANTITY
                                         </th>
 
-                                        <th class="sort align-middle  ps-4" data-sort="total" scope="col"
+                                        <th class="sort align-middle text-end ps-4" data-sort="total" scope="col"
                                             style="width:250px;">TOTAL
                                         </th>
                                     </tr>
@@ -133,7 +133,7 @@
                                                href="{% url 'view_franchise_central_inventory_products' order.product_id %}">
                                                 {{order.product_name}}</a>
                                         </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">₹
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 text-end ps-4">₹
                                             {{order.unit_sale_price}}
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
@@ -142,10 +142,10 @@
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
                                             {{order.product_gst}}%
                                         </td>
-                                        <td class="quantity align-middle  py-0 ps-4 text-700">
+                                        <td class="quantity align-middle text-end py-0 ps-4 text-700">
                                             {{order.purchase_quantity}}
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4">₹
+                                        <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹
                                             {{order.product_total_cost}}
                                         </td>
                                     </tr>
