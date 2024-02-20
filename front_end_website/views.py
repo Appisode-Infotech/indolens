@@ -17,7 +17,6 @@ def index(request):  # new
 def customerOrderTracking(request, orderId):
     order_detail, status_code = orders_controller.get_order_details(orderId)
     order_track, track_status_code = orders_controller.get_order_track(orderId)
-    print(order_track)
     return render(request, 'order_tracking/order_tracking.html', {"order_detail": order_detail['orders_details'],
                                                                   "order_track": order_track['order_track'],
                                                                   "store_details": order_track['store_details']})
@@ -85,7 +84,6 @@ def get_store_customer_analytics(request):
 def get_order_analytics(request):
     days = int(request.data['type'])
     Controller_response, status_code = get_orders_stats(days)
-    print(Controller_response['order_stats'])
 
     response = {
         "list": Controller_response['order_stats'],
@@ -100,7 +98,6 @@ def get_store_order_analytics(request):
     store_type = request.data['storeType']
     store_id = request.data['storeId']
     Controller_response, status_code = get_store_orders_stats(days, store_type, store_id)
-    print(Controller_response['order_stats'])
 
     response = {
         "list": Controller_response['order_stats'],

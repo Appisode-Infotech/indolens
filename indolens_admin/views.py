@@ -104,6 +104,8 @@ def dashboard(request):
         own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
         own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
         own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
+        own_store_sales_expense_analytics, status_code = dashboard_controller.get_sales_expense_analytics(1)
+        print(own_store_sales_expense_analytics)
         franchise_store_new_order, status_code = dashboard_controller.get_order_stats('New', 2)
         franchise_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 2)
         franchise_store_sales, status_code = dashboard_controller.get_sales_stats(2)

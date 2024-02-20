@@ -26,9 +26,9 @@ def get_order_stats(status, store_type):
             orders_list = cursor.fetchall()
 
             return {
-                       "status": True,
-                       "count": len(orders_list)
-                   }, 200
+                "status": True,
+                "count": len(orders_list)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -49,9 +49,9 @@ def get_sales_stats(store):
             total_sale = orders_list[0] if orders_list[0] is not None else 0
 
             return {
-                       "status": True,
-                       "sale": total_sale
-                   }, 200
+                "status": True,
+                "sale": total_sale
+            }, 200
 
 
     except pymysql.Error as e:
@@ -59,3 +59,33 @@ def get_sales_stats(store):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
+def get_sales_expense_analytics(store_type):
+    try:
+        with connection.cursor() as cursor:
+            get_order_query = f"""
+                                SELECT
+                                  os.store_id,
+                                  os.store_name,
+                                  IFNULL(SUM(so.product_total_cost), 0) AS total_sale
+                                FROM
+                                  own_store os
+                                LEFT JOIN
+                                  sales_order so ON os.store_id = so.created_by_store AND so.order_status != 7
+                                GROUP BY
+                                  os.store_id, os.store_name;
+
+                                """
+            cursor.execute(get_order_query)
+            sales_list = cursor.fetchall()
+
+            return {
+                "status": True,
+                "sale": sales_list
+            }, 200
+
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
