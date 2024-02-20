@@ -232,25 +232,7 @@
                                 <div class="mb-5 mt-7">
                                     <h3>Own stores - Analytics</h3>
                                     <p class="text-700">Glimpses of revenue and spend for own stores</p>
-                                    <!--                                    <div class="col-12 col-sm-auto">-->
-                                    <!--                                        <div class="btn-group" data-gantt-scale="data-gantt-scale" role="group">-->
-                                    <!--                                            <input checked="" class="btn-check" id="own_stores_weekView"-->
-                                    <!--                                                   name="scaleView"-->
-                                    <!--                                                   type="radio" value="week"/>-->
-                                    <!--                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs&#45;&#45;2 py-1 mb-0"-->
-                                    <!--                                                   for="own_stores_weekView">Week</label>-->
-                                    <!--                                            <input class="btn-check" id="own_stores_monthView" name="scaleView"-->
-                                    <!--                                                   type="radio"-->
-                                    <!--                                                   value="month"/>-->
-                                    <!--                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs&#45;&#45;2 py-1 mb-0"-->
-                                    <!--                                                   for="own_stores_monthView">Month</label>-->
-                                    <!--                                            <input class="btn-check" id="own_stores_yearView" name="scaleView"-->
-                                    <!--                                                   type="radio"-->
-                                    <!--                                                   value="year"/>-->
-                                    <!--                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs&#45;&#45;2 py-1 mb-0"-->
-                                    <!--                                                   for="own_stores_yearView">Year</label>-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
+
                                 </div>
                                 <div class="table-responsive scrollbar">
                                     <table class="table fs--2 mb-0">
@@ -260,14 +242,14 @@
                                                 style="width:32%">
                                                 SHOP
                                             </th>
-                                            <th class="border-top border-200 align-middle" scope="col"
+                                            <th class="border-top border-200 align-middle text-end" scope="col"
                                                 style="width:17%">SALES
                                             </th>
-                                            <th class="border-top border-200  align-middle" scope="col"
+                                            <th class="border-top border-200  align-middle text-end" scope="col"
                                                 style="width:16%">
                                                 EXPENSES
                                             </th>
-                                            <th class="border-top border-200  align-middle" scope="col"
+                                            <th class="border-top border-200  align-middle text-end" scope="col"
                                                 style="width:20%">
                                                 NET BALANCE
                                             </th>
@@ -275,60 +257,34 @@
                                         </tr>
                                         </thead>
                                         <tbody class="list">
-                                        <tr>
-                                            <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal"> {{ own_store_list|length }}</h4>
-                                            </td>
-                                            <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal">₹22,367</h4>
 
-                                            </td>
-                                            <td class="align-middle  py-4">
-                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
-                                            </td>
-                                            <td class="align-middle  py-4">
-                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
-                                            </td>
-                                        </tr>
-                                        {% for store in own_store_list %}
+                                        {% for amount in own_store_sales_expense_analytics %}
                                         <tr>
                                             <td class="white-space-nowrap ps-0" style="width:32%">
                                                 <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">{{store.store_id}} </h6><a href="#!">
+                                                    <h6 class="mb-0 me-3">{{amount.store_id}} </h6>
                                                     <div class="d-flex align-items-center">
                                                         <p class="mb-0 text-primary fw-bold fs--1"><a
-                                                                href="{% url 'view_own_store' store.store_id %}">{{store.store_name}}</a>
+                                                                href="{% url 'view_own_store' amount.store_id %}">{{amount.store_name}}</a>
                                                         </p>
                                                     </div>
                                                 </a>
                                                 </div>
                                             </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
+                                            <td class="align-middle text-end" style="width:17%">
+                                                <h6 class="mb-0">₹{{amount.total_sale}}</h6>
                                             </td>
-                                            <td class="align-middle " style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
+                                            <td class="align-middle text-end" style="width:17%">
+                                                <h6 class="mb-0">₹{{amount.total_expense}}</h6>
                                             </td>
-                                            <td class="align-middle " style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
+                                            <td class="align-middle text-end" style="width:17%">
+                                                <h6 class="mb-0">₹{{amount.net_profit}}</h6>
                                             </td>
                                         </tr>
                                         {% endfor %}
                                         </tbody>
                                     </table>
                                 </div>
-                                <!--                                <div class="d-flex align-items-center justify-content-between py-2 fs&#45;&#45;1 mb-1">-->
-                                <!--                                    <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="">1 to-->
-                                <!--                                        5 <span-->
-                                <!--                                                class="text-600"> Items of </span> 15</p><a class="fw-semi-bold"-->
-                                <!--                                                                                            href="#!"-->
-                                <!--                                                                                            data-list-view="*">View-->
-                                <!--                                    all<span-->
-                                <!--                                            class="fas fa-angle-right ms-2" data-fa-transform="down-1"></span></a>-->
-                                <!--                                </div>-->
                             </div>
 
 
@@ -336,22 +292,7 @@
                                 <div class="mb-5 mt-7">
                                     <h3>Franchise stores - Analytics</h3>
                                     <p class="text-700">Glimpses of revenue and spend for franchise stores</p>
-                                    <!--                                    <div class="col-12 col-sm-auto">-->
-                                    <!--                                        <div class="btn-group" data-gantt-scale="data-gantt-scale" role="group">-->
-                                    <!--                                            <input checked="" class="btn-check" id="weekView2" name="scaleView"-->
-                                    <!--                                                   type="radio" value="week"/>-->
-                                    <!--                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs&#45;&#45;2 py-1 mb-0"-->
-                                    <!--                                                   for="weekView2">Week</label>-->
-                                    <!--                                            <input class="btn-check" id="monthView2" name="scaleView" type="radio"-->
-                                    <!--                                                   value="month"/>-->
-                                    <!--                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs&#45;&#45;2 py-1 mb-0"-->
-                                    <!--                                                   for="monthView2">Month</label>-->
-                                    <!--                                            <input class="btn-check" id="yearView2" name="scaleView" type="radio"-->
-                                    <!--                                                   value="year"/>-->
-                                    <!--                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs&#45;&#45;2 py-1 mb-0"-->
-                                    <!--                                                   for="yearView2">Year</label>-->
-                                    <!--                                        </div>-->
-                                    <!--                                    </div>-->
+
                                 </div>
                                 <div class="table-responsive scrollbar">
                                     <table class="table fs--2 mb-0">
@@ -361,14 +302,14 @@
                                                 style="width:32%">
                                                 SHOP
                                             </th>
-                                            <th class="border-top border-200 align-middle" scope="col"
+                                            <th class="border-top border-200 align-middle text-end" scope="col"
                                                 style="width:17%">SALES
                                             </th>
-                                            <th class="border-top border-200  align-middle" scope="col"
+                                            <th class="border-top border-200  align-middle text-end" scope="col"
                                                 style="width:16%">
                                                 EXPENSES
                                             </th>
-                                            <th class="border-top border-200  align-middle" scope="col"
+                                            <th class="border-top border-200  align-middle text-end" scope="col"
                                                 style="width:20%">
                                                 NET BALANCE
                                             </th>
@@ -376,44 +317,28 @@
                                         </tr>
                                         </thead>
                                         <tbody class="list">
-                                        <tr>
-                                            <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal"> {{ franchise_store_list|length }}</h4>
-                                            </td>
-                                            <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal">₹377,620</h4>
-                                            </td>
-                                            <td class="align-middle  py-4">
-                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
-                                            </td>
-                                            <td class="align-middle  py-4">
-                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
-                                            </td>
-                                        </tr>
-                                        {% for store in franchise_store_list %}
+
+                                        {% for amount in franchise_store_sales_expense_analytics %}
                                         <tr>
                                             <td class="white-space-nowrap ps-0" style="width:32%">
                                                 <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">{{store.store_id}} </h6><a href="#!">
+                                                    <h6 class="mb-0 me-3">{{amount.store_id}} </h6>
                                                     <div class="d-flex align-items-center">
                                                         <p class="mb-0 text-primary fw-bold fs--1"><a
-                                                                href="{% url 'view_franchise_store' store.store_id  %}">{{store.store_city}}</a>
+                                                                href="{% url 'view_franchise_store' amount.store_id  %}">{{amount.store_name}}</a>
                                                         </p>
                                                     </div>
                                                 </a>
                                                 </div>
                                             </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
+                                            <td class="align-middle text-end" style="width:17%">
+                                                <h6 class="mb-0">₹{{amount.total_sale}}</h6>
                                             </td>
-                                            <td class="align-middle " style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
+                                            <td class="align-middle text-end " style="width:17%">
+                                                <h6 class="mb-0">₹{{amount.total_expense}}</h6>
                                             </td>
-                                            <td class="align-middle " style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
+                                            <td class="align-middle text-end" style="width:17%">
+                                                <h6 class="mb-0">₹{{amount.net_profit}}</h6>
                                             </td>
                                         </tr>
                                         {% endfor %}

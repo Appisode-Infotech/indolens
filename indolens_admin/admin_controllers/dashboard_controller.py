@@ -4,6 +4,8 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_models.admin_resp_model.store_analytics_resp_model import store_analytics
+
 ist = pytz.timezone('Asia/Kolkata')
 today = datetime.datetime.now(ist)
 
@@ -60,28 +62,63 @@ def get_sales_stats(store):
         return {"status": False, "message": str(e)}, 301
 
 
-def get_sales_expense_analytics(store_type):
+def get_store_analytics():
     try:
         with connection.cursor() as cursor:
-            get_order_query = f"""
-                                SELECT
-                                  os.store_id,
-                                  os.store_name,
-                                  IFNULL(SUM(so.product_total_cost), 0) AS total_sale
-                                FROM
-                                  own_store os
-                                LEFT JOIN
-                                  sales_order so ON os.store_id = so.created_by_store AND so.order_status != 7
-                                GROUP BY
-                                  os.store_id, os.store_name;
+            own_store_sales_query = f"""
+                SELECT
+                    os.store_id,
+                    os.store_name,
+                    COALESCE(SUM(so.product_total_cost), 0) AS total_sale,
+                    COALESCE((SELECT IFNULL(SUM(expense_amount), 0) 
+                              FROM store_expense 
+                              WHERE store_id = os.store_id 
+                                AND store_type = 1), 0) AS total_expense,
+                    COALESCE(SUM(so.product_total_cost), 0) - COALESCE((SELECT IFNULL(SUM(expense_amount), 0) 
+                                                                         FROM store_expense 
+                                                                         WHERE store_id = os.store_id 
+                                                                           AND store_type = 1), 0) AS net_profit
+                FROM
+                    own_store os
+                LEFT JOIN
+                    sales_order so ON os.store_id = so.created_by_store 
+                                  AND so.created_by_store_type = 1 
+                                  AND so.order_status != 7
+                GROUP BY
+                    os.store_id, os.store_name;
+            """
 
-                                """
-            cursor.execute(get_order_query)
-            sales_list = cursor.fetchall()
+            cursor.execute(own_store_sales_query)
+            own_sales_analytics = cursor.fetchall()
+
+            franchise_store_sales_query = f"""
+                                 SELECT
+                                    fs.store_id,
+                                    fs.store_name,
+                                    COALESCE(SUM(so.product_total_cost), 0) AS total_sale,
+                                    COALESCE((SELECT IFNULL(SUM(expense_amount), 0) 
+                                              FROM store_expense 
+                                              WHERE store_id = fs.store_id 
+                                                AND store_type = 2), 0) AS total_expense,
+                                    COALESCE(SUM(so.product_total_cost), 0) - COALESCE((SELECT IFNULL(SUM(expense_amount), 0) 
+                                                                                         FROM store_expense 
+                                                                                         WHERE store_id = fs.store_id 
+                                                                                           AND store_type = 2), 0) AS net_profit
+                                FROM
+                                    franchise_store fs
+                                LEFT JOIN
+                                    sales_order so ON fs.store_id = so.created_by_store 
+                                                  AND so.created_by_store_type = 2 
+                                                  AND so.order_status != 7
+                                GROUP BY
+                                    fs.store_id, fs.store_name; """
+            cursor.execute(franchise_store_sales_query)
+            franchise_sales_analytics = cursor.fetchall()
 
             return {
                 "status": True,
-                "sale": sales_list
+                "own_sales_analytics": store_analytics(own_sales_analytics),
+                "franchise_sales_analytics": store_analytics(franchise_sales_analytics)
             }, 200
 
 

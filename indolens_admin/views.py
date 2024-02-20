@@ -104,8 +104,7 @@ def dashboard(request):
         own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
         own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
         own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
-        own_store_sales_expense_analytics, status_code = dashboard_controller.get_sales_expense_analytics(1)
-        print(own_store_sales_expense_analytics)
+        store_sales_expense_analytics, status_code = dashboard_controller.get_store_analytics()
         franchise_store_new_order, status_code = dashboard_controller.get_order_stats('New', 2)
         franchise_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 2)
         franchise_store_sales, status_code = dashboard_controller.get_sales_stats(2)
@@ -119,7 +118,10 @@ def dashboard(request):
                        "franchise_store_new_order": franchise_store_new_order['count'],
                        "franchise_store_delivered_orders": franchise_store_delivered_orders['count'],
                        "own_store_sale": own_store_sales['sale'],
-                       "franchise_store_sale": franchise_store_sales['sale']})
+                       "franchise_store_sale": franchise_store_sales['sale'],
+                       "own_store_sales_expense_analytics": store_sales_expense_analytics['own_sales_analytics'],
+                       "franchise_store_sales_expense_analytics": store_sales_expense_analytics[
+                           'franchise_sales_analytics']})
     else:
         return redirect('login')
 
@@ -216,7 +218,7 @@ def viewFranchiseStore(request, franchiseStoreId):
         products_list, status_code = franchise_store_controller.get_all_products_for_franchise_store(franchiseStoreId)
         store_stats, status_code = franchise_store_controller.get_franchise_store_stats(franchiseStoreId)
         sales_data, status_code = orders_controller.get_all_store_orders(franchiseStoreId, 2)
-        revenue_generated, sale_status_code = orders_controller.get_store_sales(franchiseStoreId, 1)
+        revenue_generated, sale_status_code = orders_controller.get_store_sales(franchiseStoreId, 2)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(franchiseStoreId, 2)
         store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(franchiseStoreId, 2)
         return render(request, 'indolens_admin/franchiseStores/franchiseStore.html',
