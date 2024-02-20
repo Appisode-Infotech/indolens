@@ -19,7 +19,7 @@ class AdminSetting:
             'created_by': self.created_by,
             'created_on': self.created_on,
             'updated_by': self.updated_by,
-            'updated_on': self.updated_on.strftime('%Y-%m-%d %H:%M:%S') if isinstance(self.updated_on, datetime) else None
+            'updated_on': self.updated_on.strftime('%d-%m-%Y %I:%M %p') if isinstance(self.updated_on, datetime) else None
         }
 
 def admin_setting_response(response):

@@ -239,8 +239,16 @@
 
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">GST</h5>
-                                <input name="productGSTIN" class="form-control" placeholder="%" type="number"
-                                       min="0" value="{{product_data.product_gst}}" required/>
+<!--                                <input name="productGSTIN" class="form-control" placeholder="%" type="number"-->
+<!--                                       min="0" value="{{product_data.product_gst}}" required/>-->
+                                <select class="form-select"
+                                        name="productGSTIN" required="required">
+                                    <option value="0" selected="selected">0</option>
+                                    <option value="5">5</option>
+                                    <option value="12">12</option>
+                                    <option value="18">18</option>
+                                    <option value="28">28</option>
+                                </select>
                                 <div class="invalid-feedback">Please provide valid GST.</div>
                             </div>
                             <div class="col-12 col-lg-6">
@@ -663,6 +671,22 @@
 
 
 
+</script>
+<script>
+    function changeOrderStatus(selectElement, orderId) {
+        // Get the product_gst value from your backend or wherever it's stored
+        var productGst = {{ product_data.product_gst }};
+
+        // Loop through options and set the selected attribute
+        for (var i = 0; i < selectElement.options.length; i++) {
+            var option = selectElement.options[i];
+            if (option.value == productGst) {
+                option.selected = true;
+            } else {
+                option.selected = false;
+            }
+        }
+    }
 </script>
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
 
