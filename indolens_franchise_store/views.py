@@ -175,7 +175,7 @@ def deliveredFranchiseOrders(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        orders_list, status_code = franchise_store_orders_controller.get_all_orders('Delivered Customer', 'All', assigned_store)
+        orders_list, status_code = franchise_store_orders_controller.get_completed_orders('Delivered Customer', 'All', assigned_store)
         return render(request, 'orders/deliveredFranchiseOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('franchise_store_login')

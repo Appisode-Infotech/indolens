@@ -146,6 +146,9 @@
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
                                         style="width:5%;">ORDER ID
                                     </th>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
+                                        style="width:5%;">INVOICE NUMBER
+                                    </th>
                                     <th class="sort align-middle " data-sort="total" scope="col"
                                         style="width:6%;">TOTAL
                                     </th>
@@ -182,6 +185,14 @@
                                     <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details' order.order_id %}">{{order.order_id}}</a>
+                                    </td>
+                                    <td class="order align-middle white-space-nowrap py-0">
+                                    {% if order.invoice_number == None %}
+                                    NOT GENERATED
+                                    {% else %}
+                                    <a class="fw-semi-bold" target="_blank"
+                                      href="{% url 'order_invoice' order.order_id %}">{{order.invoice_number}}</a>
+                                    {% endif %}
                                     </td>
                                     <td class="total align-middle  fw-semi-bold text-1000 text-end">₹{{order.total_cost}}</td>
                                     <td class="customer align-middle white-space-nowrap ps-8">

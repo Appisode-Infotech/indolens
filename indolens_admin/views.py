@@ -2238,7 +2238,7 @@ def viewStoreReadyOrders(request, store):
 
 def viewCompletedOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = orders_controller.get_all_orders('Delivered Customer', 'All', store)
+        response, status_code = orders_controller.get_completed_orders('Delivered Customer', 'All', store)
         return render(request, 'indolens_admin/orders/viewCompletedOrders.html',
                       {"orders_list": response['orders_list'], "store": store})
     else:
