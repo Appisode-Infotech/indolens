@@ -270,8 +270,16 @@
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">GST</h5>
-                                <input name="productGSTIN" class="form-control" placeholder="%" type="number" required
-                                min="0" value="0"/>
+<!--                                <input name="productGSTIN" class="form-control" placeholder="%" type="number" required-->
+<!--                                min="0" value="0"/>-->
+                                <select class="form-select"
+                                        name="productGSTIN" required="required">
+                                    <option value="0" selected="selected">0</option>
+                                    <option value="5">5</option>
+                                    <option value="12">12</option>
+                                    <option value="18">18</option>
+                                    <option value="28">28</option>
+                                </select>
                                 <div class="invalid-feedback">Please provide valid GST.</div>
                             </div>
                             <div class="col-12 col-lg-6">
