@@ -320,8 +320,7 @@
                                         <th class="sort white-space-nowrap align-middle " data-sort="product"
                                             scope="col" style="width:350px;">PRODUCT NAME
                                         </th>
-                                        <th class="sort align-middle  " data-sort="price" scope="col"
-                                            style="width:150px;">PRICE
+                                        <th class="sort align-middle" data-sort="price" scope="col">PRICE
                                         </th>
                                         <th class="sort align-middle" data-sort="category" scope="col"
                                             style="width:150px;">CATEGORY
@@ -348,7 +347,7 @@
                                                 href="{% url 'view_products' stock.product_id %}">
                                             {{stock.product_name}}</a>
                                         </td>
-                                        <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700 text-end">
                                             ₹{{stock.sale_price}}
                                         </td>
                                         <td class="category align-middle white-space-nowrap text-600 fs--1  fw-semi-bold">
@@ -426,7 +425,7 @@
                                             scope="col"
                                             style="width:5%;">ORDER ID
                                         </th>
-                                        <th class="sort align-middle " data-sort="total" scope="col"
+                                        <th class="sort align-middle ps-3" data-sort="total" scope="col"
                                             style="width:6%;">TOTAL
                                         </th>
                                         <th class="sort align-middle ps-8" data-sort="customer" scope="col"
@@ -461,7 +460,7 @@
                                         <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                                   href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
                                         </td>
-                                        <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700 text-end">
                                             ₹{{order.total_cost}}
                                         </td>
                                         <td class="customer align-middle white-space-nowrap ps-8">
@@ -608,11 +607,10 @@
                                         <th class="sort align-middle" data-sort="reason" scope="col"
                                             style="width:20%;">REASON
                                         </th>
-                                        <th class="sort align-middle" data-sort="amount" scope="col"
-                                            style="width:20%;">AMOUNT
+                                        <th class="sort align-middle pe-3" data-sort="amount" scope="col">AMOUNT
                                         </th>
                                         <th class="sort align-middle pe-3" data-sort="date" scope="col"
-                                            style="width:15%;">DATE
+                                            style="width:18%;">DATE
                                         </th>
                                         <th class="sort align-middle text-start pe-3" data-sort="createdBy"
                                             scope="col" style="width:20%;">CREATED BY
@@ -632,7 +630,7 @@
                                         <td class="reason align-middle fw-semi-bold text-1000">
                                             {{expense.expense_reason}}
                                         </td>
-                                        <td class="amount align-middle fw-semi-bold text-1000">
+                                        <td class="amount align-middle fw-semi-bold text-1000 text-end pe-3">
                                             ₹{{expense.expense_amount}}
                                         </td>
                                         <td class="date align-middle fw-semi-bold text-1000">
