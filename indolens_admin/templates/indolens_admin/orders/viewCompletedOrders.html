@@ -227,6 +227,11 @@
                                                 class="badge-label">COMPLETE</span><span class="ms-1"
                                                                                          data-feather="check"
                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                        {% elif order.payment_status == 3 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">REFUNDED</span><span class="ms-1"
+                                                                                         data-feather="check"
+                                                                                         style="height:12.8px;width:12.8px;"></span></span>
                                         {% endif %}
                                     </td>
                                     <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
