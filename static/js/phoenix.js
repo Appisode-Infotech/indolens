@@ -6353,7 +6353,7 @@ const interpolateTextNodes = () => {
         if (match) {
             var currentAmount = parseInt(match[1]);
             var formattedAmount = formatIndianNumberingSystem(currentAmount);
-            textNode.nodeValue = textNode.nodeValue.replace(/₹\s?(\d+)/, "₹" + formattedAmount);
+            textNode.nodeValue = textNode.nodeValue.replace(/₹\s?(\d+)/, "₹ " + formattedAmount);
         }
     }
 }

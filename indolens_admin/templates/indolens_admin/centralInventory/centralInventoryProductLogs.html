@@ -127,8 +127,8 @@
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                         scope="col" style="width:20%;">PRODUCT NAME
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="price" scope="col"
-                                        style="width:20%;">QUANTITY
+                                    <th class="sort align-middle text-end" data-sort="price" scope="col"
+                                        style="width:10%;">QUANTITY
                                     </th>
                                     <th class="sort align-middle ps-4" data-sort="category" scope="col"
                                         style="width:20%;">RESTOCKED BY
@@ -147,7 +147,7 @@
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0"
                                             href="{% url 'view_products' log.product_id %}">{{log.product_name}} </a></td>
-                                    <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                    <td class="price align-middle white-space-nowrap fw-bold text-700 text-end">
                                         {{log.quantity}}
                                     </td>
 
