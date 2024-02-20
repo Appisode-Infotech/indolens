@@ -366,7 +366,7 @@
                                 <div class="col-12 col-xl-6">
                                     <div class="me-xl-4">
                                         <div>
-                                            <h3>Customer analytics</h3>
+                                            <h3>No. Of Customers</h3>
                                             <div class="col-12 col-sm-auto mt-3">
                                                 <div class="btn-group" data-gantt-scale="data-gantt-scale"
                                                      role="group">
@@ -393,7 +393,7 @@
                                 </div>
                                 <div class="col-12 col-xl-6">
                                     <div>
-                                        <h3>Order analytics</h3>
+                                        <h3>No. Of Orders</h3>
                                         <div class="col-12 col-sm-auto mt-3">
                                             <div class="btn-group" data-gantt-scale="data-gantt-scale"
                                                  role="group">
@@ -523,7 +523,7 @@
                                 <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
                                     style="width:5%;">ORDER ID
                                 </th>
-                                <th class="sort align-middle " data-sort="total" scope="col"
+                                <th class="sort align-middle ps-3 pe-3" data-sort="total" scope="col"
                                     style="width:6%;">TOTAL
                                 </th>
                                 <th class="sort align-middle " data-sort="customer" scope="col"
@@ -536,7 +536,7 @@
                                     style="width:10%;">PAYMENT STATUS
                                 </th>
                                 <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
-                                    scope="col" style="width:12%; min-width: 200px;">ORDER
+                                    scope="col" style="width:12%;">ORDER
                                     STATUS
                                 </th>
                                 <th class="sort align-middle text-start" data-sort="created_by" scope="col"
@@ -562,7 +562,7 @@
                                 <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                           href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
                                 </td>
-                                <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700 text-end ps-3 pe-3">
                                     ₹{{order.total_cost}}
                                 </td>
                                 <td class="customer align-middle white-space-nowrap ">
@@ -793,7 +793,7 @@ function setUpChart(fromDate, toDate, interval, ownStoreData, franchiseStoreData
         <h6 class="text-700">${el.currentDate.format('DD MMM')}</h6>
     </div><h6 class="fs--1 text-700 ${index > 0 && 'mb-0'
                 }"><span class="fas fa-circle me-2" style="color:${el.color}"></span>
-      ${el.date} : ${el.value}
+      ${el.date} : ₹${el.value}
     </h6>`;
         });
         return `<div class='ms-1'>

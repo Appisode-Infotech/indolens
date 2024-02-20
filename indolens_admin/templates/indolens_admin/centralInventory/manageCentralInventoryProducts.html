@@ -208,7 +208,7 @@
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0"
                                             href="{% url 'view_products' product.product_id %}">{{product.product_name}} </a></td>
-                                    <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                    <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4 text-end">
                                         ₹{{product.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
@@ -218,7 +218,7 @@
                                         {{product.brand_name}}
                                     </td>
 
-                                    <td class="quantity align-middle white-space-nowrap fw-bold text-700 ps-4">
+                                    <td class="quantity align-middle white-space-nowrap fw-bold text-700 ps-4 text-end">
                                         {{product.product_quantity}}
                                     </td>
                                     <td class="status align-middle white-space-nowrap fw-bold text-700 ps-4">

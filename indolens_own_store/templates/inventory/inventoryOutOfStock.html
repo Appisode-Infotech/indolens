@@ -174,8 +174,8 @@
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_store_inventory_products' stock.store_inventory_id %}"> {{stock.product_name}}</a>
                                     </td>
-                                    <td class="price align-middle ps-4">
-                                        {{stock.sale_price}}
+                                    <td class="price align-middle text-end ps-4">
+                                        ₹{{stock.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.category_name}}
@@ -183,7 +183,7 @@
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.brand_name}}
                                     </td>
-                                    <td class="inStock align-middle white-space-nowrap  fw-bold text-700 ps-4">
+                                    <td class="inStock align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
                                         {% if stock.store_product_quantity == None%}
                                         0
                                         {% else %}

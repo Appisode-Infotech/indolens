@@ -191,7 +191,7 @@
                                     </td>
 
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                        {{stock.sale_price}}
+                                        ₹{{stock.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.category_name}}
@@ -200,7 +200,7 @@
                                         {{stock.brand_name}}
                                     </td>
 
-                                    <td class="inStock align-middle white-space-nowrap  fw-bold text-700 ps-4">
+                                    <td class="inStock align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
                                         {% if stock.store_product_quantity == None%}
                                         0
                                         {% else %}

@@ -191,8 +191,7 @@
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details' order.order_id %}">{{order.order_id}}</a>
                                     </td>
-                                    <td class="total align-middle  fw-semi-bold text-1000">₹
-                                        {{order.total_cost}}
+                                    <td class="total align-middle  fw-semi-bold text-1000 text-end">₹{{order.total_cost}}
                                     </td>
                                     <td class="customer align-middle white-space-nowrap ps-8">
                                         <a class="d-flex align-items-center"
