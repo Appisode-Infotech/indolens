@@ -3,7 +3,7 @@ import json
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
-from indolens_admin.admin_controllers import central_inventory_controller, eye_test_controller
+from indolens_admin.admin_controllers import central_inventory_controller, eye_test_controller, orders_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
     franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller, \
@@ -217,11 +217,13 @@ def orderInvoiceFranchise(request, orderId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         order_detail, status_code = franchise_store_orders_controller.get_order_details(orderId)
+        invoice_details, inv_status_code = orders_controller.get_invoice_details(orderId)
         store_data, store_status_code = franchise_store_orders_controller.get_store_details(
             order_detail['orders_details'][0]['created_by_store'],
             order_detail['orders_details'][0]['created_by_store_type'])
         return render(request, 'orders/franchise_order_invoice.html', {"order_detail": order_detail['orders_details'],
-                                                                       "store_data": store_data['store_data']})
+                                                                       "store_data": store_data['store_data'],
+                                                                       "invoice_details": invoice_details['invoice_details']})
     else:
         return redirect('franchise_store_login')
 
@@ -230,7 +232,9 @@ def franchiseOrderStatusChange(request, orderId, status):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
+        print(status)
         order_detail, status_code = franchise_store_orders_controller.franchise_order_status_change(orderId, status)
+        print(order_detail)
         url = reverse('order_details_franchise_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:

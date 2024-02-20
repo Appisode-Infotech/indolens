@@ -139,6 +139,8 @@ def viewOwnStore(request, ownStoreId):
         products_list, prod_status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
         store_stats, store_stats_status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
         sales_data, sale_status_code = orders_controller.get_all_store_orders(ownStoreId, 1)
+        revenue_generated, sale_status_code = orders_controller.get_store_sales(ownStoreId, 1)
+        print(revenue_generated)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(ownStoreId, 1)
         store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(ownStoreId, 1)
 
@@ -147,8 +149,8 @@ def viewOwnStore(request, ownStoreId):
                        "total_employee_count": store_stats['total_employee_count'],
                        "total_customer_count": store_stats['total_customer_count'],
                        "sales_data": sales_data['orders_list'], "store_expense": store_expense['store_expense'],
-                       "revenue_generated": sum(item['total_cost'] for item in sales_data['orders_list']),
-                       "net_income": sum(item['total_cost'] for item in sales_data['orders_list']) - store_expense[
+                       "revenue_generated": revenue_generated['sale'],
+                       "net_income": int(revenue_generated['sale']) - store_expense[
                            'store_expense'], "store_expense_list": store_expense_list['store_expense']})
     else:
         return redirect('login')
@@ -212,6 +214,7 @@ def viewFranchiseStore(request, franchiseStoreId):
         products_list, status_code = franchise_store_controller.get_all_products_for_franchise_store(franchiseStoreId)
         store_stats, status_code = franchise_store_controller.get_franchise_store_stats(franchiseStoreId)
         sales_data, status_code = orders_controller.get_all_store_orders(franchiseStoreId, 2)
+        revenue_generated, sale_status_code = orders_controller.get_store_sales(franchiseStoreId, 1)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(franchiseStoreId, 2)
         store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(franchiseStoreId, 2)
         return render(request, 'indolens_admin/franchiseStores/franchiseStore.html',
@@ -219,8 +222,8 @@ def viewFranchiseStore(request, franchiseStoreId):
                        "total_employee_count": store_stats['total_employee_count'],
                        "total_customer_count": store_stats['total_customer_count'],
                        "sales_data": sales_data['orders_list'], "store_expense": store_expense['store_expense'],
-                       "revenue_generated": sum(item['total_cost'] for item in sales_data['orders_list']),
-                       "net_income": sum(item['total_cost'] for item in sales_data['orders_list']) - store_expense[
+                       "revenue_generated": revenue_generated['sale'],
+                       "net_income": int(revenue_generated['sale']) - store_expense[
                            'store_expense'], "store_expense_list": store_expense_list['store_expense']})
 
     else:
@@ -2275,12 +2278,13 @@ def viewOrderDetails(request, orderId):
 def orderInvoice(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
+        invoice_details, inv_status_code = orders_controller.get_invoice_details(orderId)
         store_data, store_status_code = orders_controller.get_store_details(
             order_detail['orders_details'][0]['created_by_store'],
             order_detail['orders_details'][0]['created_by_store_type'])
         return render(request, 'indolens_admin/orders/order_invoice.html',
                       {"order_detail": order_detail['orders_details'],
-                       "store_data": store_data['store_data']})
+                       "store_data": store_data['store_data'], "invoice_details": invoice_details['invoice_details']})
     else:
         return redirect('login')
 

@@ -440,7 +440,7 @@
                                                                 name="amount_paid"
                                                                 class="form-control"
                                                                 type="number" min="1" placeholder="&#8377;">
-                                                        <div class="invalid-feedback">This field is required.</div>
+                                                        <div class="invalid-feedback">This field is required and should be less than billing amount.</div>
                                                     </div>
 
 
@@ -2046,6 +2046,7 @@ function getProductsData() {
 
         // Display total sum in the <p> element with id 'totalSum'
         document.getElementById('totalSum').textContent = "Billing amount: ₹" + totalSum.toFixed(2);
+        document.getElementsByName('amount_paid')[0].max = totalSum.toFixed(2);
 
         // Display total number of products in the <p> element with id 'totalProducts'
         document.getElementById('totalProducts').textContent = "Total Products: " + productsArray.length;

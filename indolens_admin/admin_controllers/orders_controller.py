@@ -112,7 +112,7 @@ def get_all_store_orders(store_id, store_type):
                 LEFT JOIN franchise_store_employees creator_fs ON so.created_by = creator_fs.employee_id AND so.created_by_store_type = 2
                 LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                 LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
-                WHERE so.created_by_store = {store_id} AND so.created_by_store_type = {store_type} AND so.order_status != 7
+                WHERE so.created_by_store = {store_id} AND so.created_by_store_type = {store_type}
                 GROUP BY so.order_id          
                 """
             cursor.execute(get_order_query)
@@ -122,6 +122,30 @@ def get_all_store_orders(store_id, store_type):
                 "status": True,
                 "orders_list": get_sales_orders(orders_list)
             }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def get_store_sales(store_id, store_type):
+    try:
+        with connection.cursor() as cursor:
+            get_order_query = f"""
+                                SELECT IFNULL(SUM(product_total_cost), 0) AS total_sale
+                                FROM sales_order
+                                WHERE created_by_store_type = {store_type} AND created_by_store = {store_id}
+                                AND order_status != 7
+                                """
+            cursor.execute(get_order_query)
+            orders_list = cursor.fetchone()
+            total_sale = orders_list[0] if orders_list[0] is not None else 0
+
+            return {
+                "status": True,
+                "sale": total_sale
+            }, 200
+
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

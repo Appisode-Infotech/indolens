@@ -10,7 +10,7 @@ from indolens_own_store.own_store_controller import store_orders_controller
 
 
 def checkLogin(request):  # new
-    return HttpResponse('<h1>WELCOME INDOLENS LAB</h1>')
+    return redirect('lab_login')
 
 
 def login(request):
