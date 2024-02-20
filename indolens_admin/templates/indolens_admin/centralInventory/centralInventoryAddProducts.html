@@ -112,7 +112,7 @@
                     <div class="col-12 col-xl-8">
                         <div class="mb-5">
                             <input class="form-control" name="productTitle" placeholder="Write product title here..."
-                                   maxlength="70f" type="text" required />
+                                   maxlength="70" type="text" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');" required />
                             <div class="invalid-feedback">Please provide a valid Product title.</div>
                         </div>
                         <div class="mb-6">
