@@ -94,7 +94,8 @@
                             <label class="form-label" for="labName">Lab name</label>
 
                             <input class="form-control" id="labName" name="labName" required="" type="text"
-                                   value="{{lab.lab_name}}"/>
+                                   value="{{lab.lab_name}}"
+                            oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Please provide a valid Lab name.</div>
                         </div>
                         <div class="col-md-6">

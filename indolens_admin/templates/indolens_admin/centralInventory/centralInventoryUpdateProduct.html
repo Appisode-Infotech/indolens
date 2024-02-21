@@ -94,7 +94,8 @@
                     <div class="col-12 col-xl-8">
                         <div class="mb-5">
                             <input class="form-control" name="productTitle" placeholder="Write product title here..."
-                                   type="text" value="{{product_data.product_name}}" required/>
+                                   type="text" value="{{product_data.product_name}}"
+                                   oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"required/>
                             <div class="invalid-feedback">Please provide a valid Product title.</div>
                         </div>
                         <div class="mb-6">
