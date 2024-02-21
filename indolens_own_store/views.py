@@ -254,7 +254,6 @@ def orderStatusChange(request, orderId, status):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_update, status_code = store_orders_controller.order_status_change(orderId, status)
-        print(order_update)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:
@@ -446,7 +445,7 @@ def makeSaleOwnStore(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
-            order_id = f"""OS-{assigned_store}-{expense_controller.get_current_epoch_time()}"""
+            order_id = f"""OS_{assigned_store}_{expense_controller.get_current_epoch_time()}"""
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
