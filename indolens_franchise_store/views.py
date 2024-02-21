@@ -232,9 +232,7 @@ def franchiseOrderStatusChange(request, orderId, status):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        print(status)
         order_detail, status_code = franchise_store_orders_controller.franchise_order_status_change(orderId, status)
-        print(order_detail)
         url = reverse('order_details_franchise_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:
@@ -484,7 +482,7 @@ def makeSaleFranchiseStore(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         if request.method == 'POST':
-            order_id = f"""fs-{assigned_store}-{franchise_expense_controller.get_current_epoch_time()}"""
+            order_id = f"""fs_{assigned_store}_{franchise_expense_controller.get_current_epoch_time()}"""
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])

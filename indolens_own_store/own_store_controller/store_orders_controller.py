@@ -279,7 +279,7 @@ def order_status_change(orderID, orderStatus):
                     last_invoice_number = existing_invoice[0]
                     store_code, store_id, date_part, number_part = last_invoice_number.split('-')
                     number_part = str(int(number_part) + 1).zfill(8)
-                    invoice_number = f"{store_code}-{store_id}-{date_part}-{number_part}"
+                    invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
                 else:
                     number_part = '00000001'
                     store_code = 'OS' if order[0]['created_by_store_type'] == 1 else 'FS'

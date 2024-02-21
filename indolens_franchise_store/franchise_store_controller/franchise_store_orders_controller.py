@@ -372,7 +372,7 @@ def franchise_order_status_change(orderID, orderStatus):
                     store_id = order[0]['created_by_store']
                     date_part = getIndianTime().strftime('%d%m%Y')
 
-                    invoice_number = f"{store_code}-{store_id}-{date_part}-{number_part}"
+                    invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
 
                 create_invoice_query = f""" 
                                             INSERT INTO invoice (invoice_number, order_id, invoice_status, invoice_date,
