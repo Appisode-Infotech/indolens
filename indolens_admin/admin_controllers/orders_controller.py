@@ -147,19 +147,15 @@ def get_completed_orders(status, pay_status, store):
                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchall()
-            print(get_completed_sales_orders(orders_list))
+
             return {
                 "status": True,
                 "orders_list": get_completed_sales_orders(orders_list)
             }, 200
 
     except pymysql.Error as e:
-        print(str(e))
-        print(301)
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
-        print(str(e))
-        print(301)
         return {"status": False, "message": str(e)}, 301
 
 
