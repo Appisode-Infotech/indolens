@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
-CSRF_TRUSTED_ORIGINS = ['django.vcnrgroup.com']
+CSRF_TRUSTED_ORIGINS = ['https://django.vcnrgroup.com']
 # Application definition
 
 INSTALLED_APPS = [
