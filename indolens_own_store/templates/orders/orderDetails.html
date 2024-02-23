@@ -491,19 +491,41 @@
 
 </script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var status = "{{order_detail.0.payment_status}}";
         var select = document.getElementById("paymentStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
             if (select.options[i].value === status) {
                 select.selectedIndex = i;
+
+                // Disable options before the selected option
                 for (var j = 0; j < i; j++) {
                     select.options[j].disabled = true;
+                }
+
+                // Enable options after the selected option
+                for (var k = i + 1; k < select.options.length; k++) {
+                    select.options[k].disabled = false;
                 }
                 break;
             }
         }
+
+        // Add an event listener to handle future changes
+        select.addEventListener("change", function () {
+            var selectedIndex = select.selectedIndex;
+
+            // Disable options before the selected option
+            for (var i = 0; i < selectedIndex; i++) {
+                select.options[i].disabled = true;
+            }
+
+            // Enable options after the selected option
+            for (var j = selectedIndex + 1; j < select.options.length; j++) {
+                select.options[j].disabled = false;
+            }
+        });
     });
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.order_status }};
