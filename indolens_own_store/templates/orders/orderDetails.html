@@ -67,6 +67,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -404,23 +405,24 @@
                             <form action="{% url 'order_payment_status_change' %}" class="row g-3 needs-validation"
                                   method="post" novalidate="">
                                 {% csrf_token %}
-                                <div class="col-12">
-                                    <input class="form-control" id="orderId" maxlength="256" required
+                                 <input class="form-control" id="orderId" maxlength="256" required
                                            name="orderId"
-                                           type="text">
-                                </div>
-                                 <div class="col-12">
-                                    <input class="form-control" id="orderPaymentStatus" maxlength="256" required
+                                           type="text" hidden>
+                                 <input class="form-control" id="orderPaymentStatus" maxlength="256" required
                                            name="orderPaymentStatus"
-                                           type="text">
-                                </div>
+                                           type="text" hidden>
                                 <div class="col-12">
                                     <h5 class="mb-3">Payment mode</h5>
-                                    <input class="form-control" id="amount" maxlength="256" required
-                                           name="amount"
-                                           min="1"
-                                           type="number">
-                                    <div class="invalid-feedback">Enter Valid amount!</div>
+                                    <select
+                                            name="payment_mode" class="form-select"
+                                            aria-label="Default select example"
+                                            required="required">
+                                        <option value="" selected>Please select payment mode</option>
+                                        <option value="1"> CASH</option>
+                                        <option value="2"> UPI</option>
+                                        <option value="3"> DEBIT CARD</option>
+                                        <option value="4"> CREDIT CARD</option>
+                                    </select>
                                 </div>
                                 <div id="footer_div" class="modal-footer">
                                     <button class="btn btn-primary modal-submit" type="submit"
@@ -487,6 +489,7 @@
      $('#order_status_change_modal').modal('show');
 
 }
+
 
 
 </script>
@@ -617,6 +620,7 @@
 
 
     });
+
 
 
 
