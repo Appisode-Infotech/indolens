@@ -436,11 +436,26 @@
                                                         <h5 class="mb-3">Advance Amount Paid(₹)</h5>
                                                         <input
                                                                 onchange="genBillingInfoObject()"
-                                                                value="0" required
+                                                                required
                                                                 name="amount_paid"
                                                                 class="form-control"
                                                                 type="number" min="1" placeholder="&#8377;">
                                                         <div class="invalid-feedback">This field is required and should be less than billing amount.</div>
+                                                    </div>
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Payment Mode</h5>
+                                                        <select
+                                                                onchange="genBillingInfoObject()"
+                                                                name="payment_mode" class="form-select"
+                                                                aria-label="Default select example"
+                                                                required="required">
+                                                            <option value="" selected>Please select payment mode</option>
+                                                            <option value="1"> CASH </option>
+                                                            <option value="2"> UPI </option>
+                                                            <option value="3"> DEBIT CARD </option>
+                                                            <option value="4"> CREDIT CARD </option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required when advance amount paid.</div>
                                                     </div>
 
 
@@ -1611,13 +1626,15 @@ function genBillingInfoObject() {
     var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
     var amountPaidInput = document.getElementsByName("amount_paid")[0];
     var saleNoteInput = document.getElementsByName("sale_note")[0];
+    var paymentModeInput = document.getElementsByName("payment_mode")[0];
     var billingInfoData = {
         estDeliveryDate: estDeliveryDateInput.value,
         assignedLab: assignedLabInput.value,
         orderByEmployee: orderByEmployeeInput.value,
         amount_paid: amountPaidInput.value,
         orderId: "ORDER" + generateRandomId(),
-        "saleNote": saleNoteInput.value
+        saleNote: saleNoteInput.value,
+        paymentMode:paymentModeInput.value
     };
     billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
 }
