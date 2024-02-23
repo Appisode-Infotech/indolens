@@ -38,7 +38,7 @@ urlpatterns = [
     path('order_invoice_store/orderId=<str:orderId>', orderInvoice, name='order_invoice_store'),
     path('order_details_store/order_status_change/orderId=<str:orderId>/status=<str:status>', orderStatusChange,
          name='order_status_change'),
-    path('order_details_store/order_payment_status_change/orderId=<str:orderId>/status=<str:status>', orderPaymentStatusChange,
+    path('order_details_store/order_payment_status_change/', orderPaymentStatusChange,
          name='order_payment_status_change'),
 
     # inventory items
