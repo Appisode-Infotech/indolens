@@ -1340,6 +1340,7 @@ function addRxContactLensContainer() {
                         <input name="cl_power[${productCardCount}]"
                                class="form-control"
                                required="required"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
@@ -1348,6 +1349,7 @@ function addRxContactLensContainer() {
                         <input name="cl_bc[${productCardCount}]"
                                class="form-control"
                                required="required"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example">
                                            <div class="invalid-feedback">This field is required.
 
@@ -1356,6 +1358,7 @@ function addRxContactLensContainer() {
                         <input name="cl_dia[${productCardCount}]"
                                class="form-control"
                                required="required"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
@@ -1364,6 +1367,7 @@ function addRxContactLensContainer() {
                         <input name="cl_cylinder[${productCardCount}]"
                                class="form-control"
                                required="required"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
@@ -1372,6 +1376,7 @@ function addRxContactLensContainer() {
                         <input name="cl_axis[${productCardCount}]"
                         required="required"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 

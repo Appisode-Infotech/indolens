@@ -134,6 +134,7 @@ body {
 
 
 
+
     </style>
 
 
@@ -179,10 +180,10 @@ body {
                                 scope="col" style="width:350px;">PRODUCT NAME
                             </th>
                             <th class="sort align-middle ps-4" data-sort="price" scope="col"
-                                style="width:150px;">SALE PRICE
+                                style="width:150px; text-align: end;">SALE PRICE
                             </th>
-                            <th class="sort align-middle ps-4" data-sort="price" scope="col"
-                                style="width:150px;">FRANCHISE SALE PRICE
+                            <th  class="sort align-middle ps-4" data-sort="price" scope="col"
+                                style="width:150px; text-align: end;">FRANCHISE SALE PRICE
                             </th>
                             <th class="sort align-middle ps-4" data-sort="category" scope="col"
                                 style="width:150px;">CATEGORY
@@ -215,10 +216,11 @@ body {
                                     class="fw-semi-bold line-clamp-3 mb-0"
                                     href="{% url 'view_products' product.product_id %}">{{product.product_name}} </a>
                             </td>
-                            <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+                            <td style="text-align: end;">
                                 ₹{{product.sale_price}}
                             </td>
-                            <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
+
+                            <td style="text-align: end;">
                                 ₹{{product.franchise_sale_price}}
                             </td>
                             <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">

@@ -65,6 +65,9 @@
 
 
 
+
+
+
     </script>
 </head>
 
@@ -90,10 +93,6 @@
                         <button class="btn pe-3 ps-0 text-900"><a target="_blank"
                                                                   href="{% url 'order_invoice_store' order_detail.0.order_id %}"><span
                                 class="fas fa-file-invoice"></span> Invoice</a></button>
-                        <!--                        <button class="btn px-3 text-900"><a-->
-                        <!--                                href="{% url 'order_payment_status_change' order_detail.0.order_id '3' %}"><span-->
-                        <!--                                class="fas fa-undo me-2"></span>Refund</a></button>-->
-
                     </div>
                 </div>
                 <div class="row g-5 gy-7">
@@ -390,6 +389,55 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="order_status_change_modal" tabindex="-1"
+                 aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h5 class="modal-title text-white" id="modal_title"></h5>
+                            <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                <span class="fas fa-times fs--1 text-white"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modal_content">
+                            <!-- Form for Allocate Store -->
+                            <form action="{% url 'order_payment_status_change' %}" class="row g-3 needs-validation"
+                                  method="post" novalidate="">
+                                {% csrf_token %}
+                                 <input class="form-control" id="orderId" maxlength="256" required
+                                           name="orderId"
+                                           type="text" hidden>
+                                 <input class="form-control" id="orderPaymentStatus" maxlength="256" required
+                                           name="orderPaymentStatus"
+                                           type="text" hidden>
+                                <div class="col-12">
+                                    <h5 class="mb-3">Payment mode</h5>
+                                    <select
+                                            name="payment_mode" class="form-select"
+                                            aria-label="Default select example"
+                                            required="required">
+                                        <option value="" selected>Please select payment mode</option>
+                                        <option value="1"> CASH</option>
+                                        <option value="2"> UPI</option>
+                                        <option value="3"> DEBIT CARD</option>
+                                        <option value="4"> CREDIT CARD</option>
+                                    </select>
+                                </div>
+                                <div id="footer_div" class="modal-footer">
+                                    <button class="btn btn-primary modal-submit" type="submit"
+                                            id="modal_submit">Confirm
+                                    </button>
+                                    <button class="btn btn-outline-primary" type="reset" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {% include 'footer.html' %}
 
         </div>
@@ -415,6 +463,7 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 </body>
@@ -429,11 +478,17 @@
    function changePaymentStatus(statusWidget, order_id) {
     console.log(statusWidget.value);
     console.log(order_id);
+     $('#orderId').val(order_id);
+     $('#orderPaymentStatus').val(statusWidget.value);
+     if(statusWidget.value==2){
+            $('#modal_title').html('Complete payment?');
 
-    const url = `/own_store/order_details_store/order_payment_status_change/orderId=${order_id}/status=${statusWidget.value}`;
-    window.location.href = url;
+     }else if(statusWidget.value==3){
+            $('#modal_title').html('Refund payment?');
+     }
+     $('#order_status_change_modal').modal('show');
+
 }
-
 
 
 
@@ -565,6 +620,9 @@
 
 
     });
+
+
+
 
 
 
