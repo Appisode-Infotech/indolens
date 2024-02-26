@@ -9,7 +9,7 @@ from indolens_own_store.own_store_controller import own_store_auth_controller, s
     expense_controller, store_employee_controller, store_customers_controller, store_orders_controller, \
     own_store_dashboard_controller, own_store_lab_controller, own_store_eye_test_controller
 from indolens_own_store.own_store_model.request_model import own_store_employee_model, \
-    store_expense_model, store_create_stock_request_model
+    store_expense_model, store_create_stock_request_model, order_payment_status_change_model
 
 
 # =================================ADMIN START======================================
@@ -189,7 +189,7 @@ def completedStoreOrders(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_completed_orders('Delivered Customer', 'All',
-                                                                          assigned_store)
+                                                                                assigned_store)
         return render(request, 'orders/deliveredStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
@@ -229,7 +229,9 @@ def orderDetails(request, orderId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
-        return render(request, 'orders/orderDetails.html', {"order_detail": order_detail['orders_details']})
+        payment_logs, status_code = orders_controller.get_payment_logs(orderId)
+        return render(request, 'orders/orderDetails.html', {"order_detail": order_detail['orders_details'],
+                                                            "payment_logs": payment_logs['payment_logs']})
     else:
         return redirect('own_store_login')
 
@@ -245,7 +247,8 @@ def orderInvoice(request, orderId):
             order_detail['orders_details'][0]['created_by_store_type'])
         return render(request, 'orders/store_order_invoice.html', {"order_detail": order_detail['orders_details'],
                                                                    "store_data": store_data['store_data'],
-                                                                   "invoice_details": invoice_details['invoice_details']})
+                                                                   "invoice_details": invoice_details[
+                                                                       'invoice_details']})
     else:
         return redirect('own_store_login')
 
@@ -260,11 +263,15 @@ def orderStatusChange(request, orderId, status):
         return redirect('own_store_login')
 
 
-def orderPaymentStatusChange(request, orderId, status):
+def orderPaymentStatusChange(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        order_detail, status_code = store_orders_controller.order_payment_status_change(orderId, status)
-        url = reverse('order_details_store', kwargs={'orderId': orderId})
+        order_obj = order_payment_status_change_model.order_payment_status_change_model_from_dict(request.POST)
+
+        order_detail, status_code = store_orders_controller.order_payment_status_change(vars(order_obj), assigned_store,
+                                                                                        request.session.get('id'))
+        url = reverse('order_details_store', kwargs={'orderId': order_obj.get_attribute('order_id')})
+
         return redirect(url)
     else:
         return redirect('own_store_login')
@@ -394,6 +401,7 @@ def storeInventoryProducts(request):
     else:
         return redirect('own_store_login')
 
+
 def viewStoreInventoryProducts(request, productId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
@@ -402,13 +410,15 @@ def viewStoreInventoryProducts(request, productId):
     else:
         return redirect('own_store_login')
 
+
 def viewCentralInventoryProducts(request, productId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         print(productId)
         response, status_code = get_central_inventory_product_single(productId)
         print(response['product_data'])
-        return render(request, 'inventory/centralInventoryProductsView.html', {"product_data": response['product_data']})
+        return render(request, 'inventory/centralInventoryProductsView.html',
+                      {"product_data": response['product_data']})
     else:
         return redirect('own_store_login')
 
@@ -513,6 +523,7 @@ def getOwnStoreEyeTestById(request, testId):
 
     else:
         return redirect('own_store_login')
+
 
 def ownStoreEyeTestPrint(request, testId):
     assigned_store = getAssignedStores(request)

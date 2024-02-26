@@ -62,6 +62,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -84,17 +85,17 @@
                     <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
                     </p>
                     <p class="text-800 lh-sm mb-0">Store :
-                    {% if order_detail.0.created_by_store_type == 1%}
-                    <a class="fw-semi-bold"
-                       href="{% url 'view_own_store' order_detail.0.created_by_store %}">
-                        {{order_detail.0.store_name}}
-                    </a>
-                    {% else %}
-                    <a class="fw-semi-bold"
-                       href="{% url 'view_franchise_store' order_detail.0.created_by_store %}">
-                        {{order_detail.0.store_name}}
-                    </a>
-                    {% endif %}
+                        {% if order_detail.0.created_by_store_type == 1%}
+                        <a class="fw-semi-bold"
+                           href="{% url 'view_own_store' order_detail.0.created_by_store %}">
+                            {{order_detail.0.store_name}}
+                        </a>
+                        {% else %}
+                        <a class="fw-semi-bold"
+                           href="{% url 'view_franchise_store' order_detail.0.created_by_store %}">
+                            {{order_detail.0.store_name}}
+                        </a>
+                        {% endif %}
                     </p>
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><a target="_blank"
@@ -297,6 +298,75 @@
                                     </div>
                                 </div>
                             </div>
+                            <div data-list='{"valueNames":["slno","amount","mode","type","createdBy","createdOn"],"page":10}'
+                                 id="paymentTable">
+                                <div class="table-responsive scrollbar mt-3">
+                                    <h4 class="mb-5">Payments History</h4>
+                                    <table class="table fs--1 mb-0 border-top border-200" id="myTable">
+                                        <thead>
+                                        <tr>
+                                            <th class="sort white-space-nowrap align-middle" data-sort="slno"
+                                                scope="col">SLNO
+                                            </th>
+                                            <th class="sort align-middle ps-4" data-sort="amount" scope="col"
+                                                style="width:150px;">Payment Amount
+                                            </th>
+                                            <th class="sort align-middle ps-4" data-sort="mode" scope="col"
+                                                style="width:300px;">Payment Mode
+                                            </th>
+                                            <th class="sort align-middle ps-4" data-sort="type" scope="col"
+                                                style="width:300px;">Payment Type
+                                            </th>
+                                            <th class="sort align-middle  ps-4" data-sort="createdBy" scope="col"
+                                                style="width:250px;">Created By
+                                            </th>
+                                            <th class="sort align-middle  ps-4" data-sort="createdOn" scope="col"
+                                                style="width:250px;">Created On
+                                            </th>
+                                        </tr>
+                                        </thead>
+                                        <tbody class="list" id="payments_log">
+                                        {% for log in payment_logs %}
+
+                                        <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                            <td class="align-middle white-space-nowrap py-2 slno">
+                                            </td>
+                                            <td class="amount align-middle white-space-nowrap text-900 py-0 text-end">
+                                                ₹{{log.payment_amount}}
+                                            </td>
+                                            <td class="mode align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                                {% if log.payment_mode == 1%}
+                                                CASH
+                                                {% elif log.payment_mode == 2%}
+                                                UPI
+                                                {% elif log.payment_mode == 3%}
+                                                CREDIT CARD
+                                                {% elif log.payment_mode == 4%}
+                                                DEBIT CARD
+                                                {% endif %}
+                                            </td>
+                                            <td class="type align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                                {% if log.payment_type == 1%}
+                                                ADVANCE
+                                                {% elif log.payment_type == 2%}
+                                                DUE CLEARANCE
+                                                {% elif log.payment_type == 3%}
+                                                REFUND
+                                                {% endif %}
+                                            </td>
+                                            <td class="createdBy align-middle  py-0 ps-4 text-700">
+                                                {{log.created_by_name}}
+                                            </td>
+                                            <td class="createdOn align-middle text-900 fw-semi-bold  py-0 ps-4">
+                                                {{log.created_on}}
+                                            </td>
+                                        </tr>
+                                        {% endfor %}
+
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-12 col-xl-4 col-xxl-3">
@@ -309,7 +379,7 @@
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Total Amount :</p>
                                                 <p id="total_amount" class="text-1100 fw-semi-bold">
-                                                    ₹ {{ order_detail.0.total_cost}}</p>
+                                                    ₹{{ order_detail.0.total_cost}}</p>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Discount Amount :</p>
@@ -421,6 +491,7 @@
 
         document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
     });
+
 
 
 </script>

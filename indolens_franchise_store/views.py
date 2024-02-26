@@ -11,6 +11,7 @@ from indolens_franchise_store.franchise_store_controller import franchise_store_
     franchise_store_lab_controller, franchise_store_eye_test_controller
 from indolens_franchise_store.franchise_store_model.franchise_store_req_model import franchise_store_employee_model, \
     franchise_expense_model, franchise_create_stock_request_model
+from indolens_own_store.own_store_model.request_model import order_payment_status_change_model
 
 
 # =================================ADMIN START======================================
@@ -207,7 +208,9 @@ def orderDetailsFranchise(request, orderId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         order_detail, status_code = franchise_store_orders_controller.get_order_details(orderId)
-        return render(request, 'orders/orderDetailsFranchise.html', {"order_detail": order_detail['orders_details']})
+        payment_logs, status_code = orders_controller.get_payment_logs(orderId)
+        return render(request, 'orders/orderDetailsFranchise.html', {"order_detail": order_detail['orders_details'],
+                                                                     "payment_logs": payment_logs['payment_logs']})
     else:
         return redirect('franchise_store_login')
 
@@ -239,12 +242,14 @@ def franchiseOrderStatusChange(request, orderId, status):
         return redirect('franchise_store_login')
 
 
-def franchisePaymentStatusChange(request, orderId, status):
+def franchisePaymentStatusChange(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        order_detail, status_code = franchise_store_orders_controller.franchise_payment_status_change(orderId, status)
-        url = reverse('order_details_franchise_store', kwargs={'orderId': orderId})
+        order_obj = order_payment_status_change_model.order_payment_status_change_model_from_dict(request.POST)
+        order_detail, status_code = franchise_store_orders_controller.franchise_payment_status_change(vars(order_obj), assigned_store,
+                                                                                        request.session.get('id'))
+        url = reverse('order_details_franchise_store', kwargs={'orderId': order_obj.get_attribute('order_id')})
         return redirect(url)
     else:
         return redirect('franchise_store_login')

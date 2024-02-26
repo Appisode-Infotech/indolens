@@ -282,6 +282,73 @@
                                     </div>
                                 </div>
                             </div>
+                            <div data-list='{"valueNames":["slno","amount","mode","type","createdBy","createdOn"],"page":10}'
+                             id="paymentTable">
+                            <div class="table-responsive scrollbar mt-3">
+                                <h4 class="mb-5">Payments History</h4>
+                                <table class="table fs--1 mb-0 border-top border-200" id="myTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="sort white-space-nowrap align-middle" data-sort="slno" scope="col">SLNO</th>
+                                        <th class="sort align-middle ps-4" data-sort="amount" scope="col"
+                                            style="width:150px;">Payment Amount
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="mode" scope="col"
+                                            style="width:300px;">Payment Mode
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="type" scope="col"
+                                            style="width:300px;">Payment Type
+                                        </th>
+                                        <th class="sort align-middle  ps-4" data-sort="createdBy" scope="col"
+                                            style="width:250px;">Created By
+                                        </th>
+                                        <th class="sort align-middle  ps-4" data-sort="createdOn" scope="col"
+                                            style="width:250px;">Created On
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list" id="payments_log">
+                                    {% for log in payment_logs %}
+
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                        <td class="align-middle white-space-nowrap py-2 slno">
+                                        </td>
+                                        <td class="amount align-middle white-space-nowrap text-900 py-0 text-end">
+                                            ₹{{log.payment_amount}}
+                                        </td>
+                                        <td class="mode align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            {% if log.payment_mode == 1%}
+                                            CASH
+                                            {% elif log.payment_mode == 2%}
+                                            UPI
+                                            {% elif log.payment_mode == 3%}
+                                            CREDIT CARD
+                                            {% elif log.payment_mode == 4%}
+                                            DEBIT CARD
+                                            {% endif %}
+                                        </td>
+                                        <td class="type align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            {% if log.payment_type == 1%}
+                                            ADVANCE
+                                            {% elif log.payment_type == 2%}
+                                            DUE CLEARANCE
+                                            {% elif log.payment_type == 3%}
+                                            REFUND
+                                            {% endif %}
+                                        </td>
+                                        <td class="createdBy align-middle  py-0 ps-4 text-700">
+                                            {{log.created_by_name}}
+                                        </td>
+                                        <td class="createdOn align-middle text-900 fw-semi-bold  py-0 ps-4">
+                                            {{log.created_on}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         </div>
                     </div>
                     <div class="col-12 col-xl-4 col-xxl-3">
@@ -334,7 +401,9 @@
                                                 id="paymentStatusSelect">
                                             <option value="1">Pending</option>
                                             <option value="2">Complete</option>
+                                            {% if order_detail.0.order_status != 6 %}
                                             <option value="3">Refund</option>
+                                            {% endif %}
                                         </select>
 
                                         <h6 class="mb-2">Order status</h6>
@@ -385,6 +454,57 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="order_status_change_modal" tabindex="-1"
+                 aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h5 class="modal-title text-white" id="modal_title"></h5>
+                            <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                <span class="fas fa-times fs--1 text-white"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modal_content">
+                            <!-- Form for Allocate Store -->
+                            <form action="{% url 'franchise_payment_status_change' %}" class="row g-3 needs-validation"
+                                  method="post" novalidate="">
+                                {% csrf_token %}
+                                 <input class="form-control" id="orderId" maxlength="256" required
+                                           name="orderId"
+                                           type="hidden" >
+                                 <input class="form-control" id="orderPaymentStatus" maxlength="256" required
+                                           name="orderPaymentStatus"
+                                           type="hidden" >
+                                 <input class="form-control" id="orderPaymentAmount" maxlength="256" required
+                                           name="orderPaymentAmount"
+                                           type="hidden" >
+                                <div class="col-12">
+                                    <h5 class="mb-3">Payment mode</h5>
+                                    <select
+                                            name="payment_mode" class="form-select"
+                                            aria-label="Default select example"
+                                            required="required">
+                                        <option value="" selected>Please select payment mode</option>
+                                        <option value="1"> CASH</option>
+                                        <option value="2"> UPI</option>
+                                        <option value="3"> DEBIT CARD</option>
+                                        <option value="4"> CREDIT CARD</option>
+                                    </select>
+                                </div>
+                                <div id="footer_div" class="modal-footer">
+                                    <button class="btn btn-primary modal-submit" type="submit"
+                                            id="modal_submit">Confirm
+                                    </button>
+                                    <button class="btn btn-outline-primary" type="reset" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             {% include 'footer.html' %}
 
         </div>
@@ -410,9 +530,11 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 </body>
+
 <script>
    function changeOrderStatus(statusWidget, order_id) {
     console.log(statusWidget.value);
@@ -424,9 +546,27 @@
    function changePaymentStatus(statusWidget, order_id) {
     console.log(statusWidget.value);
     console.log(order_id);
+     $('#orderId').val(order_id);
+     $('#orderPaymentStatus').val(statusWidget.value);
 
-    const url = `/franchise_store/order_details_franchise_store/franchise_payment_status_change/orderId=${order_id}/status=${statusWidget.value}`;
-    window.location.href = url;
+     var totalCost = {{ order_detail.0.total_cost }};
+    var discountCost = {{ order_detail.0.discount_cost }};
+    var amountPaid = {{order_detail.0.amount_paid}};
+
+    var balanceAmount = discountCost - amountPaid;
+
+    console.log(balanceAmount);
+
+     if(statusWidget.value==2){
+            $('#orderPaymentAmount').val(balanceAmount);
+            $('#modal_title').html('Complete payment?');
+
+     }else if(statusWidget.value==3){
+            $('#orderPaymentAmount').val(amountPaid);
+            $('#modal_title').html('Refund payment?');
+     }
+     $('#order_status_change_modal').modal('show');
+
 }
 
 
