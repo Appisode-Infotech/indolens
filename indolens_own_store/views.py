@@ -50,7 +50,7 @@ def forgotPassword(request):
         response, status_code = own_store_auth_controller.forgot_password(request.POST['email'])
         return render(request, 'auth/own_store_forgot_password.html', {"message": response['message']})
     else:
-        return render(request, 'auth/own_store_forgot_password.html')
+        return render(request, 'auth/own_store_forgot_password.html', {"status": False})
 
 
 def resetPassword(request, code):
