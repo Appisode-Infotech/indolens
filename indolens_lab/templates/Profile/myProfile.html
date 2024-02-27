@@ -97,11 +97,7 @@
                                                 <h3>{{lab_technician.name}}</h3>
                                                 <p class="text-800">Joined on {{lab_technician.created_on}}</p>
                                                 {% if lab_technician.lab_name|length != 0 %}
-                                                <p class="text-800"> Lab -
-                                                <a class="text-decoration-none fw-semi-bold fs-0"
-                                                   href="{% url 'view_lab' lab_technician.assigned_lab_id %}">
-                                                    {{lab_technician.lab_name}}
-                                                </a></p>
+                                                <p class="text-800"> Lab - {{lab_technician.lab_name}}</p>
                                                 {% else %}
                                                 <p class="text-800">Assigned Labs - UNASSIGNED</p>
                                                 {% endif %}
@@ -168,7 +164,7 @@
                                         <p class="text-800">{{lab_technician.address}}
                                         </p>
                                         <div class="mb-3">
-                                            <h5 class="text-800">Email</h5><a href="mailto:{{lab_technician.email}}">{{lab_technician.email}}</a>
+                                            <h5 class="text-800">Email</h5>{{lab_technician.email}}
                                         </div>
                                         <h5 class="text-800">Phone</h5><a class="text-800"
                                                                           href="tel:{{lab_technician.phone}}">{{lab_technician.phone}}</a>
@@ -176,12 +172,12 @@
                                         <p class="text-800">{{lab_technician.created_on}}
                                         </p>
                                         <h5 class="text-800 mt-3">Created By</h5>
-                                        <a href="{% url 'view_sub_admin' lab_technician.created_by %}">{{lab_technician.creator_name}}</a>
+                                        {{lab_technician.creator_name}}
                                         <h5 class="text-800 mt-3">Updated On</h5>
                                         <p class="text-800">{{lab_technician.last_updated_on}}
                                         </p>
                                         <h5 class="text-800 mt-3">Updated By</h5>
-                                        <a href="{% url 'view_sub_admin' lab_technician.last_updated_by %}">{{lab_technician.updater_name}}</a>
+                                        {{lab_technician.updater_name}}
                                     </div>
                                 </div>
                             </div>

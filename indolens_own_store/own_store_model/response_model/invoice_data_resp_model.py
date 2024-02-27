@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import date
 
 class Invoice:
     def __init__(self, values):
@@ -15,7 +15,8 @@ class Invoice:
             'store_id': self.store_id,
             'store_type': self.store_type,
             'invoice_status': self.invoice_status,
-            'invoice_date': self.invoice_date,
+            'invoice_date': self.invoice_date.strftime('%d/%m/%Y') if isinstance(self.invoice_date,
+                                                                             date) else None,
         }
 
 
