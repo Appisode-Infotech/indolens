@@ -1574,6 +1574,7 @@ function updateCustomerFields(selectCustomerField) {
     //customerDataField
     var customerDataTextarea = document.getElementsByName("customerData")[0];
 
+    if(selectCustomer){
     customerNameInput.value = selectCustomer.name;
     customerEmailInput.value = selectCustomer.email;
     customerPhoneInput.value = selectCustomer.phone;
@@ -1597,6 +1598,25 @@ function updateCustomerFields(selectCustomerField) {
 
     // Convert customerdata to JSON string and assign it to customerDataTextarea
     customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
+    }else{
+    customerNameInput.value = '';
+    customerEmailInput.value = '';
+    customerPhoneInput.value = '';
+    customerAgeInput.value = '';
+    customerGenderSelect.value = '';
+    customerCityInput.value = '';
+    customerLanguageSelect.value = '';
+    customerAddressTextarea.value = '';
+    customerDataTextarea.value ='';
+
+    var customerdata = {
+
+    };
+
+    // Convert customerdata to JSON string and assign it to customerDataTextarea
+    customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
+    }
+
 }
 
 function genCustomerObject() {

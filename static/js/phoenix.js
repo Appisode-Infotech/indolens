@@ -4724,9 +4724,11 @@ const listInit = () => {
                 // -------fallback-----------
 
                 list.on('updated', function (item) {
+                console.log("case1");
                     const fallback =
                         el.querySelector('.fallback') ||
                         document.getElementById(options.fallback);
+                                        updateListControlsOnSearch();
 
                     if (fallback) {
                         if (item.matchingItems.length === 0) {
@@ -4751,8 +4753,31 @@ const listInit = () => {
                         list.fuzzySearch('');
                     });
 
-                const updateListControls = () => {
+                const updateListControlsOnSearch=()=>{
+                let visibleItemCount = list.visibleItems.length;
+                let startCount = 1;
+                if(visibleItemCount==0){
+                startCount = 0;
+                }
+                   listInfo && (listInfo.innerHTML = `${startCount} to ${visibleItemCount} <span class='text-600'> Items of </span>${totalItem}`);
+                    paginationButtonPrev &&
+                        togglePaginationButtonDisable(
+                            paginationButtonPrev,
+                            pageCount === 1
+                        );
+                    paginationButtonNext &&
+                        togglePaginationButtonDisable(
+                            paginationButtonNext,
+                            pageCount === pageQuantity
+                        );
 
+                    if (pageCount > 1 && pageCount < pageQuantity) {
+                        togglePaginationButtonDisable(paginationButtonNext, false);
+                        togglePaginationButtonDisable(paginationButtonPrev, false);
+                    }
+                    }
+
+                const updateListControls = () => {
                     listInfo && (listInfo.innerHTML = `${list.i} to ${numberOfcurrentItems} <span class='text-600'> Items of </span>${totalItem}`);
                     paginationButtonPrev &&
                         togglePaginationButtonDisable(
@@ -4896,6 +4921,7 @@ document.addEventListener('DOMContentLoaded', function () {
                         found = true;
                     }
                 });
+
                 if (!found) {
                     addNoDataRowToTable();
                 }
