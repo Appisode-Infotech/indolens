@@ -2265,10 +2265,13 @@ def viewRefundedOrders(request, store):
 
 def viewOrderDetails(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        order_detail, status_code = orders_controller.get_order_details(orderId)
-        payment_logs, status_code = orders_controller.get_payment_logs(orderId)
+        order_detail, order_status_code = orders_controller.get_order_details(orderId)
+        payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
+        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['assigned_lab'])
+        print(lab_details)
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
-                      {"order_detail": order_detail['orders_details'], "payment_logs":payment_logs['payment_logs']})
+                      {"order_detail": order_detail['orders_details'], "payment_logs": payment_logs['payment_logs'],
+                       "lab_details":lab_details['lab_data']})
     else:
         return redirect('login')
 
@@ -2387,7 +2390,6 @@ def viewLab(request, labId):
         response, status_code = lab_controller.get_lab_by_id(labId)
         lab_job, status_cde = lab_controller.get_lab_job(labId)
         lab_stats, status_cde = lab_controller.get_lab_stats(labId)
-        print(lab_stats)
         return render(request, 'indolens_admin/labs/viewLab.html',
                       {"lab_data": response['lab_data'], "lab_job": lab_job['orders_list'], "lab_stats": lab_stats})
     else:

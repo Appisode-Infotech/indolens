@@ -3,7 +3,8 @@ import json
 from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
-from indolens_admin.admin_controllers import central_inventory_controller, orders_controller, eye_test_controller
+from indolens_admin.admin_controllers import central_inventory_controller, orders_controller, eye_test_controller, \
+    lab_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller, store_orders_controller, \
@@ -230,8 +231,10 @@ def orderDetails(request, orderId):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
         payment_logs, status_code = orders_controller.get_payment_logs(orderId)
+        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['assigned_lab'])
         return render(request, 'orders/orderDetails.html', {"order_detail": order_detail['orders_details'],
-                                                            "payment_logs": payment_logs['payment_logs']})
+                                                            "payment_logs": payment_logs['payment_logs'],
+                                                            "lab_details": lab_details['lab_data']})
     else:
         return redirect('own_store_login')
 

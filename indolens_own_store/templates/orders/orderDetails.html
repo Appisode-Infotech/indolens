@@ -87,8 +87,13 @@
             <div class="mb-9">
                 <h2 class="mb-0">Order : <span>{{order_detail.0.order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
-                    <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
+                    {% if lab_details.0.lab_name != None %}
+                    <p class="text-800 lh-sm mb-0">Lab : {{lab_details.0.lab_name}}
                     </p>
+                    {% else %}
+                    <p class="text-800 lh-sm mb-0">
+                    </p>
+                    {% endif %}
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><a target="_blank"
                                                                   href="{% url 'order_invoice_store' order_detail.0.order_id %}"><span
