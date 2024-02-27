@@ -276,10 +276,6 @@
                                 </table>
                                 {% endif %}
 
-                                {% if order_detail.0.category_id == 3 %}
-                                <label>Contact Lens</label>
-                                {% endif %}
-
 
                                 <div class="row g-3 mt-3 mb-3">
                                     <div class="mb2 col-6">
@@ -291,6 +287,18 @@
                                         <h5 class="mb-3">Lens</h5>
                                         <input disabled class="form-control" style="color: black;"
                                                type="text" value="{{order_detail.0.product_name}}"/>
+                                    </div>
+                                </div>
+                                <div class="row g-3 mt-3 mb-3">
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Lens Type</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{order_detail.0.power_attribute.lens_type}}"/>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Stock Type</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{order_detail.0.power_attribute.stock_type}}"/>
                                     </div>
                                 </div>
                             </div>

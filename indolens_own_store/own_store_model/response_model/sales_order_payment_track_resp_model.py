@@ -19,7 +19,7 @@ class SalesOrderPaymentTrack:
             'created_by_store': self.created_by_store,
             'created_by_store_type': self.created_by_store_type,
             'created_by_id': self.created_by_id,
-            'created_on': self.created_on.strftime('%d-%m-%Y') if isinstance(self.created_on, datetime) else None,
+            'created_on': self.created_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.created_on, datetime) else None,
             'created_by_name': self.created_by_name
         }
 
