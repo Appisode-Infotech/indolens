@@ -545,6 +545,19 @@ sql_queries = [
  `updated_on` datetime,
  PRIMARY KEY (`sale_item_id`)
 )""",
+    """
+    CREATE TABLE `sales_order_payment_track` (
+ `id` int(11) NOT NULL AUTO_INCREMENT,
+ `order_id` varchar(255) ,
+ `payment_amount` int(11) ,
+ `payment_mode` int(11) ,
+ `payment_type` int(11) ,
+ `created_by_store` int(11) ,
+ `created_by_store_type` int(11) ,
+ `created_by_id` int(11) ,
+ `created_on` datetime ,
+ PRIMARY KEY (`id`)
+    """,
     """CREATE TABLE `store_expense` (
  `store_expense_id` int(11) NOT NULL AUTO_INCREMENT,
  `store_id` int(11),

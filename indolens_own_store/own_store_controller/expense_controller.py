@@ -101,14 +101,16 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                 `updated_on` = '{getIndianTime()}' """
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
-            order_payment_track_query = f"""INSERT INTO sales_order_payment_track (order_id, payment_amount, 
-                                                payment_mode, payment_type, created_by_store, created_by_store_type, 
-                                                created_by_id, created_on )
-                                                VALUES ('{order_id}', {billingDetailsData.get('amount_paid')},
-                                                {billingDetailsData.get('paymentMode')}, 1, {store_id}, 1,
-                                                {billingDetailsData.get('orderByEmployee')}, '{getIndianTime()}')
-                                                 """
-            cursor.execute(order_payment_track_query)
+
+            if billingDetailsData.get('amount_paid') != '0':
+                order_payment_track_query = f"""INSERT INTO sales_order_payment_track (order_id, payment_amount, 
+                                                    payment_mode, payment_type, created_by_store, created_by_store_type, 
+                                                    created_by_id, created_on )
+                                                    VALUES ('{order_id}', {billingDetailsData.get('amount_paid')},
+                                                    {billingDetailsData.get('paymentMode')}, 1, {store_id}, 1,
+                                                    {billingDetailsData.get('orderByEmployee')}, '{getIndianTime()}')
+                                                     """
+                cursor.execute(order_payment_track_query)
 
             for data in cart_data:
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
