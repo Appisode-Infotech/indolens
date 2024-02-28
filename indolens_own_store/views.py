@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import central_inventory_controller, orders_controller, eye_test_controller, \
-    lab_controller
+    lab_controller, customers_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_own_store.own_store_controller import own_store_auth_controller, store_inventory_controller, \
     expense_controller, store_employee_controller, store_customers_controller, store_orders_controller, \
@@ -298,15 +298,14 @@ def viewStoreCustomerDetails(request, customerId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_customers_controller.get_customers_by_id(customerId)
+        spending, status_code = customers_controller.get_customer_spend(customerId)
         sales_data, resp_code = orders_controller.get_all_customer_orders(customerId)
-        total_bill = 0
-        membership = "Gold"
-        for price in sales_data['orders_list']:
-            total_bill = total_bill + price.get('total_cost')
 
-        if total_bill > 5000 and total_bill < 25000:
+        membership = "Gold"
+
+        if spending['total_spending'] > 5000 and spending['total_spending'] < 25000:
             membership = "Platinum"
-        elif total_bill > 25000:
+        elif spending['total_spending'] > 25000:
             membership = "Luxuary"
         return render(request, 'customers/viewCustomerDetailsStore.html',
                       {"customers": response['customers'], "sales_data": sales_data['orders_list'],
