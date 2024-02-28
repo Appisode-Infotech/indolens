@@ -468,7 +468,7 @@ def createStoreManager(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/storeManagers/createStoreManager.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
@@ -619,7 +619,7 @@ def createFranchiseOwners(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html')
@@ -772,7 +772,7 @@ def createAreaHead(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/areaHead/createAreaHead.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/areaHead/createAreaHead.html')
@@ -911,7 +911,7 @@ def createMarketingHead(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html')
     else:
@@ -1054,7 +1054,7 @@ def createOptimetry(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/optimetry/createOptimetry.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/optimetry/createOptimetry.html')
     else:
@@ -1206,7 +1206,7 @@ def createFranchiseOptimetry(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseOptimetry/createOptimetry.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/franchiseOptimetry/createOptimetry.html')
     return redirect('login')
@@ -1354,7 +1354,7 @@ def createSaleExecutives(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html')
     return redirect('login')
@@ -1506,7 +1506,7 @@ def createFranchiseSaleExecutives(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html')
     return redirect('login')
@@ -1659,7 +1659,7 @@ def createAccountant(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/accountant/createAccountant.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/accountant/createAccountant.html')
@@ -1800,7 +1800,7 @@ def createLabTechnician(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/labTechnician/createLabTechnician.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/labTechnician/createLabTechnician.html')
     else:
@@ -1940,7 +1940,7 @@ def createOtherEmployees(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html', )
     else:
@@ -2089,7 +2089,7 @@ def createFranchiseOtherEmployees(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html', )
     else:
