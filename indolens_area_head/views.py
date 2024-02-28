@@ -23,7 +23,8 @@ def login(request):
         area_head_obj = area_head_auth_model.area_head_model_from_dict(request.POST)
         response, status_code = area_head_auth_controller.login(area_head_obj)
         if response['status']:
-            request.session.clear()
+            if request.session.get('id') is not None:
+                request.session.clear()
             for data in response['area_head']:
                 if len(data['assigned_stores']) == 1:
                     assigned_stores = f"({data['assigned_stores'][0]})"

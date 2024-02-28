@@ -90,7 +90,7 @@
             <div class="row gy-3 mb-6 justify-content-between">
                 <div class="col-md-9 col-auto">
                     <h2 class="mb-2 text-1100"> {{lab.lab_name}}</h2>
-                    <h5 class="text-700 fw-semi-bold mb-3 mt-3"><b>Address: </b>{{lab.lab_address}}</h5>
+                    <h5 class="text-700 fw-semi-bold mb-3 mt-3">Address: {{lab.lab_address}}</h5>
                     <h5 class="text-700 fw-semi-bold">Here’s what’s going on at this lab right now</h5>
                 </div>
             </div>
@@ -104,7 +104,7 @@
                                         <span
                                                 class="fs-1 fw-semi-bold text-900">{{lab.lab_gst}}</span>
                                 </div>
-                                <p class="text-800 fs--1 mb-0"><b>Store GSTIN</b></p>
+                                <p class="text-800 fs--1 mb-0">Store GSTIN</p>
                             </div>
                         </div>
                     </div>
@@ -115,7 +115,7 @@
                                     <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">
                                         {{lab.creator_name}}</a>
                                 </div>
-                                <p class="text-800 fs--1 mb-0"><b>Created By</b></p>
+                                <p class="text-800 fs--1 mb-0">Created By</p>
                             </div>
                         </div>
                     </div>
@@ -125,7 +125,7 @@
                                 <div class="d-flex align-items-end">
                                     <span class="fs-1 fw-semi-bold text-900">{{lab.created_on}}</span>
                                 </div>
-                                <p class="text-800 fs--1 mb-0"><b>Created On</b></p>
+                                <p class="text-800 fs--1 mb-0">Created On</p>
                             </div>
                         </div>
                     </div>
@@ -135,7 +135,7 @@
                                 <div class="d-flex align-items-end">
                                     <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">{{lab.updater_name}}</a>
                                 </div>
-                                <p class="text-800 fs--1 mb-0"><b>Updated By</b></p>
+                                <p class="text-800 fs--1 mb-0">Updated By</p>
                             </div>
                         </div>
                     </div>
@@ -145,7 +145,27 @@
                                 <div class="d-flex align-items-end">
                                     <span class="fs-1 fw-semi-bold text-900">{{lab.last_updated_on}}</span>
                                 </div>
-                                <p class="text-800 fs--1 mb-0"><b>Updated On</b></p>
+                                <p class="text-800 fs--1 mb-0">Updated On</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <span class="fs-1 fw-semi-bold text-900">{{lab.lab_phone}}</span>
+                                </div>
+                                <p class="text-800 fs--1 mb-0">Lab Phone</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-12 col-sm-6 col-md-3 col-lg-6 col-xl-3 col-xxl-12">
+                        <div class="d-flex align-items-center">
+                            <div class="ms-2">
+                                <div class="d-flex align-items-end">
+                                    <span class="fs-1 fw-semi-bold text-900">{{lab.lab_email}}</span>
+                                </div>
+                                <p class="text-800 fs--1 mb-0">Lab Email</p>
                             </div>
                         </div>
                     </div>

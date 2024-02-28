@@ -41,7 +41,8 @@ def login(request):
             response, status_code = admin_auth_controller.login(admin_obj)
 
             if response['status']:
-                request.session.clear()
+                if request.session.get('id') is not None:
+                    request.session.clear()
                 request.session.update({
                     'is_admin_logged_in': True,
                     'id': response['admin'].admin_id,

@@ -28,7 +28,8 @@ def login(request):
         store_obj = franchise_store_employee_model.store_employee_from_dict(request.POST)
         response, status_code = franchise_store_auth_controller.login(store_obj)
         if response['status']:
-            request.session.clear()
+            if request.session.get('id') is not None:
+                request.session.clear()
             for data in response['store']:
                 request.session.update({
                     'is_franchise_store_logged_in': True,

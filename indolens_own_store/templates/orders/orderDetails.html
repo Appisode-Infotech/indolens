@@ -679,6 +679,7 @@
                 var optionValue = parseInt(orderStatusSelect.options[i].value);
                 if (optionValue <= orderStatus) {
                     orderStatusSelect.options[i].disabled = false;
+                    orderStatusSelect.options[6].disabled = false;
                 }
             }
         } else if (orderStatus === 4) {

@@ -26,7 +26,8 @@ def login(request):
         store_obj = own_store_employee_model.store_employee_from_dict(request.POST)
         response, status_code = own_store_auth_controller.login(store_obj)
         if response['status']:
-            request.session.clear()
+            if request.session.get('id') is not None:
+                request.session.clear()
             for data in response['store']:
                 request.session.update({
                     'is_store_logged_in': True,

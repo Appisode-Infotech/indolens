@@ -18,7 +18,8 @@ def login(request):
         lab_obj = lab_tech_model.lab_technician_model_from_dict(request.POST)
         response, status_code = lab_auth_controller.lab_login(lab_obj)
         if response['status']:
-            request.session.clear()
+            if request.session.get('id') is not None:
+                request.session.clear()
             for data in response['lab_tech']:
                 request.session.update({
                     'is_lab_tech_logged_in': True,
