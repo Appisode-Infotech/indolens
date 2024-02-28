@@ -3352,6 +3352,7 @@ def addOwnStoreEmployeeImage(request, employeeId):
             response, status_code = add_documents_controller.add_own_store_employee_image(file_data, employeeId,
                                                                                           emp_obj,
                                                                                           request.session.get('id'))
+            print(response)
             role = response['role']
 
             # Dictionary mapping roles to URLs and their respective keyword arguments

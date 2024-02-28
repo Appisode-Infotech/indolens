@@ -28,7 +28,7 @@ def delete_document(documenturl, document_type, table, condition, user_id, updat
                 documents = json.loads(cursor.fetchone()[0])
                 documents.remove(documenturl)
                 cursor.execute(f""" UPDATE {table} SET {document_type} = '{json.dumps(documents)}', 
-                last_updated_on = {getIndianTime()}, last_updated_by = {updated_by} WHERE {condition} = {user_id} """)
+                last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by} WHERE {condition} = {user_id} """)
                 get_role = f""" SELECT role from {table} Where {condition} = {user_id}"""
                 cursor.execute(get_role)
                 role = cursor.fetchone()

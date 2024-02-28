@@ -31,7 +31,7 @@ def add_document(documenturl, document_type, table, condition, user_id, updated_
                 documents = json.loads(cursor.fetchone()[0])
                 documents.remove(documenturl)
                 cursor.execute(f""" UPDATE {table} SET {document_type} = {json.dumps(documents)},
-                 last_updated_on = {getIndianTime()}, last_updated_by = {updated_by} WHERE {condition} = {user_id}""")
+                 last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by} WHERE {condition} = {user_id}""")
             return {
                 "status": True,
                 "message": "Document Deleted Successfully"
@@ -59,7 +59,7 @@ def add_products_image(new_images, productId, updated_by):
             product_image = old_images+new_images.product_img
             cursor.execute(
                 f""" UPDATE central_inventory SET product_images = '{json.dumps(product_image)}', 
-                last_updated_on = {getIndianTime()}, last_updated_by = {updated_by} WHERE product_id = {productId}""")
+                last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by} WHERE product_id = {productId}""")
         return {
             "status": True,
             "message": "Document Deleted Successfully"
@@ -86,7 +86,7 @@ def add_own_store_employee_image(file_data, employeeId, emp_obj, updated_by):
 
             cursor.execute(
                 f""" UPDATE own_store_employees SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{emp_obj.document_1_type}', last_updated_on = {getIndianTime()}, 
+                document_1_type = '{emp_obj.document_1_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE employee_id = {employeeId}""")
 
             get_document2_query = f"""
@@ -97,7 +97,7 @@ def add_own_store_employee_image(file_data, employeeId, emp_obj, updated_by):
             document2 = old_images + file_data.document2
             cursor.execute(
                 f""" UPDATE own_store_employees SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{emp_obj.document_2_type}', last_updated_on = {getIndianTime()}, 
+                document_2_type = '{emp_obj.document_2_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE employee_id = {employeeId}""")
 
             get_certificates_query = f"""
@@ -108,7 +108,7 @@ def add_own_store_employee_image(file_data, employeeId, emp_obj, updated_by):
             certificates = old_images + file_data.certificates
             cursor.execute(
                 f""" UPDATE own_store_employees SET certificates = '{json.dumps(certificates)}', 
-                last_updated_on = {getIndianTime()}, last_updated_by = {updated_by}
+                last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by}
                 WHERE employee_id = {employeeId}""")
 
 
@@ -140,7 +140,7 @@ def add_franchise_store_employee_image(file_data, employeeId, emp_obj, updated_b
 
             cursor.execute(
                 f""" UPDATE franchise_store_employees SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{emp_obj.document_1_type}', last_updated_on = {getIndianTime()}, 
+                document_1_type = '{emp_obj.document_1_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE employee_id = {employeeId}""")
 
             get_document2_query = f"""
@@ -151,7 +151,7 @@ def add_franchise_store_employee_image(file_data, employeeId, emp_obj, updated_b
             document2 = old_images + file_data.document2
             cursor.execute(
                 f""" UPDATE franchise_store_employees SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{emp_obj.document_2_type}', last_updated_on = {getIndianTime()}, 
+                document_2_type = '{emp_obj.document_2_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE employee_id = {employeeId}""")
 
             get_certificates_query = f"""
@@ -162,7 +162,7 @@ def add_franchise_store_employee_image(file_data, employeeId, emp_obj, updated_b
             certificates = old_images + file_data.certificates
             cursor.execute(
                 f""" UPDATE franchise_store_employees SET certificates = '{json.dumps(certificates)}',
-                last_updated_on = {getIndianTime()}, last_updated_by = {updated_by}
+                last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by}
                 WHERE employee_id = {employeeId}""")
 
         return {
@@ -189,7 +189,7 @@ def add_sub_admin_doc(file_data, subAdminId, emp_obj, updated_by):
 
             cursor.execute(
                 f""" UPDATE admin SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{emp_obj.document_1_type}', last_updated_on = {getIndianTime()}, 
+                document_1_type = '{emp_obj.document_1_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE admin_id = {subAdminId}""")
 
             get_document2_query = f"""
@@ -200,7 +200,7 @@ def add_sub_admin_doc(file_data, subAdminId, emp_obj, updated_by):
             document2 = old_images + file_data.document2
             cursor.execute(
                 f""" UPDATE admin SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{emp_obj.document_2_type}', last_updated_on = {getIndianTime()}, 
+                document_2_type = '{emp_obj.document_2_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE admin_id = {subAdminId}""")
 
         return {
@@ -226,7 +226,7 @@ def add_area_head_doc(file_data, areaHeadId, area_head, updated_by):
 
             cursor.execute(
                 f""" UPDATE area_head SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{area_head.document1_type}', last_updated_on = {getIndianTime()}, 
+                document_1_type = '{area_head.document1_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE area_head_id = {areaHeadId}""")
 
             get_document2_query = f"""
@@ -237,7 +237,7 @@ def add_area_head_doc(file_data, areaHeadId, area_head, updated_by):
             document2 = old_images + file_data.document2
             cursor.execute(
                 f""" UPDATE area_head SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{area_head.document2_type}', last_updated_on = {getIndianTime()}, 
+                document_2_type = '{area_head.document2_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE area_head_id = {areaHeadId}""")
 
         return {
@@ -262,7 +262,7 @@ def add_marketing_heads_doc(file_data, marketingHeadId, marketing_head, updated_
 
             cursor.execute(
                 f""" UPDATE marketing_head SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{marketing_head.document_1_type}', last_updated_on = {getIndianTime()}, 
+                document_1_type = '{marketing_head.document_1_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE marketing_head_id = {marketingHeadId}""")
 
             get_document2_query = f"""
@@ -273,7 +273,7 @@ def add_marketing_heads_doc(file_data, marketingHeadId, marketing_head, updated_
             document2 = old_images + file_data.document2
             cursor.execute(
                 f""" UPDATE marketing_head SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{marketing_head.document_2_type}', last_updated_on = {getIndianTime()}, 
+                document_2_type = '{marketing_head.document_2_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE marketing_head_id = {marketingHeadId}""")
 
         return {
@@ -298,7 +298,7 @@ def add_accountant_doc(file_data, accountantId, accountant, updated_by):
 
             cursor.execute(
                 f""" UPDATE accountant SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{accountant.document_1_type}', last_updated_on = {getIndianTime()}, 
+                document_1_type = '{accountant.document_1_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE accountant_id = {accountantId}""")
 
             get_document2_query = f"""
@@ -309,7 +309,7 @@ def add_accountant_doc(file_data, accountantId, accountant, updated_by):
             document2 = old_images + file_data.document2
             cursor.execute(
                 f""" UPDATE accountant SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{accountant.document_2_type}', last_updated_on = {getIndianTime()}, 
+                document_2_type = '{accountant.document_2_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE accountant_id = {accountantId}""")
 
         return {
@@ -335,7 +335,7 @@ def add_lab_technician_doc(file_data, LabTechnicianId, lab_technician, updated_b
             cursor.execute(
                 f""" UPDATE lab_technician SET document_1_url = '{json.dumps(document1)}', 
                 document_1_type = '{lab_technician.document_1_type}',
-                 last_updated_on = {getIndianTime()}, last_updated_by = {updated_by} 
+                 last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by} 
                  WHERE lab_technician_id = {LabTechnicianId}""")
 
             get_document2_query = f"""
@@ -346,7 +346,7 @@ def add_lab_technician_doc(file_data, LabTechnicianId, lab_technician, updated_b
             document2 = old_images + file_data.document2
             cursor.execute(
                 f""" UPDATE lab_technician SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{lab_technician.document_2_type}', last_updated_on = {getIndianTime()}, 
+                document_2_type = '{lab_technician.document_2_type}', last_updated_on = '{getIndianTime()}', 
                 last_updated_by = {updated_by} WHERE lab_technician_id = {LabTechnicianId}""")
 
         return {
