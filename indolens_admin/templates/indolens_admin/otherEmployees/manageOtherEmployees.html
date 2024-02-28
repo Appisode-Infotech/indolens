@@ -253,7 +253,7 @@
                                             {% if emp.assigned_store_id == 0 %}
                                             <a class="dropdown-item"
                                                type="button"
-                                               data-bs-role="Manager"
+                                               data-bs-role="Employee"
                                                data-bs-toggle="modal"
                                                data-bs-target="#allocate_store_modal"
                                                data-employee-id="{{ emp.employee_id }}"
@@ -265,9 +265,9 @@
                                             {% else %}
                                             <a class="dropdown-item"
                                                type="button"
-                                               data-bs-role="Manager"
+                                               data-bs-role="Employee"
                                                data-bs-toggle="modal"
-                                               data-bs-target="operations_modal"
+                                               data-bs-target="#operations_modal"
                                                data-employee-id="{{ emp.employee_id }}"
                                                data-employee-name="{{ emp.name }}"
                                                data-store-name="{{emp.store_name}}"
