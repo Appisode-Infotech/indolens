@@ -623,7 +623,7 @@ function addLensContainer() {
     <input name ="product_category[${productCardCount}]" id="product_category" type="hidden"/>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h6 class="mb-3">Lens Type</h6>
+            <h6 class="mb-3">Vision Type</h6>
             <input class="form-control" name="lens_type[${productCardCount}]" placeholder="Lens Type" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
@@ -666,7 +666,7 @@ function addLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h6 class="mb-3">Stock Type</h6>
+            <h6 class="mb-3">Type</h6>
             <input readonly class="form-control" name="stock_type[${productCardCount}]" placeholder="Rx/Stock" required="required" min="1"
                 type="text" value="" />
             <div class="invalid-feedback">This field should be 1 in
@@ -724,11 +724,11 @@ function addLensContainer() {
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Eye</th>
-                        <th scope="col">Sph</th>
-                        <th scope="col">Cyl</th>
-                        <th scope="col">Axis</th>
-                        <th scope="col">Add</th>
+                        <th scope="col">EYE</th>
+                        <th scope="col">SPH</th>
+                        <th scope="col">CYL</th>
+                        <th scope="col">AXIS</th>
+                        <th scope="col">ADD</th>
                         <th scope="col">PD</th>
                     </tr>
                 </thead>
@@ -840,11 +840,11 @@ function addLensContainer() {
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Eye</th>
-                        <th scope="col">Sph</th>
-                        <th scope="col">Cyl</th>
-                        <th scope="col">Axis</th>
-                        <th scope="col">Add</th>
+                        <th scope="col">EYE</th>
+                        <th scope="col">SPH</th>
+                        <th scope="col">CYL</th>
+                        <th scope="col">AXIS</th>
+                        <th scope="col">ADD</th>
                         <th scope="col">PD</th>
                     </tr>
                 </thead>
@@ -961,7 +961,7 @@ function addStockContactLensContainer() {
     </div>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h6 class="mb-3">Lens Type</h6>
+            <h6 class="mb-3">Vision Type</h6>
             <input class="form-control"
                    name="lens_type[${productCardCount}]"
                    placeholder="Stock/Rx"
@@ -986,7 +986,7 @@ function addStockContactLensContainer() {
                    type="text" value="" readonly/>
 
         <div class="mb2 col-4">
-            <h6 class="mb-3">Contact Lens Physicality</h6>
+            <h6 class="mb-3">Contact Lens Type</h6>
             <input class="form-control"
                    name="lens_physicality[${productCardCount}]"
                    placeholder="Physicality"
@@ -1112,9 +1112,9 @@ function addStockContactLensContainer() {
                 <tr>
                     <th scope="col">Power</th>
                     <th scope="col">BC</th>
-                    <th scope="col">Dia</th>
-                    <th scope="col">Cylinder</th>
-                    <th scope="col">Axis</th>
+                    <th scope="col">DIA</th>
+                    <th scope="col">CYLINDER</th>
+                    <th scope="col">AXIS</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -1198,7 +1198,7 @@ function addRxContactLensContainer() {
     </div>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h6 class="mb-3">Stock Type</h6>
+            <h6 class="mb-3">Type</h6>
             <input class="form-control"
                    name="ContactLensStockType[${productCardCount}]"
                    placeholder="Stock/Rx"
@@ -1229,7 +1229,7 @@ function addRxContactLensContainer() {
                    hidden
                    type="text" value="" readonly/>
         <div class="mb2 col-4">
-            <h6 class="mb-3">Contact Lens Physicality</h6>
+            <h6 class="mb-3">Contact Lens Type</h6>
             <input class="form-control"
                    name="lens_physicality[${productCardCount}]"
                    placeholder="Physicality"
@@ -1355,9 +1355,9 @@ function addRxContactLensContainer() {
                 <tr>
                     <th scope="col">Power</th>
                     <th scope="col">BC</th>
-                    <th scope="col">Dia</th>
-                    <th scope="col">Cylinder</th>
-                    <th scope="col">Axis</th>
+                    <th scope="col">DIA</th>
+                    <th scope="col">CYLINDER</th>
+                    <th scope="col">AXIS</th>
                 </tr>
                 </thead>
                 <tbody>
