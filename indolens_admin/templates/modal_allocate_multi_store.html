@@ -16,13 +16,7 @@
                     {% csrf_token %}
                     <input type="hidden" name="emp_id" id="emp_id">
                     <h5 class="mb-3">Select Stores (Only active stores appear here)</h5>
-                    <select name="store_id" class="form-select" id="store_id" data-choices="data-choices" multiple="multiple"
-                            data-options='{"removeItemButton":true,"placeholder":true}' required="required">
-                        <option value="">Select a store</option>
-                        {% for store in available_stores %}
-                        <option value="{{store.store_id}}">{{store.store_name}}</option>
-                        {% endfor %}
-                    </select>
+                    <div id="select_container"></div>
                     <div class="custom-error" style="color: red;"></div>
                     <div class="modal-footer">
                         <button class="btn btn-primary modal-submit" type="submit">Submit
@@ -34,3 +28,61 @@
         </div>
     </div>
 </div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var modal = document.querySelector('#allocate_multi_store_modal');
+    var modalTitle = document.querySelector('#allocate_modal_title');
+    var modalContent = document.querySelector('#modal_content');
+    var modalSubmit = document.querySelector('#modal_submit');
+    var modalForm = document.querySelector('.allocate-store-form2'); // Select the existing form
+
+    document.body.addEventListener('click', function (event) {
+        if (event.target.matches('[data-bs-target="#allocate_multi_store_modal"]')) {
+
+            var divElement = document.getElementById("select_container");
+            divElement.innerHTML = "";
+
+            var empId = event.target.getAttribute('data-employee-id');
+            var empName = event.target.getAttribute('data-employee-name');
+            var actionType = event.target.getAttribute('data-action-type');
+            var actionUrl = event.target.getAttribute('data-action-url');
+            var formAction = event.target.getAttribute('data-bs-action');
+            var role = event.target.getAttribute('data-bs-role');
+
+            var activeList = event.target.getAttribute('data-bs-active-list');
+            var actualArray = JSON.parse(activeList);
+            console.log(actualArray);
+
+            let selectCard = document.createElement("div");
+            selectCard.innerHTML = `
+            <select name="store_id" class="form-select" id="store_id" multiple="multiple">
+                        <option value="">Select a store</option>
+                        {% for store in available_stores %}
+                        <option value="{{store.store_id}}" ${actualArray.includes({{ store.store_id }}) ? 'selected' : ''}>{{store.store_name}}</option>
+                        {% endfor %}
+            </select>
+            `;
+            document.querySelector("#select_container").appendChild(selectCard);
+
+            let choicesInstance = new Choices(selectCard.querySelector("[name='store_id']"), {
+                // Pass any necessary options for Choices.js
+                removeItemButton: true,
+                placeholder: true,
+            });
+
+            if (actionType === 'allocate') {
+                modalForm.action = formAction;
+                modalTitle.textContent = "Allocate store for - " + empName;
+                document.getElementById('emp_id').value = empId;
+            }
+
+            // Use data-bs-toggle and data-bs-target attributes to trigger the modal
+            var targetModal = event.target.getAttribute('data-bs-target');
+            var backdrop = event.target.getAttribute('data-bs-backdrop');
+            modal.setAttribute('data-bs-target', targetModal);
+            modal.setAttribute('data-bs-backdrop', backdrop);
+        }
+    });
+});
+</script>
