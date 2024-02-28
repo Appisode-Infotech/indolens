@@ -17,19 +17,19 @@ document.addEventListener("DOMContentLoaded", function () {
 
             if (actionType === 'enable' || actionType === 'disable') {
                 modalTitle.textContent = actionType === "enable" ? "Enable " + role + " - " + empName : "Disable " + role + " - " + empName;
-                modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})`;
+                modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong>`;
                 modalSubmit.href = actionUrl;
                 // Hide the form for non-"Allocate" actions
 
             } else if (actionType === 'accept' || actionType === 'reject') {
                 modalTitle.textContent = actionType === "accept" ? "" + role + " - " + empName : "" + role + " - " + empName;
-                modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})<br>Requested by store : <strong>${event.target.getAttribute('data-action-by')}</strong><br>Requested by store type : <strong>${event.target.getAttribute('data-action-store-type') === "1" ? 'Own store' : 'Franchise store'}</strong>`;
+                modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong><br>Requested by store : <strong>${event.target.getAttribute('data-action-by')}</strong><br>Requested by store type : <strong>${event.target.getAttribute('data-action-store-type') === "1" ? 'Own store' : 'Franchise store'}</strong>`;
                 modalSubmit.href = actionUrl;
                 // Hide the form for non-"Allocate" actions
 
             }  else if (actionType === 'unallocate') {
                 modalTitle.textContent = "Unallocate Store - " + empName;
-                modalContent.innerHTML = `Are you sure you want to unallocate the store <br><strong>${event.target.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong> (ID: ${empId})?`;
+                modalContent.innerHTML = `Are you sure you want to unallocate the store <br><strong>${event.target.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong>?`;
                 modalSubmit.href = actionUrl;
                 // Hide the form for "Unallocate" action
             }

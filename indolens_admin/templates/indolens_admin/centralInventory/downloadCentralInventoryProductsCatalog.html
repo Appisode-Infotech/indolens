@@ -167,12 +167,16 @@ body {
 
             <div>
                 <div>
-                    <table class="table fs--1 mb-0">
+                    <table id="myTable" class="table fs--1 mb-0">
                         <thead>
                         <tr>
                             <th class="sort white-space-nowrap align-middle ps-0 text-center" data-sort="slno"
-                                scope="col" style="width:350px;">PRODUCT ID
+                                scope="col" style="width:350px;">SL NO
                             </th>
+                             <th class="sort white-space-nowrap align-middle ps-0 text-center" data-sort="slno"
+                                scope="col" style="width:350px;">ID
+                            </th>
+
                             <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                 scope="col" style="width:350px;">PRODUCT QR
                             </th>
@@ -198,6 +202,8 @@ body {
                         {% for product in product_list %}
                         <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                             data-category="{{ product.category_name }}">
+                            <td class="order align-middle white-space-nowrap py-0 text-center slno">
+                            </td>
                             <td class="order align-middle white-space-nowrap py-0 text-center slno">
                                 {{product.product_id}}
                             </td>

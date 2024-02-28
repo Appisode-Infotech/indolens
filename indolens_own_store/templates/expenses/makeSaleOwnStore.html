@@ -673,6 +673,13 @@ function addLensContainer() {
                 minimum and should be less than available quantity.
             </div>
         </div>
+        <div class="mb2 col-4">
+            <h6 class="mb-3">Index</h6>
+            <input readonly class="form-control" name="lens_index[${productCardCount}]" placeholder="Index value" required="required" min="1"
+                type="text" value="" />
+            <div class="invalid-feedback">This field should not be empty..
+            </div>
+        </div>
 
         <input class="form-control"
                    name="product_category_id[${productCardCount}]"
@@ -1754,6 +1761,7 @@ function updateLensProductFields(selectElement, cardIndex) {
     let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
     let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
     let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
+    let lensIndexField = document.querySelector(`[name='lens_index[${cardIndex}]']`);
 
     let stockPowerCard = document.getElementById('stock_power_card[' + cardIndex + ']');
     let rxPowerCard = document.getElementById('rx_power_card[' + cardIndex + ']');
@@ -1770,6 +1778,7 @@ function updateLensProductFields(selectElement, cardIndex) {
     productNameField.value = selectedProduct?.product_name ?? '';
     productCategoryField.value = selectedProduct?.category_name ?? '';
     productPurchaseQtyField.value = '';
+    lensIndexField.value = selectedProduct.power_attribute.index;
     productPurchaseQtyField.max = selectedProduct?.product_quantity;
 
     if (selectedProduct.discount > 0) {

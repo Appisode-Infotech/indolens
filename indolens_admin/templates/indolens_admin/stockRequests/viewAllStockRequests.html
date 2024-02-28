@@ -420,7 +420,7 @@
             var role = event.target.getAttribute('data-bs-role');
 
             modalTitle.textContent = actionType === "accept" ? "" + role + " - " + empName : "" + role + " - " + empName;
-            modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong> (ID: ${empId})<br>Requested by store : <strong>${event.target.getAttribute('data-action-by')}</strong><br>Requested by store type : <strong>${event.target.getAttribute('data-action-store-type') === "1" ? 'Own store' : 'Franchise store'}</strong>`;
+            modalContent.innerHTML = `Are you sure you want to ${actionType} ?<br><strong>${empName}</strong><br>Requested by store : <strong>${event.target.getAttribute('data-action-by')}</strong><br>Requested by store type : <strong>${event.target.getAttribute('data-action-store-type') === "1" ? 'Own store' : 'Franchise store'}</strong>`;
 
             document.getElementById('reject_request_form').action = actionUrl;
         }

@@ -487,7 +487,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 modalForm.style.display = 'block';
             } else if (actionType === 'unallocate') {
                 modalTitle.textContent = "Unallocate Store - " + empName;
-                modalContent.innerHTML = `Are you sure you want to unallocate the lab <br><strong>${event.target.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong> (ID: ${empId})?`;
+                modalContent.innerHTML = `Are you sure you want to unallocate the lab <br><strong>${event.target.getAttribute('data-store-name')}</strong> for <strong>${empName}</strong>?`;
                 modalSubmit.href = actionUrl;
                 modalForm.style.display = 'none';
             }
