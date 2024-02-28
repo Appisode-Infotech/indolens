@@ -125,7 +125,7 @@ sql_queries = [
  `model_number` varchar(255),
  `hsn` varchar(255),
  `power_attribute` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`power_attribute`)),
- `franchise_sale_price` double,
+ `franchise_sale_price` int(11),
  `product_quantity` int(11),
  `product_gst` float,
  `status` tinyint(1),

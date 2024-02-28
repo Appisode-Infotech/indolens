@@ -1,0 +1,36 @@
+<div class="modal fade" id="allocate_multi_store_modal" tabindex="-1"
+     aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="allocate_modal_title text-white" id="allocate_modal_title"></h5>
+                <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <span class="fas fa-times fs--1 text-white"></span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal_content">
+                <!-- Form for Allocate Store -->
+                <form class="row g-3 needs-validation allocate-store-form2" method="post"
+                      novalidate="novalidate">
+                    {% csrf_token %}
+                    <input type="hidden" name="emp_id" id="emp_id">
+                    <h5 class="mb-3">Select Stores (Only active stores appear here)</h5>
+                    <select name="store_id" class="form-select" id="store_id" data-choices="data-choices" multiple="multiple"
+                            data-options='{"removeItemButton":true,"placeholder":true}' required="required">
+                        <option value="">Select a store</option>
+                        {% for store in available_stores %}
+                        <option value="{{store.store_id}}">{{store.store_name}}</option>
+                        {% endfor %}
+                    </select>
+                    <div class="custom-error" style="color: red;"></div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary modal-submit" type="submit">Submit
+                        </button>
+                        <button class="btn btn-outline-primary" type="reset" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
