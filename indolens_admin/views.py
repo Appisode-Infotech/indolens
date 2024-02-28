@@ -2341,15 +2341,13 @@ def viewAllCustomers(request):
 def viewCustomerDetails(request, customerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = customers_controller.get_customers_by_id(customerId)
+        spending, status_code = customers_controller.get_customer_spend(customerId)
         sales_data, sale_status_code = orders_controller.get_all_customer_orders(customerId)
-        total_bill = 0
         membership = "Gold"
-        for price in sales_data['orders_list']:
-            total_bill = total_bill + price.get('total_cost')
 
-        if total_bill > 5000 and total_bill < 25000:
+        if spending['total_spending'] > 5000 and spending['total_spending'] < 25000:
             membership = "Platinum"
-        elif total_bill > 25000:
+        elif spending['total_spending'] > 25000:
             membership = "Luxuary"
         return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer'],
                                                                                      "sales_data": sales_data[
