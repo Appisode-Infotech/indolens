@@ -111,7 +111,6 @@ def edit_sub_admin(sub_admin, files):
                     name = '{sub_admin.full_name}',
                     email = '{sub_admin.email}',
                     phone = '{sub_admin.phone}',
-                    password = '{sub_admin.password}',
                     {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
                     address = '{sub_admin.complete_address}',
                     last_updated_by = '{sub_admin.last_updated_by}',
