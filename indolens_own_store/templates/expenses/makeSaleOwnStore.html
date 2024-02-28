@@ -59,10 +59,24 @@
 
     th {
       background-color: #f2f2f2;
+          font-weight: bold; /* Add this line to make the text bold */
     }
 
     #preview {
       margin-top: 20px;
+    }
+
+     /* Add responsive styling for smaller screens */
+    @media only screen and (max-width: 600px) {
+        table {
+            width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+
+        th, td {
+            white-space: nowrap;
+        }
     }
 
         /* Add some basic styling to the table */
@@ -85,7 +99,12 @@
     padding: 8px;
 }
 
-
+.mb2 h6 {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
     </style>
     <script>
@@ -166,7 +185,7 @@
                     <div class="card-header p-4 border-bottom border-300 bg-soft">
                         <div class="row g-3 justify-content-between align-items-center">
                             <div class="col-12 col-md">
-                                <h4 class="text-900 mb-0" data-anchor="data-anchor">Make a sale</h4>
+                                <h4 class="text-900 mb-0">Make a sale</h4>
                             </div>
                         </div>
                     </div>
@@ -439,7 +458,7 @@
                                                                 required
                                                                 name="amount_paid"
                                                                 class="form-control"
-                                                                type="number" min="1" placeholder="&#8377;">
+                                                                type="number" min="0" value="0" placeholder="&#8377;">
                                                         <div class="invalid-feedback">This field is required and should be less than billing amount.</div>
                                                     </div>
                                                     <div class="mb2 col-6">
@@ -447,7 +466,7 @@
                                                         <select
                                                                 onchange="genBillingInfoObject()"
                                                                 name="payment_mode" class="form-select"
-                                                                aria-label="Default select example"
+                                                                aria-label="Default select example" disabled
                                                                 required="required">
                                                             <option value="" selected>Please select payment mode</option>
                                                             <option value="1"> CASH </option>
@@ -589,7 +608,7 @@ function addLensContainer() {
         </a>
     </div>
     <div class="mb-3 col-12">
-        <h5 class="mb-3">Select Lens</h5>
+        <h6 class="mb-3">Select Lens</h6>
         <select onchange="updateLensProductFields(this, ${productCardCount})" class="form-select" data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}'
             name="product" required="required">
             <option value="">Select Lens</option>
@@ -604,14 +623,14 @@ function addLensContainer() {
     <input name ="product_category[${productCardCount}]" id="product_category" type="hidden"/>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h5 class="mb-3">Lens Type</h5>
+            <h6 class="mb-3">Lens Type</h6>
             <input class="form-control" name="lens_type[${productCardCount}]" placeholder="Lens Type" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Brand</h5>
+            <h6 class="mb-3">Product Brand</h6>
             <input class="form-control" name="product_brand[${productCardCount}]" placeholder="Brand" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
@@ -619,35 +638,35 @@ function addLensContainer() {
         </div>
         <!-- Add the rest of your product card HTML structure here -->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product HSN</h5>
+            <h6 class="mb-3">Product HSN</h6>
             <input class="form-control" name="product_hsn[${productCardCount}]" placeholder="HSN" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Available Quantity</h5>
+            <h6 class="mb-3">Available Quantity</h6>
             <input class="form-control" name="available_qty[${productCardCount}]" placeholder="Available Quantity" required="required"
                 type="text" value="" readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price(₹)</h5>
+            <h6 class="mb-3">Unit Price(₹)</h6>
             <input class="form-control" name="unit_price[${productCardCount}]" placeholder="Unit Price" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Type</h5>
+            <h6 class="mb-3">Unit Type</h6>
             <input class="form-control" name="unit_type[${productCardCount}]" placeholder="Unit Type" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Stock Type</h5>
+            <h6 class="mb-3">Stock Type</h6>
             <input readonly class="form-control" name="stock_type[${productCardCount}]" placeholder="Rx/Stock" required="required" min="1"
                 type="text" value="" />
             <div class="invalid-feedback">This field should be 1 in
@@ -668,7 +687,7 @@ function addLensContainer() {
                    hidden
                    type="text" value="" readonly/>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Purchase Quantity</h5>
+            <h6 class="mb-3">Purchase Quantity</h6>
             <input class="form-control" name="purchase_qty[${productCardCount}]" placeholder="Purchase quantity" required="required" min="1"
                 type="number" value="" />
             <div class="invalid-feedback">This field should be 1 in
@@ -676,7 +695,7 @@ function addLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Total</h5>
+            <h6 class="mb-3">Product Total</h6>
             <input class="form-control" name="product_total[${productCardCount}]" placeholder="Product Total" required="required" type="text"
                 value="0" readonly />
             <div class="invalid-feedback">This field is required.
@@ -692,7 +711,7 @@ function addLensContainer() {
         </div>
     </div>
     <div class="dropdown-divider"></div>
-    <h5 class="mb-3">Power attributes</h5>
+    <h6 class="mb-3">Power attributes</h6>
     <div class="row mb-3 stock_power_card[${productCardCount}]" id="stock_power_card[${productCardCount}]" style="display:none">
         <div class="col-12">
             <table class="table">
@@ -710,7 +729,7 @@ function addLensContainer() {
 
                     <tr>
                         <th scope="row">Right</th>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select required name="rightLensSphStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
@@ -720,7 +739,7 @@ function addLensContainer() {
                                         <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select required name="rightLensCylStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
@@ -728,7 +747,7 @@ function addLensContainer() {
                             </select>
                                         <div class="invalid-feedback">This field is required.
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select required name="rightLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
@@ -737,7 +756,7 @@ function addLensContainer() {
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select required name="rightLensAddStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
@@ -746,7 +765,7 @@ function addLensContainer() {
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select required name="rightLensPdStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
@@ -759,7 +778,7 @@ function addLensContainer() {
 
                      <tr>
                         <th scope="row">Left</th>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select required name="leftLensSphStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
@@ -768,7 +787,7 @@ function addLensContainer() {
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select required name="leftLensCylStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
@@ -777,7 +796,7 @@ function addLensContainer() {
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select  required name="leftLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
@@ -786,7 +805,7 @@ function addLensContainer() {
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select required name="leftLensAddStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
@@ -795,13 +814,13 @@ function addLensContainer() {
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <select required name="leftLensPdStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
                                 <option value="1">1</option>
                             </select>
-                                                                    <div class="invalid-feedback">This field is required.
+                            <div class="invalid-feedback">This field is required.
 
                         </td>
                     </tr>
@@ -825,31 +844,31 @@ function addLensContainer() {
                 <tbody class="rx_power_card_table[${productCardCount}]" id="rx_power_card_table[${productCardCount}]">
                     <tr>
                         <th scope="row">Right</th>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <input required name="rightLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example"
                             oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <input required name="rightLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
                             oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <input required name="rightLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
                             oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <input required name="rightLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
                             oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <input required name="rightLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
                             oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
@@ -864,25 +883,25 @@ function addLensContainer() {
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <input required name="leftLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
                             oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <input required name="leftLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
                             oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <input required name="leftLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
                             oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
+                        <td class="col-auto col-lg-2">
                             <input required name="leftLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
                             oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
@@ -918,7 +937,7 @@ function addStockContactLensContainer() {
     </div>
 
     <div class="mb-3 col-12">
-        <h5 class="mb-3">Select Contact Lens</h5>
+        <h6 class="mb-3">Select Contact Lens</h6>
         <select onchange="updateContactLensProductFields(this, ${productCardCount})" class="form-select" data-choices="data-choices"
                 data-options='{"removeItemButton":true,"placeholder":true}'
                 name="product" required="required">
@@ -935,7 +954,7 @@ function addStockContactLensContainer() {
     </div>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h5 class="mb-3">Lens Type</h5>
+            <h6 class="mb-3">Lens Type</h6>
             <input class="form-control"
                    name="lens_type[${productCardCount}]"
                    placeholder="Stock/Rx"
@@ -960,7 +979,7 @@ function addStockContactLensContainer() {
                    type="text" value="" readonly/>
 
         <div class="mb2 col-4">
-            <h5 class="mb-3">Contact Lens Physicality</h5>
+            <h6 class="mb-3">Contact Lens Physicality</h6>
             <input class="form-control"
                    name="lens_physicality[${productCardCount}]"
                    placeholder="Physicality"
@@ -970,7 +989,7 @@ function addStockContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Contact Lens Disposablility</h5>
+            <h6 class="mb-3">Contact Lens Disposablility</h6>
             <input class="form-control"
                    name="lens_disposablility[${productCardCount}]"
                    placeholder="Disposablility"
@@ -980,7 +999,7 @@ function addStockContactLensContainer() {
             </div>
         </div>
 <!--        <div class="mb2 col-4">-->
-<!--            <h5 class="mb-3">Vision Type</h5>-->
+<!--            <h6 class="mb-3">Vision Type</h6>-->
 <!--            <input class="form-control"-->
 <!--                   name="vision_type[${productCardCount}]"-->
 <!--                   placeholder="Vision Type"-->
@@ -990,7 +1009,7 @@ function addStockContactLensContainer() {
 <!--            </div>-->
 <!--        </div>-->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Brand</h5>
+            <h6 class="mb-3">Product Brand</h6>
             <input class="form-control"
                    name="product_brand[${productCardCount}]"
                    placeholder="Brand"
@@ -1001,7 +1020,7 @@ function addStockContactLensContainer() {
         </div>
         <!-- Add the rest of your product card HTML structure here -->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product HSN</h5>
+            <h6 class="mb-3">Product HSN</h6>
             <input class="form-control"
                    name="product_hsn[${productCardCount}]"
                    placeholder="HSN"
@@ -1011,7 +1030,7 @@ function addStockContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Available Quantity</h5>
+            <h6 class="mb-3">Available Quantity</h6>
             <input class="form-control"
                    name="available_qty[${productCardCount}]"
                    placeholder="Available Quantity"
@@ -1021,7 +1040,7 @@ function addStockContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price(₹)</h5>
+            <h6 class="mb-3">Unit Price(₹)</h6>
             <input class="form-control"
                    name="unit_price[${productCardCount}]"
                    placeholder="Unit Price"
@@ -1031,7 +1050,7 @@ function addStockContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Type</h5>
+            <h6 class="mb-3">Unit Type</h6>
             <input class="form-control"
                    name="unit_type[${productCardCount}]"
                    placeholder="Unit Type"
@@ -1041,7 +1060,7 @@ function addStockContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Purchase Quantity</h5>
+            <h6 class="mb-3">Purchase Quantity</h6>
             <input class="form-control"
                    name="purchase_qty[${productCardCount}]"
                    placeholder="Purchase quantity"
@@ -1053,7 +1072,7 @@ function addStockContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Product Total</h5>
+            <h6 class="mb-3">Product Total</h6>
             <input class="form-control"
                    name="product_total[${productCardCount}]"
                    placeholder="Product Total"
@@ -1077,7 +1096,7 @@ function addStockContactLensContainer() {
         </div>
     </div>
     <div class="dropdown-divider"></div>
-    <h5 class="mb-3">Power attributes</h5>
+    <h6 class="mb-3">Power attributes</h6>
 
     <div class="row mb-3 cl_rx_power_card" id="cl_rx_power_card[${productCardCount}]">
         <div class="col-12">
@@ -1093,31 +1112,31 @@ function addStockContactLensContainer() {
                 </thead>
                 <tbody>
                 <tr>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input readonly name="cl_power[${productCardCount}]"
                                class="form-control"
                                oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input readonly name="cl_bc[${productCardCount}]"
                                class="form-control"
                                oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example">
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input readonly name="cl_dia[${productCardCount}]"
                                class="form-control"
                                oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input readonly name="cl_cylinder[${productCardCount}]"
                                class="form-control"
                                oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input readonly name="cl_axis[${productCardCount}]"
                         oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
                                class="form-control"
@@ -1155,7 +1174,7 @@ function addRxContactLensContainer() {
     </div>
 
     <div class="mb-3 col-12">
-        <h5 class="mb-3">Select Contact Lens</h5>
+        <h6 class="mb-3">Select Contact Lens</h6>
         <select onchange="updateRxContactLensProductFields(this, ${productCardCount})" class="form-select" data-choices="data-choices"
                 data-options='{"removeItemButton":true,"placeholder":true}'
                 name="product" required="required">
@@ -1172,7 +1191,7 @@ function addRxContactLensContainer() {
     </div>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h5 class="mb-3">Stock Type</h5>
+            <h6 class="mb-3">Stock Type</h6>
             <input class="form-control"
                    name="ContactLensStockType[${productCardCount}]"
                    placeholder="Stock/Rx"
@@ -1203,7 +1222,7 @@ function addRxContactLensContainer() {
                    hidden
                    type="text" value="" readonly/>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Contact Lens Physicality</h5>
+            <h6 class="mb-3">Contact Lens Physicality</h6>
             <input class="form-control"
                    name="lens_physicality[${productCardCount}]"
                    placeholder="Physicality"
@@ -1213,7 +1232,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Contact Lens Disposablility</h5>
+            <h6 class="mb-3">Contact Lens Disposablility</h6>
             <input class="form-control"
                    name="lens_disposablility[${productCardCount}]"
                    placeholder="Disposablility"
@@ -1223,7 +1242,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
 <!--        <div class="mb2 col-4">-->
-<!--            <h5 class="mb-3">Vision Type</h5>-->
+<!--            <h6 class="mb-3">Vision Type</h6>-->
 <!--            <input class="form-control"-->
 <!--                   name="vision_type[${productCardCount}]"-->
 <!--                   placeholder="Vision Type"-->
@@ -1233,7 +1252,7 @@ function addRxContactLensContainer() {
 <!--            </div>-->
 <!--        </div>-->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Brand</h5>
+            <h6 class="mb-3">Product Brand</h6>
             <input class="form-control"
                    name="product_brand[${productCardCount}]"
                    placeholder="Brand"
@@ -1244,7 +1263,7 @@ function addRxContactLensContainer() {
         </div>
         <!-- Add the rest of your product card HTML structure here -->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product HSN</h5>
+            <h6 class="mb-3">Product HSN</h6>
             <input class="form-control"
                    name="product_hsn[${productCardCount}]"
                    placeholder="HSN"
@@ -1254,7 +1273,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Available Quantity</h5>
+            <h6 class="mb-3">Available Quantity</h6>
             <input class="form-control"
                    name="available_qty[${productCardCount}]"
                    placeholder="Available Quantity"
@@ -1264,7 +1283,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price(₹)</h5>
+            <h6 class="mb-3">Unit Price(₹)</h6>
             <input class="form-control"
                    name="unit_price[${productCardCount}]"
                    placeholder="Unit Price"
@@ -1274,7 +1293,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Type</h5>
+            <h6 class="mb-3">Unit Type</h6>
             <input class="form-control"
                    name="unit_type[${productCardCount}]"
                    placeholder="Unit Type"
@@ -1284,7 +1303,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Purchase Quantity</h5>
+            <h6 class="mb-3">Purchase Quantity</h6>
             <input class="form-control"
                    name="purchase_qty[${productCardCount}]"
                    placeholder="Purchase quantity"
@@ -1296,7 +1315,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Product Total</h5>
+            <h6 class="mb-3">Product Total</h6>
             <input class="form-control"
                    name="product_total[${productCardCount}]"
                    placeholder="Product Total"
@@ -1320,7 +1339,7 @@ function addRxContactLensContainer() {
         </div>
     </div>
     <div class="dropdown-divider"></div>
-    <h5 class="mb-3">Power attributes</h5>
+    <h6 class="mb-3">Power attributes</h6>
 
     <div class="row mb-3 cl_rx_power_card" id="cl_rx_power_card[${productCardCount}]">
         <div class="col-12">
@@ -1336,7 +1355,7 @@ function addRxContactLensContainer() {
                 </thead>
                 <tbody>
                 <tr>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input name="cl_power[${productCardCount}]"
                                class="form-control"
                                required="required"
@@ -1345,7 +1364,7 @@ function addRxContactLensContainer() {
                                            <div class="invalid-feedback">This field is required.
 
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input name="cl_bc[${productCardCount}]"
                                class="form-control"
                                required="required"
@@ -1354,7 +1373,7 @@ function addRxContactLensContainer() {
                                            <div class="invalid-feedback">This field is required.
 
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input name="cl_dia[${productCardCount}]"
                                class="form-control"
                                required="required"
@@ -1363,7 +1382,7 @@ function addRxContactLensContainer() {
                                            <div class="invalid-feedback">This field is required.
 
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input name="cl_cylinder[${productCardCount}]"
                                class="form-control"
                                required="required"
@@ -1372,7 +1391,7 @@ function addRxContactLensContainer() {
                                            <div class="invalid-feedback">This field is required.
 
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input name="cl_axis[${productCardCount}]"
                         required="required"
                                class="form-control"
@@ -1411,7 +1430,7 @@ function addOtherProductsContainer() {
     </div>
 
     <div class="mb-3 col-12">
-        <h5 class="mb-3">Select Product</h5>
+        <h6 class="mb-3">Select Product</h6>
         <select onchange="updateOtherProductFields(this, ${productCardCount})" class="form-select" data-choices="data-choices"
                 data-options='{"removeItemButton":true,"placeholder":true}'
                 name="product" required="required">
@@ -1426,7 +1445,7 @@ function addOtherProductsContainer() {
     </div>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Category</h5>
+            <h6 class="mb-3">Product Category</h6>
             <input class="form-control"
                    name="product_category[${productCardCount}]"
                    placeholder="Category"
@@ -1448,7 +1467,7 @@ function addOtherProductsContainer() {
                    hidden
                    type="text" value="" readonly/>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Brand</h5>
+            <h6 class="mb-3">Product Brand</h6>
             <input class="form-control"
                    name="product_brand[${productCardCount}]"
                    placeholder="Brand"
@@ -1459,7 +1478,7 @@ function addOtherProductsContainer() {
         </div>
         <!-- Add the rest of your product card HTML structure here -->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product HSN</h5>
+            <h6 class="mb-3">Product HSN</h6>
             <input class="form-control"
                    name="product_hsn[${productCardCount}]"
                    placeholder="HSN"
@@ -1469,7 +1488,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Available Quantity</h5>
+            <h6 class="mb-3">Available Quantity</h6>
             <input class="form-control"
                    name="available_qty[${productCardCount}]"
                    placeholder="Available Quantity"
@@ -1479,7 +1498,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price(₹)</h5>
+            <h6 class="mb-3">Unit Price(₹)</h6>
             <input class="form-control"
                    name="unit_price[${productCardCount}]"
                    placeholder="Unit Price"
@@ -1489,7 +1508,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Type</h5>
+            <h6 class="mb-3">Unit Type</h6>
             <input class="form-control"
                    name="unit_type[${productCardCount}]"
                    placeholder="Unit Type"
@@ -1499,7 +1518,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Purchase Quantity</h5>
+            <h6 class="mb-3">Purchase Quantity</h6>
             <input class="form-control"
                    name="purchase_qty[${productCardCount}]"
                    placeholder="Purchase quantity"
@@ -1511,7 +1530,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Product Total</h5>
+            <h6 class="mb-3">Product Total</h6>
             <input class="form-control"
                    name="product_total[${productCardCount}]"
                    placeholder="Product Total"
@@ -1652,6 +1671,16 @@ function genBillingInfoObject() {
     var amountPaidInput = document.getElementsByName("amount_paid")[0];
     var saleNoteInput = document.getElementsByName("sale_note")[0];
     var paymentModeInput = document.getElementsByName("payment_mode")[0];
+
+    var amountPaid = parseFloat(amountPaidInput.value);
+
+    if(amountPaid>0){
+    paymentModeInput.disabled = false;
+    }else{
+    paymentModeInput.value = "";
+    paymentModeInput.disabled = true;
+    }
+
     var billingInfoData = {
         estDeliveryDate: estDeliveryDateInput.value,
         assignedLab: assignedLabInput.value,
@@ -1745,7 +1774,7 @@ function updateLensProductFields(selectElement, cardIndex) {
 
     if (selectedProduct.discount > 0) {
         discountCheckDiv.style.display = 'block';
-        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.discount + '%';
         discountValueField.value = selectedProduct.discount;
     } else {
         discountCheckDiv.style.display = 'none';
@@ -1855,7 +1884,7 @@ function updateContactLensProductFields(selectElement, cardIndex) {
 
     if (selectedProduct.discount > 0) {
         discountCheckDiv.style.display = 'block';
-        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.discount + '%';
         discountValueField.value = selectedProduct.discount;
     } else {
         discountCheckDiv.style.display = 'none';
@@ -1933,7 +1962,7 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
 
     if (selectedProduct.discount > 0) {
         discountCheckDiv.style.display = 'block';
-        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.discount + '%';
         discountValueField.value = selectedProduct.discount;
     } else {
         discountCheckDiv.style.display = 'none';
@@ -2001,7 +2030,7 @@ function updateOtherProductFields(selectElement, cardIndex) {
 
     if (selectedProduct.discount > 0) {
         discountCheckDiv.style.display = 'block';
-        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
+        discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.discount + '%';
         discountValueField.value = selectedProduct.discount;
     } else {
         discountCheckDiv.style.display = 'none';
@@ -2180,15 +2209,19 @@ function getProductsData() {
             table.className = 'product-category-table';
 
             // Create the table header
-            var headerRow = table.insertRow();
-            var slnoHeader = headerRow.insertCell(0);
+            var headerRow = table.createTHead().insertRow();
+
+            var slnoHeader = document.createElement('th');
             slnoHeader.textContent = 'Sl. No';
+            headerRow.appendChild(slnoHeader);
 
-            var frameHeader = headerRow.insertCell(1);
+            var frameHeader = document.createElement('th');
             frameHeader.textContent = 'Frame';
+headerRow.appendChild(frameHeader);
 
-            var optionHeader = headerRow.insertCell(2);
+            var optionHeader = document.createElement('th');
             optionHeader.textContent = 'Options';
+headerRow.appendChild(optionHeader);
 
             for (let i = 1; i <= parseInt(product[purchaseQtyKey]); i++) {
                 // Create a row for each frame

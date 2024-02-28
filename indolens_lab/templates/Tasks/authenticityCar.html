@@ -345,21 +345,22 @@
 
 <script>
 
-    function updateCustomerFields(selectCustomerField) {
-        var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-        let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
+function updateCustomerFields(selectCustomerField) {
+    var customers_list = JSON.parse(document.getElementById('customersList').textContent);
+    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
 
-        var customerNameInput = document.getElementsByName("customer_name")[0];
-        var customerEmailInput = document.getElementsByName("customer_email")[0];
-        var customerPhoneInput = document.getElementsByName("customer_phone")[0];
-        var customerAgeInput = document.getElementsByName("customer_age")[0];
-        var customerGenderSelect = document.getElementsByName("customer_gender")[0];
-        var customerCityInput = document.getElementsByName("customer_city")[0];
-        var customerLanguageSelect = document.getElementsByName("customer_language")[0];
-        var customerAddressTextarea = document.getElementsByName("customer_address")[0];
-        //customerDataField
-        var customerDataTextarea = document.getElementsByName("customerData")[0];
+    var customerNameInput = document.getElementsByName("customer_name")[0];
+    var customerEmailInput = document.getElementsByName("customer_email")[0];
+    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+    var customerAgeInput = document.getElementsByName("customer_age")[0];
+    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+    var customerCityInput = document.getElementsByName("customer_city")[0];
+    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+    //customerDataField
+    var customerDataTextarea = document.getElementsByName("customerData")[0];
 
+    if (selectCustomer) {
         customerNameInput.value = selectCustomer.name;
         customerEmailInput.value = selectCustomer.email;
         customerPhoneInput.value = selectCustomer.phone;
@@ -368,19 +369,17 @@
         customerCityInput.value = selectCustomer.city;
         customerLanguageSelect.value = selectCustomer.language;
         customerAddressTextarea.value = selectCustomer.address;
-        customerDataTextarea.value = selectCustomer.address;
-
-
+    } else {
+        customerNameInput.value = '';
+        customerEmailInput.value = '';
+        customerPhoneInput.value = '';
+        customerAgeInput.value = '';
+        customerGenderSelect.value = '';
+        customerCityInput.value = '';
+        customerLanguageSelect.value = '';
+        customerAddressTextarea.value = '';
+        customerDataTextarea.value = '';
     }
-
-
-
-
-
-
-
-
-
-
+}
 </script>
 </html>
