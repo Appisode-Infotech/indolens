@@ -365,9 +365,9 @@ def order_payment_status_change(order_data, store_id, created_by):
             get_order_details_query = f"""
                                         SELECT
                                             so.*,
-                                            (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{orderID}'
+                                            (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{order_data['order_id']}'
                                             GROUP BY order_id ),
-                                            (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{orderID}'
+                                            (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{order_data['order_id']}'
                                             GROUP BY order_id ),
                                             CASE
                                                 WHEN so.created_by_store_type = 1 THEN os.store_name
