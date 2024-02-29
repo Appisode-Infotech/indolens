@@ -2425,8 +2425,14 @@ def jobDetails(request, jobId):
     return render(request, 'indolens_admin/labs/jobDetails.html', {"order_detail": job_detail['orders_details']})
 
 
-def manageAuthenticityCard(request):
-    return render(request, 'indolens_admin/labs/manageAuthenticityCard.html')
+def manageAuthenticityCard(request, saleId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get(
+            'is_admin_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        print(job_detail)
+        return render(request, 'Tasks/authenticityCar.html', {"order_detail": job_detail['orders_details']})
+    else:
+        return redirect('login')
 
 
 def createAuthenticityCard(request):
@@ -3714,3 +3720,4 @@ def indolensAdminSetting(request):
 
     else:
         return redirect('login')
+
