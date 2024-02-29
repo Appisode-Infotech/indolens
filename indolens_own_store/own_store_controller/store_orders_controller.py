@@ -296,15 +296,19 @@ def order_status_change(orderID, orderStatus):
                                             {order[0]['created_by_store']},{order[0]['created_by_store_type']}) """
                 cursor.execute(create_invoice_query)
 
-            if orderStatus == "7":
-                print("Order cancelled logic if any")
-
-            if orderStatus == "6":
                 subject = email_template_controller.get_order_completion_email_subject(order[0]['order_id'])
                 body = email_template_controller.get_order_completion_email_body(order[0]['customer_name'],
+                                                                                 order[0]['order_id'],
+                                                                                 status_condition, getIndianTime())
+                send_notification_controller.send_email(subject, body, order[0]['email'])
+
+            if orderStatus == "7":
+                subject = email_template_controller.get_order_cancelled_email_subject(order[0]['order_id'])
+                body = email_template_controller.get_order_cancelled_email_body(order[0]['customer_name'],
                                                                                     order[0]['order_id'],
                                                                                     status_condition, getIndianTime())
                 send_notification_controller.send_email(subject, body, order[0]['email'])
+
             else:
                 subject = email_template_controller.get_order_status_change_email_subject(order[0]['order_id'])
                 body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
