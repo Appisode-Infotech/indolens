@@ -118,9 +118,7 @@ body {
     .container-small {
         padding: 15px;
     }
-    .print-button {
-            display: none;
-        }
+
 
     .table th, .table td {
         padding: 8px;
@@ -128,6 +126,13 @@ body {
 }
 
 
+@media print {
+    .print-button {
+        display: none;
+    }
+
+    /* Add any additional print-specific styles here */
+}
 
 {% if order_detail.0.order_status == 7 %}
       @media print {

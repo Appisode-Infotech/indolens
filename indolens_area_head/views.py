@@ -149,7 +149,7 @@ def viewEmployee(request, employeeId):
             'is_area_head_logged_in') is True:
         print(employeeId)
         response, status_code = store_employee_controller.get_store_employee_by_id(employeeId)
-        print(response)
+        
         return render(request, 'storeEmployee/viewStoreEmployee.html',
                       {"store_employee": response['store_employee']})
     else:

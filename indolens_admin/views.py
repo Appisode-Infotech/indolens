@@ -76,8 +76,6 @@ def forgotPassword(request):
 
 def resetPassword(request, code):
     if request.method == 'POST':
-        print(request.POST['password'])
-        print(request.POST['email'])
         response, status_code = admin_auth_controller.update_admin_password(request.POST['password'],
                                                                             request.POST['email'])
         return render(request, 'indolens_admin/auth/reset_password.html',
@@ -252,7 +250,6 @@ def createFranchiseStore(request):
         if request.method == 'POST':
             franchise_obj = franchise_store_model.franchise_store_model_from_dict(request.POST)
             response, status_code = franchise_store_controller.create_franchise_store(franchise_obj)
-            print(response)
             if status_code != 200:
                 return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html',
                               {"message": response['message']})
@@ -2277,7 +2274,6 @@ def viewOrderDetails(request, orderId):
         order_detail, order_status_code = orders_controller.get_order_details(orderId)
         payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
         lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['assigned_lab'])
-        print(lab_details)
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
                       {"order_detail": order_detail['orders_details'], "payment_logs": payment_logs['payment_logs'],
                        "lab_details":lab_details['lab_data']})
@@ -2429,7 +2425,6 @@ def manageAuthenticityCard(request, saleId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get(
             'is_admin_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
-        print(job_detail)
         return render(request, 'Tasks/authenticityCar.html', {"order_detail": job_detail['orders_details']})
     else:
         return redirect('login')
@@ -2966,14 +2961,12 @@ def changeStockRequestStatus(request, route, requestId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.POST:
             # Data is present in POST
-            print("Data in POST:", request.POST['reject_reason'])
             response, status_code = central_inventory_controller.change_stock_request_status_with_reason(requestId,
                                                                                                          status,
                                                                                                          request.session.get(
                                                                                                              'id'),
                                                                                                          request.POST[
                                                                                                              'reject_reason'])
-            print(response)
 
         else:
             response, status_code = central_inventory_controller.change_stock_request_status(requestId, status,
@@ -3120,8 +3113,6 @@ def unAssignFranchiseStoreOtherEmployee(request, route, FranchiseOtherEmployeeId
 
 def assignAreaHeadOwnStore(request):
     if request.method == 'POST':
-        print(type(request.POST.getlist('store_id')))
-        print(','.join(request.POST.getlist('store_id')))
         response, status_code = area_head_controller.assignStore(request.POST['emp_id'],
                                                                  ','.join(request.POST.getlist('store_id')))
     url = reverse('manage_area_head', kwargs={'status': 'All'})
@@ -3302,12 +3293,8 @@ def addProductImage(request, productId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(
-                "==========================================new file list==========================================")
-            print(file_data)
             response, status_code = add_documents_controller.add_products_image(file_data, productId,
                                                                                 request.session.get('id'))
-            print(response)
         url = reverse('update_product_images', kwargs={'productId': productId})
         return redirect(url)
     else:
@@ -3356,7 +3343,6 @@ def addOwnStoreEmployeeImage(request, employeeId):
             response, status_code = add_documents_controller.add_own_store_employee_image(file_data, employeeId,
                                                                                           emp_obj,
                                                                                           request.session.get('id'))
-            print(response)
             role = response['role']
 
             # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3476,12 +3462,9 @@ def addSubAdminDocuments(request, subAdminId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(vars(file_data))
-            print(request.POST)
             emp_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = add_documents_controller.add_sub_admin_doc(file_data, subAdminId, emp_obj,
                                                                                request.session.get('id'))
-            print(response)
 
             url = reverse('update_sub_admin_documents', kwargs={'subAdminId': subAdminId})
             return redirect(url)

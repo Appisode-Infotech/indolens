@@ -306,7 +306,6 @@ def viewAllEmployeFranchise(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_store_employee_controller.get_all_franchise_emp(assigned_store)
-        print(response)
         return render(request, 'employee/manageFranchiseEmployees.html',
                       {"franchise_employee_list": response['franchise_employee_list']})
     else:
@@ -318,7 +317,6 @@ def viewEmployeeDetailsFranchise(request, employeeId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_store_employee_controller.get_franchise_emp_by_id(assigned_store, employeeId)
-        print(response)
         return render(request, 'employee/viewEmployee.html',
                       {"franchise_employee": response['franchise_employee']})
     else:
@@ -330,7 +328,7 @@ def viewEmployeeDetailsOwn(request, employeeId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_store_employee_controller.get_own_store_employee_by_id(employeeId)
-        print(response)
+        
         return render(request, 'employee/viewEmployee.html',
                       {"franchise_employee": response['franchise_employee']})
     else:
@@ -352,7 +350,7 @@ def createStockRequestFranchise(request):
                           {"product_list": products['product_list']})
         else:
             response, status_code = franchise_inventory_controller.get_all_central_inventory_products()
-            print(response)
+            
             return render(request, 'stockRequests/createStockRequestFranchise.html',
                           {"product_list": response['product_list']})
     else:
@@ -409,10 +407,9 @@ def stockRequestDeliveryStatusChange(request, requestId, status):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        print(request)
         response, status_code = franchise_inventory_controller.request_delivery_status_change(requestId, status,
                                                                                               request.session.get('id'))
-        print(response)
+        
         return redirect('completed_franchise_store_stock_requests')
     else:
         return redirect('franchise_store_login')
@@ -450,7 +447,7 @@ def viewFranchiseCentralStoreInventoryProducts(request, productId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = get_central_inventory_product_single(productId)
-        print(response)
+        
         return render(request, 'inventory/franchiseCentralInventoryProductsView.html',
                       {"product_data": response['product_data']})
     else:
@@ -560,7 +557,7 @@ def getfranchiseStoreEyeTestById(request, testId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_store_eye_test_controller.get_eye_test_by_id(testId)
-        print(response)
+        
         return render(request, 'franchiseStoreEyeTest/viewAllStoreEyeTest.html',
                       {'eye_test_list': response['eye_test']})
 
@@ -573,7 +570,7 @@ def franchiseStoreEyeTestPrint(request, testId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = eye_test_controller.get_eye_test_by_id(testId)
-        print(response)
+        
         return render(request, 'franchiseStoreEyeTest/franchiseStoreEyeTestPrint.html',
                       {'eye_test_list': response['eye_test']})
 

@@ -298,11 +298,9 @@ def order_status_change(orderID, orderStatus):
                 cursor.execute(create_invoice_query)
 
                 subject = email_template_controller.get_order_completion_email_subject(order[0]['order_id'])
-                print(subject)
                 body = email_template_controller.get_order_completion_email_body(order[0]['customer_name'],
                                                                                  order[0]['order_id'],
                                                                                  status_condition, getIndianTime())
-                print(body)
                 send_notification_controller.send_email(subject, body, order[0]['email'])
 
             if orderStatus == "7":
