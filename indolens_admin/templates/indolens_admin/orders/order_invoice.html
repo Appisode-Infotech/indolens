@@ -339,9 +339,7 @@ body {
                             </tbody>
                         </table>
                     </div>
-                    <div class="text-end py-9 border-bottom border-300"><img class="mb-3"
-                                                                             src="../../../assets/img/logos/phoenix-mart.png"
-                                                                             alt=""/>
+                    <div style="margin-top: 100px;">
                         <h4>Authorized Signatory</h4>
                     </div>
                     <div class="py-4 border-bottom border-300">
@@ -396,8 +394,14 @@ body {
         var discountedAmount = totalCost - discountCost;
         var balanceAmount = discountCost - amountPaid;
 
-        document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
-        document.getElementById('balance').textContent = '₹ ' + balanceAmount;
+
+        if(document.getElementById('discount_amount')){
+                document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
+        }
+        if(document.getElementById('balance')){
+                document.getElementById('balance').textContent = '₹ ' + balanceAmount;
+        }
+
 
 
         const singleDigits = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
@@ -453,14 +457,25 @@ body {
     }
 
     const discountCostElement = document.getElementById('balance');
-    const discountCostText = discountCostElement.innerText;
+    var discountCostText;
+    var grandTotalInNumber;
+    if(discountCostElement){
+        discountCostText = discountCostElement.innerText;
+        grandTotalInNumber = parseFloat(discountCostText.replace('₹', ''));
+
+    }
     console.log(discountCostText);
-    const grandTotalInNumber = parseFloat(discountCostText.replace('₹', ''));
 
     const totalWords2 = numberToWords({{ order_detail.0.discount_cost }});
-    document.getElementById('totalWords2').innerText = totalWords2 + ' Rupees Only';
-    const totalWords = numberToWords(grandTotalInNumber);
-    document.getElementById('totalWords').innerText = totalWords + ' Rupees Only';
+    if(document.getElementById('totalWords2')){
+        document.getElementById('totalWords2').innerText = totalWords2 + ' Rupees Only';
+    }
+        const totalWords = numberToWords(grandTotalInNumber);
+
+    if(document.getElementById('totalWords')){
+        document.getElementById('totalWords').innerText = totalWords + ' Rupees Only';
+
+    }
     });
 
 </script>
