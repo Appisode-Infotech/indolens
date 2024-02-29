@@ -22,6 +22,17 @@ def customerOrderTracking(request, orderId):
                                                                   "store_details": order_track['store_details']})
 
 
+def customerorderInvoice(request, orderId):
+    order_detail, status_code = orders_controller.get_order_details(orderId)
+    invoice_details, inv_status_code = orders_controller.get_invoice_details(orderId)
+    store_data, store_status_code = orders_controller.get_store_details(
+        order_detail['orders_details'][0]['created_by_store'],
+        order_detail['orders_details'][0]['created_by_store_type'])
+    return render(request, 'order_tracking/customer_order_invoice.html',
+                  {"order_detail": order_detail['orders_details'],
+                   "store_data": store_data['store_data'], "invoice_details": invoice_details['invoice_details']})
+
+
 def viewProductDetails(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
     return render(request, 'Products/viewProductDetails.html', {"product_data": response['product_data']})

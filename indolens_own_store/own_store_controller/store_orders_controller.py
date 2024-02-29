@@ -299,11 +299,18 @@ def order_status_change(orderID, orderStatus):
             if orderStatus == "7":
                 print("Order cancelled logic if any")
 
-            subject = email_template_controller.get_order_status_change_email_subject(order[0]['order_id'])
-            body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
-                                                                                order[0]['order_id'],
-                                                                                status_condition, getIndianTime())
-            send_notification_controller.send_email(subject, body, order[0]['email'])
+            if orderStatus == "6":
+                subject = email_template_controller.get_order_completion_email_subject(order[0]['order_id'])
+                body = email_template_controller.get_order_completion_email_body(order[0]['customer_name'],
+                                                                                    order[0]['order_id'],
+                                                                                    status_condition, getIndianTime())
+                send_notification_controller.send_email(subject, body, order[0]['email'])
+            else:
+                subject = email_template_controller.get_order_status_change_email_subject(order[0]['order_id'])
+                body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
+                                                                                    order[0]['order_id'],
+                                                                                    status_condition, getIndianTime())
+                send_notification_controller.send_email(subject, body, order[0]['email'])
 
             return {
                 "status": True,
