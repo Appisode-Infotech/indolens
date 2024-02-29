@@ -620,7 +620,7 @@
         console.log(status);
 
         var select = document.getElementById("orderStatusSelect");
-
+        if(select){
         for (var i = 0; i < select.options.length; i++) {
             if (select.options[i].value == status) {
                 select.selectedIndex = i;
@@ -634,10 +634,10 @@
                 if (i < select.options.length - 1) {
                     select.options[i + 1].disabled = false;
                     if (status != "6"){
-                    select.options[4].disabled = false;
+                    select.options[3].disabled = false;
                     }
                     if (status == "6"){
-                    select.options[4].disabled = true;
+                    select.options[3].disabled = true;
                     }
                 }
 
@@ -660,16 +660,22 @@
                 break;
             }
         }
+        }
+
+
     });
 
     document.addEventListener("DOMContentLoaded", function () {
         var orderStatusSelect = document.getElementById("orderStatusSelect1");
+
+        if(orderStatusSelect){
         var orderStatus = {{ order_detail.0.order_status }};
 
         // Disable all options by default
         for (var i = 0; i < orderStatusSelect.options.length; i++) {
             orderStatusSelect.options[i].disabled = true;
         }
+
 
         // Enable the next option based on the order status
         if (orderStatus <= 3) {
@@ -686,7 +692,11 @@
             orderStatusSelect.options[6].disabled = false;
         } else if (orderStatus === 5) {
             orderStatusSelect.options[5].disabled = false;
+            orderStatusSelect.options[6].disabled = false;
         }
+        }
+
+
     });
 
 
