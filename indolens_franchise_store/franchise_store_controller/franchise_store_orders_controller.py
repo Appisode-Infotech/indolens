@@ -287,6 +287,15 @@ def get_all_customer_orders(customerId):
         return {"status": False, "message": str(e)}, 301
 
 def franchise_order_status_change(orderID, orderStatus):
+    status_conditions = {
+        "2": "Processing",
+        "3": "Ready",
+        "4": "Dispatched to store",
+        "5": "Arrived at store",
+        "6": "Delivered to customer",
+        "7": "Cancelled"
+    }
+    status_condition = status_conditions[orderStatus]
     try:
         with connection.cursor() as cursor:
             get_order_status_change_query = f"""
@@ -385,6 +394,19 @@ def franchise_order_status_change(orderID, orderStatus):
             if orderStatus == "7":
                 print("Order cancelled logic if any")
 
+            if orderStatus == "6":
+                subject = email_template_controller.get_order_completion_email_subject(order[0]['order_id'])
+                body = email_template_controller.get_order_completion_email_body(order[0]['customer_name'],
+                                                                                    order[0]['order_id'],
+                                                                                    status_condition, getIndianTime())
+                send_notification_controller.send_email(subject, body, order[0]['email'])
+            else:
+                subject = email_template_controller.get_order_status_change_email_subject(order[0]['order_id'])
+                body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
+                                                                                    order[0]['order_id'],
+                                                                                    status_condition, getIndianTime())
+                send_notification_controller.send_email(subject, body, order[0]['email'])
+
             return {
                        "status": True,
                    }, 200
@@ -433,9 +455,9 @@ def franchise_payment_status_change(order_data, store_id, created_by):
             get_order_details_query = f"""
                                                     SELECT
                                                         so.*,
-                                                        (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{orderID}'
+                                                        (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{order_data['order_id']}'
                                                         GROUP BY order_id ),
-                                                        (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{orderID}'
+                                                        (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{order_data['order_id']}'
                                                         GROUP BY order_id ),
                                                         CASE
                                                             WHEN so.created_by_store_type = 1 THEN os.store_name
