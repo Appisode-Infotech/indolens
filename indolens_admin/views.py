@@ -41,7 +41,8 @@ def login(request):
             response, status_code = admin_auth_controller.login(admin_obj)
 
             if response['status']:
-                request.session.clear()
+                if request.session.get('id') is not None:
+                    request.session.clear()
                 request.session.update({
                     'is_admin_logged_in': True,
                     'id': response['admin'].admin_id,
@@ -75,8 +76,6 @@ def forgotPassword(request):
 
 def resetPassword(request, code):
     if request.method == 'POST':
-        print(request.POST['password'])
-        print(request.POST['email'])
         response, status_code = admin_auth_controller.update_admin_password(request.POST['password'],
                                                                             request.POST['email'])
         return render(request, 'indolens_admin/auth/reset_password.html',
@@ -251,7 +250,6 @@ def createFranchiseStore(request):
         if request.method == 'POST':
             franchise_obj = franchise_store_model.franchise_store_model_from_dict(request.POST)
             response, status_code = franchise_store_controller.create_franchise_store(franchise_obj)
-            print(response)
             if status_code != 200:
                 return render(request, 'indolens_admin/franchiseStores/createFranchiseStore.html',
                               {"message": response['message']})
@@ -468,7 +466,7 @@ def createStoreManager(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/storeManagers/createStoreManager.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
@@ -546,7 +544,8 @@ def deleteStoreManagerDocuments(request, storeManagerId, documentURL, document_T
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'own_store_employees',
-                                                                            'employee_id', storeManagerId)
+                                                                            'employee_id', storeManagerId
+                                                                            , request.session.get('id'))
         return JsonResponse(response)
     else:
         return redirect('login')
@@ -619,7 +618,7 @@ def createFranchiseOwners(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html')
@@ -706,7 +705,8 @@ def deleteFranchiseOwnersDocuments(request, franchiseOwnersId, documentURL, docu
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'franchise_store_employees',
-                                                                            'employee_id', franchiseOwnersId)
+                                                                            'employee_id', franchiseOwnersId
+                                                                            , request.session.get('id'))
         return JsonResponse(response)
     else:
         return redirect('login')
@@ -772,7 +772,7 @@ def createAreaHead(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/areaHead/createAreaHead.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/areaHead/createAreaHead.html')
@@ -911,7 +911,7 @@ def createMarketingHead(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html')
     else:
@@ -1054,7 +1054,7 @@ def createOptimetry(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/optimetry/createOptimetry.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/optimetry/createOptimetry.html')
     else:
@@ -1129,7 +1129,8 @@ def deleteOptimetryDocuments(request, ownOptimetryId, documentURL, document_Type
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'own_store_employees',
-                                                                            'employee_id', ownOptimetryId)
+                                                                            'employee_id', ownOptimetryId
+                                                                            , request.session.get('id'))
         return JsonResponse(response)
     else:
         return redirect('login')
@@ -1206,7 +1207,7 @@ def createFranchiseOptimetry(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseOptimetry/createOptimetry.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/franchiseOptimetry/createOptimetry.html')
     return redirect('login')
@@ -1281,7 +1282,8 @@ def deleteFranchiseOptimetryDocuments(request, franchiseOptimetryId, documentURL
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'franchise_store_employees',
-                                                                            'employee_id', franchiseOptimetryId)
+                                                                            'employee_id', franchiseOptimetryId
+                                                                            , request.session.get('id'))
         return JsonResponse(response)
     else:
         return redirect('login')
@@ -1354,7 +1356,7 @@ def createSaleExecutives(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html')
     return redirect('login')
@@ -1431,7 +1433,8 @@ def deleteSaleExecutivesDocuments(request, ownSaleExecutivesId, documentURL, doc
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'own_store_employees',
-                                                                            'employee_id', ownSaleExecutivesId)
+                                                                            'employee_id', ownSaleExecutivesId
+                                                                            , request.session.get('id'))
         return JsonResponse(response)
     else:
         return redirect('login')
@@ -1506,7 +1509,7 @@ def createFranchiseSaleExecutives(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html')
     return redirect('login')
@@ -1586,7 +1589,8 @@ def deleteFranchiseSaleExecutivesDocuments(request, franchiseSaleExecutivesId, d
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'franchise_store_employees',
-                                                                            'employee_id', franchiseSaleExecutivesId)
+                                                                            'employee_id', franchiseSaleExecutivesId
+                                                                            , request.session.get('id'))
         return JsonResponse(response)
     else:
         return redirect('login')
@@ -1659,7 +1663,7 @@ def createAccountant(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/accountant/createAccountant.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/accountant/createAccountant.html')
@@ -1800,7 +1804,7 @@ def createLabTechnician(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/labTechnician/createLabTechnician.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/labTechnician/createLabTechnician.html')
     else:
@@ -1940,7 +1944,7 @@ def createOtherEmployees(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html', )
     else:
@@ -2018,7 +2022,8 @@ def deleteOtherEmployeesDocuments(request, ownEmployeeId, documentURL, document_
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'own_store_employees',
-                                                                            'employee_id', ownEmployeeId)
+                                                                            'employee_id', ownEmployeeId
+                                                                            , request.session.get('id'))
         return JsonResponse(response)
     else:
         return redirect('login')
@@ -2089,7 +2094,7 @@ def createFranchiseOtherEmployees(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html',
-                              {"message": "Something went wrong or the email is already in use"})
+                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html', )
     else:
@@ -2165,7 +2170,8 @@ def deleteFranchiseOtherEmployeesDocuments(request, franchiseSaleExecutivesId, d
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'franchise_store_employees',
-                                                                            'employee_id', franchiseSaleExecutivesId)
+                                                                            'employee_id', franchiseSaleExecutivesId
+                                                                            , request.session.get('id'))
         return JsonResponse(response)
     else:
         return redirect('login')
@@ -2265,9 +2271,12 @@ def viewRefundedOrders(request, store):
 
 def viewOrderDetails(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        order_detail, status_code = orders_controller.get_order_details(orderId)
+        order_detail, order_status_code = orders_controller.get_order_details(orderId)
+        payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
+        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['assigned_lab'])
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
-                      {"order_detail": order_detail['orders_details']})
+                      {"order_detail": order_detail['orders_details'], "payment_logs": payment_logs['payment_logs'],
+                       "lab_details":lab_details['lab_data']})
     else:
         return redirect('login')
 
@@ -2328,15 +2337,13 @@ def viewAllCustomers(request):
 def viewCustomerDetails(request, customerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = customers_controller.get_customers_by_id(customerId)
+        spending, status_code = customers_controller.get_customer_spend(customerId)
         sales_data, sale_status_code = orders_controller.get_all_customer_orders(customerId)
-        total_bill = 0
         membership = "Gold"
-        for price in sales_data['orders_list']:
-            total_bill = total_bill + price.get('total_cost')
 
-        if total_bill > 5000 and total_bill < 25000:
+        if spending['total_spending'] > 5000 and spending['total_spending'] < 25000:
             membership = "Platinum"
-        elif total_bill > 25000:
+        elif spending['total_spending'] > 25000:
             membership = "Luxuary"
         return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer'],
                                                                                      "sales_data": sales_data[
@@ -2386,7 +2393,6 @@ def viewLab(request, labId):
         response, status_code = lab_controller.get_lab_by_id(labId)
         lab_job, status_cde = lab_controller.get_lab_job(labId)
         lab_stats, status_cde = lab_controller.get_lab_stats(labId)
-        print(lab_stats)
         return render(request, 'indolens_admin/labs/viewLab.html',
                       {"lab_data": response['lab_data'], "lab_job": lab_job['orders_list'], "lab_stats": lab_stats})
     else:
@@ -2415,8 +2421,13 @@ def jobDetails(request, jobId):
     return render(request, 'indolens_admin/labs/jobDetails.html', {"order_detail": job_detail['orders_details']})
 
 
-def manageAuthenticityCard(request):
-    return render(request, 'indolens_admin/labs/manageAuthenticityCard.html')
+def manageAuthenticityCard(request, saleId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get(
+            'is_admin_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        return render(request, 'Tasks/authenticityCar.html', {"order_detail": job_detail['orders_details']})
+    else:
+        return redirect('login')
 
 
 def createAuthenticityCard(request):
@@ -2950,14 +2961,12 @@ def changeStockRequestStatus(request, route, requestId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.POST:
             # Data is present in POST
-            print("Data in POST:", request.POST['reject_reason'])
             response, status_code = central_inventory_controller.change_stock_request_status_with_reason(requestId,
                                                                                                          status,
                                                                                                          request.session.get(
                                                                                                              'id'),
                                                                                                          request.POST[
                                                                                                              'reject_reason'])
-            print(response)
 
         else:
             response, status_code = central_inventory_controller.change_stock_request_status(requestId, status,
@@ -3104,8 +3113,6 @@ def unAssignFranchiseStoreOtherEmployee(request, route, FranchiseOtherEmployeeId
 
 def assignAreaHeadOwnStore(request):
     if request.method == 'POST':
-        print(type(request.POST.getlist('store_id')))
-        print(','.join(request.POST.getlist('store_id')))
         response, status_code = area_head_controller.assignStore(request.POST['emp_id'],
                                                                  ','.join(request.POST.getlist('store_id')))
     url = reverse('manage_area_head', kwargs={'status': 'All'})
@@ -3137,7 +3144,8 @@ def unAssignLabTechnician(request, route, LabTechnicianId, labId):
 def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'admin', 'admin_id', subAdminId)
+                                                                            'admin', 'admin_id', subAdminId
+                                                                            , request.session.get('id'))
         url = reverse('update_sub_admin_documents', kwargs={'subAdminId': subAdminId})
         return redirect(url)
     else:
@@ -3147,7 +3155,8 @@ def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
 def deleteAreaHeadDocuments(request, areaHeadId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'area_head', 'area_head_id', areaHeadId)
+                                                                            'area_head', 'area_head_id', areaHeadId
+                                                                            , request.session.get('id'))
         url = reverse('update_area_head_documents', kwargs={'areaHeadId': areaHeadId})
         return redirect(url)
     else:
@@ -3158,7 +3167,8 @@ def deleteMarketingHeadDocuments(request, marketingHeadId, documentURL, document
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'marketing_head', 'marketing_head_id',
-                                                                            marketingHeadId)
+                                                                            marketingHeadId
+                                                                            , request.session.get('id'))
         url = reverse('update_marketing_head_documents', kwargs={'marketingHeadId': marketingHeadId})
         return redirect(url)
     else:
@@ -3168,7 +3178,8 @@ def deleteMarketingHeadDocuments(request, marketingHeadId, documentURL, document
 def deleteAccountantDocuments(request, accountantId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'accountant', 'accountant_id', accountantId)
+                                                                            'accountant', 'accountant_id', accountantId
+                                                                            , request.session.get('id'))
         url = reverse('update_accountant_documents', kwargs={'accountantId': accountantId})
         return redirect(url)
     else:
@@ -3179,7 +3190,8 @@ def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'lab_technician', 'lab_technician_id',
-                                                                            labTechnicianId)
+                                                                            labTechnicianId
+                                                                            , request.session.get('id'))
         url = reverse('update_lab_technician_documents', kwargs={'labTechnicianId': labTechnicianId})
         return redirect(url)
     else:
@@ -3190,7 +3202,7 @@ def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_T
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'own_store_employees', 'employee_id',
-                                                                            employeeId)
+                                                                            employeeId, request.session.get('id'))
 
         role = response['role']
 
@@ -3216,7 +3228,7 @@ def deleteFranchiseStoreEmployeeDocuments(request, employeeId, documentURL, docu
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
                                                                             'franchise_store_employees', 'employee_id',
-                                                                            employeeId)
+                                                                            employeeId, request.session.get('id'))
         role = response['role']
 
         # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3281,11 +3293,8 @@ def addProductImage(request, productId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(
-                "==========================================new file list==========================================")
-            print(file_data)
-            response, status_code = add_documents_controller.add_products_image(file_data, productId)
-            print(response)
+            response, status_code = add_documents_controller.add_products_image(file_data, productId,
+                                                                                request.session.get('id'))
         url = reverse('update_product_images', kwargs={'productId': productId})
         return redirect(url)
     else:
@@ -3330,12 +3339,10 @@ def addOwnStoreEmployeeImage(request, employeeId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(vars(file_data))
-            print(request.POST)
             emp_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = add_documents_controller.add_own_store_employee_image(file_data, employeeId,
-                                                                                          emp_obj)
-            print(response)
+                                                                                          emp_obj,
+                                                                                          request.session.get('id'))
             role = response['role']
 
             # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3394,12 +3401,10 @@ def addFranchiseStoreEmployeeImage(request, employeeId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(vars(file_data))
-            print(request.POST)
             emp_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = add_documents_controller.add_franchise_store_employee_image(file_data, employeeId,
-                                                                                                emp_obj)
-            print(response)
+                                                                                                emp_obj,
+                                                                                                request.session.get('id'))
             role = response['role']
 
             # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3457,11 +3462,9 @@ def addSubAdminDocuments(request, subAdminId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(vars(file_data))
-            print(request.POST)
             emp_obj = store_employee_model.store_employee_from_dict(request.POST)
-            response, status_code = add_documents_controller.add_sub_admin_doc(file_data, subAdminId, emp_obj)
-            print(response)
+            response, status_code = add_documents_controller.add_sub_admin_doc(file_data, subAdminId, emp_obj,
+                                                                               request.session.get('id'))
 
             url = reverse('update_sub_admin_documents', kwargs={'subAdminId': subAdminId})
             return redirect(url)
@@ -3506,11 +3509,9 @@ def addAreaHeadDocuments(request, areaHeadId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(vars(file_data))
-            print(request.POST)
             area_head = area_head_model.area_head_model_from_dict(request.POST)
-            response, status_code = add_documents_controller.add_area_head_doc(file_data, areaHeadId, area_head)
-            print(response)
+            response, status_code = add_documents_controller.add_area_head_doc(file_data, areaHeadId, area_head,
+                                                                               request.session.get('id'))
 
             url = reverse('update_area_head_documents', kwargs={'areaHeadId': areaHeadId})
             return redirect(url)
@@ -3555,11 +3556,9 @@ def addAccountantDocuments(request, accountantId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(vars(file_data))
-            print(request.POST)
             accountant = accountant_model.accountant_model_from_dict(request.POST)
-            response, status_code = add_documents_controller.add_accountant_doc(file_data, accountantId, accountant)
-            print(response)
+            response, status_code = add_documents_controller.add_accountant_doc(file_data, accountantId, accountant,
+                                                                                request.session.get('id'))
 
             url = reverse('update_accountant_documents', kwargs={'accountantId': accountantId})
             return redirect(url)
@@ -3604,12 +3603,10 @@ def addLabTechnicianDocuments(request, LabTechnicianId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(vars(file_data))
-            print(request.POST)
             lab_technician = lab_technician_model.lab_technician_model_from_dict(request.POST)
             response, status_code = add_documents_controller.add_lab_technician_doc(file_data, LabTechnicianId,
-                                                                                    lab_technician)
-            print(response)
+                                                                                    lab_technician,
+                                                                                    request.session.get('id'))
 
             url = reverse('update_lab_technician_documents', kwargs={'labTechnicianId': LabTechnicianId})
             return redirect(url)
@@ -3654,12 +3651,10 @@ def addMarketingHeadDocuments(request, marketingHeadId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
-            print(vars(file_data))
-            print(request.POST)
             marketing_head = marketing_head_model.marketing_head_model_from_dict(request.POST)
             response, status_code = add_documents_controller.add_marketing_heads_doc(file_data, marketingHeadId,
-                                                                                     marketing_head)
-            print(response)
+                                                                                     marketing_head,
+                                                                                     request.session.get('id'))
 
             url = reverse('update_marketing_head_documents', kwargs={'marketingHeadId': marketingHeadId})
             return redirect(url)
@@ -3670,7 +3665,6 @@ def addMarketingHeadDocuments(request, marketingHeadId):
 def ViewAllEyeTest(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = eye_test_controller.get_eye_test()
-        print(response)
         return render(request, 'indolens_admin/eyeTest/viewAllEyeTest.html',
                       {'eye_test_list': response['eye_test_list']})
     else:
@@ -3690,7 +3684,6 @@ def getEyeTestById(request, testId):
 def eyeTestPrint(request, testId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = eye_test_controller.get_eye_test_by_id(testId)
-        print(response)
         return render(request, 'indolens_admin/eyeTest/adminEyeTestPrint.html',
                       {'eye_test_list': response['eye_test']})
 
@@ -3710,3 +3703,4 @@ def indolensAdminSetting(request):
 
     else:
         return redirect('login')
+

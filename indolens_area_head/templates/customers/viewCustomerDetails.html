@@ -143,7 +143,7 @@
                     </div>
                     <div class="col-12 col-xxl-8">
                         <div class="mb-6">
-                            <h3 class="mb-4">Orders <span class="text-700 fw-normal">(97)</span></h3>
+                            <h3 class="mb-4">Orders <span class="text-700 fw-normal">({{orders_list|length}})</span></h3>
                             <div class="border-top border-bottom border-200"
                                  data-list='{"valueNames":["order","total","payment_status","fulfilment_status","delivery_type","date"],"page":6,"pagination":true}'
                                  id="customerOrdersTable">
@@ -157,7 +157,7 @@
                                     style="width:5%;">ORDER ID
                                 </th>
                                 <th class="sort align-middle text-end" data-sort="total" scope="col"
-                                    style="width:6%;">TOTAL
+                                    style="width:6%; min-width: 100px;">TOTAL
                                 </th>
                                 <th class="sort align-middle ps-8" data-sort="customer" scope="col"
                                     style="width:28%; min-width: 250px;">CUSTOMER

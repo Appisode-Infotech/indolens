@@ -81,20 +81,9 @@
 
             <div class="mb-9">
                 <div class="d-flex flex-wrap flex-between-center mb-3 mt-3">
-                    <p class="text-800 lh-sm mb-0">Job ID : <a class="fw-bold" href="#!">
-                        {{order_detail.0.order_id}}</a></p>
+                    <p class="text-800 lh-sm mb-0">Job ID : {{order_detail.0.order_id}}</p>
                     <p class="text-800 lh-sm me-3">Store :
-                    {% if order_detail.0.created_by_store_type == 1%}
-                    <a class="fw-semi-bold"
-                       href="{% url 'view_own_store' order_detail.0.created_by_store %}">
-                        {{order_detail.0.store_name}}
-                    </a>
-                    {% else %}
-                    <a class="fw-semi-bold"
-                       href="{% url 'view_franchise_store' order_detail.0.created_by_store %}">
-                        {{order_detail.0.store_name}}
-                    </a>
-                    {% endif %}
+                    {{order_detail.0.store_name}}
                     </p>
                 </div>
                 <div class="row g-5 gy-7">
@@ -205,7 +194,7 @@
                                         </td>
 
                                         <td class="align-middle  white-space-nowrap pe-0 action text-end">
-                                            {% if order.category_id == 2 or order.category_id == 3 %}
+                                            {% if order.category_id == 2 %}
                                             <div class="font-sans-serif btn-reveal-trigger position-static">
                                                 <button aria-expanded="false"
                                                         aria-haspopup="true"
@@ -215,15 +204,15 @@
                                                         type="button">
                                                     <span class="fas fa-ellipsis-h fs--2"></span></button>
                                                 <div class="dropdown-menu dropdown-menu-end py-2">
-                                                    <a class="dropdown-item view-button" data-bs-toggle="modalView"
-                                                       type="button"
-                                                       style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"
-                                                       data-category-info="{{ order.power_attribute | safe }}">
-                                                        View Lens Powers</a>
+<!--                                                    <a class="dropdown-item view-button" data-bs-toggle="modalView"-->
+<!--                                                       type="button"-->
+<!--                                                       style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"-->
+<!--                                                       data-category-info="{{ order.power_attribute | safe }}">-->
+<!--                                                        View Lens Powers</a>-->
                                                     <a class="dropdown-item view-button"
                                                        type="button" target="_blank"
                                                        href="{% url 'job_authenticity_card' order.sale_item_id %}">
-                                                        Print Authenticity Card</a>
+                                                        Authenticity Card</a>
 
                                                 </div>
                                             </div>
@@ -249,8 +238,7 @@
                                                                                           style="stroke-width:2.5;"></span>
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
-                                        <a class="fs--1 ms-4"
-                                           href="{% url 'customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
+                                        <p class="fs--1 ms-4" >{{order_detail.0.customer_name}}</p>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -377,26 +365,22 @@
                                             <option value="2">Process</option>
                                             <option value="3">Ready</option>
                                             <option value="4">Dispatch</option>
+                                            <option value="5" style="display:none;"
+                                                    {% if order_detail.0.order_status == 5 %}selected{% endif %}>
+                                                Delivered Store
+                                            </option>
+                                            <option value="6" style="display:none;"
+                                                    {% if order_detail.0.order_status == 6 %}selected{% endif %}>
+                                                Delivered Customer
+                                            </option>
+                                            <option value="7" style="display:none;"
+                                                    {% if order_detail.0.order_status == 7 %}selected{% endif %}>
+                                                Cancelled
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
-                        <div class="d-flex">
-                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
-                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
-                            all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
-                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
-                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                        </div>
-                        <div class="d-flex">
-                            <button class="page-link" data-list-pagination="prev"><span
-                                    class="fas fa-chevron-left"></span></button>
-                            <ul class="mb-0 pagination"></ul>
-                            <button class="page-link pe-0" data-list-pagination="next"><span
-                                    class="fas fa-chevron-right"></span></button>
                         </div>
                     </div>
                     {% include 'modal_master_view.html' %}

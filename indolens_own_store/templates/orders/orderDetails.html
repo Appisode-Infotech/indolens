@@ -65,6 +65,9 @@
 
 
 
+
+
+
     </script>
 </head>
 
@@ -84,16 +87,17 @@
             <div class="mb-9">
                 <h2 class="mb-0">Order : <span>{{order_detail.0.order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
-                    <p class="text-800 lh-sm mb-0">Customer ID : <a class="fw-bold"> {{order_detail.0.customer_id}}</a>
+                    {% if lab_details.0.lab_name != None %}
+                    <p class="text-800 lh-sm mb-0">Lab : {{lab_details.0.lab_name}}
                     </p>
+                    {% else %}
+                    <p class="text-800 lh-sm mb-0">
+                    </p>
+                    {% endif %}
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><a target="_blank"
                                                                   href="{% url 'order_invoice_store' order_detail.0.order_id %}"><span
                                 class="fas fa-file-invoice"></span> Invoice</a></button>
-                        <!--                        <button class="btn px-3 text-900"><a-->
-                        <!--                                href="{% url 'order_payment_status_change' order_detail.0.order_id '3' %}"><span-->
-                        <!--                                class="fas fa-undo me-2"></span>Refund</a></button>-->
-
                     </div>
                 </div>
                 <div class="row g-5 gy-7">
@@ -121,8 +125,8 @@
                                             style="width:200px;">QUANTITY
                                         </th>
 
-                                        <th class="sort align-middle  ps-4" data-sort="total" scope="col"
-                                            style="width:250px;">TOTAL
+                                        <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                            style="width:250px; min-width:100px;">TOTAL
                                         </th>
                                     </tr>
                                     </thead>
@@ -140,10 +144,10 @@
                                         <td class="color align-middle white-space-nowrap text-900 py-0 text-end ps-4">₹
                                             {{order.unit_sale_price}}
                                         </td>
-                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 text-end">
                                             {{order.discount_percentage}}%
                                         </td>
-                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 text-end">
                                             {{order.product_gst}}%
                                         </td>
                                         <td class="quantity align-middle  py-0 ps-4 text-700 text-end">
@@ -285,6 +289,73 @@
                                     </div>
                                 </div>
                             </div>
+                            <div data-list='{"valueNames":["slno","amount","mode","type","createdBy","createdOn"],"page":10}'
+                             id="paymentTable">
+                            <div class="table-responsive scrollbar mt-3">
+                                <h4 class="mb-5">Payments History</h4>
+                                <table class="table fs--1 mb-0 border-top border-200" id="myTable">
+                                    <thead>
+                                    <tr>
+                                        <th class="sort white-space-nowrap align-middle" data-sort="slno" scope="col">SLNO</th>
+                                        <th class="sort align-middle ps-4" data-sort="amount" scope="col"
+                                            style="width:150px;">Payment Amount
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="mode" scope="col"
+                                            style="width:300px;">Payment Mode
+                                        </th>
+                                        <th class="sort align-middle ps-4" data-sort="type" scope="col"
+                                            style="width:300px;">Payment Type
+                                        </th>
+                                        <th class="sort align-middle  ps-4" data-sort="createdBy" scope="col"
+                                            style="width:250px;">Created By
+                                        </th>
+                                        <th class="sort align-middle  ps-4" data-sort="createdOn" scope="col"
+                                            style="width:250px;">Created On
+                                        </th>
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list" id="payments_log">
+                                    {% for log in payment_logs %}
+
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                        <td class="align-middle white-space-nowrap py-2 slno">
+                                        </td>
+                                        <td class="amount align-middle white-space-nowrap text-900 py-0 text-end">
+                                            ₹{{log.payment_amount}}
+                                        </td>
+                                        <td class="mode align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            {% if log.payment_mode == 1%}
+                                            CASH
+                                            {% elif log.payment_mode == 2%}
+                                            UPI
+                                            {% elif log.payment_mode == 3%}
+                                            CREDIT CARD
+                                            {% elif log.payment_mode == 4%}
+                                            DEBIT CARD
+                                            {% endif %}
+                                        </td>
+                                        <td class="type align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            {% if log.payment_type == 1%}
+                                            ADVANCE
+                                            {% elif log.payment_type == 2%}
+                                            DUE CLEARANCE
+                                            {% elif log.payment_type == 3%}
+                                            REFUND
+                                            {% endif %}
+                                        </td>
+                                        <td class="createdBy align-middle  py-0 ps-4 text-700">
+                                                {{log.created_by_name}}
+                                        </td>
+                                        <td class="createdOn align-middle text-900 fw-semi-bold  py-0 ps-4">
+                                            {{log.created_on}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
                         </div>
                     </div>
                     <div class="col-12 col-xl-4 col-xxl-3">
@@ -297,7 +368,7 @@
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Total Amount :</p>
                                                 <p id="total_amount" class="text-1100 fw-semi-bold">
-                                                    ₹ {{order_detail.0.total_cost }}</p>
+                                                    ₹{{order_detail.0.total_cost }}</p>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Discount Amount :</p>
@@ -347,8 +418,7 @@
                                         <select onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')"
                                                 aria-label="delivery type" class="form-select" id="orderStatusSelect">
                                             <option value="1">New</option>
-                                            <option value="2">Processing</option>
-                                            <option value="3">Ready</option>
+                                            <option value="5">Ready</option>
                                             <option value="6">Delivered to customer</option>
                                             <option value="7">Cancel</option>
                                         </select>
@@ -390,6 +460,58 @@
                     </div>
                 </div>
             </div>
+            <div class="modal fade" id="order_status_change_modal" tabindex="-1"
+                 aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header bg-primary">
+                            <h5 class="modal-title text-white" id="modal_title"></h5>
+                            <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                                    aria-label="Close">
+                                <span class="fas fa-times fs--1 text-white"></span>
+                            </button>
+                        </div>
+                        <div class="modal-body" id="modal_content">
+                            <!-- Form for Allocate Store -->
+                            <form action="{% url 'order_payment_status_change' %}" class="row g-3 needs-validation"
+                                  method="post" novalidate="">
+                                {% csrf_token %}
+                                 <input class="form-control" id="orderId" maxlength="256" required
+                                           name="orderId"
+                                           type="hidden" >
+                                 <input class="form-control" id="orderPaymentStatus" maxlength="256" required
+                                           name="orderPaymentStatus"
+                                           type="hidden" >
+                                 <input class="form-control" id="orderPaymentAmount" maxlength="256" required
+                                           name="orderPaymentAmount"
+                                           type="hidden" >
+                                <div class="col-12">
+                                    <h5 class="mb-3">Payment mode</h5>
+                                    <select
+                                            name="payment_mode" class="form-select"
+                                            aria-label="Default select example"
+                                            required="required">
+                                        <option value="" selected>Please select payment mode</option>
+                                        <option value="1"> CASH</option>
+                                        <option value="2"> UPI</option>
+                                        <option value="3"> DEBIT CARD</option>
+                                        <option value="4"> CREDIT CARD</option>
+                                    </select>
+                                </div>
+                                <div id="footer_div" class="modal-footer">
+                                    <button class="btn btn-primary modal-submit" type="submit"
+                                            id="modal_submit">Confirm
+                                    </button>
+                                    <button class="btn btn-outline-primary" type="reset" data-bs-dismiss="modal">
+                                        Cancel
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             {% include 'footer.html' %}
 
         </div>
@@ -415,6 +537,7 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 
 </body>
@@ -429,36 +552,75 @@
    function changePaymentStatus(statusWidget, order_id) {
     console.log(statusWidget.value);
     console.log(order_id);
+     $('#orderId').val(order_id);
+     $('#orderPaymentStatus').val(statusWidget.value);
 
-    const url = `/own_store/order_details_store/order_payment_status_change/orderId=${order_id}/status=${statusWidget.value}`;
-    window.location.href = url;
+     var totalCost = {{ order_detail.0.total_cost }};
+    var discountCost = {{ order_detail.0.discount_cost }};
+    var amountPaid = {{order_detail.0.amount_paid}};
+
+    var balanceAmount = discountCost - amountPaid;
+
+    console.log(balanceAmount);
+
+     if(statusWidget.value==2){
+            $('#orderPaymentAmount').val(balanceAmount);
+            $('#modal_title').html('Complete payment?');
+
+     }else if(statusWidget.value==3){
+            $('#orderPaymentAmount').val(amountPaid);
+            $('#modal_title').html('Refund payment?');
+     }
+     $('#order_status_change_modal').modal('show');
+
 }
-
 
 
 
 </script>
 <script>
-    document.addEventListener("DOMContentLoaded", function() {
+    document.addEventListener("DOMContentLoaded", function () {
         var status = "{{order_detail.0.payment_status}}";
         var select = document.getElementById("paymentStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
             if (select.options[i].value === status) {
                 select.selectedIndex = i;
+
+                // Disable options before the selected option
                 for (var j = 0; j < i; j++) {
                     select.options[j].disabled = true;
+                }
+
+                // Enable options after the selected option
+                for (var k = i + 1; k < select.options.length; k++) {
+                    select.options[k].disabled = false;
                 }
                 break;
             }
         }
+
+        // Add an event listener to handle future changes
+        select.addEventListener("change", function () {
+            var selectedIndex = select.selectedIndex;
+
+            // Disable options before the selected option
+            for (var i = 0; i < selectedIndex; i++) {
+                select.options[i].disabled = true;
+            }
+
+            // Enable options after the selected option
+            for (var j = selectedIndex + 1; j < select.options.length; j++) {
+                select.options[j].disabled = false;
+            }
+        });
     });
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.order_status }};
         console.log(status);
 
         var select = document.getElementById("orderStatusSelect");
-
+        if(select){
         for (var i = 0; i < select.options.length; i++) {
             if (select.options[i].value == status) {
                 select.selectedIndex = i;
@@ -472,10 +634,10 @@
                 if (i < select.options.length - 1) {
                     select.options[i + 1].disabled = false;
                     if (status != "6"){
-                    select.options[4].disabled = false;
+                    select.options[3].disabled = false;
                     }
                     if (status == "6"){
-                    select.options[4].disabled = true;
+                    select.options[3].disabled = true;
                     }
                 }
 
@@ -498,16 +660,22 @@
                 break;
             }
         }
+        }
+
+
     });
 
     document.addEventListener("DOMContentLoaded", function () {
         var orderStatusSelect = document.getElementById("orderStatusSelect1");
+
+        if(orderStatusSelect){
         var orderStatus = {{ order_detail.0.order_status }};
 
         // Disable all options by default
         for (var i = 0; i < orderStatusSelect.options.length; i++) {
             orderStatusSelect.options[i].disabled = true;
         }
+
 
         // Enable the next option based on the order status
         if (orderStatus <= 3) {
@@ -516,6 +684,7 @@
                 var optionValue = parseInt(orderStatusSelect.options[i].value);
                 if (optionValue <= orderStatus) {
                     orderStatusSelect.options[i].disabled = false;
+                    orderStatusSelect.options[6].disabled = false;
                 }
             }
         } else if (orderStatus === 4) {
@@ -525,6 +694,9 @@
             orderStatusSelect.options[5].disabled = false;
             orderStatusSelect.options[6].disabled = false;
         }
+        }
+
+
     });
 
 
@@ -543,6 +715,9 @@
 
 
     });
+
+
+
 
 
 

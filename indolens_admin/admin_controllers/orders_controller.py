@@ -8,6 +8,8 @@ from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
 from indolens_own_store.own_store_model.response_model.invoice_data_resp_model import get_invoice_detail
 from indolens_own_store.own_store_model.response_model.order_track import order_track
+from indolens_own_store.own_store_model.response_model.sales_order_payment_track_resp_model import \
+    sales_order_payment_track_response
 from indolens_own_store.own_store_model.response_model.store_resp_model import get_store
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -322,6 +324,33 @@ def get_order_details(orderId):
             return {
                 "status": True,
                 "orders_details": get_order_detail(orders_details),
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def get_payment_logs(orderId):
+    try:
+        with connection.cursor() as cursor:
+            get_payment_logs_query = f"""
+                SELECT so.*, 
+                    CASE 
+                        WHEN so.created_by_store_type = 1 THEN creator_os.name 
+                        ELSE creator_fs.name 
+                    END AS creator_name
+                FROM sales_order_payment_track AS so
+                LEFT JOIN own_store_employees creator_os ON so.created_by_id = creator_os.employee_id AND so.created_by_store_type = 1
+                LEFT JOIN franchise_store_employees creator_fs ON so.created_by_id = creator_fs.employee_id AND so.created_by_store_type = 2
+                WHERE so.order_id = '{orderId}' GROUP BY so.id  
+                """
+            cursor.execute(get_payment_logs_query)
+            payment_logs = cursor.fetchall()
+
+            return {
+                "status": True,
+                "payment_logs": sales_order_payment_track_response(payment_logs)
             }, 200
 
     except pymysql.Error as e:

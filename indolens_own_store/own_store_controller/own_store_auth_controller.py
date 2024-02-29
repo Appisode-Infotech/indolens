@@ -138,6 +138,7 @@ def forgot_password(email):
                 subject = email_template_controller.get_password_reset_email_subject(email)
                 body = email_template_controller.get_password_reset_email_body(check_email[2], reset_pwd_link, email)
                 email_response = send_notification_controller.send_email(subject, body, email)
+                print(email_response.status_code)
 
                 if email_response.status_code == 200:
                     return {

@@ -62,6 +62,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -82,7 +83,8 @@
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
-                            <h2 class="mb-0">Create stock request<span class="fw-normal text-700 ms-3">({{product_list|length}})</span></h2>
+                            <h2 class="mb-0">Create stock request<span class="fw-normal text-700 ms-3">({{product_list|length}})</span>
+                            </h2>
                         </div>
                     </div>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -107,7 +109,7 @@
                             <tr>
                                 <th class="sort white-space-nowrap align-middle pe-3" data-sort="SlNo" scope="col"
                                     style="width:5%;">SL NO
-                                    </th>
+                                </th>
                                 <th class="sort white-space-nowrap align-middle fs--2" scope="col"
                                     style="width:110px;"></th>
                                 <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
@@ -150,8 +152,9 @@
                                     </a>
                                 </td>
                                 <td class="product align-middle ps-4">
-                                    <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_central_inventory_products' product.product_id %}">
-                                                {{product.product_name}}</a>
+                                    <a class="fw-semi-bold line-clamp-2 mb-0 "
+                                       href="{% url 'view_central_inventory_products' product.product_id %}">
+                                        {{product.product_name}}</a>
 
                                 </td>
                                 <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
@@ -194,7 +197,7 @@
                                                 class="dropdown-item" data-bs-target="#verticallyCentered"
                                                 data-bs-product-id="{{product.product_id}}"
                                                 data-bs-target-store-id="{{product.target_store_id}}"
-                                                data-bs-unit-cost ="{{product.franchise_sale_price}}"
+                                                data-bs-unit-cost="{{product.franchise_sale_price}}"
                                                 data-bs-toggle="modal">Request</a>
                                         </div>
                                     </div>
@@ -215,7 +218,8 @@
                                             type="button"><span class="fas fa-times fs--1"></span></button>
                                 </div>
                                 <div class="p-4 code-to-copy">
-                                    <form action="{% url 'create_request_store' %}" class="row g-3 needs-validation" method='POST'
+                                    <form action="{% url 'create_request_store' %}" class="row g-3 needs-validation"
+                                          method='POST'
                                           novalidate="">
                                         {% csrf_token %}
                                         <div class="col-12">
@@ -234,16 +238,17 @@
                                                 Quantity</label>
 
                                             <input class="form-control" id="expense_reason" maxlength="256"
-                                                   required="" name="product_quantity"
+                                                   required="" name="product_quantity" min="1"
                                                    type="number" value=""/>
                                             <div class="invalid-feedback">Enter valid quantity!</div>
                                         </div>
                                         <input id="request_to_store_id" name="request_to_store_id" type="hidden"/>
                                         <input id="unit_cost" name="unit_cost" type="hidden"/>
-                                        <input  name="request_from_store_id" type="hidden" value="{{request.session.assigned_store_id}}"/>
-                                        <input  name="created_by" type="hidden" value="{{request.session.id}}"/>
-                                        <input  name="store_type" type="hidden" value="{{request.session.store_type}}"/>
-                                        <input  name="route" type="hidden" value="create_request_store"/>
+                                        <input name="request_from_store_id" type="hidden"
+                                               value="{{request.session.assigned_store_id}}"/>
+                                        <input name="created_by" type="hidden" value="{{request.session.id}}"/>
+                                        <input name="store_type" type="hidden" value="{{request.session.store_type}}"/>
+                                        <input name="route" type="hidden" value="create_request_store"/>
 
                                         <div class="modal-footer">
                                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -300,6 +305,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -324,18 +330,16 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 
 
-
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    document.body.addEventListener('click', function (event) {
     var enableDisableButtons = document.querySelectorAll('[data-bs-target="#verticallyCentered"]');
     var modal = document.getElementById('verticallyCentered');
     var productIdField = modal.querySelector('#product_id');
     var targetStoreField = modal.querySelector('#request_to_store_id');
     var unitCostField = modal.querySelector('#unit_cost');
-    document.body.addEventListener('click', function (event) {
         enableDisableButtons.forEach(function (button) {
             button.addEventListener('click', function (event) {
-
                 var productId = event.currentTarget.getAttribute('data-bs-product-id');
                 var targetStore = event.currentTarget.getAttribute('data-bs-target-store-id');
                 var unitCost = event.currentTarget.getAttribute('data-bs-unit-cost');
@@ -347,6 +351,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
 
 </script>
 

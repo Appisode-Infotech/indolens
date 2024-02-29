@@ -18,7 +18,8 @@ def login(request):
         lab_obj = lab_tech_model.lab_technician_model_from_dict(request.POST)
         response, status_code = lab_auth_controller.lab_login(lab_obj)
         if response['status']:
-            request.session.clear()
+            if request.session.get('id') is not None:
+                request.session.clear()
             for data in response['lab_tech']:
                 request.session.update({
                     'is_lab_tech_logged_in': True,
@@ -60,7 +61,6 @@ def labLogout(request):
 def labForgotPassword(request):
     if request.method == 'POST':
         response, status_code = lab_auth_controller.forgot_password(request.POST['email'])
-        print(response)
         return render(request, 'auth/lab_forgot_password.html',
                       {"message": response['message'], "status": response['status']})
     else:
@@ -136,7 +136,6 @@ def dispatchedTask(request):
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
         dispatched_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Dispatched")
-        print(dispatched_task)
         return render(request, 'Tasks/viewDispatchedTask.html', {"all_task": dispatched_task['task_list']})
     else:
         return redirect('lab_login')
@@ -147,7 +146,6 @@ def labJobDetails(request, jobId):
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
         job_detail, status_code = lab_task_controller.get_lab_job_details(jobId, assigned_lab)
-        print(job_detail)
         return render(request, 'Tasks/jobDetails.html', {"order_detail": job_detail['orders_details']})
     else:
         return redirect('lab_login')
@@ -187,9 +185,7 @@ def viewLabCentralInventoryProducts(request, productId):
     # assigned_store = getAssignedStores(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
-        print(productId)
         response, status_code = get_central_inventory_product_single(productId)
-        print(response['product_data'])
         return render(request, 'inventory/labCentralInventoryProductsView.html',
                       {"product_data": response['product_data']})
     else:

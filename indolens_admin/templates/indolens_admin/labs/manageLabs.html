@@ -113,6 +113,9 @@
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
                                     scope="col" style="width:30%;">LAB NAME
                                 </th>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
+                                    scope="col" style="width:30%;">DISPLAY NAME
+                                </th>
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="jobs"
                                     scope="col" style="width:30%;">ACTIVE JOBS
                                 </th>
@@ -143,6 +146,9 @@
                                         href="{% url 'view_lab' lab.lab_id %}">
                                     {{lab.lab_name}}
                                 </a>
+                                </td>
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 name">
+                                    {{lab.lab_display_name}}
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 jobs">{{lab.job_count}}
                                 </td>

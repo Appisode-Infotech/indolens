@@ -12,13 +12,17 @@ from indolens_own_store.own_store_controller import lens_sale_power_attribute_co
 from indolens_own_store.own_store_model.response_model.store_expense_resp_model import get_store_expenses
 
 ist = pytz.timezone('Asia/Kolkata')
+
+
 def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
 
+
 def convert_to_db_date_format(date_str):
     date_obj = datetime.datetime.strptime(date_str, "%d/%m/%Y")
     return date_obj.date()
+
 
 def get_current_epoch_time():
     epoch_time = int(time.time())
@@ -80,7 +84,8 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                 '{customerData.get('age')}','{customerData.get('phone')}',
                                                 '{customerData.get('email')}','{customerData.get('language')}',
                                                 '{customerData.get('city')}','{customerData.get('address')}',
-                                                {employee_id},{store_id}, 1, '{getIndianTime()}',{employee_id},{store_id},'1', 
+                                                {billingDetailsData.get('orderByEmployee')},{store_id}, 1, '{getIndianTime()}',
+                                                {billingDetailsData.get('orderByEmployee')},{store_id},'1', 
                                                 '{getIndianTime()}')
                                                 ON DUPLICATE KEY UPDATE 
                                                 `name` = '{customerData.get('name')}', 
@@ -90,12 +95,22 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                 `language` = '{customerData.get('language')}', 
                                                 `city` = '{customerData.get('city')}', 
                                                 `address` = '{customerData.get('address')}', 
-                                                `updated_by_employee_id` = {employee_id}, 
+                                                `updated_by_employee_id` = {billingDetailsData.get('orderByEmployee')}, 
                                                 `updated_by_store_id` = {store_id}, 
                                                 `updated_by_store_type` = 1, 
                                                 `updated_on` = '{getIndianTime()}' """
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
+
+            if billingDetailsData.get('amount_paid') != '0':
+                order_payment_track_query = f"""INSERT INTO sales_order_payment_track (order_id, payment_amount, 
+                                                    payment_mode, payment_type, created_by_store, created_by_store_type, 
+                                                    created_by_id, created_on )
+                                                    VALUES ('{order_id}', {billingDetailsData.get('amount_paid')},
+                                                    {billingDetailsData.get('paymentMode')}, 1, {store_id}, 1,
+                                                    {billingDetailsData.get('orderByEmployee')}, '{getIndianTime()}')
+                                                     """
+                cursor.execute(order_payment_track_query)
 
             for data in cart_data:
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
@@ -156,8 +171,8 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                 {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                                 {discount_percentage}, {is_discount_applied}, 
                                                                 '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
-                                                                {customer_id}, {billingDetailsData.get('assignedLab')}, 
-                                                                1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
+                                                                {customer_id}, 
+                                                                1, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                                                 {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                                                 '{getIndianTime()}', 
                                                                 {billingDetailsData.get('orderByEmployee')}, 
@@ -214,7 +229,8 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
             subject = email_template_controller.get_order_creation_email_subject(order_id)
             body = email_template_controller.get_order_placed_email_body(customerData.get('name'),
                                                                          order_id, getIndianTime(),
-                                                                         convert_to_db_date_format(billingDetailsData.get('estDeliveryDate')))
+                                                                         convert_to_db_date_format(
+                                                                             billingDetailsData.get('estDeliveryDate')))
             send_notification_controller.send_email(subject, body, customerData.get('email'))
 
             return {

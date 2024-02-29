@@ -409,7 +409,7 @@
                                 <div class="col-12 col-xl-6">
                                     <div class="me-xl-4">
                                         <div>
-                                            <h3>Customer analytics</h3>
+                                            <h3>No. Of Customers</h3>
                                             <div class="col-12 col-sm-auto mt-3">
                                                 <div class="btn-group" data-gantt-scale="data-gantt-scale"
                                                      role="group">
@@ -436,7 +436,7 @@
                                 </div>
                                 <div class="col-12 col-xl-6">
                                     <div>
-                                        <h3>Order analytics</h3>
+                                        <h3>No. Of Orders</h3>
                                         <div class="col-12 col-sm-auto mt-3">
                                             <div class="btn-group" data-gantt-scale="data-gantt-scale"
                                                  role="group">
@@ -591,7 +591,7 @@
                                     style="width:5%;">ORDER ID
                                 </th>
                                 <th class="sort align-middle text-end" data-sort="total" scope="col"
-                                    style="width:6%;">TOTAL
+                                    style="width:6%; min-width: 100px;">TOTAL
                                 </th>
                                 <th class="sort align-middle ps-8" data-sort="customer" scope="col"
                                     style="width:28%; min-width: 250px;">CUSTOMER
@@ -631,7 +631,7 @@
                                     ₹{{order.total_cost}}
                                 </td>
                                 <td class="customer align-middle white-space-nowrap ps-8">
-                                    <a class="d-flex align-items-center" href="{% url 'customer_details' 1%}">
+                                    <a class="d-flex align-items-center" href="{% url 'view_store_customer_details' order.customer_id %}">
                                         <div class="avatar avatar-m">
                                             <div class="avatar-name rounded-circle">
                                                 <span>{{order.customer_name.0}}</span></div>
@@ -1186,7 +1186,6 @@ function setupCustomersChart(interval, data) {
                 axisLabel: {
                     color: getColor('gray-800'),
                     formatter: value => window.dayjs(value).format('MMM DD'),
-                    interval: 3,
                     fontFamily: 'Nunito Sans',
                     fontWeight: 600,
                     fontSize: 12.8

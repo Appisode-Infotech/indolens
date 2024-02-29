@@ -31,7 +31,6 @@ def send_email(subject, body, to_email):
 
     emailjs = get_emailjs_attribute()
     if any(emailjs.values()):
-        print("Data is present")
         print(emailjs.get('emailjs_url'))
         print(emailjs.get('emailjs_template_id'))
         print(emailjs.get('emailjs_user_id'))
@@ -55,7 +54,6 @@ def send_email(subject, body, to_email):
         email_response = requests.post(url, data=json.dumps(data), headers=headers)
         return email_response
     else:
-        print("Data is empty")
         return "no email js credentials found"
 
 

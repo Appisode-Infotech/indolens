@@ -157,6 +157,42 @@ INDOLENS
 09980557575
 """
 
+def get_order_completion_email_subject(order_number):
+    return f""" INDOLENS Order Completed - {order_number} """
+
+def get_order_completion_email_body(customer_name, order_number, status, date):
+    return f""" Dear {customer_name},
+
+Kindly be informed that your order has been completed. Below are the completed order details details:
+
+Order Number: {order_number}
+Order Status: {status}
+Date of Change: {date}
+Invoice: {base_url}/customer_order_invoice/orderId={order_number}
+
+Best regards,
+INDOLENS
+09980557575
+"""
+
+
+def get_order_cancelled_email_subject(order_number):
+    return f""" INDOLENS Order Cancelled - {order_number} """
+
+def get_order_cancelled_email_body(customer_name, order_number, status, date):
+    return f""" Dear {customer_name},
+
+Kindly be informed that your order has been cancelled. Below are the cancelled order details details:
+
+Order Number: {order_number}
+Order Status: {status}
+Date of Change: {date}
+
+Best regards,
+INDOLENS
+09980557575
+"""
+
 
 # ORDER PAYMENT STATUS CHANGE
 def get_order_payment_status_change_email_subject(order_number):

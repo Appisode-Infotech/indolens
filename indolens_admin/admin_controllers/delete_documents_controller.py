@@ -12,7 +12,7 @@ def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
 
-def delete_document(documenturl, document_type, table, condition, user_id):
+def delete_document(documenturl, document_type, table, condition, user_id, updated_by):
     try:
         parts = documenturl.split('/')
         folder_name = parts[0]
@@ -27,7 +27,8 @@ def delete_document(documenturl, document_type, table, condition, user_id):
                 cursor.execute(get_documents_query)
                 documents = json.loads(cursor.fetchone()[0])
                 documents.remove(documenturl)
-                cursor.execute(f""" UPDATE {table} SET {document_type} = '{json.dumps(documents)}' WHERE {condition} = {user_id} """)
+                cursor.execute(f""" UPDATE {table} SET {document_type} = '{json.dumps(documents)}', 
+                last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by} WHERE {condition} = {user_id} """)
                 get_role = f""" SELECT role from {table} Where {condition} = {user_id}"""
                 cursor.execute(get_role)
                 role = cursor.fetchone()

@@ -1,0 +1,88 @@
+<div class="modal fade" id="allocate_multi_store_modal" tabindex="-1"
+     aria-labelledby="verticallyCenteredModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header bg-primary">
+                <h5 class="allocate_modal_title text-white" id="allocate_modal_title"></h5>
+                <button class="btn p-1" type="button" data-bs-dismiss="modal"
+                        aria-label="Close">
+                    <span class="fas fa-times fs--1 text-white"></span>
+                </button>
+            </div>
+            <div class="modal-body" id="modal_content">
+                <!-- Form for Allocate Store -->
+                <form class="row g-3 needs-validation allocate-store-form2" method="post"
+                      novalidate="novalidate">
+                    {% csrf_token %}
+                    <input type="hidden" name="emp_id" id="emp_id">
+                    <h5 class="mb-3">Select Stores (Only active stores appear here)</h5>
+                    <div id="select_container"></div>
+                    <div class="custom-error" style="color: red;"></div>
+                    <div class="modal-footer">
+                        <button class="btn btn-primary modal-submit" type="submit">Submit
+                        </button>
+                        <button class="btn btn-outline-primary" type="reset" data-bs-dismiss="modal">Cancel</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    var modal = document.querySelector('#allocate_multi_store_modal');
+    var modalTitle = document.querySelector('#allocate_modal_title');
+    var modalContent = document.querySelector('#modal_content');
+    var modalSubmit = document.querySelector('#modal_submit');
+    var modalForm = document.querySelector('.allocate-store-form2'); // Select the existing form
+
+    document.body.addEventListener('click', function (event) {
+        if (event.target.matches('[data-bs-target="#allocate_multi_store_modal"]')) {
+
+            var divElement = document.getElementById("select_container");
+            divElement.innerHTML = "";
+
+            var empId = event.target.getAttribute('data-employee-id');
+            var empName = event.target.getAttribute('data-employee-name');
+            var actionType = event.target.getAttribute('data-action-type');
+            var actionUrl = event.target.getAttribute('data-action-url');
+            var formAction = event.target.getAttribute('data-bs-action');
+            var role = event.target.getAttribute('data-bs-role');
+
+            var activeList = event.target.getAttribute('data-bs-active-list');
+            var actualArray = JSON.parse(activeList);
+            console.log(actualArray);
+
+            let selectCard = document.createElement("div");
+            selectCard.innerHTML = `
+            <select name="store_id" class="form-select" id="store_id" multiple="multiple">
+                        <option value="">Select a store</option>
+                        {% for store in available_stores %}
+                        <option value="{{store.store_id}}" ${actualArray.includes({{ store.store_id }}) ? 'selected' : ''}>{{store.store_name}}</option>
+                        {% endfor %}
+            </select>
+            `;
+            document.querySelector("#select_container").appendChild(selectCard);
+
+            let choicesInstance = new Choices(selectCard.querySelector("[name='store_id']"), {
+                // Pass any necessary options for Choices.js
+                removeItemButton: true,
+                placeholder: true,
+            });
+
+            if (actionType === 'allocate') {
+                modalForm.action = formAction;
+                modalTitle.textContent = "Allocate store for - " + empName;
+                document.getElementById('emp_id').value = empId;
+            }
+
+            // Use data-bs-toggle and data-bs-target attributes to trigger the modal
+            var targetModal = event.target.getAttribute('data-bs-target');
+            var backdrop = event.target.getAttribute('data-bs-backdrop');
+            modal.setAttribute('data-bs-target', targetModal);
+            modal.setAttribute('data-bs-backdrop', backdrop);
+        }
+    });
+});
+</script>

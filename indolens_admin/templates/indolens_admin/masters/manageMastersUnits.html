@@ -71,6 +71,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -360,6 +361,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -388,10 +390,10 @@
 
 <script>
 document.addEventListener("DOMContentLoaded", function () {
+    document.body.addEventListener('click', function (event) {
     var editUnitButton = document.querySelectorAll('[data-bs-target="#updateUnit"]');
     var unitIdField = document.getElementById('edit_unit_id');
     var unitNameField = document.getElementById('edit_unit_name');
-    document.body.addEventListener('click', function (event) {
         editUnitButton.forEach(function (button) {
             button.addEventListener('click', function (event) {
                 var unitId = event.currentTarget.getAttribute('data-unit-id');
@@ -402,6 +404,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
 </script>
 </body>
 

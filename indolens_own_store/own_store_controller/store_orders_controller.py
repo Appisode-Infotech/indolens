@@ -191,6 +191,7 @@ def get_all_store_orders(store_id, store_type):
 
 
 def order_status_change(orderID, orderStatus):
+    print(orderStatus)
     status_conditions = {
         "2": "Processing",
         "3": "Ready",
@@ -258,7 +259,7 @@ def order_status_change(orderID, orderStatus):
             order = get_order_detail(orders_details)
 
             if orderStatus == "6":
-                #
+                print("order completed")
                 # payment_status_change_query = f"""
                 #                 UPDATE sales_order SET payment_status = 2
                 #                 WHERE order_id = '{orderID}'
@@ -277,7 +278,7 @@ def order_status_change(orderID, orderStatus):
 
                 if existing_invoice:
                     last_invoice_number = existing_invoice[0]
-                    store_code, store_id, date_part, number_part = last_invoice_number.split('-')
+                    store_code, store_id, date_part, number_part = last_invoice_number.split('_')
                     number_part = str(int(number_part) + 1).zfill(8)
                     invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
                 else:
@@ -287,7 +288,7 @@ def order_status_change(orderID, orderStatus):
                     store_id = order[0]['created_by_store']
                     date_part = getIndianTime().strftime('%d%m%Y')
 
-                    invoice_number = f"{store_code}-{store_id}-{date_part}-{number_part}"
+                    invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
 
                 create_invoice_query = f""" 
                                             INSERT INTO invoice (invoice_number, order_id, invoice_status, invoice_date,
@@ -296,14 +297,25 @@ def order_status_change(orderID, orderStatus):
                                             {order[0]['created_by_store']},{order[0]['created_by_store_type']}) """
                 cursor.execute(create_invoice_query)
 
-            if orderStatus == "7":
-                print("Order cancelled logic if any")
+                subject = email_template_controller.get_order_completion_email_subject(order[0]['order_id'])
+                body = email_template_controller.get_order_completion_email_body(order[0]['customer_name'],
+                                                                                 order[0]['order_id'],
+                                                                                 status_condition, getIndianTime())
+                send_notification_controller.send_email(subject, body, order[0]['email'])
 
-            subject = email_template_controller.get_order_status_change_email_subject(order[0]['order_id'])
-            body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
-                                                                                order[0]['order_id'],
-                                                                                status_condition, getIndianTime())
-            send_notification_controller.send_email(subject, body, order[0]['email'])
+            if orderStatus == "7":
+                subject = email_template_controller.get_order_cancelled_email_subject(order[0]['order_id'])
+                body = email_template_controller.get_order_cancelled_email_body(order[0]['customer_name'],
+                                                                                    order[0]['order_id'],
+                                                                                    status_condition, getIndianTime())
+                send_notification_controller.send_email(subject, body, order[0]['email'])
+
+            else:
+                subject = email_template_controller.get_order_status_change_email_subject(order[0]['order_id'])
+                body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
+                                                                                    order[0]['order_id'],
+                                                                                    status_condition, getIndianTime())
+                send_notification_controller.send_email(subject, body, order[0]['email'])
 
             return {
                 "status": True,
@@ -315,45 +327,60 @@ def order_status_change(orderID, orderStatus):
         return {"status": False, "message": str(e)}, 301
 
 
-def order_payment_status_change(orderID, paymentStatus):
+def order_payment_status_change(order_data, store_id, created_by):
     status_conditions = {
         "2": "Completed",
         "3": "Refunded"
     }
-    status_condition = status_conditions[paymentStatus]
+    status_condition = status_conditions[order_data['order_payment_status']]
     try:
         with connection.cursor() as cursor:
             order_payment_status_change_query = f"""
-                UPDATE sales_order SET payment_status = {paymentStatus}
-                WHERE order_id = '{orderID}'
-                """
+                UPDATE sales_order 
+                SET 
+                    payment_status = {order_data['order_payment_status']},
+                    amount_paid = 
+                        CASE 
+                            WHEN {order_data['order_payment_status']} = 2 THEN amount_paid + {order_data['order_payment_amount']}
+                            ELSE amount_paid - {order_data['order_payment_amount']}
+                        END
+                WHERE order_id = '{order_data['order_id']}'
+            """
             cursor.execute(order_payment_status_change_query)
 
-            if paymentStatus == "3":
+            order_payment_track_query = f"""INSERT INTO sales_order_payment_track (order_id, payment_amount, 
+                                            payment_mode, payment_type, created_by_store, created_by_store_type, 
+                                            created_by_id, created_on )
+                                            VALUES ('{order_data['order_id']}', {order_data['order_payment_amount']},
+                                            {order_data['payment_mode']}, {order_data['order_payment_status']}, 
+                                            {store_id}, 1, {created_by}, '{getIndianTime()}') """
+            cursor.execute(order_payment_track_query)
+
+            if order_data['order_payment_status'] == "3":
                 order_status_change_query = f"""
                                 UPDATE sales_order SET order_status = 7
-                                WHERE order_id = '{orderID}'
+                                WHERE order_id = '{order_data['order_id']}'
                                 """
                 cursor.execute(order_status_change_query)
 
             get_order_details_query = f"""
-                                        SELECT 
+                                        SELECT
                                             so.*,
-                                            (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{orderID}' 
-                                            GROUP BY order_id ), 
-                                            (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{orderID}' 
-                                            GROUP BY order_id ), 
-                                            CASE 
-                                                WHEN so.created_by_store_type = 1 THEN os.store_name 
-                                                ELSE fs.store_name 
+                                            (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{order_data['order_id']}'
+                                            GROUP BY order_id ),
+                                            (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{order_data['order_id']}'
+                                            GROUP BY order_id ),
+                                            CASE
+                                                WHEN so.created_by_store_type = 1 THEN os.store_name
+                                                ELSE fs.store_name
                                             END AS store_name,
-                                            CASE 
-                                                WHEN so.created_by_store_type = 1 THEN creator_os.name 
-                                                ELSE creator_fs.name 
+                                            CASE
+                                                WHEN so.created_by_store_type = 1 THEN creator_os.name
+                                                ELSE creator_fs.name
                                             END AS creator_name,
-                                            CASE 
-                                                WHEN so.created_by_store_type = 1 THEN updater_os.name 
-                                                ELSE updater_fs.name 
+                                            CASE
+                                                WHEN so.created_by_store_type = 1 THEN updater_os.name
+                                                ELSE updater_fs.name
                                             END AS updater_name,
                                             c.*, ci.*, pc.category_name, pm.material_name,
                                             ft.frame_type_name, fsh.shape_name,co.color_name, u.unit_name, b.brand_name
@@ -373,7 +400,7 @@ def order_payment_status_change(orderID, paymentStatus):
                                         LEFT JOIN franchise_store_employees creator_fs ON so.created_by = creator_fs.employee_id AND so.created_by_store_type = 2
                                         LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
                                         LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
-                                        WHERE so.order_id = '{orderID}' GROUP BY so.sale_item_id  
+                                        WHERE so.order_id = '{order_data['order_id']}' GROUP BY so.sale_item_id
                                         """
             cursor.execute(get_order_details_query)
             orders_details = cursor.fetchall()

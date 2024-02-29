@@ -139,7 +139,7 @@
                                                type="text" value="{{order_detail.0.customer_name}}"/>
                                     </div>
                                     <div class="mb2 col-6">
-                                        <h5 class="mb-3">Bill Number</h5>
+                                        <h5 class="mb-3">Order ID</h5>
                                         <input disabled class="form-control" style="color: black;"
                                                type="text" value="{{order_detail.0.order_id}}"/>
                                     </div>
@@ -276,10 +276,6 @@
                                 </table>
                                 {% endif %}
 
-                                {% if order_detail.0.category_id == 3 %}
-                                <label>Contact Lens</label>
-                                {% endif %}
-
 
                                 <div class="row g-3 mt-3 mb-3">
                                     <div class="mb2 col-6">
@@ -291,6 +287,18 @@
                                         <h5 class="mb-3">Lens</h5>
                                         <input disabled class="form-control" style="color: black;"
                                                type="text" value="{{order_detail.0.product_name}}"/>
+                                    </div>
+                                </div>
+                                <div class="row g-3 mt-3 mb-3">
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Lens Type</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{order_detail.0.power_attribute.lens_type}}"/>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Stock Type</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{order_detail.0.power_attribute.stock_type}}"/>
                                     </div>
                                 </div>
                             </div>
@@ -337,21 +345,22 @@
 
 <script>
 
-    function updateCustomerFields(selectCustomerField) {
-        var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-        let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
+function updateCustomerFields(selectCustomerField) {
+    var customers_list = JSON.parse(document.getElementById('customersList').textContent);
+    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
 
-        var customerNameInput = document.getElementsByName("customer_name")[0];
-        var customerEmailInput = document.getElementsByName("customer_email")[0];
-        var customerPhoneInput = document.getElementsByName("customer_phone")[0];
-        var customerAgeInput = document.getElementsByName("customer_age")[0];
-        var customerGenderSelect = document.getElementsByName("customer_gender")[0];
-        var customerCityInput = document.getElementsByName("customer_city")[0];
-        var customerLanguageSelect = document.getElementsByName("customer_language")[0];
-        var customerAddressTextarea = document.getElementsByName("customer_address")[0];
-        //customerDataField
-        var customerDataTextarea = document.getElementsByName("customerData")[0];
+    var customerNameInput = document.getElementsByName("customer_name")[0];
+    var customerEmailInput = document.getElementsByName("customer_email")[0];
+    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
+    var customerAgeInput = document.getElementsByName("customer_age")[0];
+    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
+    var customerCityInput = document.getElementsByName("customer_city")[0];
+    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
+    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
+    //customerDataField
+    var customerDataTextarea = document.getElementsByName("customerData")[0];
 
+    if (selectCustomer) {
         customerNameInput.value = selectCustomer.name;
         customerEmailInput.value = selectCustomer.email;
         customerPhoneInput.value = selectCustomer.phone;
@@ -360,19 +369,17 @@
         customerCityInput.value = selectCustomer.city;
         customerLanguageSelect.value = selectCustomer.language;
         customerAddressTextarea.value = selectCustomer.address;
-        customerDataTextarea.value = selectCustomer.address;
-
-
+    } else {
+        customerNameInput.value = '';
+        customerEmailInput.value = '';
+        customerPhoneInput.value = '';
+        customerAgeInput.value = '';
+        customerGenderSelect.value = '';
+        customerCityInput.value = '';
+        customerLanguageSelect.value = '';
+        customerAddressTextarea.value = '';
+        customerDataTextarea.value = '';
     }
-
-
-
-
-
-
-
-
-
-
+}
 </script>
 </html>

@@ -99,9 +99,9 @@
                     </div>
                 </div>
                 <div class="row g-5">
-                    <div class="col-12 col-xxl-4">
+                    <div class="col-12 ">
                         <div class="row g-3 g-xxl-0 h-100">
-                            <div class="col-12 col-md-7 col-xxl-12 mb-xxl-3">
+                            <div class="col-12 col-md-7  mb-xxl-3">
                                 <div class="card h-100">
                                     <div class="card-body d-flex flex-column justify-content-between pb-3">
                                         <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
@@ -122,7 +122,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-5 col-xxl-12 mb-xxl-3">
+                            <div class="col-12 col-md-5  mb-xxl-3">
                                 <div class="card h-100">
                                     <div class="card-body pb-3">
                                         <div class="d-flex align-items-center mb-3">
@@ -147,7 +147,7 @@
                     </div>
                     <div class="col-12 col-xxl-8">
                         <div class="mb-6">
-                            <h3 class="mb-4">Orders </h3>
+                            <h3 class="mb-4">Orders <span class="text-700 fw-normal">({{sales_data|length}})</span></h3>
                             <div class="border-top border-bottom border-200"
                                  data-list='{"valueNames":["order","total","payment_status","fulfilment_status","delivery_type","date"],"page":6,"pagination":true}'
                                  id="customerOrdersTable">
@@ -160,7 +160,7 @@
                                                 style="width:5%;">ORDER ID
                                             </th>
                                             <th class="sort align-middle text-end" data-sort="total" scope="col"
-                                                style="width:6%;">TOTAL
+                                                style="width:6%; min-width: 100px;">TOTAL
                                             </th>
                                             <th class="sort align-middle ps-8" data-sort="customer" scope="col"
                                                 style="width:28%; min-width: 250px;">CUSTOMER

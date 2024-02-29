@@ -118,9 +118,7 @@ body {
     .container-small {
         padding: 15px;
     }
-    .print-button {
-            display: none;
-        }
+
 
     .table th, .table td {
         padding: 8px;
@@ -128,16 +126,34 @@ body {
 }
 
 
+@media print {
+    .print-button {
+        display: none;
+    }
 
+    /* Add any additional print-specific styles here */
+}
 
-
-
-
-
+{% if order_detail.0.order_status == 7 %}
+      @media print {
+        body::after {
+          content: "CANCELLED";
+          position: fixed;
+          top: 50%;
+          left: 50%;
+           transform: translate(-50%, -50%) rotate(-45deg); /* Rotate by 45 degrees */
+          font-size: 6em; /* Increase font size */
+          color: rgba(255, 0, 0, 0.5); /* Set the color and transparency of the watermark */
+          text-align: center;
+          z-index: 999;
+        }
+      }
+    {% endif %}
 
 
 
     </style>
+
 </head>
 
 
@@ -163,7 +179,6 @@ body {
                         </button>
                     </div>
                 </div>
-
 
                 <div id="invoice_details" class="bg-soft p-4 mb-4 rounded-2">
                     <div class="d-flex flex-column align-items-center">
@@ -255,7 +270,7 @@ body {
                                     class="align-middle text-end text-1000 fw-semi-bold text-end" colspan="2">
                                     ₹{{order.unit_sale_price}}
                                 </td>
-                                <td class="align-middle text-end fw-semi-bold" colspan="1">
+                                <td style="text-align: end;" class="align-middle text-end fw-semi-bold" colspan="1">
                                     {{order.discount_percentage}}%
                                 </td>
                                 <td style="text-align: end;" class="align-middle text-end" colspan="2">
@@ -329,9 +344,7 @@ body {
                             </tbody>
                         </table>
                     </div>
-                    <div class="text-end py-9 border-bottom border-300"><img class="mb-3"
-                                                                             src="../../../assets/img/logos/phoenix-mart.png"
-                                                                             alt=""/>
+                    <div style="margin-top: 100px;">
                         <h4>Authorized Signatory</h4>
                     </div>
                     <div class="py-4 border-bottom border-300">
@@ -386,8 +399,14 @@ body {
         var discountedAmount = totalCost - discountCost;
         var balanceAmount = discountCost - amountPaid;
 
-        document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
-        document.getElementById('balance').textContent = '₹ ' + balanceAmount;
+
+        if(document.getElementById('discount_amount')){
+                document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
+        }
+        if(document.getElementById('balance')){
+                document.getElementById('balance').textContent = '₹ ' + balanceAmount;
+        }
+
 
 
         const singleDigits = ['', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine'];
@@ -443,14 +462,25 @@ body {
     }
 
     const discountCostElement = document.getElementById('balance');
-    const discountCostText = discountCostElement.innerText;
+    var discountCostText;
+    var grandTotalInNumber;
+    if(discountCostElement){
+        discountCostText = discountCostElement.innerText;
+        grandTotalInNumber = parseFloat(discountCostText.replace('₹', ''));
+
+    }
     console.log(discountCostText);
-    const grandTotalInNumber = parseFloat(discountCostText.replace('₹', ''));
 
     const totalWords2 = numberToWords({{ order_detail.0.discount_cost }});
-    document.getElementById('totalWords2').innerText = totalWords2 + ' Rupees Only';
-    const totalWords = numberToWords(grandTotalInNumber);
-    document.getElementById('totalWords').innerText = totalWords + ' Rupees Only';
+    if(document.getElementById('totalWords2')){
+        document.getElementById('totalWords2').innerText = totalWords2 + ' Rupees Only';
+    }
+        const totalWords = numberToWords(grandTotalInNumber);
+
+    if(document.getElementById('totalWords')){
+        document.getElementById('totalWords').innerText = totalWords + ' Rupees Only';
+
+    }
     });
 
 </script>
