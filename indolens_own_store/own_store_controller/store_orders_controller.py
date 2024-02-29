@@ -191,6 +191,7 @@ def get_all_store_orders(store_id, store_type):
 
 
 def order_status_change(orderID, orderStatus):
+    print(orderStatus)
     status_conditions = {
         "2": "Processing",
         "3": "Ready",
@@ -258,7 +259,7 @@ def order_status_change(orderID, orderStatus):
             order = get_order_detail(orders_details)
 
             if orderStatus == "6":
-                #
+                print("order completed")
                 # payment_status_change_query = f"""
                 #                 UPDATE sales_order SET payment_status = 2
                 #                 WHERE order_id = '{orderID}'
@@ -277,7 +278,7 @@ def order_status_change(orderID, orderStatus):
 
                 if existing_invoice:
                     last_invoice_number = existing_invoice[0]
-                    store_code, store_id, date_part, number_part = last_invoice_number.split('-')
+                    store_code, store_id, date_part, number_part = last_invoice_number.split('_')
                     number_part = str(int(number_part) + 1).zfill(8)
                     invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
                 else:
@@ -287,7 +288,7 @@ def order_status_change(orderID, orderStatus):
                     store_id = order[0]['created_by_store']
                     date_part = getIndianTime().strftime('%d%m%Y')
 
-                    invoice_number = f"{store_code}-{store_id}-{date_part}-{number_part}"
+                    invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
 
                 create_invoice_query = f""" 
                                             INSERT INTO invoice (invoice_number, order_id, invoice_status, invoice_date,
@@ -297,9 +298,11 @@ def order_status_change(orderID, orderStatus):
                 cursor.execute(create_invoice_query)
 
                 subject = email_template_controller.get_order_completion_email_subject(order[0]['order_id'])
+                print(subject)
                 body = email_template_controller.get_order_completion_email_body(order[0]['customer_name'],
                                                                                  order[0]['order_id'],
                                                                                  status_condition, getIndianTime())
+                print(body)
                 send_notification_controller.send_email(subject, body, order[0]['email'])
 
             if orderStatus == "7":
