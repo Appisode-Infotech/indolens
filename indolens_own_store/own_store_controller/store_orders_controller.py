@@ -296,15 +296,19 @@ def order_status_change(orderID, orderStatus):
                                             {order[0]['created_by_store']},{order[0]['created_by_store_type']}) """
                 cursor.execute(create_invoice_query)
 
-            if orderStatus == "7":
-                print("Order cancelled logic if any")
-
-            if orderStatus == "6":
                 subject = email_template_controller.get_order_completion_email_subject(order[0]['order_id'])
                 body = email_template_controller.get_order_completion_email_body(order[0]['customer_name'],
+                                                                                 order[0]['order_id'],
+                                                                                 status_condition, getIndianTime())
+                send_notification_controller.send_email(subject, body, order[0]['email'])
+
+            if orderStatus == "7":
+                subject = email_template_controller.get_order_cancelled_email_subject(order[0]['order_id'])
+                body = email_template_controller.get_order_cancelled_email_body(order[0]['customer_name'],
                                                                                     order[0]['order_id'],
                                                                                     status_condition, getIndianTime())
                 send_notification_controller.send_email(subject, body, order[0]['email'])
+
             else:
                 subject = email_template_controller.get_order_status_change_email_subject(order[0]['order_id'])
                 body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
@@ -361,9 +365,9 @@ def order_payment_status_change(order_data, store_id, created_by):
             get_order_details_query = f"""
                                         SELECT
                                             so.*,
-                                            (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{orderID}'
+                                            (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{order_data['order_id']}'
                                             GROUP BY order_id ),
-                                            (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{orderID}'
+                                            (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{order_data['order_id']}'
                                             GROUP BY order_id ),
                                             CASE
                                                 WHEN so.created_by_store_type = 1 THEN os.store_name

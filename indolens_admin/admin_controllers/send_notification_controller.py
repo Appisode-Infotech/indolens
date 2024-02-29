@@ -54,7 +54,6 @@ def send_email(subject, body, to_email):
         email_response = requests.post(url, data=json.dumps(data), headers=headers)
         return email_response
     else:
-        print("Data is empty")
         return "no email js credentials found"
 
 
