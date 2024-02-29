@@ -708,7 +708,9 @@ function addLensContainer() {
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
-        <div class="mb2 col-6" id="discount_check_div[${productCardCount}]" style="display:none">
+
+    </div>
+    <div class="mb-3 col-6" id="discount_check_div[${productCardCount}]" style="display:none">
             <input id="discount_value_field[${productCardCount}]" type="hidden" class="form-check" name="discount_percentage[${productCardCount}]" required="required"
                 readonly />
             <input class="form-check-input" type="checkbox" name="discount_checked[${productCardCount}]"
@@ -716,7 +718,6 @@ function addLensContainer() {
             <label id="discount_value[${productCardCount}]" class="form-check-label text-900"
                 for="bootstrap-wizard-validation-wizard-checkbox[${productCardCount}]"></label>
         </div>
-    </div>
     <div class="dropdown-divider"></div>
     <h6 class="mb-3">Power attributes</h6>
     <div class="row mb-3 stock_power_card[${productCardCount}]" id="stock_power_card[${productCardCount}]" style="display:none">

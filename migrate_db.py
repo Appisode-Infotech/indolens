@@ -127,9 +127,9 @@ sql_queries = [
  `power_attribute` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`power_attribute`)),
  `franchise_sale_price` int(11),
  `product_quantity` int(11),
- `product_gst` float,
+ `product_gst` int(11),
  `status` tinyint(1),
- `discount` float,
+ `discount` int(11),
  `created_on` datetime,
  `created_by` int(11),
  `last_updated_on` datetime,
@@ -548,15 +548,15 @@ sql_queries = [
     """
     CREATE TABLE `sales_order_payment_track` (
  `id` int(11) NOT NULL AUTO_INCREMENT,
- `order_id` varchar(255) ,
- `payment_amount` int(11) ,
- `payment_mode` int(11) ,
- `payment_type` int(11) ,
- `created_by_store` int(11) ,
- `created_by_store_type` int(11) ,
- `created_by_id` int(11) ,
- `created_on` datetime ,
- PRIMARY KEY (`id`)
+ `order_id` varchar(255),
+ `payment_amount` int(11),
+ `payment_mode` int(11),
+ `payment_type` int(11),
+ `created_by_store` int(11),
+ `created_by_store_type` int(11),
+ `created_by_id` int(11),
+ `created_on` datetime,
+ PRIMARY KEY (`id`))
     """,
     """CREATE TABLE `store_expense` (
  `store_expense_id` int(11) NOT NULL AUTO_INCREMENT,
