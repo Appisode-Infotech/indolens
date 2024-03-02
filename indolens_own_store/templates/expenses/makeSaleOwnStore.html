@@ -175,10 +175,10 @@
             <form id="saleForm" action="{% url 'own_store_make_sale' %}" method="post">
                 {% csrf_token %}
 
-                <input name="cartData">
+                <input type="hidden" name="cartData">
                 <input type="hidden" name="customerData">
                 <input type="hidden" name="billingDetailsData">
-                <input id="linkedData" name="linkedData">
+                <input type="hidden" id="linkedData" name="linkedData">
             </form>
             <div class="col-12">
                 <div class="card shadow-none border border-300 my-4" data-component-card="data-component-card">
@@ -480,6 +480,7 @@
 
                                                 </div>
 
+                                                                                <div id="category1Container"></div>
 
 
                                                 <div class="mb2 col-12 mt-3">
@@ -528,7 +529,6 @@
                             </div>
                         </div>
                     </div>
-                                                                                <div id="category1Container"></div>
 
                 </div>
             </div>
