@@ -2359,7 +2359,7 @@ function getProductsData() {
             dropdown.name = product[productNameKey] + '--' + productNameKey + "--" + product.product;
 
             var noLinkedItemOption = document.createElement('option');
-            noLinkedItemOption.value = '';
+            noLinkedItemOption.value = 'NA';
             noLinkedItemOption.textContent = 'No Linked Item';
             dropdown.appendChild(noLinkedItemOption);
 
@@ -2407,7 +2407,7 @@ function handleDropdownChange(productsArray,event) {
     linkedItemSelects.forEach(currentDropdown => {
         if (currentDropdown !== event.target) {
             Array.from(currentDropdown.options).forEach(option => {
-                 if (option.value !== '' && selectedOptions.includes(option.value)) {
+                 if (option.value !== 'NA' && selectedOptions.includes(option.value)) {
                     // Hide the option
                     option.style.display = 'none';
                 } else {
