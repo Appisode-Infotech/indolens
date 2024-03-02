@@ -215,14 +215,14 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 req_date">
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}} {{stock.delivery_status}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 moved_date">
-                                    {% if stock.delivery_status == 2 %}
-                                    <p class="mb-0 fs--1 text-900">{{stock.last_updated_on}}</p>
+                                    {% if stock.delivery_status == 1 or stock.delivery_status == 2 %}
+                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_last_updated_on}}</p>
                                     {% else %}
-                                    <p class="mb-0 fs--1 text-900">Not Delivered</p>
+                                    <p class="mb-0 fs--1 text-900">Not Dispatched</p>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end approvalStatus">
