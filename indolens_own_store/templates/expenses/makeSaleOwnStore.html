@@ -175,10 +175,10 @@
             <form id="saleForm" action="{% url 'own_store_make_sale' %}" method="post">
                 {% csrf_token %}
 
-                <input type="hidden" name="cartData">
+                <input name="cartData">
                 <input type="hidden" name="customerData">
                 <input type="hidden" name="billingDetailsData">
-                <input type="hidden" id="linkedData" name="linkedData">
+                <input id="linkedData" name="linkedData">
             </form>
             <div class="col-12">
                 <div class="card shadow-none border border-300 my-4" data-component-card="data-component-card">
@@ -480,7 +480,7 @@
 
                                                 </div>
 
-                                                <div id="category1Container"></div>
+
 
                                                 <div class="mb2 col-12 mt-3">
                                                     <h5 class="mb-3">Sale notes</h5>
@@ -528,6 +528,7 @@
                             </div>
                         </div>
                     </div>
+                                                                                <div id="category1Container"></div>
 
                 </div>
             </div>
@@ -2177,115 +2178,183 @@ function getProductsData() {
 }
 </script>
 <script>
-   function generateLinkedItemUi(productsArray) {
-    let category1Products = [];
-    let category2Products = [];
-    document.getElementById('category1Container').innerHTML = '';
+    function generateLinkedItemUi(productsArray){
 
-    productsArray.forEach(product => {
-        const categoryIdKey = Object.keys(product).find(key => key.startsWith("product_category_id"));
-        if (categoryIdKey && (product[categoryIdKey] === "1" || product[categoryIdKey] === "2")) {
-            (product[categoryIdKey] === "1" ? category1Products : category2Products).push(product);
-        }
-    });
+        let category1Products = [];
+        let category2Products = [];
+        document.getElementById('category1Container').innerHTML = ``;
+        productsArray.forEach(product => {
+            // Extracting the keys dynamically
+            const keys = Object.keys(product);
 
-    if (category2Products.length > 0) {
-        const category1Container = document.getElementById('category1Container');
-        const productCategoryDiv = document.createElement('div');
+            // Check if there is a key starting with "product_category_id"
+            const categoryIdKey = keys.find(key => key.startsWith("product_category_id"));
+
+            // If the key exists and the value is "1" or "2", categorize the product
+            if (categoryIdKey && (product[categoryIdKey] === "1" || product[categoryIdKey] === "2")) {
+                if (product[categoryIdKey] === "1") {
+                    category1Products.push(product);
+                } else if (product[categoryIdKey] === "2") {
+                    category2Products.push(product);
+                }
+            }
+        });
+
+        if(category2Products.length>0){
+        var category1Container = document.getElementById('category1Container');
+        var productCategoryDiv = document.createElement('div');
         productCategoryDiv.className = 'product-category';
+
         productCategoryDiv.innerHTML = '';
         category1Container.innerHTML = '';
-        const heading = document.createElement('h2');
+        var heading = document.createElement('h2');
         heading.textContent = 'Link items';
         category1Container.appendChild(heading);
-    }
-
-    const table = document.createElement('table');
-    table.className = 'product-category-table';
-    const headerRow = table.createTHead().insertRow();
-
-    ['Sl. No', 'Lens', 'Options'].forEach(headerText => {
-        const header = document.createElement('th');
-        header.textContent = headerText;
-        headerRow.appendChild(header);
-    });
-
-    category2Products.forEach((product, index) => {
-        const purchaseQtyKey = Object.keys(product).find(key => key.startsWith("purchase_qty"));
-        const productNameKey = Object.keys(product).find(key => key.startsWith("product_name"));
-
-        for (let i = 1; i <= parseInt(product[purchaseQtyKey]); i++) {
-            const row = table.insertRow();
-            [i, product[productNameKey]].forEach((data, cellIndex) => {
-                const cell = row.insertCell(cellIndex);
-                cell.textContent = data;
-            });
-
-            const optionCell = row.insertCell(2);
-            optionCell.className = 'linked-item-cell';
-            const dropdown = document.createElement('select');
-            dropdown.className = 'form-select linkedItemSelect';
-            dropdown.name = `${product[productNameKey]}--${productNameKey}--${product.product}`;
-
-            const noLinkedItemOption = document.createElement('option');
-            noLinkedItemOption.value = '';
-            noLinkedItemOption.textContent = 'No Linked Item';
-            dropdown.appendChild(noLinkedItemOption);
-
-            category1Products.forEach(category1Product => {
-                const purchaseQtyLensKey = Object.keys(category1Product).find(key => key.startsWith("purchase_qty"));
-                const productNameLensKey = Object.keys(category1Product).find(key => key.startsWith("product_name"));
-
-                for (let j = 1; j <= parseInt(category1Product[purchaseQtyLensKey]); j++) {
-                    const option = document.createElement('option');
-                    option.value = `${category1Product[productNameLensKey]}--${j}--${productNameKey}--${category1Product.product}`;
-                    option.textContent = `${category1Product[productNameLensKey]}-${j}`;
-                    dropdown.appendChild(option);
-                }
-            });
-
-            dropdown.addEventListener('change', () => handleDropdownChange(productsArray));
-            optionCell.appendChild(dropdown);
         }
+
+        // Create a table for each product category
+        var table = document.createElement('table');
+        table.className = 'product-category-table';
+
+        // Create the table header
+        var headerRow = table.createTHead().insertRow();
+
+        var slnoHeader = document.createElement('th');
+        slnoHeader.textContent = 'Sl. No';
+        headerRow.appendChild(slnoHeader);
+
+        var lensHeader = document.createElement('th');
+        lensHeader.textContent = 'Lens';
+        headerRow.appendChild(lensHeader);
+        var optionHeader = document.createElement('th');
+        optionHeader.textContent = 'Options';
+        headerRow.appendChild(optionHeader);
+
+        category2Products.forEach((product, index) => {
+        const keys = Object.keys(product);
+        const purchaseQtyKey = keys.find(key => key.startsWith("purchase_qty"));
+        const productNameKey = keys.find(key => key.startsWith("product_name"));
+
+        for(let i = 1; i <= parseInt(product[purchaseQtyKey]);i++){
+        var row = table.insertRow();
+        var slnoCell = row.insertCell(0);
+        slnoCell.textContent = i;
+
+        // lens column
+        var lensCell = row.insertCell(1);
+        lensCell.textContent = product[productNameKey];
+
+        // Options column
+        var optionCell = row.insertCell(2);
+        optionCell.className = 'linked-item-cell';
+
+        var dropdown = document.createElement('select');
+        dropdown.className = 'form-select linkedItemSelect';
+        dropdown.name = product[productNameKey] + '--' + productNameKey + "--" + product.product;
+
+        var noLinkedItemOption = document.createElement('option');
+        noLinkedItemOption.value = '';
+        noLinkedItemOption.textContent = 'No Linked Item';
+        dropdown.appendChild(noLinkedItemOption);
+
+          category1Products.forEach(category1Product => {
+            const keys = Object.keys(category1Product);
+            const lensKeys = Object.keys(product);
+            const purchaseQtyLensKey = keys.find(key => key.startsWith("purchase_qty"));
+            const productNameLensKey = keys.find(key => key.startsWith("product_name"));
+            const productLensKey = lensKeys.find(key => key.startsWith("product_name"));
+
+            for (let j = 1; j <= parseInt(category1Product[purchaseQtyLensKey]); j++) {
+                var option = document.createElement('option');
+                option.value = category1Product[productNameLensKey] + "--" + j + "--" + productLensKey + "--" + category1Product.product; // Set the actual value based on your data
+                option.textContent = category1Product[productNameLensKey] + "-" + j; // Set the actual text based on your data
+                dropdown.appendChild(option);
+            }
+        });
+        dropdown.addEventListener('change', function () {
+            handleDropdownChange(productsArray);
+        });
+        // Append the dropdown to the option cell
+        optionCell.appendChild(dropdown);
+        }
+
         document.getElementById('category1Container').appendChild(table);
-    });
-}
+
+        });
+
+
+    }
 </script>
 <script>
    function handleDropdownChange(productsArray) {
+    var selectedOptions = [];
     const linkJsonList = [];
 
+    // Get all linkedItemSelect dropdowns
     const linkedItemSelects = document.querySelectorAll('.linkedItemSelect');
-    const selectedOptions = Array.from(linkedItemSelects, dropdown => dropdown.value);
+    // Iterate through all dropdowns and their options
+    linkedItemSelects.forEach(currentDropdown => {
+        selectedOptions.push(currentDropdown.value);
+    });
 
     linkedItemSelects.forEach(currentDropdown => {
         if (currentDropdown !== event.target) {
             Array.from(currentDropdown.options).forEach(option => {
-                option.style.display = selectedOptions.includes(option.value) && option.value !== '' ? 'none' : '';
+                if (selectedOptions.includes(option.value) && option.value != '') {
+                    // Hide the option
+                    option.style.display = 'none';
+                } else {
+                    // Show the option (in case it was previously hidden)
+                    option.style.display = '';
+                }
             });
         }
     });
+    console.log('case1');
+    console.log(linkedItemSelects);
 
-    linkedItemSelects.forEach(select => {
-        const [lensName, lensLinkedCount, attachedLensIndexKey, frameId] = select.value.split('--');
-        linkJsonList.push({ "lensIndexKey": attachedLensIndexKey, "frameId": frameId });
+    linkedItemSelects.forEach((select, index) => {
+
+    const [lensName, lensLinkedCount, attachedLensIndexKey, frameId] = select.value.split('--');
+
+        console.log(select.value);
+        console.log(attachedLensIndexKey);
+        console.log(frameId);
+        linkJsonList.push({
+            "lensIndexKey": attachedLensIndexKey,
+            "frameId": frameId,
+        });
+    });
+    const jsonString = JSON.stringify(linkJsonList);
+
+    // Set the value of the input field with ID 'linkedData'
+    const linkedDataInput = document.getElementById('linkedData');
+    linkedDataInput.value = jsonString;
+    linkJsonList.forEach(link => {
+        productsArray.forEach(category1Product => {
+            category1Product.linkedFrameIds = [];
+        });
     });
 
-    const jsonString = JSON.stringify(linkJsonList);
-    document.getElementById('linkedData').value = jsonString;
-
-    productsArray.forEach(category1Product => {
-        category1Product.linkedFrameIds = [];
-        linkJsonList.forEach(link => {
+    linkJsonList.forEach(link => {
+        productsArray.forEach(category1Product => {
             const keys = Object.keys(category1Product);
+            // Check if attachedLensIndexKey is present in category1Product
             if (keys.includes(link.lensIndexKey)) {
-                if (!category1Product.linkedFrameIds) category1Product.linkedFrameIds = [];
+                // Check if linkedFrameIds array exists, if not, create it
+                if (!category1Product.linkedFrameIds) {
+                    category1Product.linkedFrameIds = [];
+                }
+
+                // Add linkedFrameId value to the array
                 category1Product.linkedFrameIds.push(link.frameId);
             }
         });
     });
+    let cartDataField = document.querySelector(`[name='cartData']`);
+    let jsonData = JSON.stringify(productsArray);
+    cartDataField.value = jsonData;
 
-    document.querySelector(`[name='cartData']`).value = JSON.stringify(productsArray);
 }
 </script>
 </body>
