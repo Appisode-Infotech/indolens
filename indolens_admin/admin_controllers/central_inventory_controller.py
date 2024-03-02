@@ -689,7 +689,6 @@ def change_stock_request_status(requestId, status, updator):
         return {"status": False, "message": str(e)}, 301
 
 def change_stock_request_status_with_reason(requestId, status, updator, comments):
-    print(comments)
     try:
         with connection.cursor() as cursor:
             fetch_req_product_query = f"""SELECT * FROM request_products 
