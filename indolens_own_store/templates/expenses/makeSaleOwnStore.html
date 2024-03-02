@@ -2266,7 +2266,7 @@ function getProductsData() {
 
             for (let j = 1; j <= parseInt(category1Product[purchaseQtyLensKey]); j++) {
                 var option = document.createElement('option');
-                option.value = category1Product[productNameLensKey] + "--" + j + "--" + productLensKey + "--" + category1Product.product; // Set the actual value based on your data
+                option.value = category1Product[productNameLensKey] + "--" + j + "--" + productLensKey + "--" + category1Product.product+"--"+productNameLensKey; // Set the actual value based on your data
                 option.textContent = category1Product[productNameLensKey] + "-" + j; // Set the actual text based on your data
                 dropdown.appendChild(option);
             }
@@ -2286,7 +2286,112 @@ function getProductsData() {
     }
 </script>
 <script>
-   function handleDropdownChange(productsArray) {
+  function generateLinkedItemUi(productsArray) {
+
+    let frameProductsList = [];
+    let lensProductsList = [];
+
+    document.getElementById('category1Container').innerHTML = ``;
+    productsArray.forEach(product => {
+        const keys = Object.keys(product);
+        const categoryIdKey = keys.find(key => key.startsWith("product_category_id"));
+        if (categoryIdKey && (product[categoryIdKey] === "1" || product[categoryIdKey] === "2")) {
+            if (product[categoryIdKey] === "1") {
+                frameProductsList.push(product);
+            } else if (product[categoryIdKey] === "2") {
+                lensProductsList.push(product);
+            }
+        }
+    });
+
+    if (lensProductsList.length > 0) {
+        var category1Container = document.getElementById('category1Container');
+        var productCategoryDiv = document.createElement('div');
+        productCategoryDiv.className = 'product-category';
+
+        productCategoryDiv.innerHTML = '';
+        category1Container.innerHTML = '';
+        var heading = document.createElement('h2');
+        heading.textContent = 'Link items';
+        category1Container.appendChild(heading);
+    }
+
+    // Create a table for each product category
+    var table = document.createElement('table');
+    table.className = 'product-category-table';
+
+    // Create the table header
+    var headerRow = table.createTHead().insertRow();
+
+    var slnoHeader = document.createElement('th');
+    slnoHeader.textContent = 'Sl. No';
+    headerRow.appendChild(slnoHeader);
+
+    var lensHeader = document.createElement('th');
+    lensHeader.textContent = 'Lens';
+    headerRow.appendChild(lensHeader);
+    var optionHeader = document.createElement('th');
+    optionHeader.textContent = 'Options';
+    headerRow.appendChild(optionHeader);
+    let serialNumberCounter = 0;
+
+    lensProductsList.forEach((product, index) => {
+        const keys = Object.keys(product);
+        const purchaseQtyKey = keys.find(key => key.startsWith("purchase_qty"));
+        const productNameKey = keys.find(key => key.startsWith("product_name"));
+
+        for (let i = 1; i <= parseInt(product[purchaseQtyKey]); i++) {
+            var row = table.insertRow();
+            serialNumberCounter++;
+            var slnoCell = row.insertCell(0);
+            slnoCell.textContent = serialNumberCounter;
+
+            // lens column
+            var lensCell = row.insertCell(1);
+            lensCell.textContent = product[productNameKey];
+
+            // Options column
+            var optionCell = row.insertCell(2);
+            optionCell.className = 'linked-item-cell';
+
+            var dropdown = document.createElement('select');
+            dropdown.className = 'form-select linkedItemSelect';
+            dropdown.name = product[productNameKey] + '--' + productNameKey + "--" + product.product;
+
+            var noLinkedItemOption = document.createElement('option');
+            noLinkedItemOption.value = '';
+            noLinkedItemOption.textContent = 'No Linked Item';
+            dropdown.appendChild(noLinkedItemOption);
+
+            frameProductsList.forEach(category1Product => {
+                const keys = Object.keys(category1Product);
+                const lensKeys = Object.keys(product);
+                const purchaseQtyLensKey = keys.find(key => key.startsWith("purchase_qty"));
+                const productNameLensKey = keys.find(key => key.startsWith("product_name"));
+                const productLensKey = lensKeys.find(key => key.startsWith("product_name"));
+
+                for (let j = 1; j <= parseInt(category1Product[purchaseQtyLensKey]); j++) {
+                    var option = document.createElement('option');
+                    option.value = category1Product[productNameLensKey] + "--" + j + "--" + productLensKey + "--" + category1Product.product + "--" + productNameLensKey; // Set the actual value based on your data
+                    option.textContent = category1Product[productNameLensKey] + "-" + j; // Set the actual text based on your data
+                    dropdown.appendChild(option);
+                }
+            });
+            dropdown.addEventListener('change', function () {
+                handleDropdownChange(productsArray);
+            });
+            // Append the dropdown to the option cell
+            optionCell.appendChild(dropdown);
+        }
+
+        document.getElementById('category1Container').appendChild(table);
+
+    });
+
+
+}
+
+function handleDropdownChange(productsArray) {
     var selectedOptions = [];
     const linkJsonList = [];
 
@@ -2300,9 +2405,11 @@ function getProductsData() {
     linkedItemSelects.forEach(currentDropdown => {
         if (currentDropdown !== event.target) {
             Array.from(currentDropdown.options).forEach(option => {
-                if (selectedOptions.includes(option.value) && option.value != '') {
+                if (selectedOptions.includes(option.value)) {
                     // Hide the option
-                    option.style.display = 'none';
+                    if (option.value != '') {
+                        option.style.display = 'none';
+                    }
                 } else {
                     // Show the option (in case it was previously hidden)
                     option.style.display = '';
@@ -2310,16 +2417,9 @@ function getProductsData() {
             });
         }
     });
-    console.log('case1');
-    console.log(linkedItemSelects);
 
     linkedItemSelects.forEach((select, index) => {
-
-    const [lensName, lensLinkedCount, attachedLensIndexKey, frameId] = select.value.split('--');
-
-        console.log(select.value);
-        console.log(attachedLensIndexKey);
-        console.log(frameId);
+        const [lensName, lensLinkedCount, attachedLensIndexKey, frameId] = select.value.split('--');
         linkJsonList.push({
             "lensIndexKey": attachedLensIndexKey,
             "frameId": frameId,
