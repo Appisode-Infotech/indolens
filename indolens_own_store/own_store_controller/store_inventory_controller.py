@@ -182,6 +182,7 @@ def get_all_central_inventory_products(store_id):
 
             cursor.execute(get_stores_product_query)
             store_product_list = cursor.fetchall()
+            print(store_product_list)
             return {
                 "status": True,
                 "product_list": get_products_for_stock_request(product_list + store_product_list)
