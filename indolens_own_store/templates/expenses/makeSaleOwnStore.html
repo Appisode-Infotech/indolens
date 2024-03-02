@@ -2377,11 +2377,13 @@ function getProductsData() {
                     dropdown.appendChild(option);
                 }
             });
-            dropdown.addEventListener('change', function () {
-                handleDropdownChange(productsArray);
-            });
-            // Append the dropdown to the option cell
+             // Append the dropdown to the option cell
             optionCell.appendChild(dropdown);
+
+            dropdown.addEventListener('change', function (event) {
+                handleDropdownChange(productsArray,event);
+            });
+
         }
 
         document.getElementById('category1Container').appendChild(table);
@@ -2391,7 +2393,7 @@ function getProductsData() {
 
 }
 
-function handleDropdownChange(productsArray) {
+function handleDropdownChange(productsArray,event) {
     var selectedOptions = [];
     const linkJsonList = [];
 
@@ -2405,11 +2407,9 @@ function handleDropdownChange(productsArray) {
     linkedItemSelects.forEach(currentDropdown => {
         if (currentDropdown !== event.target) {
             Array.from(currentDropdown.options).forEach(option => {
-                if (selectedOptions.includes(option.value)) {
+                 if (option.value !== '' && selectedOptions.includes(option.value)) {
                     // Hide the option
-                    if (option.value != '') {
-                        option.style.display = 'none';
-                    }
+                    option.style.display = 'none';
                 } else {
                     // Show the option (in case it was previously hidden)
                     option.style.display = '';
