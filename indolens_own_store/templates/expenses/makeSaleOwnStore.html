@@ -482,7 +482,6 @@
 
                                                 <div id="category1Container"></div>
 
-
                                                 <div class="mb2 col-12 mt-3">
                                                     <h5 class="mb-3">Sale notes</h5>
 
@@ -529,11 +528,13 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             {% include 'footer.html' %}
         </div>
     </div>
+
     <script>
         var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
         var navbarTop = document.querySelector('.navbar-top');
@@ -1931,7 +1932,6 @@ function updateContactLensProductFields(selectElement, cardIndex) {
 
 function updateRxContactLensProductFields(selectElement, cardIndex) {
     let selectedProduct = contact_lens_list.find(product => product.product_id == selectElement.value);
-    console.log(selectedProduct);
     let stockTypeField = document.querySelector(`[name='ContactLensStockType[${cardIndex}]']`);
     let lensPhysicalityField = document.querySelector(`[name='lens_physicality[${cardIndex}]']`);
     let lensDisposablilityField = document.querySelector(`[name='lens_disposablility[${cardIndex}]']`);
@@ -2172,158 +2172,121 @@ function getProductsData() {
 
         document.getElementById('preview').innerHTML = tableHtml;
 
-
-
-        // for generating linked items ui
-        let category1Products = [];
-        let category2Products = [];
-
-        productsArray.forEach(product => {
-            // Extracting the keys dynamically
-            const keys = Object.keys(product);
-
-            // Check if there is a key starting with "product_category_id"
-            const categoryIdKey = keys.find(key => key.startsWith("product_category_id"));
-
-            // If the key exists and the value is "1" or "2", categorize the product
-            if (categoryIdKey && (product[categoryIdKey] === "1" || product[categoryIdKey] === "2")) {
-                if (product[categoryIdKey] === "1") {
-                    category1Products.push(product);
-                } else if (product[categoryIdKey] === "2") {
-                    category2Products.push(product);
-                }
-            }
-        });
-        var category1Container = document.getElementById('category1Container');
-        var productCategoryDiv = document.createElement('div');
-        productCategoryDiv.className = 'product-category';
-
-        productCategoryDiv.innerHTML = '';
-        category1Container.innerHTML = '';
-        var heading = document.createElement('h2');
-        heading.textContent = 'Link items';
-        category1Container.appendChild(heading);
-        // Display the separated lists
-        // console.log('Category 1 Products:', category1Products);
-        // console.log('Category 2 Products:', category2Products);
-
-
-
-        category1Products.forEach((product, index) => {
-            const keys = Object.keys(product);
-            const purchaseQtyKey = keys.find(key => key.startsWith("purchase_qty"));
-            const productNameKey = keys.find(key => key.startsWith("product_name"));
-
-            // Create a table for each product category
-            var table = document.createElement('table');
-            table.className = 'product-category-table';
-
-            // Create the table header
-            var headerRow = table.createTHead().insertRow();
-
-            var slnoHeader = document.createElement('th');
-            slnoHeader.textContent = 'Sl. No';
-            headerRow.appendChild(slnoHeader);
-
-            var frameHeader = document.createElement('th');
-            frameHeader.textContent = 'Frame';
-headerRow.appendChild(frameHeader);
-
-            var optionHeader = document.createElement('th');
-            optionHeader.textContent = 'Options';
-headerRow.appendChild(optionHeader);
-
-            for (let i = 1; i <= parseInt(product[purchaseQtyKey]); i++) {
-                // Create a row for each frame
-                var row = table.insertRow();
-
-                // Sl. No column
-                var slnoCell = row.insertCell(0);
-                slnoCell.textContent = i;
-
-                // Frame column
-                var frameCell = row.insertCell(1);
-                frameCell.textContent = product[productNameKey];
-
-                // Options column
-                var optionCell = row.insertCell(2);
-                optionCell.className = 'linked-item-cell';
-
-                // Create a dropdown for each frame
-                var dropdown = document.createElement('select');
-                dropdown.className = 'form-select linkedItemSelect';
-                dropdown.name = product[productNameKey] + '--' + productNameKey + "--" + product.product;
-
-                // Add an initial option to represent no linked item
-                var noLinkedItemOption = document.createElement('option');
-                noLinkedItemOption.value = '';
-                noLinkedItemOption.textContent = 'No Linked Item';
-                dropdown.appendChild(noLinkedItemOption);
-
-                // Populate the dropdown with options from category2Products
-                category2Products.forEach(category2Product => {
-                    const keys = Object.keys(category2Product);
-                    const purchaseQtyLensKey = keys.find(key => key.startsWith("purchase_qty"));
-                    const productNameLensKey = keys.find(key => key.startsWith("product_name"));
-
-                    for (let j = 1; j <= parseInt(category2Product[purchaseQtyLensKey]); j++) {
-                        var option = document.createElement('option');
-                        option.value = category2Product[productNameLensKey] + "--" + j + "--" + productNameLensKey + "--" + category2Product.product; // Set the actual value based on your data
-                        option.textContent = category2Product[productNameLensKey] + "-" + j; // Set the actual text based on your data
-                        dropdown.appendChild(option);
-                    }
-                });
-                dropdown.addEventListener('change', handleDropdownChange);
-
-                // Append the dropdown to the option cell
-                optionCell.appendChild(dropdown);
-            }
-
-            // Append the table to the productCategoryDiv
-            productCategoryDiv.appendChild(table);
-        });
-
-        function handleDropdownChange(event) {
-            const selectedValue = event.target.value;
-            console.log(selectedValue);
-
-            // Create an array to store the linked items in JSON format
-            const linkJsonList = [];
-
-            // Get all selects with class name 'linkedItemSelect'
-            const linkedItemSelects = document.querySelectorAll('.linkedItemSelect');
-
-            linkedItemSelects.forEach((select, index) => {
-                const [frameName, frameIndexKey, frameId] = select.name.split('--');
-                const [lensName, lensLinkedCount, attachedFrameIndexKey, lensId] = select.value.split('--');
-
-                linkJsonList.push({
-                    "frameName": frameName,
-                    "frameIndexKey": frameIndexKey,
-                    "lensName": lensName,
-                    "lensLinkedCount": lensLinkedCount,
-                    "frameId": frameId,
-                    "lensId": lensId
-                });
-            });
-
-            const jsonString = JSON.stringify(linkJsonList);
-
-            // Set the value of the input field with ID 'linkedData'
-            const linkedDataInput = document.getElementById('linkedData');
-            linkedDataInput.value = jsonString;
-            console.log(linkJsonList);
-        }
-
-
-        // Append the productCategoryDiv to the main container
-        category1Container.appendChild(productCategoryDiv);
+        generateLinkedItemUi(productsArray);
     }
 }
+</script>
+<script>
+   function generateLinkedItemUi(productsArray) {
+    let category1Products = [];
+    let category2Products = [];
+    document.getElementById('category1Container').innerHTML = '';
 
+    productsArray.forEach(product => {
+        const categoryIdKey = Object.keys(product).find(key => key.startsWith("product_category_id"));
+        if (categoryIdKey && (product[categoryIdKey] === "1" || product[categoryIdKey] === "2")) {
+            (product[categoryIdKey] === "1" ? category1Products : category2Products).push(product);
+        }
+    });
 
+    if (category2Products.length > 0) {
+        const category1Container = document.getElementById('category1Container');
+        const productCategoryDiv = document.createElement('div');
+        productCategoryDiv.className = 'product-category';
+        productCategoryDiv.innerHTML = '';
+        category1Container.innerHTML = '';
+        const heading = document.createElement('h2');
+        heading.textContent = 'Link items';
+        category1Container.appendChild(heading);
+    }
 
+    const table = document.createElement('table');
+    table.className = 'product-category-table';
+    const headerRow = table.createTHead().insertRow();
 
+    ['Sl. No', 'Lens', 'Options'].forEach(headerText => {
+        const header = document.createElement('th');
+        header.textContent = headerText;
+        headerRow.appendChild(header);
+    });
+
+    category2Products.forEach((product, index) => {
+        const purchaseQtyKey = Object.keys(product).find(key => key.startsWith("purchase_qty"));
+        const productNameKey = Object.keys(product).find(key => key.startsWith("product_name"));
+
+        for (let i = 1; i <= parseInt(product[purchaseQtyKey]); i++) {
+            const row = table.insertRow();
+            [i, product[productNameKey]].forEach((data, cellIndex) => {
+                const cell = row.insertCell(cellIndex);
+                cell.textContent = data;
+            });
+
+            const optionCell = row.insertCell(2);
+            optionCell.className = 'linked-item-cell';
+            const dropdown = document.createElement('select');
+            dropdown.className = 'form-select linkedItemSelect';
+            dropdown.name = `${product[productNameKey]}--${productNameKey}--${product.product}`;
+
+            const noLinkedItemOption = document.createElement('option');
+            noLinkedItemOption.value = '';
+            noLinkedItemOption.textContent = 'No Linked Item';
+            dropdown.appendChild(noLinkedItemOption);
+
+            category1Products.forEach(category1Product => {
+                const purchaseQtyLensKey = Object.keys(category1Product).find(key => key.startsWith("purchase_qty"));
+                const productNameLensKey = Object.keys(category1Product).find(key => key.startsWith("product_name"));
+
+                for (let j = 1; j <= parseInt(category1Product[purchaseQtyLensKey]); j++) {
+                    const option = document.createElement('option');
+                    option.value = `${category1Product[productNameLensKey]}--${j}--${productNameKey}--${category1Product.product}`;
+                    option.textContent = `${category1Product[productNameLensKey]}-${j}`;
+                    dropdown.appendChild(option);
+                }
+            });
+
+            dropdown.addEventListener('change', () => handleDropdownChange(productsArray));
+            optionCell.appendChild(dropdown);
+        }
+        document.getElementById('category1Container').appendChild(table);
+    });
+}
+</script>
+<script>
+   function handleDropdownChange(productsArray) {
+    const linkJsonList = [];
+
+    const linkedItemSelects = document.querySelectorAll('.linkedItemSelect');
+    const selectedOptions = Array.from(linkedItemSelects, dropdown => dropdown.value);
+
+    linkedItemSelects.forEach(currentDropdown => {
+        if (currentDropdown !== event.target) {
+            Array.from(currentDropdown.options).forEach(option => {
+                option.style.display = selectedOptions.includes(option.value) && option.value !== '' ? 'none' : '';
+            });
+        }
+    });
+
+    linkedItemSelects.forEach(select => {
+        const [lensName, lensLinkedCount, attachedLensIndexKey, frameId] = select.value.split('--');
+        linkJsonList.push({ "lensIndexKey": attachedLensIndexKey, "frameId": frameId });
+    });
+
+    const jsonString = JSON.stringify(linkJsonList);
+    document.getElementById('linkedData').value = jsonString;
+
+    productsArray.forEach(category1Product => {
+        category1Product.linkedFrameIds = [];
+        linkJsonList.forEach(link => {
+            const keys = Object.keys(category1Product);
+            if (keys.includes(link.lensIndexKey)) {
+                if (!category1Product.linkedFrameIds) category1Product.linkedFrameIds = [];
+                category1Product.linkedFrameIds.push(link.frameId);
+            }
+        });
+    });
+
+    document.querySelector(`[name='cartData']`).value = JSON.stringify(productsArray);
+}
 </script>
 </body>
 
