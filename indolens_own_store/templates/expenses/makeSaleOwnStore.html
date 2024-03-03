@@ -2138,7 +2138,7 @@ function getProductsData() {
 
 
         var tableHtml = '<table>';
-        tableHtml += '<thead><tr><th>Sl. No</th><th>Product Name</th><th>Category</th><th>Purchase Qty</th><th>Product Total</th></tr></thead>';
+        tableHtml += '<thead><tr><th>Sl. No</th><th>Product Name</th><th>Category</th><th style="text-align: end;">Purchase Qty</th><th style="text-align: end;">Product Total</th></tr></thead>';
         tableHtml += '<tbody>';
 
         var grandTotal = 0;
@@ -2162,13 +2162,13 @@ function getProductsData() {
             tableHtml += '<td>' + slNo + '</td>';
             tableHtml += '<td>' + productName + '</td>';
             tableHtml += '<td>' + category + '</td>';
-            tableHtml += '<td>' + purchaseQty + '</td>';
-            tableHtml += '<td>₹' + productTotal.toFixed(2) + '</td>';
+            tableHtml += '<td style="text-align: end;">' + purchaseQty + '</td>';
+            tableHtml += '<td style="text-align: end;">₹' + productTotal.toFixed(2) + '</td>';
             tableHtml += '</tr>';
         });
 
         tableHtml += '</tbody>';
-        tableHtml += '<tfoot><tr><td colspan="4">Grand Total</td><td>₹' + grandTotal.toFixed(2) + '</td></tr></tfoot>';
+        tableHtml += '<tfoot><tr><td colspan="4">Grand Total</td><td style="text-align: end;">₹' + grandTotal.toFixed(2) + '</td></tr></tfoot>';
         tableHtml += '</table>';
 
         document.getElementById('preview').innerHTML = tableHtml;
@@ -2373,7 +2373,7 @@ function getProductsData() {
                 for (let j = 1; j <= parseInt(category1Product[purchaseQtyLensKey]); j++) {
                     var option = document.createElement('option');
                     option.value = category1Product[productNameLensKey] + "--" + j + "--" + productLensKey + "--" + category1Product.product + "--" + productNameLensKey; // Set the actual value based on your data
-                    option.textContent = category1Product[productNameLensKey] + "-" + j; // Set the actual text based on your data
+                    option.textContent = category1Product[productNameLensKey]; // Set the actual text based on your data
                     dropdown.appendChild(option);
                 }
             });
@@ -2405,7 +2405,6 @@ function handleDropdownChange(productsArray,event) {
     });
 
     linkedItemSelects.forEach(currentDropdown => {
-        if (currentDropdown !== event.target) {
             Array.from(currentDropdown.options).forEach(option => {
                  if (option.value !== 'NA' && selectedOptions.includes(option.value)) {
                     // Hide the option
@@ -2415,7 +2414,6 @@ function handleDropdownChange(productsArray,event) {
                     option.style.display = '';
                 }
             });
-        }
     });
 
     linkedItemSelects.forEach((select, index) => {
