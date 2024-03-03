@@ -150,12 +150,25 @@ def labJobDetails(request, jobId):
     else:
         return redirect('lab_login')
 
-def viewJobAuthenticityCard(request, saleId):
+
+def viewJobAuthenticityCard(request, saleId, frame):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
         job_detail, status_code = lab_task_controller.get_sale_item_details(saleId, assigned_lab)
-        return render(request, 'Tasks/authenticityCar.html', {"order_detail": job_detail['orders_details']})
+        return render(request, 'Tasks/authenticityCar.html', {"order_detail": job_detail['orders_details'],
+                                                              "frame": frame})
+    else:
+        return redirect('lab_login')
+
+
+def viewJobItemDetails(request, saleId):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        job_detail, status_code = lab_task_controller.get_sale_item_details(saleId, assigned_lab)
+        return render(request, 'Tasks/jobItemDetails.html', {"job_item_detail": job_detail['orders_details'],
+                                                             "frame_list": job_detail['frame_list']})
     else:
         return redirect('lab_login')
 

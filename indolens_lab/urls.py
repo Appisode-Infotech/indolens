@@ -24,7 +24,9 @@ urlpatterns = [
 
     path('view_products/productId=<int:productId>', viewLabCentralInventoryProducts,
          name='view_lab_central_inventory_products'),
-    path('job_authenticity_card/saleId=<str:saleId>', viewJobAuthenticityCard,
+    path('job_item_details/saleId=<str:saleId>', viewJobItemDetails,
+         name='job_item_details'),
+    path('job_authenticity_card/saleId=<str:saleId>/frame=<str:frame>', viewJobAuthenticityCard,
          name='job_authenticity_card'),
 
 ]

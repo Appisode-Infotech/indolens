@@ -124,6 +124,7 @@ def get_lab_job_details(orderId, assigned_lab):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def get_sale_item_details(saleId, assigned_lab):
     try:
         with connection.cursor() as cursor:
@@ -166,10 +167,29 @@ def get_sale_item_details(saleId, assigned_lab):
                 """
             cursor.execute(get_order_details_query)
             orders_details = cursor.fetchall()
+            sale_item_details = get_order_detail(orders_details)
+            print(sale_item_details[0]['linked_item'])
+            print(tuple(sale_item_details[0]['linked_item']))
 
+            all_frame_details = []
+
+            for product_id in sale_item_details[0]['linked_item']:
+                get_frame_details_query = f"""
+                    SELECT product_id, product_name
+                    FROM central_inventory
+                    WHERE product_id = {product_id}
+                """
+
+                cursor.execute(get_frame_details_query)
+                frame_details = cursor.fetchone()
+                all_frame_details.append(frame_details)
+
+            frames_list = [{"frame_id": frame_id, "frame_name": frame_name} for frame_id, frame_name in all_frame_details]
+            print(frames_list)
             return {
                 "status": True,
                 "orders_details": get_order_detail(orders_details),
+                "frame_list": frames_list
             }, 200
 
     except pymysql.Error as e:
