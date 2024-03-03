@@ -171,8 +171,7 @@
                                         <td class="price align-middle text-900 fw-semi-bold text-end">₹
                                             {{order.product_total_cost}}
                                         </td>
-                                    </tr>
-                                    {% if order.category_id == 2 or order.category_id == 3 %}
+                                        {% if order.category_id == 2 or order.category_id == 3 %}
                                         <td class="align-middle text-end white-space-nowrap pe-0">
                                             <div class="font-sans-serif btn-reveal-trigger position-static" >
                                                 <button aria-expanded="false"
@@ -199,6 +198,8 @@
                                         </td>
                                         {% endif %}
                                     {% endfor %}
+                                    </tr>
+
 
                                     </tbody>
                                 </table>
