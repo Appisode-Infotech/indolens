@@ -168,8 +168,6 @@ def get_sale_item_details(saleId, assigned_lab):
             cursor.execute(get_order_details_query)
             orders_details = cursor.fetchall()
             sale_item_details = get_order_detail(orders_details)
-            print(sale_item_details[0]['linked_item'])
-            print(tuple(sale_item_details[0]['linked_item']))
 
             all_frame_details = []
 

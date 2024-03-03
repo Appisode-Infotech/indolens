@@ -29,4 +29,5 @@ urlpatterns = [
     path('job_authenticity_card/saleId=<str:saleId>/frame=<str:frame>', viewJobAuthenticityCard,
          name='job_authenticity_card'),
 
+
 ]
