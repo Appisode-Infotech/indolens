@@ -28,6 +28,8 @@ urlpatterns = [
          name='job_item_details'),
     path('job_authenticity_card/saleId=<str:saleId>/frame=<str:frame>', viewJobAuthenticityCard,
          name='job_authenticity_card'),
+    path('contact_Lens_power_card/saleId=<str:saleId>', contactLensPowerCard,
+         name='contact_Lens_power_card'),
 
 
 ]

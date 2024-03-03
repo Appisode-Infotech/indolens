@@ -2441,7 +2441,17 @@ def viewJobItemDetails(request, saleId):
                       {"job_item_detail": job_detail['orders_details'],
                        "frame_list": job_detail['frame_list']})
     else:
-        return redirect('lab_login')
+        return redirect('login')
+
+
+def labcontactLensPowerCard(request, saleId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get(
+            'is_admin_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        return render(request, 'indolens_admin/labs/contactLensPowerCard.html',
+                      {"order_detail": job_detail['orders_details']})
+    else:
+        return redirect('login')
 
 
 def manageAuthenticityCard(request, saleId, frame):

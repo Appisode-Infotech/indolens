@@ -311,6 +311,8 @@ urlpatterns = [
     path('lab_job_item_details/saleId=<str:saleId>', viewJobItemDetails,
              name='lab_job_item_details'),
     path('manage_authenticity_card/saleId=<str:saleId>/frame=<str:frame>', manageAuthenticityCard, name='manage_authenticity_card'),
+    path('lab_contact_Lens_power_card/saleId=<str:saleId>', labcontactLensPowerCard,
+             name='lab_contact_Lens_power_card'),
     path('manage_authenticity_card/create_authenticity_card/', createAuthenticityCard, name='create_authenticity_card'),
     # marketing
     path('manage_tasks/', viewOwnStore, name='manage_tasks'),

@@ -161,6 +161,15 @@ def viewJobAuthenticityCard(request, saleId, frame):
     else:
         return redirect('lab_login')
 
+def contactLensPowerCard(request, saleId):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        job_detail, status_code = lab_task_controller.get_sale_item_details(saleId, assigned_lab)
+        return render(request, 'Tasks/contactLensPowerCard.html', {"order_detail": job_detail['orders_details']})
+    else:
+        return redirect('lab_login')
+
 
 def viewJobItemDetails(request, saleId):
     assigned_lab = getAssignedLab(request)

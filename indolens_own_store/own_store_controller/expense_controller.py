@@ -117,9 +117,6 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                 if new_data.get('product_category_id') == '2':
                     discount_percentage = new_data.get('discount_percentage')
                     linked_items = [int(x) for x in new_data.get('linkedFrameIds')]
-                    print("linked item for lense")
-                    print(linked_items)
-                    print(type(linked_items))
                     if discount_percentage == "":
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
@@ -158,7 +155,9 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "" or None:
                         discount_percentage = 0
+                    print(new_data)
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
+                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     insert_contact_len_sales_query = f""" INSERT INTO `sales_order`
