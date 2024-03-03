@@ -128,6 +128,9 @@
                                         <th class="sort align-middle text-end" data-sort="total" scope="col"
                                             style="width:250px; min-width:100px;">TOTAL
                                         </th>
+                                        <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                            style="width:250px; min-width:100px;">ACTION
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody class="list" id="order-table-body">
@@ -155,6 +158,34 @@
                                         </td>
                                         <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4 text-end">₹
                                             {{order.product_total_cost}}
+                                        </td>
+                                        <td class="align-middle  white-space-nowrap pe-0 action text-end">
+                                            {% if order.category_id == 2 or order.category_id == 3 %}
+                                            <div class="font-sans-serif btn-reveal-trigger position-static">
+                                                <button aria-expanded="false"
+                                                        aria-haspopup="true"
+                                                        class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                        data-boundary="window"
+                                                        data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                    <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                    {% if order.category_id == 2 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button"
+                                                       href="{% url 'own_store_job_item_details' order.sale_item_id %}">
+                                                        Line Item Details</a>
+                                                    {% elif order.category_id == 3 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button" target="_blank"
+                                                       href="{% url 'own_store_contact_lens_power_card' order.sale_item_id %}">
+                                                        Contact Lens Power</a>
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
                                         </td>
                                     </tr>
                                     {% endfor %}

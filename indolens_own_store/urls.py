@@ -61,6 +61,15 @@ urlpatterns = [
     path('get_eye_test/', getOwnStoreEyeTest, name='get_eye_test'),
     path('get_eye_test_by_id/testId=<int:testId>', getOwnStoreEyeTestById, name='get_eye_test_by_id'),
     path('print_eye_test/testId=<int:testId>', ownStoreEyeTestPrint, name='own_store_eye_test_print'),
+
+    path('own_store_contact_lens_power_card/saleId=<str:saleId>', ownStoreContactLensPowerCard,
+             name='own_store_contact_lens_power_card'),
+    path('own_store_lens_power_card/saleId=<str:saleId>', ownStoreLensPowerCard,
+             name='own_store_lens_power_card'),
+    path('own_store_job_item_details/saleId=<str:saleId>', viewJobItemDetails,
+             name='own_store_job_item_details'),
+    path('own_store_job_authenticity_card/saleId=<str:saleId>/frame=<str:frame>', viewJobAuthenticityCard,
+             name='own_store_job_authenticity_card'),
 ]
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
