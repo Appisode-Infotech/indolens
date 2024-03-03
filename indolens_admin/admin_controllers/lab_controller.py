@@ -338,16 +338,17 @@ def get_lab_job_authenticity_card(saleId):
 
             all_frame_details = []
 
-            for product_id in sale_item_details[0]['linked_item']:
-                get_frame_details_query = f"""
-                                SELECT product_id, product_name
-                                FROM central_inventory
-                                WHERE product_id = {product_id}
-                            """
+            if sale_item_details[0]['linked_item'] != 0:
+                for product_id in sale_item_details[0]['linked_item']:
+                    get_frame_details_query = f"""
+                                    SELECT product_id, product_name
+                                    FROM central_inventory
+                                    WHERE product_id = {product_id}
+                                """
 
-                cursor.execute(get_frame_details_query)
-                frame_details = cursor.fetchone()
-                all_frame_details.append(frame_details)
+                    cursor.execute(get_frame_details_query)
+                    frame_details = cursor.fetchone()
+                    all_frame_details.append(frame_details)
 
             frames_list = [{"frame_id": frame_id, "frame_name": frame_name} for frame_id, frame_name in
                            all_frame_details]
