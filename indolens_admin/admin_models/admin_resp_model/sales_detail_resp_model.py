@@ -40,6 +40,7 @@ class SalesOrder:
         # Parse product images from JSON string to a list
         self.product_images = json.loads(self.product_images) if self.product_images else []
         self.power_attribute = json.loads(self.power_attribute) if self.power_attribute else []
+        self.linked_item = json.loads(self.linked_item) if self.linked_item else []
 
     def to_dict(self):
         return {

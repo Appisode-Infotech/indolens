@@ -116,6 +116,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
                 if new_data.get('product_category_id') == '2':
                     discount_percentage = new_data.get('discount_percentage')
+                    linked_items = [int(x) for x in new_data.get('linkedFrameIds')]
                     if discount_percentage == "":
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
@@ -129,7 +130,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             `order_status`, `payment_status`, `delivery_status`, `payment_mode`,
                                             `amount_paid`, `estimated_delivery_date`, `created_by_store`,
                                             `created_by`, `created_on`, `updated_by`, `updated_on`, 
-                                            `created_by_store_type`, sales_note)
+                                            `created_by_store_type`, sales_note, linked_item)
                                             VALUES
                                             ('{order_id}', {new_data.get('product')}, 
                                             '{new_data.get('product_hsn')}', 
@@ -140,7 +141,8 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             {customer_id}, 1, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                             '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
-                                            '{getIndianTime()}', 1, '{billingDetailsData.get('saleNote')}') """
+                                            '{getIndianTime()}', 1, '{billingDetailsData.get('saleNote')}', 
+                                            '{json.dumps(linked_items)}') """
 
                     cursor.execute(insert_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
@@ -153,7 +155,9 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     discount_percentage = new_data.get('discount_percentage')
                     if discount_percentage == "" or None:
                         discount_percentage = 0
+                    print(new_data)
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
+                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     insert_contact_len_sales_query = f""" INSERT INTO `sales_order`

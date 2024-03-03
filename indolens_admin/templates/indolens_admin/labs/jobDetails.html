@@ -114,6 +114,9 @@
                                         <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
                                             style="width:250px;">BRAND
                                         </th>
+                                        <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
+                                            style="width:250px;">ACTION
+                                        </th>
                                     </tr>
                                     </thead>
                                     <tbody class="list" id="order-table-body">
@@ -192,10 +195,17 @@
                                                         type="button">
                                                     <span class="fas fa-ellipsis-h fs--2"></span></button>
                                                 <div class="dropdown-menu dropdown-menu-end py-2">
+                                                    {% if order.category_id == 2 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button"
+                                                       href="{% url 'lab_job_item_details' order.sale_item_id %}">
+                                                        Line Item Details</a>
+                                                    {% elif order.category_id == 3 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button" target="_blank"
-                                                       href="{% url 'manage_authenticity_card' order.sale_item_id %}">
-                                                        Authenticity Card</a>
+                                                       href="{% url 'lab_contact_Lens_power_card' order.sale_item_id %}">
+                                                        Contact Lens Power</a>
+                                                    {% endif %}
                                                 </div>
                                             </div>
                                         </td>

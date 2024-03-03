@@ -14,6 +14,8 @@
 
 
 
+
+
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -66,6 +68,8 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
+
     </script>
     <style>
     @media print {
@@ -100,6 +104,8 @@
             page-break-after: auto;
         }
 
+
+
     </style>
 </head>
 
@@ -114,7 +120,7 @@
         <div class="content">
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form >
+                    <form>
                         {% csrf_token %}
                         <div class="tab-pane" role="tabpanel"
                              aria-labelledby="bootstrap-wizard-validation-tab2"
@@ -147,165 +153,83 @@
 
                         <div class="row mb-3 mt-3 mb-3">
                             <div class="col-12">
-                                {% if order_detail.0.category_id == 2 %}
-                                <table class="table mb-0 border-top border-200">
-                                    <thead>
-                                    <tr>
-                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
-                                            scope="col"></th>
-                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
-                                            scope="col">SPH
-                                        </th>
-                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
-                                            scope="col">CYL
-                                        </th>
-                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
-                                            scope="col">AXIS
-                                        </th>
-                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
-                                            scope="col">ADD
-                                        </th>
-                                        <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
-                                            scope="col">IPD
-                                        </th>
-                                    </tr>
-                                    </thead>
-                                    {% if order_detail.0.power_attribute.stock_type == 'stock' %}
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">R</th>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensSphStock}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensCylStock}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAxisStock}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAddStock}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensPdStock}}"/>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">L</th>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensSphStock}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensCylStock}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAxisStock}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-3">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAddStock}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-3">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensPdStock}}"/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                    {% else %}
-                                    <tbody>
-                                    <tr>
-                                        <th scope="row">R</th>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensSphRx}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensCylRx}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAxisRx}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAddRx}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensPdRx}}"/>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">L</th>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensSphRx}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensCylRx}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAxisRx}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-3">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAddRx}}"/>
-                                        </td>
-                                        <td class="col-6 col-lg-3">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensPdRx}}"/>
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                    {% endif %}
-                                </table>
+                                {% if order_detail.0.category_id == 3 %}
+                                <div class="row mb-3 cl_rx_power_card" id="cl_rx_power_card[${productCardCount}]">
+                                    <div class="col-12">
+                                        <table class="table">
+                                            <thead>
+                                            <tr>
+                                                <th scope="col">Power</th>
+                                                <th scope="col">BC</th>
+                                                <th scope="col">DIA</th>
+                                                <th scope="col">CYLINDER</th>
+                                                <th scope="col">AXIS</th>
+                                            </tr>
+                                            </thead>
+                                            {% for lens in order_detail %}
+                                            <tbody>
+                                            <tr>
+                                                <td class="col-auto col-lg-2">
+                                                    <input readonly
+                                                           class="form-control" value="{{lens.power_attribute.power}}"/>
+                                                </td>
+                                                <td class="col-auto col-lg-2">
+                                                    <input readonly
+                                                           class="form-control" value="{{lens.power_attribute.bc}}"/>
+                                                </td>
+                                                <td class="col-auto col-lg-2">
+                                                    <input readonly
+                                                           class="form-control" value="{{lens.power_attribute.dia}}"/>
+                                                </td>
+                                                <td class="col-auto col-lg-2">
+                                                    <input readonly
+                                                           class="form-control" value="{{lens.power_attribute.cyl}}"/>
+                                                </td>
+                                                <td class="col-auto col-lg-2">
+                                                    <input readonly
+                                                           class="form-control" value="{{lens.power_attribute.axis}}"/>
+                                                </td>
+                                            </tr>
+                                            </tbody>
+                                            {% endfor %}
+                                        </table>
+                                    </div>
+                                </div>
                                 {% endif %}
 
 
                                 <div class="row g-3 mt-3 mb-3">
                                     <div class="mb2 col-12">
-                                        <h5 class="mb-3">Frame</h5>
-                                        <input disabled class="form-control" style="color: black;"
-                                               type="text" value="{{frame}}"/>
-                                    </div>
-                                    <div class="mb2 col-12">
                                         <h5 class="mb-3">Lens</h5>
                                         <input disabled class="form-control" style="color: black;"
                                                type="text" value="{{order_detail.0.product_name}}"/>
                                     </div>
+
                                 </div>
                                 <div class="row g-3 mt-3 mb-3">
                                     <div class="mb2 col-6">
                                         <h5 class="mb-3">Lens Type</h5>
                                         <input disabled class="form-control" style="color: black;"
-                                               type="text" value="{{order_detail.0.power_attribute.lens_type}}"/>
+                                               type="text" value="{{order_detail.0.power_attribute.contact_lens_type}}"/>
                                     </div>
                                     <div class="mb2 col-6">
                                         <h5 class="mb-3">Stock Type</h5>
                                         <input disabled class="form-control" style="color: black;"
                                                type="text" value="{{order_detail.0.power_attribute.stock_type}}"/>
                                     </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Contact Lens Disposablity</h5>
+                                        <input disabled class="form-control" style="color: black;"
+                                               type="text" value="{{order_detail.0.contact_lens_disposability}}"/>
+                                    </div>
                                 </div>
                             </div>
 
                             <div>
-                            <button class="btn btn-phoenix-secondary" onclick="window.print()"><span
-                                    class="fa-solid fa-print me-sm-2"></span><span class="d-none d-sm-inline-block">Print</span>
-                            </button>
-                        </div>
+                                <button class="btn btn-phoenix-secondary" onclick="window.print()"><span
+                                        class="fa-solid fa-print me-sm-2"></span><span class="d-none d-sm-inline-block">Print</span>
+                                </button>
+                            </div>
                         </div>
                     </form>
                 </div>
@@ -379,5 +303,7 @@ function updateCustomerFields(selectCustomerField) {
         customerDataTextarea.value = '';
     }
 }
+
+
 </script>
 </html>
