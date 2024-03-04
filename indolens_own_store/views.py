@@ -59,7 +59,9 @@ def resetPassword(request, code):
     if request.method == 'POST':
         response, status_code = own_store_auth_controller.update_store_employee_password(request.POST['password'],
                                                                                          request.POST['email'])
-        return render(request, 'auth/own_store_reset_password.html', {"code": code})
+        print(response)
+        print(status_code)
+        return render(request, 'auth/own_store_reset_password.html',  {"code": code, "message": response['message']})
     else:
         response, status_code = own_store_auth_controller.check_link_validity(code)
         return render(request, 'auth/own_store_reset_password.html',

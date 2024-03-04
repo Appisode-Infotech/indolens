@@ -212,13 +212,14 @@ def update_store_employee_password(password, email):
 
             login_query = f"""UPDATE reset_password SET status = 1 WHERE email = '{email}'"""
             cursor.execute(login_query)
-
             return {
                 "status": True,
                 "message": "Password changed successfully. Please login using new credentials"
             }, 200
 
     except pymysql.Error as e:
+        print(e)
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
+        print(e)
         return {"status": False, "message": str(e)}, 301
