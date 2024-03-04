@@ -196,7 +196,7 @@ def order_status_change(orderID, orderStatus):
         "2": "Processing",
         "3": "Ready",
         "4": "Dispatched to store",
-        "5": "Arrived at store",
+        "5": "Ready in store",
         "6": "Delivered to customer",
         "7": "Cancelled"
     }
