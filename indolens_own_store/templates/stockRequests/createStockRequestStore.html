@@ -79,7 +79,7 @@
         <div class="content">
 
             <div class="col-12 col-xxl-6">
-                <div data-list='{"valueNames":["SlNo","product","price","category","brand","store","inStock","publishedOn"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["SlNo","prodId","product","price","category","brand","store","inStock","publishedOn"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -110,6 +110,9 @@
                                 <th class="sort white-space-nowrap align-middle pe-3" data-sort="SlNo" scope="col"
                                     style="width:5%;">SL NO
                                 </th>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="prodId" scope="col"
+                                    style="width:5%;">PRODUCT ID
+                                </th>
                                 <th class="sort white-space-nowrap align-middle fs--2" scope="col"
                                     style="width:110px;"></th>
                                 <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
@@ -128,7 +131,7 @@
                                     style="width:150px;">STORE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="inStock" scope="col"
-                                    style="width:250px;">STORE STOCK
+                                    style="width:250px;">MY STOCK
                                 </th>
                                 <th class="sort align-middle ps-4" data-sort="publishedOn" scope="col"
                                     style="width:50px;">PUBLISHED ON
@@ -142,6 +145,7 @@
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
 
                                 <td class="align-middle white-space-nowrap py-0 SlNo"></td>
+                                <td class="align-middle white-space-nowrap py-0 prodId">PID{{ product.product_id }}</td>
 
                                 <td class="align-middle white-space-nowrap py-0">
                                     <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">

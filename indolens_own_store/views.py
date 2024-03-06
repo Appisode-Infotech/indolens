@@ -328,6 +328,7 @@ def createStockRequestStore(request):
         else:
             response, status_code = store_inventory_controller.get_all_central_inventory_products(
                 assigned_store)
+            print(response)
             return render(request, 'stockRequests/createStockRequestStore.html',
                           {"product_list": response['product_list']})
     else:
