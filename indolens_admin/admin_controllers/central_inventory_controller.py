@@ -728,8 +728,6 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                                                         WHERE product_id = {product_details[3]}"""
                         cursor.execute(update_central_Inventory)
 
-
-
                         return {
                             "status": True,
                             "message": "Status Changed"
@@ -750,7 +748,6 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                         "status": True,
                         "message": "Status Changed"
                     }, 200
-
 
             else:
                 fetch_inventory_product_query = f"""SELECT product_quantity FROM store_inventory 
@@ -779,10 +776,9 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                         }, 200
 
                     else:
-                        print("yes7")
                         return {
                             "status": False,
-                            "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in inventory"
+                            "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in store"
                         }, 200
                 else:
                     update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}'
