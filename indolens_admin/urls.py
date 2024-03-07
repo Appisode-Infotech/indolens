@@ -443,6 +443,9 @@ urlpatterns = [
 
     path('manage_central_inventory_products/add_product_image/productId=<int:productId>',
          addProductImage, name='add_product_image'),
+
+    re_path('manage_central_inventory_products/print_qr_tag/qrUrl=(?P<qrUrl>.+?)/price=(?P<price>[0-9]+)/pId=(?P<pId>[0-9]+)',
+         print_qr_tag, name='print_qr_tag'),
     path('manage_own_store_employee/add_own_store_employee_image/employeeId=<int:employeeId>',
          addOwnStoreEmployeeImage, name='add_own_store_employee_image'),
     path('manage_franchise_store_employee/add_franchise_store_employee_image/employeeId=<int:employeeId>',

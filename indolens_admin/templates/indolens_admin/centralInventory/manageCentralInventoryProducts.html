@@ -265,6 +265,11 @@
                                                 <a class="dropdown-item"
                                                    href="{% url 'update_product_images' product.product_id %}">Update
                                                     Product Images</a>
+
+                                                <a class="dropdown-item"
+                                                   target="_blank"
+                                                   href="{% url 'print_qr_tag' product.product_qr_code product.sale_price product.product_id %}">Print QR Tags</a>
+
                                                 <div class="dropdown-divider"></div>
 
                                                 {% if product.status == 0 %}

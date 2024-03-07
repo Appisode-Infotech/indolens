@@ -3337,6 +3337,15 @@ def addProductImage(request, productId):
         return redirect('login')
 
 
+def print_qr_tag(request, qrUrl, price, pId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        print('hello')
+        return render(request, 'indolens_admin/centralInventory/qr_tag_print.html', {'qrUrl': qrUrl, "price" : price, "pId" : pId})
+    else:
+        return redirect('login')
+
+
+
 def addOwnStoreEmployeeImage(request, employeeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
