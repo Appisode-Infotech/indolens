@@ -26,7 +26,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 CORS_ORIGIN_ALLOW_ALL = True
-
+CSRF_TRUSTED_ORIGINS = ['https://django.vcnrgroup.com']
 # Application definition
 
 INSTALLED_APPS = [
@@ -88,8 +88,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'indolens_db',
-        'USER': 'root',
-        'PASSWORD': '',
+        'USER': 'indolensadmin',
+        'PASSWORD': 'Indolens@#1234',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -131,7 +131,6 @@ STATIC_URL = 'static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
 ]
-
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
