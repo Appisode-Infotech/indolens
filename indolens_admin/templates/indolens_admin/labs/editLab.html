@@ -220,93 +220,82 @@
 <script async
         defer
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC6O2CG9zBAksJH4SCgCZlbx3XRWVwzY1E&libraries=places&callback=initMap"></script>
+
 <script>
-        var map, marker, store_lat_lng, searchInput;
+    var map, marker, store_lat_lng, searchInput;
 
-        function initMap() {
-            var mapOptions = {
-                zoom: 12,
-            };
+    function initMap() {
+        var mapOptions = {
+            zoom: 16,
+        };
 
-            var mapDiv = document.getElementById('map');
-            map = new google.maps.Map(mapDiv, mapOptions);
+        var mapDiv = document.getElementById('map');
+        map = new google.maps.Map(mapDiv, mapOptions);
 
-            store_lat_lng = document.getElementById('store_lat_lng');
-            searchInput = document.getElementById('searchInput');
+        store_lat_lng = document.getElementById('store_lat_lng');
+        searchInput = document.getElementById('searchInput');
 
-             // Set the default center to Bangalore
-             var defaultCenter = {
-                 lat: 12.9716,
-                 lng: 77.5946
-             };
-             map.setCenter(defaultCenter);
-            // Try to get the user's current position
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(function(position) {
-                    var userLatLng = {
-                        lat: position.coords.latitude,
-                        lng: position.coords.longitude
-                    };
+        // Set the default center based on store_lat and store_lng
+        var defaultCenter = {
+            lat: parseFloat({{ lab_data.0.lab_lat}}),
+            lng: parseFloat({{ lab_data.0.lab_lng}})
+        };
+        map.setCenter(defaultCenter);
 
-                    map.setCenter(userLatLng);
-                    marker = new google.maps.Marker({
-                        position: userLatLng,
-                        map: map,
-                        draggable: true,
-                        title: 'Drag me to set the location',
-                    });
 
-                    google.maps.event.addListener(marker, 'dragend', function(event) {
-                        var lat = event.latLng.lat();
-                        var lng = event.latLng.lng();
-                        store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
-                    });
 
-                    store_lat_lng.value = 'Latitude: ' + userLatLng.lat + ', Longitude: ' + userLatLng.lng;
-                });
-            }
+        // Create a marker for the default location
+        marker = new google.maps.Marker({
+            position: defaultCenter,
+            map: map,
+            draggable: true,
+            title: 'Drag me to set the location',
+        });
 
-            // Initialize Google Places Autocomplete for search
-            var autocomplete = new google.maps.places.Autocomplete(searchInput);
-            autocomplete.bindTo('bounds', map);
+        google.maps.event.addListener(marker, 'dragend', function(event) {
+            var lat = event.latLng.lat();
+            var lng = event.latLng.lng();
+            store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
+        });
 
-            // Set listener to update map and marker on autocomplete selection
-            autocomplete.addListener('place_changed', function() {
-                var place = autocomplete.getPlace();
-                if (!place.geometry) {
-                    return;
-                }
+        store_lat_lng.value = 'Latitude: ' + defaultCenter.lat + ', Longitude: ' + defaultCenter.lng;
 
-                map.setCenter(place.geometry.location);
+        // Try to get the user's current position
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(function(position) {
+                var userLatLng = {
+                    lat: position.coords.latitude,
+                    lng: position.coords.longitude
+                };
 
-                if (!marker) {
-                    marker = new google.maps.Marker({
-                        position: place.geometry.location,
-                        map: map,
-                        draggable: true,
-                        title: 'Drag me to set the location',
-                    });
-                    google.maps.event.addListener(marker, 'dragend', function(event) {
-                        var lat = event.latLng.lat();
-                        var lng = event.latLng.lng();
-                        store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
-                    });
-                } else {
-                    marker.setPosition(place.geometry.location);
-                }
+                map.setCenter(userLatLng);
+                marker.setPosition(userLatLng);
 
-                var lat = marker.getPosition().lat();
-                var lng = marker.getPosition().lng();
-                store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
+                store_lat_lng.value = 'Latitude: ' + userLatLng.lat + ', Longitude: ' + userLatLng.lng;
             });
         }
 
+        // Initialize Google Places Autocomplete for search
+        var autocomplete = new google.maps.places.Autocomplete(searchInput);
+        autocomplete.bindTo('bounds', map);
 
+        // Set listener to update map and marker on autocomplete selection
+        autocomplete.addListener('place_changed', function() {
+            var place = autocomplete.getPlace();
+            if (!place.geometry) {
+                return;
+            }
 
+            map.setCenter(place.geometry.location);
+            marker.setPosition(place.geometry.location);
 
-
-
+            var lat = marker.getPosition().lat();
+            var lng = marker.getPosition().lng();
+            store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
+        });
+    }
 </script>
+
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
 
 </body>

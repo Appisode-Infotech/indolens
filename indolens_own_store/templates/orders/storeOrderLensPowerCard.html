@@ -157,6 +157,7 @@
                                         <table class="table">
                                             <thead>
                                             <tr>
+                                                <th scope="col">EYE</th>
                                                 <th scope="col">Power</th>
                                                 <th scope="col">BC</th>
                                                 <th scope="col">DIA</th>
@@ -167,6 +168,10 @@
                                             {% for lens in order_detail %}
                                             <tbody>
                                             <tr>
+                                                <td class="col-auto col-lg-2">
+                                                    <input readonly
+                                                           class="form-control" value="{{lens.power_attribute.eye}}"/>
+                                                </td>
                                                 <td class="col-auto col-lg-2">
                                                     <input readonly
                                                            class="form-control" value="{{lens.power_attribute.power}}"/>

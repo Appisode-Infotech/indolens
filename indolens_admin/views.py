@@ -239,6 +239,7 @@ def editFranchiseStore(request, franchiseStoreId):
 
         else:
             response, status_code = franchise_store_controller.get_franchise_store_by_id(franchiseStoreId)
+            print(response)
             return render(request, 'indolens_admin/franchiseStores/editFranchiseStore.html',
                           {"franchise_store": response['franchise_store'], "id": franchiseStoreId})
     else:

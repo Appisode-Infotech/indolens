@@ -1356,6 +1356,7 @@ function addRxContactLensContainer() {
             <table class="table">
                 <thead>
                 <tr>
+                    <th scope="col">Eye</th>
                     <th scope="col">Power</th>
                     <th scope="col">BC</th>
                     <th scope="col">DIA</th>
@@ -1365,6 +1366,16 @@ function addRxContactLensContainer() {
                 </thead>
                 <tbody>
                 <tr>
+                    <td class="col-auto col-lg-2">
+                            <select required name="cl_eye[${productCardCount}]" class="form-select" aria-label="Default select example">
+                                <option value="">Select Eye</option>
+                                <option value="Right">Right</option>
+                                <option value="Left">Left</option>
+                                <option value="Both">Both</option>
+                            </select>
+                                        <div class="invalid-feedback">This field is required.
+
+                        </td>
                     <td class="col-auto col-lg-2">
                         <input name="cl_power[${productCardCount}]"
                                class="form-control"

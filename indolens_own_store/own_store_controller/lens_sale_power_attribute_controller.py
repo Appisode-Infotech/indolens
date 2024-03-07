@@ -42,7 +42,8 @@ def get_power_attribute(data):
             'bc': data.get('cl_bc', ''),
             'dia': data.get('cl_dia', ''),
             'cyl': data.get('cl_cylinder', ''),
-            'axis': data.get('cl_axis', '')
+            'axis': data.get('cl_axis', ''),
+            'eye': data.get('cl_eye', '')
         }
         return power_attributes
 
