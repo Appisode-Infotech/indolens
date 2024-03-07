@@ -469,7 +469,7 @@ def get_all_moved_stocks_list(status):
                                         WHEN rp.store_type = 1 THEN os.store_name
                                         ELSE fstore.store_name
                                     END AS store_name,
-                                    from_store.store_name
+                                    from_store.store_name, si.product_quantity
                                     FROM request_products As rp
                                     LEFT JOIN central_inventory AS ci ON ci.product_id = rp.product_id
                                     LEFT JOIN admin AS creator ON rp.created_by = creator.admin_id
@@ -484,6 +484,7 @@ def get_all_moved_stocks_list(status):
                                     LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
                                     LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
                                     LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
+                                    LEFT JOIN store_inventory si ON si.product_id = rp.product_id AND si.store_id = rp.request_to_store_id AND si.store_type = 1
                                     WHERE rp.request_status LIKE '{status}' 
                                     ORDER BY rp.request_products_id DESC"""
 
@@ -508,7 +509,7 @@ def get_all_stock_requests(status):
                                         WHEN rp.store_type = 1 THEN os.store_name
                                         ELSE fstore.store_name
                                     END AS store_name,
-                                    from_store.store_name
+                                    from_store.store_name, si.product_quantity
                                     FROM request_products As rp
                                     LEFT JOIN central_inventory AS ci ON ci.product_id = rp.product_id
                                     LEFT JOIN admin AS creator ON rp.created_by = creator.admin_id
@@ -523,6 +524,7 @@ def get_all_stock_requests(status):
                                     LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
                                     LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
                                     LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
+                                    LEFT JOIN store_inventory si ON si.product_id = rp.product_id AND si.store_id = rp.request_to_store_id AND si.store_type = 1
                                     WHERE rp.request_status LIKE '{status}' AND is_requested = 1
                                     ORDER BY rp.request_products_id DESC"""
 

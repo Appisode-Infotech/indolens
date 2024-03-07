@@ -13,9 +13,11 @@ class Product:
             self.product_id, self.product_name, self.product_description, self.product_images, self.product_qr_code,
             self.category_id, self.brand_id, self.material_id, self.frame_type_id, self.frame_shape_id,
             self.color_id, self.unit_id, self.origin, self.cost_price, self.sale_price, self.model_number,
-            self.hsn, self.power_attribute, self.franchise_sale_price, self.product_quantity, self.product_gst, self.status, self.discount, self.created_on, self.created_by, self.last_updated_on,
+            self.hsn, self.power_attribute, self.franchise_sale_price, self.product_quantity, self.product_gst,
+            self.status, self.discount, self.created_on, self.created_by, self.last_updated_on,
             self.last_updated_by, self.creator_name, self.updater_name, self.category_name, self.material_name,
-            self.frame_type_name, self.shape_name, self.color_name, self.unit_name, self.brand_name, self.store_name
+            self.frame_type_name, self.shape_name, self.color_name, self.unit_name, self.brand_name, self.store_name,
+            self.from_store_name
 
         ) = values
 
@@ -80,6 +82,7 @@ class Product:
             'unit_name': self.unit_name,
             'brand_name': self.brand_name,
             'store_name': self.store_name,
+            'from_store_name': self.from_store_name,
         }
 
 
