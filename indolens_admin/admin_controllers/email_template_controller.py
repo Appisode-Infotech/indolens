@@ -9,7 +9,7 @@ ist = pytz.timezone('Asia/Kolkata')
 
 def getIndianTime():
     today = datetime.datetime.now(ist)
-    formatted_date = today.strftime('%d/%m/%Y')
+    formatted_date = today.strftime('%d/%m/%Y %I:%M %p')
     return formatted_date
 
 # EMPLOYEE CREATION EMAIL
