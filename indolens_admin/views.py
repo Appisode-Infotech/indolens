@@ -3733,11 +3733,9 @@ def indolensAdminSetting(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             response, status_code = admin_setting_controller.admin_setting(request.POST)
-            print(response)
             return redirect('indolens_admin_setting')
         else:
             response, status_code = admin_setting_controller.get_admin_setting()
-            print(response)
             return render(request, 'indolens_admin/settings/IndolensAdminSetting.html',
                           {"admin_setting": response['admin_setting']})
 

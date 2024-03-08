@@ -91,6 +91,7 @@ def get_emailjs_attribute():
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 def get_base_url():
     try:
         with connection.cursor() as cursor:
@@ -98,6 +99,19 @@ def get_base_url():
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
             return admin_check[0] if admin_check is not None else {}
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def get_support_data():
+    try:
+        with connection.cursor() as cursor:
+            admin_setting_check = f""" SELECT support_attributes FROM admin_setting """
+            cursor.execute(admin_setting_check)
+            admin_check = cursor.fetchone()
+            return json.loads(admin_check[0]) if admin_check is not None else {}
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

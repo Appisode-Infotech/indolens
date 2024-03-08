@@ -1,16 +1,21 @@
 import datetime
 import pytz
 
-from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
+from indolens_admin.admin_controllers.admin_setting_controller import get_base_url, get_support_data
 
 base_url = get_base_url()
 
 ist = pytz.timezone('Asia/Kolkata')
 
+
 def getIndianTime():
     today = datetime.datetime.now(ist)
     formatted_date = today.strftime('%d/%m/%Y %I:%M %p')
     return formatted_date
+
+
+support_data = get_support_data()
+
 
 # EMPLOYEE CREATION EMAIL
 def get_employee_creation_email_subject(name):
@@ -35,7 +40,11 @@ Click on the "Login" button.
 If you encounter any issues during the login process or have any questions about your account, please contact our support team at support@indolens.in. We are here to assist you.
                         
 Best regards,
-INDOLENS """
+INDOLENS 
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
+"""
 
 
 # EMPLOYEE UPDATE EMAIL
@@ -50,7 +59,10 @@ Address: {address}
 Date: {getIndianTime()}
 
 Best regards,
-INDOLENS """
+INDOLENS 
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}"""
 
 
 # EMPLOYEE STORE ASSIGNED
@@ -75,6 +87,9 @@ Thank you for your continued dedication to Indolens. We look forward to witnessi
 
 Best regards,
 INDOLENS
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
@@ -98,6 +113,9 @@ If you have any issues or need further assistance, feel free to contact our supp
 
 Best regards,
 INDOLENS
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
@@ -122,6 +140,9 @@ def get_employee_unassigned_store_email_body(name, role, email, store_name, stor
 
     Best regards,
     INDOLENS
+    Email: {support_data.get('support_email')}
+    Phone: {support_data.get('support_phone')}
+    Working Hours: {support_data.get('support_hour')}
     """
 
 
@@ -144,6 +165,9 @@ Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
@@ -164,10 +188,15 @@ Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
+
 
 def get_order_completion_email_subject(order_number):
     return f""" INDOLENS Order Completed - {order_number} """
+
 
 def get_order_completion_email_body(customer_name, order_number, status, date):
     return f""" Dear {customer_name},
@@ -181,11 +210,15 @@ Invoice: {base_url}/customer_order_invoice/orderId={order_number}
 
 Best regards,
 INDOLENS
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
 def get_order_cancelled_email_subject(order_number):
     return f""" INDOLENS Order Cancelled - {order_number} """
+
 
 def get_order_cancelled_email_body(customer_name, order_number, status, date):
     return f""" Dear {customer_name},
@@ -198,6 +231,9 @@ Date of Change: {getIndianTime()}
 
 Best regards,
 INDOLENS
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
@@ -218,6 +254,9 @@ Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
@@ -240,4 +279,7 @@ If you have any questions or concerns regarding your eye test report, our team i
 Thank you once again for choosing INDOLENS. We value your trust in us and look forward to serving you in the future.
 
 Best regards,
-INDOLENS """
+INDOLENS 
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}"""
