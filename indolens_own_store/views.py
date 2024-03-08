@@ -90,6 +90,7 @@ def getAssignedStores(request):
 
 
 # ================================= OWN STORE DASHBOARD ======================================
+
 def dashboard(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:

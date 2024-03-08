@@ -27,13 +27,18 @@ def admin_setting(data):
                 'emailjs_service_id': data.get('emailjs_service_id', ''),
                 'emailjs_template_id': data.get('emailjs_template_id', ''),
                 'emailjs_user_id': data.get('emailjs_user_id', ''),
-                'emailjs_recaptcha': data.get('emailjs_recaptcha', ''),
+            }
+
+            support_attributes = {
+                'support_email': data.get('support_email', ''),
+                'support_phone': data.get('support_phone', ''),
+                'support_hour': data.get('support_hours', ''),
             }
 
             if admin_check[0] == 0:
                 admin_setting_query = f"""INSERT INTO admin_setting (emailjs_attribute, base_url, created_on,
-                created_by, updated_on, updated_by ) VALUES('{json.dumps(emailjs_attributes)}', '{data.get('base_url')}',
-                '{getIndianTime()}', 1, '{getIndianTime()}', 1) """
+                created_by, updated_on, updated_by, support_attributes ) VALUES('{json.dumps(emailjs_attributes)}', '{data.get('base_url')}',
+                '{getIndianTime()}', 1, '{getIndianTime()}', 1, '{json.dumps(support_attributes)}') """
                 cursor.execute(admin_setting_query)
                 return {"status": True, "message": "Insert Success"}, 200
             else:
@@ -43,7 +48,8 @@ def admin_setting(data):
                         emailjs_attribute = '{json.dumps(emailjs_attributes)}', 
                         base_url = '{data.get('base_url')}',
                         updated_on = '{getIndianTime()}',
-                        updated_by = 1
+                        updated_by = 1,
+                        support_attributes = '{json.dumps(support_attributes)}'
                     WHERE setting_id = 1
                 """
                 cursor.execute(admin_setting_query)
@@ -64,7 +70,7 @@ def get_admin_setting():
             admin_check = cursor.fetchone()
             return {"status": True,
                     "message": "fetch Success",
-                    "admin_setting": admin_setting_response(admin_check) if admin_check is not None else {}
+                    "admin_setting": admin_setting_response(admin_check) if admin_check is not None else {},
                     }, 200
 
     except pymysql.Error as e:

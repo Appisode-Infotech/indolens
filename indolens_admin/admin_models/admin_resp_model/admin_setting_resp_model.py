@@ -10,6 +10,7 @@ class AdminSetting:
         self.created_on = values[4]
         self.updated_by = values[5]
         self.updated_on = values[6]
+        self.support_attribute = json.loads(values[7]) if values[7] else {}
 
     def to_dict(self):
         return {
@@ -19,7 +20,8 @@ class AdminSetting:
             'created_by': self.created_by,
             'created_on': self.created_on,
             'updated_by': self.updated_by,
-            'updated_on': self.updated_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.updated_on, datetime) else None
+            'updated_on': self.updated_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.updated_on, datetime) else None,
+            'support_attribute': self.support_attribute,
         }
 
 def admin_setting_response(response):

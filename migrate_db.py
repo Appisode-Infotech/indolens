@@ -63,16 +63,19 @@ sql_queries = [
  PRIMARY KEY (`admin_id`),
  UNIQUE KEY `unique_email_admin` (`email`)
 )""",
-    """CREATE TABLE `admin_setting` (
+    """
+    CREATE TABLE `admin_setting` (
  `setting_id` int(11) NOT NULL AUTO_INCREMENT,
- `emailjs_attribute` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin NOT NULL CHECK (json_valid(`emailjs_attribute`)),
- `base_url` varchar(255),
- `created_by` int(11),
- `created_on` datetime,
- `updated_by` int(11),
- `updated_on` datetime,
+ `emailjs_attribute` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`emailjs_attribute`)),
+ `base_url` varchar(255) ,
+ `created_by` int(11) ,
+ `created_on` datetime ,
+ `updated_by` int(11) ,
+ `updated_on` datetime ,
+ `support_attributes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`support_attributes`)),
  PRIMARY KEY (`setting_id`)
-)""",
+)
+    """,
     """CREATE TABLE `area_head` (
  `area_head_id` int(11) NOT NULL AUTO_INCREMENT,
  `name` varchar(255),

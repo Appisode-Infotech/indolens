@@ -70,6 +70,8 @@
 
 
 
+
+
     </script>
 </head>
 
@@ -105,7 +107,7 @@
                                            type="text" value="{{admin_setting.base_url}}"/>
                                     <div class="invalid-feedback">Base URL is mandatory.</div>
                                 </div>
-                                <h5 class="mb-3 mt-3">Email Notification Settings</h5>
+                                <h5 class="mb-3 mt-3 mb-3 mt-6">Email Notification Settings</h5>
                                 <div id="customer_info" class="row g-3 mb-3">
                                     <div class="mb2 col-6">
                                         <h5 class="mb-3">EmailJS URL</h5>
@@ -145,17 +147,39 @@
                                                type="text" value="{{admin_setting.emailjs_attribute.emailjs_user_id}}"/>
                                         <div class="invalid-feedback">EmailJS User Id is mandatory.</div>
                                     </div>
+                                </div>
+                                <h5 class="mb-3 mt-6">INDOLENS Support Info</h5>
+                                <div class="row g-3 mb-3">
                                     <div class="mb2 col-6">
-                                        <h5 class="mb-3">EmailJS Recaptcha Response</h5>
+                                        <h5 class="mb-3">Support Email</h5>
                                         <input class="form-control"
-                                               name="emailjs_recaptcha"
-                                               placeholder="EmailJS Recaptcha Response"
+                                               name="support_email"
+                                               placeholder="Support team email"
+                                               required="required"
+                                               type="email" value="{{admin_setting.support_attribute.support_email}}"/>
+                                        <div class="invalid-feedback">Email is mandatory.</div>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Support Phone</h5>
+                                        <input class="form-control"
+                                               name="support_phone"
+                                               placeholder="Support Phone"
+                                               required="required"
+                                               type="number"
+                                               max="9999999999" min="1111111111"
+                                               value="{{admin_setting.support_attribute.support_phone}}"/>
+                                        <div class="invalid-feedback">Support Phone is mandatory.</div>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Support Hours</h5>
+                                        <input class="form-control"
+                                               name="support_hours"
+                                               placeholder="support Hours"
                                                required="required"
                                                type="text"
-                                               value="{{admin_setting.emailjs_attribute.emailjs_recaptcha}}"/>
-                                        <div class="invalid-feedback">EmailJS Recaptcha Response is mandatory.</div>
+                                               value="{{admin_setting.support_attribute.support_hour}}"/>
+                                        <div class="invalid-feedback">Support Hour is mandatory.</div>
                                     </div>
-
 
                                 </div>
                             </div>
@@ -226,6 +250,8 @@
         var form = document.getElementById('settingsForm');
         form.submit();
     }
+
+
 
 </script>
 </body>
