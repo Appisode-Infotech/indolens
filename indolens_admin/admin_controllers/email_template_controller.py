@@ -213,3 +213,24 @@ Best regards,
 INDOLENS
 09980557575
 """
+
+
+# EMPLOYEE CREATION EMAIL
+def get_customer_eye_test_email_subject(name):
+    return f""" INDOLENS Eye Test Summary - {name} """
+
+
+def get_customer_eye_test_email_body(name, test_id):
+    return f""" Dear {name},
+
+Thank you for choosing INDOLENS for your recent eye test. We are pleased to inform you that your eye test report is now available.
+
+To access your eye test report, please click on the following secure link: {base_url}/customer_eye_test/testId={test_id}
+
+Please note that the link is unique to you and should not be shared with others to maintain the privacy of your eye health information.
+If you have any questions or concerns regarding your eye test report, our team is here to assist you.
+
+Thank you once again for choosing INDOLENS. We value your trust in us and look forward to serving you in the future.
+
+Best regards,
+INDOLENS """

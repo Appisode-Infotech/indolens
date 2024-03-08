@@ -4,6 +4,7 @@ import pytz
 from django.db import connection
 
 from indolens_admin.admin_models.admin_resp_model.completed_order_resp_model import get_completed_sales_orders
+from indolens_admin.admin_models.admin_resp_model.invoice_detail_resp_model import get_order_invoice_detail
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
 from indolens_own_store.own_store_model.response_model.invoice_data_resp_model import get_invoice_detail
@@ -299,7 +300,9 @@ def get_order_details(orderId):
                         ELSE updater_fs.name 
                     END AS updater_name,
                     c.*, ci.*, pc.category_name, pm.material_name,
-                    ft.frame_type_name, fsh.shape_name,co.color_name, u.unit_name, b.brand_name
+                    ft.frame_type_name, fsh.shape_name,co.color_name, u.unit_name, b.brand_name,
+                    (ci.product_gst / 2) AS product_gst_half,
+                    (so.product_total_cost - (so.product_total_cost * ci.product_gst / 100)) AS discounted_total_cost
                 FROM sales_order AS so
                 LEFT JOIN customers AS c ON c.customer_id = so.customer_id
                 LEFT JOIN central_inventory AS ci ON ci.product_id = so.product_id
@@ -323,7 +326,7 @@ def get_order_details(orderId):
 
             return {
                 "status": True,
-                "orders_details": get_order_detail(orders_details),
+                "orders_details": get_order_invoice_detail(orders_details),
             }, 200
 
     except pymysql.Error as e:
