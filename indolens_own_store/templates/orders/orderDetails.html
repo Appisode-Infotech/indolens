@@ -656,7 +656,7 @@
     });
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.order_status }};
-        var paystatus = "{{order_detail.0.payment_status}}";
+        var paymentstatus = {{ order_detail.0.payment_status }};
         console.log(status);
 
         var select = document.getElementById("orderStatusSelect");
@@ -679,10 +679,9 @@
                     if (status == "6"){
                     select.options[3].disabled = true;
                     }
-                }
-
-                if( paystatus != 2) {
-                select.options[2].disabled = true;
+                    if (paymentstatus != 2){
+                    select.options[2].disabled = true;
+                    }
                 }
 
                 // Add event listener to update options dynamically
@@ -711,7 +710,7 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         var orderStatusSelect = document.getElementById("orderStatusSelect1");
-        var paystatus = "{{order_detail.0.payment_status}}";
+        var paymentstatus = {{ order_detail.0.payment_status }};
 
         if(orderStatusSelect){
         var orderStatus = {{ order_detail.0.order_status }};
@@ -739,7 +738,7 @@
             orderStatusSelect.options[5].disabled = false;
             orderStatusSelect.options[6].disabled = false;
         }
-        if( paystatus != 2) {
+        if (paymentstatus != 2){
             orderStatusSelect.options[5].disabled = true;
             }
         }
