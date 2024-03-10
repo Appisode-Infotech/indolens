@@ -4,7 +4,7 @@ from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from rest_framework.decorators import api_view
 
-from indolens_admin.admin_controllers import orders_controller
+from indolens_admin.admin_controllers import orders_controller, eye_test_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_admin.admin_controllers.graphs_and_statistics import get_own_vs_franchise_sales_stats, get_customer_stats, \
     get_orders_stats, get_store_sales_stats, get_store_customer_stats, get_store_orders_stats
@@ -17,6 +17,7 @@ def index(request):  # new
 def customerOrderTracking(request, orderId):
     order_detail, status_code = orders_controller.get_order_details(orderId)
     order_track, track_status_code = orders_controller.get_order_track(orderId)
+    print(order_track)
     return render(request, 'order_tracking/order_tracking.html', {"order_detail": order_detail['orders_details'],
                                                                   "order_track": order_track['order_track'],
                                                                   "store_details": order_track['store_details']})
@@ -115,3 +116,9 @@ def get_store_order_analytics(request):
         "interval": days
     }
     return JsonResponse(response, status=200)
+
+
+def customerEyeTestPrint(request, testId):
+    response, status_code = eye_test_controller.get_eye_test_by_id(testId)
+    return render(request, 'indolens_admin/eyeTest/adminEyeTestPrint.html',
+                  {'eye_test_list': response['eye_test']})

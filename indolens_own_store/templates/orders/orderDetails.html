@@ -620,6 +620,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var status = "{{order_detail.0.payment_status}}";
+        var order_status = "{{order_detail.0.order_status}}";
         var select = document.getElementById("paymentStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -635,6 +636,10 @@
                 for (var k = i + 1; k < select.options.length; k++) {
                     select.options[k].disabled = false;
                 }
+                if (order_status == 7){
+                    select.options[1].disabled = true;
+                }
+
                 break;
             }
         }
@@ -656,6 +661,7 @@
     });
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.order_status }};
+        var paymentstatus = {{ order_detail.0.payment_status }};
         console.log(status);
 
         var select = document.getElementById("orderStatusSelect");
@@ -677,6 +683,9 @@
                     }
                     if (status == "6"){
                     select.options[3].disabled = true;
+                    }
+                    if (paymentstatus != 2){
+                    select.options[2].disabled = true;
                     }
                 }
 
@@ -706,6 +715,7 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         var orderStatusSelect = document.getElementById("orderStatusSelect1");
+        var paymentstatus = {{ order_detail.0.payment_status }};
 
         if(orderStatusSelect){
         var orderStatus = {{ order_detail.0.order_status }};
@@ -733,6 +743,9 @@
             orderStatusSelect.options[5].disabled = false;
             orderStatusSelect.options[6].disabled = false;
         }
+        if (paymentstatus != 2){
+            orderStatusSelect.options[5].disabled = true;
+            }
         }
 
 

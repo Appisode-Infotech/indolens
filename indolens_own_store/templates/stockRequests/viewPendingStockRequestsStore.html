@@ -80,7 +80,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["slno","name","type","product","productId","quantity","price","req_date","moved_date","approvalStatus","deliveryStatus"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","name","sendername","type","product","productId","quantity","price","req_date","moved_date","approvalStatus","deliveryStatus"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -110,10 +110,13 @@
                                         style="width:5%;">SL NO
                                     </th>
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="name"
-                                    scope="col" style="width:30%;">STORE NAME
+                                    scope="col" style="width:30%;">REQUEST FROM
                                 </th>
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="type"
-                                    scope="col" style="width:30%;">STORE TYPE
+                                    scope="col" style="width:30%;">REQUEST FROM STORE TYPE
+                                </th>
+                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="sendername"
+                                    scope="col" style="width:30%;">REQUEST TO
                                 </th>
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="product"
                                     scope="col" style="width:30%;">PRODUCT NAME
@@ -154,8 +157,20 @@
                                         class="text-decoration-none fw-bold fs-0">{{stock.store_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap py-4 type">
+                                <td class="align-middle white-space-nowrap py-4" type>
+                                    {% if stock.store_type == 1 %}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
+                                    {% else %}
+                                    <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
+                                    {% endif %}
+                                </td>
+
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 sendername">
+                                    {% if stock.request_to_store_id == 0 %}
+                                    <p class="text-decoration-none fw-bold fs-0">CENTRAL INVENTORY</p>
+                                    {% else %}
+                                    <p class="text-decoration-none fw-bold fs-0">{{stock.from_store_name}}</p>
+                                    {% endif %}
                                 </td>
 
                                 <td class="product align-middle">

@@ -16,4 +16,6 @@ urlpatterns = [
     path('get_store_customer_analytics/', get_store_customer_analytics, name='get_store_customer_analytics'),
     path('get_store_order_analytics/', get_store_order_analytics, name='get_store_order_analytics'),
 
+    path('customer_eye_test/testId=<int:testId>', customerEyeTestPrint, name='customer_eye_test_print'),
+
 ]

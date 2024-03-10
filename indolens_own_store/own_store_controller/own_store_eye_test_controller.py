@@ -7,14 +7,18 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_own_store.own_store_controller import lens_sale_power_attribute_controller
 from indolens_own_store.own_store_model.response_model.eye_test_resp_model import get_eye_test_resp
 from indolens_own_store.own_store_model.response_model.store_expense_resp_model import get_store_expenses
 
 ist = pytz.timezone('Asia/Kolkata')
+
+
 def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
+
 
 def add_eye_test(customerData, created_by, store_id):
     try:
@@ -44,15 +48,18 @@ def add_eye_test(customerData, created_by, store_id):
                                                 `updated_on` = '{getIndianTime()}' """
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
-            print(customer_id)
 
             power_attributes = lens_sale_power_attribute_controller.get_eye_test_power_attribute(customerData)
-            print(power_attributes)
 
             add_eye_test_query = f""" INSERT INTO eye_test (customer_id, power_attributes, 
             created_by_store_id, created_by_store_type, created_by, created_on, updated_by, updated_on)
             VALUES({customer_id}, '{json.dumps(power_attributes)}', {store_id},1, {created_by}, '{getIndianTime()}', {created_by}, '{getIndianTime()}')"""
             cursor.execute(add_eye_test_query)
+            test_id = cursor.lastrowid
+
+            subject = email_template_controller.get_customer_eye_test_email_subject(customerData.get('customer_name'))
+            body = email_template_controller.get_customer_eye_test_email_body(customerData.get('customer_name'), test_id)
+            send_notification_controller.send_email(subject, body, customerData.get('customer_email'))
 
             return {
                 "status": True,

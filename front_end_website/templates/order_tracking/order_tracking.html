@@ -269,6 +269,10 @@ function getItemByStatus(status) {
 for(let i = 1;i<8;i++){
 var assignedLab={{order_detail.0.assigned_lab}};
 
+if(i==2 && assignedLab==0){
+continue;
+}
+
 if(i==3 && assignedLab==0){
 continue;
 }

@@ -56,6 +56,7 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -112,6 +113,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -127,11 +129,11 @@
         <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 40px;">
         <h1 class="mt-2">Indolens</h1>
     </div>
-    <h3 class="mb-3 mt-2" style="text-align: center;">Eye Test Report</h3>
+    <h3 class="mb-3 mt-2" style="text-align: center;">Glass Prescription</h3>
     <h5 class="mb-4" style="text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
         {{test.store_address}} </h5>
-<!--    <h5 class="mb-4" style="text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">-->
-<!--        Test: {{test.customer_phone}}_eye_test_{{test.eye_test_id}} </h5>-->
+    <!--    <h5 class="mb-4" style="text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">-->
+    <!--        Test: {{test.customer_phone}}_eye_test_{{test.eye_test_id}} </h5>-->
     <div class="col-xl-9">
         {% csrf_token %}
         <div class="tab-pane">
@@ -297,58 +299,72 @@
         <div class="mb-3">
             <div class="row mb-3 pt-3">
                 <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="unifocal" value="1"/>
-                    <label >UNIFOCAL</label>
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="unifocal"
+                           value="1"/>
+                    <label>UNIFOCAL</label>
                 </div>
                 <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="bifocal" value="1"/>
-                    <label >BIFOCAL</label>
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="bifocal"
+                           value="1"/>
+                    <label>BIFOCAL</label>
                 </div>
                 <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="progressive" value="1"/>
-                    <label >PROGRESSIVE</label>
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="progressive"
+                           value="1"/>
+                    <label>PROGRESSIVE</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="cr39" value="1"/>
-                    <label >CR39</label>
-                </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="arc" value="1"/>
-                    <label >ARC</label>
-                </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="glass" value="1"/>
-                    <label >GLASS</label>
-                </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="highIndex" value="1"/>
-                    <label >HIGH INDEX</label>
-                </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="pg" value="1"/>
-                    <label >PG</label>
-                </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="constant" value="1"/>
-                    <label >CONSTANT</label>
-                </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="distance" value="1"/>
-                    <label >DISTANCE</label>
-                </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="near" value="1"/>
-                    <label >NEAR</label>
-                </div>
+
 
                 <div class="row mb-3 pt-3">
                     <div class="col-4 col-lg-3">
+                        <input disabled style="color: black;" class="form-check-input" type="checkbox" name="cr39"
+                               value="1"/>
+                        <label>CR39</label>
+                    </div>
+                    <div class="col-4 col-lg-3">
+                        <input disabled style="color: black;" class="form-check-input" type="checkbox" name="arc"
+                               value="1"/>
+                        <label>ARC</label>
+                    </div>
+                    <div class="col-4 col-lg-3">
+                        <input disabled style="color: black;" class="form-check-input" type="checkbox" name="glass"
+                               value="1"/>
+                        <label>GLASS</label>
+                    </div>
+                    <div class="col-4 col-lg-3">
+                        <input disabled style="color: black;" class="form-check-input" type="checkbox" name="highIndex"
+                               value="1"/>
+                        <label>HIGH INDEX</label>
+                    </div>
+                    <div class="col-4 col-lg-3">
+                        <input disabled style="color: black;" class="form-check-input" type="checkbox" name="pg"
+                               value="1"/>
+                        <label>PG</label>
+                    </div>
+                    <div class="col-4 col-lg-3">
+                        <input disabled style="color: black;" class="form-check-input" type="checkbox" name="constant"
+                               value="1"/>
+                        <label>CONSTANT</label>
+                    </div>
+                    <div class="col-4 col-lg-3">
+                        <input disabled style="color: black;" class="form-check-input" type="checkbox" name="distance"
+                               value="1"/>
+                        <label>DISTANCE</label>
+                    </div>
+                    <div class="col-4 col-lg-3">
+                        <input disabled style="color: black;" class="form-check-input" type="checkbox" name="near"
+                               value="1"/>
+                        <label>NEAR</label>
+                    </div>
+                    <div class="col-4 col-lg-3">
                         <label class="form-label">PDR</label>
-                        <input disabled style="color: black;" type="text" name="pdr" value="{{test.power_attributes.pdr}}"/>
+                        <input disabled style="color: black;" type="text" name="pdr"
+                               value="{{test.power_attributes.pdr}}"/>
                     </div>
                     <div class="col-4 col-lg-3">
                         <label class="form-label">PDL</label>
-                        <input disabled style="color: black;" type="text" name="pdl" value="{{test.power_attributes.pdl}}"/>
+                        <input disabled style="color: black;" type="text" name="pdl"
+                               value="{{test.power_attributes.pdl}}"/>
                     </div>
                 </div>
             </div>
@@ -402,6 +418,7 @@
             }
         });
     }
+
 
 
 </script>

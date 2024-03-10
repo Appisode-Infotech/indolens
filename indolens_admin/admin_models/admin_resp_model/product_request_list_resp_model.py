@@ -16,7 +16,7 @@ class Product:
             self.status, self.discount, self.created_on,
             self.created_by, self.last_updated_on, self.last_updated_by, self.creator_name, self.updater_name,
             self.category_name, self.material_name, self.frame_type_name, self.shape_name, self.color_name,
-            self.unit_name, self.brand_name, self.store_name, self.sender_store
+            self.unit_name, self.brand_name, self.store_name, self.sender_store, self.sender_store_quantity
 
         ) = values
 
@@ -82,6 +82,7 @@ class Product:
             'brand_name': self.brand_name,
             'store_name': self.store_name,
             'sender_store': self.sender_store,
+            'sender_store_quantity': self.sender_store_quantity,
         }
 
 

@@ -2946,6 +2946,7 @@ def manageMoveAStock(request):
 def viewAllStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_stock_requests('%')
+        print(response)
         return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:

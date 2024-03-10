@@ -83,12 +83,14 @@ def getAssignedStores(request):
             request.session.clear()
             return assigned_store
         else:
+            request.session['assigned_store_id'] = assigned_store
             return assigned_store
     else:
         return redirect('own_store_login')
 
 
 # ================================= OWN STORE DASHBOARD ======================================
+
 def dashboard(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
@@ -328,7 +330,6 @@ def createStockRequestStore(request):
         else:
             response, status_code = store_inventory_controller.get_all_central_inventory_products(
                 assigned_store)
-            print(response)
             return render(request, 'stockRequests/createStockRequestStore.html',
                           {"product_list": response['product_list']})
     else:
@@ -340,6 +341,7 @@ def viewAllStockRequestsStore(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.view_all_store_stock_request(
             assigned_store, '%')
+        print(response)
         return render(request, 'stockRequests/viewAllStockRequestsStore.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
