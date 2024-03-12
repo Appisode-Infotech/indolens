@@ -5,14 +5,71 @@
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
-
     <style>
-    #map {
-        width: 100%;
-        height: 400px; /* Adjust the height as needed */
+        .container {
+    display: flex;
+    flex-direction: column; /* align items vertically */
+    align-items: left;    /* center items horizontally */
+}
+ .horizontal{
+     justify-content: space-between; /* or 'space-around' or 'space-evenly' */
+
+    display: flex;
+}
+.horizontal .item:not(:last-child) {
+    margin-right: 20px; /* Adjust the margin as needed */
+}
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .mb-3 {
+            margin-bottom: 1.5rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 1.5rem;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        @media print {
+         .print-button {
+        display: none;
     }
+            .form-check-input:checked::before {
+                content: '\2714';
+                text-align: center;
+                font-size: 0.6em;
+                position: relative;
+                top: -4px;
+            }
+        }
 
 
+.btnP {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+
+.vertical-center {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    height: 100%; /* Set height to 100% to make vertical centering work */
+}
 
     </style>
     <!-- ===============================================-->
@@ -25,82 +82,6 @@
     <!--    Favicons-->
     <!-- ===============================================-->
     <!-- Favicon and Manifest -->
-    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
-    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
-    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
-    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
-    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
-    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
-    <meta content="#ffffff" name="theme-color">
-
-    <!-- JavaScript Dependencies -->
-    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
-    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
-    <script src="{% static 'js/config.js' %}"></script>
-
-    <!-- Stylesheets -->
-    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
-    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
-          rel="stylesheet">
-    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
-    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
-    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
-
-    <script>
-      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
-      if (isRTL) {
-        var linkDefault = document.getElementById('style-default');
-        var userLinkDefault = document.getElementById('user-style-default');
-        linkDefault.setAttribute('disabled', true);
-        userLinkDefault.setAttribute('disabled', true);
-        document.querySelector('html').setAttribute('dir', 'rtl');
-      } else {
-        var linkRTL = document.getElementById('style-rtl');
-        var userLinkRTL = document.getElementById('user-style-rtl');
-        linkRTL.setAttribute('disabled', true);
-        userLinkRTL.setAttribute('disabled', true);
-      }
-    </script>
-    <style>
-    @media print {
-        body, html {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
-
-        .btn {
-            display: none;
-        }
-        table {
-            width: 100%;
-        }
-
-        th, td {
-            padding: 8px; /* Adjust padding as needed */
-        }
-        /* Show all table columns when printing */
-        @page {
-            size: auto;
-            margin: 0;
-        }
-
-        table {
-            page-break-inside: auto;
-        }
-
-        tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
-        }
-
-    </style>
 </head>
 
 
@@ -114,23 +95,14 @@
         <div class="content">
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form >
                         {% csrf_token %}
                         <div class="tab-pane" role="tabpanel"
                              aria-labelledby="bootstrap-wizard-validation-tab2"
                              id="bootstrap-wizard-validation-tab2">
                             <div>
-                                <div id="customer_info" class="row g-3 mb-3">
-                                    <div class="mb2 col-6">
-                                        <h5 class="mb-3">Order ID</h5>
-                                        <input disabled class="form-control" style="color: black;"
-                                               type="text" value="{{order_detail.0.order_id}}"/>
-                                    </div>
-                                    <div class="mb2 col-6">
-                                        <h5 class="mb-3">Manufacturing Date</h5>
-                                        <input disabled class="form-control" style="color: black;"
-                                               type="email" value="{{order_detail.0.created_on}}"/>
-                                    </div>
+                                <div id="customer_info" class="horizontal">
+                                        <h4 class="item">Order ID : {{order_detail.0.order_id}}</h4>
+                                        <h4 class="item">Manufacturing Date : {{order_detail.0.created_on}}</h4>
                                 </div>
                             </div>
                         </div>
@@ -165,48 +137,40 @@
                                     <tr>
                                         <th scope="row">R</th>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensSphStock}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensSphStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensCylStock}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensCylStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAxisStock}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensAxisStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAddStock}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensAddStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensPdStock}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensPdStock}}</p>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <th scope="row">L</th>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensSphStock}}"/>
+                                            <p>{{order_detail.0.power_attribute.rightLensSphStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensCylStock}}"/>
+                                            <p>{{order_detail.0.power_attribute.rightLensCylStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAxisStock}}"/>
+                                            <p>{{order_detail.0.power_attribute.rightLensAxisStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-3">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAddStock}}"/>
+                                            <p>{{order_detail.0.power_attribute.rightLensAddStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-3">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensPdStock}}"/>
+                                            <p>
+                                                {{order_detail.0.power_attribute.rightLensPdStock}}
+                                            </p>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -215,48 +179,38 @@
                                     <tr>
                                         <th scope="row">R</th>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensSphRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensSphRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensCylRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensCylRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAxisRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensAxisRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensAddRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensAddRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.leftLensPdRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.leftLensPdRx}}</p>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <th scope="row">L</th>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensSphRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.rightLensSphRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensCylRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.rightLensCylRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAxisRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.rightLensAxisRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-3">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensAddRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.rightLensAddRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-3">
-                                            <input disabled style="color: black;"
-                                                   type="text" value="{{order_detail.0.power_attribute.rightLensPdRx}}"/>
+                                            <p>{{order_detail.0.power_attribute.rightLensPdRx}}</p>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -272,9 +226,7 @@
 <!--                                               type="text" value="{{frame}}"/>-->
 <!--                                    </div>-->
                                     <div class="mb2 col-12">
-                                        <h5 class="mb-3">Lens</h5>
-                                        <input disabled class="form-control" style="color: black;"
-                                               type="text" value="{{order_detail.0.product_name}}"/>
+                                        <h5 class="mb-3">Lens: {{order_detail.0.product_name}}</h5>
                                     </div>
                                 </div>
 <!--                                <div class="row g-3 mt-3 mb-3">-->
@@ -297,7 +249,6 @@
                             </button>
                         </div>
                         </div>
-                    </form>
                 </div>
             </div>
 
