@@ -505,10 +505,6 @@
                     <div class="modal-content">
                         <div class="modal-header bg-primary">
                             <h5 class="modal-title text-white" id="modal_title"></h5>
-                            <button class="btn p-1" type="button" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                <span class="fas fa-times fs--1 text-white"></span>
-                            </button>
                         </div>
                         <div class="modal-body" id="modal_content">
                             <!-- Form for Allocate Store -->
@@ -541,7 +537,7 @@
                                     <button class="btn btn-primary modal-submit" type="submit"
                                             id="modal_submit">Confirm
                                     </button>
-                                    <button class="btn btn-outline-primary" type="reset" data-bs-dismiss="modal">
+                                    <button id="cancelButton" class="btn btn-outline-primary" type="reset" data-bs-dismiss="modal">
                                         Cancel
                                     </button>
                                 </div>
@@ -617,6 +613,35 @@
 
 
 </script>
+<script>
+    document.getElementById('cancelButton').addEventListener('click', function() {
+        var status = "{{order_detail.0.payment_status}}";
+        var order_status = "{{order_detail.0.order_status}}";
+        var select = document.getElementById("paymentStatusSelect");
+
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === status) {
+                select.selectedIndex = i;
+
+                // Disable options before the selected option
+                for (var j = 0; j < i; j++) {
+                    select.options[j].disabled = true;
+                }
+
+                // Enable options after the selected option
+                for (var k = i + 1; k < select.options.length; k++) {
+                    select.options[k].disabled = false;
+                }
+                if (order_status == 7){
+                    select.options[1].disabled = true;
+                }
+
+                break;
+            }
+        }
+    });
+</script>
+
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var status = "{{order_detail.0.payment_status}}";
