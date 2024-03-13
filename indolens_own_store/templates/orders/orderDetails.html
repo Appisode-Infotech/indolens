@@ -112,21 +112,24 @@
                                         <th class="sort white-space-nowrap align-middle" data-sort="products"
                                             scope="col" style="min-width:200px;">PRODUCTS
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="color" scope="col"
+                                        <th class="sort align-middle ps-4 text-end" data-sort="color" scope="col"
                                             style="width:150px;">SALE PRICE
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="size" scope="col"
+                                        <th class="sort align-middle ps-4 text-end" data-sort="size" scope="col"
                                             style="width:300px;">DISCOUNT
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="size" scope="col"
+                                        <th class="sort align-middle ps-4 text-end" data-sort="size" scope="col"
                                             style="width:300px;">GST
                                         </th>
-                                        <th class="sort align-middle  ps-4" data-sort="quantity" scope="col"
+                                        <th class="sort align-middle  ps-4 text-end" data-sort="quantity" scope="col"
                                             style="width:200px;">QUANTITY
                                         </th>
 
                                         <th class="sort align-middle text-end" data-sort="total" scope="col"
                                             style="width:250px; min-width:100px;">TOTAL
+                                        </th>
+                                        <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                            style="width:250px; min-width:100px;">ACTION
                                         </th>
                                     </tr>
                                     </thead>
@@ -155,6 +158,34 @@
                                         </td>
                                         <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4 text-end">₹
                                             {{order.product_total_cost}}
+                                        </td>
+                                        <td class="align-middle  white-space-nowrap pe-0 action text-end">
+                                            {% if order.category_id == 2 or order.category_id == 3 %}
+                                            <div class="font-sans-serif btn-reveal-trigger position-static">
+                                                <button aria-expanded="false"
+                                                        aria-haspopup="true"
+                                                        class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                        data-boundary="window"
+                                                        data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                    <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                    {% if order.category_id == 2 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button"
+                                                       href="{% url 'own_store_job_item_details' order.sale_item_id %}">
+                                                        Line Item Details</a>
+                                                    {% elif order.category_id == 3 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button" target="_blank"
+                                                       href="{% url 'own_store_contact_lens_power_card' order.sale_item_id %}">
+                                                        Contact Lens Power</a>
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -399,6 +430,14 @@
                                 </div>
                             </div>
                             <div class="col-12">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h3 class="card-title mb-4">Sales Note</h3>
+                                        <h6 class="mb-2">{{order_detail.0.sales_note}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
@@ -466,10 +505,6 @@
                     <div class="modal-content">
                         <div class="modal-header bg-primary">
                             <h5 class="modal-title text-white" id="modal_title"></h5>
-                            <button class="btn p-1" type="button" data-bs-dismiss="modal"
-                                    aria-label="Close">
-                                <span class="fas fa-times fs--1 text-white"></span>
-                            </button>
                         </div>
                         <div class="modal-body" id="modal_content">
                             <!-- Form for Allocate Store -->
@@ -502,7 +537,7 @@
                                     <button class="btn btn-primary modal-submit" type="submit"
                                             id="modal_submit">Confirm
                                     </button>
-                                    <button class="btn btn-outline-primary" type="reset" data-bs-dismiss="modal">
+                                    <button id="cancelButton" class="btn btn-outline-primary" type="reset" data-bs-dismiss="modal">
                                         Cancel
                                     </button>
                                 </div>
@@ -579,8 +614,9 @@
 
 </script>
 <script>
-    document.addEventListener("DOMContentLoaded", function () {
+    document.getElementById('cancelButton').addEventListener('click', function() {
         var status = "{{order_detail.0.payment_status}}";
+        var order_status = "{{order_detail.0.order_status}}";
         var select = document.getElementById("paymentStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -596,6 +632,39 @@
                 for (var k = i + 1; k < select.options.length; k++) {
                     select.options[k].disabled = false;
                 }
+                if (order_status == 7){
+                    select.options[1].disabled = true;
+                }
+
+                break;
+            }
+        }
+    });
+</script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var status = "{{order_detail.0.payment_status}}";
+        var order_status = "{{order_detail.0.order_status}}";
+        var select = document.getElementById("paymentStatusSelect");
+
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === status) {
+                select.selectedIndex = i;
+
+                // Disable options before the selected option
+                for (var j = 0; j < i; j++) {
+                    select.options[j].disabled = true;
+                }
+
+                // Enable options after the selected option
+                for (var k = i + 1; k < select.options.length; k++) {
+                    select.options[k].disabled = false;
+                }
+                if (order_status == 7){
+                    select.options[1].disabled = true;
+                }
+
                 break;
             }
         }
@@ -617,6 +686,7 @@
     });
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.order_status }};
+        var paymentstatus = {{ order_detail.0.payment_status }};
         console.log(status);
 
         var select = document.getElementById("orderStatusSelect");
@@ -638,6 +708,9 @@
                     }
                     if (status == "6"){
                     select.options[3].disabled = true;
+                    }
+                    if (paymentstatus != 2){
+                    select.options[2].disabled = true;
                     }
                 }
 
@@ -667,6 +740,7 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         var orderStatusSelect = document.getElementById("orderStatusSelect1");
+        var paymentstatus = {{ order_detail.0.payment_status }};
 
         if(orderStatusSelect){
         var orderStatus = {{ order_detail.0.order_status }};
@@ -694,6 +768,9 @@
             orderStatusSelect.options[5].disabled = false;
             orderStatusSelect.options[6].disabled = false;
         }
+        if (paymentstatus != 2){
+            orderStatusSelect.options[5].disabled = true;
+            }
         }
 
 

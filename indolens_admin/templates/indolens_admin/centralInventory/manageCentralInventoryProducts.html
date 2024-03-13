@@ -87,7 +87,7 @@
                     </li>
                     {% endfor %}
                 </ul>
-                <div data-list='{"valueNames":["slno","product","price","category","brand","quantity", "status","date"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["slno","productId","product","price","category","brand","quantity", "status","date"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -152,6 +152,9 @@
                                     <th class="sort white-space-nowrap align-middle ps-0" data-sort="slno"
                                         scope="col" style="width:350px;">SL NO
                                     </th>
+                                    <th class="sort white-space-nowrap align-middle ps-0" data-sort="productId"
+                                        scope="col" style="width:350px;">Product Id
+                                    </th>
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                         scope="col" style="width:400px;">PRODUCT IMAGE
                                     </th>
@@ -191,6 +194,7 @@
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                     data-category="{{ product.category_name }}">
                                     <td class="order align-middle white-space-nowrap py-0 slno"></td>
+                                    <td class="order align-middle white-space-nowrap py-0 productId"> {{product.product_id}}</td>
                                     <td class="align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
                                             <div class="avatar avatar-m">
@@ -261,6 +265,11 @@
                                                 <a class="dropdown-item"
                                                    href="{% url 'update_product_images' product.product_id %}">Update
                                                     Product Images</a>
+
+                                                <a class="dropdown-item"
+                                                   target="_blank"
+                                                   href="{% url 'print_qr_tag' product.product_qr_code product.sale_price product.product_id %}">Print QR Tags</a>
+
                                                 <div class="dropdown-divider"></div>
 
                                                 {% if product.status == 0 %}

@@ -194,7 +194,7 @@
                                         </td>
 
                                         <td class="align-middle  white-space-nowrap pe-0 action text-end">
-                                            {% if order.category_id == 2 %}
+                                            {% if order.category_id == 2 or order.category_id == 3 %}
                                             <div class="font-sans-serif btn-reveal-trigger position-static">
                                                 <button aria-expanded="false"
                                                         aria-haspopup="true"
@@ -204,19 +204,22 @@
                                                         type="button">
                                                     <span class="fas fa-ellipsis-h fs--2"></span></button>
                                                 <div class="dropdown-menu dropdown-menu-end py-2">
-<!--                                                    <a class="dropdown-item view-button" data-bs-toggle="modalView"-->
-<!--                                                       type="button"-->
-<!--                                                       style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"-->
-<!--                                                       data-category-info="{{ order.power_attribute | safe }}">-->
-<!--                                                        View Lens Powers</a>-->
+                                                    {% if order.category_id == 2 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button"
+                                                       href="{% url 'job_item_details' order.sale_item_id %}">
+                                                        Line Item Details</a>
+                                                    {% elif order.category_id == 3 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button" target="_blank"
-                                                       href="{% url 'job_authenticity_card' order.sale_item_id %}">
-                                                        Authenticity Card</a>
+                                                       href="{% url 'contact_Lens_power_card' order.sale_item_id %}">
+                                                        Contact Lens Power</a>
+                                                    {% endif %}
 
                                                 </div>
                                             </div>
                                             {% endif %}
+
                                         </td>
 
                                     </tr>
@@ -354,6 +357,14 @@
                     <div class="col-12 col-xl-4 col-xxl-3">
                         <div class="row">
                             <div class="col-12">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h3 class="card-title mb-4">Sales Note</h3>
+                                        <h6 class="mb-2">{{order_detail.0.sales_note}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
@@ -367,7 +378,7 @@
                                             <option value="4">Dispatch</option>
                                             <option value="5" style="display:none;"
                                                     {% if order_detail.0.order_status == 5 %}selected{% endif %}>
-                                                Delivered Store
+                                                Ready In Store
                                             </option>
                                             <option value="6" style="display:none;"
                                                     {% if order_detail.0.order_status == 6 %}selected{% endif %}>

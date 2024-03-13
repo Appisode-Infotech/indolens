@@ -61,7 +61,7 @@ def resetPassword(request, code):
     if request.method == 'POST':
         response, status_code = franchise_store_auth_controller.update_store_employee_password(request.POST['password'],
                                                                                                request.POST['email'])
-        return render(request, 'auth/franchise_store_reset_password.html', {"code": code})
+        return render(request, 'auth/franchise_store_reset_password.html', {"code": code, "message": response['message']})
     else:
         response, status_code = franchise_store_auth_controller.check_link_validity(code)
         return render(request, 'auth/franchise_store_reset_password.html',
@@ -345,11 +345,11 @@ def createStockRequestFranchise(request):
             stock_obj = franchise_create_stock_request_model.franchise_create_stock_request_model_from_dict(
                 request.POST)
             response = franchise_inventory_controller.create_store_stock_request(stock_obj)
-            products, status_code = franchise_inventory_controller.get_all_central_inventory_products()
+            products, status_code = franchise_inventory_controller.get_all_central_inventory_products(assigned_store)
             return render(request, 'stockRequests/createStockRequestFranchise.html',
                           {"product_list": products['product_list']})
         else:
-            response, status_code = franchise_inventory_controller.get_all_central_inventory_products()
+            response, status_code = franchise_inventory_controller.get_all_central_inventory_products(assigned_store)
             
             return render(request, 'stockRequests/createStockRequestFranchise.html',
                           {"product_list": response['product_list']})

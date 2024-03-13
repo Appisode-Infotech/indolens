@@ -6,8 +6,19 @@
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
 
-    <style>
 
+    <style>
+    .container {
+    display: flex;
+    flex-direction: column; /* align items vertically */
+    align-items: left;    /* center items horizontally */
+}
+ .horizontal{
+    display: flex;
+}
+.horizontal .item:not(:last-child) {
+    margin-right: 20px; /* Adjust the margin as needed */
+}
         body {
             font-family: Arial, sans-serif;
         }
@@ -28,16 +39,10 @@
             text-align: left;
         }
 
-        .form-check-input {
-            margin-right: 5px;
-        }
-
-        .form-label {
-            display: inline-block;
-            margin-bottom: 0.5rem;
-        }
-
         @media print {
+         .print-button {
+        display: none;
+    }
             .form-check-input:checked::before {
                 content: '\2714';
                 text-align: center;
@@ -56,63 +61,22 @@
     border-radius: 4px;
     cursor: pointer;
 }
+
+
+
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
     <title> {{eye_test_list.0.customer_phone}}_eye_test_{{eye_test_list.0.eye_test_id}}</title>
 
+
+    <!-- Add these links in the <head> section of your HTML document -->
+
     {% load static %}
     <!-- ===============================================-->
     <!--    Favicons-->
     <!-- ===============================================-->
-    <!-- Favicon and Manifest -->
-    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
-    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
-    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
-    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
-    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
-    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
-    <meta content="#ffffff" name="theme-color">
-
-    <!-- JavaScript Dependencies -->
-    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
-    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
-    <script src="{% static 'js/config.js' %}"></script>
-
-    <!-- Stylesheets -->
-    <link href="{% static 'vendors/choices/choices.min.css' %}" rel="stylesheet">
-    <link href="{% static 'vendors/flatpickr/flatpickr.min.css' %}" rel="stylesheet">
-    <link href="https://fonts.googleapis.com" rel="preconnect">
-    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
-          rel="stylesheet">
-    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
-    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
-    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
-
-    <script>
-      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
-      if (isRTL) {
-        var linkDefault = document.getElementById('style-default');
-        var userLinkDefault = document.getElementById('user-style-default');
-        linkDefault.setAttribute('disabled', true);
-        userLinkDefault.setAttribute('disabled', true);
-        document.querySelector('html').setAttribute('dir', 'rtl');
-      } else {
-        var linkRTL = document.getElementById('style-rtl');
-        var userLinkRTL = document.getElementById('user-style-rtl');
-        linkRTL.setAttribute('disabled', true);
-        userLinkRTL.setAttribute('disabled', true);
-      }
-
-
-
-
-    </script>
 </head>
 
 
@@ -123,15 +87,17 @@
 <!-- ===============================================-->
 <main class="main p-5" id="top">
     {% for test in eye_test_list %}
-    <div class="d-flex flex-column align-items-center">
-        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 40px;">
-        <h1 class="mt-2">Indolens</h1>
+    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
+        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" height="60">
+        <h1 style="margin: 0;" class="mt-2">Indolens</h1>
+        <h1 style="margin: 0;" class="mt-2">ಇಂಡೊಲೆನ್ಸ್</h1>
     </div>
-    <h3 class="mb-3 mt-2" style="text-align: center;">Eye Test Report</h3>
-    <h5 class="mb-4" style="text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
+
+    <h3 class="mb-3 mt-2" style="text-align: center; margin: 10px;">Glass Prescription</h3>
+    <h5 class="mb-4" style=" margin: 15px; text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
         {{test.store_address}} </h5>
-<!--    <h5 class="mb-4" style="text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">-->
-<!--        Test: {{test.customer_phone}}_eye_test_{{test.eye_test_id}} </h5>-->
+    <!--    <h5 class="mb-4" style="text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">-->
+    <!--        Test: {{test.customer_phone}}_eye_test_{{test.eye_test_id}} </h5>-->
     <div class="col-xl-9">
         {% csrf_token %}
         <div class="tab-pane">
@@ -140,25 +106,23 @@
                 <tr>
                     <th scope="row">Customer Name</th>
                     <td>
-                        <input disabled style="color: black;" type="text"
-                               value="{{test.customer_name}}"/>
+                        {{test.customer_name}}
                     </td>
                     <th scope="row">Date</th>
                     <td>
-                        <input disabled style="color: black;" type="email"
-                               value="{{test.created_on}}"/>
+                        {{test.created_on}}
                     </td>
                 </tr>
                 <tr>
                     <th scope="row">Customer Phone</th>
                     <td>
-                        <input disabled style="color: black;" type="text"
-                               value="{{test.customer_phone}}"/>
+                        {{test.customer_phone}}
                     </td>
                     <th scope="row">Customer Age</th>
                     <td>
-                        <input disabled style="color: black;" type="text"
-                               value="{{test.customer_age}}"/>
+
+                        {{test.customer_age}}
+
                     </td>
                 </tr>
                 </tbody>
@@ -183,23 +147,18 @@
                     <tr>
                         <th scope="row">D/V</th>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.RightDvSph}}"/>
+                            {{test.power_attributes.RightDvSph}}
+                        </td>
+                        <td class="col-6 col-lg-2">
+                            {{test.power_attributes.RightDvCyl}}
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.RightDvCyl}}"/>
+                            {{test.power_attributes.RightDvAxis}}
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.RightDvAxis}}"/>
-
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.RightDvVision}}"/>
+                            {{test.power_attributes.RightDvVision}}
 
                         </td>
                     </tr>
@@ -207,23 +166,19 @@
                     <tr>
                         <th scope="row">N/V</th>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.RightNvSph}}"/>
+                            {{test.power_attributes.RightNvSph}}
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.RightNvCyl}}"/>
+                            {{test.power_attributes.RightNvCyl}}
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.RightNvAxis}}"/>
+                            {{test.power_attributes.RightNvAxis}}
 
                         </td>
                         <td class="col-6 col-lg-3">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.RightNvVision}}"/>
+                            {{test.power_attributes.RightNvVision}}
 
                         </td>
                     </tr>
@@ -244,23 +199,19 @@
                     <tr>
                         <th scope="row">D/V</th>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.LeftDvSph}}"/>
+                            {{test.power_attributes.LeftDvSph}}
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.LeftDvCyl}}"/>
+                            {{test.power_attributes.LeftDvCyl}}
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.LeftDvAxis}}"/>
+                            {{test.power_attributes.LeftDvAxis}}
 
                         </td>
                         <td class="col-6 col-lg-3">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.LeftDvVision}}"/>
+                            {{test.power_attributes.LeftDvVision}}
 
                         </td>
 
@@ -269,23 +220,19 @@
                     <tr>
                         <th scope="row">N/V</th>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.LeftNvSph}}"/>
+                            {{test.power_attributes.LeftNvSph}}
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.LeftNvCyl}}"/>
+                            {{test.power_attributes.LeftNvCyl}}
 
                         </td>
                         <td class="col-6 col-lg-2">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.LeftNvAxis}}"/>
+                            {{test.power_attributes.LeftNvAxis}}
 
                         </td>
                         <td class="col-6 col-lg-3">
-                            <input disabled style="color: black;"
-                                   type="text" value="{{test.power_attributes.LeftNvVision}}"/>
+                            {{test.power_attributes.LeftNvVision}}
 
                         </td>
                     </tr>
@@ -294,62 +241,78 @@
             </div>
         </div>
 
-        <div class="mb-3">
-            <div class="row mb-3 pt-3">
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="unifocal" value="1"/>
-                    <label >UNIFOCAL</label>
+        <div class="mb-3 container">
+            <div class="horizontal mb-3">
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="unifocal"
+                           value="1"/>
+                    <label>UNIFOCAL</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="bifocal" value="1"/>
-                    <label >BIFOCAL</label>
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="bifocal"
+                           value="1"/>
+                    <label>BIFOCAL</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="progressive" value="1"/>
-                    <label >PROGRESSIVE</label>
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="progressive"
+                           value="1"/>
+                    <label>PROGRESSIVE</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="cr39" value="1"/>
-                    <label >CR39</label>
+            </div>
+            <div class="horizontal mb-3">
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="cr39"
+                           value="1"/>
+                    <label>CR39</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="arc" value="1"/>
-                    <label >ARC</label>
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="arc"
+                           value="1"/>
+                    <label>ARC</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="glass" value="1"/>
-                    <label >GLASS</label>
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="glass"
+                           value="1"/>
+                    <label>GLASS</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="highIndex" value="1"/>
-                    <label >HIGH INDEX</label>
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="highIndex"
+                           value="1"/>
+                    <label>HIGH INDEX</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="pg" value="1"/>
-                    <label >PG</label>
+            </div>
+            <div class="horizontal mb-3 ">
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="pg"
+                           value="1"/>
+                    <label>PG</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="constant" value="1"/>
-                    <label >CONSTANT</label>
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="constant"
+                           value="1"/>
+                    <label>CONSTANT</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="distance" value="1"/>
-                    <label >DISTANCE</label>
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="distance"
+                           value="1"/>
+                    <label>DISTANCE</label>
                 </div>
-                <div class="col-4 col-lg-3">
-                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="near" value="1"/>
-                    <label >NEAR</label>
+                <div class="col-4 col-lg-3 item">
+                    <input disabled style="color: black;" class="form-check-input" type="checkbox" name="near"
+                           value="1"/>
+                    <label>NEAR</label>
                 </div>
-
-                <div class="row mb-3 pt-3">
-                    <div class="col-4 col-lg-3">
-                        <label class="form-label">PDR</label>
-                        <input disabled style="color: black;" type="text" name="pdr" value="{{test.power_attributes.pdr}}"/>
-                    </div>
-                    <div class="col-4 col-lg-3">
-                        <label class="form-label">PDL</label>
-                        <input disabled style="color: black;" type="text" name="pdl" value="{{test.power_attributes.pdl}}"/>
-                    </div>
+            </div>
+            <div class="horizontal mb-3 item">
+                <div class="col-4 col-lg-3 item">
+                    <label class="form-label">PDR</label>
+                    <input disabled style="color: black;" type="text" name="pdr"
+                           value="{{test.power_attributes.pdr}}"/>
+                </div>
+                <div class="col-4 col-lg-3 item">
+                    <label class="form-label">PDL</label>
+                    <input disabled style="color: black;" type="text" name="pdl"
+                           value="{{test.power_attributes.pdl}}"/>
                 </div>
             </div>
         </div>
@@ -373,18 +336,7 @@
 <!-- ===============================================-->
 <!--    JavaScripts-->
 <!-- ===============================================-->
-<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
-<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
-<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
-<script src="{% static 'vendors/is/is.min.js' %}"></script>
-<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
-<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
-<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
-<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
-<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
-<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
-<script src="{% static 'vendors/choices/choices.min.js' %}"></script>
-<script src="{% static 'js/phoenix.js' %}"></script>
+
 <script>
     var powerAttributes = {{eye_test_list.0.power_attributes | safe}};
     console.log(powerAttributes);

@@ -95,12 +95,12 @@
                         <div class="mb-5">
                             <input class="form-control" name="productTitle" placeholder="Write product title here..."
                                    type="text" value="{{product_data.product_name}}"
-                                   oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"required/>
+                                   oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '');" required/>
                             <div class="invalid-feedback">Please provide a valid Product title.</div>
                         </div>
                         <div class="mb-6">
                             <h4 class="mb-3"> Product Description</h4>
-                            <textarea required class="tinymce"
+                            <textarea class="tinymce"
                                       data-tinymce='{"height":"15rem","placeholder":"Write a description here..."}'
                                       name="productDescription">{{product_data.product_description}}</textarea>
                             <div class="invalid-feedback">Please provide a Product description.</div>
@@ -151,9 +151,15 @@
                             <div class="mb-3">
                                 <h4 class="mb-3">Index</h4>
                                 <select class="form-select" id="index" name="index" required="required">
-                                    <option value="0.1">0.1</option>
-                                    <option value="0.2">0.2</option>
-                                    <option value="0.3">0.3</option>
+                                    <option value="1.49">1.49</option>
+                                    <option value="1.50">1.50</option>
+                                    <option value="1.56">1.56</option>
+                                    <option value="1.59">1.59</option>
+                                    <option value="1.60">1.60</option>
+                                    <option value="1.61">1.61</option>
+                                    <option value="1.64">1.64</option>
+                                    <option value="1.67">1.67</option>
+                                    <option value="1.74">1.74</option>
                                 </select>
                                 <div class="invalid-feedback">Please provide a valid Index.</div>
                             </div>

@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens {{request.session.lab_name}} - Job details</title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- Stylesheets -->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+
+
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+
+        {% include 'nav_bar_store.html' %}
+
+        <div class="content">
+
+            <div class="mb-9">
+                <div class="d-flex flex-wrap flex-between-center mb-3 mt-3">
+                    <p class="text-800 lh-sm mb-0">Order ID : {{job_item_detail.0.order_id}}</p>
+                    <p class="text-800 lh-sm me-3">Store :
+                        {{job_item_detail.0.store_name}}
+                    </p>
+                </div>
+                <div id="orderTable">
+                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                        <div class="table-responsive scrollbar mx-n1 px-1">
+                            <table class="table table-sm fs--1 mb-0" id="myTable">
+                                <thead>
+                                <tr>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
+                                    <th class="sort align-middle" data-sort="jobId" scope="col"
+                                        style="width:150px;">Lens
+                                    </th>
+                                    <th class="sort align-middle " data-sort="store" scope="col"
+                                        style="width:150px; max-width:200px;">LENS TYPE
+                                    </th>
+                                    <th class="sort align-middle " data-sort="store" scope="col"
+                                        style="width:150px; max-width:200px;">STOCK TYPE
+                                    </th>
+                                    <th class="sort align-middle" data-sort="category" scope="col"
+                                        style="width:150px;">LINKED FRAME
+                                    </th>
+                                    <th class="sort align-middle text-end ps-4" scope="col"
+                                        style="width:250px;">ACTION
+                                    </th>
+
+                                </tr>
+                                </thead>
+                                <tbody class="list" id="order-table-body">
+                                {% for frame in frame_list %}
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                    data-category="{{ order.order_status }}">
+                                    <td class="fs--1 align-middle px-0 py-3 slno"></td>
+                                    <td class="store align-middle white-space-nowrap ">
+                                        <a href="{% url 'view_central_inventory_products' job_item_detail.0.product_id %}">
+                                            {{job_item_detail.0.product_name}} </a>
+                                    </td>
+                                    <td class="category align-middle white-space-nowrap text-900">
+                                        {{job_item_detail.0.power_attribute.lens_type}}
+                                    </td>
+                                    <td class="category align-middle white-space-nowrap text-900">
+                                        {{job_item_detail.0.power_attribute.stock_type}}
+                                    </td>
+                                    <td class="material align-middle white-space-nowrap text-700 fw-semi-bold">
+                                        <a href="{% url 'view_central_inventory_products' frame.frame_id %}">
+                                        {{frame.frame_name}} </a>
+                                    </td>
+                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                        <div class="font-sans-serif btn-reveal-trigger position-static">
+                                            <button aria-expanded="false"
+                                                    aria-haspopup="true"
+                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                    data-boundary="window"
+                                                    data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                    type="button">
+                                                <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                                <a class="dropdown-item" target="_blank"
+                                                   href="{% url 'own_store_job_authenticity_card' job_item_detail.0.sale_item_id frame.frame_name %}">Authenticity Card</a>
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% include 'footer.html' %}
+
+        </div>
+    </div>
+
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
+<script src="{% static 'js/custom_master_view_modals.js' %}"></script>
+<script src="{% static 'js/breadcrumbs.js' %}"></script>
+
+
+</body>
+<script>
+        var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
+        var navbarTop = document.querySelector('.navbar-top');
+        if (navbarTopStyle === 'darker') {
+          navbarTop.classList.add('navbar-darker');
+        }
+
+        var navbarVerticalStyle = localStorage.getItem('phoenixNavbarVerticalStyle');
+        var navbarVertical = document.querySelector('.navbar-vertical');
+        if (navbarVerticalStyle === 'darker') {
+          navbarVertical.classList.add('navbar-darker');
+        }
+
+
+
+
+
+
+</script>
+<script>
+    function changeOrderStatus(statusWidget, order_id) {
+        console.log(statusWidget.value);
+        console.log(order_id);
+
+        const url = `/lab/lab_job_details/job_status_change/jobId=${order_id}/status=${statusWidget.value}`;
+        window.location.href = url;
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+        var status = {{ order_detail.0.order_status }};
+        console.log(status);
+
+        var select = document.getElementById("orderStatusSelect");
+
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value == status) {
+                select.selectedIndex = i;
+
+                // Disable all options
+                for (var j = 0; j < select.options.length; j++) {
+                    select.options[j].disabled = true;
+                }
+
+                // Enable the next option from the selected one
+                if (i < select.options.length - 1) {
+                    select.options[i + 1].disabled = false;
+                    if (status != "6"){
+                    select.options[4].disabled = false;
+                    }
+                    if (status == "6"){
+                    select.options[4].disabled = true;
+                    }
+                }
+
+                // Add event listener to update options dynamically
+                select.addEventListener("change", function() {
+                    var selectedIndex = this.selectedIndex;
+
+                    // Disable all options
+                    for (var k = 0; k < this.options.length; k++) {
+                        this.options[k].disabled = true;
+                    }
+
+                    // Enable the next option from the selected one
+                    if (selectedIndex < this.options.length - 1) {
+                        this.options[selectedIndex + 1].disabled = false;
+
+                    }
+                });
+
+                break;
+            }
+        }
+    });
+
+
+
+</script>
+</html>

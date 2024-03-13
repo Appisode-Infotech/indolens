@@ -239,6 +239,7 @@ def editFranchiseStore(request, franchiseStoreId):
 
         else:
             response, status_code = franchise_store_controller.get_franchise_store_by_id(franchiseStoreId)
+            print(response)
             return render(request, 'indolens_admin/franchiseStores/editFranchiseStore.html',
                           {"franchise_store": response['franchise_store'], "id": franchiseStoreId})
     else:
@@ -466,7 +467,8 @@ def createStoreManager(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/storeManagers/createStoreManager.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/storeManagers/createStoreManager.html')
@@ -618,7 +620,8 @@ def createFranchiseOwners(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/franchiseOwners/createFranchiseOwner.html')
@@ -772,7 +775,8 @@ def createAreaHead(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/areaHead/createAreaHead.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/areaHead/createAreaHead.html')
@@ -911,7 +915,8 @@ def createMarketingHead(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/marketingHeads/createMarketingHead.html')
     else:
@@ -1054,7 +1059,8 @@ def createOptimetry(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/optimetry/createOptimetry.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/optimetry/createOptimetry.html')
     else:
@@ -1207,7 +1213,8 @@ def createFranchiseOptimetry(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseOptimetry/createOptimetry.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/franchiseOptimetry/createOptimetry.html')
     return redirect('login')
@@ -1356,7 +1363,8 @@ def createSaleExecutives(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/salesExecutive/createSaleExecutives.html')
     return redirect('login')
@@ -1509,7 +1517,8 @@ def createFranchiseSaleExecutives(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/franchiseSalesExecutive/createSaleExecutives.html')
     return redirect('login')
@@ -1663,7 +1672,8 @@ def createAccountant(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/accountant/createAccountant.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
 
         else:
             return render(request, 'indolens_admin/accountant/createAccountant.html')
@@ -1804,7 +1814,8 @@ def createLabTechnician(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/labTechnician/createLabTechnician.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/labTechnician/createLabTechnician.html')
     else:
@@ -1944,7 +1955,8 @@ def createOtherEmployees(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/otherEmployees/createOtherEmployees.html', )
     else:
@@ -2094,7 +2106,8 @@ def createFranchiseOtherEmployees(request):
                 return redirect(url)
             else:
                 return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html',
-                              {"message": "This email address is already associated with an existing employee account. Please use a different email address."})
+                              {
+                                  "message": "This email address is already associated with an existing employee account. Please use a different email address."})
         else:
             return render(request, 'indolens_admin/franchiseOtherEmployees/createOtherEmployees.html', )
     else:
@@ -2276,7 +2289,7 @@ def viewOrderDetails(request, orderId):
         lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['assigned_lab'])
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
                       {"order_detail": order_detail['orders_details'], "payment_logs": payment_logs['payment_logs'],
-                       "lab_details":lab_details['lab_data']})
+                       "lab_details": lab_details['lab_data']})
     else:
         return redirect('login')
 
@@ -2421,11 +2434,34 @@ def jobDetails(request, jobId):
     return render(request, 'indolens_admin/labs/jobDetails.html', {"order_detail": job_detail['orders_details']})
 
 
-def manageAuthenticityCard(request, saleId):
+def viewJobItemDetails(request, saleId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get(
             'is_admin_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
-        return render(request, 'Tasks/authenticityCar.html', {"order_detail": job_detail['orders_details']})
+        print(job_detail)
+        return render(request, 'indolens_admin/labs/jobItemDetails.html',
+                      {"job_item_detail": job_detail['orders_details'],
+                       "frame_list": job_detail['frame_list']})
+    else:
+        return redirect('login')
+
+
+def labcontactLensPowerCard(request, saleId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get(
+            'is_admin_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        return render(request, 'indolens_admin/labs/contactLensPowerCard.html',
+                      {"order_detail": job_detail['orders_details']})
+    else:
+        return redirect('login')
+
+
+def manageAuthenticityCard(request, saleId, frame):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get(
+            'is_admin_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        return render(request, 'Tasks/authenticityCar.html', {"order_detail": job_detail['orders_details'],
+                                                              "frame": frame})
     else:
         return redirect('login')
 
@@ -2910,6 +2946,7 @@ def manageMoveAStock(request):
 def viewAllStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_stock_requests('%')
+        print(response)
         return render(request, 'indolens_admin/stockRequests/viewAllStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -3301,6 +3338,15 @@ def addProductImage(request, productId):
         return redirect('login')
 
 
+def print_qr_tag(request, qrUrl, price, pId):
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        print('hello')
+        return render(request, 'indolens_admin/centralInventory/qr_tag_print.html', {'qrUrl': qrUrl, "price" : price, "pId" : pId})
+    else:
+        return redirect('login')
+
+
+
 def addOwnStoreEmployeeImage(request, employeeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
@@ -3404,7 +3450,8 @@ def addFranchiseStoreEmployeeImage(request, employeeId):
             emp_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = add_documents_controller.add_franchise_store_employee_image(file_data, employeeId,
                                                                                                 emp_obj,
-                                                                                                request.session.get('id'))
+                                                                                                request.session.get(
+                                                                                                    'id'))
             role = response['role']
 
             # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3703,4 +3750,3 @@ def indolensAdminSetting(request):
 
     else:
         return redirect('login')
-

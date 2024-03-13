@@ -59,7 +59,9 @@ def resetPassword(request, code):
     if request.method == 'POST':
         response, status_code = own_store_auth_controller.update_store_employee_password(request.POST['password'],
                                                                                          request.POST['email'])
-        return render(request, 'auth/own_store_reset_password.html', {"code": code})
+        print(response)
+        print(status_code)
+        return render(request, 'auth/own_store_reset_password.html',  {"code": code, "message": response['message']})
     else:
         response, status_code = own_store_auth_controller.check_link_validity(code)
         return render(request, 'auth/own_store_reset_password.html',
@@ -81,12 +83,14 @@ def getAssignedStores(request):
             request.session.clear()
             return assigned_store
         else:
+            request.session['assigned_store_id'] = assigned_store
             return assigned_store
     else:
         return redirect('own_store_login')
 
 
 # ================================= OWN STORE DASHBOARD ======================================
+
 def dashboard(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
@@ -337,6 +341,7 @@ def viewAllStockRequestsStore(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.view_all_store_stock_request(
             assigned_store, '%')
+        print(response)
         return render(request, 'stockRequests/viewAllStockRequestsStore.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -526,5 +531,45 @@ def ownStoreEyeTestPrint(request, testId):
         return render(request, 'ownStoreEyeTest/ownStoreEyeTestPrint.html',
                       {'eye_test_list': response['eye_test']})
 
+    else:
+        return redirect('own_store_login')
+
+
+def ownStoreContactLensPowerCard(request, saleId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        return render(request, 'indolens_admin/labs/contactLensPowerCard.html',
+                      {"order_detail": job_detail['orders_details']})
+    else:
+        return redirect('own_store_login')
+
+def ownStoreLensPowerCard(request, saleId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        return render(request, 'indolens_admin/labs/contactLensPowerCard.html',
+                      {"order_detail": job_detail['orders_details']})
+    else:
+        return redirect('own_store_login')
+
+
+def viewJobItemDetails(request, saleId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        return render(request, 'orders/jobItemDetails.html',
+                      {"job_item_detail": job_detail['orders_details'],
+                       "frame_list": job_detail['frame_list']})
+    else:
+        return redirect('own_store_login')
+
+
+def viewJobAuthenticityCard(request, saleId, frame):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        return render(request, 'orders/authenticityCar.html', {"order_detail": job_detail['orders_details'],
+                                                              "frame": frame})
     else:
         return redirect('own_store_login')

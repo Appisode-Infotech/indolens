@@ -122,25 +122,27 @@
                                 <table class="table fs--1 mb-0 border-top border-200">
                                     <thead>
                                     <tr>
-                                        <th class="sort white-space-nowrap align-middle fs--2" scope="col"></th>
                                         <th class="sort white-space-nowrap align-middle" data-sort="products"
                                             scope="col" style="min-width:200px;">PRODUCTS
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="color" scope="col"
+                                        <th class="sort align-middle text-end ps-4 text-end" data-sort="color" scope="col"
                                             style="width:150px;">SALE PRICE
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="size" scope="col"
+                                        <th class="sort align-middle ps-4 text-end" data-sort="size" scope="col"
                                             style="width:300px;">DISCOUNT
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="size" scope="col"
+                                        <th class="sort align-middle ps-4 text-end" data-sort="size" scope="col"
                                             style="width:300px;">GST
                                         </th>
-                                        <th class="sort align-middle  ps-4" data-sort="quantity" scope="col"
+                                        <th class="sort align-middle  ps-4 text-end" data-sort="quantity" scope="col"
                                             style="width:100px;">QUANTITY
                                         </th>
 
                                         <th class="sort align-middle text-end" data-sort="total" scope="col"
                                             style="width:250px; min-width:100px;">TOTAL
+                                        </th>
+                                        <th class="sort align-middle text-end" scope="col"
+                                            style="width:250px;">ACTION
                                         </th>
                                     </tr>
                                     </thead>
@@ -148,8 +150,6 @@
                                     {% for order in order_detail %}
 
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                        <td class="align-middle white-space-nowrap py-2">
-                                        </td>
                                         <td class="products align-middle py-0">
                                             <a class="fw-semi-bold line-clamp-2 mb-0"
                                                href="{% url 'view_products' order.product_id %}">
@@ -171,8 +171,35 @@
                                         <td class="price align-middle text-900 fw-semi-bold text-end">₹
                                             {{order.product_total_cost}}
                                         </td>
-                                    </tr>
+                                        {% if order.category_id == 2 or order.category_id == 3 %}
+                                        <td class="align-middle text-end white-space-nowrap pe-0">
+                                            <div class="font-sans-serif btn-reveal-trigger position-static" >
+                                                <button aria-expanded="false"
+                                                        aria-haspopup="true"
+                                                        class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                        data-boundary="window"
+                                                        data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                    <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                    {% if order.category_id == 2 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button"
+                                                       href="{% url 'lab_job_item_details' order.sale_item_id %}">
+                                                        Line Item Details</a>
+                                                    {% elif order.category_id == 3 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button" target="_blank"
+                                                       href="{% url 'lab_contact_Lens_power_card' order.sale_item_id %}">
+                                                        Contact Lens Power</a>
+                                                    {% endif %}
+                                                </div>
+                                            </div>
+                                        </td>
+                                        {% endif %}
                                     {% endfor %}
+                                    </tr>
+
 
                                     </tbody>
                                 </table>
@@ -404,6 +431,14 @@
                                 </div>
                             </div>
                             <div class="col-12">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h3 class="card-title mb-4">Sales Note</h3>
+                                        <h6 class="mb-2">{{order_detail.0.sales_note}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
@@ -418,10 +453,11 @@
                                         <h6 class="mb-2">Order status</h6>
                                         <select disabled aria-label="delivery type" class="form-select"
                                                 id="orderStatusSelect">
+                                            <option value="1">New</option>
                                             <option value="2">Process</option>
                                             <option value="3">Ready</option>
                                             <option value="4">Dispatch to Store</option>
-                                            <option value="5">Delivered Store</option>
+                                            <option value="5">Ready In Store</option>
                                             <option value="6">Delivered Customer</option>
                                             <option value="7">Cancel</option>
                                         </select>

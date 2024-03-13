@@ -91,7 +91,7 @@
                     {% endif %}
                     {% endfor %}
                 </ul>
-                <div data-list='{"valueNames":["SlNo","product","price","category","brand","inStock","publishedOn"],"page":10,"pagination":true}'
+                <div data-list='{"valueNames":["SlNo","productId","product","price","category","brand","inStock","publishedOn"],"page":10,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -126,6 +126,9 @@
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="SlNo" scope="col"
                                         style="width:5%;">SL NO
                                     </th>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="productId" scope="col"
+                                        style="width:5%;">PRODUCT ID
+                                    </th>
                                     <th class="sort white-space-nowrap align-middle pe-3" scope="col"
                                         style="width:5%;">PRODUCT IMAGE</th>
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
@@ -155,6 +158,7 @@
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                     data-category="{{ stock.category_name }}">
                                     <td class="align-middle white-space-nowrap py-0 SlNo"></td>
+                                    <td class="align-middle white-space-nowrap py-0 productId">{{stock.product_id}}</td>
 
                                     <td class="align-middle white-space-nowrap py-0">
                                         <a href="{{ MEDIA_URL }}{{ stock.product_images.0 }}" target="_blank">

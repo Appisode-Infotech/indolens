@@ -56,18 +56,40 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
-
-
-
-
-
-
-
-
-
-
-
     </script>
+    <style>
+        .golden-card {
+            background-color: gold;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            display: inline-block;
+            margin-right: 10px;
+            text-align: center;
+
+        }
+
+        .platinum-card {
+            background-color: #222;
+            color: white;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            display: inline-block;
+            margin-right: 10px;
+            text-align: center;
+        }
+
+
+        .luxury-card {
+            background-color: #ff4081;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            display: inline-block;
+            text-align: center;
+        }
+    </style>
 </head>
 
 
@@ -118,7 +140,19 @@
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3 class="name">{{ customer.name }}</h3>
                                                 <p class="text-800">Joined on {{ customer.created_on }}</p>
-                                                <h4>{{membership}} Member</h4>
+                                                {% if membership == 'Gold' %}
+                                                <div class="golden-card">
+                                                    <h4>{{membership}} Member</h4>
+                                                </div>
+                                                {% elif membership == 'Platinum' %}
+                                                <div class="platinum-card">
+                                                    <h4 style="color: white;">{{membership}} Member</h4>
+                                                </div>
+                                                {% elif membership == 'Luxuary' %}
+                                                <div class="luxury-card">
+                                                    <h4>{{membership}} Member</h4>
+                                                </div>
+                                                {% endif %}
                                             </div>
 
                                         </div>
@@ -262,9 +296,9 @@
                                                                                                    style="height:12.8px;width:12.8px;"></span></span>
                                                 {% elif order.order_status == 5 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                        class="badge-label">DELIVERED STORE</span><span class="ms-1"
-                                                                                                        data-feather="check"
-                                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                                        class="badge-label">READY IN STORE</span><span class="ms-1"
+                                                                                                       data-feather="check"
+                                                                                                       style="height:12.8px;width:12.8px;"></span></span>
                                                 {% elif order.order_status == 6 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
@@ -346,6 +380,8 @@ document.addEventListener("DOMContentLoaded", function () {
         avatar.textContent = firstLetter;
     });
 });
+
+
 
 
 

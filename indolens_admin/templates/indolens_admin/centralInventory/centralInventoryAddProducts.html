@@ -57,6 +57,7 @@
 
 
 
+
     </style>
 
     <script>
@@ -73,6 +74,7 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
+
 
 
 
@@ -112,7 +114,8 @@
                     <div class="col-12 col-xl-8">
                         <div class="mb-5">
                             <input class="form-control" name="productTitle" placeholder="Write product title here..."
-                                   maxlength="70" type="text" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');" required />
+                                   maxlength="70" type="text"
+                                   oninput="this.value = this.value.replace(/[^a-zA-Z0-9\s]/g, '');" required/>
                             <div class="invalid-feedback">Please provide a valid Product title.</div>
                         </div>
                         <div class="mb-6">
@@ -176,13 +179,19 @@
 
                             <div class="mb-3">
                                 <h4 class="mb-3">Index</h4>
-                                <select class="form-select"
-                                        name="index" required="required">
+                                <select class="form-select" name="index" required="required">
                                     <option value="">Select Index</option>
-                                    <option value="0.1">0.1</option>
-                                    <option value="0.2">0.2</option>
-                                    <option value="0.3">0.3</option>
+                                    <option value="1.49">1.49</option>
+                                    <option value="1.50">1.50</option>
+                                    <option value="1.56">1.56</option>
+                                    <option value="1.59">1.59</option>
+                                    <option value="1.60">1.60</option>
+                                    <option value="1.61">1.61</option>
+                                    <option value="1.64">1.64</option>
+                                    <option value="1.67">1.67</option>
+                                    <option value="1.74">1.74</option>
                                 </select>
+
                                 <div class="invalid-feedback">Please provide a valid Index.</div>
                             </div>
                         </div>
@@ -265,13 +274,13 @@
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Quantity</h5>
                                 <input name="productQuantity" class="form-control" placeholder="Quantity" type="number"
-                                min="1" required/>
+                                       min="1" required/>
                                 <div class="invalid-feedback">Please provide valid quantity.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">GST</h5>
-<!--                                <input name="productGSTIN" class="form-control" placeholder="%" type="number" required-->
-<!--                                min="0" value="0"/>-->
+                                <!--                                <input name="productGSTIN" class="form-control" placeholder="%" type="number" required-->
+                                <!--                                min="0" value="0"/>-->
                                 <select class="form-select"
                                         name="productGSTIN" required="required">
                                     <option value="0" selected="selected">0</option>
@@ -301,13 +310,14 @@
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Retail Sale price(₹)</h5>
-                                <input name="salePrice" class="form-control" placeholder="₹" type="number" min="1" required/>
+                                <input name="salePrice" class="form-control" placeholder="₹" type="number" min="1"
+                                       required/>
                                 <div class="invalid-feedback">Please provide valid sale price.</div>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Franchise Sale price(₹)</h5>
                                 <input name="franchiseSalePrice" class="form-control" placeholder="₹" type="number"
-                                 min="1" required/>
+                                       min="1" required/>
                                 <div class="invalid-feedback">Please provide valid Franchise sale price.</div>
                             </div>
                         </div>
@@ -316,14 +326,14 @@
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Model Number</h5>
                                 <input name="modelNumber" class="form-control" placeholder="Model Number" type="text"
-                                required/>
+                                       required/>
                                 <div class="invalid-feedback">Please provide valid model number.</div>
 
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">HSN Number</h5>
                                 <input name="hsnNumber" class="form-control" placeholder="HSN Number" type="text"
-                                required/>
+                                       required/>
                                 <div class="invalid-feedback">Please provide valid HSN price.</div>
 
                             </div>
@@ -513,6 +523,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -579,8 +590,8 @@
             $('#only_frame_options input, #only_frame_options select, .lens-widget input, .lens-widget select, .contact-lens-widget input, .contact-lens-widget select').prop('required', false);
         }
     }
-</script>
 
+</script>
 
 
 <script>
@@ -651,6 +662,7 @@
             });
         });
     });
+
 </script>
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
 

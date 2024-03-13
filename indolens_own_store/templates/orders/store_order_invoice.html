@@ -126,7 +126,6 @@ body {
 }
 
 
-
 @media print {
     .print-button {
         display: none;
@@ -182,14 +181,15 @@ body {
                 </div>
 
                 <div id="invoice_details" class="bg-soft p-4 mb-4 rounded-2">
-                    <div class="d-flex flex-column align-items-center">
-                        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 40px;">
+                    <div>
+                        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 60px;">
                         <h2 class="mt-2">Indolens</h2>
+                        <h2 class="mt-2">ಇಂಡೊಲೆನ್ಸ್</h2>
                     </div>
                     {% if invoice_details.invoice_number|length != 0 %}
                     <h1 class="mb-3">Invoice</h1>
                     {% else %}
-                    <h1 class="mb-3">Draft Invoice</h1>
+                    <h1 class="mb-3">Approval Challan</h1>
                     {% endif %}
                     <div class="table-responsive">
                         <table class="table table-borderless">
@@ -212,7 +212,8 @@ body {
                                 <th scope="row" class="align-middle">Order Date</th>
                                 <td class="align-middle">{{order_detail.0.created_on}}</td>
                                 <th scope="row" class="align-middle">Sold by</th>
-                                <td class="align-middle" colspan="3">{{order_detail.0.creator_name}}<br/>{{store_data.0.store_address}}
+                                <td class="align-middle" colspan="3">{{store_data.0.store_name}}<br/>{{store_data.0.store_address}}
+                                    <br/>{{store_data.0.store_email}}<br/>{{store_data.0.store_phone}}
                                 </td>
                             </tr>
                             <tr>
@@ -244,10 +245,11 @@ body {
                             <tr>
                                 <th scope="col" colspan="2">Products</th>
                                 <th class="ps-5" colspan="2">HSN Number</th>
-                                <th scope="col" colspan="1">Quantity</th>
                                 <th class="text-end" colspan="2">Unit Price</th>
-                                <th class="text-end" colspan="1">Discount</th>
-                                <th class="text-end" colspan="2">Total Price</th>
+                                <th scope="col" colspan="1">Quantity</th>
+                                <th scope="col" colspan="1">CGST</th>
+                                <th scope="col" colspan="1">SGST</th>
+                                <th class="text-end" colspan="2">Total Amount</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -263,16 +265,22 @@ body {
                                     {{order.hsn_product}}
                                     {% endif %}
                                 </td>
+
+                                <td style="text-align: end;"
+                                    class="align-middle text-end text-1000 fw-semi-bold text-end" colspan="2">
+                                    ₹{{order.gst_exclusive_amt}}
+                                </td>
                                 <td style="text-align: end;" class="align-middle text-700 fw-semi-bold text-end"
                                     colspan="1">
                                     {{order.purchase_quantity}}
                                 </td>
-                                <td style="text-align: end;"
-                                    class="align-middle text-end text-1000 fw-semi-bold text-end" colspan="2">
-                                    ₹{{order.unit_sale_price}}
+                                <td style="text-align: end;" class="align-middle text-700 fw-semi-bold text-end"
+                                    colspan="1">
+                                    {{ order.broken_gst }}
                                 </td>
-                                <td style="text-align: end;" class="align-middle text-end fw-semi-bold" colspan="1">
-                                    {{order.discount_percentage}}%
+                                <td style="text-align: end;" class="align-middle text-700 fw-semi-bold text-end"
+                                    colspan="1">
+                                    {{ order.broken_gst }}
                                 </td>
                                 <td style="text-align: end;" class="align-middle text-end" colspan="2">
                                     ₹{{order.product_total_cost}}
@@ -285,38 +293,33 @@ body {
                             <tr class="bg-200">
                                 <td colspan="2"></td>
                                 <td colspan="2"></td>
-                                <td colspan="1"></td>
                                 <td colspan="2"></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
                                 <td class="align-middle fw-semi-bold" colspan="1"><b>Subtotal</b></td>
                                 <td style="text-align: end;" class="align-middle text-end fw-bold" colspan="2">₹
-                                    {{order_detail.0.total_cost }}
+                                    {{order_detail.0.discount_cost }}
                                 </td>
                             </tr>
                             <tr>
                                 <td colspan="2"></td>
                                 <td colspan="2"></td>
-                                <td colspan="1"></td>
                                 <td colspan="2"></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
                                 <td class="align-middle fw-bold ps-15" colspan="1"><b>Shipping Cost</b></td>
                                 <td style="text-align: end; " class="align-middle text-end fw-semi-bold" colspan="2">
                                     ₹0
                                 </td>
                             </tr>
-                            <tr>
-                                <td colspan="2"></td>
-                                <td colspan="2"></td>
-                                <td colspan="1"></td>
-                                <td colspan="2"></td>
-                                <td class="align-middle fw-bold ps-15" colspan="1"><b>Discount</b></td>
-                                <td style="text-align: end; " class="align-middle text-end fw-semi-bold" colspan="2"
-                                    id="discount_amount"></td>
-                            </tr>
+
                             {% if invoice_details.invoice_number|length == 0 %}
                             <tr>
                                 <td colspan="2"></td>
                                 <td colspan="2"></td>
-                                <td colspan="1"></td>
                                 <td colspan="2"></td>
+                                <td colspan="1"></td>
+                                <td colspan="1"></td>
                                 <td class="align-middle fw-bold ps-15" colspan="1"><b>Amount Paid</b></td>
                                 <td class="align-middle text-end fw-semi-bold" colspan="2"
                                     style="text-align: end;" id="amount_paid">₹{{order_detail.0.amount_paid}}
@@ -326,7 +329,7 @@ body {
                             {% if invoice_details.invoice_number|length == 0 %}
                             <tr class="bg-200">
                                 <td class="align-middle ps-4 fw-bold text-1000" colspan="2"><b>Balance Amount</b></td>
-                                <td id="totalWords" class="align-middle fw-bold text-1000" colspan="6"></td>
+                                <td id="totalWords" class="align-middle fw-bold text-1000" colspan="7"></td>
                                 <td class="align-middle text-end fw-bold" style="text-align: end; font-weight: bold;"
                                     id="balance">
                                 </td>
@@ -334,7 +337,7 @@ body {
                             {% else %}
                             <tr class="bg-200">
                                 <td class="align-middle ps-4 fw-bold text-1000" colspan="2"><b>Billing Amount</b></td>
-                                <td id="totalWords2" class="align-middle fw-bold text-1000" colspan="6"></td>
+                                <td id="totalWords2" class="align-middle fw-bold text-1000" colspan="7"></td>
                                 <td class="align-middle" style="text-align: end;">
                                     <b>₹{{ order_detail.0.discount_cost }}</b>
                                 </td>

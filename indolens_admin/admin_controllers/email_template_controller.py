@@ -1,7 +1,20 @@
-# base_url = "http://127.0.0.1:8000"
-from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
+import datetime
+import pytz
+
+from indolens_admin.admin_controllers.admin_setting_controller import get_base_url, get_support_data
 
 base_url = get_base_url()
+
+ist = pytz.timezone('Asia/Kolkata')
+
+
+def getIndianTime():
+    today = datetime.datetime.now(ist)
+    formatted_date = today.strftime('%d/%m/%Y %I:%M %p')
+    return formatted_date
+
+
+support_data = get_support_data()
 
 
 # EMPLOYEE CREATION EMAIL
@@ -27,7 +40,11 @@ Click on the "Login" button.
 If you encounter any issues during the login process or have any questions about your account, please contact our support team at support@indolens.in. We are here to assist you.
                         
 Best regards,
-INDOLENS """
+INDOLENS 
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
+"""
 
 
 # EMPLOYEE UPDATE EMAIL
@@ -39,9 +56,13 @@ We are pleased to inform you that your user {role} profile has been successfully
 Username/Email: {email}
 Phone: {phone}
 Address: {address}
+Date: {getIndianTime()}
 
 Best regards,
-INDOLENS """
+INDOLENS 
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}"""
 
 
 # EMPLOYEE STORE ASSIGNED
@@ -56,6 +77,7 @@ We are pleased to inform you of your recent store assignment at Indolens. We are
 
 Store Assignment Details:
 - Store Name: {store_name}
+- Assigned Date: {getIndianTime()}
 - Location: {store_address}
 - Store Phone: {store_phone}
 
@@ -65,6 +87,9 @@ Thank you for your continued dedication to Indolens. We look forward to witnessi
 
 Best regards,
 INDOLENS
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
@@ -84,16 +109,19 @@ To reset your password, please click on the following link:
 
 Please note that this link is time-sensitive, so we recommend completing the reset process within 15 minutes.
 
-If you have any issues or need further assistance, feel free to contact our support team at ['support'].
+If you have any issues or need further assistance, feel free to contact our support team.
 
 Best regards,
 INDOLENS
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
 # EMPLOYEE STORE UNASSIGNED
 def get_employee_unassigned_store_email_subject(order_number):
-    return f""" INDOLENS Store Assigned - {order_number} """
+    return f""" INDOLENS Store Unassigned - {order_number} """
 
 
 def get_employee_unassigned_store_email_body(name, role, email, store_name, store_phone, store_address):
@@ -102,8 +130,9 @@ def get_employee_unassigned_store_email_body(name, role, email, store_name, stor
     We wanted to inform you of a recent change in your store assignment at Indolens.
     It has been decided to unassign your {role} role for user: {email} from the following store:
 
-    Store Assignment Details:
+    Store Unassignment Details:
     - Store Name: {store_name}
+    - Unassigned Date: {getIndianTime()}
     - Location: {store_address}
     - Store Phone: {store_phone}
     
@@ -111,6 +140,9 @@ def get_employee_unassigned_store_email_body(name, role, email, store_name, stor
 
     Best regards,
     INDOLENS
+    Email: {support_data.get('support_email')}
+    Phone: {support_data.get('support_phone')}
+    Working Hours: {support_data.get('support_hour')}
     """
 
 
@@ -127,13 +159,15 @@ Thank you for choosing INDOLENS! We are excited to confirm that your order has b
 Below are the details of your recent purchase:
 
 Order Number: {order_number}
-Order Date: {order_date}
+Date: {getIndianTime()}
 Estimated Delivery Date: {estimated_delivery_date}
 Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
-09980557575
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
@@ -149,16 +183,20 @@ Kindly be informed that the status of your order has been updated. Below are the
 
 Order Number: {order_number}
 Order Status: {status}
-Date of Change: {date}
+Date of Change: {getIndianTime()}
 Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
-09980557575
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
+
 
 def get_order_completion_email_subject(order_number):
     return f""" INDOLENS Order Completed - {order_number} """
+
 
 def get_order_completion_email_body(customer_name, order_number, status, date):
     return f""" Dear {customer_name},
@@ -167,17 +205,20 @@ Kindly be informed that your order has been completed. Below are the completed o
 
 Order Number: {order_number}
 Order Status: {status}
-Date of Change: {date}
+Date of Change: {getIndianTime()}
 Invoice: {base_url}/customer_order_invoice/orderId={order_number}
 
 Best regards,
 INDOLENS
-09980557575
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
 def get_order_cancelled_email_subject(order_number):
     return f""" INDOLENS Order Cancelled - {order_number} """
+
 
 def get_order_cancelled_email_body(customer_name, order_number, status, date):
     return f""" Dear {customer_name},
@@ -186,11 +227,13 @@ Kindly be informed that your order has been cancelled. Below are the cancelled o
 
 Order Number: {order_number}
 Order Status: {status}
-Date of Change: {date}
+Date of Change: {getIndianTime()}
 
 Best regards,
 INDOLENS
-09980557575
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
 
 
@@ -211,5 +254,32 @@ Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
-09980557575
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
 """
+
+
+# EMPLOYEE CREATION EMAIL
+def get_customer_eye_test_email_subject(name):
+    return f""" INDOLENS Eye Test Summary - {name} """
+
+
+def get_customer_eye_test_email_body(name, test_id):
+    return f""" Dear {name},
+
+Thank you for choosing INDOLENS for your recent eye test. We are pleased to inform you that your eye test report is now available.
+
+Your eye test was conducted on {getIndianTime()}. 
+To access your eye test report, please click on the following secure link: {base_url}/customer_eye_test/testId={test_id}
+
+Please note that the link is unique to you and should not be shared with others to maintain the privacy of your eye health information.
+If you have any questions or concerns regarding your eye test report, our team is here to assist you.
+
+Thank you once again for choosing INDOLENS. We value your trust in us and look forward to serving you in the future.
+
+Best regards,
+INDOLENS 
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}"""

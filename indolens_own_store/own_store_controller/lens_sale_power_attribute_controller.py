@@ -36,13 +36,14 @@ def get_power_attribute(data):
     elif data['product_category_id'] == '3':
         power_attributes = {
             'stock_type': data.get('ContactLensStockType', ''),
-            'contact_lens_type': data.get('contact_lens_type', ''),
-            'contact_lens_disposability': data.get('contact_lens_disposability', ''),
-            'power': data.get('contactLensPower', ''),
-            'bc': data.get('contactLensBC', ''),
-            'dia': data.get('contactLensDia', ''),
-            'cyl': data.get('contactLensCylinder', ''),
-            'axis': data.get('contactLensAxis', '')
+            'contact_lens_type': data.get('lens_physicality', ''),
+            'contact_lens_disposability': data.get('lens_disposablility', ''),
+            'power': data.get('cl_power', ''),
+            'bc': data.get('cl_bc', ''),
+            'dia': data.get('cl_dia', ''),
+            'cyl': data.get('cl_cylinder', ''),
+            'axis': data.get('cl_axis', ''),
+            'eye': data.get('cl_eye', '')
         }
         return power_attributes
 

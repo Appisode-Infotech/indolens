@@ -308,7 +308,11 @@ urlpatterns = [
     path('manage_labs/view_active_jobs/', viewActiveJobs, name='view_active_jobs'),
     path('manage_labs/view_all_jobs/labId=<int:labId>', viewAllJobs, name='view_all_jobs'),
     path('manage_labs/job_details/jobId=<str:jobId>', jobDetails, name='job_details'),
-    path('manage_authenticity_card/saleId=<str:saleId>', manageAuthenticityCard, name='manage_authenticity_card'),
+    path('lab_job_item_details/saleId=<str:saleId>', viewJobItemDetails,
+             name='lab_job_item_details'),
+    path('manage_authenticity_card/saleId=<str:saleId>/frame=<str:frame>', manageAuthenticityCard, name='manage_authenticity_card'),
+    path('lab_contact_Lens_power_card/saleId=<str:saleId>', labcontactLensPowerCard,
+             name='lab_contact_Lens_power_card'),
     path('manage_authenticity_card/create_authenticity_card/', createAuthenticityCard, name='create_authenticity_card'),
     # marketing
     path('manage_tasks/', viewOwnStore, name='manage_tasks'),
@@ -439,6 +443,9 @@ urlpatterns = [
 
     path('manage_central_inventory_products/add_product_image/productId=<int:productId>',
          addProductImage, name='add_product_image'),
+
+    re_path('manage_central_inventory_products/print_qr_tag/qrUrl=(?P<qrUrl>.+?)/price=(?P<price>[0-9]+)/pId=(?P<pId>[0-9]+)',
+         print_qr_tag, name='print_qr_tag'),
     path('manage_own_store_employee/add_own_store_employee_image/employeeId=<int:employeeId>',
          addOwnStoreEmployeeImage, name='add_own_store_employee_image'),
     path('manage_franchise_store_employee/add_franchise_store_employee_image/employeeId=<int:employeeId>',

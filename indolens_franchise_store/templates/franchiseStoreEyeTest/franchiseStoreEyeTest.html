@@ -9,7 +9,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens {{request.session.store_name}} - Create Own Stores</title>
+    <title>Indolens {{request.session.store_name}} - Create Eye Test</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -61,6 +61,12 @@
 
 
 
+
+
+
+
+
+
     </script>
 </head>
 
@@ -72,13 +78,13 @@
 <!-- ===============================================-->
 <main class="main" id="top">
     <div class="container-fluid px-0">
-        {% include 'nav_bar_franchise.html' %}
+        {% include 'nav_bar_store.html' %}
         <div class="content">
 
             <h2 class="mb-4">Eye Testing for Customers</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'franchise_store_eye_test' %}" class="row g-3 needs-validation" method="post"
+                    <form action="{% url 'own_store_eye_test' %}" class="row g-3 needs-validation" method="post"
                           novalidate="">
                         {% csrf_token %}
                         <div class="tab-pane" role="tabpanel"
@@ -106,7 +112,8 @@
                                                placeholder="Name"
                                                required="required" maxlength="70"
                                                onchange="genCustomerObject()"
-                                               type="text" value="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                               type="text" value=""
+                                               oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                         <div class="invalid-feedback">This field is required.</div>
                                     </div>
                                     <div class="mb2 col-6">
@@ -163,7 +170,8 @@
                                                required="required"
                                                onchange="genCustomerObject()"
 
-                                               type="text" value="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                               type="text" value=""
+                                               oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                         <div class="invalid-feedback">This field is required.</div>
                                     </div>
                                     <div class="mb2 col-12">
@@ -225,28 +233,32 @@
                                                    name="RightDvSph"
                                                    placeholder="Right DV SPH"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightDvCyl"
                                                    placeholder="Right DV CYL"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightDvAxis"
                                                    placeholder="Right DV AXIS"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightDvVision"
                                                    placeholder="Right DV VISION"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                     </tr>
 
@@ -257,28 +269,32 @@
                                                    name="RightNvSph"
                                                    placeholder="Right NV SPH"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightNvCyl"
                                                    placeholder="Right NV CYL"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightNvAxis"
                                                    placeholder="Right NV AXIS"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-3">
                                             <input class="form-control"
                                                    name="RightNvVision"
                                                    placeholder="Right NV VISION"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -302,28 +318,32 @@
                                                    name="LeftDvSph"
                                                    placeholder="Left DV SPH"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftDvCyl"
                                                    placeholder="Left DV CYL"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftDvAxis"
                                                    placeholder="Left DV AXIS"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-3">
                                             <input class="form-control"
                                                    name="LeftDvVision"
                                                    placeholder="Left DV VISION"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
 
                                     </tr>
@@ -335,28 +355,32 @@
                                                    name="LeftNvSph"
                                                    placeholder="Left NV SPH"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftNvCyl"
                                                    placeholder="Left NV CYL"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftNvAxis"
                                                    placeholder="Left NV AXIS"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                         <td class="col-6 col-lg-3">
                                             <input class="form-control"
                                                    name="LeftNvVision"
                                                    placeholder="Left NV VISION"
                                                    required="required"
-                                                   type="text" value=""/>
+                                                   type="number" value=""/>
+                                            <div class="invalid-feedback">This field is required.</div>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -367,89 +391,90 @@
                         <div class="mb-3 ">
                             <div class="row mb-3 pt-3 ">
                                 <div class="col-12 col-lg-3">
-                                    <input class="form-check-input" type="checkbox"
-                                           name="unifocal"
-                                           value="1"/>
+                                    <input class="form-check-input main-checkbox" type="checkbox" name="unifocal"
+                                           value="1" onchange="handleCheckboxChange(this)">
                                     <label class="form-check-label">UNIFOCAL</label>
                                 </div>
+
                                 <div class="col-12 col-lg-3">
-                                    <input class="form-check-input" type="checkbox"
-                                           name="bifocal"
-                                           value="1"/>
+                                    <input class="form-check-input main-checkbox" type="checkbox" name="bifocal"
+                                           value="1" onchange="handleCheckboxChange(this)">
                                     <label class="form-check-label">BIFOCAL</label>
                                 </div>
+
                                 <div class="col-12 col-lg-3">
-                                    <input class="form-check-input" type="checkbox"
-                                           name="progressive"
-                                           value="1"/>
+                                    <input class="form-check-input main-checkbox" type="checkbox" name="progressive"
+                                           value="1" onchange="handleCheckboxChange(this)">
                                     <label class="form-check-label">PROGRESSIVE</label>
                                 </div>
-                                <div class="col-12 col-lg-3">
+
+
+                            </div>
+                            <div class="row mb-3 pt-3 ">
+                                <div class="col-12 col-lg-3 mt-3">
                                     <input class="form-check-input" type="checkbox"
                                            name="cr39"
                                            value="1"/>
                                     <label class="form-check-label">CR39</label>
                                 </div>
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-3 mt-3">
                                     <input class="form-check-input" type="checkbox"
                                            name="arc"
                                            value="1"/>
                                     <label class="form-check-label">ARC</label>
                                 </div>
-                                <div class="col-12 col-lg-3">
-                                    <label class="form-label">PDR</label>
-                                    <input class="form-control" type="text"
-                                           name="pdr"/>
-                                </div>
-                                <div class="col-12 col-lg-3">
-                                    <label class="form-label">PDL</label>
-                                    <input class="form-control" type="text"
-                                           name="pdl"/>
-                                </div>
 
-                            </div>
-                            <div class="row mb-3 pt-3 ">
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-3 mt-3">
                                     <input class="form-check-input" type="checkbox"
                                            name="glass"
                                            value="1"/>
                                     <label class="form-check-label">GLASS</label>
                                 </div>
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-3 mt-3">
                                     <input class="form-check-input" type="checkbox"
                                            name="highIndex"
                                            value="1"/>
                                     <label class="form-check-label">HIGH INDEX</label>
                                 </div>
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-3 mt-3">
                                     <input class="form-check-input" type="checkbox"
                                            name="pg"
                                            value="1"/>
                                     <label class="form-check-label">PG</label>
                                 </div>
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-3 mt-3">
                                     <input class="form-check-input" type="checkbox"
                                            name="constant"
                                            value="1"/>
                                     <label class="form-check-label">CONSTANT</label>
                                 </div>
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-3 mt-3">
                                     <input class="form-check-input" type="checkbox"
                                            name="distance"
                                            value="1"/>
                                     <label class="form-check-label">DISTANCE</label>
                                 </div>
-                                <div class="col-12 col-lg-3">
+                                <div class="col-12 col-lg-3 mt-3">
                                     <input class="form-check-input" type="checkbox"
                                            name="near"
                                            value="1"/>
                                     <label class="form-check-label">NEAR</label>
                                 </div>
+                                <div class="col-12 col-lg-3 mt-3">
+                                    <label class="form-label">PDR</label>
+                                    <input class="form-control" type="text"
+                                           name="pdr"/>
+                                </div>
+                                <div class="col-12 col-lg-3 mt-3">
+                                    <label class="form-label">PDL</label>
+                                    <input class="form-control" type="text"
+                                           name="pdl"/>
+                                </div>
                             </div>
                         </div>
 
                         <div class="col-12">
-                            <button class="btn btn-primary" type="submit">Save</button>
+                            <button class="btn btn-primary" type="submit">Submit</button>
                         </div>
                     </form>
                 </div>
@@ -481,7 +506,22 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 {{ customers_list|json_script:"customersList" }}
 <script>
-    function updateCustomerFields(selectCustomerField) {
+    function handleCheckboxChange(checkbox) {
+        // Get all main checkboxes
+        const mainCheckboxes = document.querySelectorAll('.main-checkbox');
+
+        // If the current checkbox is checked, uncheck the other main checkboxes
+        if (checkbox.checked) {
+            mainCheckboxes.forEach(function (cb) {
+                if (cb !== checkbox) {
+                    cb.checked = false;
+                }
+            });
+        }
+    }
+</script>
+<script>
+   function updateCustomerFields(selectCustomerField) {
     var customers_list = JSON.parse(document.getElementById('customersList').textContent);
     let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
 
@@ -516,6 +556,7 @@
         customerDataTextarea.value = '';
     }
 }
+
 </script>
 </body>
 </html>

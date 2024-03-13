@@ -8,7 +8,7 @@ class Product:
             self.request_id, self.store_id, self.store_type, self.request_product_id,
             self.request_product_quantity, self.request_product_unit_cost, self.request_status, self.delivery_status,
             self.is_requested, self.request_to_store_id, self.payment_status, self.comment, self.store_product_created_on,
-            self.store_product_created_by, self.store_product_last_updated_on, self.store_product_last_updated_by,
+            self.store_product_created_by, self.request_product_last_updated_on, self.store_product_last_updated_by,
             self.product_id, self.product_name, self.product_description, self.product_images, self.product_qr_code,
             self.category_id, self.brand_id, self.material_id, self.frame_type_id, self.frame_shape_id,
             self.color_id, self.unit_id, self.origin, self.cost_price, self.sale_price, self.model_number,
@@ -16,7 +16,7 @@ class Product:
             self.status, self.discount, self.created_on,
             self.created_by, self.last_updated_on, self.last_updated_by, self.creator_name, self.updater_name,
             self.category_name, self.material_name, self.frame_type_name, self.shape_name, self.color_name,
-            self.unit_name, self.brand_name, self.store_name, self.sender_store
+            self.unit_name, self.brand_name, self.store_name, self.sender_store, self.sender_store_quantity
 
         ) = values
 
@@ -40,7 +40,7 @@ class Product:
             'comment': self.comment,
             'request_product_created_on': self.store_product_created_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.store_product_created_on, datetime) else None,
             'request_product_created_by': self.store_product_created_by,
-            'request_product_last_updated_on': self.store_product_last_updated_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.store_product_last_updated_on, datetime) else None,
+            'request_product_last_updated_on': self.request_product_last_updated_on.strftime('%d/%m/%Y %I:%M %p') if isinstance(self.request_product_last_updated_on, datetime) else None,
             'request_product_last_updated_by': self.store_product_last_updated_by,
 
             'product_id': self.product_id,
@@ -82,6 +82,7 @@ class Product:
             'brand_name': self.brand_name,
             'store_name': self.store_name,
             'sender_store': self.sender_store,
+            'sender_store_quantity': self.sender_store_quantity,
         }
 
 
