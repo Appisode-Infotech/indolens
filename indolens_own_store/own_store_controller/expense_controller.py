@@ -116,7 +116,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                 new_data = {re.sub(r'\[\d+\]', '', key): value for key, value in data.items()}
                 if new_data.get('product_category_id') == '2':
                     discount_percentage = new_data.get('discount_percentage')
-                    linked_items = [int(x) for x in new_data.get('linkedFrameIds')]
+                    linked_items = [int(x) for x in new_data.get('linkedFrameIds', [])]
                     if discount_percentage == "":
                         discount_percentage = 0
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)

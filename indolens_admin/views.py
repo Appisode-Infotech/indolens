@@ -90,7 +90,6 @@ def resetPassword(request, code):
 
 def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-
         own_stores, status_code = own_store_controller.get_all_own_stores('All')
         franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
         sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
