@@ -233,7 +233,9 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                          order_id, getIndianTime(),
                                                                          convert_to_db_date_format(
                                                                              billingDetailsData.get('estDeliveryDate')))
-            send_notification_controller.send_email(subject, body, customerData.get('email'))
+            response = send_notification_controller.send_email(subject, body, customerData.get('email'))
+            print("email response")
+            print(response)
 
             return {
                 "status": True,
