@@ -2996,7 +2996,6 @@ def viewRejectedStockRequests(request):
 def changeStockRequestStatus(request, route, requestId, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.POST:
-            # Data is present in POST
             response, status_code = central_inventory_controller.change_stock_request_status_with_reason(requestId,
                                                                                                          status,
                                                                                                          request.session.get(
