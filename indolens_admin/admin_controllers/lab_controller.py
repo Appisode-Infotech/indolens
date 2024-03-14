@@ -113,10 +113,8 @@ def get_lab_by_id(labid):
             }, 200
 
     except pymysql.Error as e:
-        print(e)
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
-        print(e)
         return {"status": False, "message": str(e)}, 301
 
 
