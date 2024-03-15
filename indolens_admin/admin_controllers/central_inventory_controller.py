@@ -742,9 +742,9 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                         }, 200
                 else:
                     update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
-                                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', 
+                                        last_updated_on = '{getIndianTime()}', last_updated_by = {updator}, 
                                         delivery_status = 3, comment = '{comments}'
-                                        WHERE request_products_id = '{requestId}' """
+                                        WHERE request_products_id = {requestId}  """
                     cursor.execute(update_stock_request_query)
                     return {
                         "status": True,
@@ -761,7 +761,7 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                 if status == 1:
                     if available_quantity >= quantity:
                         update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
-                                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', 
+                                        last_updated_on = '{getIndianTime()}', last_updated_by = {updator}, 
                                         delivery_status = 1, comment = '{comments}'
                                         WHERE request_products_id = '{requestId}' """
                         cursor.execute(update_stock_request_query)
@@ -783,9 +783,9 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                             "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in store"
                         }, 200
                 else:
-                    update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}'
+                    update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
                                                         last_updated_on = '{getIndianTime()}', 
-                                                        last_updated_by = '{updator}', delivery_status = 3, 
+                                                        last_updated_by = {updator}, delivery_status = 3, 
                                                         comment = '{comments}'
                                                         WHERE request_products_id = '{requestId}' """
                     cursor.execute(update_stock_request_query)

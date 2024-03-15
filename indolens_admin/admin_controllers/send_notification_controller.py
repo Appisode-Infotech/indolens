@@ -31,10 +31,6 @@ def send_email(subject, body, to_email):
 
     emailjs = get_emailjs_attribute()
     if any(emailjs.values()):
-        print(emailjs.get('emailjs_url'))
-        print(emailjs.get('emailjs_template_id'))
-        print(emailjs.get('emailjs_user_id'))
-        print(emailjs.get('emailjs_recaptcha'))
 
         url = emailjs.get('emailjs_url')
         data = {
