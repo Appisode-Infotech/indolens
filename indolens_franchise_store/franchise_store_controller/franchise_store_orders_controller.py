@@ -286,7 +286,7 @@ def get_all_customer_orders(customerId):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
-def franchise_order_status_change(orderID, orderStatus):
+def franchise_order_status_change(orderID, orderStatus, updated_by, store_id):
     status_conditions = {
         "2": "Processing",
         "3": "Ready",
@@ -299,7 +299,8 @@ def franchise_order_status_change(orderID, orderStatus):
     try:
         with connection.cursor() as cursor:
             get_order_status_change_query = f"""
-                UPDATE sales_order SET order_status = {orderStatus}
+                UPDATE sales_order SET order_status = {orderStatus}, updated_on = '{getIndianTime()}', 
+                updated_by_employee_id = {updated_by}, updated_by_store_id = {store_id}, updated_by_store_type = 2,
                 WHERE order_id = '{orderID}'
                 """
             cursor.execute(get_order_status_change_query)
@@ -431,7 +432,9 @@ def franchise_payment_status_change(order_data, store_id, created_by):
             order_payment_status_change_query = f"""
                             UPDATE sales_order 
                             SET 
-                                payment_status = {order_data['order_payment_status']},
+                                payment_status = {order_data['order_payment_status']}, updated_on = '{getIndianTime()}',
+                                updated_by_employee_id = {created_by}, updated_by_store_id = {store_id}, 
+                                updated_by_store_type = 2,
                                 amount_paid = 
                                     CASE 
                                         WHEN {order_data['order_payment_status']} = 2 THEN amount_paid + {order_data['order_payment_amount']}

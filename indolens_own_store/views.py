@@ -263,7 +263,9 @@ def orderInvoice(request, orderId):
 def orderStatusChange(request, orderId, status):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        order_update, status_code = store_orders_controller.order_status_change(orderId, status)
+        order_update, status_code = store_orders_controller.order_status_change(orderId, status,
+                                                                                request.session.get('id'),
+                                                                                assigned_store)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:

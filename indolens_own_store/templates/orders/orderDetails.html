@@ -522,7 +522,7 @@
                                            type="hidden" >
                                 <div class="col-12">
                                     <h5 class="mb-3">Payment mode</h5>
-                                    <select
+                                    <select id="payment_mode"
                                             name="payment_mode" class="form-select"
                                             aria-label="Default select example"
                                             required="required">
@@ -586,9 +586,12 @@
 }
    function changePaymentStatus(statusWidget, order_id) {
     console.log(statusWidget.value);
-    console.log(order_id);
      $('#orderId').val(order_id);
      $('#orderPaymentStatus').val(statusWidget.value);
+
+<!--     hideOptionsBasedOnPaymentStatus(statusWidget.value);-->
+
+    console.log(statusWidget.value);
 
      var totalCost = {{ order_detail.0.total_cost }};
     var discountCost = {{ order_detail.0.discount_cost }};
@@ -610,37 +613,54 @@
 
 }
 
+<!--function hideOptionsBasedOnPaymentStatus(paymentStatus) {-->
+<!--    var select = document.getElementById("payment_mode");-->
+<!--    if (paymentStatus === '3') { // If orderPaymentStatus is '3'-->
+<!--        // Hide options for CREDIT Card and Debit Card-->
+<!--        for (var i = 0; i < select.options.length; i++) {-->
+<!--            if (select.options[i].value === '3' || select.options[i].value === '4') {-->
+<!--                select.options[i].style.display = 'none';-->
+<!--            }-->
+<!--        }-->
+<!--    } else {-->
+<!--        // Show all options-->
+<!--        for (var i = 0; i < select.options.length; i++) {-->
+<!--            select.options[i].style.display = 'block';-->
+<!--        }-->
+<!--    }-->
+<!--}-->
+
 
 
 </script>
-<script>
-    document.getElementById('cancelButton').addEventListener('click', function() {
-        var status = "{{order_detail.0.payment_status}}";
-        var order_status = "{{order_detail.0.order_status}}";
-        var select = document.getElementById("paymentStatusSelect");
+<!--<script>-->
+<!--    document.getElementById('cancelButton').addEventListener('click', function() {-->
+<!--        var status = "{{order_detail.0.payment_status}}";-->
+<!--        var order_status = "{{order_detail.0.order_status}}";-->
+<!--        var select = document.getElementById("paymentStatusSelect");-->
 
-        for (var i = 0; i < select.options.length; i++) {
-            if (select.options[i].value === status) {
-                select.selectedIndex = i;
+<!--        for (var i = 0; i < select.options.length; i++) {-->
+<!--            if (select.options[i].value === status) {-->
+<!--                select.selectedIndex = i;-->
 
-                // Disable options before the selected option
-                for (var j = 0; j < i; j++) {
-                    select.options[j].disabled = true;
-                }
+<!--                // Disable options before the selected option-->
+<!--                for (var j = 0; j < i; j++) {-->
+<!--                    select.options[j].disabled = true;-->
+<!--                }-->
 
-                // Enable options after the selected option
-                for (var k = i + 1; k < select.options.length; k++) {
-                    select.options[k].disabled = false;
-                }
-                if (order_status == 7){
-                    select.options[1].disabled = true;
-                }
+<!--                // Enable options after the selected option-->
+<!--                for (var k = i + 1; k < select.options.length; k++) {-->
+<!--                    select.options[k].disabled = false;-->
+<!--                }-->
+<!--                if (order_status == 7){-->
+<!--                    select.options[1].disabled = true;-->
+<!--                }-->
 
-                break;
-            }
-        }
-    });
-</script>
+<!--                break;-->
+<!--            }-->
+<!--        }-->
+<!--    });-->
+<!--</script>-->
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -799,4 +819,48 @@
 
 
 </script>
+<script>
+    // Function to handle modal close event
+    function handleModalClose() {
+        var status = "{{order_detail.0.payment_status}}";
+        var order_status = "{{order_detail.0.order_status}}";
+        var select = document.getElementById("paymentStatusSelect");
+
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === status) {
+                select.selectedIndex = i;
+
+                // Disable options before the selected option
+                for (var j = 0; j < i; j++) {
+                    select.options[j].disabled = true;
+                }
+
+                // Enable options after the selected option
+                for (var k = i + 1; k < select.options.length; k++) {
+                    select.options[k].disabled = false;
+                }
+                if (order_status == 7){
+                    select.options[1].disabled = true;
+                }
+
+                break;
+            }
+        }
+    }
+
+    // Add event listener to the modal for close event
+    $('#order_status_change_modal').on('hidden.bs.modal', function (e) {
+        handleModalClose();
+    });
+
+    // Add event listener to the document for click event
+    document.addEventListener('click', function(event) {
+        var target = event.target;
+        // Check if the clicked element is outside the modal
+        if (!target.closest('#order_status_change_modal')) {
+            handleModalClose();
+        }
+    });
+</script>
+
 </html>
