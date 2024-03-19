@@ -240,7 +240,7 @@ def create_store_stock_request(stock_obj):
 def view_all_store_stock_request(store_id, status):
     try:
         with connection.cursor() as cursor:
-            get_all_out_of_stock_product_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
+            get_all_stock_request_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
                                     pm.material_name, ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, 
                                     b.brand_name, 
                                     CASE
@@ -265,7 +265,7 @@ def view_all_store_stock_request(store_id, status):
                                     WHERE ( rp.store_id = {store_id} OR rp.request_to_store_id = {store_id}) AND rp.request_status LIKE '{status}' 
                                     ORDER BY rp.request_products_id DESC"""
 
-            cursor.execute(get_all_out_of_stock_product_query)
+            cursor.execute(get_all_stock_request_query)
             product_list = cursor.fetchall()
             return {
                 "status": True,

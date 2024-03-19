@@ -95,7 +95,7 @@
                             <label class="form-label" for="color">Color</label>
 
                             <input class="form-control" id="color" name="color_name" required=""
-                                   type="text" value=""/>
+                                   type="text" value="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Code is mandatory.</div>
                         </div>
 

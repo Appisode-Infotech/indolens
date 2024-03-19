@@ -285,7 +285,7 @@
                             <h2 class="mb-0">Products ({{products_list|length}})</h2>
                         </div>
                     </div>
-                    <div data-list='{"valueNames":["product","price","category","brand","inStock","publishedOn"],"page":10,"pagination":true}'
+                    <div data-list='{"valueNames":["slno","product","price","category","brand","inStock","publishedOn"],"page":10,"pagination":true}'
                          id="products">
                         <div class="mb-4">
                             <div class="row g-3">
@@ -307,8 +307,9 @@
                                 <table class="table fs--1 mb-0" >
                                 <thead>
                                 <tr>
-                                    <th class="sort white-space-nowrap align-middle fs--2" scope="col"
-                                        style="width:70px;"></th>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                         scope="col" style="width:350px;">PRODUCT NAME
                                     </th>
@@ -334,14 +335,7 @@
                                 {% for stock in products_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                     data-category="{{ stock.category_name }}">
-                                    <td class="align-middle white-space-nowrap py-0">
-                                        <a href="{{ MEDIA_URL }}{{ stock.product_images.0 }}" target="_blank">
-                                            <div class="avatar avatar-m">
-                                                <img alt="" class="rounded-circle"
-                                                     src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
-                                            </div>
-                                        </a>
-                                    </td>
+                                    <td class="fs--1 align-middle px-0 py-3 slno"></td>
 
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_products' stock.product_id %}">
@@ -396,7 +390,7 @@
                 </div>
                 <div class="col-12 col-xxl-2">
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-7 border-y border-300">
-                        <div data-list='{"valueNames":["order","total","customer","payment_status","fulfilment_status","createdby","created_on","updated_by","updated_on","date"],"page":6}'>
+                        <div data-list='{"valueNames":["slno","order","total","customer","payment_status","fulfilment_status","createdby","created_on","updated_by","updated_on","date"],"page":6}'>
                             <div class="row align-items-end justify-content-between pb-5 g-3">
                                 <div class="col-auto">
                                     <h3>Sales ({{sales_data|length}}) </h3>
@@ -424,6 +418,9 @@
                                 <table class="table table-sm fs--1 mb-0" >
                                 <thead>
                                 <tr>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
                                         style="width:5%;">ORDER ID
                                     </th>
@@ -459,6 +456,7 @@
                                 {% for order in sales_data %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                 data-category="{{ order.order_status }}">
+                                    <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
                                     </td>
@@ -573,7 +571,7 @@
                 </div>
                  <div class="col-12 col-xxl-2">
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-7 border-y border-300">
-                        <div data-list='{"valueNames":["id","reason","amount","date","createdBy","createdOn"],"page":6}'>
+                        <div data-list='{"valueNames":["slno","id","reason","amount","date","createdBy","createdOn"],"page":6}'>
                             <div class="row align-items-end justify-content-between pb-5 g-3">
                                 <div class="col-auto">
                                     <h3>Expense ({{store_expense_list|length}}) </h3>
@@ -601,6 +599,9 @@
                                 <table class="table table-sm fs--1 mb-0">
                                     <thead>
                                     <tr>
+                                        <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
                                         <th class="sort white-space-nowrap align-middle pe-3" data-sort="id"
                                             scope="col"
                                             style="width:5%;">EXPENSE ID
@@ -626,6 +627,7 @@
                                     {% for expense in store_expense_list %}
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                         data-category="{{ order.order_status }}">
+                                        <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                         <td class="id align-middle white-space-nowrap py-0">
                                             #{{expense.store_expense_id}}</a>
                                         </td>
@@ -693,12 +695,26 @@
           navbarVertical.classList.add('navbar-darker');
         }
 
-
-
-
-
-
     </script>
+    <script>
+  // Function to add serial numbers to table rows
+  function addSerialNumbersToTables() {
+    var tables = document.querySelectorAll('table');
+    tables.forEach(function(table) {
+      // Check if the table contains the class 'sort'
+      if (table.querySelector('.sort')) {
+        var rows = table.querySelectorAll('tbody tr');
+        for (var i = 0; i < rows.length; i++) {
+          var cell = rows[i].querySelector('.slno');
+          cell.textContent = i + 1;
+        }
+      }
+    });
+  }
+
+  // Call the function to add serial numbers
+  addSerialNumbersToTables();
+</script>
 </main>
 <!-- ===============================================-->
 <!--    End of Main Content-->

@@ -87,7 +87,7 @@
                             <label class="form-label" for="typeName">Frame Type Name</label>
 
                             <input class="form-control" id="typeName" name="frame_type_name" required="" type="text"
-                                   value=""/>
+                                   value="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Frame Type Name is mandatory.</div>
                         </div>
 

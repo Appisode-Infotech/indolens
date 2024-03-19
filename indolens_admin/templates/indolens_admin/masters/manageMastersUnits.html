@@ -141,7 +141,7 @@
                                         <label class="form-label" for="unitName">Unit name</label>
 
                                         <input class="form-control" id="unitName" name="unit_name" required=""
-                                               type="text"
+                                               type="text" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"
                                                value=""/>
                                         <div class="invalid-feedback">Unit Name is mandatory.</div>
 
@@ -179,7 +179,7 @@
                                     {% csrf_token %}
                                     <div class="col-md-12">
                                         <input hidden class="form-control" id="edit_unit_id" name="unit_id" required=""
-                                               type="text"
+                                               type="text" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"
                                                value=""/>
                                         <label class="form-label" for="unitName">Unit name</label>
 

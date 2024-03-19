@@ -88,7 +88,7 @@
                             <label class="form-label" for="brandName">Brand name</label>
 
                             <input class="form-control" id="brandName" name="brand_name" required="" type="text"
-                                   value=""/>
+                                   value="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Brand name is mandatory.</div>
                         </div>
 <!--                        <div class="col-md-6">-->

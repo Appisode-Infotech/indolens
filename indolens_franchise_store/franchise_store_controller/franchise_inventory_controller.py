@@ -228,25 +228,32 @@ def create_store_stock_request(stock_obj):
 def view_all_store_stock_request(store_id, status):
     try:
         with connection.cursor() as cursor:
-            get_all_out_of_stock_product_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
-                                    pm.material_name, ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, 
-                                    b.brand_name, os.store_name
-                                    FROM request_products As rp
-                                    LEFT JOIN central_inventory AS ci ON ci.product_id = rp.product_id
-                                    LEFT JOIN admin AS creator ON rp.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON rp.last_updated_by = updater.admin_id
-                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
-                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
-                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
-                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
-                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
-                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
-                                    LEFT JOIN franchise_store os ON os.store_id = {store_id}
-                                    WHERE rp.store_id = {store_id} AND rp.request_status LIKE '{status}' AND rp.store_type = 2 
-                                    ORDER BY rp.request_products_id DESC"""
+            get_all_stock_request_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
+                                                pm.material_name, ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, 
+                                                b.brand_name, 
+                                                CASE
+                                                    WHEN rp.store_type = 1 THEN os.store_name
+                                                    ELSE fstore.store_name
+                                                END AS store_name,
+                                                from_store.store_name
+                                                FROM request_products As rp
+                                                LEFT JOIN central_inventory AS ci ON ci.product_id = rp.product_id
+                                                LEFT JOIN admin AS creator ON rp.created_by = creator.admin_id
+                                                LEFT JOIN admin AS updater ON rp.last_updated_by = updater.admin_id
+                                                LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
+                                                LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
+                                                LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
+                                                LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
+                                                LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
+                                                LEFT JOIN units AS u ON ci.unit_id = u.unit_id
+                                                LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
+                                                LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
+                                                LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
+                                                LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
+                                                WHERE ( rp.store_id = {store_id} OR rp.request_to_store_id = {store_id}) AND rp.request_status LIKE '{status}' 
+                                                ORDER BY rp.request_products_id DESC"""
 
-            cursor.execute(get_all_out_of_stock_product_query)
+            cursor.execute(get_all_stock_request_query)
             product_list = cursor.fetchall()
             return {
                 "status": True,

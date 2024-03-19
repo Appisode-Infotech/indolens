@@ -87,7 +87,7 @@
                             <label class="form-label" for="materialsName">Materials NAME</label>
 
                             <input class="form-control" id="materialsName" name="material_name" required="" type="text"
-                                   value="{{material.material_name}}"/>
+                                   value="{{material.material_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Materials NAME is mandatory.</div>
                         </div>
 

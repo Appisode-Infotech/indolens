@@ -87,7 +87,7 @@
                             <label class="form-label" for="shapeName">Frame Shape name</label>
 
                             <input class="form-control" id="shapeName" name="shape_name" required="" type="text"
-                                   value=""/>
+                                   value="" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Frame Shape name is mandatory.</div>
                         </div>
 

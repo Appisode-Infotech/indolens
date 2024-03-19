@@ -88,7 +88,7 @@
                             <label class="form-label" for="categoryName">Category name</label>
 
                             <input class="form-control" id="categoryName" name="category_name" required="" type="text"
-                                   value="{{category.category_name}}"/>
+                                   value="{{category.category_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Category Name is mandatory.</div>
                         </div>
                         <div class="col-md-6">
