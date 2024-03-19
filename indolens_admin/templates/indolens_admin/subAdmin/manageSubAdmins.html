@@ -118,9 +118,11 @@
                                         </div>
                                     </div>
                                 </div>
+                                {% if request.session.id == 1 %}
                                 <div class="col-auto"><a class="btn btn-primary px-5"
                                                          href="{% url 'create_sub_admin' %}"><i
                                         class="fa-solid fa-plus me-2"></i>Add admin</a></div>
+                                {% endif %}
                             </div>
                         </div>
                     </div>
@@ -230,6 +232,7 @@
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
                                                                                              href="{% url 'view_sub_admin' sub_admin.admin_id %}">View</a>
+                                            {% if request.session.id == 1 %}
                                             <a class="dropdown-item"
                                                href="{% url 'edit_sub_admin' sub_admin.admin_id %}">Update Profile</a>
                                             <a class="dropdown-item"
@@ -263,6 +266,7 @@
                                                data-action-url="{% url 'enable_disable_sub_admin' status sub_admin.admin_id 0 %}">
                                                 Make Inactive
                                             </a>
+                                            {% endif %}
                                             {% endif %}
                                         </div>
                                     </div>

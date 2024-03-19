@@ -47,6 +47,7 @@ def login(request):
                     'is_admin_logged_in': True,
                     'id': response['admin'].admin_id,
                     'name': response['admin'].name,
+                    'role': response['role'].role,
                     'profile_pic': response['admin'].profile_pic,
                 })
                 return redirect('dashboard')
