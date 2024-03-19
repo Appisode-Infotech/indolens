@@ -148,15 +148,15 @@
                                                        type="text" value=""/>
                                                 <div class="invalid-feedback">Enter valid Reason!</div>
                                             </div>
-                                            <div class="col-12">
-                                                <label class="form-label" for="expense_reason">Expense Date</label>
+<!--                                            <div class="col-12">-->
+<!--                                                <label class="form-label" for="expense_reason">Expense Date</label>-->
 
-                                                <input class="form-control datetimepicker"
-                                                       data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'
-                                                       id="datepicker"
-                                                       placeholder="dd/mm/yyyy" name="expense_date" type="text"
-                                                       disabled/>
-                                            </div>
+<!--                                                <input class="form-control datetimepicker"-->
+<!--                                                       data-options='{"disableMobile":true,"dateFormat":"d/m/Y"}'-->
+<!--                                                       id="datepicker"-->
+<!--                                                       placeholder="dd/mm/yyyy" name="expense_date" type="text"-->
+<!--                                                       disabled/>-->
+<!--                                            </div>-->
                                             <input name="created_by" required type="hidden"
                                                    value="{{ request.session.id }}">
                                             <input name="store_id" required type="hidden"
@@ -304,6 +304,7 @@
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+
 
 </body>
 
