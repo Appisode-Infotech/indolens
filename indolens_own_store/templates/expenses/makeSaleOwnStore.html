@@ -121,43 +121,6 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -716,7 +679,7 @@ function addLensContainer() {
             <input id="discount_value_field[${productCardCount}]" type="hidden" class="form-check" name="discount_percentage[${productCardCount}]" required="required"
                 readonly />
             <input class="form-check-input" type="checkbox" name="discount_checked[${productCardCount}]"
-                id="bootstrap-wizard-validation-wizard-checkbox[${productCardCount}]" />
+                id="bootstrap-wizard-validation-wizard-checkbox[${productCardCount}]" value="off"/>
             <label id="discount_value[${productCardCount}]" class="form-check-label text-900"
                 for="bootstrap-wizard-validation-wizard-checkbox[${productCardCount}]"></label>
         </div>
@@ -1551,7 +1514,7 @@ function addStockContactLensContainer() {
                    required="required" readonly/>
             <input class="form-check-input" type="checkbox"
                    name="discount_checked[${productCardCount}]"
-                   id="bootstrap-wizard-validation-wizard-checkbox_cl"/>
+                   id="bootstrap-wizard-validation-wizard-checkbox_cl" value="off"/>
             <label id="discount_value[${productCardCount}]"
                    class="form-check-label text-900"
                    for="bootstrap-wizard-validation-wizard-checkbox"></label>
@@ -1794,7 +1757,7 @@ function addRxContactLensContainer() {
                    required="required" readonly/>
             <input class="form-check-input" type="checkbox"
                    name="discount_checked[${productCardCount}]"
-                   id="bootstrap-wizard-validation-wizard-checkbox_cl"/>
+                   id="bootstrap-wizard-validation-wizard-checkbox_cl" value="off"/>
             <label id="discount_value[${productCardCount}]"
                    class="form-check-label text-900"
                    for="bootstrap-wizard-validation-wizard-checkbox"></label>
@@ -2020,7 +1983,7 @@ function addOtherProductsContainer() {
                    required="required" readonly/>
             <input class="form-check-input" type="checkbox"
                    name="discount_checked[${productCardCount}]"
-                   id="bootstrap-wizard-validation-wizard-checkbox_cl"/>
+                   id="bootstrap-wizard-validation-wizard-checkbox_cl" value="off"/>
             <label id="discount_value[${productCardCount}]"
                    class="form-check-label text-900"
                    for="discount_value_field[${productCardCount}]"></label>
@@ -2303,9 +2266,11 @@ function updateLensProductFields(selectElement, cardIndex) {
             let discountPercentage = parseFloat(discountValueField.value) || 0;
             let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
             productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+            discountCheckbox.value = 'on';
         } else {
             productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
             productProductTotalField.innerHTML = '';
+            discountCheckbox.value = 'off';
         }
     });
 }
@@ -2386,9 +2351,11 @@ function updateContactLensProductFields(selectElement, cardIndex) {
             let discountPercentage = parseFloat(discountValueField.value) || 0;
             let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
             productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+            discountCheckbox.value = 'on';
         } else {
             productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
             productProductTotalField.innerHTML = '';
+            discountCheckbox.value = 'off';
         }
     });
 }
@@ -2463,9 +2430,11 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
             let discountPercentage = parseFloat(discountValueField.value) || 0;
             let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
             productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+            discountCheckbox.value = 'on';
         } else {
             productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
             productProductTotalField.innerHTML = '';
+            discountCheckbox.value = 'off';
         }
     });
 }
@@ -2531,9 +2500,11 @@ function updateOtherProductFields(selectElement, cardIndex) {
             let discountPercentage = parseFloat(discountValueField.value) || 0;
             let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
             productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+            discountCheckbox.value = 'on';
         } else {
             productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
             productProductTotalField.innerHTML = '';
+            discountCheckbox.value = 'off';
         }
     });
 
@@ -2576,6 +2547,7 @@ function getProductsData() {
         let cartDataField = document.querySelector(`[name='cartData']`);
         // Now, productsArray contains the data of form elements inside all product_widgets
         let jsonData = JSON.stringify(productsArray);
+        console.log(jsonData);
         cartDataField.value = jsonData;
 
 
