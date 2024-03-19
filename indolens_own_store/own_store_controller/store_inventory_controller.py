@@ -262,7 +262,7 @@ def view_all_store_stock_request(store_id, status):
                                     LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
                                     LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
                                     LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
-                                    WHERE ( rp.store_id = {store_id} OR rp.request_to_store_id = {store_id}) AND rp.request_status LIKE '{status}' 
+                                    WHERE ( ( rp.store_id = {store_id} AND rp.store_type = 1 ) OR rp.request_to_store_id = {store_id}) AND rp.request_status LIKE '{status}' 
                                     ORDER BY rp.request_products_id DESC"""
 
             cursor.execute(get_all_stock_request_query)

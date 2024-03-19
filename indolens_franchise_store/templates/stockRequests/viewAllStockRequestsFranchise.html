@@ -179,8 +179,12 @@
                                     <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 requestDate">
+                                <td class="align-middle white-space-nowrap ps-3 py-4 req_date">
+                                    {% if stock.is_requested == 1 %}
                                     <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
+                                    {% else %}
+                                    NOT APPLICABLE
+                                    {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 moved_date">
                                     {% if stock.delivery_status == 1 or stock.delivery_status == 2 %}
