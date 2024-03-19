@@ -174,7 +174,6 @@
                             </thead>
                             <tbody class="list" id="project-list-table-body">
                             {% for sub_admin in sub_admin_list %}
-                            {% if sub_admin.admin_id == request.session.id %}
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
@@ -273,7 +272,6 @@
                                     </div>
                                 </td>
                             </tr>
-                            {% endif %}
                             {% endfor %}
                             </tbody>
                         </table>
