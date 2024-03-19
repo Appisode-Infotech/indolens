@@ -302,7 +302,7 @@ def get_order_details(orderId):
                     c.*, ci.*, pc.category_name, pm.material_name,
                     ft.frame_type_name, fsh.shape_name,co.color_name, u.unit_name, b.brand_name,
                     (ci.product_gst / 2) AS product_gst_half,
-                    (so.product_total_cost - (so.product_total_cost * ci.product_gst / 100)) AS discounted_total_cost
+                    (so.unit_sale_price - (so.unit_sale_price * ci.product_gst / 100)) AS discounted_total_cost
                 FROM sales_order AS so
                 LEFT JOIN customers AS c ON c.customer_id = so.customer_id
                 LEFT JOIN central_inventory AS ci ON ci.product_id = so.product_id
