@@ -3087,14 +3087,15 @@ def unAssignOtherEmployeeOwnStore(request, route, otherEmployeeId, storeId):
 def assignFranchiseStoreOwner(request, route):
     if request.method == 'POST':
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
-                                                                                          request.POST[
-                                                                                              'store_id'])
+                                                                                          request.POST['store_id'],
+                                                                                          'Franchise Owner')
         url = reverse('manage_franchise_owners', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignFranchiseStoreOwner(request, route, FranchiseOwnerId, storeId):
-    response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOwnerId, storeId)
+    response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOwnerId, storeId,
+                                                                                        'Franchise Owner')
     url = reverse('manage_franchise_owners', kwargs={'status': route})
     return redirect(url)
 
@@ -3102,14 +3103,15 @@ def unAssignFranchiseStoreOwner(request, route, FranchiseOwnerId, storeId):
 def assignFranchiseStoreOptimetry(request, route):
     if request.method == 'POST':
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
-                                                                                          request.POST[
-                                                                                              'store_id'])
+                                                                                          request.POST['store_id'],
+                                                                                          'Optometry')
         url = reverse('manage_franchise_optimetry', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignFranchiseStoreOptimetry(request, route, FranchiseOptimetryId, storeId):
-    response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOptimetryId, storeId)
+    response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOptimetryId, storeId,
+                                                                                        'Optometry')
     url = reverse('manage_franchise_optimetry', kwargs={'status': route})
     return redirect(url)
 
@@ -3117,15 +3119,15 @@ def unAssignFranchiseStoreOptimetry(request, route, FranchiseOptimetryId, storeI
 def assignFranchiseStoreSalesExecutive(request, route):
     if request.method == 'POST':
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
-                                                                                          request.POST[
-                                                                                              'store_id'])
+                                                                                          request.POST['store_id'],
+                                                                                          'Sales Executive')
         url = reverse('manage_franchise_sales_executives', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignFranchiseStoreSalesExecutive(request, route, FranchiseSalesExecutiveId, storeId):
     response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseSalesExecutiveId,
-                                                                                        storeId)
+                                                                                        storeId, 'Sales Executive')
     url = reverse('manage_franchise_sales_executives', kwargs={'status': route})
     return redirect(url)
 
@@ -3133,15 +3135,15 @@ def unAssignFranchiseStoreSalesExecutive(request, route, FranchiseSalesExecutive
 def assignFranchiseStoreOtherEmployee(request, route):
     if request.method == 'POST':
         response, status_code = franchise_manager_controller.assign_store_franchise_owner(request.POST['emp_id'],
-                                                                                          request.POST[
-                                                                                              'store_id'])
+                                                                                          request.POST['store_id'],
+                                                                                          'Store Employee')
         url = reverse('manage_franchise_other_employees', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignFranchiseStoreOtherEmployee(request, route, FranchiseOtherEmployeeId, storeId):
     response, status_code = franchise_manager_controller.unassign_store_franchise_owner(FranchiseOtherEmployeeId,
-                                                                                        storeId)
+                                                                                        storeId, 'Store Employee')
     url = reverse('manage_franchise_other_employees', kwargs={'status': route})
     return redirect(url)
 

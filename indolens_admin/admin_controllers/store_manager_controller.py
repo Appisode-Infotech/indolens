@@ -176,11 +176,11 @@ def assignStore(empId, storeId):
             # Execute the update query using your cursor
             cursor.execute(assign_store_manager_query)
 
-            get_manager_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
+            get_employee_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
             """
 
             # Execute the update query using your cursor
-            cursor.execute(get_manager_query)
+            cursor.execute(get_employee_query)
             manager_data = cursor.fetchone()
 
             get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
@@ -190,7 +190,7 @@ def assignStore(empId, storeId):
             store_data = cursor.fetchone()
 
             subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data[0])
-            body = email_template_controller.get_employee_assigned_store_email_body(manager_data[0], 'Manager',
+            body = email_template_controller.get_employee_assigned_store_email_body(manager_data[0], 'Optometry',
                                                                                     manager_data[1],
                                                                                     store_data[0],
                                                                                     store_data[1], store_data[2])
@@ -220,11 +220,10 @@ def unAssignStore(empId, storeId):
             """
             # Execute the update query using your cursor
             cursor.execute(unassign_store_manager_query)
-            get_manager_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
+            get_employee_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
                         """
-
             # Execute the update query using your cursor
-            cursor.execute(get_manager_query)
+            cursor.execute(get_employee_query)
             manager_data = cursor.fetchone()
 
             get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
@@ -234,7 +233,7 @@ def unAssignStore(empId, storeId):
             store_data = cursor.fetchone()
 
             subject = email_template_controller.get_employee_unassigned_store_email_subject(manager_data[0])
-            body = email_template_controller.get_employee_unassigned_store_email_body(manager_data[0], 'Manager',
+            body = email_template_controller.get_employee_unassigned_store_email_body(manager_data[0], 'Optometry',
                                                                                       manager_data[1], store_data[0],
                                                                                       store_data[1], store_data[2])
 

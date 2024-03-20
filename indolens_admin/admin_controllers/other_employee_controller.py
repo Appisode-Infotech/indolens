@@ -6,6 +6,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -34,6 +35,11 @@ def create_other_employee(other_emp, files):
             # Execute the query using your cursor
             cursor.execute(insert_other_emp_query)
             empid = cursor.lastrowid
+
+            subject = email_template_controller.get_employee_creation_email_subject(other_emp.name)
+            body = email_template_controller.get_store_employee_creation_email_body(other_emp.name, 'Store Employee',
+                                                                              other_emp.email)
+            send_notification_controller.send_email(subject, body, other_emp.email)
 
             return {
                 "status": True,
@@ -295,8 +301,6 @@ def enable_disable_franchise_other_employees(empid, status):
 
 
 def assign_store_own_store_other_employee(empId, storeId):
-    print(empId)
-    print(storeId)
     try:
         with connection.cursor() as cursor:
             update_store_manager_query = f"""
@@ -307,6 +311,26 @@ def assign_store_own_store_other_employee(empId, storeId):
                     employee_id = {empId}
             """
             cursor.execute(update_store_manager_query)
+
+            get_employee_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
+                                                """
+            # Execute the update query using your cursor
+            cursor.execute(get_employee_query)
+            manager_data = cursor.fetchone()
+
+            get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
+                                                                        WHERE store_id = {storeId}"""
+
+            cursor.execute(get_store_query)
+            store_data = cursor.fetchone()
+
+            subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data[0])
+            body = email_template_controller.get_employee_assigned_store_email_body(manager_data[0], 'Store Employee',
+                                                                                    manager_data[1],
+                                                                                    store_data[0],
+                                                                                    store_data[1], store_data[2])
+
+            send_notification_controller.send_email(subject, body, manager_data[1])
 
             return {
                        "status": True,
@@ -331,6 +355,25 @@ def unassign_store_own_store_other_employee(empId, storeId):
             """
             # Execute the update query using your cursor
             cursor.execute(update_store_manager_query)
+
+            get_employee_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
+                                                """
+            # Execute the update query using your cursor
+            cursor.execute(get_employee_query)
+            manager_data = cursor.fetchone()
+
+            get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
+                                                                        WHERE store_id = {storeId}"""
+
+            cursor.execute(get_store_query)
+            store_data = cursor.fetchone()
+
+            subject = email_template_controller.get_employee_unassigned_store_email_subject(manager_data[0])
+            body = email_template_controller.get_employee_unassigned_store_email_body(manager_data[0], 'Store Employee',
+                                                                                      manager_data[1], store_data[0],
+                                                                                      store_data[1], store_data[2])
+
+            send_notification_controller.send_email(subject, body, manager_data[1])
 
             return {
                        "status": True,

@@ -161,7 +161,7 @@ def edit_franchise_owner(franchise_owner, files):
         return {"status": False, "message": str(e)}, 301
 
 
-def assign_store_franchise_owner(empId, storeId):
+def assign_store_franchise_owner(empId, storeId, role):
     try:
         with connection.cursor() as cursor:
             update_store_manager_query = f"""
@@ -174,6 +174,26 @@ def assign_store_franchise_owner(empId, storeId):
             # Execute the update query using your cursor
             cursor.execute(update_store_manager_query)
 
+            get_employee_query = f""" SELECT name,email,phone FROM franchise_store_employees WHERE employee_id = {empId}
+                                                """
+            # Execute the update query using your cursor
+            cursor.execute(get_employee_query)
+            manager_data = cursor.fetchone()
+
+            get_store_query = f""" SELECT store_name, store_phone, store_address FROM franchise_store 
+                                                                        WHERE store_id = {storeId}"""
+
+            cursor.execute(get_store_query)
+            store_data = cursor.fetchone()
+
+            subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data[0])
+            body = email_template_controller.get_employee_assigned_store_email_body(manager_data[0], 'Franchise Owner',
+                                                                                    manager_data[1],
+                                                                                    store_data[0],
+                                                                                    store_data[1], store_data[2])
+
+            send_notification_controller.send_email(subject, body, manager_data[1])
+
             return {
                 "status": True,
                 "message": "Store assigned"
@@ -185,7 +205,7 @@ def assign_store_franchise_owner(empId, storeId):
         return {"status": False, "message": str(e)}, 301
 
 
-def unassign_store_franchise_owner(FranchiseOwnerId, storeId):
+def unassign_store_franchise_owner(FranchiseOwnerId, storeId, role):
     try:
         with connection.cursor() as cursor:
             update_store_manager_query = f"""
@@ -197,6 +217,26 @@ def unassign_store_franchise_owner(FranchiseOwnerId, storeId):
             """
             # Execute the update query using your cursor
             cursor.execute(update_store_manager_query)
+
+            get_employee_query = f""" SELECT name,email,phone FROM franchise_store_employees WHERE employee_id = {FranchiseOwnerId}
+                                                            """
+            # Execute the update query using your cursor
+            cursor.execute(get_employee_query)
+            manager_data = cursor.fetchone()
+
+            get_store_query = f""" SELECT store_name, store_phone, store_address FROM franchise_store 
+                                                                                    WHERE store_id = {storeId}"""
+
+            cursor.execute(get_store_query)
+            store_data = cursor.fetchone()
+
+            subject = email_template_controller.get_employee_unassigned_store_email_subject(manager_data[0])
+            body = email_template_controller.get_employee_unassigned_store_email_body(manager_data[0],
+                                                                                      'Sales Executive',
+                                                                                      manager_data[1], store_data[0],
+                                                                                      store_data[1], store_data[2])
+
+            send_notification_controller.send_email(subject, body, manager_data[1])
 
             return {
                        "status": True,

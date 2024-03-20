@@ -172,6 +172,30 @@ def assignStore(empId, storeId):
             # Execute the update query using your cursor
             cursor.execute(update_store_manager_query)
 
+            get_employee_query = f""" SELECT name,email,phone FROM area_head WHERE area_head_id = {empId}
+                                                            """
+            # Execute the update query using your cursor
+            cursor.execute(get_employee_query)
+            manager_data = cursor.fetchone()
+            if len(storeId) == 1:
+                 storeId = f"""({storeId})"""
+
+            get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
+                                                                                    WHERE store_id IN {tuple(storeId)}"""
+
+            cursor.execute(get_store_query)
+            store_data = cursor.fetchall()
+            print(store_data)
+
+            subject = email_template_controller.get_area_head_assigned_store_email_subject(manager_data[0])
+            body = email_template_controller.get_area_head_assigned_store_email_body(manager_data[0], 'Store Employee',
+                                                                                    manager_data[1],
+                                                                                    store_data)
+            print(body)
+
+            response = send_notification_controller.send_email(subject, body, manager_data[1])
+            print(response)
+
             return {
                        "status": True,
                        "message": "Store assigned"
