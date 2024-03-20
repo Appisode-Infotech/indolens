@@ -87,6 +87,13 @@
         <div class="content">
 
             <div class="mb-9">
+                {% if message %}
+                    <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
+                        <strong>{{message}}</strong>
+
+                        <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+                    </div>
+                    {% endif %}
                 <div data-list='{"valueNames":["slno","id","name","status"],"page":6,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">

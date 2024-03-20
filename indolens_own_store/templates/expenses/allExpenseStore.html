@@ -189,9 +189,9 @@
                                     scope="col" style="width:10%;">SL NO
                                 </th>
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="reason"
-                                    scope="col" style="width:20%;">REASON
+                                    scope="col" style="width:10%;">REASON
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="amount" scope="col" style="width:10%;">
+                                <th class="sort align-middle" data-sort="amount" scope="col" style="width:5%;">
                                     AMOUNT
                                 </th>
 
@@ -199,7 +199,7 @@
                                     DATE
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="createdBy" scope="col"
+                                <th class="sort align-middle" data-sort="createdBy" scope="col"
                                     style="width:5%;">CREATED BY
                                 </th>
                             </tr>
@@ -214,7 +214,7 @@
                                 </td>
 
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 amount">
+                                <td class="align-middle white-space-nowrap text-end amount">
                                     <p class="mb-0 fs--1 text-900 text-end">₹{{expense.expense_amount}}</p>
                                 </td>
 
@@ -222,7 +222,7 @@
                                     <p class="mb-0 fs--1 text-900">{{expense.created_on}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end createdBy">
+                                <td class="align-middle white-space-nowrap createdBy">
                                     <a class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_employee' expense.created_by %}">{{expense.creator_name}}</a>
                                 </td>

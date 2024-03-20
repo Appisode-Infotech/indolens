@@ -1,3 +1,4 @@
+import re
 import time
 
 from django.core.files.storage import default_storage
@@ -2484,8 +2485,13 @@ def addProductCategory(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
-            response = master_category_controller.add_product_category(product_cat_obj)
-            return redirect('manage_central_inventory_category')
+            response, status_code = master_category_controller.add_product_category(product_cat_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                return render(request, 'indolens_admin/masters/addProductCategory.html',
+                              {"message": f"""Error Duplicate Entry: product category- {product_cat_obj.category_name} 
+                              with prefix- {product_cat_obj.category_prefix} exist"""})
+            else:
+                return redirect('manage_central_inventory_category')
         else:
             return render(request, 'indolens_admin/masters/addProductCategory.html')
     else:
@@ -2496,8 +2502,16 @@ def editProductCategory(request, categoryId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             product_cat_obj = product_category_model.product_category_model_from_dict(request.POST)
-            master_category_controller.edit_product_category(product_cat_obj)
-            return redirect('manage_central_inventory_category')
+            response, status_code = master_category_controller.edit_product_category(product_cat_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                product_category, status_code = master_category_controller.get_central_inventory_category_by_id(
+                    categoryId)
+                return render(request, 'indolens_admin/masters/editProductCategory.html',
+                              {"product_category": product_category['product_category'],
+                               "message": f"""Error Duplicate Entry: product category- {product_cat_obj.category_name} 
+                              with prefix- {product_cat_obj.category_prefix} exist"""})
+            else:
+                return redirect('manage_central_inventory_category')
         else:
             if categoryId == 1 or categoryId == 2 or categoryId == 3:
                 return redirect('manage_central_inventory_category')
@@ -2530,8 +2544,13 @@ def addMastersBrands(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
-            resp = master_brand_controller.add_product_brand(master_brand_obj)
-            return redirect('manage_central_inventory_brands')
+            response, status_code = master_brand_controller.add_product_brand(master_brand_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                return render(request, 'indolens_admin/masters/addMastersBrand.html',
+                              {"message": f"""Error Duplicate Entry: Brand name- {master_brand_obj.brand_name} already 
+                              exist"""})
+            else:
+                return redirect('manage_central_inventory_brands')
         else:
             return render(request, 'indolens_admin/masters/addMastersBrand.html')
     else:
@@ -2542,9 +2561,15 @@ def editMastersBrands(request, brandId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             master_brand_obj = master_brand_model.master_brand_model_from_dict(request.POST)
-            resp = master_brand_controller.edit_product_brand(master_brand_obj)
-
-            return redirect('manage_central_inventory_brands')
+            response, status_code = master_brand_controller.edit_product_brand(master_brand_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                product_brand, status_code = master_brand_controller.get_central_inventory_brand_by_id(brandId)
+                return render(request, 'indolens_admin/masters/editMastersBrand.html',
+                              {"product_brand": product_brand['product_brand'],
+                               "message": f"""Error Duplicate Entry: Brand name- {master_brand_obj.brand_name} already 
+                              exist"""})
+            else:
+                return redirect('manage_central_inventory_brands')
         else:
             response, status_code = master_brand_controller.get_central_inventory_brand_by_id(brandId)
             return render(request, 'indolens_admin/masters/editMastersBrand.html',
@@ -2575,9 +2600,13 @@ def addMastersShapes(request):
         if request.method == 'POST':
 
             master_shape_obj = master_shape_model.master_shape_model_from_dict(request.POST)
-            resp = master_shape_controller.add_frame_shape(master_shape_obj)
-
-            return redirect('manage_central_inventory_shapes')
+            response, status_code = master_shape_controller.add_frame_shape(master_shape_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                return render(request, 'indolens_admin/masters/addMastersShapes.html',
+                              {"message": f"""Error Duplicate Entry: Frame Shape- {master_shape_obj.shape_name} already 
+                              exist"""})
+            else:
+                return redirect('manage_central_inventory_shapes')
         else:
             return render(request, 'indolens_admin/masters/addMastersShapes.html')
     else:
@@ -2588,8 +2617,15 @@ def editMastersShapes(request, shapeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             master_shape_obj = master_shape_model.master_shape_model_from_dict(request.POST)
-            resp = master_shape_controller.edit_frame_shape(master_shape_obj)
-            return redirect('manage_central_inventory_shapes')
+            response, status_code = master_shape_controller.edit_frame_shape(master_shape_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                product_shape, status_code = master_shape_controller.get_central_inventory_shapes_by_id(shapeId)
+                return render(request, 'indolens_admin/masters/editMastersShapes.html',
+                              {"product_shape": product_shape['product_shape'],
+                               "message": f"""Error Duplicate Entry: Frame Shape- {master_shape_obj.shape_name} already 
+                              exist"""})
+            else:
+                return redirect('manage_central_inventory_shapes')
         else:
             response, status_code = master_shape_controller.get_central_inventory_shapes_by_id(shapeId)
             return render(request, 'indolens_admin/masters/editMastersShapes.html',
@@ -2619,8 +2655,13 @@ def addMastersFrameType(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             frame_type_obj = master_frame_type_model.master_frame_type_model_from_dict(request.POST)
-            resp = master_frame_type_controller.add_frame_type(frame_type_obj)
-            return redirect('manage_central_inventory_frame_types')
+            response, status_code = master_frame_type_controller.add_frame_type(frame_type_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                return render(request, 'indolens_admin/masters/addMastersFrameType.html',
+                              {"message": f"""Error Duplicate Entry: Frame type- {frame_type_obj.frame_type_name} already 
+                              exist"""})
+            else:
+                return redirect('manage_central_inventory_frame_types')
         else:
             return render(request, 'indolens_admin/masters/addMastersFrameType.html')
     else:
@@ -2632,8 +2673,15 @@ def editMastersFrameType(request, frameId):
         if request.method == 'POST':
 
             frame_type_obj = master_frame_type_model.master_frame_type_model_from_dict(request.POST)
-            resp = master_frame_type_controller.edit_frame_type(frame_type_obj)
-            return redirect('manage_central_inventory_frame_types')
+            response, status_code = master_frame_type_controller.edit_frame_type(frame_type_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                frame_type, status_code = master_frame_type_controller.get_central_inventory_frame_types_by_id(frameId)
+                return render(request, 'indolens_admin/masters/editMastersFrameType.html',
+                              {"frame_type": frame_type['frame_type'],
+                               "message": f"""Error Duplicate Entry: Frame type- {frame_type_obj.frame_type_name} already 
+                              exist"""})
+            else:
+                return redirect('manage_central_inventory_frame_types')
         else:
             response, status_code = master_frame_type_controller.get_central_inventory_frame_types_by_id(frameId)
             return render(request, 'indolens_admin/masters/editMastersFrameType.html',
@@ -2663,8 +2711,13 @@ def addMastersColor(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             color_obj = master_color_model.master_color_model_from_dict(request.POST)
-            resp = master_color_controller.add_master_color(color_obj)
-            return redirect('manage_central_inventory_color')
+            response, status_code = master_color_controller.add_master_color(color_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                return render(request, 'indolens_admin/masters/addMastersColor.html',
+                              {"message": f"""Error Duplicate Entry: Colour with code- {color_obj.color_code} 
+                              and name- {color_obj.color_name} already exist"""})
+            else:
+                return redirect('manage_central_inventory_color')
         else:
             return render(request, 'indolens_admin/masters/addMastersColor.html')
     else:
@@ -2675,8 +2728,15 @@ def editMastersColor(request, colorId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             color_obj = master_color_model.master_color_model_from_dict(request.POST)
-            resp = master_color_controller.edit_master_color(color_obj)
-            return redirect('manage_central_inventory_color')
+            response, status_code = master_color_controller.edit_master_color(color_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                frame_color, status_code = master_color_controller.get_central_inventory_color_by_id(colorId)
+                return render(request, 'indolens_admin/masters/editMastersColor.html',
+                              {"frame_color": frame_color['frame_color'],
+                               "message": f"""Error Duplicate Entry: Colour with code- {color_obj.color_code} 
+                              and name- {color_obj.color_name} already exist"""})
+            else:
+                return redirect('manage_central_inventory_color')
         else:
             response, status_code = master_color_controller.get_central_inventory_color_by_id(colorId)
             return render(request, 'indolens_admin/masters/editMastersColor.html',
@@ -2706,8 +2766,13 @@ def addMastersMaterials(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             material_obj = master_material_model.master_material_model_from_dict(request.POST)
-            resp = master_material_controller.add_master_material(material_obj)
-            return redirect('manage_central_inventory_materials')
+            response, status_code = master_material_controller.add_master_material(material_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                return render(request, 'indolens_admin/masters/addMastersMaterials.html',
+                              {"message": f"""Error Duplicate Entry: Material- {material_obj.material_name} already 
+                              exist"""})
+            else:
+                return redirect('manage_central_inventory_materials')
         else:
             return render(request, 'indolens_admin/masters/addMastersMaterials.html')
     else:
@@ -2718,8 +2783,16 @@ def editMastersMaterials(request, materialId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             material_obj = master_material_model.master_material_model_from_dict(request.POST)
-            resp = master_material_controller.edit_master_material(material_obj)
-            return redirect('manage_central_inventory_materials')
+            response, status_code = master_material_controller.edit_master_material(material_obj)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                product_material, status_code = master_material_controller.get_central_inventory_materials_by_id(
+                    materialId)
+                return render(request, 'indolens_admin/masters/editMastersMaterials.html',
+                              {"product_material": product_material['product_material'],
+                               "message": f"""Error Duplicate Entry: Material- {material_obj.material_name} already 
+                              exist"""})
+            else:
+                return redirect('manage_central_inventory_materials')
         else:
             response, status_code = master_material_controller.get_central_inventory_materials_by_id(materialId)
             return render(request, 'indolens_admin/masters/editMastersMaterials.html',
@@ -2750,8 +2823,14 @@ def addMastersUnits(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             data = request.POST
-            resp = master_units_controller.add_masters_units(data)
-        return redirect('manage_central_inventory_units')
+            response, status_code = master_units_controller.add_masters_units(data)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                units_list, status_code = master_units_controller.get_all_units()
+                return render(request, 'indolens_admin/masters/manageMastersUnits.html',
+                              {"units_list": units_list['units_list'],
+                               "message": f"""Error Duplicate Entry: Unit- {data['unit_name']} already exist"""})
+            else:
+                return redirect('manage_central_inventory_units')
     else:
         return redirect('login')
 
@@ -2760,8 +2839,14 @@ def editMastersUnits(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             data = request.POST
-            resp = master_units_controller.edit_master_units(data)
-        return redirect('manage_central_inventory_units')
+            response, status_code = master_units_controller.edit_master_units(data)
+            if not response['status'] and "Duplicate entry" in response['message']:
+                units_list, status_code = master_units_controller.get_all_units()
+                return render(request, 'indolens_admin/masters/manageMastersUnits.html',
+                              {"units_list": units_list['units_list'],
+                               "message": f"""Error Duplicate Entry: Unit- {data['unit_name']} already exist"""})
+            else:
+                return redirect('manage_central_inventory_units')
     else:
         return redirect('login')
 
@@ -3341,10 +3426,10 @@ def addProductImage(request, productId):
 def print_qr_tag(request, qrUrl, price, pId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         print('hello')
-        return render(request, 'indolens_admin/centralInventory/qr_tag_print.html', {'qrUrl': qrUrl, "price" : price, "pId" : pId})
+        return render(request, 'indolens_admin/centralInventory/qr_tag_print.html',
+                      {'qrUrl': qrUrl, "price": price, "pId": pId})
     else:
         return redirect('login')
-
 
 
 def addOwnStoreEmployeeImage(request, employeeId):
