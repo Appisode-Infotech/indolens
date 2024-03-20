@@ -460,6 +460,7 @@ def makeSaleOwnStore(request):
         if request.method == 'POST':
             order_id = f"""OS_{assigned_store}_{expense_controller.get_current_epoch_time()}"""
             cart_data = json.loads(request.POST['cartData'])
+            print(cart_data)
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,

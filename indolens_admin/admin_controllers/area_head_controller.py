@@ -159,7 +159,6 @@ def enable_disable_area_head(ahId, status):
 
 
 def assignStore(empId, storeId):
-    print(storeId)
     try:
         with connection.cursor() as cursor:
             update_store_manager_query = f"""
@@ -185,16 +184,13 @@ def assignStore(empId, storeId):
 
             cursor.execute(get_store_query)
             store_data = cursor.fetchall()
-            print(store_data)
 
             subject = email_template_controller.get_area_head_assigned_store_email_subject(manager_data[0])
             body = email_template_controller.get_area_head_assigned_store_email_body(manager_data[0], 'Area Head',
                                                                                     manager_data[1],
                                                                                     store_data)
-            print(body)
 
             response = send_notification_controller.send_email(subject, body, manager_data[1])
-            print(response)
 
             return {
                        "status": True,
