@@ -188,7 +188,7 @@ def assignStore(empId, storeId):
             print(store_data)
 
             subject = email_template_controller.get_area_head_assigned_store_email_subject(manager_data[0])
-            body = email_template_controller.get_area_head_assigned_store_email_body(manager_data[0], 'Store Employee',
+            body = email_template_controller.get_area_head_assigned_store_email_body(manager_data[0], 'Area Head',
                                                                                     manager_data[1],
                                                                                     store_data)
             print(body)
