@@ -108,6 +108,7 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`brand_id`)
+ UNIQUE KEY unique_brand_name (brand_name)
 )""",
     """CREATE TABLE `central_inventory` (
  `product_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -197,6 +198,7 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`shape_id`)
+ UNIQUE KEY unique_shape_name (shape_name)
 )""",
     """CREATE TABLE `frame_types` (
  `frame_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -208,6 +210,7 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`frame_id`)
+ UNIQUE KEY unique_frame_type_name (frame_type_name)
 )""",
     """CREATE TABLE `franchise_owner` (
  `franchise_owner_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -447,6 +450,7 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`category_id`)
+ UNIQUE KEY unique_category_name_prefix (category_name,category_prefix)
 )""",
     """CREATE TABLE `product_colors` (
  `color_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -459,6 +463,7 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`color_id`)
+ UNIQUE KEY unique_color_code_name (color_code,color_name)
 )""",
     """CREATE TABLE `product_materials` (
  `material_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -470,6 +475,7 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`material_id`)
+ UNIQUE KEY unique_material_name (material_name)
 )""",
     """CREATE TABLE `request_products` (
  `request_products_id` int(11) NOT NULL AUTO_INCREMENT,
@@ -615,6 +621,7 @@ sql_queries = [
  `last_updated_on` datetime,
  `last_updated_by` int(11),
  PRIMARY KEY (`unit_id`)
+ UNIQUE KEY unique_unit_name (unit_name)
 )"""
 ]
 
