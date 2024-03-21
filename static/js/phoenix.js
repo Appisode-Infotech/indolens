@@ -4752,7 +4752,7 @@
                             if(splitArray[0]=='all'){
                                 splitArray[0]='';
                             }
-                            list.search(splitArray[0],splitArray[1])
+                            list.search(splitArray[0],[splitArray[1]])
                          })
                     });
 
