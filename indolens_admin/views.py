@@ -2831,6 +2831,8 @@ def addMastersUnits(request):
                                "message": f"""Error Duplicate Entry: Unit- {data['unit_name']} already exist"""})
             else:
                 return redirect('manage_central_inventory_units')
+        else:
+            return redirect('manage_central_inventory_units')
     else:
         return redirect('login')
 

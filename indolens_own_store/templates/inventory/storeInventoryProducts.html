@@ -89,11 +89,11 @@
                 </div>
 
                 <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                    <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a></li>
+                    <li class="nav-item"><a aria-current="page" class="nav-link filter active" href="#filter-all-category">All</a></li>
                     {% for category in categories_List %}
                     {% if category.category_id != 2 and category.category_id != 3 %}
                     <li class="nav-item">
-                        <a class="nav-link filter" href="#filter-{{ category.category_name }}">
+                        <a class="nav-link filter" href="#filter-filterIn_{{ category.category_name }}-category">
                             {{ category.category_name}}</a>
                     </li>
                     {% endif %}
@@ -198,7 +198,7 @@
                                         ₹{{stock.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        {{stock.category_name}}
+                                        <p style="display: none;">filterIn_{{stock.category_name}}</p>{{stock.category_name}}
                                     </td>
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.brand_name}}
