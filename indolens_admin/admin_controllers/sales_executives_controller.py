@@ -137,8 +137,8 @@ def create_franchise_sales_executives(sales_executives, files):
             # Execute the query using your cursor
             cursor.execute(insert_sales_executives_query)
 
-            subject = email_template_controller.get_employee_creation_email_subject(sales_executives.name)
-            body = email_template_controller.get_employee_creation_email_body(sales_executives.name, 'Sales Executive',
+            subject = email_template_controller.get_franchise_employee_creation_email_subject(sales_executives.name)
+            body = email_template_controller.get_franchise_employee_creation_email_body(sales_executives.name, 'Sales Executive',
                                                                               sales_executives.email,
                                                                               sales_executives.password)
             send_notification_controller.send_email(subject, body, sales_executives.email)

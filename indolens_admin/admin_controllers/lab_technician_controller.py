@@ -6,6 +6,7 @@ import pymysql
 import pytz
 from django.db import connection
 
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.lab_technician_resp_model import get_lab_technicians
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -33,6 +34,12 @@ def create_lab_technician(lab_technician, files):
             # Execute the query using your cursor
             cursor.execute(insert_marketing_head_query)
             ltid = cursor.lastrowid
+
+            subject = email_template_controller.get_lab_tech_creation_email_subject(lab_technician.name)
+            body = email_template_controller.get_lab_tech_creation_email_body(lab_technician.name, 'Lab Technician',
+                                                                              lab_technician.email,
+                                                                              lab_technician.password)
+            send_notification_controller.send_email(subject, body, lab_technician.email)
 
             return {
                 "status": True,

@@ -35,8 +35,8 @@ def create_franchise_owner(franchise_owner, files):
             # Execute the query using your cursor
             cursor.execute(insert_franchise_owner_query)
 
-            subject = email_template_controller.get_employee_creation_email_subject(franchise_owner.name)
-            body = email_template_controller.get_employee_creation_email_body(franchise_owner.name, 'Franchise Owner',
+            subject = email_template_controller.get_franchise_employee_creation_email_subject(franchise_owner.name)
+            body = email_template_controller.get_franchise_employee_creation_email_body(franchise_owner.name, 'Franchise Owner',
                                                                               franchise_owner.email,
                                                                               franchise_owner.password)
             send_notification_controller.send_email(subject, body, franchise_owner.email)

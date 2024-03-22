@@ -81,7 +81,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["slno","name","type","sendername","product","productId","quantity","price","req_date","moved_date","approvalStatus","deliveryStatus"],"page":6,"pagination":true}'
+                <div data-list='{"valueNames":["slno","name","type","sendername","product","productId","quantity","price","req_date","moved_date","approvalStatus","deliveryStatus"],"page":20,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -140,10 +140,10 @@
                                     MOVED DATE
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="approvalStatus" scope="col"
+                                <th class="sort align-middle" data-sort="approvalStatus" scope="col"
                                     style="width:5%;">APPROVAL STATUS
                                 </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="deliveryStatus" scope="col"
+                                <th class="sort white-space-nowrap align-middle text-center" data-sort="deliveryStatus" scope="col"
                                     style="width:50%;">COMMENTS
                                 </th>
 
@@ -206,7 +206,7 @@
                                     {% endif %}
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end approvalStatus">
+                                <td class="align-middle white-space-nowrap approvalStatus">
                                     {% if stock.request_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
@@ -218,7 +218,7 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap deliveryStatus"
+                                <td class="align-middle white-space-nowrap ps-5 deliveryStatus"
                                     style="max-width: 350px;min-width: 300px; word-wrap: break-word; overflow: hidden; white-space: normal;">
                                     {{stock.comment}}
                                 </td>

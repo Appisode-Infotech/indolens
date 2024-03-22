@@ -136,6 +136,11 @@ def create_franchise_other_employee(other_emp, files):
             cursor.execute(insert_other_emp_query)
             empid = cursor.lastrowid
 
+            subject = email_template_controller.get_lab_tech_creation_email_subject(other_emp.name)
+            body = email_template_controller.get_store_employee_creation_email_body(other_emp.name, 'Lab Technician',
+                                                                              other_emp.email)
+            send_notification_controller.send_email(subject, body, other_emp.email)
+
             return {
                 "status": True,
                 "message": "Employee added",

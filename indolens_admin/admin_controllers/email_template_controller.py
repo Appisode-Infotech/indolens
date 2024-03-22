@@ -37,8 +37,67 @@ Visit the Indolens: {base_url}/own_store/own_store_login/
 Enter your email and the temporary password provided above.
 Click on the "Login" button.
 
-If you encounter any issues during the login process or have any questions about your account, please contact our support team at support@indolens.in. We are here to assist you.
+If you encounter any issues during the login process or have any questions about your account, please contact our support team. We are here to assist you.
                         
+Best regards,
+INDOLENS 
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
+"""
+
+
+# EMPLOYEE CREATION EMAIL
+def get_franchise_employee_creation_email_subject(name):
+    return f""" INDOLENS Account Created - {name} """
+
+
+def get_franchise_employee_creation_email_body(name, role, email, password):
+    return f""" Dear {name},
+
+We are pleased to inform you that your user {role} profile has been successfully created in Indolens, and you are now ready to access our platform. Below are your login credentials:
+
+Username/Email: {email}
+Password: {password}
+
+For security reasons, we recommend that you log in to your account as soon as possible and change your password. 
+Here are the steps to access your account:
+
+Visit the Indolens: {base_url}/franchise_store/franchise_store_login/
+Enter your email and the temporary password provided above.
+Click on the "Login" button.
+
+If you encounter any issues during the login process or have any questions about your account, please contact our support team. We are here to assist you.
+
+Best regards,
+INDOLENS 
+Email: {support_data.get('support_email')}
+Phone: {support_data.get('support_phone')}
+Working Hours: {support_data.get('support_hour')}
+"""
+
+# EMPLOYEE CREATION EMAIL
+def get_lab_tech_creation_email_subject(name):
+    return f""" INDOLENS Account Created - {name} """
+
+
+def get_lab_tech_creation_email_body(name, role, email, password):
+    return f""" Dear {name},
+
+We are pleased to inform you that your user {role} profile has been successfully created in Indolens, and you are now ready to access our platform. Below are your login credentials:
+
+Username/Email: {email}
+Password: {password}
+
+For security reasons, we recommend that you log in to your account as soon as possible and change your password. 
+Here are the steps to access your account:
+
+Visit the Indolens: {base_url}/lab/lab_login/
+Enter your email and the temporary password provided above.
+Click on the "Login" button.
+
+If you encounter any issues during the login process or have any questions about your account, please contact our support team. We are here to assist you.
+
 Best regards,
 INDOLENS 
 Email: {support_data.get('support_email')}
