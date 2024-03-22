@@ -83,7 +83,7 @@
                     <li class="nav-item"><a aria-current="page" class="nav-link filter active" href="#filter-all-category">All</a></li>
                     {% for category in categories_List %}
                     <li class="nav-item">
-                        <a class="nav-link filter" href="#filter-{{ category.category_name }}-category">{{ category.category_name }}</a>
+                        <a class="nav-link filter" href="#filter-filterIn_{{ category.category_name }}-category">{{ category.category_name }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -218,7 +218,7 @@
                                         ₹{{product.sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        {{product.category_name}}
+                                        <p style="display: none;">filterIn_{{product.category_name}}</p>{{product.category_name}}
                                     </td>
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{product.brand_name}}
