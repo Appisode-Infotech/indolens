@@ -87,7 +87,7 @@
                     <div class="col-auto">
                         <h2 class="mb-0">Admin Details</h2>
                     </div>
-                    {% if admin.admin_id == 1%}
+                    {% if request.session.id == 1 %}
                     <div class="col-auto">
                         <div class="row g-3">
                             <div class="col-auto">

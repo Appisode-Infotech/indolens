@@ -63,6 +63,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -78,13 +79,22 @@
         <div class="content">
             <form class="mb-9 ">
                 {% csrf_token %}
-                <div class="row g-3 flex-between-end mb-5">
+                <div class="row align-items-center justify-content-between g-3 mb-4">
                     <div class="col-auto">
                         <h2 class="mb-2">View product</h2>
                         <h5 class="text-700 fw-semi-bold">Product Name: <b>{{product_data.product_name}}</b></h5>
                         <h5 class="text-700 fw-semi-bold">Product Id: <b>{{product_data.product_id}}</b></h5>
                     </div>
+                    <div class="col-auto">
+                        <div class="row g-3">
+                            <div class="col-auto">
+                                <a class="btn btn-phoenix-secondary" href="{% url 'update_product' product_data.product_id %}">
+                                    <span class="fas fa-refresh me-2"></span> Update
+                                </a>
 
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <h4 class="mb-3">Product Title</h4>
                 <div class="row g-5">
@@ -134,9 +144,12 @@
                         </div>
 
                         <div class="mb-6">
-                            <h4 class="mb-3"> Product Description</h4>
-                            {{product_data.product_description|safe}}
+                            <h4 class="mb-3">Product Description</h4>
+                            <div class="product-description" style="word-break: break-all;">
+                                {{product_data.product_description|safe}}
+                            </div>
                         </div>
+
 
                         <!--                        New code-->
                         {% if product_data.category_id == 2 %}
@@ -374,17 +387,17 @@
                                                 </select>
                                             </div>
                                             <div class="col-12 col-sm-6 col-xl-12">
-                                                    <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Material</h5>
-                                                    </div>
-                                                    <select disabled name="materialId" required
-                                                            class="form-select mb-3">
-                                                        <option value="{{product_data.material_id}}">
-                                                            {{product_data.material_name}}
-                                                        </option>
-
-                                                    </select>
+                                                <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                    <h5 class="text-1000">Material</h5>
                                                 </div>
+                                                <select disabled name="materialId" required
+                                                        class="form-select mb-3">
+                                                    <option value="{{product_data.material_id}}">
+                                                        {{product_data.material_name}}
+                                                    </option>
+
+                                                </select>
+                                            </div>
 
                                             {% if product_data.category_id == 1 %}
                                             <div id="only_frame_options">
@@ -518,6 +531,7 @@
 
 
 
+
     </script>
 </main>
 <!-- ===============================================-->
@@ -594,6 +608,7 @@
 
 
 
+
 </script>
 
 
@@ -631,6 +646,7 @@
         setCheckboxValue("contact_lens_disposability5", stockData.contact_lens_disposability);
 
         });
+
 
 
 </script>
