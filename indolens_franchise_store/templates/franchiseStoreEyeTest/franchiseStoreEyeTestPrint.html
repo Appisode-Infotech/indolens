@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta content="IE=edge" http-equiv="X-UA-Compatible">
     <meta content="width=device-width, initial-scale=1" name="viewport">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
 
 
     <style>
@@ -64,6 +65,12 @@
 
 
 
+
+
+
+
+
+
     </style>
     <!-- ===============================================-->
     <!--    Document Title-->
@@ -87,14 +94,30 @@
 <!-- ===============================================-->
 <main class="main p-5" id="top">
     {% for test in eye_test_list %}
-    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">
-        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" height="60">
-        <h1 style="margin: 0;" class="mt-2">Indolens</h1>
-        <h1 style="margin: 0;" class="mt-2">ಇಂಡೊಲೆನ್ಸ್</h1>
+    <!--    <div style="display: flex; flex-direction: column; align-items: center; text-align: center;">-->
+    <!--        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" height="60">-->
+    <!--        <h1 style="margin: 0;" class="mt-2">Indolens</h1>-->
+    <!--        <h1 style="margin: 0;" class="mt-2">ಇಂಡೊಲೆನ್ಸ್</h1>-->
+    <!--    </div>-->
+
+    <div style="display: flex; justify-content: space-between; align-items: center; text-align: center;">
+        <div style="display: flex; flex-direction: column; align-items: flex-start;">
+            <img src="{% static 'img/icons/logo.png' %}" alt="Logo" height="60">
+            <h1 style="margin: 0;" class="mt-2">Indolens</h1>
+        </div>
+        <div>
+            <h1 style="margin-left: 0px;" class="mt-2">ಇಂಡೊಲೆನ್ಸ್</h1>
+        </div>
+        <div style="display: flex; flex-direction: column; align-items: centre;">
+            <h3 style="margin: 0;" class="mt-2">Store Contact</h3>
+            <h3 style="margin: 0;" class="mt-2">9897890987</h3>
+        </div>
     </div>
 
+
     <h3 class="mb-3 mt-2" style="text-align: center; margin: 10px;">Glass Prescription</h3>
-    <h5 class="mb-4" style=" margin: 15px; text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
+    <h5 class="mb-4"
+        style=" margin: 15px; text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">
         {{test.store_address}} </h5>
     <!--    <h5 class="mb-4" style="text-align: center; max-width: 500px; margin-left: auto; margin-right: auto;">-->
     <!--        Test: {{test.customer_phone}}_eye_test_{{test.eye_test_id}} </h5>-->
@@ -120,9 +143,17 @@
                     </td>
                     <th scope="row">Customer Age</th>
                     <td>
-
                         {{test.customer_age}}
-
+                    </td>
+                </tr>
+                <tr>
+                    <th scope="row">Test For</th>
+                    <td>
+                        {{test.power_attributes.test_type}}
+                    </td>
+                    <th scope="row">Test ID</th>
+                    <td>
+                        TEST{{test.eye_test_id}}
                     </td>
                 </tr>
                 </tbody>
@@ -316,8 +347,26 @@
                 </div>
             </div>
         </div>
+<!--        <div style="display: flex; justify-content: space-between; align-items: center;">-->
+<!--            <div style="background-color: #d3d3d3; padding: 10px; border-radius: 5px; width: 100%;">-->
+<!--                <h4 style="margin: 0; text-align: center; line-height: 1.5;">For customer assistance please call us</h4>-->
+<!--                <h4 style="margin: 0; text-align: center; line-height: 1.5;">Follow us-->
+<!--                    <a href="http://www.facebook.com" style="color: black; text-decoration: none;"><i class="fab fa-facebook"></i></a>-->
+<!--                    <a href="http://www.twitter.com" style="color: black; text-decoration: none;"><i class="fab fa-twitter"></i></a>-->
+<!--                    <a href="http://www.instagram.com" style="color: black; text-decoration: none;"><i class="fab fa-instagram"></i></a>-->
+<!--                    <a href="http://www.linkedin.com" style="color: black; text-decoration: none;"><i class="fab fa-linkedin"></i></a>-->
+<!--                    <a href="http://www.youtube.com" style="color: black; text-decoration: none;"><i class="fab fa-youtube"></i></a>-->
+<!--                    @Indolensstore-->
+<!--                </h4>-->
+<!--                <h4 style="margin: 0; text-align: center; line-height: 1.5;"><span>&#128279;</span> <a-->
+<!--                        href="http://www.indolens.com" style="color: black; text-decoration: none;">www.indolens.com</a>-->
+<!--                    <span>&#128231;</span> <a href="mailto:info@indolens.com"-->
+<!--                                              style="color: black; text-decoration: none;">info@indolens.com</a></h4>-->
+<!--            </div>-->
+<!--        </div>-->
 
-        <div>
+
+        <div style="margin-top: 10px;">
             <button class="btnP btn-phoenix-secondary print-button" onclick="window.print()">
                 <span class="fa-solid fa-print me-sm-2"></span>
                 <span class="d-none d-sm-inline-block">Print</span>
@@ -354,6 +403,12 @@
             }
         });
     }
+
+
+
+
+
+
 
 
 </script>

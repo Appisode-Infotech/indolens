@@ -175,6 +175,10 @@
                                                        type="button"
                                                        href="{% url 'own_store_job_item_details' order.sale_item_id %}">
                                                         Line Item Details</a>
+                                                    <a class="dropdown-item view-button" target="_blank"
+                                                       type="button"
+                                                       href="{% url 'own_store_job_authenticity_card' order.sale_item_id 'NA' %}">
+                                                        Authenticity Card</a>
                                                     {% elif order.category_id == 3 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button" target="_blank"

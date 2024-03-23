@@ -55,6 +55,7 @@ def get_power_attribute(data):
 
 def get_eye_test_power_attribute(data):
     power_attributes = {
+        'test_type': data.get('test_type', ''),
         'RightDvSph': data.get('RightDvSph', ''),
         'RightDvCyl': data.get('RightDvCyl', ''),
         'RightDvAxis': data.get('RightDvAxis', ''),

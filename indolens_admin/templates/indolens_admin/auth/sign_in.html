@@ -102,10 +102,17 @@
                             <p class="text-700">Get access to your account</p>
                         </div>
                         {% if message %}
-                        <div class="alert alert-soft-danger alert-dismissible fade show" role="alert">
-                            <strong>{{message}}</strong>
+                        <div class="alert alert-soft-danger fade show text-center" role="alert">
+                            <div class="col-auto">
+                                <button aria-label="Close" class="btn-close float-start" data-bs-dismiss="alert"
+                                        type="button"></button>
+                            </div>
+                            <div class="row align-items-center justify-content-center">
 
-                            <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
+                                <div class="col-auto">
+                                    <strong>{{message}}</strong>
+                                </div>
+                            </div>
                         </div>
                         {% endif %}
 

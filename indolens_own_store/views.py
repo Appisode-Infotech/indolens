@@ -44,7 +44,10 @@ def login(request):
         else:
             return render(request, 'auth/own_store_sign_in.html', {"message": response['message']})
     else:
-        return render(request, 'auth/own_store_sign_in.html')
+        if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
+            return redirect('own_store_dashboard')
+        else:
+            return render(request, 'auth/own_store_sign_in.html')
 
 
 def forgotPassword(request):
