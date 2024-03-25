@@ -64,7 +64,7 @@ def resetPassword(request, code):
                                                                                          request.POST['email'])
         print(response)
         print(status_code)
-        return render(request, 'auth/own_store_reset_password.html',  {"code": code, "message": response['message']})
+        return render(request, 'auth/own_store_reset_password.html', {"code": code, "message": response['message']})
     else:
         response, status_code = own_store_auth_controller.check_link_validity(code)
         return render(request, 'auth/own_store_reset_password.html',
@@ -502,8 +502,11 @@ def ownStoreEyeTest(request):
             return redirect('get_eye_test')
         else:
             customerResponse, cust_status_code = store_customers_controller.get_all_customers()
+            optometryResponse, cust_status_code = store_employee_controller.get_all_active_store_optometry(
+                assigned_store)
             return render(request, 'ownStoreEyeTest/ownStoreEyeTest.html',
-                          {'customers_list': customerResponse['customers_list']})
+                          {'customers_list': customerResponse['customers_list'],
+                           'optometry_list': optometryResponse['optometry_list']})
     else:
         return redirect('own_store_login')
 
@@ -550,6 +553,7 @@ def ownStoreContactLensPowerCard(request, saleId):
     else:
         return redirect('own_store_login')
 
+
 def ownStoreLensPowerCard(request, saleId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
@@ -576,6 +580,6 @@ def viewJobAuthenticityCard(request, saleId, frame):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
         return render(request, 'orders/authenticityCar.html', {"order_detail": job_detail['orders_details'],
-                                                              "frame": frame})
+                                                               "frame": frame})
     else:
         return redirect('own_store_login')
