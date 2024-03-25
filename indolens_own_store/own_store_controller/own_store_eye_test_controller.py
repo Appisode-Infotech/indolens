@@ -90,6 +90,7 @@ def get_eye_test():
                                             LEFT JOIN franchise_store_employees creator_fs ON et.created_by = creator_fs.employee_id AND et.created_by_store_type = 2
                                             LEFT JOIN own_store_employees updater_os ON et.updated_by = updater_os.employee_id AND et.created_by_store_type = 1
                                             LEFT JOIN franchise_store_employees updater_fs ON et.updated_by = updater_fs.employee_id AND et.created_by_store_type = 2
+                                            ORDER BY et.eye_test_id DESC
                                              """
             cursor.execute(get_eye_test_query)
             eye_test = cursor.fetchall()
