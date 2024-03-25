@@ -49,12 +49,11 @@ def add_eye_test(customerData, created_by, store_id):
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
 
-            print(customerData)
             power_attributes = lens_sale_power_attribute_controller.get_eye_test_power_attribute(customerData)
 
             add_eye_test_query = f""" INSERT INTO eye_test (customer_id, power_attributes, 
             created_by_store_id, created_by_store_type, created_by, created_on, updated_by, updated_on)
-            VALUES({customer_id}, '{json.dumps(power_attributes)}', {store_id},1, {created_by}, '{getIndianTime()}', {created_by}, '{getIndianTime()}')"""
+            VALUES({customer_id}, '{json.dumps(power_attributes)}', {store_id},1, {customerData.get('optometry_id')}, '{getIndianTime()}', {customerData.get('optometry_id')}, '{getIndianTime()}')"""
             cursor.execute(add_eye_test_query)
             test_id = cursor.lastrowid
 
@@ -91,6 +90,7 @@ def get_eye_test():
                                             LEFT JOIN franchise_store_employees creator_fs ON et.created_by = creator_fs.employee_id AND et.created_by_store_type = 2
                                             LEFT JOIN own_store_employees updater_os ON et.updated_by = updater_os.employee_id AND et.created_by_store_type = 1
                                             LEFT JOIN franchise_store_employees updater_fs ON et.updated_by = updater_fs.employee_id AND et.created_by_store_type = 2
+                                            ORDER BY et.eye_test_id DESC
                                              """
             cursor.execute(get_eye_test_query)
             eye_test = cursor.fetchall()
