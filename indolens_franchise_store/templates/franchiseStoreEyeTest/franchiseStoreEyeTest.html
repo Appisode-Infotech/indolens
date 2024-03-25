@@ -84,7 +84,7 @@
             <h2 class="mb-4">Eye Testing for Customers</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'own_store_eye_test' %}" class="row g-3 needs-validation" method="post"
+                    <form action="{% url 'franchise_store_eye_test' %}" class="row g-3 needs-validation" method="post"
                           novalidate="">
                         {% csrf_token %}
                         <div class="tab-pane" role="tabpanel"
@@ -142,10 +142,10 @@
                                         <input class="form-control"
                                                name="customer_age"
                                                placeholder="Age"
-                                               required="required"
+                                               required="required" min="1" max="150"
                                                onchange="genCustomerObject()"
 
-                                               type="text" value=""/>
+                                               type="number" value=""/>
                                         <div class="invalid-feedback">This field is required.</div>
                                     </div>
                                     <div class="mb2 col-6">
@@ -205,8 +205,18 @@
                                                 name="customer_address" class="form-control"
                                                 rows="3" required="required"></textarea>
                                     </div>
-
-
+                                    <div class="mb2 col-12">
+                                        <h5 class="mb-3">Test For:</h5>
+                                        <select name="test_type" class="form-select"
+                                                aria-label="Default select example"
+                                                required="required">
+                                            <option value="" selected="selected">Please select test type
+                                            </option>
+                                            <option value="Specticale">Specticale</option>
+                                            <option value="Contact Lens">Contact Lens</option>
+                                        </select>
+                                        <div class="invalid-feedback">This field is required.</div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -373,7 +383,7 @@
                         </div>
 
                         <div class="mb-3 ">
-                            <div class="row mb-3 pt-3 ">
+                            <div class="row mb-3">
                                 <div class="col-12 col-lg-3">
                                     <input class="form-check-input main-checkbox" type="checkbox" name="unifocal"
                                            value="1" onchange="handleCheckboxChange(this)">
@@ -391,10 +401,9 @@
                                            value="1" onchange="handleCheckboxChange(this)">
                                     <label class="form-check-label">PROGRESSIVE</label>
                                 </div>
-
-
                             </div>
-                            <div class="row mb-3 pt-3 ">
+
+                            <div class="row mb-3 ">
                                 <div class="col-12 col-lg-3 mt-3">
                                     <input class="form-check-input" type="checkbox"
                                            name="cr39"
