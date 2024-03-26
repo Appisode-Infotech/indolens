@@ -166,39 +166,40 @@ def get_all_store_orders(store_id, store_type):
     try:
         with connection.cursor() as cursor:
             get_order_query = f"""
-                SELECT 
-                    so.so_*, 
-                    c.customer_name, 
-                    SUM(so_product_total_cost) AS total_cost, 
-                    CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN os.store_name 
-                        ELSE fs.fs_store_name 
-                    END AS store_name,
-                    CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN creator_os.name 
-                        ELSE creator_fs.fs_name 
-                    END AS creator_name,
-                    CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN updater_os.name 
-                        ELSE updater_fs.fs_name 
-                    END AS updater_name
-                FROM sales_order AS so
-                LEFT JOIN customers AS c ON c.customer_customer_id = so.so_customer_id
-                LEFT JOIN own_store os ON so.so_created_by_store = os.store_id AND so.so_created_by_store_type = 1
-                LEFT JOIN franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
-                LEFT JOIN own_store_employees creator_os ON so.so_created_by = creator_os.employee_id AND so.so_created_by_store_type = 1
-                LEFT JOIN franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fs_employee_id AND so.so_created_by_store_type = 2
-                LEFT JOIN own_store_employees updater_os ON so.so_updated_by = updater_os.employee_id AND so.so_created_by_store_type = 1
-                LEFT JOIN franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fs_employee_id AND so.so_created_by_store_type = 2
-                WHERE so.so_created_by_store = {store_id} AND so.so_created_by_store_type = {store_type}
-                GROUP BY so.so_order_id          
-                """
+                            SELECT 
+                                so.*, 
+                                c.customer_name, 
+                                SUM(so_product_total_cost) AS total_cost, 
+                                CASE 
+                                    WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
+                                    ELSE fs.fs_store_name 
+                                END AS store_name,
+                                CASE 
+                                    WHEN so.so_created_by_store_type = 1 THEN creator_os.ose_name 
+                                    ELSE creator_fs.fse_name 
+                                END AS creator_name,
+                                CASE 
+                                    WHEN so.so_created_by_store_type = 1 THEN updater_os.ose_name 
+                                    ELSE updater_fs.fse_name 
+                                END AS updater_name
+                            FROM sales_order AS so
+                            LEFT JOIN customers AS c ON c.customer_customer_id = so.so_customer_id
+                            LEFT JOIN own_store os ON so.so_created_by_store = os.os_store_id AND so.so_created_by_store_type = 1
+                            LEFT JOIN franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
+                            LEFT JOIN own_store_employees creator_os ON so.so_created_by = creator_os.ose_employee_id AND so.so_created_by_store_type = 1
+                            LEFT JOIN franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                            LEFT JOIN own_store_employees updater_os ON so.so_updated_by = updater_os.ose_employee_id AND so.so_created_by_store_type = 1
+                            LEFT JOIN franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                            WHERE so.so_created_by_store = {store_id} AND so.so_created_by_store_type = {store_type}
+                            GROUP BY so.so_order_id ORDER BY so.so_sale_item_id DESC         
+                            """
             cursor.execute(get_order_query)
+
             orders_list = cursor.fetchall()
 
             return {
                 "status": True,
-                "orders_list": get_sales_orders(orders_list)
+                "orders_list": orders_list
             }, 200
 
     except pymysql.Error as e:
@@ -211,14 +212,14 @@ def get_store_sales(store_id, store_type):
     try:
         with connection.cursor() as cursor:
             get_order_query = f"""
-                                SELECT IFNULL(SUM(product_total_cost), 0) AS total_sale
+                                SELECT IFNULL(SUM(so_product_total_cost), 0) AS total_sale
                                 FROM sales_order
-                                WHERE created_by_store_type = {store_type} AND created_by_store = {store_id}
-                                AND order_status != 7
+                                WHERE so_created_by_store_type = {store_type} AND so_created_by_store = {store_id}
+                                AND so_order_status != 7
                                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchone()
-            total_sale = orders_list[0] if orders_list[0] is not None else 0
+            total_sale = orders_list['total_sale'] if orders_list['total_sale'] is not None else 0
 
             return {
                 "status": True,

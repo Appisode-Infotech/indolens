@@ -67,21 +67,25 @@ def delete_product_image(imageURL, productId):
             print("file deletd")
             with connection.cursor() as cursor:
                 get_documents_query = f"""
-                SELECT product_images FROM central_inventory Where product_id = {productId}
+                SELECT ci_product_images FROM central_inventory Where ci_product_id = {productId}
                 """
                 cursor.execute(get_documents_query)
-                documents = json.loads(cursor.fetchone()[0])
+                documents = cursor.fetchone()
+                print(documents)
+                print(json.loads(documents['ci_product_images']))
+                documents = json.loads(documents['ci_product_images'])
                 documents.remove(imageURL)
-                cursor.execute(f""" UPDATE central_inventory SET product_images = '{json.dumps(documents)}' WHERE product_id = {productId}""")
+                print(documents)
+                cursor.execute(f""" UPDATE central_inventory SET ci_product_images = '{json.dumps(documents)}' WHERE ci_product_id = {productId}""")
             return {
                 "status": True,
                 "message": "Document Deleted Successfully"
-            }
+            }, 200
         else:
             return {
                 "status": False,
                 "message": f"{file_name} Document Doesn't Exist"
-            }
+            }, 400
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

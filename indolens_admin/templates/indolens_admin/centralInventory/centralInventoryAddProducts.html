@@ -359,8 +359,8 @@
                                                         onchange="handleCategoryChange()" required>
                                                     <option value="">Select category</option>
                                                     {% for category in product_categories %}
-                                                    <option value="{{category.category_id}}">
-                                                        {{category.category_name}}
+                                                    <option value="{{category.pc_category_id}}">
+                                                        {{category.pc_category_name}}
                                                     </option>
                                                     {% endfor %}
                                                 </select>
@@ -377,7 +377,7 @@
                                                         class="form-select mb-3" required>
                                                     <option value="">Select Brand</option>
                                                     {% for brand in product_brands %}
-                                                    <option value="{{brand.brand_id}}">{{brand.brand_name}}</option>
+                                                    <option value="{{brand.brand_brand_id}}">{{brand.brand_name}}</option>
                                                     {% endfor %}
                                                 </select>
                                                 <div class="invalid-feedback">Please select a brand.</div>

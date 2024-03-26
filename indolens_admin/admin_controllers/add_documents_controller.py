@@ -52,14 +52,17 @@ def add_products_image(new_images, productId, updated_by):
     try:
         with connection.cursor() as cursor:
             get_documents_query = f"""
-            SELECT product_images FROM central_inventory Where product_id = {productId}
+            SELECT ci_product_images FROM central_inventory Where ci_product_id = {productId}
             """
             cursor.execute(get_documents_query)
-            old_images = json.loads(cursor.fetchone()[0])
-            product_image = old_images+new_images.product_img
+            old_images = cursor.fetchone()
+            print(old_images)
+            print(json.loads(old_images['ci_product_images']))
+            product_image = json.loads(old_images['ci_product_images'])+new_images.product_img
+            print(product_image)
             cursor.execute(
-                f""" UPDATE central_inventory SET product_images = '{json.dumps(product_image)}', 
-                last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by} WHERE product_id = {productId}""")
+                f""" UPDATE central_inventory SET ci_product_images = '{json.dumps(product_image)}', 
+                ci_last_updated_on = '{getIndianTime()}', ci_last_updated_by = {updated_by} WHERE ci_product_id = {productId}""")
         return {
             "status": True,
             "message": "Document Deleted Successfully"

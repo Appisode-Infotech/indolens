@@ -98,7 +98,7 @@
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                             <div class="d-flex flex-wrap">
                                 <label></label>
-                                {% for image in product_data.product_images %}
+                                {% for image in product_data.ci_product_images %}
                                 <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3"
                                      style="max-width:125px">
                                     <div class="border border-300 p-2 rounded-2 me-2 mb-2">
@@ -112,16 +112,16 @@
                                                  alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                         </a>
                                     </div>
-                                    {% if product_data.product_images.1|length == 0 %}
+                                    {% if product_data.ci_product_images.1|length == 0 %}
                                     <p style="color: red; text-align: center;"> One image is Mandatory </p>
                                     {% else %}
                                     <a data-bs-toggle="modal"
                                        data-bs-target="#delete_document"
                                        data-employee-id="{{ manager.employee_id }}"
-                                       data-employee-name="{{ product_data.product_name }}"
+                                       data-employee-name="{{ product_data.ci_product_name }}"
                                        data-document-preview="{{ MEDIA_URL }}{{ image }}"
                                        data-action-type="delete"
-                                       data-action-href="{% url 'delete_product_image' product_data.product_id image %}"
+                                       data-action-href="{% url 'delete_product_image' product_data.ci_product_id image %}"
                                        class="btn btn-soft-danger me-1 mb-5" type="button">
                                         <i class="fa fa-trash me-1"></i> Delete
                                     </a>
@@ -134,7 +134,7 @@
                     </div>
                 </div>
 
-                <form action="{% url 'add_product_image' product_data.product_id %}" class="mb-9 needs-validation"
+                <form action="{% url 'add_product_image' product_data.ci_product_id %}" class="mb-9 needs-validation"
                       method="post" novalidate="novalidate"
                       enctype="multipart/form-data">
                     {% csrf_token %}

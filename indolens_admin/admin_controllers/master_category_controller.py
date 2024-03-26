@@ -70,17 +70,17 @@ def edit_product_category(product_cat_obj):
 def get_all_central_inventory_category():
     try:
         with connection.cursor() as cursor:
-            get_product_category_query = f""" SELECT pc.* , creator.name, updater.name
+            get_product_category_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
             FROM product_categories AS pc 
-            LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id 
+            LEFT JOIN admin AS creator ON pc.pc_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON pc.pc_last_updated_by = updater.admin_admin_id 
             ORDER BY pc.category_id ASC"""
             cursor.execute(get_product_category_query)
             stores_data = cursor.fetchall()
 
             return {
                 "status": True,
-                "product_category": get_product_categories(stores_data)
+                "product_category": stores_data
             }, 200
 
     except pymysql.Error as e:

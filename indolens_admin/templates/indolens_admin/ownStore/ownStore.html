@@ -345,7 +345,7 @@
                                         <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                         <td class="product align-middle "><a
                                                 class="fw-semi-bold line-clamp-3 mb-0"
-                                                href="{% url 'view_products' stock.product_id %}">
+                                                href="{% url 'view_products' stock.si_product_id %}">
                                             {{stock.product_name}}</a>
                                         </td>
                                         <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700 text-end">
@@ -464,14 +464,14 @@
                                         data-category="{{ order.order_status }}">
                                         <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                         <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                                  href="{% url 'order_details' order.order_id %}">{{order.order_id}}</a>
+                                                                                                  href="{% url 'order_details' order.so_order_id %}">{{order.order_id}}</a>
                                         </td>
                                         <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700 text-end">
                                             ₹{{order.total_cost}}
                                         </td>
                                         <td class="customer align-middle white-space-nowrap ps-8">
                                             <a class="d-flex align-items-center"
-                                               href="{% url 'customer_details' order.customer_id %}">
+                                               href="{% url 'customer_details' order.so_customer_id %}">
                                                 <div class="avatar avatar-m">
                                                     <div class="avatar-name rounded-circle">
                                                         <span>{{order.customer_name.0}}</span></div>
@@ -537,13 +537,13 @@
 
                                         </td>
                                         <td class="createdby align-middle white-space-nowrap text-900 fs--1 text-start">
-                                            <a href="{% url 'view_order_creator' order.created_by order.created_by_store_type %}">{{order.creator_name}}</a>
+                                            <a href="{% url 'view_order_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
                                         </td>
                                         <td class="created_on align-middle white-space-nowrap text-700 fs--1  ">
                                             {{order.created_on}}
                                         </td>
                                         <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                            <a href="{% url 'view_order_creator' order.updated_by order.created_by_store_type %}">
+                                            <a href="{% url 'view_order_creator' order.so_updated_by order.so_created_by_store_type %}">
                                                 {{order.updater_name}} </a>
                                         </td>
                                         <td class="updated_on align-middle white-space-nowrap text-700 fs--1  ">
@@ -648,7 +648,7 @@
                                             {{expense.expense_date}}
                                         </td>
                                         <td class="createdBy align-middle fw-semi-bold text-1000">
-                                            <a href="{% url 'view_order_creator' expense.created_by expense.store_type %}">
+                                            <a href="{% url 'view_order_creator' expense.se_created_by expense.se_store_type %}">
                                                 {{expense.creator_name}}</a>
                                         </td>
                                         <td class="createdOn align-middle fw-semi-bold text-1000">

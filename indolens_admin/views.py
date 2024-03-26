@@ -146,12 +146,19 @@ def manageOwnStores(request, status):
 def viewOwnStore(request, ownStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, resp_status_code = own_store_controller.get_own_store_by_id(ownStoreId)
+        # print(response)
         products_list, prod_status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
+        # print(products_list)
         store_stats, store_stats_status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
+        # print(store_stats)
         sales_data, sale_status_code = orders_controller.get_all_store_orders(ownStoreId, 1)
+        # print(sales_data)
         revenue_generated, sale_status_code = orders_controller.get_store_sales(ownStoreId, 1)
+        # print(revenue_generated)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(ownStoreId, 1)
+        # print(store_expense)
         store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(ownStoreId, 1)
+        # print(store_expense_list)
 
         return render(request, 'indolens_admin/ownStore/ownStore.html',
                       {"store_data": response['own_stores'], "products_list": products_list['products_list'],
@@ -178,6 +185,7 @@ def editOwnStore(request, ownStoreId):
 
         else:
             response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
+            # print(response)
             return render(request, 'indolens_admin/ownStore/editOwnStore.html',
                           {"store_data": response['own_stores'], "id": ownStoreId})
     else:
@@ -2880,6 +2888,7 @@ def enableDisableMastersUnits(request, unitId, status):
 def manageCentralInventoryProducts(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_central_inventory_products(status)
+        print(response)
         return render(request, 'indolens_admin/centralInventory/manageCentralInventoryProducts.html',
                       {"product_list": response['product_list'], "categories_List": response['categoriesList'],
                        "status": status})
@@ -2938,12 +2947,14 @@ def centralInventoryUpdateProductStatus(request, filter, productId, status):
 
 def centralInventoryUpdateProductImages(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
+    # print(response)
     return render(request, 'indolens_admin/centralInventory/updateproductImages.html',
                   {'product_data': response['product_data'], 'productId': productId})
 
 
 def centralInventoryViewProducts(request, productId):
     response, status_code = get_central_inventory_product_single(productId)
+    print(response)
     return render(request, 'indolens_admin/centralInventory/centralInventoryViewProduct.html',
                   {'product_data': response['product_data'], 'productId': productId})
 
@@ -2997,6 +3008,7 @@ def centralInventoryAddProducts(request):
             return redirect(url)
         else:
             response, status_code = central_inventory_controller.get_all_active_types()
+            # print(response)
             return render(request, 'indolens_admin/centralInventory/centralInventoryAddProducts.html', response)
 
     else:
@@ -3006,6 +3018,7 @@ def centralInventoryAddProducts(request):
 def manageCentralInventoryOutOfStock(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
+        print(response)
         return render(request, 'indolens_admin/centralInventory/manageCentralInventoryOutOfStock.html',
                       {"stocks_list": response['stocks_list'], "categories_list": response['categories_list']})
     else:
@@ -3021,12 +3034,17 @@ def manageMoveStocks(request):
             else:
                 store_id = request.POST['franchise_store_id']
             response = central_inventory_controller.create_store_stock_request(stock_obj, store_id)
+            print(response)
             return redirect('manageMoveStocks')
         else:
             moved_stocks, status_code = central_inventory_controller.get_all_moved_stocks_list('1')
+            # print(moved_stocks)
             own_store, status_code = own_store_controller.get_all_own_stores('Active')
+            # print(own_store)
             franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('Active')
+            # print(franchise_store)
             products, status_code = central_inventory_controller.get_central_inventory_products_to_move('Active')
+            # print(products)
             return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html',
                           {"own_store_list": own_store['own_stores'], "products": products['product_list'],
                            "franchise_store_list": franchise_store['franchise_store'],
@@ -3389,6 +3407,7 @@ def deleteFranchiseStoreEmployeeDocuments(request, employeeId, documentURL, docu
 def deleteProductImage(request, productId, imageURL):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_product_image(imageURL, productId)
+        print(response)
         url = reverse('update_product_images', kwargs={'productId': productId})
         return redirect(url)
     else:
@@ -3432,6 +3451,7 @@ def addProductImage(request, productId):
             file_data = FileData(form_data)
             response, status_code = add_documents_controller.add_products_image(file_data, productId,
                                                                                 request.session.get('id'))
+            print(response)
         url = reverse('update_product_images', kwargs={'productId': productId})
         return redirect(url)
     else:

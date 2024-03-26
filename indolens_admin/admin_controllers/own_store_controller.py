@@ -16,19 +16,25 @@ def create_own_store(store_obj):
     store_lat, store_lng = map(float, cleaned_str.split(', '))
     try:
         with connection.cursor() as cursor:
-            create_own_store_query = f"""
-                                    INSERT INTO own_store (
-                                        store_zip, store_name, store_display_name, store_phone, store_gst, store_email,
-                                        store_city, store_state, store_lat, store_lng, store_address,
-                                        status, created_by, created_on, last_updated_by, last_updated_on ) 
-                                    VALUES ('{store_obj.store_zip_code}', '{store_obj.store_name}', 
-                                            '{store_obj.store_display_name}', '{store_obj.store_phone}', 
-                                            '{store_obj.store_gstin}', '{store_obj.store_email}', 
-                                            '{store_obj.store_city}', '{store_obj.store_state}', '{store_lat}',
-                                            '{store_lng}', '{store_obj.complete_address}', 1, {store_obj.created_by}, 
-                                            '{getIndianTime()}', {store_obj.last_updated_by}, '{getIndianTime()}')"""
+            create_own_store_query = """
+                INSERT INTO own_store (
+                    os_store_zip, os_store_name, os_store_display_name, os_store_phone, 
+                    os_store_gst, os_store_email, os_store_city, os_store_state, os_store_lat, 
+                    os_store_lng, os_store_address, os_status, os_created_by, os_created_on, 
+                    os_last_updated_by, os_last_updated_on
+                ) 
+                VALUES (
+                    %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s
+                )
+            """
 
-            cursor.execute(create_own_store_query)
+            cursor.execute(create_own_store_query, (
+                store_obj.store_zip_code, store_obj.store_name, store_obj.store_display_name,
+                store_obj.store_phone, store_obj.store_gstin, store_obj.store_email,
+                store_obj.store_city, store_obj.store_state, store_lat, store_lng,
+                store_obj.complete_address, 1, store_obj.created_by, getIndianTime(),
+                store_obj.last_updated_by, getIndianTime()
+            ))
             storeId = cursor.lastrowid
             return {
                        "status": True,
@@ -52,21 +58,21 @@ def get_all_own_stores(status):
     try:
         with connection.cursor() as cursor:
             get_own_stores_query = f"""
-                                    SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name,
-                                    creator.name, updater.name
+                                    SELECT own_store.*, own_store_employees.ose_name, own_store_employees.ose_employee_id,
+                                    creator.admin_name, updater.admin_name
                                     FROM own_store
-                                    LEFT JOIN admin AS creator ON own_store.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON own_store.last_updated_by = updater.admin_id
-                                    LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1
-                                    WHERE own_store.status {status_condition} 
-                                    GROUP BY own_store.store_id
-                                    ORDER BY own_store.store_id DESC
+                                    LEFT JOIN admin AS creator ON own_store.os_created_by = creator.admin_admin_id
+                                    LEFT JOIN admin AS updater ON own_store.os_last_updated_by = updater.admin_admin_id
+                                    LEFT JOIN own_store_employees ON own_store.os_store_id = own_store_employees.ose_assigned_store_id AND own_store_employees.ose_role = 1
+                                    WHERE own_store.os_status {status_condition} 
+                                    GROUP BY own_store.os_store_id
+                                    ORDER BY own_store.os_store_id DESC
                                     """
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
                        "status": True,
-                       "own_stores": get_own_store(stores_data)
+                       "own_stores": stores_data
                    }, 200
 
     except pymysql.Error as e:
@@ -150,18 +156,18 @@ def get_active_own_stores():
 def get_own_store_by_id(sid):
     try:
         with connection.cursor() as cursor:
-            get_own_stores_query = f""" SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name,
-                                    creator.name, updater.name
+            get_own_stores_query = f""" SELECT own_store.*, own_store_employees.ose_name, own_store_employees.ose_employee_id,
+                                    creator.admin_name, updater.admin_name
                                     FROM own_store
-                                    LEFT JOIN admin AS creator ON own_store.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON own_store.last_updated_by = updater.admin_id
-                                    LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1 
-                                    WHERE own_store.store_id = '{sid}' GROUP BY own_store.store_id """
+                                    LEFT JOIN admin AS creator ON own_store.os_created_by = creator.admin_admin_id
+                                    LEFT JOIN admin AS updater ON own_store.os_last_updated_by = updater.admin_admin_id
+                                    LEFT JOIN own_store_employees ON own_store.os_store_id = own_store_employees.ose_assigned_store_id AND own_store_employees.ose_role = 1 
+                                    WHERE own_store.os_store_id = '{sid}' GROUP BY own_store.os_store_id """
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
                        "status": True,
-                       "own_stores": get_own_store(stores_data)
+                       "own_stores": stores_data
                    }, 200
 
     except pymysql.Error as e:
@@ -214,9 +220,9 @@ def enable_disable_own_store(sid, status):
             update_sub_admin_query = f"""
                 UPDATE own_store
                 SET
-                    status = {status}
+                    os_status = {status}
                 WHERE
-                    store_id = {sid}
+                    os_store_id = {sid}
             """
 
             # Execute the update query using your cursor
@@ -237,19 +243,21 @@ def get_own_storestore_stats(ownStoreId):
     try:
         with connection.cursor() as cursor:
             employee_count_sql_query = f"""SELECT COUNT(*) FROM own_store_employees 
-                                            WHERE assigned_store_id = {ownStoreId} AND status = 1"""
+                                            WHERE ose_assigned_store_id = {ownStoreId} AND ose_status = 1"""
             cursor.execute(employee_count_sql_query)
-            total_employee_count = cursor.fetchone()[0]
+            total_employee_count = cursor.fetchone()
+            employee_count = total_employee_count['COUNT(*)'] if total_employee_count['COUNT(*)'] is not None else 0
 
-            customer_count_sql_query = f"""SELECT COUNT(*) FROM customers WHERE created_by_store_id = {ownStoreId} 
-                                        AND created_by_store_type = 1 """
+            customer_count_sql_query = f"""SELECT COUNT(*) FROM customers WHERE customer_created_by_store_id = {ownStoreId} 
+                                        AND customer_created_by_store_type = 1 """
             cursor.execute(customer_count_sql_query)
-            total_customer_count = cursor.fetchone()[0]
+            total_customer_count = cursor.fetchone()
+            customer_count = total_customer_count['COUNT(*)'] if total_customer_count['COUNT(*)'] is not None else 0
 
             return {
                        "status": True,
-                       "total_employee_count": total_employee_count,
-                       "total_customer_count": total_customer_count
+                       "total_employee_count": employee_count,
+                       "total_customer_count": customer_count
                    }, 200
 
     except pymysql.Error as e:

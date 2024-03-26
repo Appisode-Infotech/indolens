@@ -177,14 +177,14 @@
                             <tr class="position-static">
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 slno"></td>
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 storeName">
-                                    {% if stock.store_type == 1 %}
+                                    {% if stock.pr_store_type == 1 %}
                                     <a
                                             class="text-decoration-none fw-bold fs-0"
-                                            href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
+                                            href="{% url 'view_own_store' stock.pr_store_id %}">{{stock.store_name}}</a>
                                     {% else %}
                                     <a
                                             class="text-decoration-none fw-bold fs-0"
-                                            href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
+                                            href="{% url 'view_franchise_store' stock.pr_store_id %}">{{stock.store_name}}</a>
                                     {% endif %}
                                 </td>
 
@@ -197,14 +197,14 @@
                                 </td>
 
                                 <td class="align-middle productName">
-                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_products' stock.product_id %}">{{stock.product_name}}</a></td>
+                                    <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_products' stock.pr_product_id %}">{{stock.ci_product_name}}</a></td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 categoryName">
                                     <p class="mb-0 fs--1 text-900">{{stock.category_name}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 quantity text-end">
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.pr_product_quantity}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 price text-end">
@@ -339,7 +339,7 @@
                                     <option value="">Select Product</option>
                                     {% for products in products %}
 <!--                                    <option value="{{products.product_id}}">{{products.product_name}}</option>-->
-                                    <option value="{{ products.product_id }}" data-quantity="{{ products.product_quantity }}">{{ products.product_name }}</option>
+                                    <option value="{{ products.ci_product_id }}" data-quantity="{{ products.ci_product_quantity }}">{{ products.ci_product_name }}</option>
 
                                     {% endfor %}
                                 </select>
@@ -366,7 +366,7 @@
                                         name="own_store_id">
                                     <option value="">Choose Store to move</option>
                                     {% for store in own_store_list %}
-                                    <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                    <option value="{{store.os_store_id}}">{{store.os_store_name}}</option>
                                     {% endfor %}
                                 </select>
                                 <div class="custom-error" style="color: red;"></div>
@@ -379,7 +379,7 @@
                                         name="franchise_store_id" id="franchiseStoreSelect">
                                     <option value="">Choose Store to move</option>
                                     {% for store in franchise_store_list %}
-                                    <option value="{{store.store_id}}">{{store.store_name}}</option>
+                                    <option value="{{store.fs_store_id}}">{{store.fs_store_name}}</option>
                                     {% endfor %}
                                 </select>
                                 <div class="custom-error" style="color: red;"></div>

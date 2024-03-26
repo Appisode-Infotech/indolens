@@ -53,20 +53,20 @@ def get_all_franchise_stores(status):
     status_condition = status_conditions[status]
     try:
         with connection.cursor() as cursor:
-            get_franchise_stores_query = f""" SELECT DISTINCT franchise_store.*, franchise_store_employees.name, franchise_store_employees.employee_id,
-                                        creator.name, updater.name
+            get_franchise_stores_query = f""" SELECT DISTINCT franchise_store.*, franchise_store_employees.fse_name, franchise_store_employees.fse_employee_id,
+                                        creator.admin_name, updater.admin_name
                                         FROM franchise_store
-                                        LEFT JOIN admin AS creator ON franchise_store.created_by = creator.admin_id
-                                        LEFT JOIN admin AS updater ON franchise_store.last_updated_by = updater.admin_id
-                                        LEFT JOIN franchise_store_employees ON franchise_store.store_id = franchise_store_employees.assigned_store_id AND franchise_store_employees.role = 1
-                                        WHERE franchise_store.status {status_condition}
-                                        ORDER BY franchise_store.store_id DESC
+                                        LEFT JOIN admin AS creator ON franchise_store.fs_created_by = creator.admin_admin_id
+                                        LEFT JOIN admin AS updater ON franchise_store.fs_last_updated_by = updater.admin_admin_id
+                                        LEFT JOIN franchise_store_employees ON franchise_store.fs_store_id = franchise_store_employees.fse_assigned_store_id AND franchise_store_employees.fse_role = 1
+                                        WHERE franchise_store.fs_status {status_condition}
+                                        ORDER BY franchise_store.fs_store_id DESC
                                         """
             cursor.execute(get_franchise_stores_query)
             stores_data = cursor.fetchall()
             return {
                 "status": True,
-                "franchise_store": get_franchise_store(stores_data)
+                "franchise_store": stores_data
             }, 200
 
     except pymysql.Error as e:

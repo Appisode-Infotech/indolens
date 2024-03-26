@@ -22,69 +22,51 @@ from indolens_admin.admin_models.admin_resp_model.stockMovementInvoice_resp_mode
 from indolens_admin.admin_models.admin_resp_model.store_inventory_product_resp_model import get_store_stocks
 
 ist = pytz.timezone('Asia/Kolkata')
+
+
 def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
 
+
 def get_all_active_types():
     try:
         with connection.cursor() as cursor:
-            get_product_category_query = f""" SELECT pc.* , creator.name, updater.name
-                           FROM product_categories AS pc 
-                           LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
-                           LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id
-                           WHERE pc.status = 1
+            get_product_category_query = f""" SELECT *
+                           FROM product_categories WHERE pc_status = 1
                            """
-            get_product_brand_query = f""" SELECT br.* , creator.name, updater.name
-                           FROM brands AS br 
-                           LEFT JOIN admin AS creator ON br.created_by = creator.admin_id
-                           LEFT JOIN admin AS updater ON br.last_updated_by = updater.admin_id
-                           WHERE br.status = 1
+            get_product_brand_query = f""" SELECT *
+                           FROM brands WHERE brand_status = 1
                            """
-            get_material_query = f""" SELECT pm.* , creator.name, updater.name
-                            FROM product_materials AS pm
-                            LEFT JOIN admin AS creator ON pm.created_by = creator.admin_id
-                            LEFT JOIN admin AS updater ON pm.last_updated_by = updater.admin_id
-                            WHERE pm.status = 1
+            get_material_query = f""" SELECT *
+                            FROM product_materials WHERE pm_status = 1
                             """
-            get_frame_types_query = f""" SELECT ft.* , creator.name, updater.name
-                            FROM frame_types AS ft
-                            LEFT JOIN admin AS creator ON ft.created_by = creator.admin_id
-                            LEFT JOIN admin AS updater ON ft.last_updated_by = updater.admin_id
-                            WHERE ft.status = 1 
+            get_frame_types_query = f""" SELECT ft.*
+                            FROM frame_types AS ft WHERE ftype_status = 1 
                             """
-            get_product_shape_query = f""" SELECT fs.* , creator.name, updater.name
-                           FROM frame_shapes AS fs 
-                           LEFT JOIN admin AS creator ON fs.created_by = creator.admin_id
-                           LEFT JOIN admin AS updater ON fs.last_updated_by = updater.admin_id
-                           WHERE fs.status = 1
+            get_product_shape_query = f""" SELECT fs.*
+                           FROM frame_shapes AS fs WHERE fs.fshape_status = 1
                            """
-            get_frame_color_query = f""" SELECT pc.* , creator.name, updater.name
-                            FROM product_colors AS pc
-                            LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
-                            LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id
-                            WHERE pc.status = 1
+            get_frame_color_query = f""" SELECT pc.*
+                            FROM product_colors AS pc WHERE pc.pcol_status = 1
                             """
-            get_units_query = f""" SELECT u.*, creator.name, updater.name 
-                                                           FROM units AS u
-                                                            LEFT JOIN admin AS creator ON u.created_by = creator.admin_id
-                                                            LEFT JOIN admin AS updater ON u.last_updated_by = updater.admin_id
-                                                            WHERE u.status = 1
-                                                            """
+            get_units_query = f""" SELECT u.*
+                                   FROM units AS u WHERE u.unit_status = 1
+                                   """
             cursor.execute(get_product_category_query)
-            product_categories = get_product_categories(cursor.fetchall())
+            product_categories = (cursor.fetchall())
             cursor.execute(get_product_brand_query)
-            product_brands = get_brands(cursor.fetchall())
+            product_brands = (cursor.fetchall())
             cursor.execute(get_material_query)
-            product_materials = get_product_materials(cursor.fetchall())
+            product_materials = (cursor.fetchall())
             cursor.execute(get_frame_types_query)
-            frame_types = get_frame_types(cursor.fetchall())
+            frame_types = (cursor.fetchall())
             cursor.execute(get_product_shape_query)
-            frame_shapes = get_frame_shapes(cursor.fetchall())
+            frame_shapes = (cursor.fetchall())
             cursor.execute(get_frame_color_query)
-            colors = get_product_colors(cursor.fetchall())
+            colors = (cursor.fetchall())
             cursor.execute(get_units_query)
-            master_units = get_master_units(cursor.fetchall())
+            master_units = (cursor.fetchall())
             return {
                 "status": True,
                 "product_categories": product_categories,
@@ -108,22 +90,22 @@ def add_central_inventory_products(product_obj, file, power_attributes):
     try:
         with connection.cursor() as cursor:
             add_product_query = f""" INSERT INTO central_inventory 
-                                                (product_name, product_description, product_images, 
-                                                category_id, brand_id, material_id, frame_type_id, frame_shape_id, 
-                                                color_id, unit_id, origin, cost_price, sale_price, model_number, hsn, 
-                                                created_on, created_by, last_updated_on, last_updated_by, 
-                                                product_quantity, product_gst, discount, franchise_sale_price, power_attribute, status) 
-                                                VALUES ('{product_obj.product_title}','{product_obj.product_description}',
-                                                '{json.dumps(file.product_img)}','{product_obj.category_id}',
-                                                '{product_obj.brand_id}','{product_obj.material_id}',
-                                                '{frame_type_id_value}','{frame_shape_id_value}',
-                                                '{product_obj.color_id}','{product_obj.unit_id}','{product_obj.origin}',
-                                                '{product_obj.cost_price}','{product_obj.sale_price}', 
-                                                '{product_obj.model_number}', '{product_obj.hsn_number}',
-                                                '{getIndianTime()}','{product_obj.created_by}','{getIndianTime()}',
-                                                '{product_obj.last_updated_by}', '{product_obj.product_quantity}', 
-                                                '{product_obj.product_gstin}', {product_obj.discount}, 
-                                                {product_obj.franchise_sale_price}, '{power_attributes_json}', 1) """
+                                    (ci_product_name, ci_product_description, ci_product_images, 
+                                    ci_category_id, ci_brand_id, ci_material_id, ci_frame_type_id, ci_frame_shape_id, 
+                                    ci_color_id, ci_unit_id, ci_origin, ci_cost_price, ci_sale_price, ci_model_number, ci_hsn, 
+                                    ci_created_on, ci_created_by, ci_last_updated_on, ci_last_updated_by, 
+                                    ci_product_quantity, ci_product_gst, ci_discount, ci_franchise_sale_price, ci_power_attribute, ci_status) 
+                                    VALUES ('{product_obj.product_title}','{product_obj.product_description}',
+                                    '{json.dumps(file.product_img)}','{product_obj.category_id}',
+                                    '{product_obj.brand_id}','{product_obj.material_id}',
+                                    '{frame_type_id_value}','{frame_shape_id_value}',
+                                    '{product_obj.color_id}','{product_obj.unit_id}','{product_obj.origin}',
+                                    '{product_obj.cost_price}','{product_obj.sale_price}', 
+                                    '{product_obj.model_number}', '{product_obj.hsn_number}',
+                                    '{getIndianTime()}','{product_obj.created_by}','{getIndianTime()}',
+                                    '{product_obj.last_updated_by}', '{product_obj.product_quantity}', 
+                                    '{product_obj.product_gstin}', {product_obj.discount}, 
+                                    {product_obj.franchise_sale_price}, '{power_attributes_json}', 1) """
 
             cursor.execute(add_product_query)
 
@@ -176,7 +158,7 @@ def add_central_inventory_products(product_obj, file, power_attributes):
             text = f"Product ID: {productId}"
             text_width, text_height = draw.textsize(text, font)
             text_position = (
-            (QRimg.width - text_width) // 2, QRimg.height - text_height - 10)
+                (QRimg.width - text_width) // 2, QRimg.height - text_height - 10)
             draw.text(text_position, text, fill="#000000", font=font)
 
             # Construct the path to save the image in the media directory
@@ -284,31 +266,43 @@ def get_all_central_inventory_products(status):
         }
         status_condition = status_conditions[status]
         with connection.cursor() as cursor:
-            get_all_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
-                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
-                                    FROM central_inventory As ci
-                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
-                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
-                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
-                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
-                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
-                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
-                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                    WHERE ci.status {status_condition} ORDER BY ci.product_id DESC """
+            get_all_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
+                                                ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
+                                                FROM central_inventory As ci
+                                                LEFT JOIN admin AS creator ON ci.ci_created_by = creator.admin_admin_id
+                                                LEFT JOIN admin AS updater ON ci.ci_last_updated_by = updater.admin_admin_id
+                                                LEFT JOIN product_categories AS pc ON ci.ci_category_id = pc.pc_category_id
+                                                LEFT JOIN product_materials AS pm ON ci.ci_material_id = pm.pm_material_id
+                                                LEFT JOIN frame_types AS ft ON ci.ci_frame_type_id = ft.ftype_frame_id
+                                                LEFT JOIN frame_shapes AS fs ON ci.ci_frame_shape_id = fs.fshape_shape_id
+                                                LEFT JOIN product_colors AS c ON ci.ci_color_id = c.pcol_color_id
+                                                LEFT JOIN units AS u ON ci.ci_unit_id = u.unit_unit_id
+                                                LEFT JOIN brands AS b ON ci.ci_brand_id = b.brand_brand_id
+                                                WHERE ci.ci_status {status_condition} ORDER BY ci.ci_product_id DESC"""
 
             cursor.execute(get_all_product_query)
             product_list = cursor.fetchall()
+            product_list['ci_power_attribute'] = json.loads(product_list['ci_power_attribute'])
+            product_list['ci_product_images'] = json.loads(product_list['ci_product_images'])
+
+            get_product_category_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
+                                    FROM product_categories AS pc 
+                                    LEFT JOIN admin AS creator ON pc.pc_created_by = creator.admin_admin_id
+                                    LEFT JOIN admin AS updater ON pc.pc_last_updated_by = updater.admin_admin_id 
+                                    ORDER BY pc.pc_category_id ASC"""
+            cursor.execute(get_product_category_query)
+            product_category = cursor.fetchall()
+
             return {
                 "status": True,
-                "product_list": get_products(product_list),
-                "categoriesList": get_all_central_inventory_category()[0]['product_category']
+                "product_list": product_list,
+                "categoriesList": product_category
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def get_central_inventory_products_to_move(status):
     try:
@@ -319,26 +313,36 @@ def get_central_inventory_products_to_move(status):
         }
         status_condition = status_conditions[status]
         with connection.cursor() as cursor:
-            get_all_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
-                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
-                                    FROM central_inventory As ci
-                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
-                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
-                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
-                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
-                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
-                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
-                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                    WHERE ci.category_id <> 2 AND ci.category_id <> 3 AND ci.status {status_condition} """
+            get_all_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
+                                        ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
+                                        FROM central_inventory As ci
+                                        LEFT JOIN admin AS creator ON ci.ci_created_by = creator.admin_admin_id
+                                        LEFT JOIN admin AS updater ON ci.ci_last_updated_by = updater.admin_admin_id
+                                        LEFT JOIN product_categories AS pc ON ci.ci_category_id = pc.pc_category_id
+                                        LEFT JOIN product_materials AS pm ON ci.ci_material_id = pm.pm_material_id
+                                        LEFT JOIN frame_types AS ft ON ci.ci_frame_type_id = ft.ftype_frame_id
+                                        LEFT JOIN frame_shapes AS fs ON ci.ci_frame_shape_id = fs.fshape_shape_id
+                                        LEFT JOIN product_colors AS c ON ci.ci_color_id = c.pcol_color_id
+                                        LEFT JOIN units AS u ON ci.ci_unit_id = u.unit_unit_id
+                                        LEFT JOIN brands AS b ON ci.ci_brand_id = b.brand_brand_id
+                                        WHERE ci.ci_category_id <> 2 AND ci.ci_category_id <> 3 
+                                        AND ci.ci_status {status_condition} ORDER BY ci.ci_product_id DESC"""
 
             cursor.execute(get_all_product_query)
             product_list = cursor.fetchall()
+
+            get_product_category_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
+                                                FROM product_categories AS pc 
+                                                LEFT JOIN admin AS creator ON pc.pc_created_by = creator.admin_admin_id
+                                                LEFT JOIN admin AS updater ON pc.pc_last_updated_by = updater.admin_admin_id 
+                                                ORDER BY pc.pc_category_id ASC"""
+            cursor.execute(get_product_category_query)
+            product_category = cursor.fetchall()
+
             return {
                 "status": True,
-                "product_list": get_products(product_list),
-                "categoriesList": get_all_central_inventory_category()[0]['product_category']
+                "product_list": product_list,
+                "categoriesList": product_category
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -349,29 +353,33 @@ def get_central_inventory_products_to_move(status):
 def get_central_inventory_product_single(productId):
     with connection.cursor() as cursor:
         try:
-            get_all_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
-                                            ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
-                                            FROM central_inventory As ci
-                                            LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
-                                            LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
-                                            LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
-                                            LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
-                                            LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
-                                            LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
-                                            LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                                            LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                            WHERE ci.product_id= {productId} """
-            cursor.execute(get_all_product_query)
-            product_list = cursor.fetchall()
+            get_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
+                                                ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
+                                                FROM central_inventory As ci
+                                                LEFT JOIN admin AS creator ON ci.ci_created_by = creator.admin_admin_id
+                                                LEFT JOIN admin AS updater ON ci.ci_last_updated_by = updater.admin_admin_id
+                                                LEFT JOIN product_categories AS pc ON ci.ci_category_id = pc.pc_category_id
+                                                LEFT JOIN product_materials AS pm ON ci.ci_material_id = pm.pm_material_id
+                                                LEFT JOIN frame_types AS ft ON ci.ci_frame_type_id = ft.ftype_frame_id
+                                                LEFT JOIN frame_shapes AS fs ON ci.ci_frame_shape_id = fs.fshape_shape_id
+                                                LEFT JOIN product_colors AS c ON ci.ci_color_id = c.pcol_color_id
+                                                LEFT JOIN units AS u ON ci.ci_unit_id = u.unit_unit_id
+                                                LEFT JOIN brands AS b ON ci.ci_brand_id = b.brand_brand_id
+                                                WHERE ci.ci_product_id= {productId} """
+
+            cursor.execute(get_product_query)
+            product_data = cursor.fetchone()
+            product_data['ci_power_attribute'] = json.loads(product_data['ci_power_attribute'])
+            product_data['ci_product_images'] = json.loads(product_data['ci_product_images'])
             return {
                 "status": True,
-                "product_data": get_products(product_list)[0],
+                "product_data": product_data,
             }, 200
         except pymysql.Error as e:
             return {"status": False, "message": str(e)}, 301
         except Exception as e:
             return {"status": False, "message": str(e)}, 301
+
 
 def get_central_inventory_product_restoc_log(productId):
     with connection.cursor() as cursor:
@@ -385,7 +393,7 @@ def get_central_inventory_product_restoc_log(productId):
             product_list = cursor.fetchall()
             return {
                 "status": True,
-                "restock_logs": get_restock_logs(product_list),
+                "restock_logs": product_list,
             }, 200
         except pymysql.Error as e:
             return {"status": False, "message": str(e)}, 301
@@ -413,11 +421,19 @@ def get_all_out_of_stock_central_inventory_products(quantity):
 
             cursor.execute(get_all_product_query)
             stocks_list = cursor.fetchall()
-            print(stocks_list)
+
+            get_product_category_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
+                        FROM product_categories AS pc 
+                        LEFT JOIN admin AS creator ON pc.pc_created_by = creator.admin_admin_id
+                        LEFT JOIN admin AS updater ON pc.pc_last_updated_by = updater.admin_admin_id 
+                        ORDER BY pc.pc_category_id ASC"""
+            cursor.execute(get_product_category_query)
+            product_category = cursor.fetchall()
+
             return {
                 "status": True,
                 "stocks_list": stocks_list,
-                "categories_list": get_all_central_inventory_category()[0]['product_category']
+                "categories_list": product_category
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e), "stocks_list": []}, 301
@@ -464,36 +480,37 @@ def get_all_out_of_stock_products_for_store(quantity):
 def get_all_moved_stocks_list(status):
     try:
         with connection.cursor() as cursor:
-            get_all_out_of_stock_product_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
-                                    pm.material_name, ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
+            get_all_out_of_stock_product_query = f""" SELECT rp.*, ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, 
+                                    pm.pm_material_name, ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name,
                                     CASE
-                                        WHEN rp.store_type = 1 THEN os.store_name
-                                        ELSE fstore.store_name
+                                        WHEN rp.pr_store_type = 1 THEN os.os_store_name
+                                        ELSE fstore.fs_store_name
                                     END AS store_name,
-                                    from_store.store_name, si.product_quantity
+                                    from_store.os_store_name, si.si_product_quantity
                                     FROM request_products As rp
-                                    LEFT JOIN central_inventory AS ci ON ci.product_id = rp.product_id
-                                    LEFT JOIN admin AS creator ON rp.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON rp.last_updated_by = updater.admin_id
-                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
-                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
-                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
-                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
-                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
-                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id 
-                                    LEFT JOIN own_store os ON rp.store_id = os.store_id AND rp.store_type = 1
-                                    LEFT JOIN own_store AS from_store ON rp.request_to_store_id = from_store.store_id
-                                    LEFT JOIN franchise_store fstore ON rp.store_id = fstore.store_id AND rp.store_type = 2
-                                    LEFT JOIN store_inventory si ON si.product_id = rp.product_id AND si.store_id = rp.request_to_store_id AND si.store_type = 1
-                                    WHERE rp.request_status LIKE '{status}' 
-                                    ORDER BY rp.request_products_id DESC"""
+                                    LEFT JOIN central_inventory AS ci ON ci.ci_product_id = rp.pr_product_id
+                                    LEFT JOIN admin AS creator ON rp.pr_created_by = creator.admin_admin_id
+                                    LEFT JOIN admin AS updater ON rp.pr_last_updated_by = updater.admin_admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.ci_category_id = pc.pc_category_id
+                                    LEFT JOIN product_materials AS pm ON ci.ci_material_id = pm.pm_material_id
+                                    
+                                    LEFT JOIN frame_types AS ft ON ci.ci_frame_type_id = ft.ftype_frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.ci_frame_shape_id = fs.fshape_shape_id
+                                    LEFT JOIN product_colors AS c ON ci.ci_color_id = c.pcol_color_id
+                                    LEFT JOIN units AS u ON ci.ci_unit_id = u.unit_unit_id
+                                    LEFT JOIN brands AS b ON ci.ci_brand_id = b.brand_brand_id
+                                    LEFT JOIN own_store os ON rp.pr_store_id = os.os_store_id AND rp.pr_store_type = 1
+                                    LEFT JOIN own_store AS from_store ON rp.pr_request_to_store_id = from_store.os_store_id
+                                    LEFT JOIN franchise_store fstore ON rp.pr_store_id = fstore.fs_store_id AND rp.pr_store_type = 2
+                                    LEFT JOIN store_inventory si ON si.si_product_id = rp.pr_product_id AND si.si_store_id = rp.pr_request_to_store_id AND si.si_store_type = 1
+                                    WHERE rp.pr_request_status LIKE '{status}' 
+                                    ORDER BY rp.pr_request_products_id DESC"""
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
             return {
                 "status": True,
-                "stocks_request_list": get_request_product_list(product_list)
+                "stocks_request_list": product_list
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -622,8 +639,6 @@ def change_stock_request_status(requestId, status, updator):
                                                                             WHERE product_id = {product_details[3]}"""
                         cursor.execute(update_central_Inventory)
 
-
-
                         return {
                             "status": True,
                             "message": "Status Changed"
@@ -690,6 +705,7 @@ def change_stock_request_status(requestId, status, updator):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def change_stock_request_status_with_reason(requestId, status, updator, comments):
     try:
@@ -804,8 +820,8 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
 def change_product_status(productId, status):
     try:
         with connection.cursor() as cursor:
-            update_stock_request_query = f"""UPDATE central_inventory SET status = '{status}' 
-            WHERE product_id = '{productId}' """
+            update_stock_request_query = f"""UPDATE central_inventory SET ci_status = '{status}' 
+            WHERE ci_product_id = '{productId}' """
             cursor.execute(update_stock_request_query)
         return {
             "status": True,
@@ -823,28 +839,29 @@ def create_store_stock_request(stock_obj, store_id):
     try:
         with connection.cursor() as cursor:
             stock_req_query = """INSERT INTO request_products ( 
-                               store_id, 
-                               store_type, 
-                               product_id, 
-                               product_quantity, 
-                               request_status, 
-                               delivery_status, 
-                               is_requested,
-                               request_to_store_id,
-                               payment_status,
-                               created_on, 
-                               created_by, 
-                               last_updated_on, 
-                               last_updated_by,
-                               comment
+                               pr_store_id, 
+                               pr_store_type, 
+                               pr_product_id, 
+                               pr_product_quantity, 
+                               pr_request_status, 
+                               pr_delivery_status, 
+                               pr_is_requested,
+                               pr_request_to_store_id,
+                               pr_payment_status,
+                               pr_created_on, 
+                               pr_created_by, 
+                               pr_last_updated_on, 
+                               pr_last_updated_by,
+                               pr_comment
                            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
             cursor.execute(stock_req_query, (
                 store_id, stock_obj.store_type, stock_obj.product_id, stock_obj.product_quantity,
-                1, 1, 0, 0, 0, getIndianTime(), stock_obj.created_by, getIndianTime(), stock_obj.created_by, stock_obj.comments))
+                1, 1, 0, 0, 0, getIndianTime(), stock_obj.created_by, getIndianTime(), stock_obj.created_by,
+                stock_obj.comments))
 
-            update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {stock_obj.product_quantity} 
-                                                                                    WHERE product_id = {stock_obj.product_id}"""
+            update_central_Inventory = f"""UPDATE central_inventory SET ci_product_quantity = ci_product_quantity - {stock_obj.product_quantity} 
+                                                                                    WHERE ci_product_id = {stock_obj.product_id}"""
             cursor.execute(update_central_Inventory)
 
             return {
@@ -903,4 +920,3 @@ def get_central_inventory_lens(store_id):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
-

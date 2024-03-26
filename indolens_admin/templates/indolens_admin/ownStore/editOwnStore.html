@@ -82,7 +82,7 @@
             <h2 class="mb-4">Edit Own Store</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_own_store' store.store_id %}" class="row g-3 needs-validation"
+                    <form action="{% url 'edit_own_store' store.os_store_id %}" class="row g-3 needs-validation"
                           method="post"
                           novalidate="">
                         {% csrf_token %}
@@ -91,7 +91,7 @@
                             <label class="form-label" for="storeName">Store name</label>
 
                             <input class="form-control" id="storeName" name="storeName" required="" type="text"
-                                   value="{{store.store_name}}"/>
+                                   value="{{store.os_store_name}}"/>
                             <div class="invalid-feedback">Enter valid store name.</div>
 
                         </div>
@@ -100,7 +100,7 @@
                             <label class="form-label" for="storeDisplayName">Store Display Name</label>
 
                             <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
-                                   type="text" value="{{store.store_display_name}}"/>
+                                   type="text" value="{{store.os_store_display_name}}"/>
                                                         <div class="invalid-feedback">Enter valid store display name.</div>
 
                         </div>
@@ -110,7 +110,7 @@
                             <label class="form-label" for="storePhone">Store Phone</label>
 
                             <input class="form-control" id="storePhone" name="storePhone" required="" type="number"
-                                   min="1111111111" max="9999999999" value="{{store.store_phone}}"/>
+                                   min="1111111111" max="9999999999" value="{{store.os_store_phone}}"/>
                                                         <div class="invalid-feedback">Enter valid phone number with 10 digits.</div>
 
                         </div>
@@ -120,7 +120,7 @@
 
                             <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
                                    minlength="15" maxlength="15"
-                                   value="{{store.store_gst}}" pattern="([0-9]{2}[a-z]{4}([a-z]{1}|[0-9]{1}).[0-9]{3}[a-z]{3}"/>
+                                   value="{{store.os_store_gst}}" pattern="([0-9]{2}[a-z]{4}([a-z]{1}|[0-9]{1}).[0-9]{3}[a-z]{3}"/>
                                                         <div class="invalid-feedback">Enter valid store GSTIN.</div>
 
                         </div>
