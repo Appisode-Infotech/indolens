@@ -21,8 +21,8 @@ def get_order_stats(status, store_type):
             get_order_query = f"""
                     SELECT count(*)
                     FROM sales_order
-                    WHERE order_status {status_condition} AND created_by_store_type = {store_type} 
-                    GROUP BY order_id          
+                    WHERE so_order_status {status_condition} AND so_created_by_store_type = {store_type} 
+                    GROUP BY so_order_id          
                     """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchone()
@@ -45,9 +45,9 @@ def get_sales_stats(store):
     try:
         with connection.cursor() as cursor:
             get_order_query = f"""
-                                SELECT IFNULL(SUM(product_total_cost), 0) AS total_sale
+                                SELECT IFNULL(SUM(so_product_total_cost), 0) AS total_sale
                                 FROM sales_order
-                                WHERE created_by_store_type = {store} AND order_status != 7
+                                WHERE so_created_by_store_type = {store} AND so_order_status != 7
                                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchone()
@@ -68,25 +68,25 @@ def get_store_analytics():
         with connection.cursor() as cursor:
             own_store_sales_query = f"""
                 SELECT
-                    os.store_id,
-                    os.store_name,
-                    COALESCE(SUM(so.product_total_cost), 0) AS total_sale,
-                    COALESCE((SELECT IFNULL(SUM(expense_amount), 0) 
+                    os.os_store_id,
+                    os.os_store_name,
+                    COALESCE(SUM(so.so_product_total_cost), 0) AS total_sale,
+                    COALESCE((SELECT IFNULL(SUM(se_expense_amount), 0) 
                               FROM store_expense 
-                              WHERE store_id = os.store_id 
-                                AND store_type = 1), 0) AS total_expense,
-                    COALESCE(SUM(so.product_total_cost), 0) - COALESCE((SELECT IFNULL(SUM(expense_amount), 0) 
+                              WHERE se_store_id = os.os_store_id 
+                                AND se_store_type = 1), 0) AS total_expense,
+                    COALESCE(SUM(so.so_product_total_cost), 0) - COALESCE((SELECT IFNULL(SUM(se_expense_amount), 0) 
                                                                          FROM store_expense 
-                                                                         WHERE store_id = os.store_id 
-                                                                           AND store_type = 1), 0) AS net_profit
+                                                                         WHERE se_store_id = os.os_store_id 
+                                                                           AND se_store_type = 1), 0) AS net_profit
                 FROM
                     own_store os
                 LEFT JOIN
-                    sales_order so ON os.store_id = so.created_by_store 
-                                  AND so.created_by_store_type = 1 
-                                  AND so.order_status != 7
+                    sales_order so ON os.os_store_id = so.so_created_by_store 
+                                  AND so.so_created_by_store_type = 1 
+                                  AND so.so_order_status != 7
                 GROUP BY
-                    os.store_id, os.store_name;
+                    os.os_store_id, os.os_store_name;
             """
 
             cursor.execute(own_store_sales_query)
@@ -94,25 +94,25 @@ def get_store_analytics():
 
             franchise_store_sales_query = f"""
                                  SELECT
-                                    fs.store_id,
-                                    fs.store_name,
-                                    COALESCE(SUM(so.product_total_cost), 0) AS total_sale,
-                                    COALESCE((SELECT IFNULL(SUM(expense_amount), 0) 
+                                    fs.fs_store_id,
+                                    fs.fs_store_name,
+                                    COALESCE(SUM(so.so_product_total_cost), 0) AS total_sale,
+                                    COALESCE((SELECT IFNULL(SUM(se_expense_amount), 0) 
                                               FROM store_expense 
-                                              WHERE store_id = fs.store_id 
-                                                AND store_type = 2), 0) AS total_expense,
-                                    COALESCE(SUM(so.product_total_cost), 0) - COALESCE((SELECT IFNULL(SUM(expense_amount), 0) 
+                                              WHERE se_store_id = fs.fs_store_id 
+                                                AND se_store_type = 2), 0) AS total_expense,
+                                    COALESCE(SUM(so.so_product_total_cost), 0) - COALESCE((SELECT IFNULL(SUM(se_expense_amount), 0) 
                                                                                          FROM store_expense 
-                                                                                         WHERE store_id = fs.store_id 
-                                                                                           AND store_type = 2), 0) AS net_profit
+                                                                                         WHERE se_store_id = fs.fs_store_id 
+                                                                                           AND se_store_type = 2), 0) AS net_profit
                                 FROM
                                     franchise_store fs
                                 LEFT JOIN
-                                    sales_order so ON fs.store_id = so.created_by_store 
-                                                  AND so.created_by_store_type = 2 
-                                                  AND so.order_status != 7
+                                    sales_order so ON fs.fs_store_id = so.so_created_by_store 
+                                                  AND so.so_created_by_store_type = 2 
+                                                  AND so.so_order_status != 7
                                 GROUP BY
-                                    fs.store_id, fs.store_name; """
+                                    fs.fs_store_id, fs.fs_store_name; """
             cursor.execute(franchise_store_sales_query)
             franchise_sales_analytics = cursor.fetchall()
 

@@ -396,26 +396,27 @@ def get_central_inventory_product_restoc_log(productId):
 def get_all_out_of_stock_central_inventory_products(quantity):
     try:
         with connection.cursor() as cursor:
-            get_all_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
-                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
+            get_all_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
+                                    ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
                                     FROM central_inventory As ci
-                                    LEFT JOIN admin AS creator ON ci.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON ci.last_updated_by = updater.admin_id
-                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
-                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
-                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
-                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
-                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
-                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                    WHERE ci.product_quantity <= '{quantity}'
-                                    ORDER BY ci.product_id DESC"""
+                                    LEFT JOIN admin AS creator ON ci.ci_created_by = creator.admin_admin_id
+                                    LEFT JOIN admin AS updater ON ci.ci_last_updated_by = updater.admin_admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.ci_category_id = pc.pc_category_id
+                                    LEFT JOIN product_materials AS pm ON ci.ci_material_id = pm.pm_material_id
+                                    LEFT JOIN frame_types AS ft ON ci.ci_frame_type_id = ft.ftype_frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.ci_frame_shape_id = fs.fshape_shape_id
+                                    LEFT JOIN product_colors AS c ON ci.ci_color_id = c.pcol_color_id
+                                    LEFT JOIN units AS u ON ci.ci_unit_id = u.unit_unit_id
+                                    LEFT JOIN brands AS b ON ci.ci_brand_id = b.brand_brand_id
+                                    WHERE ci.ci_product_quantity <= '{quantity}'
+                                    ORDER BY ci.ci_product_id DESC"""
 
             cursor.execute(get_all_product_query)
             stocks_list = cursor.fetchall()
+            print(stocks_list)
             return {
                 "status": True,
-                "stocks_list": get_products(stocks_list),
+                "stocks_list": stocks_list,
                 "categories_list": get_all_central_inventory_category()[0]['product_category']
             }, 200
     except pymysql.Error as e:

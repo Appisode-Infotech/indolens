@@ -94,16 +94,27 @@ def resetPassword(request, code):
 def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         own_store_count, status_code = own_store_controller.get_own_store_count()
+        print(own_store_count)
         franchise_store_count, status_code = franchise_store_controller.get_franchise_stores_count()
+        print(franchise_store_count)
         sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
+        # print(sales)
         own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
+        print(own_store_new_order)
         own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
+        print(own_store_delivered_orders)
         own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
+        print(own_store_sales)
         store_sales_expense_analytics, status_code = dashboard_controller.get_store_analytics()
+        # print(store_sales_expense_analytics)
         franchise_store_new_order, status_code = dashboard_controller.get_order_stats('New', 2)
+        print(franchise_store_new_order)
         franchise_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 2)
+        print(franchise_store_delivered_orders)
         franchise_store_sales, status_code = dashboard_controller.get_sales_stats(2)
+        print(franchise_store_sales)
         out_of_stock, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
+        print(out_of_stock)
         return render(request, 'indolens_admin/dashboard.html',
                       {"own_store_count": own_store_count['own_stores'],
                        "franchise_store_list": franchise_store_count['franchise_store'],
