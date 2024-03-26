@@ -190,8 +190,7 @@ def get_all_store_orders(store_id, store_type):
         return {"status": False, "message": str(e)}, 301
 
 
-def order_status_change(orderID, orderStatus, updated_by, store_id):
-    print(orderStatus)
+def order_status_change(orderID, orderStatus, updated_by):
     status_conditions = {
         "2": "Processing",
         "3": "Ready",
@@ -206,7 +205,7 @@ def order_status_change(orderID, orderStatus, updated_by, store_id):
         with connection.cursor() as cursor:
             order_status_change_query = f"""
                 UPDATE sales_order SET order_status = {orderStatus}, updated_on = '{getIndianTime()}',
-                updated_by_employee_id = {updated_by}, updated_by_store_id = {store_id}, updated_by_store_type = 1,
+                updated_by = {updated_by}
                 WHERE order_id = '{orderID}'
                 """
             cursor.execute(order_status_change_query)
@@ -340,7 +339,7 @@ def order_payment_status_change(order_data, store_id, created_by):
                 UPDATE sales_order 
                 SET 
                     payment_status = {order_data['order_payment_status']}, updated_on = '{getIndianTime()}',
-                    updated_by_employee_id = {created_by}, updated_by_store_id = {store_id}, updated_by_store_type = 1,
+                    updated_by = {created_by},
                     amount_paid = 
                         CASE 
                             WHEN {order_data['order_payment_status']} = 2 THEN amount_paid + {order_data['order_payment_amount']}
