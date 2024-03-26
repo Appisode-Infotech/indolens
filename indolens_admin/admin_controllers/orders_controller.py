@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_models.admin_resp_model.completed_order_resp_model import get_completed_sales_orders
 from indolens_admin.admin_models.admin_resp_model.invoice_detail_resp_model import get_order_invoice_detail
@@ -81,8 +81,8 @@ def get_all_orders(status, pay_status, store):
 
             return {
                 "status": True,
-                "orders_list": get_sales_orders(orders_list),
-                "latest_orders": get_sales_orders(orders_list)[:15]
+                "orders_list": orders_list,
+                "latest_orders": orders_list[:15]
             }, 200
 
     except pymysql.Error as e:

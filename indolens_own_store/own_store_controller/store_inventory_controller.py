@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
 from indolens_own_store.own_store_model.response_model.product_request_list_resp_model import get_request_product_list

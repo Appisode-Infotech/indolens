@@ -5,7 +5,7 @@ import re
 
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_own_store.own_store_controller import lens_sale_power_attribute_controller
 from indolens_own_store.own_store_model.response_model.eye_test_resp_model import get_eye_test_resp

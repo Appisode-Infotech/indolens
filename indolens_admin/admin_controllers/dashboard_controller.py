@@ -2,7 +2,7 @@ import datetime
 
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_models.admin_resp_model.store_analytics_resp_model import store_analytics
 
@@ -19,17 +19,20 @@ def get_order_stats(status, store_type):
     try:
         with connection.cursor() as cursor:
             get_order_query = f"""
-                    SELECT *
+                    SELECT count(*)
                     FROM sales_order
                     WHERE order_status {status_condition} AND created_by_store_type = {store_type} 
                     GROUP BY order_id          
                     """
             cursor.execute(get_order_query)
-            orders_list = cursor.fetchall()
-
+            orders_list = cursor.fetchone()
+            if orders_list is None:
+                count = 0
+            else:
+                count = orders_list['count(*)']
             return {
                 "status": True,
-                "count": len(orders_list)
+                "count": count
             }, 200
 
     except pymysql.Error as e:
@@ -48,11 +51,9 @@ def get_sales_stats(store):
                                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchone()
-            total_sale = orders_list[0] if orders_list[0] is not None else 0
-
             return {
                 "status": True,
-                "sale": total_sale
+                "sale": orders_list['total_sale']
             }, 200
 
 
@@ -117,8 +118,8 @@ def get_store_analytics():
 
             return {
                 "status": True,
-                "own_sales_analytics": store_analytics(own_sales_analytics),
-                "franchise_sales_analytics": store_analytics(franchise_sales_analytics)
+                "own_sales_analytics": own_sales_analytics,
+                "franchise_sales_analytics": franchise_sales_analytics
             }, 200
 
 

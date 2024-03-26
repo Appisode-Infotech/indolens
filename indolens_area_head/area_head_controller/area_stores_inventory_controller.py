@@ -3,7 +3,7 @@ import json
 
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_controllers.master_category_controller import get_all_central_inventory_category
 from indolens_admin.admin_models.admin_resp_model.central_inventory_product_resp_model import get_products

@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_models.admin_resp_model.store_inventory_resp_model import get_store_inventory
 

@@ -1,12 +1,8 @@
 from datetime import datetime
 
 import bcrypt
-import pymysql
 
-db_host = 'localhost'
-db_user = 'indolensadmin'
-db_password = 'Indolens@#1234'
-db_name = 'indolens_db'
+from indolens.db_connection import connection
 
 # db_host = 'localhost'
 # db_user = 'root'
@@ -625,7 +621,6 @@ sql_queries = [
 )"""
 ]
 
-connection = pymysql.connect(host=db_host, user=db_user, password=db_password, database=db_name)
 
 create_admin_query = """
     INSERT INTO admin (

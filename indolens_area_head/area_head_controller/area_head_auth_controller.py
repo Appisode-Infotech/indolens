@@ -7,7 +7,7 @@ import bcrypt
 import pymysql
 import pytz
 import requests
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_area_head.area_head_model.area_head_resp_models.area_head_resp_model import get_area_heads

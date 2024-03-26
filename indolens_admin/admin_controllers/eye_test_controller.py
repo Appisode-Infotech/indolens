@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_models.admin_resp_model.eye_test_print_resp_model import get_eye_test_print_resp
 from indolens_own_store.own_store_model.response_model.eye_test_resp_model import get_eye_test_resp

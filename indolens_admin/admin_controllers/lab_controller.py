@@ -2,7 +2,7 @@ import datetime
 
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_models.admin_resp_model.lab_resp_model import get_labs
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail

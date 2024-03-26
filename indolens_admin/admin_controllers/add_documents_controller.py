@@ -4,7 +4,7 @@ import os
 
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 
 ist = pytz.timezone('Asia/Kolkata')

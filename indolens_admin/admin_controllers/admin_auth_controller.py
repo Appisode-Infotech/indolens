@@ -4,7 +4,7 @@ import random
 
 import bcrypt
 import pymysql
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
@@ -30,7 +30,7 @@ def generate_random_string(length=16):
 def login(admin_obj):
     try:
         with connection.cursor() as cursor:
-            login_query = f"""SELECT * FROM admin WHERE email = '{admin_obj.email}'"""
+            login_query = f"""SELECT * FROM admin WHERE admin_email = '{admin_obj.email}'"""
             cursor.execute(login_query)
             admin_data = cursor.fetchone()
             if admin_data is None:
@@ -40,12 +40,12 @@ def login(admin_obj):
                     "admin": None
                 }, 301
 
-            elif admin_obj is not None and admin_data[12] != 0:
-                if bcrypt.checkpw(admin_obj.password.encode('utf-8'), admin_data[4].encode('utf-8')):
+            elif admin_obj is not None and admin_data['admin_status'] != 0:
+                if bcrypt.checkpw(admin_obj.password.encode('utf-8'), admin_data['admin_password'].encode('utf-8')):
                     return {
                         "status": True,
                         "message": "admin login successfull",
-                        "admin": admin_auth_model.admin_auth_model_from_dict(get_admin_user(admin_data))
+                        "admin": admin_data
                     }, 200
                 else:
                     return {
@@ -53,7 +53,7 @@ def login(admin_obj):
                         "message": "Invalid admin password",
                         "admin": None
                     }, 301
-            elif admin_obj is not None and admin_data[12] == 0:
+            elif admin_obj is not None and admin_data['admin_status'] == 0:
                 return {
                     "status": False,
                     "message": "The id has been blocked, please contact super admin",

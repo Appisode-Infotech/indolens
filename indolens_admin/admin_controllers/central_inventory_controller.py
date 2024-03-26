@@ -4,7 +4,7 @@ import json
 import pymysql
 import pytz
 from PIL import ImageFont
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_admin.admin_controllers.master_category_controller import get_all_central_inventory_category

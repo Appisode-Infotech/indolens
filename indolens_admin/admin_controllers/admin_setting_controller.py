@@ -1,7 +1,7 @@
 import datetime
 import json
 import pymysql
-from django.db import connection
+from indolens.db_connection import connection
 
 import pytz
 

@@ -7,7 +7,7 @@ import bcrypt
 import pymysql
 import pytz
 import requests
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_controllers.admin_setting_controller import get_base_url

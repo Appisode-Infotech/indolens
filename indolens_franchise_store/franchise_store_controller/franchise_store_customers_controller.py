@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_franchise_store.franchise_store_model.franchise_store_resp_model.franchise_store_customer_resp_model import \
     get_franchise_store_customers

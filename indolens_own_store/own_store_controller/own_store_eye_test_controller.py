@@ -5,7 +5,7 @@ import re
 
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_own_store.own_store_controller import lens_sale_power_attribute_controller

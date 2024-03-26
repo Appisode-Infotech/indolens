@@ -2,7 +2,7 @@ import datetime
 
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_models.admin_resp_model.own_store_resp_model import get_own_store
 
@@ -67,6 +67,25 @@ def get_all_own_stores(status):
             return {
                        "status": True,
                        "own_stores": get_own_store(stores_data)
+                   }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def get_own_store_count():
+    try:
+        with connection.cursor() as cursor:
+            get_own_stores_query = f"""
+                                    SELECT count(*)
+                                    FROM own_store
+                                    """
+            cursor.execute(get_own_stores_query)
+            stores_data = cursor.fetchone()
+            return {
+                       "status": True,
+                       "own_stores": stores_data['count(*)']
                    }, 200
 
     except pymysql.Error as e:

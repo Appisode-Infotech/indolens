@@ -9,6 +9,7 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
+
 import os
 from pathlib import Path
 
@@ -87,7 +88,7 @@ WSGI_APPLICATION = 'indolens.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'indolens_db',
+        'NAME': '2_indolens_db',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

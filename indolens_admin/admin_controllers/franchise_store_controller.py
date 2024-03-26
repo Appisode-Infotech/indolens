@@ -2,7 +2,7 @@ import datetime
 
 import pymysql
 import pytz
-from django.db import connection
+from indolens.db_connection import connection
 
 from indolens_admin.admin_models.admin_resp_model.franchise_store_resp_model import get_franchise_store
 from indolens_admin.admin_models.admin_resp_model.store_inventory_resp_model import get_store_inventory
@@ -67,6 +67,23 @@ def get_all_franchise_stores(status):
             return {
                 "status": True,
                 "franchise_store": get_franchise_store(stores_data)
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def get_franchise_stores_count():
+    try:
+        with connection.cursor() as cursor:
+            get_franchise_stores_query = f""" SELECT count(*)
+                                        FROM franchise_store"""
+            cursor.execute(get_franchise_stores_query)
+            stores_data = cursor.fetchone()
+            return {
+                "status": True,
+                "franchise_store": stores_data['count(*)']
             }, 200
 
     except pymysql.Error as e:

@@ -40,15 +40,17 @@ def login(request):
         if request.method == 'POST':
             admin_obj = admin_auth_model.admin_auth_model_from_dict(request.POST)
             response, status_code = admin_auth_controller.login(admin_obj)
+            print(response)
 
             if response['status']:
                 if request.session.get('id') is not None:
                     request.session.clear()
                 request.session.update({
                     'is_admin_logged_in': True,
-                    'id': response['admin'].admin_id,
-                    'name': response['admin'].name,
-                    'profile_pic': response['admin'].profile_pic,
+                    'id': response['admin']['admin_admin_id'],
+                    'name': response['admin']['admin_name'],
+                    'profile_pic': response['admin']['admin_profile_pic'],
+                    'role': response['admin']['admin_role'],
                 })
                 return redirect('dashboard')
             else:
@@ -91,8 +93,8 @@ def resetPassword(request, code):
 
 def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        own_stores, status_code = own_store_controller.get_all_own_stores('All')
-        franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('All')
+        own_store_count, status_code = own_store_controller.get_own_store_count()
+        franchise_store_count, status_code = franchise_store_controller.get_franchise_stores_count()
         sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
         own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
         own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
@@ -103,8 +105,8 @@ def dashboard(request):
         franchise_store_sales, status_code = dashboard_controller.get_sales_stats(2)
         out_of_stock, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
         return render(request, 'indolens_admin/dashboard.html',
-                      {"own_store_list": own_stores['own_stores'],
-                       "franchise_store_list": franchise_store['franchise_store'],
+                      {"own_store_count": own_store_count['own_stores'],
+                       "franchise_store_list": franchise_store_count['franchise_store'],
                        "orders_list": sales['latest_orders'], "out_of_stock": len(out_of_stock['stocks_list']),
                        "own_store_new_order": own_store_new_order['count'],
                        "own_store_delivered_orders": own_store_delivered_orders['count'],
