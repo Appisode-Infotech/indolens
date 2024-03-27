@@ -105,7 +105,17 @@
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3>{{employee.name}}</h3>
                                                 <p class="text-800">Joined {{employee.created_on}}</p>
-                                                <p class="text-800">Manager - {{employee.store_name}}</p>
+                                                <p class="text-800">
+                                                    {% if employee.role == 1 %}
+                                                    Manager
+                                                    {% elif employee.role == 2 %}
+                                                    Optometry
+                                                    {% elif employee.role == 3 %}
+                                                    Sales Executive
+                                                    {% elif employee.role == 4 %}
+                                                    Employee
+                                                    {% endif %}
+                                                    - {{employee.store_name}}</p>
 
                                             </div>
                                         </div>
