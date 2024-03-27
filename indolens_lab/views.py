@@ -186,7 +186,7 @@ def jobStatusChange(request, jobId, status):
     assigned_lab = getAssignedLab(request)
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
-        order_update, status_code = store_orders_controller.order_status_change(jobId, status)
+        order_update, status_code = lab_task_controller.task_status_change(jobId, status)
         url = reverse('lab_job_details', kwargs={'jobId': jobId})
         return redirect(url)
     else:
