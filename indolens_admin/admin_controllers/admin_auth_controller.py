@@ -33,6 +33,7 @@ def login(admin_obj):
             login_query = f"""SELECT * FROM admin WHERE admin_email = '{admin_obj.email}'"""
             cursor.execute(login_query)
             admin_data = cursor.fetchone()
+            print(admin_data)
             if admin_data is None:
                 return {
                     "status": False,

@@ -68,17 +68,17 @@ def edit_master_units(data):
 def get_all_units():
     try:
         with connection.cursor() as cursor:
-            get_units_query = f""" SELECT u.*, creator.name, updater.name 
+            get_units_query = f""" SELECT u.*, creator.admin_name, updater.admin_name 
                                            FROM units AS u
-                                            LEFT JOIN admin AS creator ON u.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON u.last_updated_by = updater.admin_id
-                                            ORDER BY u.unit_id ASC
+                                            LEFT JOIN admin AS creator ON u.unit_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON u.unit_last_updated_by = updater.admin_admin_id
+                                            ORDER BY u.unit_unit_id ASC
                                              """
             cursor.execute(get_units_query)
             master_units = cursor.fetchall()
             return {
                        "status": True,
-                       "units_list": get_master_units(master_units)
+                       "units_list": master_units
 
                    }, 200
 
@@ -91,7 +91,7 @@ def enable_disable_master_units(uid, status):
     try:
         with connection.cursor() as cursor:
             set_units_query = f"""
-            UPDATE units SET status = '{status}' WHERE unit_id = '{uid}';
+            UPDATE units SET unit_status = '{status}' WHERE unit_unit_id = '{uid}';
             """
             cursor.execute(set_units_query)
 

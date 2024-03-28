@@ -65,18 +65,18 @@ def edit_frame_shape(shape_obj):
 def get_all_central_inventory_shapes():
     try:
         with connection.cursor() as cursor:
-            get_product_shape_query = f""" SELECT fs.* , creator.name, updater.name
+            get_product_shape_query = f""" SELECT fs.* , creator.admin_name, updater.admin_name
             FROM frame_shapes AS fs 
-            LEFT JOIN admin AS creator ON fs.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON fs.last_updated_by = updater.admin_id
-            ORDER BY fs.shape_id ASC
+            LEFT JOIN admin AS creator ON fs.fshape_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON fs.fshape_last_updated_by = updater.admin_admin_id
+            ORDER BY fs.fshape_shape_id ASC
             """
             cursor.execute(get_product_shape_query)
             shapes_data = cursor.fetchall()
 
             return {
                 "status": True,
-                "product_shape": get_frame_shapes(shapes_data)
+                "product_shape": shapes_data
             }, 200
 
     except pymysql.Error as e:
@@ -88,7 +88,7 @@ def enable_disable_frame_shape(sid, status):
     try:
         with connection.cursor() as cursor:
             set_frame_shape_query = f"""
-            UPDATE frame_shapes SET status = '{status}' WHERE shape_id = '{sid}';
+            UPDATE frame_shapes SET fshape_status = '{status}' WHERE fshape_shape_id = '{sid}';
             """
             cursor.execute(set_frame_shape_query)
 

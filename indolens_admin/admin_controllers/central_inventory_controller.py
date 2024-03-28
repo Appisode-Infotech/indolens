@@ -282,8 +282,6 @@ def get_all_central_inventory_products(status):
 
             cursor.execute(get_all_product_query)
             product_list = cursor.fetchall()
-            product_list['ci_power_attribute'] = json.loads(product_list['ci_power_attribute'])
-            product_list['ci_product_images'] = json.loads(product_list['ci_product_images'])
 
             get_product_category_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
                                     FROM product_categories AS pc 

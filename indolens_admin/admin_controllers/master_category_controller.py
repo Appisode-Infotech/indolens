@@ -74,13 +74,13 @@ def get_all_central_inventory_category():
             FROM product_categories AS pc 
             LEFT JOIN admin AS creator ON pc.pc_created_by = creator.admin_admin_id
             LEFT JOIN admin AS updater ON pc.pc_last_updated_by = updater.admin_admin_id 
-            ORDER BY pc.category_id ASC"""
+            ORDER BY pc.pc_category_id ASC"""
             cursor.execute(get_product_category_query)
-            stores_data = cursor.fetchall()
-
+            product_category = cursor.fetchall()
+            print(product_category)
             return {
                 "status": True,
-                "product_category": stores_data
+                "product_category": product_category
             }, 200
 
     except pymysql.Error as e:
@@ -93,7 +93,7 @@ def enable_disable_product_category(cid, status):
     try:
         with connection.cursor() as cursor:
             set_product_category_query = f"""
-            UPDATE product_categories SET status = '{status}' WHERE category_id = '{cid}';
+            UPDATE product_categories SET pc_status = '{status}' WHERE pc_category_id = '{cid}';
             """
             cursor.execute(set_product_category_query)
 

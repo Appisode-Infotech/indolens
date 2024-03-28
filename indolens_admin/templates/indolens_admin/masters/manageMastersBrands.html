@@ -141,7 +141,7 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for brand in product_brand %}
 
-                            <tr class="position-static" data-category="{{ brand.status }}">
+                            <tr class="position-static" data-category="{{ brand.brand_status }}">
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 id">
                                     <p class="mb-0 fs--1 text-900">{{brand.brand_id}}</p>
@@ -156,10 +156,10 @@
                                 </td>
 
                                 <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700 status">
-                                    {% if brand.status == 0 %}
+                                    {% if brand.brand_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">
                                         <p style="display: none;">filterIn_InActive</p>InActive</span></td>
-                                {% elif brand.status == 1 %}
+                                {% elif brand.brand_status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">
                                     <p style="display: none;">filterIn_Active</p>Active</span>
                                 {% endif %}
@@ -178,10 +178,10 @@
                                                type="button"
                                                data-category-info="{{ brand | safe }}">View</a>
                                             <a class="dropdown-item"
-                                               type="button" href="{% url 'edit_product_brand' brand.brand_id %}"
+                                               type="button" href="{% url 'edit_product_brand' brand.brand_brand_id %}"
                                             >Update</a>
                                             <div class="dropdown-divider"></div>
-                                            {% if brand.status == 0 %}
+                                            {% if brand.brand_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Brand"
@@ -190,10 +190,10 @@
                                                data-employee-id="{{ brand.brand_id }}"
                                                data-employee-name="{{ brand.brand_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_product_brand' brand.brand_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_product_brand' brand.brand_brand_id 1 %}">
                                                 Make Active
                                             </a>
-                                            {% elif brand.status == 1 %}
+                                            {% elif brand.brand_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-role="Brand"
@@ -202,7 +202,7 @@
                                                data-employee-id="{{ brand.brand_id }}"
                                                data-employee-name="{{ brand.brand_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_product_brand' brand.brand_id 0 %}">Make
+                                               data-action-url="{% url 'enable_disable_product_brand' brand.brand_brand_id 0 %}">Make
                                                 Inactive</a>
                                             {% endif %}
                                         </div>

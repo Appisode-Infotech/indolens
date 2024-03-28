@@ -2496,6 +2496,7 @@ def createAuthenticityCard(request):
 def manageMastersCategory(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_category_controller.get_all_central_inventory_category()
+        print(response)
         return render(request, 'indolens_admin/masters/manageMastersCategory.html',
                       {"product_category": response['product_category']})
     else:
@@ -2555,6 +2556,7 @@ def enableDisableProductCategory(request, categoryId, status):
 def manageMastersBrands(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_brand_controller.get_all_central_inventory_brand()
+        print(response)
         return render(request, 'indolens_admin/masters/manageMastersBrands.html',
                       {"product_brand": response["product_brand"]})
     else:
@@ -2610,6 +2612,7 @@ def enableDisableMastersBrands(request, brandId, status):
 def manageMastersShapes(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_shape_controller.get_all_central_inventory_shapes()
+        print(response)
         return render(request, 'indolens_admin/masters/manageMastersShapes.html',
                       {"product_shape": response["product_shape"]})
     else:
@@ -2666,6 +2669,7 @@ def enableDisableMastersShapes(request, shapeId, status):
 def manageMastersFrameType(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_frame_type_controller.get_all_central_inventory_frame_types()
+        print(response)
         return render(request, 'indolens_admin/masters/manageMastersFrameType.html',
                       {"frame_type": response["frame_type"]})
     else:
@@ -2722,6 +2726,7 @@ def enableDisableMastersFrameType(request, frametypeId, status):
 def manageMastersColor(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_color_controller.get_all_central_inventory_color()
+        print(response)
         return render(request, 'indolens_admin/masters/manageMastersColor.html',
                       {"frame_color": response["frame_color"]})
     else:
@@ -2777,6 +2782,7 @@ def enableDisableMastersColor(request, colorId, status):
 def manageMastersMaterials(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_material_controller.get_all_central_inventory_materials()
+        print(response)
         return render(request, 'indolens_admin/masters/manageMastersMaterials.html',
                       {"frame_material": response["frame_material"]})
     else:
@@ -2833,7 +2839,7 @@ def enableDisableMastersMaterials(request, materialId, status):
 def manageMastersUnits(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = master_units_controller.get_all_units()
-
+        print(response)
         return render(request, 'indolens_admin/masters/manageMastersUnits.html',
                       {"units_list": response['units_list']})
     else:

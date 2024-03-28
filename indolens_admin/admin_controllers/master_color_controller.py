@@ -65,18 +65,18 @@ def edit_master_color(color_obj):
 def get_all_central_inventory_color():
     try:
         with connection.cursor() as cursor:
-            get_frame_color_query = f""" SELECT pc.* , creator.name, updater.name
+            get_frame_color_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
             FROM product_colors AS pc
-            LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id
-            ORDER BY pc.color_id ASC
+            LEFT JOIN admin AS creator ON pc.pcol_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON pc.pcol_last_updated_by = updater.admin_admin_id
+            ORDER BY pc.pcol_color_id ASC
             """
             cursor.execute(get_frame_color_query)
             frame_color_data = cursor.fetchall()
 
             return {
                        "status": True,
-                       "frame_color": get_product_colors(frame_color_data)
+                       "frame_color": frame_color_data
                    }, 200
 
     except pymysql.Error as e:
@@ -89,7 +89,7 @@ def enable_disable_master_color(mcid, status):
     try:
         with connection.cursor() as cursor:
             set_color_query = f"""
-            UPDATE product_colors SET status = '{status}' WHERE color_id = '{mcid}';
+            UPDATE product_colors SET pcol_status = '{status}' WHERE pcol_color_id = '{mcid}';
             """
             cursor.execute(set_color_query)
 

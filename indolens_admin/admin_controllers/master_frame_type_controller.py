@@ -64,18 +64,18 @@ def edit_frame_type(frame_obj):
 def get_all_central_inventory_frame_types():
     try:
         with connection.cursor() as cursor:
-            get_frame_types_query = f""" SELECT ft.* , creator.name, updater.name
+            get_frame_types_query = f""" SELECT ft.* , creator.admin_name, updater.admin_name
             FROM frame_types AS ft
-            LEFT JOIN admin AS creator ON ft.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON ft.last_updated_by = updater.admin_id
-            ORDER BY ft.frame_id ASC
+            LEFT JOIN admin AS creator ON ft.ftype_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON ft.ftype_last_updated_by = updater.admin_admin_id
+            ORDER BY ft.ftype_frame_id ASC
             """
             cursor.execute(get_frame_types_query)
             frame_type_data = cursor.fetchall()
 
             return {
                 "status": True,
-                "frame_type": get_frame_types(frame_type_data)
+                "frame_type": frame_type_data
             }, 200
 
     except pymysql.Error as e:
@@ -87,7 +87,7 @@ def enable_disable_frame_type(tid, status):
     try:
         with connection.cursor() as cursor:
             set_frame_type_query = f"""
-            UPDATE frame_types SET status = '{status}' WHERE frame_id = '{tid}';
+            UPDATE frame_types SET ftype_status = '{status}' WHERE ftype_frame_id = '{tid}';
             """
             cursor.execute(set_frame_type_query)
 

@@ -64,18 +64,18 @@ def edit_master_material(material_obj):
 def get_all_central_inventory_materials():
     try:
         with connection.cursor() as cursor:
-            get_material_query = f""" SELECT pm.* , creator.name, updater.name
+            get_material_query = f""" SELECT pm.* , creator.admin_name, updater.admin_name
             FROM product_materials AS pm
-            LEFT JOIN admin AS creator ON pm.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON pm.last_updated_by = updater.admin_id
-            ORDER BY pm.material_id ASC
+            LEFT JOIN admin AS creator ON pm.pm_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON pm.pm_last_updated_by = updater.admin_admin_id
+            ORDER BY pm.pm_material_id ASC
             """
             cursor.execute(get_material_query)
             material_data = cursor.fetchall()
 
             return {
                 "status": True,
-                "frame_material": get_product_materials(material_data)
+                "frame_material": material_data
             }, 200
 
     except pymysql.Error as e:
@@ -87,7 +87,7 @@ def enable_disable_master_material(mid, status):
     try:
         with connection.cursor() as cursor:
             set_material_query = f"""
-            UPDATE product_materials SET status = '{status}' WHERE material_id = '{mid}';
+            UPDATE product_materials SET pm_status = '{status}' WHERE pm_material_id = '{mid}';
             """
             cursor.execute(set_material_query)
 

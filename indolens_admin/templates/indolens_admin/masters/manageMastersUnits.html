@@ -247,7 +247,7 @@
                             </thead>
                             <tbody class="list" id="project-list-table-body">
                             {% for units in units_list %}
-                            <tr class="position-static" data-category="{{ units.status }}">
+                            <tr class="position-static" data-category="{{ units.unit_status }}">
                                 <td class="align-middle white-space-nowrap py-0 slno"></td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 name">
@@ -255,10 +255,10 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 status">
-                                    {% if units.status == 0 %}
+                                    {% if units.unit_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">
                                         <p style="display: none;">filterIn_InActive</p>InActive</span>
-                                    {% elif units.status == 1 %}
+                                    {% elif units.unit_status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">
                                         <p style="display: none;">filterIn_Active</p>Active</span>
                                     {% endif %}
@@ -292,33 +292,33 @@
 
                                             <a class="dropdown-item"
                                                type="button"
-                                               data-unit-id="{{ units.unit_id }}"
+                                               data-unit-id="{{ units.unit_unit_id }}"
                                                data-unit-name="{{ units.unit_name }}"
                                                data-bs-toggle="modal"
                                                data-bs-target="#updateUnit"
                                             >Update</a>
                                             <div class="dropdown-divider"></div>
-                                            {% if units.status == 0 %}
+                                            {% if units.unit_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Units"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ units.unit_id }}"
+                                               data-employee-id="{{ units.unit_unit_id }}"
                                                data-employee-name="{{ units.unit_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_master_units' units.unit_id 1 %}">Make
+                                               data-action-url="{% url 'enable_disable_master_units' units.unit_unit_id 1 %}">Make
                                                 Active</a>
-                                            {% elif units.status == 1 %}
+                                            {% elif units.unit_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-role="Units"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ units.unit_id }}"
+                                               data-employee-id="{{ units.unit_unit_id }}"
                                                data-employee-name="{{ units.unit_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_master_units' units.unit_id 0 %}">Make
+                                               data-action-url="{% url 'enable_disable_master_units' units.unit_unit_id 0 %}">Make
                                                 Inactive</a>
                                             {% endif %}
                                         </div>

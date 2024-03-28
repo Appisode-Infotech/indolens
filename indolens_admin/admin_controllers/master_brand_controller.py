@@ -63,18 +63,18 @@ def edit_product_brand(brand_obj):
 def get_all_central_inventory_brand():
     try:
         with connection.cursor() as cursor:
-            get_product_brand_query = f""" SELECT br.* , creator.name, updater.name
+            get_product_brand_query = f""" SELECT br.* , creator.admin_name, updater.admin_name
             FROM brands AS br 
-            LEFT JOIN admin AS creator ON br.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON br.last_updated_by = updater.admin_id
-            ORDER BY br.brand_id ASC
+            LEFT JOIN admin AS creator ON br.brand_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON br.brand_last_updated_by = updater.admin_admin_id
+            ORDER BY br.brand_brand_id ASC
             """
             cursor.execute(get_product_brand_query)
             brand_data = cursor.fetchall()
 
             return {
                 "status": True,
-                "product_brand": get_brands(brand_data)
+                "product_brand": brand_data
             }, 200
 
     except pymysql.Error as e:
@@ -86,7 +86,7 @@ def enable_disable_product_brand(bid, status):
     try:
         with connection.cursor() as cursor:
             set_product_brand_query = f"""
-            UPDATE brands SET status = '{status}' WHERE brand_id = '{bid}';
+            UPDATE brands SET brand_status = '{status}' WHERE brand_brand_id = '{bid}';
             """
             cursor.execute(set_product_brand_query)
 

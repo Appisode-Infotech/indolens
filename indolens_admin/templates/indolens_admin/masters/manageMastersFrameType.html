@@ -153,24 +153,24 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for type in frame_type %}
 
-                            <tr class="position-static" data-category="{{ type.status }}">
+                            <tr class="position-static" data-category="{{ type.ftype_status }}">
 
-                                <td class="align-middle time white-space-nowrap ps-0 py-4 id">{{type.frame_id}}
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 id">{{type.ftype_frame_id}}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 type">
-                                    <p class="mb-0 fs--1 text-900">{{type.frame_type_name}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{type.ftype_name}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 description">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{type.frame_type_description}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{type.ftype_description}}</p>
                                 </td>
 
                                 <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700 status">
-                                    {% if type.status == 0 %}
+                                    {% if type.ftype_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">
                                         <p style="display: none;">filterIn_InActive</p>InActive</span>
-                                    {% elif type.status == 1 %}
+                                    {% elif type.ftype_status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">
                                         <p style="display: none;">filterIn_Active</p>Active</span>
                                     {% endif %}
@@ -192,30 +192,30 @@
                                                type="button"
                                             >View</a>
                                             <a class="dropdown-item"
-                                               type="button" href="{% url 'edit_frame_type' type.frame_id %}"
+                                               type="button" href="{% url 'edit_frame_type' type.ftype_frame_id %}"
                                             >Update</a>
                                             <div class="dropdown-divider"></div>
-                                            {% if type.status == 0 %}
+                                            {% if type.ftype_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Frame Type"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ type.frame_id }}"
-                                               data-employee-name="{{ type.frame_type_name }}"
+                                               data-employee-id="{{ type.ftype_frame_id }}"
+                                               data-employee-name="{{ type.ftype_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_frame_type' type.frame_id 1 %}">Make
+                                               data-action-url="{% url 'enable_disable_frame_type' type.ftype_frame_id 1 %}">Make
                                                 Active</a>
-                                            {% elif type.status == 1 %}
+                                            {% elif type.ftype_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-role="Frame Type"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ type.frame_id }}"
-                                               data-employee-name="{{ type.frame_type_name }}"
+                                               data-employee-id="{{ type.ftype_frame_id }}"
+                                               data-employee-name="{{ type.ftype_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_frame_type' type.frame_id 0 %}">Make
+                                               data-action-url="{% url 'enable_disable_frame_type' type.ftype_frame_id 0 %}">Make
                                                 Inactive</a>
                                             {% endif %}
                                         </div>
