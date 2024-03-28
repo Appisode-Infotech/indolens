@@ -15,8 +15,8 @@ def add_frame_type(frame_obj):
         with connection.cursor() as cursor:
             create_shape_query = f"""
                 INSERT INTO frame_types (
-                    frame_type_name,  frame_type_description, 
-                    status, created_on, created_by, last_updated_on, last_updated_by
+                    ftype_name,  ftype_description, 
+                    ftype_status, ftype_created_on, ftype_created_by, ftype_last_updated_on, ftype_last_updated_by
                 ) 
                 VALUES (
                     '{frame_obj.frame_type_name}',
@@ -43,10 +43,10 @@ def edit_frame_type(frame_obj):
         with connection.cursor() as cursor:
             update_shape_query = f"""
                 UPDATE  frame_types SET
-                    frame_type_name = '{frame_obj.frame_type_name}',  
-                    frame_type_description = '{frame_obj.frame_type_description}', 
-                    last_updated_on = '{getIndianTime()}', last_updated_by = '{frame_obj.last_updated_by}'
-                    WHERE frame_id = {frame_obj.frame_id}
+                    ftype_name = '{frame_obj.frame_type_name}',  
+                    ftype_description = '{frame_obj.frame_type_description}', 
+                    ftype_last_updated_on = '{getIndianTime()}', ftype_last_updated_by = '{frame_obj.last_updated_by}'
+                    WHERE ftype_frame_id = {frame_obj.frame_id}
             """
 
             cursor.execute(update_shape_query)
@@ -105,18 +105,18 @@ def enable_disable_frame_type(tid, status):
 def get_central_inventory_frame_types_by_id(frameId):
     try:
         with connection.cursor() as cursor:
-            get_frame_types_query = f""" SELECT ft.* , creator.name, updater.name
+            get_frame_types_query = f""" SELECT ft.* , creator.admin_name, updater.admin_name
             FROM frame_types AS ft
-            LEFT JOIN admin AS creator ON ft.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON ft.last_updated_by = updater.admin_id
-            WHERE ft.frame_id = {frameId}
+            LEFT JOIN admin AS creator ON ft.ftype_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON ft.ftype_last_updated_by = updater.admin_admin_id
+            WHERE ft.ftype_frame_id = {frameId}
             """
             cursor.execute(get_frame_types_query)
             frame_type_data = cursor.fetchall()
 
             return {
                 "status": True,
-                "frame_type": get_frame_types(frame_type_data)
+                "frame_type": frame_type_data
             }, 200
 
     except pymysql.Error as e:

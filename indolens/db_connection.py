@@ -6,5 +6,6 @@ connection = pymysql.connect(
     user="root",
     password="",
     db="2_indolens_db",
+    autocommit=True,
     cursorclass=pymysql.cursors.DictCursor
 )

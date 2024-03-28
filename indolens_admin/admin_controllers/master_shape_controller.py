@@ -15,8 +15,8 @@ def add_frame_shape(shape_obj):
         with connection.cursor() as cursor:
             create_shape_query = f"""
                 INSERT INTO frame_shapes (
-                    shape_name,  shape_description, 
-                    status, created_on, created_by, last_updated_on, last_updated_by
+                    fshape_name,  fshape_description, 
+                    fshape_status, fshape_created_on, fshape_created_by, fshape_last_updated_on, fshape_last_updated_by
                 ) 
                 VALUES (
                     '{shape_obj.shape_name}',
@@ -39,14 +39,15 @@ def add_frame_shape(shape_obj):
         return {"status": False, "message": str(e)}, 301
 
 def edit_frame_shape(shape_obj):
+    print(vars(shape_obj))
     try:
         with connection.cursor() as cursor:
             update_shape_query = f"""
                 UPDATE  frame_shapes SET
-                    shape_name = '{shape_obj.shape_name}',  
-                    shape_description = '{shape_obj.shape_description}', 
-                    last_updated_on = '{getIndianTime()}', last_updated_by = '{shape_obj.last_updated_by}'
-                    WHERE shape_id = {shape_obj.shape_id}
+                    fshape_name = '{shape_obj.shape_name}',  
+                    fshape_description = '{shape_obj.shape_description}', 
+                    fshape_last_updated_on = '{getIndianTime()}', fshape_last_updated_by = '{shape_obj.last_updated_by}'
+                    WHERE fshape_shape_id = {shape_obj.shape_id}
                 
             """
 
@@ -106,18 +107,18 @@ def enable_disable_frame_shape(sid, status):
 def get_central_inventory_shapes_by_id(shapeId):
     try:
         with connection.cursor() as cursor:
-            get_product_shape_query = f""" SELECT fs.* , creator.name, updater.name
+            get_product_shape_query = f""" SELECT fs.* , creator.admin_name, updater.admin_name
             FROM frame_shapes AS fs 
-            LEFT JOIN admin AS creator ON fs.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON fs.last_updated_by = updater.admin_id
-            WHERE fs.shape_id = {shapeId}
+            LEFT JOIN admin AS creator ON fs.fshape_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON fs.fshape_last_updated_by = updater.admin_admin_id
+            WHERE fs.fshape_shape_id = {shapeId}
             """
             cursor.execute(get_product_shape_query)
             shapes_data = cursor.fetchall()
 
             return {
                 "status": True,
-                "product_shape": get_frame_shapes(shapes_data)
+                "product_shape": shapes_data
             }, 200
 
     except pymysql.Error as e:

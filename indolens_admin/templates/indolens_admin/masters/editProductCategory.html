@@ -86,7 +86,7 @@
                         <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
                     </div>
                     {% endif %}
-                    <form action="{% url 'edit_product_category' category.category_id %}"
+                    <form action="{% url 'edit_product_category' category.pc_category_id %}"
                           class="row g-3 needs-validation" enctype="multipart/form-data"
                           method="post" novalidate="">
                         {% csrf_token %}
@@ -95,7 +95,7 @@
                             <label class="form-label" for="categoryName">Category name</label>
 
                             <input class="form-control" id="categoryName" name="category_name" required="" type="text"
-                                   value="{{category.category_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{category.pc_category_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Category Name is mandatory.</div>
                         </div>
                         <div class="col-md-6">
@@ -103,7 +103,7 @@
                             <label class="form-label" for="productPrefix">Category Prefix</label>
 
                             <input class="form-control" id="productPrefix" name="category_prefix" required=""
-                                   type="text" value="{{category.category_prefix}}"/>
+                                   type="text" value="{{category.pc_category_prefix}}"/>
                             <div class="invalid-feedback">Category Prefix is mandatory.</div>
                         </div>
 
@@ -113,11 +113,11 @@
                             <label class="form-label" for="description">Description</label>
 
                             <textarea class="form-control" id="description" name="category_description" required
-                                      rows="3">{{category.category_description}}</textarea>
+                                      rows="3">{{category.pc_category_description}}</textarea>
                             <div class="invalid-feedback">Description is mandatory.</div>
                         </div>
                         <input required type="hidden" name="category_id"
-                               value="{{ category.category_id }}">
+                               value="{{ category.pc_category_id }}">
                         <input required type="hidden" name="last_updated_by"
                                value="{{ request.session.id }}">
 

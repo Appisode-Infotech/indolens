@@ -86,7 +86,7 @@
                         <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
                     </div>
                     {% endif %}
-                    <form action="{% url 'edit_frame_shape' shape.shape_id %}"
+                    <form action="{% url 'edit_frame_shape' shape.fshape_shape_id %}"
                           class="row g-3 needs-validation " enctype="multipart/form-data"
                           method="post" novalidate="">
                         {% csrf_token %}
@@ -95,7 +95,7 @@
                             <label class="form-label" for="shapeName">Frame Shape name</label>
 
                             <input class="form-control" id="shapeName" name="shape_name" required="" type="text"
-                                   value="{{shape.shape_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{shape.fshape_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Frame Shape name is mandatory.</div>
                         </div>
 
@@ -104,12 +104,12 @@
                             <label class="form-label" for="description">Description</label>
 
                             <textarea class="form-control" id="description" name="shape_description" required
-                                      rows="3">{{shape.shape_description}}</textarea>
+                                      rows="3">{{shape.fshape_description}}</textarea>
                             <div class="invalid-feedback">Description is mandatory.</div>
                         </div>
                         <input required type="hidden" name="shape_id"
 
-                               value="{{shape.shape_id}}">
+                               value="{{shape.fshape_shape_id}}">
                         <input required type="hidden" name="last_updated_by"
 
                                value="{{ request.session.id }}">

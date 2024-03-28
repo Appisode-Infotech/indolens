@@ -2539,6 +2539,7 @@ def editProductCategory(request, categoryId):
                 return redirect('manage_central_inventory_category')
             else:
                 response, status_code = master_category_controller.get_central_inventory_category_by_id(categoryId)
+                print(response)
                 return render(request, 'indolens_admin/masters/editProductCategory.html',
                               {"product_category": response['product_category']})
     else:
@@ -2642,6 +2643,7 @@ def editMastersShapes(request, shapeId):
         if request.method == 'POST':
             master_shape_obj = master_shape_model.master_shape_model_from_dict(request.POST)
             response, status_code = master_shape_controller.edit_frame_shape(master_shape_obj)
+            print(response)
             if not response['status'] and "Duplicate entry" in response['message']:
                 product_shape, status_code = master_shape_controller.get_central_inventory_shapes_by_id(shapeId)
                 return render(request, 'indolens_admin/masters/editMastersShapes.html',
@@ -2652,6 +2654,7 @@ def editMastersShapes(request, shapeId):
                 return redirect('manage_central_inventory_shapes')
         else:
             response, status_code = master_shape_controller.get_central_inventory_shapes_by_id(shapeId)
+            print(response)
             return render(request, 'indolens_admin/masters/editMastersShapes.html',
                           {"product_shape": response['product_shape']})
     else:

@@ -16,8 +16,8 @@ def add_product_brand(brand_obj):
         with connection.cursor() as cursor:
             create_brand_query = f"""
                 INSERT INTO brands (
-                    brand_name, category_id, brand_description, 
-                    status, created_on, created_by, last_updated_on, last_updated_by
+                    brand_name, brand_category_id, brand_description, 
+                    brand_status, brand_created_on, brand_created_by, brand_last_updated_on, brand_last_updated_by
                 ) 
                 VALUES (
                     '{brand_obj.brand_name}',
@@ -38,6 +38,7 @@ def add_product_brand(brand_obj):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 def edit_product_brand(brand_obj):
     try:
         with connection.cursor() as cursor:
@@ -45,8 +46,8 @@ def edit_product_brand(brand_obj):
                 UPDATE  brands SET
                     brand_name = '{brand_obj.brand_name}', 
                     brand_description = '{brand_obj.brand_description}', 
-                    last_updated_on = '{getIndianTime()}', last_updated_by = '{brand_obj.last_updated_by}'
-                    WHERE brand_id = {brand_obj.brand_id}
+                    brand_last_updated_on = '{getIndianTime()}', brand_last_updated_by = '{brand_obj.last_updated_by}'
+                    WHERE brand_brand_id = {brand_obj.brand_id}
             """
 
             cursor.execute(update_brand_query)
@@ -104,18 +105,18 @@ def enable_disable_product_brand(bid, status):
 def get_central_inventory_brand_by_id(brandId):
     try:
         with connection.cursor() as cursor:
-            get_product_brand_query = f""" SELECT br.* , creator.name, updater.name
+            get_product_brand_query = f""" SELECT br.* , creator.admin_name, updater.admin_name
             FROM brands AS br 
-            LEFT JOIN admin AS creator ON br.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON br.last_updated_by = updater.admin_id
-            WHERE br.brand_id = {brandId}
+            LEFT JOIN admin AS creator ON br.brand_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON br.brand_last_updated_by = updater.admin_admin_id
+            WHERE br.brand_brand_id = {brandId}
             """
             cursor.execute(get_product_brand_query)
             brand_data = cursor.fetchall()
 
             return {
                 "status": True,
-                "product_brand": get_brands(brand_data)
+                "product_brand": brand_data
             }, 200
 
     except pymysql.Error as e:

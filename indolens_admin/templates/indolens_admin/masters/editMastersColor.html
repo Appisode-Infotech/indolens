@@ -86,7 +86,7 @@
                         <button aria-label="Close" class="btn-close" data-bs-dismiss="alert" type="button"></button>
                     </div>
                     {% endif %}
-                    <form action="{% url 'edit_master_color' color.color_id %}"
+                    <form action="{% url 'edit_master_color' color.pcol_color_id %}"
                           class="row g-3 needs-validation " enctype="multipart/form-data"
                           method="post" novalidate="">
                         {% csrf_token %}
@@ -94,7 +94,7 @@
                             <label class="form-label" for="colorCode">Color Code</label>
 
                             <input class="form-control" id="colorCode" name="color_code" required="" type="text"
-                                   value="{{color.color_code}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{color.pcol_color_code}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Color Code is mandatory.</div>
                         </div>
                         <div class="col-md-6">
@@ -102,7 +102,7 @@
                             <label class="form-label" for="color">Color</label>
 
                             <input class="form-control" id="color" name="color_name" required=""
-                                   type="text" value="{{color.color_name}}"/>
+                                   type="text" value="{{color.pcol_color_name}}"/>
                             <div class="invalid-feedback">Code is mandatory.</div>
                         </div>
 
@@ -112,11 +112,11 @@
                             <label class="form-label" for="description">Description</label>
 
                             <textarea class="form-control" id="description" name="color_description" required
-                                      rows="3">{{color.color_description}}</textarea>
+                                      rows="3">{{color.pcol_color_description}}</textarea>
                             <div class="invalid-feedback">Description is mandatory.</div>
                         </div>
                         <input required type="hidden" name="color_id"
-                               value="{{color.color_id}}">
+                               value="{{color.pcol_color_id}}">
                         <input required type="hidden" name="last_updated_by"
                                value="{{ request.session.id }}">
 

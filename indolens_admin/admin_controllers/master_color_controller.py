@@ -16,8 +16,8 @@ def add_master_color(color_obj):
         with connection.cursor() as cursor:
             create_color_query = f"""
                 INSERT INTO product_colors (
-                    color_code, color_name,  color_description, 
-                    status, created_on, created_by, last_updated_on, last_updated_by
+                    pcol_color_code, pcol_color_name, pcol_color_description, 
+                    pcol_status, pcol_created_on, pcol_created_by, pcol_last_updated_on, pcol_last_updated_by
                 ) 
                 VALUES (
                     '{color_obj.color_code}', '{color_obj.color_name}',
@@ -43,11 +43,13 @@ def edit_master_color(color_obj):
     try:
         with connection.cursor() as cursor:
             update_color_query = f"""
-                UPDATE  product_colors SET
-                    color_code = '{color_obj.color_code}', 
-                    color_name = '{color_obj.color_name}',  color_description = '{color_obj.color_description}', 
-                    last_updated_on = '{getIndianTime()}', last_updated_by = '{color_obj.last_updated_by}'
-                    WHERE color_id = {color_obj.color_id}
+                UPDATE product_colors SET
+                    pcol_color_code = '{color_obj.color_code}', 
+                    pcol_color_name = '{color_obj.color_name}',  
+                    pcol_color_description = '{color_obj.color_description}', 
+                    pcol_last_updated_on = '{getIndianTime()}', 
+                    pcol_last_updated_by = '{color_obj.last_updated_by}'
+                WHERE pcol_color_id = {color_obj.color_id}
             """
 
             cursor.execute(update_color_query)
@@ -107,18 +109,18 @@ def enable_disable_master_color(mcid, status):
 def get_central_inventory_color_by_id(colorId):
     try:
         with connection.cursor() as cursor:
-            get_frame_color_query = f""" SELECT pc.* , creator.name, updater.name
+            get_frame_color_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
             FROM product_colors AS pc
-            LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id
-            WHERE pc.color_id = {colorId}
+            LEFT JOIN admin AS creator ON pc.pcol_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON pc.pcol_last_updated_by = updater.admin_admin_id
+            WHERE pc.pcol_color_id = {colorId}
             """
             cursor.execute(get_frame_color_query)
             frame_color_data = cursor.fetchall()
 
             return {
                        "status": True,
-                       "frame_color": get_product_colors(frame_color_data)
+                       "frame_color": frame_color_data
                    }, 200
 
     except pymysql.Error as e:
