@@ -2825,6 +2825,7 @@ def editMastersMaterials(request, materialId):
                 return redirect('manage_central_inventory_materials')
         else:
             response, status_code = master_material_controller.get_central_inventory_materials_by_id(materialId)
+            print(response)
             return render(request, 'indolens_admin/masters/editMastersMaterials.html',
                           {"product_material": response['product_material']})
     else:

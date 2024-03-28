@@ -15,8 +15,8 @@ def add_master_material(material_obj):
         with connection.cursor() as cursor:
             create_material_query = f"""
                 INSERT INTO product_materials (
-                    material_name,  material_description, 
-                    status, created_on, created_by, last_updated_on, last_updated_by
+                    pm_material_name, pm_material_description, 
+        pm_status, pm_created_on, pm_created_by, pm_last_updated_on, pm_last_updated_by
                 ) 
                 VALUES (
                     '{material_obj.material_name}',
@@ -39,15 +39,16 @@ def add_master_material(material_obj):
         return {"status": False, "message": str(e)}, 301
 
 def edit_master_material(material_obj):
+    print(vars(material_obj))
     try:
         with connection.cursor() as cursor:
             update_material_query = f"""
-                UPDATE  product_materials SET
-                    material_name = '{material_obj.material_name}',  
-                    material_description = '{material_obj.material_description}', 
-                    last_updated_on = '{getIndianTime()}', last_updated_by = '{material_obj.last_updated_by}'
-                    WHERE material_id = {material_obj.material_id}
-                
+                UPDATE product_materials SET
+                    pm_material_name = '{material_obj.material_name}',  
+                    pm_material_description = '{material_obj.material_description}', 
+                    pm_last_updated_on = '{getIndianTime()}', 
+                    pm_last_updated_by = '{material_obj.last_updated_by}'
+                WHERE pm_material_id = {material_obj.material_id}
             """
 
             cursor.execute(update_material_query)
@@ -105,18 +106,18 @@ def enable_disable_master_material(mid, status):
 def get_central_inventory_materials_by_id(materialId):
     try:
         with connection.cursor() as cursor:
-            get_material_query = f""" SELECT pm.* , creator.name, updater.name
+            get_material_query = f""" SELECT pm.* , creator.admin_name, updater.admin_name
             FROM product_materials AS pm
-            LEFT JOIN admin AS creator ON pm.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON pm.last_updated_by = updater.admin_id
-            WHERE pm.material_id = {materialId}
+            LEFT JOIN admin AS creator ON pm.pm_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON pm.pm_last_updated_by = updater.admin_admin_id
+            WHERE pm.pm_material_id = {materialId}
             """
             cursor.execute(get_material_query)
-            material_data = cursor.fetchall()
+            material_data = cursor.fetchone()
 
             return {
                 "status": True,
-                "product_material": get_product_materials(material_data)
+                "product_material": material_data
             }, 200
 
     except pymysql.Error as e:
