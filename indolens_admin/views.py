@@ -2225,6 +2225,7 @@ def enableDisableFranchiseOtherEmployees(request, route, franchiseEmployeeId, st
 def viewAllOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = orders_controller.get_all_orders('All', 'All', store)
+        print(response)
         return render(request, 'indolens_admin/orders/viewAllOrders.html',
                       {"orders_list": response['orders_list'], "store": store})
     else:
@@ -2278,7 +2279,9 @@ def viewStoreReadyOrders(request, store):
 
 def viewCompletedOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        print(store)
         response, status_code = orders_controller.get_completed_orders('Delivered Customer', 'All', store)
+        print(response)
         return render(request, 'indolens_admin/orders/viewCompletedOrders.html',
                       {"orders_list": response['orders_list'], "store": store})
     else:
@@ -2306,8 +2309,11 @@ def viewRefundedOrders(request, store):
 def viewOrderDetails(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         order_detail, order_status_code = orders_controller.get_order_details(orderId)
+        print(order_detail)
         payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
-        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['assigned_lab'])
+        # print(payment_logs)
+        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['so_assigned_lab'])
+        # print(lab_details)
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
                       {"order_detail": order_detail['orders_details'], "payment_logs": payment_logs['payment_logs'],
                        "lab_details": lab_details['lab_data']})
@@ -2392,6 +2398,7 @@ def viewCustomerDetails(request, customerId):
 def manageLabs(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_controller.get_all_labs()
+        print(response)
         return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
     else:
         return redirect('login')
@@ -3871,10 +3878,13 @@ def eyeTestPrint(request, testId):
 def indolensAdminSetting(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
+            print(request.POST)
             response, status_code = admin_setting_controller.admin_setting(request.POST)
+            print(response)
             return redirect('indolens_admin_setting')
         else:
             response, status_code = admin_setting_controller.get_admin_setting()
+            print(response)
             return render(request, 'indolens_admin/settings/IndolensAdminSetting.html',
                           {"admin_setting": response['admin_setting']})
 

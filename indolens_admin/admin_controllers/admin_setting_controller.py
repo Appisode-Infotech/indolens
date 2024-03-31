@@ -21,6 +21,9 @@ def admin_setting(data):
             admin_setting_check = f""" SELECT COUNT(*) FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
+            print(admin_check['COUNT(*)'])
+            print(type(admin_check['COUNT(*)']))
+            print(data.get('base_url'))
 
             emailjs_attributes = {
                 'emailjs_url': data.get('emailjs_url', ''),
@@ -35,7 +38,7 @@ def admin_setting(data):
                 'support_hour': data.get('support_hours', ''),
             }
 
-            if admin_check[0] == 0:
+            if admin_check['COUNT(*)'] == 0:
                 admin_setting_query = f"""INSERT INTO admin_setting (emailjs_attribute, base_url, created_on,
                 created_by, updated_on, updated_by, support_attributes ) VALUES('{json.dumps(emailjs_attributes)}', '{data.get('base_url')}',
                 '{getIndianTime()}', 1, '{getIndianTime()}', 1, '{json.dumps(support_attributes)}') """
@@ -67,10 +70,13 @@ def get_admin_setting():
         with connection.cursor() as cursor:
             admin_setting_check = f""" SELECT * FROM admin_setting """
             cursor.execute(admin_setting_check)
-            admin_check = cursor.fetchone()
+            admin_settings = cursor.fetchone()
+
+            admin_settings['emailjs_attribute'] = json.loads(admin_settings['emailjs_attribute']) if admin_settings['emailjs_attribute'] else []
+            admin_settings['support_attributes'] = json.loads(admin_settings['support_attributes']) if admin_settings['support_attributes'] else []
             return {"status": True,
                     "message": "fetch Success",
-                    "admin_setting": admin_setting_response(admin_check) if admin_check is not None else {},
+                    "admin_setting": admin_settings if admin_settings is not None else {},
                     }, 200
 
     except pymysql.Error as e:

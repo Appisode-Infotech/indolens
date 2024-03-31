@@ -120,31 +120,31 @@ def get_completed_orders(status, pay_status, store):
         with connection.cursor() as cursor:
             get_order_query = f"""
                 SELECT 
-                    so.so_*, 
+                    so.*, 
                     c.customer_name, 
                     SUM(so_product_total_cost) AS total_cost, 
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN os.store_name 
+                        WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
                         ELSE fs.fs_store_name 
                     END AS store_name,
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN creator_os.name 
-                        ELSE creator_fs.fs_name 
+                        WHEN so.so_created_by_store_type = 1 THEN creator_os.ose_name 
+                        ELSE creator_fs.fse_name 
                     END AS creator_name,
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN updater_os.name 
-                        ELSE updater_fs.fs_name 
+                        WHEN so.so_created_by_store_type = 1 THEN updater_os.ose_name 
+                        ELSE updater_fs.fse_name 
                     END AS updater_name,
-                    i.invoice_number
+                    i.invoice_invoice_number
                 FROM sales_order AS so
                 LEFT JOIN customers AS c ON c.customer_customer_id = so.so_customer_id
-                LEFT JOIN invoice AS i ON i.order_id = so.so_order_id
-                LEFT JOIN own_store os ON so.so_created_by_store = os.store_id AND so.so_created_by_store_type = 1
+                LEFT JOIN invoice AS i ON i.invoice_order_id = so.so_order_id
+                LEFT JOIN own_store os ON so.so_created_by_store = os.os_store_id AND so.so_created_by_store_type = 1
                 LEFT JOIN franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
-                LEFT JOIN own_store_employees creator_os ON so.so_created_by = creator_os.employee_id AND so.so_created_by_store_type = 1
-                LEFT JOIN franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fs_employee_id AND so.so_created_by_store_type = 2
-                LEFT JOIN own_store_employees updater_os ON so.so_updated_by = updater_os.employee_id AND so.so_created_by_store_type = 1
-                LEFT JOIN franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fs_employee_id AND so.so_created_by_store_type = 2
+                LEFT JOIN own_store_employees creator_os ON so.so_created_by = creator_os.ose_employee_id AND so.so_created_by_store_type = 1
+                LEFT JOIN franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                LEFT JOIN own_store_employees updater_os ON so.so_updated_by = updater_os.ose_employee_id AND so.so_created_by_store_type = 1
+                LEFT JOIN franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fse_employee_id AND so.so_created_by_store_type = 2
                 WHERE so.so_order_status {status_condition} AND so.so_payment_status {payment_status_value} AND so.so_created_by_store_type {store_condition}
                 GROUP BY so.so_order_id ORDER BY so.so_sale_item_id DESC         
                 """
@@ -153,7 +153,7 @@ def get_completed_orders(status, pay_status, store):
 
             return {
                 "status": True,
-                "orders_list": get_completed_sales_orders(orders_list)
+                "orders_list": orders_list
             }, 200
 
     except pymysql.Error as e:
@@ -283,51 +283,69 @@ def get_order_details(orderId):
         with connection.cursor() as cursor:
             get_order_details_query = f"""
                 SELECT 
-                    so.so_*,
-                    (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{orderId}' 
-                    GROUP BY order_id ), 
-                    (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{orderId}' 
-                    GROUP BY order_id ), 
+                    so.*,
+                    SUM(so.so_unit_sale_price * so.so_purchase_quantity) AS total_cost,
+                    SUM(so.so_product_total_cost) AS discount_cost,
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN os.store_name 
+                        WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
                         ELSE fs.fs_store_name 
                     END AS store_name,
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN creator_os.name 
-                        ELSE creator_fs.fs_name 
+                        WHEN so.so_created_by_store_type = 1 THEN creator_os.ose_name 
+                        ELSE creator_fs.fse_name 
                     END AS creator_name,
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN updater_os.name 
-                        ELSE updater_fs.fs_name 
+                        WHEN so.so_created_by_store_type = 1 THEN updater_os.ose_name 
+                        ELSE updater_fs.fse_name 
                     END AS updater_name,
-                    c.customer_*, ci.*, pc.customer_category_name, pm.material_name,
-                    ft.frame_type_name, fsh.shape_name,co.color_name, u.unit_name, b.brand_name,
-                    ROUND((ci.product_gst / 2), 2) AS product_gst_half,
-                    ROUND(((100*so.so_unit_sale_price/(100+ci.product_gst ))-(so.so_discount_percentage/100)*(100*so.so_unit_sale_price/(100+ci.product_gst ))), 2) AS discounted_total_cost
-                FROM sales_order AS so
-                LEFT JOIN customers AS c ON c.customer_customer_id = so.so_customer_id
-                LEFT JOIN central_inventory AS ci ON ci.product_id = so.so_product_id
-                LEFT JOIN product_categories AS pc ON ci.category_id = pc.customer_category_id
-                LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
-                LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
-                LEFT JOIN frame_shapes AS fsh ON ci.frame_shape_id = fsh.shape_id
-                LEFT JOIN product_colors AS co ON ci.color_id = co.color_id
-                LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                LEFT JOIN own_store os ON so.so_created_by_store = os.store_id AND so.so_created_by_store_type = 1
-                LEFT JOIN franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
-                LEFT JOIN own_store_employees creator_os ON so.so_created_by = creator_os.employee_id AND so.so_created_by_store_type = 1
-                LEFT JOIN franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fs_employee_id AND so.so_created_by_store_type = 2
-                LEFT JOIN own_store_employees updater_os ON so.so_updated_by = updater_os.employee_id AND so.so_created_by_store_type = 1
-                LEFT JOIN franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fs_employee_id AND so.so_created_by_store_type = 2
-                WHERE so.so_order_id = '{orderId}' GROUP BY so.so_sale_item_id  
-                """
+                    c.*, ci.*, pc.pc_category_name, pm.pm_material_name,
+                    ft.ftype_name, fsh.fshape_name,co.pcol_color_name, u.unit_name, b.brand_name,
+                    ROUND((ci.ci_product_gst / 2), 2) AS product_gst_half,
+                    ROUND(((100 * so.so_unit_sale_price / (100 + ci.ci_product_gst)) - (so.so_discount_percentage / 100) * (100 * so.so_unit_sale_price / (100 + ci.ci_product_gst))), 2) AS discounted_total_cost
+                FROM 
+                    sales_order AS so
+                LEFT JOIN 
+                    customers AS c ON c.customer_customer_id = so.so_customer_id
+                LEFT JOIN 
+                    central_inventory AS ci ON ci.ci_product_id = so.so_product_id
+                LEFT JOIN 
+                    product_categories AS pc ON ci.ci_category_id = pc.pc_category_id
+                LEFT JOIN 
+                    product_materials AS pm ON ci.ci_material_id = pm.pm_material_id
+                LEFT JOIN 
+                    frame_types AS ft ON ci.ci_frame_type_id = ft.ftype_frame_id
+                LEFT JOIN 
+                    frame_shapes AS fsh ON ci.ci_frame_shape_id = fsh.fshape_shape_id
+                LEFT JOIN 
+                    product_colors AS co ON ci.ci_color_id = co.pcol_color_id
+                LEFT JOIN 
+                    units AS u ON ci.ci_unit_id = u.unit_unit_id
+                LEFT JOIN 
+                    brands AS b ON ci.ci_brand_id = b.brand_brand_id
+                LEFT JOIN 
+                    own_store os ON so.so_created_by_store = os.os_store_id AND so.so_created_by_store_type = 1
+                LEFT JOIN 
+                    franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
+                LEFT JOIN 
+                    own_store_employees creator_os ON so.so_created_by = creator_os.ose_employee_id AND so.so_created_by_store_type = 1
+                LEFT JOIN 
+                    franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                LEFT JOIN 
+                    own_store_employees updater_os ON so.so_updated_by = updater_os.ose_employee_id AND so.so_created_by_store_type = 1
+                LEFT JOIN 
+                    franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                WHERE 
+                    so.so_order_id = '{orderId}'
+                GROUP BY 
+                    so.so_order_id
+            """
             cursor.execute(get_order_details_query)
+
             orders_details = cursor.fetchall()
 
             return {
                 "status": True,
-                "orders_details": get_order_invoice_detail(orders_details),
+                "orders_details": orders_details,
             }, 200
 
     except pymysql.Error as e:
@@ -339,22 +357,22 @@ def get_payment_logs(orderId):
     try:
         with connection.cursor() as cursor:
             get_payment_logs_query = f"""
-                SELECT so.so_*, 
+                SELECT so.*, 
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN creator_os.name 
-                        ELSE creator_fs.fs_name 
+                        WHEN so.sopt_created_by_store_type = 1 THEN creator_os.ose_name 
+                        ELSE creator_fs.fse_name 
                     END AS creator_name
                 FROM sales_order_payment_track AS so
-                LEFT JOIN own_store_employees creator_os ON so.so_created_by_id = creator_os.employee_id AND so.so_created_by_store_type = 1
-                LEFT JOIN franchise_store_employees creator_fs ON so.so_created_by_id = creator_fs.fs_employee_id AND so.so_created_by_store_type = 2
-                WHERE so.so_order_id = '{orderId}' GROUP BY so.so_id  
+                LEFT JOIN own_store_employees creator_os ON so.sopt_created_by_id = creator_os.ose_employee_id AND so.sopt_created_by_store_type = 1
+                LEFT JOIN franchise_store_employees creator_fs ON so.sopt_created_by_id = creator_fs.fse_employee_id AND so.sopt_created_by_store_type = 2
+                WHERE so.sopt_order_id = '{orderId}' GROUP BY so.sopt_id  
                 """
             cursor.execute(get_payment_logs_query)
             payment_logs = cursor.fetchall()
 
             return {
                 "status": True,
-                "payment_logs": sales_order_payment_track_response(payment_logs)
+                "payment_logs": payment_logs
             }, 200
 
     except pymysql.Error as e:

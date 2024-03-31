@@ -80,18 +80,18 @@
         <div class="content">
 
             <div class="mb-9">
-                <h2 class="mb-0">Order : <span>{{order_detail.0.order_id}} </span></h2>
+                <h2 class="mb-0">Order : <span>{{order_detail.0.so_order_id}} </span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-3 mt-3">
                     <p class="text-800 lh-sm mb-0">Store :
-                        {% if order_detail.0.created_by_store_type == 1%}
+                        {% if order_detail.so_created_by_store_type == 1%}
                         <a class="fw-semi-bold"
-                           href="{% url 'view_own_store' order_detail.0.created_by_store %}">
-                            {{order_detail.0.store_name}}
+                           href="{% url 'view_own_store' order_detail.so_created_by_store %}">
+                            {{order_detail.so_store_name}}
                         </a>
                         {% else %}
                         <a class="fw-semi-bold"
-                           href="{% url 'view_franchise_store' order_detail.0.created_by_store %}">
-                            {{order_detail.0.store_name}}
+                           href="{% url 'view_franchise_store' order_detail.0.so_created_by_store %}">
+                            {{order_detail.so_store_name}}
                         </a>
                         {% endif %}
                     </p>
@@ -105,10 +105,10 @@
                     {% endif %}
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><a target="_blank"
-                                                                  href="{% url 'order_invoice' order_detail.0.order_id %}"><span
+                                                                  href="{% url 'order_invoice' order_detail.0.so_order_id %}"><span
                                 class="fas fa-file-invoice"></span> Invoice</a></button>
                         <button class="btn px-3 text-900"><a target="_blank"
-                                                             href="{% url 'customer_order_tracking' order_detail.0.order_id %}"><span
+                                                             href="{% url 'customer_order_tracking' order_detail.0.so_order_id %}"><span
                                 class="fas fa-undo me-2"></span>Track Order</a></button>
 
                     </div>
@@ -152,26 +152,26 @@
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="products align-middle py-0">
                                             <a class="fw-semi-bold line-clamp-2 mb-0"
-                                               href="{% url 'view_products' order.product_id %}">
-                                                {{order.product_name}}
+                                               href="{% url 'view_products' order_detail.0.so_product_id %}">
+                                                {{order.ci_product_name}}
                                             </a>
                                         </td>
                                         <td class="color align-middle white-space-nowrap text-900 py-0 ps-4 text-end">₹
-                                            {{order.unit_sale_price}}
+                                            {{order.so_unit_sale_price}}
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 text-end">
-                                            {{order.discount_percentage}}%
+                                            {{order.so_discount_percentage}}%
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 text-end">
-                                            {{order.product_gst}}%
+                                            {{order.so_product_gst}}%
                                         </td>
                                         <td class="quantity align-middle  py-0 ps-4 text-700 text-end">
-                                            {{order.purchase_quantity}}
+                                            {{order.so_purchase_quantity}}
                                         </td>
                                         <td class="price align-middle text-900 fw-semi-bold text-end">₹
-                                            {{order.product_total_cost}}
+                                            {{order.so_product_total_cost}}
                                         </td>
-                                        {% if order.category_id == 2 or order.category_id == 3 %}
+                                        {% if order.so_category_id == 2 or order.so_category_id == 3 %}
                                         <td class="align-middle text-end white-space-nowrap pe-0">
                                             <div class="font-sans-serif btn-reveal-trigger position-static" >
                                                 <button aria-expanded="false"
@@ -182,15 +182,15 @@
                                                         type="button">
                                                     <span class="fas fa-ellipsis-h fs--2"></span></button>
                                                 <div class="dropdown-menu dropdown-menu-end py-2">
-                                                    {% if order.category_id == 2 %}
+                                                    {% if order.so_category_id == 2 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button"
-                                                       href="{% url 'lab_job_item_details' order.sale_item_id %}">
+                                                       href="{% url 'lab_job_item_details' orders_details.so_sale_item_id %}">
                                                         Line Item Details</a>
-                                                    {% elif order.category_id == 3 %}
+                                                    {% elif order.so_category_id == 3 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button" target="_blank"
-                                                       href="{% url 'lab_contact_Lens_power_card' order.sale_item_id %}">
+                                                       href="{% url 'lab_contact_Lens_power_card' orders_details.so_sale_item_id %}">
                                                         Contact Lens Power</a>
                                                     {% endif %}
                                                 </div>
@@ -207,7 +207,7 @@
                         </div>
                         <div class="d-flex flex-between-center py-3 border-bottom mb-7">
                             <p class="text-1100 fw-semi-bold lh-sm mb-0">Items subtotal :</p>
-                            <p class="text-1100 fw-bold lh-sm mb-0">₹ {{order_detail.0.discount_cost}}</p>
+                            <p class="text-1100 fw-bold lh-sm mb-0">₹ {{order_detail.so_discount_cost}}</p>
                         </div>
                         <div class="row gx-4 gy-6 g-xl-7 justify-content-sm-center justify-content-xl-start">
                             <div class="col-12 col-sm-auto">
@@ -220,7 +220,7 @@
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="{% url 'customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
+                                           href="{% url 'customer_details' order_detail.0.so_customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -229,7 +229,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:{{order_detail.0.email}}::">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.so_email}}::">{{order_detail.0.customer_email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -238,7 +238,7 @@
                                             <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="ms-4" style="max-width: 200px;">
-                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.customer_address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -247,7 +247,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.so_phone}}">{{order_detail.0.customer_phone}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -261,7 +261,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:{{order_detail.0.email}}:">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.so_email}}:">{{order_detail.0.customer_email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -269,7 +269,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.so_phone}}">{{order_detail.0.customer_phone}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -278,7 +278,7 @@
                                             <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="ms-4" style="max-width: 200px;">
-                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.customer_address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -288,7 +288,7 @@
                                             <h6 class="mb-0">Shipping Date</h6>
                                         </div>
                                         <p class="mb-0 text-800 fs--1 ms-4">
-                                            {{order_detail.0.estimated_delivery_date}}</p>
+                                            {{order_detail.0.so_estimated_delivery_date}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -365,33 +365,33 @@
                                             <td class="align-middle white-space-nowrap py-2 slno">
                                             </td>
                                             <td class="amount align-middle white-space-nowrap text-900 py-0 text-end">
-                                                ₹{{log.payment_amount}}
+                                                ₹{{log.sopt_payment_amount}}
                                             </td>
                                             <td class="mode align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                                {% if log.payment_mode == 1%}
+                                                {% if log.sopt_payment_mode == 1%}
                                                 CASH
-                                                {% elif log.payment_mode == 2%}
+                                                {% elif log.sopt_payment_mode == 2%}
                                                 UPI
-                                                {% elif log.payment_mode == 3%}
+                                                {% elif log.sopt_payment_mode == 3%}
                                                 CREDIT CARD
-                                                {% elif log.payment_mode == 4%}
+                                                {% elif log.sopt_payment_mode == 4%}
                                                 DEBIT CARD
                                                 {% endif %}
                                             </td>
                                             <td class="type align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                                {% if log.payment_type == 1%}
+                                                {% if log.sopt_payment_type == 1%}
                                                 ADVANCE
-                                                {% elif log.payment_type == 2%}
+                                                {% elif log.sopt_payment_type == 2%}
                                                 DUE CLEARANCE
-                                                {% elif log.payment_type == 3%}
+                                                {% elif log.sopt_payment_type == 3%}
                                                 REFUND
                                                 {% endif %}
                                             </td>
                                             <td class="createdBy align-middle  py-0 ps-4 text-700">
-                                                {{log.created_by_name}}
+                                                {{log.creator_name}}
                                             </td>
                                             <td class="createdOn align-middle text-900 fw-semi-bold  py-0 ps-4">
-                                                {{log.created_on}}
+                                                {{log.sopt_created_on}}
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -412,7 +412,7 @@
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Total Amount :</p>
                                                 <p id="total_amount" class="text-1100 fw-semi-bold">
-                                                    ₹{{ order_detail.0.total_cost}}</p>
+                                                    ₹{{ order_detail.so_total_cost}}</p>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Discount Amount :</p>
@@ -425,7 +425,7 @@
                                         </div>
                                         <div class="d-flex justify-content-between border-top border-dashed pt-4">
                                             <h4 class="mb-0">Total :</h4>
-                                            <h4 class="mb-0">₹{{order_detail.0.discount_cost}}</h4>
+                                            <h4 class="mb-0">₹{{order_detail.so_discount_cost}}</h4>
                                         </div>
                                     </div>
                                 </div>
@@ -434,7 +434,7 @@
                                 <div class="card mb-3">
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Sales Note</h3>
-                                        <h6 class="mb-2">{{order_detail.0.sales_note}}</h6>
+                                        <h6 class="mb-2">{{order_detail.so_sales_note}}</h6>
                                     </div>
                                 </div>
                             </div>
@@ -498,7 +498,7 @@
 </body>
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var status = "{{order_detail.0.payment_status}}";
+        var status = "{{order_detail.so_payment_status}}";
         var select = document.getElementById("paymentStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -512,7 +512,7 @@
         }
     });
     document.addEventListener("DOMContentLoaded", function() {
-        var status = {{order_detail.0.order_status}};
+        var status = {{order_detail.so_order_status}};
         var select = document.getElementById("orderStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -526,8 +526,8 @@
         }
     });
     document.addEventListener('DOMContentLoaded', function() {
-        var totalCost = {{ order_detail.0.total_cost }};
-        var discountCost = {{ order_detail.0.discount_cost }};
+        var totalCost = {{ order_detail.so_total_cost }};
+        var discountCost = {{ order_detail.so_discount_cost }};
 
         var discountedAmount = totalCost - discountCost;
 
