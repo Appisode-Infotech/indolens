@@ -93,6 +93,9 @@ DATABASES = {
         'PASSWORD': '',
         'HOST': 'localhost',
         'PORT': '3306',
+        'OPTIONS': {
+                    'cursorclass': 'pymysql.cursors.DictCursor',
+                },
     }
 }
 
