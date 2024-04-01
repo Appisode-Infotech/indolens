@@ -4,14 +4,14 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
 
 
 def get_all_franchise_emp(store):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_employee_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name
                                             FROM franchise_store_employees AS sm
                                             LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
@@ -33,7 +33,7 @@ def get_all_franchise_emp(store):
 
 def get_franchise_emp_by_id(store, employeeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_employee_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM franchise_store_employees AS sm
                                             LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
@@ -54,7 +54,7 @@ def get_franchise_emp_by_id(store, employeeId):
 
 def get_all_active_franchise_emp(store):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_employee_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name
                                             FROM franchise_store_employees AS sm
                                             LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
@@ -78,7 +78,7 @@ def get_all_active_franchise_emp(store):
 
 def get_own_store_employee_by_id(employee_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_employee_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id

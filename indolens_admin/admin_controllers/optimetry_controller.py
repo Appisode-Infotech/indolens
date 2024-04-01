@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
@@ -17,7 +17,7 @@ def getIndianTime():
 def create_optimetry(optimetry_obj, files):
     try:
         hashed_password = bcrypt.hashpw(optimetry_obj.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_optimetry_obj_query = f"""
                 INSERT INTO own_store_employees (
                     name, email, phone, password, profile_pic, 
@@ -58,7 +58,7 @@ def create_optimetry(optimetry_obj, files):
 
 def update_optimetry(optimetry_obj, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_optimetry_obj_query = f"""
                                 UPDATE own_store_employees
                                 SET 
@@ -85,7 +85,7 @@ def update_optimetry(optimetry_obj, files):
 
 def enable_disable_optimetry(opid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_optimetry_query = f"""
                 UPDATE own_store_employees
                 SET
@@ -111,7 +111,7 @@ def enable_disable_optimetry(opid, status):
 def create_franchise_optimetry(optimetry_obj, files):
     try:
         hashed_password = bcrypt.hashpw(optimetry_obj.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_optimetry_obj_query = f"""
                 INSERT INTO franchise_store_employees (
                     name, email, phone, password, profile_pic, 
@@ -157,7 +157,7 @@ def get_all_optimetry(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name FROM own_store_employees AS op
                                             LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
@@ -185,7 +185,7 @@ def get_all_franchise_optimetry(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS op
                                             LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
@@ -208,7 +208,7 @@ def get_all_franchise_optimetry(status):
 
 def get_optimetry_by_id(opid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_optimetry_query = f""" SELECT op.*, os.store_name, creator.name, updater.name FROM own_store_employees AS op
                                             LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
@@ -229,7 +229,7 @@ def get_optimetry_by_id(opid):
 
 def get_franchise_optimetry_by_id(opid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_optimetry_query = f""" SELECT op.*, os.store_name, creator.name, updater.name FROM franchise_store_employees AS op
                                             LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
@@ -250,7 +250,7 @@ def get_franchise_optimetry_by_id(opid):
 
 def edit_franchise_optimetry(optimetry_obj, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_optimetry_obj_query = f"""
                                 UPDATE franchise_store_employees
                                 SET 
@@ -278,7 +278,7 @@ def edit_franchise_optimetry(optimetry_obj, files):
 
 def enable_disable_franchise_optimetry(franchiseOptimetryId, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_optimetry_query = f"""
                 UPDATE franchise_store_employees
                 SET

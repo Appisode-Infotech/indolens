@@ -2,7 +2,7 @@ import datetime
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.own_store_resp_model import get_own_store
 
@@ -15,7 +15,7 @@ def create_own_store(store_obj):
     cleaned_str = store_obj.store_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
     store_lat, store_lng = map(float, cleaned_str.split(', '))
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_own_store_query = """
                 INSERT INTO own_store (
                     os_store_zip, os_store_name, os_store_display_name, os_store_phone, 
@@ -56,7 +56,7 @@ def get_all_own_stores(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_own_stores_query = f"""
                                     SELECT own_store.*, own_store_employees.ose_name, own_store_employees.ose_employee_id,
                                     creator.admin_name, updater.admin_name
@@ -82,7 +82,7 @@ def get_all_own_stores(status):
 
 def get_own_store_count():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_own_stores_query = f"""
                                     SELECT count(*)
                                     FROM own_store
@@ -102,7 +102,7 @@ def get_own_store_count():
 
 def get_unassigned_active_own_store_for_manager():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             unassigned_stores = []
             # get_unassigned_active_own_store_for_manager_query = f"""SELECT o.store_id, o.store_name FROM own_store AS o
             # LEFT JOIN own_store_employees e ON o.store_id = e.assigned_store_id WHERE (e.employee_id IS NULL OR e.role
@@ -132,7 +132,7 @@ def get_unassigned_active_own_store_for_manager():
 
 def get_active_own_stores():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             unassigned_stores = []
             get_unassigned_active_own_store_for_manager_query = f"""SELECT o.store_id, o.store_name FROM own_store o 
             WHERE o.status = 1;"""
@@ -155,7 +155,7 @@ def get_active_own_stores():
 
 def get_own_store_by_id(sid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_own_stores_query = f""" SELECT own_store.*, own_store_employees.ose_name, own_store_employees.ose_employee_id,
                                     creator.admin_name, updater.admin_name
                                     FROM own_store
@@ -180,7 +180,7 @@ def edit_own_store_by_id(store_obj):
     cleaned_str = store_obj.store_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
     store_lat, store_lng = map(float, cleaned_str.split(', '))
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_own_store_query = f"""
                 UPDATE own_store
                 SET 
@@ -216,7 +216,7 @@ def edit_own_store_by_id(store_obj):
 
 def enable_disable_own_store(sid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_sub_admin_query = f"""
                 UPDATE own_store
                 SET
@@ -241,7 +241,7 @@ def enable_disable_own_store(sid, status):
 
 def get_own_storestore_stats(ownStoreId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             employee_count_sql_query = f"""SELECT COUNT(*) FROM own_store_employees 
                                             WHERE ose_assigned_store_id = {ownStoreId} AND ose_status = 1"""
             cursor.execute(employee_count_sql_query)

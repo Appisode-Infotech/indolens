@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.eye_test_print_resp_model import get_eye_test_print_resp
 from indolens_own_store.own_store_model.response_model.eye_test_resp_model import get_eye_test_resp
@@ -12,7 +12,7 @@ def getIndianTime():
     return today
 def get_eye_test():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_eye_test_query = f""" SELECT et.*, c.name, c.phone, 
                                             CASE 
                                                 WHEN et.created_by_store_type = 1 THEN creator_os.name 
@@ -45,7 +45,7 @@ def get_eye_test():
 
 def get_eye_test_by_id(testId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_eye_test_by_id_query = f""" SELECT et.*, c.name, c.phone, c.age, 
                                             CASE 
                                                 WHEN et.created_by_store_type = 1 THEN creator_os.name 

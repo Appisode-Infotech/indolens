@@ -1,7 +1,7 @@
 import datetime
 import json
 import pymysql
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 import pytz
 
@@ -17,7 +17,7 @@ def getIndianTime():
 
 def admin_setting(data):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             admin_setting_check = f""" SELECT COUNT(*) FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
@@ -67,7 +67,7 @@ def admin_setting(data):
 
 def get_admin_setting():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             admin_setting_check = f""" SELECT * FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_settings = cursor.fetchone()
@@ -87,7 +87,7 @@ def get_admin_setting():
 
 def get_emailjs_attribute():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             admin_setting_check = f""" SELECT emailjs_attribute FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
@@ -100,7 +100,7 @@ def get_emailjs_attribute():
 
 def get_base_url():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             admin_setting_check = f""" SELECT base_url FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
@@ -113,7 +113,7 @@ def get_base_url():
 
 def get_support_data():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             admin_setting_check = f""" SELECT support_attributes FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()

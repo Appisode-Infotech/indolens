@@ -3,7 +3,7 @@ import json
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers.master_category_controller import get_all_central_inventory_category
 from indolens_admin.admin_models.admin_resp_model.central_inventory_product_resp_model import get_products
@@ -17,7 +17,7 @@ def getIndianTime():
 
 def get_all_out_of_stock_products_for_stores(quantity, store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
                                     os.store_name

@@ -2,7 +2,7 @@ from datetime import datetime
 
 import bcrypt
 
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 # db_host = 'localhost'
 # db_user = 'root'
@@ -646,7 +646,7 @@ create_admin_query = """
 """
 
 try:
-    with connection.cursor() as cursor:
+    with getConnection().cursor() as cursor:
         for sql_query in sql_queries:
             cursor.execute(sql_query)
         cursor.execute(create_admin_query, (

@@ -1,5 +1,5 @@
 import pymysql
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 import datetime
 import pytz
 
@@ -12,7 +12,7 @@ def getIndianTime():
 
 def add_frame_type(frame_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_shape_query = f"""
                 INSERT INTO frame_types (
                     ftype_name,  ftype_description, 
@@ -40,7 +40,7 @@ def add_frame_type(frame_obj):
 
 def edit_frame_type(frame_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_shape_query = f"""
                 UPDATE  frame_types SET
                     ftype_name = '{frame_obj.frame_type_name}',  
@@ -63,7 +63,7 @@ def edit_frame_type(frame_obj):
 
 def get_all_central_inventory_frame_types():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_frame_types_query = f""" SELECT ft.* , creator.admin_name, updater.admin_name
             FROM frame_types AS ft
             LEFT JOIN admin AS creator ON ft.ftype_created_by = creator.admin_admin_id
@@ -85,7 +85,7 @@ def get_all_central_inventory_frame_types():
 
 def enable_disable_frame_type(tid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             set_frame_type_query = f"""
             UPDATE frame_types SET ftype_status = '{status}' WHERE ftype_frame_id = '{tid}';
             """
@@ -104,7 +104,7 @@ def enable_disable_frame_type(tid, status):
 
 def get_central_inventory_frame_types_by_id(frameId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_frame_types_query = f""" SELECT ft.* , creator.admin_name, updater.admin_name
             FROM frame_types AS ft
             LEFT JOIN admin AS creator ON ft.ftype_created_by = creator.admin_admin_id

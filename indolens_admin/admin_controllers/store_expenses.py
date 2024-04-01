@@ -1,13 +1,13 @@
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.store_expenses_resp_model import get_store_expenses
 
 
 def get_store_expense_amount(store_id, store_type):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_expense_query = f"""
                 SELECT IFNULL(SUM(se_expense_amount), 0) AS total_expense 
                 FROM store_expense 
@@ -32,7 +32,7 @@ def get_store_expense_amount(store_id, store_type):
 
 def get_store_expense_list(store_id, store_type):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_expense_query = f"""
                 SELECT se.*, CASE 
                            WHEN se.se_store_type = 1 THEN creator_own.ose_name

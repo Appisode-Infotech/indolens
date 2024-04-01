@@ -1,5 +1,5 @@
 import pymysql
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 import datetime
 import pytz
 
@@ -12,7 +12,7 @@ def getIndianTime():
 
 def add_master_material(material_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_material_query = f"""
                 INSERT INTO product_materials (
                     pm_material_name, pm_material_description, 
@@ -41,7 +41,7 @@ def add_master_material(material_obj):
 def edit_master_material(material_obj):
     print(vars(material_obj))
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_material_query = f"""
                 UPDATE product_materials SET
                     pm_material_name = '{material_obj.material_name}',  
@@ -64,7 +64,7 @@ def edit_master_material(material_obj):
 
 def get_all_central_inventory_materials():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_material_query = f""" SELECT pm.* , creator.admin_name, updater.admin_name
             FROM product_materials AS pm
             LEFT JOIN admin AS creator ON pm.pm_created_by = creator.admin_admin_id
@@ -86,7 +86,7 @@ def get_all_central_inventory_materials():
 
 def enable_disable_master_material(mid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             set_material_query = f"""
             UPDATE product_materials SET pm_status = '{status}' WHERE pm_material_id = '{mid}';
             """
@@ -105,7 +105,7 @@ def enable_disable_master_material(mid, status):
 
 def get_central_inventory_materials_by_id(materialId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_material_query = f""" SELECT pm.* , creator.admin_name, updater.admin_name
             FROM product_materials AS pm
             LEFT JOIN admin AS creator ON pm.pm_created_by = creator.admin_admin_id

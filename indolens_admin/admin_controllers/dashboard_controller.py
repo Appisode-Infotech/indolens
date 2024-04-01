@@ -2,7 +2,7 @@ import datetime
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.store_analytics_resp_model import store_analytics
 
@@ -17,7 +17,7 @@ def get_order_stats(status, store_type):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                     SELECT count(*)
                     FROM sales_order
@@ -43,7 +43,7 @@ def get_order_stats(status, store_type):
 
 def get_sales_stats(store):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                                 SELECT IFNULL(SUM(so_product_total_cost), 0) AS total_sale
                                 FROM sales_order
@@ -65,7 +65,7 @@ def get_sales_stats(store):
 
 def get_store_analytics():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             own_store_sales_query = f"""
                 SELECT
                     os.os_store_id,

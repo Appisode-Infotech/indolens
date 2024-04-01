@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.marketing_head_resp_model import get_marketing_heads
@@ -18,7 +18,7 @@ def getIndianTime():
 def create_marketing_head(marketing_head, files):
     try:
         hashed_password = bcrypt.hashpw(marketing_head.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_marketing_head_query = f"""
                 INSERT INTO marketing_head (
                     name, email, phone, password, profile_pic, 
@@ -63,7 +63,7 @@ def get_all_marketing_head(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_marketing_head_query = f"""
             SELECT mh.*, creator.name, updater.name, ah.name
             FROM marketing_head AS mh
@@ -89,7 +89,7 @@ def get_all_marketing_head(status):
 
 def get_marketing_head_by_id(mhid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_marketing_head_query = f"""
             SELECT mh.*, creator.name, updater.name, ah.name
             FROM marketing_head AS mh
@@ -114,7 +114,7 @@ def get_marketing_head_by_id(mhid):
 
 def edit_marketing_head(marketing_head_obj, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_marketing_head_obj_query = f"""
                                 UPDATE marketing_head
                                 SET 
@@ -142,7 +142,7 @@ def edit_marketing_head(marketing_head_obj, files):
 
 def enable_disable_marketing_head(mhid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_marketing_head_query = f"""
                 UPDATE marketing_head
                 SET

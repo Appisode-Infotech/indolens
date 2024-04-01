@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.sub_admin_resp_model import get_sub_admin
@@ -17,7 +17,7 @@ def getIndianTime():
 def create_sub_admin(sub_admin, files):
     try:
         hashed_password = bcrypt.hashpw(sub_admin.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_admin_query = f"""
                 INSERT INTO admin (
                     name, email, phone, password, role, profile_pic, 
@@ -61,7 +61,7 @@ def get_all_sub_admin(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_sub_admin_query = f""" SELECT a.*, creator.name, updater.name 
                                             FROM admin AS a
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
@@ -83,7 +83,7 @@ def get_all_sub_admin(status):
 
 def get_sub_admin_by_id(said):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_sub_admin_query = f""" SELECT a.*, creator.name, updater.name 
                                             FROM admin AS a
                                             LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
@@ -104,7 +104,7 @@ def get_sub_admin_by_id(said):
 
 def edit_sub_admin(sub_admin, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_admin_query = f"""
                 UPDATE admin
                 SET
@@ -135,7 +135,7 @@ def edit_sub_admin(sub_admin, files):
 
 def enable_disable_sub_admin(said, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_sub_admin_query = f"""
                 UPDATE admin
                 SET

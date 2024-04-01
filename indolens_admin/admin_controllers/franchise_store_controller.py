@@ -2,7 +2,7 @@ import datetime
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.franchise_store_resp_model import get_franchise_store
 from indolens_admin.admin_models.admin_resp_model.store_inventory_resp_model import get_store_inventory
@@ -17,7 +17,7 @@ def create_franchise_store(franchise_obj):
     cleaned_str = franchise_obj.store_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
     store_lat, store_lng = map(float, cleaned_str.split(', '))
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_franchise_store_query = f"""
                                         INSERT INTO franchise_store (
                                             store_zip, store_name, store_display_name, store_phone, store_gst, store_email,
@@ -52,7 +52,7 @@ def get_all_franchise_stores(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_franchise_stores_query = f""" SELECT DISTINCT franchise_store.*, franchise_store_employees.fse_name, franchise_store_employees.fse_employee_id,
                                         creator.admin_name, updater.admin_name
                                         FROM franchise_store
@@ -76,7 +76,7 @@ def get_all_franchise_stores(status):
 
 def get_franchise_stores_count():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_franchise_stores_query = f""" SELECT count(*)
                                         FROM franchise_store"""
             cursor.execute(get_franchise_stores_query)
@@ -94,7 +94,7 @@ def get_franchise_stores_count():
 
 def get_franchise_store_by_id(fid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_franchise_stores_query = f""" SELECT franchise_store.*, franchise_store_employees.name, 
                                         franchise_store_employees.employee_id,
                                         creator.name, updater.name FROM franchise_store
@@ -121,7 +121,7 @@ def edit_franchise_store_by_id(franchise_obj):
     cleaned_str = franchise_obj.store_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
     store_lat, store_lng = map(float, cleaned_str.split(', '))
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_franchise_store_query = f"""
                     UPDATE franchise_store
                     SET 
@@ -157,7 +157,7 @@ def edit_franchise_store_by_id(franchise_obj):
 
 def enable_disable_franchise_store(fid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_franchise_store_query = f"""
                 UPDATE franchise_store
                 SET
@@ -182,7 +182,7 @@ def enable_disable_franchise_store(fid, status):
 
 def get_all_products_for_franchise_store(store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
                                     os.store_name
@@ -214,7 +214,7 @@ def get_all_products_for_franchise_store(store_id):
 
 def get_franchise_store_stats(ownStoreId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             employee_count_sql_query = f"""SELECT COUNT(*) FROM franchise_store_employees 
                                             WHERE assigned_store_id = {ownStoreId} AND status = 1"""
             cursor.execute(employee_count_sql_query)

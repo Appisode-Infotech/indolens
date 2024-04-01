@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
@@ -17,7 +17,7 @@ def getIndianTime():
 def create_own_sales_executives(sales_executives, files):
     try:
         hashed_password = bcrypt.hashpw(sales_executives.password.encode('utf-8'), bcrypt.gensalt()).decode('utf_8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_sales_executives_query = f"""
                 INSERT INTO own_store_employees (
                    name, email, phone, password, profile_pic, 
@@ -56,7 +56,7 @@ def create_own_sales_executives(sales_executives, files):
 
 def update_own_sales_executives(sales_executives, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_sales_executives_query = f"""
                 UPDATE own_store_employees
                 SET 
@@ -87,7 +87,7 @@ def update_own_sales_executives(sales_executives, files):
 
 def update_franchise_sales_executives(sales_executives, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_sales_executives_query = f"""
                 UPDATE franchise_store_employees
                 SET 
@@ -119,7 +119,7 @@ def update_franchise_sales_executives(sales_executives, files):
 def create_franchise_sales_executives(sales_executives, files):
     try:
         hashed_password = bcrypt.hashpw(sales_executives.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_sales_executives_query = f"""
                 INSERT INTO franchise_store_employees (
                    name, email, phone, password, profile_pic, 
@@ -165,7 +165,7 @@ def get_all_own_sales_executive(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
@@ -193,7 +193,7 @@ def get_all_franchise_sales_executive(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS sm
                                             LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
@@ -216,7 +216,7 @@ def get_all_franchise_sales_executive(status):
 
 def get_own_sales_executive_by_id(seId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
@@ -237,7 +237,7 @@ def get_own_sales_executive_by_id(seId):
 
 def get_franchise_sales_executive_by_id(seId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS sm
                                             LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
@@ -259,7 +259,7 @@ def get_franchise_sales_executive_by_id(seId):
 
 def enable_disable_sales_executive(seId, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_sales_executive_query = f"""
                 UPDATE own_store_employees
                 SET
@@ -283,7 +283,7 @@ def enable_disable_sales_executive(seId, status):
 
 def enable_disable_franchise_sales_executive(seId, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_sales_executive_query = f"""
                 UPDATE franchise_store_employees
                 SET 
@@ -308,7 +308,7 @@ def enable_disable_franchise_sales_executive(seId, status):
 
 def assign_store_own_store_sales_executive(empId, storeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
@@ -352,7 +352,7 @@ def assign_store_own_store_sales_executive(empId, storeId):
 
 def unassign_store_own_store_sales_executive(empId, storeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET

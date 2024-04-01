@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
@@ -17,7 +17,7 @@ def getIndianTime():
 def create_other_employee(other_emp, files):
     try:
         hashed_password = bcrypt.hashpw(other_emp.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_other_emp_query = f"""
                 INSERT INTO own_store_employees (
                     name, email, phone, password, profile_pic, 
@@ -55,7 +55,7 @@ def create_other_employee(other_emp, files):
 
 def update_other_employee(other_emp, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_other_emp_query = f"""
                 UPDATE own_store_employees
                 SET 
@@ -86,7 +86,7 @@ def update_other_employee(other_emp, files):
 
 def update_franchise_other_employee(other_emp, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_other_emp_query = f"""
                 UPDATE franchise_store_employees
                 SET 
@@ -117,7 +117,7 @@ def update_franchise_other_employee(other_emp, files):
 def create_franchise_other_employee(other_emp, files):
     try:
         hashed_password = bcrypt.hashpw(other_emp.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_other_emp_query = f"""
                 INSERT INTO franchise_store_employees (
                     name, email, phone, password, profile_pic, 
@@ -161,7 +161,7 @@ def get_all_other_emp(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name 
                                             FROM own_store_employees AS op
                                             LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
@@ -190,7 +190,7 @@ def get_all_franchise_other_emp(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS op
                                             LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
@@ -213,7 +213,7 @@ def get_all_franchise_other_emp(status):
 
 def get_other_emp_by_id(empid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT foe.*, os.store_name, creator.name, updater.name 
                                             FROM own_store_employees AS foe
                                             LEFT JOIN own_store AS os ON foe.assigned_store_id = os.store_id
@@ -235,7 +235,7 @@ def get_other_emp_by_id(empid):
 
 def get_franchise_other_emp_by_id(empid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT foe.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS foe
                                             LEFT JOIN franchise_store AS os ON foe.assigned_store_id = os.store_id
@@ -257,7 +257,7 @@ def get_franchise_other_emp_by_id(empid):
 
 def enable_disable_other_employees(empid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_other_employees_query = f"""
                 UPDATE own_store_employees
                 SET
@@ -282,7 +282,7 @@ def enable_disable_other_employees(empid, status):
 
 def enable_disable_franchise_other_employees(empid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_other_employees_query = f"""
                 UPDATE franchise_store_employees
                 SET
@@ -307,7 +307,7 @@ def enable_disable_franchise_other_employees(empid, status):
 
 def assign_store_own_store_other_employee(empId, storeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
@@ -350,7 +350,7 @@ def assign_store_own_store_other_employee(empId, storeId):
 
 def unassign_store_own_store_other_employee(empId, storeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET

@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.area_head_resp_model import get_area_heads
@@ -17,7 +17,7 @@ def getIndianTime():
 def create_area_head(area_head, files):
     try:
         hashed_password = bcrypt.hashpw(area_head.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_area_head_query = f"""
                 INSERT INTO area_head (
                     name, email, phone, password, profile_pic, 
@@ -61,7 +61,7 @@ def get_all_area_head(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_area_head_query = f"""
             SELECT ah.*, GROUP_CONCAT(os.store_name SEPARATOR ', ') AS assigned_stores_names, creator.name, updater.name
             FROM area_head AS ah
@@ -86,7 +86,7 @@ def get_all_area_head(status):
 
 def get_area_head_by_id(ahid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_area_head_query = f"""
             SELECT ah.*, GROUP_CONCAT(os.store_name SEPARATOR ', ') AS assigned_stores_names, creator.name, updater.name
             FROM area_head AS ah
@@ -112,7 +112,7 @@ def get_area_head_by_id(ahid):
 
 def edit_area_head(area_head, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_area_head_query = f"""
                                 UPDATE area_head
                                 SET 
@@ -141,7 +141,7 @@ def edit_area_head(area_head, files):
 def enable_disable_area_head(ahId, status):
     # update table set status= '{status}' where area_head_id = '{ahid}'
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             set_area_head_query = f"""
             UPDATE area_head SET status = '{status}' WHERE area_head_id = '{ahId}';
             """
@@ -160,7 +160,7 @@ def enable_disable_area_head(ahId, status):
 
 def assignStore(empId, storeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE area_head
                 SET
@@ -205,7 +205,7 @@ def assignStore(empId, storeId):
 
 def unAssignStore(empId, storeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE area_head
                 SET

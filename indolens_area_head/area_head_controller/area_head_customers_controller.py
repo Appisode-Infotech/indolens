@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.customer_resp_model import get_customers
 
@@ -15,7 +15,7 @@ def getIndianTime():
 
 def get_all_area_stores_customers(assigned_stores):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_customers_query = f""" SELECT c.*, os.store_name, creator.name, updater.name,
                                             (SELECT SUM(so.product_total_cost) FROM sales_order AS so WHERE so.customer_id = c.customer_id AND so.order_status != 7) AS total_spend,
                                             (SELECT COUNT(DISTINCT so.order_id) FROM sales_order AS so WHERE so.customer_id = c.customer_id) AS order_count
@@ -40,7 +40,7 @@ def get_all_area_stores_customers(assigned_stores):
 
 def get_customers_by_id(customer_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_customers_query = f""" SELECT c.*, os.store_name, creator.name, updater.name, 
                                             (SELECT SUM(product_total_cost) AS total_spend FROM sales_order 
                                             WHERE customer_id = '{customer_id}' AND order_status != 7),

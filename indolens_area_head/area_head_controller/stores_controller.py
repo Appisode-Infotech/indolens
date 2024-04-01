@@ -3,7 +3,7 @@ import datetime
 import pymysql
 import pytz
 import requests
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.franchise_store_resp_model import get_franchise_store
 from indolens_admin.admin_models.admin_resp_model.own_store_resp_model import get_own_store
@@ -22,7 +22,7 @@ def get_area_head_own_stores(status, assigned_stores):
     status_condition = status_conditions[status]
 
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
 
             get_own_stores_query = f"""
                                         SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name,

@@ -3,7 +3,7 @@ from datetime import datetime, timedelta
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 ist = pytz.timezone('Asia/Kolkata')
 
@@ -15,7 +15,7 @@ def getIndianTime():
 
 def get_own_vs_franchise_sales_stats(start_date, end_date):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_own_store_sales_stats_query = f"""
                                 WITH RECURSIVE DateRange AS (
                                     SELECT '{start_date}' AS date
@@ -66,7 +66,7 @@ def get_own_vs_franchise_sales_stats(start_date, end_date):
 
 def get_store_sales_stats(start_date, end_date, store_type, store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_sales_stats_query = f"""
                                 WITH RECURSIVE DateRange AS (
                                     SELECT '{start_date}' AS date
@@ -102,7 +102,7 @@ def get_customer_stats(days):
     end_date = datetime.now().strftime('%Y-%m-%d')
     start_date = (datetime.now() - timedelta(days=days - 1)).strftime('%Y-%m-%d')
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_customer_stats_query = f"""
                                 WITH RECURSIVE DateRange AS (
                                     SELECT '{start_date}' AS date
@@ -136,7 +136,7 @@ def get_store_customer_stats(days, store_type, store_id):
     end_date = datetime.now().strftime('%Y-%m-%d')
     start_date = (datetime.now() - timedelta(days=days - 1)).strftime('%Y-%m-%d')
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_customer_stats_query = f"""
                                 WITH RECURSIVE DateRange AS (
                                     SELECT '{start_date}' AS date
@@ -172,7 +172,7 @@ def get_orders_stats(days):
     end_date = datetime.now().strftime('%Y-%m-%d')
     start_date = (datetime.now() - timedelta(days=days - 1)).strftime('%Y-%m-%d')
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_stats_query = f"""
                                 WITH RECURSIVE DateRange AS (
                                     SELECT '{start_date}' AS date
@@ -207,7 +207,7 @@ def get_store_orders_stats(days, store_type, store_id):
     end_date = datetime.now().strftime('%Y-%m-%d')
     start_date = (datetime.now() - timedelta(days=days - 1)).strftime('%Y-%m-%d')
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_stats_query = f"""
                                 WITH RECURSIVE DateRange AS (
                                     SELECT '{start_date}' AS date

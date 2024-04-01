@@ -4,7 +4,7 @@ import bcrypt
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import send_notification_controller, email_template_controller
 from indolens_admin.admin_models.admin_resp_model.own_store_emp_resp_model import get_own_store_employees
@@ -17,7 +17,7 @@ def getIndianTime():
 def create_store_manager(store_manager, files):
     try:
         hashed_password = bcrypt.hashpw(store_manager.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_store_manager_query = f"""
                 INSERT INTO own_store_employees (
                     name, email, phone, password, profile_pic, 
@@ -56,7 +56,7 @@ def create_store_manager(store_manager, files):
 
 def update_store_manager(store_manager, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
@@ -97,7 +97,7 @@ def get_all_store_manager(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
@@ -119,7 +119,7 @@ def get_all_store_manager(status):
 
 def get_store_manager_by_id(mid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
                                             LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
                                             LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
@@ -140,7 +140,7 @@ def get_store_manager_by_id(mid):
 
 def enable_disable_store_manager(mid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
@@ -165,7 +165,7 @@ def enable_disable_store_manager(mid, status):
 
 def assignStore(empId, storeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             assign_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
@@ -210,7 +210,7 @@ def assignStore(empId, storeId):
 
 def unAssignStore(empId, storeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             unassign_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET

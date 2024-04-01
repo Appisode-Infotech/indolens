@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.completed_order_resp_model import get_completed_sales_orders
 from indolens_admin.admin_models.admin_resp_model.invoice_detail_resp_model import get_order_invoice_detail
@@ -47,7 +47,7 @@ def get_all_orders(status, pay_status, store):
     }
     store_condition = store_values[store]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.*, 
@@ -117,7 +117,7 @@ def get_completed_orders(status, pay_status, store):
     }
     store_condition = store_values[store]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.*, 
@@ -164,7 +164,7 @@ def get_completed_orders(status, pay_status, store):
 
 def get_all_store_orders(store_id, store_type):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                             SELECT 
                                 so.*, 
@@ -210,7 +210,7 @@ def get_all_store_orders(store_id, store_type):
 
 def get_store_sales(store_id, store_type):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                                 SELECT IFNULL(SUM(so_product_total_cost), 0) AS total_sale
                                 FROM sales_order
@@ -235,7 +235,7 @@ def get_store_sales(store_id, store_type):
 
 def get_all_customer_orders(customerId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.so_*, 
@@ -280,7 +280,7 @@ def get_all_customer_orders(customerId):
 
 def get_order_details(orderId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_details_query = f"""
                 SELECT 
                     so.*,
@@ -355,7 +355,7 @@ def get_order_details(orderId):
 
 def get_payment_logs(orderId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_payment_logs_query = f"""
                 SELECT so.*, 
                     CASE 
@@ -383,7 +383,7 @@ def get_payment_logs(orderId):
 
 def get_invoice_details(orderId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_details_query = f""" SELECT * FROM invoice WHERE order_id = '{orderId}'"""
             cursor.execute(get_order_details_query)
             orders_details = cursor.fetchone()
@@ -406,7 +406,7 @@ def get_order_creator_role(employeeID, storeType):
     }
     status_condition = status_conditions[storeType]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_creator_query = f"""
                 SELECT role FROM {status_condition} WHERE employee_id = {employeeID}
                 """
@@ -426,7 +426,7 @@ def get_order_creator_role(employeeID, storeType):
 
 def get_store_details(storeId, storeType):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
 
             if storeType == 1:
                 get_own_stores_query = f""" SELECT own_store.*
@@ -454,7 +454,7 @@ def get_store_details(storeId, storeType):
 
 def get_order_track(orderId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_own_stores_query = f""" SELECT ot.*
                                         FROM order_track AS ot
                                         WHERE ot.order_id = '{orderId}' """

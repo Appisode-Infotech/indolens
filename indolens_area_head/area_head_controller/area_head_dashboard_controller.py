@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 ist = pytz.timezone('Asia/Kolkata')
 def getIndianTime():
@@ -15,7 +15,7 @@ def get_order_stats(status, store_type):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                     SELECT *
                     FROM sales_order
@@ -38,7 +38,7 @@ def get_order_stats(status, store_type):
 
 def get_sales_stats(store):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                                 SELECT IFNULL(SUM(product_total_cost), 0) AS total_sale
                                 FROM sales_order

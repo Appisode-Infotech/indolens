@@ -2,7 +2,7 @@ import datetime
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.master_color_resp_model import get_product_colors
 
@@ -13,7 +13,7 @@ def getIndianTime():
 
 def add_master_color(color_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_color_query = f"""
                 INSERT INTO product_colors (
                     pcol_color_code, pcol_color_name, pcol_color_description, 
@@ -41,7 +41,7 @@ def add_master_color(color_obj):
 
 def edit_master_color(color_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_color_query = f"""
                 UPDATE product_colors SET
                     pcol_color_code = '{color_obj.color_code}', 
@@ -66,7 +66,7 @@ def edit_master_color(color_obj):
 
 def get_all_central_inventory_color():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_frame_color_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
             FROM product_colors AS pc
             LEFT JOIN admin AS creator ON pc.pcol_created_by = creator.admin_admin_id
@@ -89,7 +89,7 @@ def get_all_central_inventory_color():
 
 def enable_disable_master_color(mcid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             set_color_query = f"""
             UPDATE product_colors SET pcol_status = '{status}' WHERE pcol_color_id = '{mcid}';
             """
@@ -108,7 +108,7 @@ def enable_disable_master_color(mcid, status):
 
 def get_central_inventory_color_by_id(colorId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_frame_color_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
             FROM product_colors AS pc
             LEFT JOIN admin AS creator ON pc.pcol_created_by = creator.admin_admin_id

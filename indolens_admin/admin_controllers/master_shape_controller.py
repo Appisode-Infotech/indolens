@@ -1,5 +1,5 @@
 import pymysql
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 import datetime
 import pytz
 
@@ -12,7 +12,7 @@ def getIndianTime():
 
 def add_frame_shape(shape_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_shape_query = f"""
                 INSERT INTO frame_shapes (
                     fshape_name,  fshape_description, 
@@ -41,7 +41,7 @@ def add_frame_shape(shape_obj):
 def edit_frame_shape(shape_obj):
     print(vars(shape_obj))
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_shape_query = f"""
                 UPDATE  frame_shapes SET
                     fshape_name = '{shape_obj.shape_name}',  
@@ -65,7 +65,7 @@ def edit_frame_shape(shape_obj):
 
 def get_all_central_inventory_shapes():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_product_shape_query = f""" SELECT fs.* , creator.admin_name, updater.admin_name
             FROM frame_shapes AS fs 
             LEFT JOIN admin AS creator ON fs.fshape_created_by = creator.admin_admin_id
@@ -87,7 +87,7 @@ def get_all_central_inventory_shapes():
 
 def enable_disable_frame_shape(sid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             set_frame_shape_query = f"""
             UPDATE frame_shapes SET fshape_status = '{status}' WHERE fshape_shape_id = '{sid}';
             """
@@ -106,7 +106,7 @@ def enable_disable_frame_shape(sid, status):
 
 def get_central_inventory_shapes_by_id(shapeId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_product_shape_query = f""" SELECT fs.* , creator.admin_name, updater.admin_name
             FROM frame_shapes AS fs 
             LEFT JOIN admin AS creator ON fs.fshape_created_by = creator.admin_admin_id

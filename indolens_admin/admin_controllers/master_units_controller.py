@@ -3,7 +3,7 @@ import json
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.master_units_resp_model import get_master_units
 
@@ -14,7 +14,7 @@ def getIndianTime():
 
 def add_masters_units(data):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_master_units_query = f"""
                 INSERT INTO units (
                     unit_name, unit_status, unit_created_on, unit_created_by, unit_last_updated_on,
@@ -41,7 +41,7 @@ def add_masters_units(data):
 
 def edit_master_units(data):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_master_units_query = f"""
                 UPDATE units SET
                     unit_name = '{data['unit_name']}',  
@@ -68,7 +68,7 @@ def edit_master_units(data):
 
 def get_all_units():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_units_query = f""" SELECT u.*, creator.admin_name, updater.admin_name 
                                            FROM units AS u
                                             LEFT JOIN admin AS creator ON u.unit_created_by = creator.admin_admin_id
@@ -90,7 +90,7 @@ def get_all_units():
 
 def enable_disable_master_units(uid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             set_units_query = f"""
             UPDATE units SET unit_status = '{status}' WHERE unit_unit_id = '{uid}';
             """

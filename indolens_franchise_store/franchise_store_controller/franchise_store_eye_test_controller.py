@@ -5,7 +5,7 @@ import re
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_own_store.own_store_controller import lens_sale_power_attribute_controller
 from indolens_own_store.own_store_model.response_model.eye_test_resp_model import get_eye_test_resp
@@ -18,7 +18,7 @@ def getIndianTime():
 
 def add_eye_test(customerData, created_by, store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_update_customer = f"""INSERT INTO `customers`(`name`, `gender`, `age`, `phone`, `email`,
                                                 `language`, `city`, `address`, `created_by_employee_id`,
                                                 `created_by_store_id`, `created_by_store_type`, `created_on`,
@@ -68,7 +68,7 @@ def add_eye_test(customerData, created_by, store_id):
 
 def get_eye_test():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_eye_test_query = f""" SELECT et.*, c.name, c.phone, 
                                             CASE 
                                                 WHEN et.created_by_store_type = 1 THEN creator_os.name 
@@ -100,7 +100,7 @@ def get_eye_test():
 
 def get_eye_test_by_id(testId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_eye_test_by_id_query = f""" SELECT et.*, c.name, 
                                             CASE 
                                                 WHEN et.created_by_store_type = 1 THEN creator_os.name 

@@ -7,7 +7,7 @@ import bcrypt
 import pymysql
 import pytz
 import requests
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
@@ -26,7 +26,7 @@ def generate_random_string(length=16):
 
 def login(store_ob):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             login_query = f"""SELECT ose.*, os.store_name, creator.name, updater.name FROM own_store_employees AS ose 
                                 LEFT JOIN own_store AS os ON ose.assigned_store_id = os.store_id
                                 LEFT JOIN admin AS creator ON ose.created_by = creator.admin_id
@@ -88,7 +88,7 @@ def login(store_ob):
 
 def get_assigned_store(employee_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_assigned_store = f"""SELECT assigned_store_id FROM own_store_employees 
                                 WHERE employee_id = '{employee_id}'"""
             cursor.execute(get_assigned_store)
@@ -115,7 +115,7 @@ def get_assigned_store(employee_id):
 
 def forgot_password(email):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             pwd_code = generate_random_string()
             reset_pwd_link = f"{get_base_url()}/own_store/reset_password/code={pwd_code}"
             print(reset_pwd_link)
@@ -164,7 +164,7 @@ def forgot_password(email):
 
 def check_link_validity(code):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             check_link_validity_query = f""" SELECT status, created_on, email FROM reset_password WHERE code = '{code}'
                                                 ORDER BY reset_password_id DESC LIMIT 1"""
             cursor.execute(check_link_validity_query)
@@ -206,7 +206,7 @@ def check_link_validity(code):
 def update_store_employee_password(password, email):
     try:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             login_query = f"""UPDATE own_store_employees SET password = %s WHERE email = '{email}'"""
             cursor.execute(login_query, (hashed_password,))
 

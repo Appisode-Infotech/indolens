@@ -7,7 +7,7 @@ import bcrypt
 import pymysql
 import pytz
 import requests
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
@@ -31,7 +31,7 @@ def generate_random_string(length=16):
 
 def lab_login(lab_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             login_query = f"""SELECT lt.*, creator.name, updater.name, l.lab_name
                         FROM lab_technician AS lt
                         LEFT JOIN lab AS l ON lt.assigned_lab_id = l.lab_id
@@ -91,7 +91,7 @@ def lab_login(lab_obj):
 
 def get_assigned_lab(lab_tech_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_assigned_lab = f"""SELECT assigned_lab_id FROM lab_technician 
                                 WHERE lab_technician_id = '{lab_tech_id}'"""
             cursor.execute(get_assigned_lab)
@@ -105,7 +105,7 @@ def get_assigned_lab(lab_tech_id):
 
 def forgot_password(email):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             pwd_code = generate_random_string()
             reset_pwd_link = f"{get_base_url()}/lab/lab_reset_password/code={pwd_code}"
             print(reset_pwd_link)
@@ -153,7 +153,7 @@ def forgot_password(email):
 
 def check_link_validity(code):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             check_link_validity_query = f""" SELECT status, created_on, email FROM reset_password WHERE code = '{code}'
                                                 ORDER BY reset_password_id DESC LIMIT 1"""
             cursor.execute(check_link_validity_query)
@@ -195,7 +195,7 @@ def check_link_validity(code):
 def update_lab_tech_password(password, email):
     try:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             login_query = f"""UPDATE lab_technician SET password = %s WHERE email = '{email}'"""
             cursor.execute(login_query, (hashed_password,))
 

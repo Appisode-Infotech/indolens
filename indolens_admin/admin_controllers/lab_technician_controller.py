@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.lab_technician_resp_model import get_lab_technicians
@@ -17,7 +17,7 @@ def getIndianTime():
 def create_lab_technician(lab_technician, files):
     try:
         hashed_password = bcrypt.hashpw(lab_technician.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_marketing_head_query = f"""
                 INSERT INTO lab_technician (
                     name, email, phone, password, profile_pic, 
@@ -61,7 +61,7 @@ def get_all_lab_technician(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_lab_technician_query = f"""
             SELECT lt.*, creator.name, updater.name, l.lab_name
             FROM lab_technician AS lt
@@ -87,7 +87,7 @@ def get_all_lab_technician(status):
 
 def get_lab_technician_by_id(ltid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_lab_technician_query = f"""
                         SELECT lt.*, creator.name, updater.name, l.lab_name
                         FROM lab_technician AS lt
@@ -110,7 +110,7 @@ def get_lab_technician_by_id(ltid):
         return {"status": False, "message": str(e)}, 301
 def edit_lab_technician(lab_tech_obj, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_lab_tech_obj_query = f"""
                                 UPDATE lab_technician
                                 SET 
@@ -138,7 +138,7 @@ def edit_lab_technician(lab_tech_obj, files):
 
 def enable_disable_lab_technician(ltid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_lab_technician_query = f"""
                 UPDATE lab_technician
                 SET
@@ -163,7 +163,7 @@ def enable_disable_lab_technician(ltid, status):
 
 def assign_lab(labtechId, labId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_lab_technician_query = f"""
                 UPDATE lab_technician
                 SET
@@ -187,7 +187,7 @@ def assign_lab(labtechId, labId):
 
 def unassign_lab(labtechId, labId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_lab_technician_query = f"""
                 UPDATE lab_technician
                 SET

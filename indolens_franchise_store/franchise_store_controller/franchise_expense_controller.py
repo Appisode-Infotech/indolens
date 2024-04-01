@@ -5,7 +5,7 @@ import time
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_own_store.own_store_controller import lens_sale_power_attribute_controller
@@ -26,7 +26,7 @@ def get_current_epoch_time():
 
 def create_franchise_store_expense(expense_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_expense_obj_query = f"""
                             INSERT INTO store_expense (
                                 store_id, store_type, expense_amount, expense_reason, expense_date, created_on, created_by
@@ -48,7 +48,7 @@ def create_franchise_store_expense(expense_obj):
 
 def get_all_franchise_store_expense(store_id, store_type):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_expense_obj_query = f""" SELECT se.*, creator.name FROM store_expense AS se
                                             LEFT JOIN franchise_store_employees AS creator ON se.created_by = creator.employee_id
                                             WHERE se.store_id = {store_id} AND se.store_type= {store_type}
@@ -69,7 +69,7 @@ def get_all_franchise_store_expense(store_id, store_type):
 
 def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id, order_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_update_customer = f"""INSERT INTO `customers`(`name`, `gender`, `age`, `phone`, `email`,
                                                 `language`, `city`, `address`, `created_by_employee_id`,
                                                 `created_by_store_id`, `created_by_store_type`, `created_on`,

@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
 from indolens_lab.lab_models.response_model.lab_job_resp_model import get_lab_jobs_list
@@ -17,7 +17,7 @@ def get_lab_jobs(labId, status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_job_details_query = f"""
                 SELECT 
                     so.*,
@@ -70,7 +70,7 @@ def get_lab_jobs(labId, status):
 
 def get_lab_job_details(orderId, assigned_lab):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_details_query = f"""
                 SELECT 
                     so.*,
@@ -127,7 +127,7 @@ def get_lab_job_details(orderId, assigned_lab):
 
 def get_sale_item_details(saleId, assigned_lab):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_details_query = f"""
                 SELECT 
                     so.*,
@@ -199,7 +199,7 @@ def get_sale_item_details(saleId, assigned_lab):
 
 def get_lab_job_stats(labId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_new_job_details_query = f"""
                                         SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
                                         FROM (

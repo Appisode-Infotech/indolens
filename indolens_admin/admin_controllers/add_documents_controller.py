@@ -4,7 +4,7 @@ import os
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -23,7 +23,7 @@ def add_document(documenturl, document_type, table, condition, user_id, updated_
 
         if os.path.exists(file_path):
             os.remove(file_path)
-            with connection.cursor() as cursor:
+            with getConnection().cursor() as cursor:
                 get_documents_query = f"""
                 SELECT {document_type} FROM {table} Where {condition} = {user_id}
                 """
@@ -50,7 +50,7 @@ def add_document(documenturl, document_type, table, condition, user_id, updated_
 
 def add_products_image(new_images, productId, updated_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_documents_query = f"""
             SELECT ci_product_images FROM central_inventory Where ci_product_id = {productId}
             """
@@ -75,7 +75,7 @@ def add_products_image(new_images, productId, updated_by):
 
 def add_own_store_employee_image(file_data, employeeId, emp_obj, updated_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_role = f""" SELECT role from own_store_employees Where employee_id = {employeeId}"""
             cursor.execute(get_role)
             role = cursor.fetchone()
@@ -129,7 +129,7 @@ def add_own_store_employee_image(file_data, employeeId, emp_obj, updated_by):
 
 def add_franchise_store_employee_image(file_data, employeeId, emp_obj, updated_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_role = f""" SELECT role from franchise_store_employees Where employee_id = {employeeId}"""
             cursor.execute(get_role)
             role = cursor.fetchone()
@@ -182,7 +182,7 @@ def add_franchise_store_employee_image(file_data, employeeId, emp_obj, updated_b
 
 def add_sub_admin_doc(file_data, subAdminId, emp_obj, updated_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_document1_query = f"""
                         SELECT document_1_url FROM admin Where admin_id = {subAdminId}
                         """
@@ -219,7 +219,7 @@ def add_sub_admin_doc(file_data, subAdminId, emp_obj, updated_by):
 
 def add_area_head_doc(file_data, areaHeadId, area_head, updated_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_document1_query = f"""
                         SELECT document_1_url FROM area_head Where area_head_id = {areaHeadId}
                         """
@@ -255,7 +255,7 @@ def add_area_head_doc(file_data, areaHeadId, area_head, updated_by):
 
 def add_marketing_heads_doc(file_data, marketingHeadId, marketing_head, updated_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_document1_query = f"""
                         SELECT document_1_url FROM marketing_head Where marketing_head_id = {marketingHeadId}
                         """
@@ -291,7 +291,7 @@ def add_marketing_heads_doc(file_data, marketingHeadId, marketing_head, updated_
 
 def add_accountant_doc(file_data, accountantId, accountant, updated_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_document1_query = f"""
                         SELECT document_1_url FROM accountant Where accountant_id = {accountantId}
                         """
@@ -327,7 +327,7 @@ def add_accountant_doc(file_data, accountantId, accountant, updated_by):
 
 def add_lab_technician_doc(file_data, LabTechnicianId, lab_technician, updated_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_document1_query = f"""
                         SELECT document_1_url FROM lab_technician Where lab_technician_id = {LabTechnicianId}
                         """

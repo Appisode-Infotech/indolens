@@ -2,8 +2,8 @@ import datetime
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
 
+from indolens.db_connection import getConnection
 from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -16,7 +16,7 @@ def getIndianTime():
 
 def add_product_category(product_cat_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_category_query = f"""
                 INSERT INTO product_categories (
                     pc_category_name, pc_category_prefix, pc_category_description, 
@@ -45,7 +45,7 @@ def add_product_category(product_cat_obj):
 
 def edit_product_category(product_cat_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_category_query = f"""
                 UPDATE  product_categories SET  
                     pc_category_name = '{product_cat_obj.category_name}', 
@@ -69,7 +69,7 @@ def edit_product_category(product_cat_obj):
 
 def get_all_central_inventory_category():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_product_category_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
             FROM product_categories AS pc 
             LEFT JOIN admin AS creator ON pc.pc_created_by = creator.admin_admin_id
@@ -90,7 +90,7 @@ def get_all_central_inventory_category():
 
 def enable_disable_product_category(cid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             set_product_category_query = f"""
             UPDATE product_categories SET pc_status = '{status}' WHERE pc_category_id = '{cid}';
             """
@@ -109,7 +109,7 @@ def enable_disable_product_category(cid, status):
 
 def get_central_inventory_category_by_id(categoryId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_product_category_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
             FROM product_categories AS pc 
             LEFT JOIN admin AS creator ON pc.pc_created_by = creator.admin_admin_id

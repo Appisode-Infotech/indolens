@@ -4,7 +4,7 @@ import json
 import pymysql
 import pytz
 from PIL import ImageFont
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_admin.admin_controllers.master_category_controller import get_all_central_inventory_category
@@ -31,7 +31,7 @@ def getIndianTime():
 
 def get_all_active_types():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_product_category_query = f""" SELECT *
                            FROM product_categories WHERE pc_status = 1
                            """
@@ -88,7 +88,7 @@ def add_central_inventory_products(product_obj, file, power_attributes):
     frame_type_id_value = product_obj.frame_type_id if product_obj.frame_type_id != '' else 0
     frame_shape_id_value = product_obj.frame_shape_id if product_obj.frame_shape_id != '' else 0
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             add_product_query = f""" INSERT INTO central_inventory 
                                     (ci_product_name, ci_product_description, ci_product_images, 
                                     ci_category_id, ci_brand_id, ci_material_id, ci_frame_type_id, ci_frame_shape_id, 
@@ -193,7 +193,7 @@ def update_central_inventory_products(product_obj, productId, power_attribute):
     power_attributes_json = json.dumps(power_attribute)
     print(power_attributes_json)
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_product_query = f"""
                 UPDATE central_inventory 
                 SET product_name = '{product_obj.product_title}',
@@ -233,7 +233,7 @@ def update_central_inventory_products(product_obj, productId, power_attribute):
 
 def restock_central_inventory_products(productId, product_quantity, created_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             restock_product_query = f"""
                 UPDATE central_inventory 
                 SET product_quantity = product_quantity + {product_quantity}
@@ -265,7 +265,7 @@ def get_all_central_inventory_products(status):
             "Inactive": "= 0"
         }
         status_condition = status_conditions[status]
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
                                                 ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
                                                 FROM central_inventory As ci
@@ -310,7 +310,7 @@ def get_central_inventory_products_to_move(status):
             "Inactive": "= 0"
         }
         status_condition = status_conditions[status]
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
                                         ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
                                         FROM central_inventory As ci
@@ -349,7 +349,7 @@ def get_central_inventory_products_to_move(status):
 
 
 def get_central_inventory_product_single(productId):
-    with connection.cursor() as cursor:
+    with getConnection().cursor() as cursor:
         try:
             get_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
                                                 ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
@@ -380,7 +380,7 @@ def get_central_inventory_product_single(productId):
 
 
 def get_central_inventory_product_restoc_log(productId):
-    with connection.cursor() as cursor:
+    with getConnection().cursor() as cursor:
         try:
             get_all_product_query = f""" SELECT logs.*, ci.product_name, creator.name
                                             FROM central_inventory_restock_log AS logs
@@ -401,7 +401,7 @@ def get_central_inventory_product_restoc_log(productId):
 
 def get_all_out_of_stock_central_inventory_products(quantity):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
                                     ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
                                     FROM central_inventory As ci
@@ -441,7 +441,7 @@ def get_all_out_of_stock_central_inventory_products(quantity):
 
 def get_all_out_of_stock_products_for_store(quantity):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
                                     CASE
@@ -477,7 +477,7 @@ def get_all_out_of_stock_products_for_store(quantity):
 
 def get_all_moved_stocks_list(status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT rp.*, ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, 
                                     pm.pm_material_name, ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name,
                                     CASE
@@ -518,7 +518,7 @@ def get_all_moved_stocks_list(status):
 
 def get_all_stock_requests(status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
                                     pm.material_name, ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
                                     CASE
@@ -558,7 +558,7 @@ def get_all_stock_requests(status):
 
 def get_stock_requests_by_id(requestId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
                                     pm.material_name, ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
                                     CASE
@@ -611,7 +611,7 @@ def get_stock_requests_by_id(requestId):
 
 def change_stock_request_status(requestId, status, updator):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             fetch_req_product_query = f"""SELECT * FROM request_products 
                         WHERE request_products_id = '{requestId}'"""
             cursor.execute(fetch_req_product_query)
@@ -707,7 +707,7 @@ def change_stock_request_status(requestId, status, updator):
 
 def change_stock_request_status_with_reason(requestId, status, updator, comments):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             fetch_req_product_query = f"""SELECT * FROM request_products 
                         WHERE request_products_id = '{requestId}'"""
             cursor.execute(fetch_req_product_query)
@@ -817,7 +817,7 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
 
 def change_product_status(productId, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_stock_request_query = f"""UPDATE central_inventory SET ci_status = '{status}' 
             WHERE ci_product_id = '{productId}' """
             cursor.execute(update_stock_request_query)
@@ -835,7 +835,7 @@ def change_product_status(productId, status):
 
 def create_store_stock_request(stock_obj, store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             stock_req_query = """INSERT INTO request_products ( 
                                pr_store_id, 
                                pr_store_type, 
@@ -875,7 +875,7 @@ def create_store_stock_request(stock_obj, store_id):
 
 def get_central_inventory_lens(store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_lens_from_central_ionventory = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name
                                     FROM central_inventory As ci

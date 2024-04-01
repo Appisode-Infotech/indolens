@@ -2,7 +2,7 @@ import datetime
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.lab_resp_model import get_labs
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
@@ -18,7 +18,7 @@ def create_lab(lab_obj):
     cleaned_str = lab_obj.lab_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
     lab_lat, lab_lng = map(float, cleaned_str.split(', '))
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_lab_query = f"""
                                     INSERT INTO lab (
                                         lab_name, lab_display_name, lab_phone, lab_gst, lab_email,
@@ -47,7 +47,7 @@ def create_lab(lab_obj):
 
 def get_all_labs():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_lab_query = f""" SELECT l.*, creator.name, updater.name, lt.name, 
                                 COUNT(DISTINCT CASE WHEN so.order_status IN (1, 2, 3) THEN so.order_id END)
                                 FROM lab AS l
@@ -71,7 +71,7 @@ def get_all_labs():
 
 def get_all_active_labs():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_lab_query = f""" SELECT l.*, creator.name, updater.name, lt.name, 
                                 COUNT(DISTINCT CASE WHEN so.order_status IN (1, 2, 3) THEN so.order_id END)
                                 FROM lab AS l
@@ -97,7 +97,7 @@ def get_all_active_labs():
 
 def get_lab_by_id(labid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_lab_query = f""" SELECT l.*, creator.admin_name, updater.admin_name, lt.lt_name,  COUNT(DISTINCT so.so_order_id) AS order_count
                                 FROM lab AS l
                                 LEFT JOIN lab_technician AS lt ON lt.lt_assigned_lab_id = l.lab_lab_id
@@ -120,7 +120,7 @@ def get_lab_by_id(labid):
 
 def enable_disable_lab(labid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_lab_query = f"""
                 UPDATE lab
                 SET
@@ -147,7 +147,7 @@ def edit_lab_by_id(lab_obj):
     cleaned_str = lab_obj.lab_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
     lab_lat, lab_lng = map(float, cleaned_str.split(', '))
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_lab_query = f"""
                 UPDATE lab
                 SET 
@@ -181,7 +181,7 @@ def edit_lab_by_id(lab_obj):
 
 def get_lab_job(labId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.*, 
@@ -226,7 +226,7 @@ def get_lab_job(labId):
 
 def get_lab_stats(labId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_new_job_details_query = f"""
                                                     SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
                                                     FROM (
@@ -293,7 +293,7 @@ def get_lab_stats(labId):
 
 def get_lab_job_authenticity_card(saleId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_details_query = f"""
                 SELECT 
                     so.*,

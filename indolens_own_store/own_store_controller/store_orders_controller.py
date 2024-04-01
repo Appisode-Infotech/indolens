@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.completed_order_resp_model import get_completed_sales_orders
@@ -35,7 +35,7 @@ def get_all_orders(status, pay_status, store_id):
     }
     payment_status_value = payment_status_values[pay_status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.*, 
@@ -99,7 +99,7 @@ def get_completed_orders(status, pay_status, store_id):
     }
     payment_status_value = payment_status_values[pay_status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.*, 
@@ -147,7 +147,7 @@ def get_completed_orders(status, pay_status, store_id):
 
 def get_all_store_orders(store_id, store_type):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.*, 
@@ -203,7 +203,7 @@ def order_status_change(orderID, orderStatus, updated_by, store_id):
     status_condition = status_conditions[orderStatus]
 
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             order_status_change_query = f"""
                 UPDATE sales_order SET order_status = {orderStatus}, updated_on = '{getIndianTime()}',
                 updated_by_employee_id = {updated_by}, updated_by_store_id = {store_id}, updated_by_store_type = 1,
@@ -335,7 +335,7 @@ def order_payment_status_change(order_data, store_id, created_by):
     }
     status_condition = status_conditions[order_data['order_payment_status']]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             order_payment_status_change_query = f"""
                 UPDATE sales_order 
                 SET 

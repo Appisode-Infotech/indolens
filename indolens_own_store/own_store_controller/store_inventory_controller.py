@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.master_category_resp_model import get_product_categories
 from indolens_own_store.own_store_model.response_model.product_request_list_resp_model import get_request_product_list
@@ -18,7 +18,7 @@ def getIndianTime():
 
 def get_all_out_of_stock_products_for_store(quantity, store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
                                     os.store_name
@@ -60,7 +60,7 @@ def get_all_out_of_stock_products_for_store(quantity, store_id):
 
 def get_all_products_for_store(store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
                                     os.store_name
@@ -102,7 +102,7 @@ def get_all_products_for_store(store_id):
 
 def getstore_product_by_id(assigned_store, productId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
                                     os.store_name
@@ -136,7 +136,7 @@ def getstore_product_by_id(assigned_store, productId):
 
 def get_all_central_inventory_products(store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_product_query = f""" SELECT ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
                                     ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name, 
                                     (SELECT product_quantity 
@@ -203,7 +203,7 @@ def get_all_central_inventory_products(store_id):
 
 def create_store_stock_request(stock_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             stock_req_query = """INSERT INTO request_products ( 
                                store_id, 
                                store_type, 
@@ -239,7 +239,7 @@ def create_store_stock_request(stock_obj):
 
 def view_all_store_stock_request(store_id, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_stock_request_query = f""" SELECT rp.*, ci.*, creator.name, updater.name, pc.category_name, 
                                     pm.material_name, ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, 
                                     b.brand_name, 
@@ -279,7 +279,7 @@ def view_all_store_stock_request(store_id, status):
 
 def request_delivery_status_change(request_id, status, updated_by):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_stock_request_query = f"""UPDATE request_products SET delivery_status = {status}
                                                 WHERE request_products_id = '{request_id}' """
             cursor.execute(update_stock_request_query)

@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.accountant_resp_model import get_accountants
@@ -18,7 +18,7 @@ def getIndianTime():
 def create_accountant(accountant, files):
     try:
         hashed_password = bcrypt.hashpw(accountant.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_accountant_query = f"""
                 INSERT INTO accountant (
                     name, email, phone, password, profile_pic, 
@@ -63,7 +63,7 @@ def get_all_accountant(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_accountant_query = f"""
             SELECT ac.*, creator.name, updater.name
             FROM accountant AS ac
@@ -88,7 +88,7 @@ def get_all_accountant(status):
 
 def get_accountant_by_id(aid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_accountant_query = f"""
             SELECT ac.*, creator.name, updater.name
             FROM accountant AS ac
@@ -113,7 +113,7 @@ def get_accountant_by_id(aid):
 
 def edit_accountant(accountant_obj, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_accountant_obj_query = f"""
                                 UPDATE accountant
                                 SET 
@@ -141,7 +141,7 @@ def edit_accountant(accountant_obj, files):
 
 def enable_disable_accountant(aid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_accountant_query = f"""
                 UPDATE accountant
                 SET

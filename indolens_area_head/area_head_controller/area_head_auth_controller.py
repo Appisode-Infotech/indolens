@@ -7,7 +7,7 @@ import bcrypt
 import pymysql
 import pytz
 import requests
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_area_head.area_head_model.area_head_resp_models.area_head_resp_model import get_area_heads
@@ -25,7 +25,7 @@ def generate_random_string(length=16):
 
 def login(area_head):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             login_query = f""" SELECT * 
                                 FROM area_head                                
                                 WHERE email = '{area_head.email}'"""
@@ -70,7 +70,7 @@ def login(area_head):
 
 def forgot_password(email):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             pwd_code = generate_random_string()
             reset_pwd_link = f"{get_base_url()}/area_head/reset_password/code={pwd_code}"
             print(reset_pwd_link)
@@ -131,7 +131,7 @@ def forgot_password(email):
 def update_area_head_password(password, email):
     try:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             login_query = f"""UPDATE area_head SET password = %s WHERE email = '{email}'"""
             cursor.execute(login_query, (hashed_password,))
             admin_data = cursor.fetchone()
@@ -153,7 +153,7 @@ def update_area_head_password(password, email):
 
 def check_link_validity(code):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             check_link_validity_query = f""" SELECT status, created_on, email FROM reset_password WHERE code = '{code}'
                                                 ORDER BY reset_password_id DESC LIMIT 1"""
             cursor.execute(check_link_validity_query)
@@ -194,7 +194,7 @@ def check_link_validity(code):
 
 def get_area_head_assigned_store(aread_head_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_assigned_store = f"""SELECT assigned_stores FROM area_head 
                                 WHERE area_head_id = '{aread_head_id}'"""
             cursor.execute(get_assigned_store)

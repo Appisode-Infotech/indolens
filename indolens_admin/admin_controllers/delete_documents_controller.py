@@ -4,7 +4,7 @@ import os
 
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -21,7 +21,7 @@ def delete_document(documenturl, document_type, table, condition, user_id, updat
 
         if os.path.exists(file_path):
             os.remove(file_path)
-            with connection.cursor() as cursor:
+            with getConnection().cursor() as cursor:
                 get_documents_query = f"""
                 SELECT {document_type} FROM {table} WHERE {condition} = {user_id} """
                 cursor.execute(get_documents_query)
@@ -38,7 +38,7 @@ def delete_document(documenturl, document_type, table, condition, user_id, updat
                 "message": "Document Deleted Successfully"
             }, 200
         else:
-            with connection.cursor() as cursor:
+            with getConnection().cursor() as cursor:
                 get_role = f""" SELECT role from {table} Where {condition} = {user_id}"""
                 cursor.execute(get_role)
                 role = cursor.fetchone()
@@ -65,7 +65,7 @@ def delete_product_image(imageURL, productId):
             print("file found")
             os.remove(file_path)
             print("file deletd")
-            with connection.cursor() as cursor:
+            with getConnection().cursor() as cursor:
                 get_documents_query = f"""
                 SELECT ci_product_images FROM central_inventory Where ci_product_id = {productId}
                 """

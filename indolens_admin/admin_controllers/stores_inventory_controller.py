@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.store_inventory_resp_model import get_store_inventory
 
@@ -12,7 +12,7 @@ def getIndianTime():
 
 def get_all_products_for_own_store(store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.admin_name, updater.admin_name, 
                                     pc.pc_category_name, pm.pm_material_name,
                                     ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name,

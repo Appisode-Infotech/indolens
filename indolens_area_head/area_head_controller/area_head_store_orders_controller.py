@@ -1,7 +1,7 @@
 import datetime
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
 from indolens_admin.admin_models.admin_resp_model.sales_resp_model import get_sales_orders
@@ -30,7 +30,7 @@ def get_all_orders(status, pay_status, store_id):
     }
     payment_status_value = payment_status_values[pay_status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.*, 
@@ -76,7 +76,7 @@ def get_all_orders(status, pay_status, store_id):
 
 def get_all_store_orders(store_id):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.*, 
@@ -121,7 +121,7 @@ def get_all_store_orders(store_id):
 
 def get_order_details(orderId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_details_query = f"""
                 SELECT 
                     so.*,
@@ -168,7 +168,7 @@ def get_order_details(orderId):
 
 def get_all_customer_orders(customerId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_order_query = f"""
                 SELECT 
                     so.*, 

@@ -1,5 +1,5 @@
 import pymysql
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 import datetime
 import pytz
 
@@ -13,7 +13,7 @@ def getIndianTime():
 
 def add_product_brand(brand_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             create_brand_query = f"""
                 INSERT INTO brands (
                     brand_name, brand_category_id, brand_description, 
@@ -41,7 +41,7 @@ def add_product_brand(brand_obj):
 
 def edit_product_brand(brand_obj):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_brand_query = f"""
                 UPDATE  brands SET
                     brand_name = '{brand_obj.brand_name}', 
@@ -63,7 +63,7 @@ def edit_product_brand(brand_obj):
 
 def get_all_central_inventory_brand():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_product_brand_query = f""" SELECT br.* , creator.admin_name, updater.admin_name
             FROM brands AS br 
             LEFT JOIN admin AS creator ON br.brand_created_by = creator.admin_admin_id
@@ -85,7 +85,7 @@ def get_all_central_inventory_brand():
 
 def enable_disable_product_brand(bid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             set_product_brand_query = f"""
             UPDATE brands SET brand_status = '{status}' WHERE brand_brand_id = '{bid}';
             """
@@ -104,7 +104,7 @@ def enable_disable_product_brand(bid, status):
 
 def get_central_inventory_brand_by_id(brandId):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_product_brand_query = f""" SELECT br.* , creator.admin_name, updater.admin_name
             FROM brands AS br 
             LEFT JOIN admin AS creator ON br.brand_created_by = creator.admin_admin_id

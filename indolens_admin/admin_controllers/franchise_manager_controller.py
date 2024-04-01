@@ -4,7 +4,7 @@ import json
 import bcrypt
 import pymysql
 import pytz
-from indolens.db_connection import connection
+from indolens.db_connection import getConnection
 
 from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 from indolens_admin.admin_models.admin_resp_model.franchise_owner_resp_model import get_franchise_owners
@@ -17,7 +17,7 @@ def getIndianTime():
 def create_franchise_owner(franchise_owner, files):
     try:
         hashed_password = bcrypt.hashpw(franchise_owner.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             insert_franchise_owner_query = f"""
                 INSERT INTO franchise_store_employees (
                     name, email, phone, password, profile_pic, 
@@ -63,7 +63,7 @@ def get_all_franchise_owner(status):
     }
     status_condition = status_conditions[status]
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_franchise_owner_query = f""" SELECT a.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS a
                                             LEFT JOIN franchise_store AS os ON a.assigned_store_id = os.store_id
@@ -86,7 +86,7 @@ def get_all_franchise_owner(status):
 
 def get_franchise_owner_by_id(foid):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             get_all_franchise_owner_query = f""" SELECT a.*, os.store_name, creator.name, updater.name 
                                             FROM franchise_store_employees AS a
                                             LEFT JOIN franchise_store AS os ON a.assigned_store_id = os.store_id
@@ -108,7 +108,7 @@ def get_franchise_owner_by_id(foid):
 
 def enable_disable_franchise_owner(foid, status):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_franchise_owners_query = f"""
                 UPDATE franchise_store_employees
                 SET
@@ -133,7 +133,7 @@ def enable_disable_franchise_owner(foid, status):
 
 def edit_franchise_owner(franchise_owner, files):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_franchise_owners_query = f"""
                 UPDATE franchise_store_employees
                 SET 
@@ -163,7 +163,7 @@ def edit_franchise_owner(franchise_owner, files):
 
 def assign_store_franchise_owner(empId, storeId, role):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE franchise_store_employees
                 SET
@@ -207,7 +207,7 @@ def assign_store_franchise_owner(empId, storeId, role):
 
 def unassign_store_franchise_owner(FranchiseOwnerId, storeId, role):
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
                 UPDATE franchise_store_employees
                 SET
@@ -251,7 +251,7 @@ def unassign_store_franchise_owner(FranchiseOwnerId, storeId, role):
 
 def get_active_franchise_stores():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             unassigned_stores = []
             get_unassigned_active_own_store_for_manager_query = f"""SELECT f.store_id, f.store_name FROM franchise_store f 
             WHERE f.status = 1;"""
@@ -273,7 +273,7 @@ def get_active_franchise_stores():
 
 def get_active_unassigned_franchise_stores():
     try:
-        with connection.cursor() as cursor:
+        with getConnection().cursor() as cursor:
             unassigned_stores = []
             get_unassigned_active_own_store_for_manager_query = f"""SELECT f.store_id, f.store_name FROM franchise_store f 
                     LEFT JOIN franchise_store_employees fse ON f.store_id = fse.assigned_store_id AND fse.role = 1
