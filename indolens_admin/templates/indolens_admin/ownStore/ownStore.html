@@ -85,12 +85,11 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for store in store_data %}
         <div class="content">
             <div class="row gy-3 mb-3 justify-content-between">
                 <div class="col-md-9 col-auto">
-                    <h2 class="mb-2 text-1100">{{store.store_display_name}} - {{store.store_name}}</h2>
-                    <h5 class="text-700 fw-semi-bold mb-3 mt-3"><b>Address: </b>{{store.store_address}}</h5>
+                    <h2 class="mb-2 text-1100">{{store_data.os_store_display_name}} - {{store_data.os_store_name}}</h2>
+                    <h5 class="text-700 fw-semi-bold mb-3 mt-3"><b>Address: </b>{{store_data.os_store_address}}</h5>
                     <!--                    <h5 class="text-700 fw-semi-bold">Here’s what’s going on at this store right now</h5>-->
                 </div>
                 <!--                <div class="col-md-3 col-auto">-->
@@ -111,7 +110,7 @@
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
                                         <span
-                                                class="fs-1 fw-semi-bold text-900">{{store.store_gst}}</span>
+                                                class="fs-1 fw-semi-bold text-900">{{store_data.os_store_gst}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Store GSTIN</p>
                             </div>
@@ -122,7 +121,7 @@
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
                                     <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">
-                                        {{store.creator}}</a>
+                                        {{store_data.creator}}</a>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Created By </p>
                             </div>
@@ -132,7 +131,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{store.created_on}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{store_data.os_created_on}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Created On</p>
                             </div>
@@ -143,7 +142,7 @@
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
                                     <a href="{% url 'view_sub_admin' 1 %}"
-                                       class="fs-1 fw-semi-bold ">{{store.updater}}</a>
+                                       class="fs-1 fw-semi-bold ">{{store_data.updater}}</a>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Updated By</p>
                             </div>
@@ -153,7 +152,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{store.last_updated_on}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{store_data.os_last_updated_on}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Updated On</p>
                             </div>
@@ -163,7 +162,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{store.store_phone}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{store_data.os_store_phone}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Store Phone</p>
                             </div>
@@ -173,7 +172,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{store.store_email}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{store_data.os_store_email}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Store Email</p>
                             </div>
@@ -346,28 +345,28 @@
                                         <td class="product align-middle "><a
                                                 class="fw-semi-bold line-clamp-3 mb-0"
                                                 href="{% url 'view_products' stock.si_product_id %}">
-                                            {{stock.product_name}}</a>
+                                            {{stock.ci_product_name}}</a>
                                         </td>
                                         <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700 text-end">
-                                            ₹{{stock.sale_price}}
+                                            ₹{{stock.ci_sale_price}}
                                         </td>
                                         <td class="category align-middle white-space-nowrap text-600 fs--1  fw-semi-bold">
-                                            {{stock.category_name}}
+                                            {{stock.pc_category_name}}
                                         </td>
                                         <td class="brand align-middle white-space-nowrap text-600 fs--1  fw-semi-bold">
                                             {{stock.brand_name}}
                                         </td>
 
                                         <td class="inStock align-middle white-space-nowrap  fw-bold text-700 ">
-                                            {% if stock.store_product_quantity == None%}
+                                            {% if stock.si_product_quantity == None%}
                                             0
                                             {% else %}
-                                            {{stock.store_product_quantity}}
+                                            {{stock.si_product_quantity}}
                                             {% endif %}
                                         </td>
 
                                         <td class="publishedOn align-middle white-space-nowrap text-600 ">
-                                            {{stock.store_product_created_on}}
+                                            {{stock.si_last_updated_on}}
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -480,17 +479,17 @@
                                             </a>
                                         </td>
                                         <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                            {% if order.payment_status == 1 %}
+                                            {% if order.so_payment_status == 1 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
                                                     class="badge-label">PENDING</span><span class="ms-1"
                                                                                             data-feather="check"
                                                                                             style="height:12.8px;width:12.8px;"></span></span>
-                                            {% elif order.payment_status == 2 %}
+                                            {% elif order.so_payment_status == 2 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
                                                     class="badge-label">COMPLETE</span><span class="ms-1"
                                                                                              data-feather="check"
                                                                                              style="height:12.8px;width:12.8px;"></span></span>
-                                            {% elif order.payment_status == 3 %}
+                                            {% elif order.so_payment_status == 3 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
                                                     class="badge-label">REFUNDED</span><span class="ms-1"
                                                                                              data-feather="check"
@@ -498,37 +497,37 @@
                                             {% endif %}
                                         </td>
                                         <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                            {% if order.order_status == 1 %}
+                                            {% if order.so_order_status == 1 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                     class="badge-label">NEW</span><span class="ms-1"
                                                                                         data-feather="check"
                                                                                         style="height:12.8px;width:12.8px;"></span></span>
-                                            {% elif order.order_status == 2 %}
+                                            {% elif order.so_order_status == 2 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                     class="badge-label">PROCESSING</span><span class="ms-1"
                                                                                                data-feather="check"
                                                                                                style="height:12.8px;width:12.8px;"></span></span>
-                                            {% elif order.order_status == 3 %}
+                                            {% elif order.so_order_status == 3 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                     class="badge-label">READY</span><span class="ms-1"
                                                                                           data-feather="check"
                                                                                           style="height:12.8px;width:12.8px;"></span></span>
-                                            {% elif order.order_status == 4 %}
+                                            {% elif order.so_order_status == 4 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                     class="badge-label">DISPATCHED</span><span class="ms-1"
                                                                                                data-feather="check"
                                                                                                style="height:12.8px;width:12.8px;"></span></span>
-                                            {% elif order.order_status == 5 %}
+                                            {% elif order.so_order_status == 5 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
                                                     class="badge-label">READY IN STORE</span><span class="ms-1"
                                                                                                    data-feather="check"
                                                                                                    style="height:12.8px;width:12.8px;"></span></span>
-                                            {% elif order.order_status == 6 %}
+                                            {% elif order.so_order_status == 6 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
                                                     class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
                                                                                                        data-feather="check"
                                                                                                        style="height:12.8px;width:12.8px;"></span></span>
-                                            {% elif order.order_status == 7 %}
+                                            {% elif order.so_order_status == 7 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
                                                     class="badge-label">CANCELLED</span><span class="ms-1"
                                                                                               data-feather="check"
@@ -537,17 +536,17 @@
 
                                         </td>
                                         <td class="createdby align-middle white-space-nowrap text-900 fs--1 text-start">
-                                            <a href="{% url 'view_order_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
+                                            <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
                                         </td>
                                         <td class="created_on align-middle white-space-nowrap text-700 fs--1  ">
-                                            {{order.created_on}}
+                                            {{order.so_created_on}}
                                         </td>
                                         <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                            <a href="{% url 'view_order_creator' order.so_updated_by order.so_created_by_store_type %}">
+                                            <a href="{% url 'view_record_creator' order.so_updated_by order.so_created_by_store_type %}">
                                                 {{order.updater_name}} </a>
                                         </td>
                                         <td class="updated_on align-middle white-space-nowrap text-700 fs--1  ">
-                                            {{order.updated_on}}
+                                            {{order.so_updated_on}}
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -636,23 +635,23 @@
                                         data-category="{{ order.order_status }}">
                                         <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                         <td class="id align-middle white-space-nowrap py-0">
-                                            {{expense.store_expense_id}}</a>
+                                            {{expense.se_store_expense_id}}</a>
                                         </td>
                                         <td class="reason align-middle fw-semi-bold text-1000">
-                                            {{expense.expense_reason}}
+                                            {{expense.se_expense_reason}}
                                         </td>
                                         <td class="amount align-middle fw-semi-bold text-1000 text-end pe-3">
-                                            ₹{{expense.expense_amount}}
+                                            ₹{{expense.se_expense_amount}}
                                         </td>
                                         <td class="date align-middle fw-semi-bold text-1000">
-                                            {{expense.expense_date}}
+                                            {{expense.se_expense_date}}
                                         </td>
                                         <td class="createdBy align-middle fw-semi-bold text-1000">
-                                            <a href="{% url 'view_order_creator' expense.se_created_by expense.se_store_type %}">
+                                            <a href="{% url 'view_record_creator' expense.se_created_by expense.se_store_type %}">
                                                 {{expense.creator_name}}</a>
                                         </td>
                                         <td class="createdOn align-middle fw-semi-bold text-1000">
-                                            {{expense.created_on}}
+                                            {{expense.se_created_on}}
                                         </td>
 
                                     </tr>
@@ -689,7 +688,6 @@
                 {% include 'footer.html' %}
             </div>
         </div>
-        {% endfor %}
     </div>
     <script>
         var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');

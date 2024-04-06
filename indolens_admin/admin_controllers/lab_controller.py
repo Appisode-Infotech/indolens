@@ -20,16 +20,16 @@ def create_lab(lab_obj):
     try:
         with getConnection().cursor() as cursor:
             create_lab_query = f"""
-                                    INSERT INTO lab (
-                                        lab_name, lab_display_name, lab_phone, lab_gst, lab_email,
-                                        lab_city, lab_state, lab_zip, lab_lat, lab_lng, lab_address,
-                                        status, created_by, created_on, last_updated_by, last_updated_on) 
-                                    VALUES ('{lab_obj.lab_name}', '{lab_obj.lab_display_name}', 
-                                            '{lab_obj.lab_phone}', '{lab_obj.lab_gstin}', 
-                                            '{lab_obj.lab_email}', '{lab_obj.lab_city}', 
-                                            '{lab_obj.lab_state}', '{lab_obj.lab_zip_code}', '{lab_lat}',
-                                            '{lab_lng}', '{lab_obj.complete_address}', 1, {lab_obj.created_by}, 
-                                            '{getIndianTime()}', {lab_obj.last_updated_by}, '{getIndianTime()}')"""
+                INSERT INTO lab (
+                    lab_name, lab_display_name, lab_phone, lab_gst, lab_email,
+                    lab_city, lab_state, lab_zip, lab_lat, lab_lng, lab_address,
+                    lab_status, lab_created_by, lab_created_on, lab_last_updated_by, lab_last_updated_on) 
+                VALUES ('{lab_obj.lab_name}', '{lab_obj.lab_display_name}', 
+                        '{lab_obj.lab_phone}', '{lab_obj.lab_gstin}', 
+                        '{lab_obj.lab_email}', '{lab_obj.lab_city}', 
+                        '{lab_obj.lab_state}', '{lab_obj.lab_zip_code}', '{lab_lat}',
+                        '{lab_lng}', '{lab_obj.complete_address}', 1, {lab_obj.created_by}, 
+                        '{getIndianTime()}', {lab_obj.last_updated_by}, '{getIndianTime()}')"""
 
             cursor.execute(create_lab_query)
             lab_id = cursor.lastrowid
@@ -48,20 +48,20 @@ def create_lab(lab_obj):
 def get_all_labs():
     try:
         with getConnection().cursor() as cursor:
-            get_lab_query = f""" SELECT l.*, creator.name, updater.name, lt.name, 
-                                COUNT(DISTINCT CASE WHEN so.order_status IN (1, 2, 3) THEN so.order_id END)
+            get_lab_query = f""" SELECT l.*, creator.admin_name, updater.admin_name, lt.lt_name, 
+                                COUNT(DISTINCT CASE WHEN so.so_order_status IN (1, 2, 3) THEN so.so_order_id END) AS jobs_count
                                 FROM lab AS l
-                                LEFT JOIN lab_technician AS lt ON lt.assigned_lab_id = l.lab_id
-                                LEFT JOIN admin AS creator ON l.created_by = creator.admin_id
-                                LEFT JOIN admin AS updater ON l.last_updated_by = updater.admin_id
-                                LEFT JOIN sales_order AS so ON l.lab_id = so.assigned_lab
-                                GROUP BY l.lab_id
-                                ORDER BY l.lab_id DESC"""
+                                LEFT JOIN lab_technician AS lt ON lt.lt_assigned_lab_id = l.lab_lab_id
+                                LEFT JOIN admin AS creator ON l.lab_created_by = creator.admin_admin_id
+                                LEFT JOIN admin AS updater ON l.lab_last_updated_by = updater.admin_admin_id
+                                LEFT JOIN sales_order AS so ON l.lab_lab_id = so.so_assigned_lab
+                                GROUP BY l.lab_lab_id
+                                ORDER BY l.lab_lab_id DESC"""
             cursor.execute(get_lab_query)
             lab_data = cursor.fetchall()
             return {
                 "status": True,
-                "lab_list": get_labs(lab_data)
+                "lab_list": lab_data
             }, 200
 
     except pymysql.Error as e:
@@ -124,9 +124,9 @@ def enable_disable_lab(labid, status):
             update_lab_query = f"""
                 UPDATE lab
                 SET
-                    status = {status}
+                    lab_status = {status}
                 WHERE
-                    lab_id = {labid}
+                    lab_lab_id = {labid}
             """
 
             # Execute the update query using your cursor
@@ -162,10 +162,11 @@ def edit_lab_by_id(lab_obj):
                     lab_lat = '{lab_lat}',
                     lab_lng = '{lab_lng}',
                     lab_address = '{lab_obj.complete_address}',
-                    last_updated_on = '{getIndianTime()}',
-                    last_updated_by = {lab_obj.last_updated_by}
-                WHERE lab_id = {lab_obj.lab_id}
+                    lab_last_updated_on = '{getIndianTime()}',
+                    lab_last_updated_by = {lab_obj.last_updated_by}
+                WHERE lab_lab_id = {lab_obj.lab_id}
             """
+
             cursor.execute(update_lab_query)
 
             return {

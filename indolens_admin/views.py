@@ -152,7 +152,7 @@ def viewOwnStore(request, ownStoreId):
         store_stats, store_stats_status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
         # print(store_stats)
         sales_data, sale_status_code = orders_controller.get_all_store_orders(ownStoreId, 1)
-        # print(sales_data)
+        print(sales_data)
         revenue_generated, sale_status_code = orders_controller.get_store_sales(ownStoreId, 1)
         # print(revenue_generated)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(ownStoreId, 1)
@@ -219,6 +219,7 @@ def enableDisableOwnStore(request, ownStoreId, status, route):
 def manageFranchiseStores(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_all_franchise_stores(status)
+        print(response)
         return render(request, 'indolens_admin/franchiseStores/manageFranchiseStores.html',
                       {"franchise_store_list": response['franchise_store'], "status": status})
     else:
@@ -228,12 +229,17 @@ def manageFranchiseStores(request, status):
 def viewFranchiseStore(request, franchiseStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_store_controller.get_franchise_store_by_id(franchiseStoreId)
+        # print(response)
         products_list, status_code = franchise_store_controller.get_all_products_for_franchise_store(franchiseStoreId)
+        print(products_list)
         store_stats, status_code = franchise_store_controller.get_franchise_store_stats(franchiseStoreId)
+        # print(store_stats)
         sales_data, status_code = orders_controller.get_all_store_orders(franchiseStoreId, 2)
+        # print(sales_data)
         revenue_generated, sale_status_code = orders_controller.get_store_sales(franchiseStoreId, 2)
         store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(franchiseStoreId, 2)
         store_expense_list, store_exp_list_status_code = store_expenses.get_store_expense_list(franchiseStoreId, 2)
+        # print(store_expense_list)
         return render(request, 'indolens_admin/franchiseStores/franchiseStore.html',
                       {"franchise_store": response['franchise_store'], "products_list": products_list['products_list'],
                        "total_employee_count": store_stats['total_employee_count'],
@@ -251,7 +257,9 @@ def editFranchiseStore(request, franchiseStoreId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             franchise_obj = franchise_store_model.franchise_store_model_from_dict(request.POST)
+            print(vars(franchise_obj))
             response, status_code = franchise_store_controller.edit_franchise_store_by_id(franchise_obj)
+            print(response)
             if status_code != 200:
                 return render(request, 'indolens_admin/ownStore/editOwnStore.html', {"message": response['message']})
             else:
@@ -2332,10 +2340,11 @@ def orderInvoice(request, orderId):
         return redirect('login')
 
 
-def viewOrderCreator(request, employeeID, storeType):
+def viewRecordCreator(request, employeeID, storeType):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        order_detail, status_code = orders_controller.get_order_creator_role(employeeID, storeType)
-        role = order_detail['role']
+        creator_detail, status_code = orders_controller.get_order_creator_role(employeeID, storeType)
+        print(creator_detail)
+        role = creator_detail['role']
         role_urls = {}
         if storeType == 1:
             role_urls = {
@@ -2399,7 +2408,7 @@ def viewCustomerDetails(request, customerId):
 def manageLabs(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_controller.get_all_labs()
-        print(response)
+        # print(response)
         return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
     else:
         return redirect('login')
@@ -2422,10 +2431,12 @@ def editLab(request, labId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             lab_obj = lab_model.lab_model_from_dict(request.POST)
+            print(vars(lab_obj))
             lab_controller.edit_lab_by_id(lab_obj)
             return redirect('manage_labs')
         else:
             response, status_code = lab_controller.get_lab_by_id(labId)
+            print(response)
             return render(request, 'indolens_admin/labs/editLab.html', {"lab_data": response['lab_data']})
     return redirect('login')
 
@@ -3850,6 +3861,7 @@ def addMarketingHeadDocuments(request, marketingHeadId):
 def ViewAllEyeTest(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = eye_test_controller.get_eye_test()
+        print(response)
         return render(request, 'indolens_admin/eyeTest/viewAllEyeTest.html',
                       {'eye_test_list': response['eye_test_list']})
     else:

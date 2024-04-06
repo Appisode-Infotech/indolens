@@ -82,11 +82,10 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
         <div class="content">
-            {% for lab in lab_data %}
             <h2 class="mb-4">Edit Lab</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_lab' lab.lab_id %}" class="row g-3 needs-validation" method="post"
+                    <form action="{% url 'edit_lab' lab_data.lab_lab_id %}" class="row g-3 needs-validation" method="post"
                           novalidate="">
                         {% csrf_token %}
                         <div class="col-md-6">
@@ -94,7 +93,7 @@
                             <label class="form-label" for="labName">Lab name</label>
 
                             <input class="form-control" id="labName" name="labName" required="" type="text"
-                                   value="{{lab.lab_name}}"
+                                   value="{{lab_data.lab_name}}"
                             oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Please provide a valid Lab name.</div>
                         </div>
@@ -103,7 +102,7 @@
                             <label class="form-label" for="labDisplayName">Lab Display Name</label>
 
                             <input class="form-control" id="labDisplayName" name="labDisplayName" required=""
-                                   type="text" value="{{lab.lab_display_name}}"/>
+                                   type="text" value="{{lab_data.lab_display_name}}"/>
                             <div class="invalid-feedback">Please provide a valid Lab display name.</div>
                         </div>
 
@@ -113,7 +112,7 @@
 
                             <input class="form-control" id="labPhone" name="labPhone" required="" type="number"
                                    max="9999999999" min="1111111111"
-                                   value="{{lab.lab_phone}}"/>
+                                   value="{{lab_data.lab_phone}}"/>
                             <div class="invalid-feedback">Phone is mandatory with 10 digits.</div>
                         </div>
                         <div class="col-md-4">
@@ -122,7 +121,7 @@
 
                             <input class="form-control" id="labGSTIN" name="labGSTIN" required="" type="text"
                                    minlength="15" maxlength="15"
-                                   value="{{lab.lab_gst}}" pattern="([0-9]{2}[a-z]{4}([a-z]{1}|[0-9]{1}).[0-9]{3}[a-z]{3}"/>
+                                   value="{{lab_data.lab_gst}}" pattern="([0-9]{2}[a-z]{4}([a-z]{1}|[0-9]{1}).[0-9]{3}[a-z]{3}"/>
                             <div class="invalid-feedback">Please provide a valid Lab GSTIN.</div>
                         </div>
 
@@ -131,7 +130,7 @@
                             <label class="form-label" for="labEmail">Lab Email</label>
 
                             <input class="form-control" id="labEmail" name="labEmail" required="" type="email"
-                                   value="{{lab.lab_email}}"/>
+                                   value="{{lab_data.lab_email}}"/>
                             <div class="invalid-feedback">Please provide a valid Labemail.</div>
                         </div>
 
@@ -140,7 +139,7 @@
                             <label class="form-label" for="labCity">City</label>
 
                             <input class="form-control" id="labCity" name="labCity" required="" type="text"
-                                   value="{{lab.lab_city}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{lab_data.lab_city}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Please provide a valid city.</div>
                         </div>
                         <div class="col-md-4">
@@ -148,7 +147,7 @@
                             <label class="form-label" for="labState">State</label>
 
                             <input class="form-control" id="labState" name="labState" required="" type="text"
-                                   value="{{lab.lab_state}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{lab_data.lab_state}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Please provide a valid state.</div>
                         </div>
                         <div class="col-md-4">
@@ -156,7 +155,7 @@
                             <label class="form-label" for="labZipCode">Zip</label>
 
                             <input class="form-control" id="labZipCode" name="labZipCode" required="" type="number"
-                                  min="111111" max="999999" value="{{lab.lab_zip}}"/>
+                                  min="111111" max="999999" value="{{lab_data.lab_zip}}"/>
                             <div class="invalid-feedback">Please provide a valid zip.</div>
                         </div>
                         <div class="col-12">
@@ -164,7 +163,7 @@
                             <label class="form-label" for="completeAddress">Complete Address</label>
 
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3" maxlength="255"> {{lab.lab_address}}</textarea>
+                                      rows="3" maxlength="255"> {{lab_data.lab_address}}</textarea>
                             <div class="invalid-feedback">Please provide a valid address.</div>
                         </div>
                         <div class="col-sm-12">
@@ -174,13 +173,13 @@
                         <div class="col-sm-12">
                             <input class="form-control" id="store_lat_lng" name="lab_lat_lng" placeholder="Co Ordinates"
                                    readonly
-                                   required type="text" value="Latitude: {{lab.lab_lat}}, Longitude: {{lab.lab_lng}}">
+                                   required type="text" value="Latitude: {{lab_data.lab_lat}}, Longitude: {{lab_data.lab_lng}}">
                         </div>
                         <div class="col-12" id="map"></div>
                         <input name="last_updated_by" required type="hidden"
                                value="{{ request.session.id }}">
                         <input name="labId" required type="hidden"
-                               value="{{ lab.lab_id }}">
+                               value="{{ lab_data.lab_lab_id }}">
 
                         <div class="col-12">
 
@@ -189,7 +188,6 @@
                     </form>
                 </div>
             </div>
-            {% endfor %}
             {% include 'footer.html' %}
 
         </div>
@@ -237,8 +235,8 @@
 
         // Set the default center based on store_lat and store_lng
         var defaultCenter = {
-            lat: parseFloat({{ lab_data.0.lab_lat}}),
-            lng: parseFloat({{ lab_data.0.lab_lng}})
+            lat: parseFloat({{ lab_data.lab_lat}}),
+            lng: parseFloat({{ lab_data.lab_lng}})
         };
         map.setCenter(defaultCenter);
 

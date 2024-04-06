@@ -244,12 +244,12 @@
                                                 {% if order.so_created_by_store_type == 1%}
                                                 <a class="fw-semi-bold"
                                                    href="{% url 'view_own_store' order.so_created_by_store %}">
-                                                    {{order.so_store_name}}
+                                                    {{order.store_name}}
                                                 </a>
                                                 {% else %}
                                                 <a class="fw-semi-bold"
                                                    href="{% url 'view_franchise_store' order.so_created_by_store %}">
-                                                    {{order.so_store_name}}
+                                                    {{order.store_name}}
                                                 </a>
                                                 {% endif %}
                                             </td>

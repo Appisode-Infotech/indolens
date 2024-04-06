@@ -181,35 +181,35 @@
                                 <td class="order align-middle white-space-nowrap py-0 slno"></td>
                                 <td class="align-middle time white-space-nowrap ps-0 storeName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_franchise_store' store.store_id  %}">{{store.store_name}}</a>
+                                        href="{% url 'view_franchise_store' store.fs_store_id  %}">{{store.fs_store_name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 displayName py-4">
-                                    <p class="mb-0 fs--1 text-900">{{store.store_display_name}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{store.fs_store_display_name}}</p>
                                 </td>
 
 
                                 <td class="align-middle white-space-nowrap storeAdmin ">
-                                    {% if store.owner_name != None %}
+                                    {% if store.fs_owner_name != None %}
                                     <a
                                             class="text-decoration-none fw-bold fs-0"
-                                            href="{% url 'view_franchise_owner' store.employee_id %}">{{store.owner_name}}</a>
+                                            href="{% url 'view_franchise_owner' store.fs_employee_id %}">{{store.fs_owner_name}}</a>
                                     {% else %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 date py-4">
-                                    <p class="mb-0 fs--1 text-900">{{store.created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{store.fs_created_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 city py-4">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{store.store_city}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{store.fs_store_city}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end status">
-                                    {% if store.status == 0 %}
+                                    {% if store.fs_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
-                                {% elif store.status == 1 %}
+                                {% elif store.fs_status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
                                 {% endif %}
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -221,31 +221,31 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_franchise_store' store.store_id %}">View</a>
+                                                                                             href="{% url 'view_franchise_store' store.fs_store_id %}">View</a>
                                             <a class="dropdown-item"
-                                               href="{% url 'edit_franchise_store' store.store_id %}">Edit</a>
+                                               href="{% url 'edit_franchise_store' store.fs_store_id %}">Edit</a>
                                             <div class="dropdown-divider"></div>
-                                            {% if store.status == 0 %}
+                                            {% if store.fs_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Franchise Store"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ store.store_id }}"
-                                               data-employee-name="{{ store.store_name }}"
+                                               data-employee-id="{{ store.fs_store_id }}"
+                                               data-employee-name="{{ store.fs_store_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_franchise_store' store.store_id 1 status %}">Make
+                                               data-action-url="{% url 'enable_disable_franchise_store' store.fs_store_id 1 status %}">Make
                                                 Active</a>
-                                            {% elif store.status == 1 %}
+                                            {% elif store.fs_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-role="Franchise Store"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ store.store_id }}"
-                                               data-employee-name="{{ store.store_name }}"
+                                               data-employee-id="{{ store.fs_store_id }}"
+                                               data-employee-name="{{ store.fs_store_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_franchise_store' store.store_id 0 status %}">Make
+                                               data-action-url="{% url 'enable_disable_franchise_store' store.fs_store_id 0 status %}">Make
                                                 Inactive</a>
                                             {% endif %}
                                         </div>

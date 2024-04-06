@@ -157,14 +157,14 @@ def get_own_store_by_id(sid):
     try:
         with getConnection().cursor() as cursor:
             get_own_stores_query = f""" SELECT own_store.*, own_store_employees.ose_name, own_store_employees.ose_employee_id,
-                                    creator.admin_name, updater.admin_name
+                                    creator.admin_name AS creator, updater.admin_name AS updater
                                     FROM own_store
                                     LEFT JOIN admin AS creator ON own_store.os_created_by = creator.admin_admin_id
                                     LEFT JOIN admin AS updater ON own_store.os_last_updated_by = updater.admin_admin_id
                                     LEFT JOIN own_store_employees ON own_store.os_store_id = own_store_employees.ose_assigned_store_id AND own_store_employees.ose_role = 1 
                                     WHERE own_store.os_store_id = '{sid}' GROUP BY own_store.os_store_id """
             cursor.execute(get_own_stores_query)
-            stores_data = cursor.fetchall()
+            stores_data = cursor.fetchone()
             return {
                        "status": True,
                        "own_stores": stores_data

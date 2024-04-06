@@ -407,17 +407,27 @@ def get_order_creator_role(employeeID, storeType):
         2: "franchise_store_employees",
     }
     status_condition = status_conditions[storeType]
+    role_conditions = {
+        1: "ose_role",
+        2: "fse_role",
+    }
+    role_condition = role_conditions[storeType]
+    employee_conditions = {
+        1: "ose_employee_id",
+        2: "fse_employee_id",
+    }
+    employee_condition = employee_conditions[storeType]
     try:
         with getConnection().cursor() as cursor:
             get_order_creator_query = f"""
-                SELECT role FROM {status_condition} WHERE employee_id = {employeeID}
-                """
+                    SELECT {role_condition} FROM {status_condition} WHERE {employee_condition} = {employeeID}
+                    """
             cursor.execute(get_order_creator_query)
             role = cursor.fetchone()
 
             return {
                 "status": True,
-                "role": role[0]
+                "role": role[role_condition] if role else None
             }, 200
 
     except pymysql.Error as e:

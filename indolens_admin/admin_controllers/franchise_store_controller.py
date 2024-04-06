@@ -8,27 +8,29 @@ from indolens_admin.admin_models.admin_resp_model.franchise_store_resp_model imp
 from indolens_admin.admin_models.admin_resp_model.store_inventory_resp_model import get_store_inventory
 
 ist = pytz.timezone('Asia/Kolkata')
+
+
 def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
 
-def create_franchise_store(franchise_obj):
 
+def create_franchise_store(franchise_obj):
     cleaned_str = franchise_obj.store_lat_lng.replace('Latitude: ', '').replace('Longitude: ', '')
     store_lat, store_lng = map(float, cleaned_str.split(', '))
     try:
         with getConnection().cursor() as cursor:
             create_franchise_store_query = f"""
-                                        INSERT INTO franchise_store (
-                                            store_zip, store_name, store_display_name, store_phone, store_gst, store_email,
-                                            store_city, store_state, store_lat, store_lng, store_address,
-                                            status, created_by, created_on, last_updated_by, last_updated_on ) 
-                                        VALUES ('{franchise_obj.store_zip_code}', '{franchise_obj.store_name}', 
-                                                '{franchise_obj.store_display_name}', '{franchise_obj.store_phone}', 
-                                                '{franchise_obj.store_gstin}', '{franchise_obj.store_email}', 
-                                                '{franchise_obj.store_city}', '{franchise_obj.store_state}', '{store_lat}',
-                                                '{store_lng}', '{franchise_obj.complete_address}', 1, {franchise_obj.created_by}, 
-                                                '{getIndianTime()}', {franchise_obj.last_updated_by}, '{getIndianTime()}')"""
+                INSERT INTO franchise_store (
+                    fs_store_zip, fs_store_name, fs_store_display_name, fs_store_phone, fs_store_gst, fs_store_email,
+                    fs_store_city, fs_store_state, fs_store_lat, fs_store_lng, fs_store_address,
+                    fs_status, fs_created_by, fs_created_on, fs_last_updated_by, fs_last_updated_on ) 
+                VALUES ('{franchise_obj.store_zip_code}', '{franchise_obj.store_name}', 
+                        '{franchise_obj.store_display_name}', '{franchise_obj.store_phone}', 
+                        '{franchise_obj.store_gstin}', '{franchise_obj.store_email}', 
+                        '{franchise_obj.store_city}', '{franchise_obj.store_state}', '{store_lat}',
+                        '{store_lng}', '{franchise_obj.complete_address}', 1, {franchise_obj.created_by}, 
+                        '{getIndianTime()}', {franchise_obj.last_updated_by}, '{getIndianTime()}')"""
 
             cursor.execute(create_franchise_store_query)
             storeId = cursor.lastrowid
@@ -74,6 +76,7 @@ def get_all_franchise_stores(status):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def get_franchise_stores_count():
     try:
         with getConnection().cursor() as cursor:
@@ -95,20 +98,20 @@ def get_franchise_stores_count():
 def get_franchise_store_by_id(fid):
     try:
         with getConnection().cursor() as cursor:
-            get_franchise_stores_query = f""" SELECT franchise_store.*, franchise_store_employees.name, 
-                                        franchise_store_employees.employee_id,
-                                        creator.name, updater.name FROM franchise_store
-                                        LEFT JOIN admin AS creator ON franchise_store.created_by = creator.admin_id
-                                        LEFT JOIN admin AS updater ON franchise_store.last_updated_by = updater.admin_id
+            get_franchise_stores_query = f""" SELECT franchise_store.*, franchise_store_employees.fse_name, 
+                                        franchise_store_employees.fse_employee_id,
+                                        creator.admin_name AS creator, updater.admin_name AS Updater FROM franchise_store
+                                        LEFT JOIN admin AS creator ON franchise_store.fs_created_by = creator.admin_admin_id
+                                        LEFT JOIN admin AS updater ON franchise_store.fs_last_updated_by = updater.admin_admin_id
                                         LEFT JOIN franchise_store_employees ON 
-                                        franchise_store.store_id = franchise_store_employees.assigned_store_id AND 
-                                        franchise_store_employees.role = 1 WHERE franchise_store.store_id = '{fid}'
-                                        GROUP BY franchise_store.store_id"""
+                                        franchise_store.fs_store_id = franchise_store_employees.fse_assigned_store_id AND 
+                                        franchise_store_employees.fse_role = 1 WHERE franchise_store.fs_store_id = '{fid}'
+                                        GROUP BY franchise_store.fs_store_id"""
             cursor.execute(get_franchise_stores_query)
-            stores_data = cursor.fetchall()
+            stores_data = cursor.fetchone()
             return {
                 "status": True,
-                "franchise_store": get_franchise_store(stores_data)
+                "franchise_store": stores_data
             }, 200
 
     except pymysql.Error as e:
@@ -123,26 +126,24 @@ def edit_franchise_store_by_id(franchise_obj):
     try:
         with getConnection().cursor() as cursor:
             update_franchise_store_query = f"""
-                    UPDATE franchise_store
-                    SET 
-                        store_zip = '{franchise_obj.store_zip_code}',
-                        store_name = '{franchise_obj.store_name}',
-                        store_display_name = '{franchise_obj.store_display_name}',
-                        store_phone = '{franchise_obj.store_phone}',
-                        store_gst = '{franchise_obj.store_gstin}',
-                        store_email = '{franchise_obj.store_email}',
-                        store_city = '{franchise_obj.store_city}',
-                        store_state = '{franchise_obj.store_state}',
-                        store_lat = '{store_lat}',
-                        store_lng = '{store_lng}',
-                        store_address = '{franchise_obj.complete_address}',
-                        last_updated_on = '{getIndianTime()}',
-                        last_updated_by = {franchise_obj.last_updated_by}
-                    WHERE store_id = {franchise_obj.store_id}
-                """
-
+                UPDATE franchise_store
+                SET 
+                    fs_store_zip = '{franchise_obj.store_zip_code}',
+                    fs_store_name = '{franchise_obj.store_name}',
+                    fs_store_display_name = '{franchise_obj.store_display_name}',
+                    fs_store_phone = '{franchise_obj.store_phone}',
+                    fs_store_gst = '{franchise_obj.store_gstin}',
+                    fs_store_email = '{franchise_obj.store_email}',
+                    fs_store_city = '{franchise_obj.store_city}',
+                    fs_store_state = '{franchise_obj.store_state}',
+                    fs_store_lat = '{store_lat}',
+                    fs_store_lng = '{store_lng}',
+                    fs_store_address = '{franchise_obj.complete_address}',
+                    fs_last_updated_on = '{getIndianTime()}',
+                    fs_last_updated_by = {franchise_obj.last_updated_by}
+                WHERE fs_store_id = {franchise_obj.store_id}
+            """
             cursor.execute(update_franchise_store_query)
-            connection.commit()  # Commit the transaction after executing the update query
 
             return {
                 "status": True,
@@ -161,12 +162,11 @@ def enable_disable_franchise_store(fid, status):
             update_franchise_store_query = f"""
                 UPDATE franchise_store
                 SET
-                    status = {status}
+                    fs_status = {status}
                 WHERE
-                    store_id = {fid}
+                    fs_store_id = {fid}
             """
 
-            # Execute the update query using your cursor
             cursor.execute(update_franchise_store_query)
 
             return {
@@ -183,28 +183,29 @@ def enable_disable_franchise_store(fid, status):
 def get_all_products_for_franchise_store(store_id):
     try:
         with getConnection().cursor() as cursor:
-            get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
-                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
-                                    os.store_name
-                                    FROM store_inventory As si
-                                    LEFT JOIN central_inventory AS ci ON ci.product_id = si.product_id
-                                    LEFT JOIN admin AS creator ON si.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON si.last_updated_by = updater.admin_id
-                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
-                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
-                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
-                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
-                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
-                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                    LEFT JOIN franchise_store AS os ON os.store_id = '{store_id}' 
-                                    WHERE si.store_id = {store_id} AND si.store_type = 2 """
+            get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.admin_name, updater.admin_name, 
+                                                pc.pc_category_name, pm.pm_material_name,
+                                                ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name,
+                                                os.os_store_name
+                                                FROM store_inventory As si
+                                                LEFT JOIN central_inventory AS ci ON ci.ci_product_id = si.si_product_id
+                                                LEFT JOIN admin AS creator ON si.si_created_by = creator.admin_admin_id
+                                                LEFT JOIN admin AS updater ON si.si_last_updated_by = updater.admin_admin_id
+                                                LEFT JOIN product_categories AS pc ON ci.ci_category_id = pc.pc_category_id
+                                                LEFT JOIN product_materials AS pm ON ci.ci_material_id = pm.pm_material_id
+                                                LEFT JOIN frame_types AS ft ON ci.ci_frame_type_id = ft.ftype_frame_id
+                                                LEFT JOIN frame_shapes AS fs ON ci.ci_frame_shape_id = fs.fshape_shape_id
+                                                LEFT JOIN product_colors AS c ON ci.ci_color_id = c.pcol_color_id
+                                                LEFT JOIN units AS u ON ci.ci_unit_id = u.unit_unit_id
+                                                LEFT JOIN brands AS b ON ci.ci_brand_id = b.brand_brand_id
+                                                LEFT JOIN own_store AS os ON os.os_store_id = '{store_id}' 
+                                                WHERE si.si_store_id = {store_id} AND si.si_store_type = 2 """
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
             return {
                 "status": True,
-                "products_list": get_store_inventory(product_list)
+                "products_list": product_list
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -216,20 +217,20 @@ def get_franchise_store_stats(ownStoreId):
     try:
         with getConnection().cursor() as cursor:
             employee_count_sql_query = f"""SELECT COUNT(*) FROM franchise_store_employees 
-                                            WHERE assigned_store_id = {ownStoreId} AND status = 1"""
+                                            WHERE fse_assigned_store_id = {ownStoreId} AND fse_status = 1"""
             cursor.execute(employee_count_sql_query)
-            total_employee_count = cursor.fetchone()[0]
+            total_employee_count = cursor.fetchone()['COUNT(*)']
 
-            customer_count_sql_query = f"""SELECT COUNT(*) FROM customers WHERE created_by_store_id = {ownStoreId} AND 
-                                                created_by_store_type = 2 """
+            customer_count_sql_query = f"""SELECT COUNT(*) FROM customers WHERE customer_created_by_store_id = {ownStoreId} AND 
+                                                customer_created_by_store_type = 2 """
             cursor.execute(customer_count_sql_query)
-            total_customer_count = cursor.fetchone()[0]
+            total_customer_count = cursor.fetchone()['COUNT(*)']
 
             return {
-                       "status": True,
-                       "total_employee_count": total_employee_count,
-                       "total_customer_count": total_customer_count
-                   }, 200
+                "status": True,
+                "total_employee_count": total_employee_count,
+                "total_customer_count": total_customer_count
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

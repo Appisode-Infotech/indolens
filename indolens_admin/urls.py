@@ -296,7 +296,7 @@ urlpatterns = [
     path('refunded_orders/store=<str:store>', viewRefundedOrders, name='refunded_orders'),
     path('order_details/orderId=<str:orderId>', viewOrderDetails, name='order_details'),
     path('order_invoice/orderId=<str:orderId>', orderInvoice, name='order_invoice'),
-    path('view_order_creator/employeeID=<int:employeeID>/storeType=<int:storeType>', viewOrderCreator, name='view_order_creator'),
+    path('view_record_creator/employeeID=<int:employeeID>/storeType=<int:storeType>', viewRecordCreator, name='view_record_creator'),
 
     # labs
     path('manage_labs/', manageLabs, name='manage_labs'),

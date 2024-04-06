@@ -184,26 +184,26 @@
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details' order.so_order_id %}">{{order.so_order_id}}</a>
                                     </td>
-                                    <td class="total align-middle  fw-semi-bold text-1000 text-end">₹{{order.so_total_cost}}</td>
+                                    <td class="total align-middle  fw-semi-bold text-1000 text-end">₹{{order.total_cost}}</td>
                                     <td class="customer align-middle white-space-nowrap ps-8">
                                         <a class="d-flex align-items-center" href="{% url 'customer_details' 1%}">
                                             <div class="avatar avatar-m">
                                                 <div class="avatar-name rounded-circle">
-                                                    <span>{{order.so_customer_name.0}}</span></div>
+                                                    <span>{{order.customer_name.0}}</span></div>
                                             </div>
-                                            <h6 class="mb-0 ms-3 text-900">{{order.so_customer_name}}</h6>
+                                            <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
                                         </a>
                                     </td>
                                     <td class="store align-middle white-space-nowrap ">
                                         {% if order.so_created_by_store_type == 1%}
                                         <a class="fw-semi-bold"
                                            href="{% url 'view_own_store' order.so_created_by_store %}">
-                                            {{order.so_store_name}}
+                                            {{order.store_name}}
                                         </a>
                                         {% else %}
                                         <a class="fw-semi-bold"
                                            href="{% url 'view_franchise_store' order.so_created_by_store %}">
-                                            {{order.so_store_name}}
+                                            {{order.store_name}}
                                         </a>
                                         {% endif %}
                                     </td>
@@ -258,14 +258,14 @@
 
                                     </td>
                                     <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        <a href="{% url 'view_order_creator' order.so_created_by order.so_created_by_store_type %}">{{order.so_creator_name}}</a>
+                                        <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
                                     </td>
                                     <td class="created_on align-middle white-space-nowrap text-700 fs--1  ">
                                         {{order.so_created_on}}
                                     </td>
                                     <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                        <a href="{% url 'view_order_creator' order.so_updated_by order.so_created_by_store_type %}">
-                                            {{order.so_updater_name}} </a>
+                                        <a href="{% url 'view_record_creator' order.so_updated_by order.so_created_by_store_type %}">
+                                            {{order.updater_name}} </a>
                                     </td>
                                     <td class="updated_on align-middle white-space-nowrap text-700 fs--1  ">
                                         {{order.so_updated_on}}

@@ -13,28 +13,28 @@ def getIndianTime():
 def get_eye_test():
     try:
         with getConnection().cursor() as cursor:
-            get_eye_test_query = f""" SELECT et.*, c.name, c.phone, 
+            get_eye_test_query = f""" SELECT et.*, c.customer_name, c.customer_phone, 
                                             CASE 
-                                                WHEN et.created_by_store_type = 1 THEN creator_os.name 
-                                                ELSE creator_fs.name 
+                                                WHEN et.et_created_by_store_type = 1 THEN creator_os.ose_name 
+                                                ELSE creator_fs.fse_name 
                                             END AS creator_name,
                                             CASE 
-                                                WHEN et.created_by_store_type = 1 THEN updater_os.name 
-                                                ELSE updater_fs.name 
+                                                WHEN et.et_created_by_store_type = 1 THEN updater_os.ose_name 
+                                                ELSE updater_fs.fse_name 
                                             END AS updater_name 
                                             FROM eye_test as et
-                                            LEFT JOIN customers AS c ON et.customer_id = c.customer_id
-                                            LEFT JOIN own_store_employees creator_os ON et.created_by = creator_os.employee_id AND et.created_by_store_type = 1
-                                            LEFT JOIN franchise_store_employees creator_fs ON et.created_by = creator_fs.employee_id AND et.created_by_store_type = 2
-                                            LEFT JOIN own_store_employees updater_os ON et.updated_by = updater_os.employee_id AND et.created_by_store_type = 1
-                                            LEFT JOIN franchise_store_employees updater_fs ON et.updated_by = updater_fs.employee_id AND et.created_by_store_type = 2
-                                            ORDER BY et.eye_test_id DESC
+                                            LEFT JOIN customers AS c ON et.et_customer_id = c.customer_customer_id
+                                            LEFT JOIN own_store_employees creator_os ON et.et_created_by = creator_os.ose_employee_id AND et.et_created_by_store_type = 1
+                                            LEFT JOIN franchise_store_employees creator_fs ON et.et_created_by = creator_fs.fse_employee_id AND et.et_created_by_store_type = 2
+                                            LEFT JOIN own_store_employees updater_os ON et.et_updated_by = updater_os.ose_employee_id AND et.et_created_by_store_type = 1
+                                            LEFT JOIN franchise_store_employees updater_fs ON et.et_updated_by = updater_fs.fse_employee_id AND et.et_created_by_store_type = 2
+                                            ORDER BY et.et_eye_test_id DESC
                                              """
             cursor.execute(get_eye_test_query)
             eye_test = cursor.fetchall()
             return {
                 "status": True,
-                "eye_test_list": get_eye_test_resp(eye_test)
+                "eye_test_list": eye_test
             }, 200
 
     except pymysql.Error as e:
