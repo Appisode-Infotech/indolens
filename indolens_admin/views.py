@@ -2312,11 +2312,8 @@ def viewOrderDetails(request, orderId):
         print(order_detail)
         payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
         # print(payment_logs)
-        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['so_assigned_lab'])
-        # print(lab_details)
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
-                      {"order_detail": order_detail['orders_details'], "payment_logs": payment_logs['payment_logs'],
-                       "lab_details": lab_details['lab_data']})
+                      {"order_detail": order_detail['orders_details'], "payment_logs": payment_logs['payment_logs']})
     else:
         return redirect('login')
 
@@ -2368,6 +2365,7 @@ def viewOrderCreator(request, employeeID, storeType):
 def viewAllCustomers(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = customers_controller.get_all_stores_customers()
+        print(response)
         return render(request, 'indolens_admin/customers/viewAllCustomers.html',
                       {"customers_list": response['customers_list']})
     else:
@@ -2377,13 +2375,16 @@ def viewAllCustomers(request):
 def viewCustomerDetails(request, customerId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = customers_controller.get_customers_by_id(customerId)
-        spending, status_code = customers_controller.get_customer_spend(customerId)
+        print(response)
+        # spending, status_code = customers_controller.get_customer_spend(customerId)
+        print(response['customer']['total_spend'])
         sales_data, sale_status_code = orders_controller.get_all_customer_orders(customerId)
+        # print(sales_data)
         membership = "Gold"
 
-        if spending['total_spending'] > 5000 and spending['total_spending'] < 25000:
+        if response['customer']['total_spend'] > 5000 and response['customer']['total_spend'] < 25000:
             membership = "Platinum"
-        elif spending['total_spending'] > 25000:
+        elif response['customer']['total_spend'] > 25000:
             membership = "Luxuary"
         return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer'],
                                                                                      "sales_data": sales_data[

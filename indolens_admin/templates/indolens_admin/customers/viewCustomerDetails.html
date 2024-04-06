@@ -101,8 +101,6 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for customer in customer %}
-
         <div class="content">
 
             <div class="mb-9">
@@ -138,8 +136,8 @@
                                             </div>
 
                                             <div class="col-12 col-sm-auto flex-1">
-                                                <h3 class="name">{{ customer.name }}</h3>
-                                                <p class="text-800">Joined on {{ customer.created_on }}</p>
+                                                <h3 class="name">{{ customer.customer_name }}</h3>
+                                                <p class="text-800">Joined on {{ customer.customer_created_on }}</p>
                                                 {% if membership == 'Gold' %}
                                                 <div class="golden-card">
                                                     <h4>{{membership}} Member</h4>
@@ -167,15 +165,15 @@
                                             <button class="btn btn-link p-0"></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
-                                        <p class="text-800">{{customer.address}}
+                                        <p class="text-800">{{customer.customer_address}}
                                         </p>
                                         <div class="mb-3">
                                             <h5 class="text-800">Email</h5><a href="mailto:shatinon@jeemail.com">
-                                            {{customer.email}}
+                                            {{customer.customer_email}}
                                         </a>
                                         </div>
                                         <h5 class="text-800">Phone</h5><a class="text-800"
-                                                                          href="tel:{{customer.phone}}">{{customer.phone}}</a>
+                                                                          href="tel:{{customer.customer_phone}}">{{customer.customer_phone}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -237,36 +235,36 @@
                                             </td>
                                             <td class="order align-middle white-space-nowrap py-0"><a
                                                     class="fw-semi-bold"
-                                                    href="{% url 'order_details' order.order_id %}">#{{order.order_id}}</a>
+                                                    href="{% url 'order_details' order.so_order_id %}">{{order.so_order_id}}</a>
                                             </td>
                                             <td class="total align-middle  fw-semi-bold text-1000 text-end">
                                                 ₹{{order.total_cost}}
                                             </td>
                                             <td class="store align-middle white-space-nowrap ">
-                                                {% if order.created_by_store_type == 1%}
+                                                {% if order.so_created_by_store_type == 1%}
                                                 <a class="fw-semi-bold"
-                                                   href="{% url 'view_own_store' order.created_by_store %}">
-                                                    {{order.store_name}}
+                                                   href="{% url 'view_own_store' order.so_created_by_store %}">
+                                                    {{order.so_store_name}}
                                                 </a>
                                                 {% else %}
                                                 <a class="fw-semi-bold"
-                                                   href="{% url 'view_franchise_store' order.created_by_store %}">
-                                                    {{order.store_name}}
+                                                   href="{% url 'view_franchise_store' order.so_created_by_store %}">
+                                                    {{order.so_store_name}}
                                                 </a>
                                                 {% endif %}
                                             </td>
                                             <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                                {% if order.payment_status == 1 %}
+                                                {% if order.so_payment_status == 1 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
                                                         class="badge-label">PENDING</span><span class="ms-1"
                                                                                                 data-feather="check"
                                                                                                 style="height:12.8px;width:12.8px;"></span></span>
-                                                {% elif order.payment_status == 2 %}
+                                                {% elif order.so_payment_status == 2 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
                                                         class="badge-label">COMPLETE</span><span class="ms-1"
                                                                                                  data-feather="check"
                                                                                                  style="height:12.8px;width:12.8px;"></span></span>
-                                                {% elif order.payment_status == 3 %}
+                                                {% elif order.so_payment_status == 3 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
                                                         class="badge-label">REFUNDED</span><span class="ms-1"
                                                                                                  data-feather="check"
@@ -274,37 +272,37 @@
                                                 {% endif %}
                                             </td>
                                             <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                                {% if order.order_status == 1 %}
+                                                {% if order.so_order_status == 1 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">NEW</span><span class="ms-1"
                                                                                             data-feather="check"
                                                                                             style="height:12.8px;width:12.8px;"></span></span>
-                                                {% elif order.order_status == 2 %}
+                                                {% elif order.so_order_status == 2 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">PROCESSING</span><span class="ms-1"
                                                                                                    data-feather="check"
                                                                                                    style="height:12.8px;width:12.8px;"></span></span>
-                                                {% elif order.order_status == 3 %}
+                                                {% elif order.so_order_status == 3 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">READY</span><span class="ms-1"
                                                                                               data-feather="check"
                                                                                               style="height:12.8px;width:12.8px;"></span></span>
-                                                {% elif order.order_status == 4 %}
+                                                {% elif order.so_order_status == 4 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">DISPATCHED</span><span class="ms-1"
                                                                                                    data-feather="check"
                                                                                                    style="height:12.8px;width:12.8px;"></span></span>
-                                                {% elif order.order_status == 5 %}
+                                                {% elif order.so_order_status == 5 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">READY IN STORE</span><span class="ms-1"
                                                                                                        data-feather="check"
                                                                                                        style="height:12.8px;width:12.8px;"></span></span>
-                                                {% elif order.order_status == 6 %}
+                                                {% elif order.so_order_status == 6 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
                                                                                                            data-feather="check"
                                                                                                            style="height:12.8px;width:12.8px;"></span></span>
-                                                {% elif order.order_status == 7 %}
+                                                {% elif order.so_order_status == 7 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">CANCELLED</span><span class="ms-1"
                                                                                                   data-feather="check"
@@ -316,13 +314,13 @@
                                                 {{order.creator_name}}
                                             </td>
                                             <td class="date align-middle white-space-nowrap text-700 fs--1  ">
-                                                {{order.created_on}}
+                                                {{order.so_created_on}}
                                             </td>
                                             <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
                                                 {{order.updater_name}}
                                             </td>
                                             <td class="date align-middle white-space-nowrap text-700 fs--1  ">
-                                                {{order.updated_on}}
+                                                {{order.so_updated_on}}
                                             </td>
                                         </tr>
                                         {% endfor %}
@@ -357,7 +355,6 @@
             {% include 'footer.html' %}
 
         </div>
-        {% endfor %}
     </div>
 
 </main>

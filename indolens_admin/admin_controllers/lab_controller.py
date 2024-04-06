@@ -106,7 +106,7 @@ def get_lab_by_id(labid):
                                 LEFT JOIN sales_order AS so ON l.lab_lab_id = so.so_assigned_lab
                                 WHERE lab_lab_id = '{labid}'"""
             cursor.execute(get_lab_query)
-            lab_data = cursor.fetchall()
+            lab_data = cursor.fetchone()
             return {
                 "status": True,
                 "lab_data": lab_data

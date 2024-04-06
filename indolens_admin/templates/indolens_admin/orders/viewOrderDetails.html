@@ -86,20 +86,20 @@
                         {% if order_detail.so_created_by_store_type == 1%}
                         <a class="fw-semi-bold"
                            href="{% url 'view_own_store' order_detail.so_created_by_store %}">
-                            {{order_detail.so_store_name}}
+                            {{order_detail.0.store_name}}
                         </a>
                         {% else %}
                         <a class="fw-semi-bold"
                            href="{% url 'view_franchise_store' order_detail.0.so_created_by_store %}">
-                            {{order_detail.so_store_name}}
+                            {{order_detail.0.store_name}}
                         </a>
                         {% endif %}
                     </p>
-                    {% if lab_details.0.lab_name != None %}
+                    {% if order_detail.0.so_assigned_lab != 0 %}
                     <p class="text-800 lh-sm mb-0">Lab :
                         <a class="fw-semi-bold"
-                           href="{% url 'view_lab' lab_details.0.lab_id %}">
-                            {{lab_details.0.lab_name}}
+                           href="{% url 'view_lab' order_detail.0.so_assigned_lab %}">
+                            {{order_detail.0.lab_name}}
                         </a>
                     </p>
                     {% endif %}
