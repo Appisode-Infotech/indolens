@@ -2444,8 +2444,11 @@ def editLab(request, labId):
 def viewLab(request, labId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_controller.get_lab_by_id(labId)
+        # print(response)
         lab_job, status_cde = lab_controller.get_lab_job(labId)
+        # print(lab_job)
         lab_stats, status_cde = lab_controller.get_lab_stats(labId)
+        print(lab_stats)
         return render(request, 'indolens_admin/labs/viewLab.html',
                       {"lab_data": response['lab_data'], "lab_job": lab_job['orders_list'], "lab_stats": lab_stats})
     else:

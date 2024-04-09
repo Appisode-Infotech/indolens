@@ -98,7 +98,8 @@ def get_all_active_labs():
 def get_lab_by_id(labid):
     try:
         with getConnection().cursor() as cursor:
-            get_lab_query = f""" SELECT l.*, creator.admin_name, updater.admin_name, lt.lt_name,  COUNT(DISTINCT so.so_order_id) AS order_count
+            get_lab_query = f""" SELECT l.*, creator.admin_name AS creator_name, updater.admin_name As updater_name, 
+                                lt.lt_name As lab_tech_name,  COUNT(DISTINCT so.so_order_id) AS order_count
                                 FROM lab AS l
                                 LEFT JOIN lab_technician AS lt ON lt.lt_assigned_lab_id = l.lab_lab_id
                                 LEFT JOIN admin AS creator ON l.lab_created_by = creator.admin_admin_id
@@ -184,40 +185,40 @@ def get_lab_job(labId):
     try:
         with getConnection().cursor() as cursor:
             get_order_query = f"""
-                SELECT 
-                    so.*, 
-                    c.name, 
-                    SUM(product_total_cost) AS total_cost, 
-                    CASE 
-                        WHEN so.created_by_store_type = 1 THEN os.store_name 
-                        ELSE fs.store_name 
-                    END AS store_name,
-                    CASE 
-                        WHEN so.created_by_store_type = 1 THEN creator_os.name 
-                        ELSE creator_fs.name 
-                    END AS creator_name,
-                    CASE 
-                        WHEN so.created_by_store_type = 1 THEN updater_os.name 
-                        ELSE updater_fs.name 
-                    END AS updater_name
-                FROM sales_order AS so
-                LEFT JOIN customers AS c ON c.customer_id = so.customer_id
-                LEFT JOIN own_store os ON so.created_by_store = os.store_id AND so.created_by_store_type = 1
-                LEFT JOIN franchise_store fs ON so.created_by_store = fs.store_id AND so.created_by_store_type = 2
-                LEFT JOIN own_store_employees creator_os ON so.created_by = creator_os.employee_id AND so.created_by_store_type = 1
-                LEFT JOIN franchise_store_employees creator_fs ON so.created_by = creator_fs.employee_id AND so.created_by_store_type = 2
-                LEFT JOIN own_store_employees updater_os ON so.updated_by = updater_os.employee_id AND so.created_by_store_type = 1
-                LEFT JOIN franchise_store_employees updater_fs ON so.updated_by = updater_fs.employee_id AND so.created_by_store_type = 2
-                WHERE so.assigned_lab = {labId}
-                GROUP BY so.order_id ORDER BY so.sale_item_id DESC         
-                """
+                            SELECT 
+                                so.*, 
+                                c.customer_name, 
+                                SUM(so_product_total_cost) AS total_cost, 
+                                CASE 
+                                    WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
+                                    ELSE fs.fs_store_name 
+                                END AS store_name,
+                                CASE 
+                                    WHEN so.so_created_by_store_type = 1 THEN creator_os.ose_name 
+                                    ELSE creator_fs.fse_name 
+                                END AS creator_name,
+                                CASE 
+                                    WHEN so.so_created_by_store_type = 1 THEN updater_os.ose_name 
+                                    ELSE updater_fs.fse_name 
+                                END AS updater_name
+                            FROM sales_order AS so
+                            LEFT JOIN customers AS c ON c.customer_customer_id = so.so_customer_id
+                            LEFT JOIN own_store os ON so.so_created_by_store = os.os_store_id AND so.so_created_by_store_type = 1
+                            LEFT JOIN franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
+                            LEFT JOIN own_store_employees creator_os ON so.so_created_by = creator_os.ose_employee_id AND so.so_created_by_store_type = 1
+                            LEFT JOIN franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                            LEFT JOIN own_store_employees updater_os ON so.so_updated_by = updater_os.ose_employee_id AND so.so_created_by_store_type = 1
+                            LEFT JOIN franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                            WHERE so.so_assigned_lab = {labId}
+                            GROUP BY so.so_order_id ORDER BY so.so_sale_item_id DESC         
+                            """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchall()
 
             return {
                        "status": True,
-                       "orders_list": get_sales_orders(orders_list),
-                       "all_jobs_list": get_sales_orders(orders_list)
+                       "orders_list": orders_list,
+                       "all_jobs_list": orders_list
                    }, 200
 
     except pymysql.Error as e:
@@ -231,10 +232,10 @@ def get_lab_stats(labId):
             get_new_job_details_query = f"""
                                                     SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
                                                     FROM (
-                                                        SELECT COUNT(DISTINCT order_id) AS total_count
+                                                        SELECT COUNT(DISTINCT so_order_id) AS total_count
                                                         FROM sales_order
-                                                        WHERE assigned_lab = {labId} AND order_status = 1
-                                                        GROUP BY order_id
+                                                        WHERE so_assigned_lab = {labId} AND so_order_status = 1
+                                                        GROUP BY so_order_id
                                                     ) AS subquery
                                                     """
 
@@ -244,10 +245,10 @@ def get_lab_stats(labId):
             get_active_job_details_query = f"""
                                                     SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
                                                     FROM (
-                                                        SELECT COUNT(DISTINCT order_id) AS total_count
+                                                        SELECT COUNT(DISTINCT so_order_id) AS total_count
                                                         FROM sales_order
-                                                        WHERE assigned_lab = {labId} AND order_status IN ( 2,3)
-                                                        GROUP BY order_id
+                                                        WHERE so_assigned_lab = {labId} AND so_order_status IN ( 2,3)
+                                                        GROUP BY so_order_id
                                                     ) AS subquery
                                                     """
             cursor.execute(get_active_job_details_query)
@@ -256,10 +257,10 @@ def get_lab_stats(labId):
             get_completed_job_details_query = f"""
                                                     SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
                                                     FROM (
-                                                        SELECT COUNT(DISTINCT order_id) AS total_count
+                                                        SELECT COUNT(DISTINCT so_order_id) AS total_count
                                                         FROM sales_order
-                                                        WHERE assigned_lab = {labId} AND order_status IN (4,5,6,7)
-                                                        GROUP BY order_id
+                                                        WHERE so_assigned_lab = {labId} AND so_order_status IN (4,5,6,7)
+                                                        GROUP BY so_order_id
                                                     ) AS subquery
                                                     """
             cursor.execute(get_completed_job_details_query)
@@ -268,10 +269,10 @@ def get_lab_stats(labId):
             get_total_job_details_query = f"""
                                                     SELECT IFNULL(SUM(subquery.total_count), 0) AS total_count
                                                     FROM (
-                                                        SELECT COUNT(DISTINCT order_id) AS total_count
+                                                        SELECT COUNT(DISTINCT so_order_id) AS total_count
                                                         FROM sales_order
-                                                        WHERE assigned_lab = {labId}
-                                                        GROUP BY order_id
+                                                        WHERE so_assigned_lab = {labId}
+                                                        GROUP BY so_order_id
                                                     ) AS subquery
                                                     """
 
@@ -280,10 +281,10 @@ def get_lab_stats(labId):
 
             return {
                 "status": True,
-                "new_jobs": new_jobs[0],
-                "active_jobs": active_jobs[0],
-                "completed_jobs": completed_jobs[0],
-                "total_jobs": total_jobs[0],
+                "new_jobs": new_jobs['total_count'],
+                "active_jobs": active_jobs['total_count'],
+                "completed_jobs": completed_jobs['total_count'],
+                "total_jobs": total_jobs['total_count'],
             }, 200
 
     except pymysql.Error as e:

@@ -71,6 +71,7 @@
     
 
 
+    
     </script>
 </head>
 
@@ -83,14 +84,13 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for lab in lab_data%}
 
 
         <div class="content">
             <div class="row gy-3 mb-6 justify-content-between">
                 <div class="col-md-9 col-auto">
-                    <h2 class="mb-2 text-1100"> {{lab.lab_display_name}} - {{lab.lab_name}}</h2>
-                    <h5 class="text-700 fw-semi-bold mb-3 mt-3">Address: {{lab.lab_address}}</h5>
+                    <h2 class="mb-2 text-1100"> {{lab_data.lab_display_name}} - {{lab_data.lab_name}}</h2>
+                    <h5 class="text-700 fw-semi-bold mb-3 mt-3">Address: {{lab_data.lab_address}}</h5>
                     <h5 class="text-700 fw-semi-bold">Here’s what’s going on at this lab right now</h5>
                 </div>
             </div>
@@ -102,7 +102,7 @@
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
                                         <span
-                                                class="fs-1 fw-semi-bold text-900">{{lab.lab_gst}}</span>
+                                                class="fs-1 fw-semi-bold text-900">{{lab_data.lab_gst}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Store GSTIN</p>
                             </div>
@@ -113,7 +113,7 @@
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
                                     <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">
-                                        {{lab.creator_name}}</a>
+                                        {{lab_data.creator_name}}</a>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Created By</p>
                             </div>
@@ -123,7 +123,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{lab.created_on}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{lab_data.lab_created_on}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Created On</p>
                             </div>
@@ -133,7 +133,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">{{lab.updater_name}}</a>
+                                    <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">{{lab_data.updater_name}}</a>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Updated By</p>
                             </div>
@@ -143,7 +143,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{lab.last_updated_on}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{lab_data.lab_last_updated_on}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Updated On</p>
                             </div>
@@ -153,7 +153,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{lab.lab_phone}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{lab_data.lab_phone}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Lab Phone</p>
                             </div>
@@ -163,7 +163,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{lab.lab_email}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{lab_data.lab_email}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Lab Email</p>
                             </div>
@@ -235,15 +235,24 @@
                         </div>
                     </div>
                     <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter active"
+                                                href="#filter-all-fulfilment_status">All</a></li>
+                        <li class="nav-item"><a class="nav-link filter" href="#filter-NEW-fulfilment_status">New</a>
                         </li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-1">New</a></li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-2">Processing</a></li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-3">Ready</a></li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-4">Dispatched </a></li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-5">Ready in Store</a></li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-6">Delivered Customer</a></li>
-                        <li class="nav-item"><a class="nav-link filter" href="#filter-7">Cancelled</a></li>
+                        <li class="nav-item"><a class="nav-link filter" href="#filter-PROCESSING-fulfilment_status">Processing</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link filter"
+                                                href="#filter-filterIn_READY IN LAB-fulfilment_status">Ready In Lab</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link filter" href="#filter-DISPATCHED-fulfilment_status">Dispatched</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link filter" href="#filter-READY IN STORE-fulfilment_status">Ready
+                            In Store</a></li>
+                        <li class="nav-item"><a class="nav-link filter"
+                                                href="#filter-DELIVERED CUSTOMER-fulfilment_status">Delivered
+                            Customer</a></li>
+                        <li class="nav-item"><a class="nav-link filter" href="#filter-CANCELLED-fulfilment_status">Cancelled</a>
+                        </li>
                     </ul>
                     <div data-list='{"valueNames":["order","total","customer","payment_status","fulfilment_status","delivery_type","date"],"page":5,"pagination":true}'
                          id="orderTable">
@@ -306,71 +315,85 @@
                                     <tbody class="list" id="order-table-body">
                                     {% for job in lab_job %}
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static"
-                                        data-category="{{ job.order_status }}">
+                                        data-category="{{ job.so_order_status }}">
                                         <td class="fs--1 align-middle px-0 py-3">
                                             <div class="form-check mb-0 fs-0">
                                             </div>
                                         </td>
                                         </td>
                                         <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                                  href="{% url 'job_details' job.order_id %}">{{job.order_id}}</a>
+                                                                                                  href="{% url 'job_details' job.so_order_id %}">{{job.so_order_id}}</a>
                                         </td>
                                         <td class="customer align-middle white-space-nowrap ">
-                                            {% if job.created_by_store_type == 1%}
+                                            {% if job.so_created_by_store_type == 1%}
                                             <a class="fw-semi-bold"
-                                               href="{% url 'view_own_store' job.created_by_store %}">
+                                               href="{% url 'view_own_store' job.so_created_by_store %}">
                                                 {{job.store_name}}
                                             </a>
                                             {% else %}
                                             <a class="fw-semi-bold"
-                                               href="{% url 'view_franchise_store' job.created_by_store %}">
-                                                {{job.store_name}}
+                                               href="{% url 'view_franchise_store' job.so_created_by_store %}">
+                                                {{job.so_store_name}}
                                             </a>
                                             {% endif %}
                                         </td>
                                         <!--                                        <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"-->
-                                        <!--                                                                                                  href="{% url 'order_details' job.order_id %}">#{{job.order_id}}</a>-->
+                                        <!--                                                                                                  href="{% url 'order_details' job.so_order_id %}">#{{job.so_order_id}}</a>-->
                                         <!--                                        </td>-->
 
                                         <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                            {% if job.payment_status == 1 %}
+                                            {% if job.so_payment_status == 1 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                     class="badge-label">PENDING</span></span>
-                                            {% elif job.payment_status == 2 %}
+                                            {% elif job.so_payment_status == 2 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
                                                     class="badge-label">COMPLETE</span></span>
-                                            {% elif job.payment_status == 3 %}
+                                            {% elif job.so_payment_status == 3 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
                                                     class="badge-label">REFUNDED</span></span>
                                             {% endif %}
                                         </td>
                                         <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                            {% if job.order_status == 1 %}
+                                            {% if job.so_order_status == 1 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">NEW</span></span>
-                                            {% elif job.order_status == 2 %}
+                                                    class="badge-label">NEW</span><span class="ms-1"
+                                                                                        data-feather="check"
+                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif job.so_order_status == 2 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">PROCESSING</span></span>
-                                            {% elif job.order_status == 3 %}
+                                                    class="badge-label">PROCESSING</span><span class="ms-1"
+                                                                                               data-feather="check"
+                                                                                               style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif job.so_order_status == 3 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">READY</span></span>
-                                            {% elif job.order_status == 4 %}
+                                                    class="badge-label"><span style="display: none;">filterIn_READY IN LAB</span>READY IN LAB</span><span
+                                                    class="ms-1" data-feather="check"
+                                                    style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif job.so_order_status == 4 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                    class="badge-label">DISPATCHED</span></span>
-                                            {% elif job.order_status == 5 %}
+                                                    class="badge-label">DISPATCHED</span><span class="ms-1"
+                                                                                               data-feather="check"
+                                                                                               style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif job.so_order_status == 5 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                    class="badge-label">READY IN STORE</span></span>
-                                            {% elif job.order_status == 6 %}
-                                            <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                    class="badge-label">DELIVERED CUSTOMER</span></span>
-                                            {% elif job.order_status == 7 %}
+                                                    class="badge-label">READY IN STORE</span><span class="ms-1"
+                                                                                                   data-feather="check"
+                                                                                                   style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif job.so_order_status == 6 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                    class="badge-label">CANCELLED</span></span>
+                                                    class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
+                                                                                                       data-feather="check"
+                                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                            {% elif job.so_order_status == 7 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                    class="badge-label">CANCELLED</span><span class="ms-1"
+                                                                                              data-feather="check"
+                                                                                              style="height:12.8px;width:12.8px;"></span></span>
                                             {% endif %}
 
                                         </td>
                                         <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                            {{job.created_on}}
+                                            {{job.so_created_on}}
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -399,7 +422,6 @@
                 </div>
 
                 {% include 'footer.html' %}
-                {% endfor %}
             </div>
         </div>
     </div>
@@ -427,6 +449,7 @@
     
 
 
+    
     </script>
 </main>
 <!-- ===============================================-->
