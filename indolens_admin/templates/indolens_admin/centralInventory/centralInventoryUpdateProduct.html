@@ -317,99 +317,70 @@
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="mb-0 text-1000">Category</h5>
-                                                    <a class="fw-bold fs--1" href="{% url 'add_product_category' %}">
-                                                        Add new category</a>
 
                                                 </div>
                                                 <select id="categorySelect" name="categoryId" required
                                                         aria-label="category" class="form-select mb-3"
                                                         onchange="handleCategoryChange()">
                                                     <option value="{{product_data.ci_category_id}}">
-                                                        {{product_data.ci_category_name}}
+                                                        {{product_data.pc_category_name}}
                                                     </option>
                                                 </select>
-                                                <div class="invalid-feedback">Please select category.</div>
                                             </div>
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                    <h5 class="mb-0 text-1000">Brand</h5><a class="fw-bold fs--1"
-                                                                                            href="{% url 'add_product_brand' %}">Add
-                                                    new
-                                                    Brand</a>
+                                                    <h5 class="mb-0 text-1000">Brand</h5>
                                                 </div>
                                                 <select name="brandId" required aria-label="brands"
                                                         class="form-select mb-3">
                                                     <option value="{{product_data.ci_brand_id}}">
-                                                        {{product_data.ci_brand_name}}
+                                                        {{product_data.brand_name}}
                                                     </option>
-                                                    {% for brand in response.product_brands %}
-                                                    <option value="{{brand.brand_id}}">{{brand.brand_name}}</option>
-                                                    {% endfor %}
+
                                                 </select>
-                                                <div class="invalid-feedback">Please select a brand.</div>
+                                            </div>
+                                            <div class="col-12 col-sm-6 col-xl-12">
+                                                <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                    <h5 class="text-1000">Material</h5>
+                                                </div>
+                                                <select name="materialId" required
+                                                        class="form-select mb-3">
+                                                    <option value="{{product_data.ci_material_id}}">
+                                                        {{product_data.pm_material_name}}
+                                                    </option>
+
+                                                </select>
                                             </div>
 
-                                            <div id="only_frame_options" class="d-none">
+                                            {% if product_data.ci_category_id == 1 %}
+                                            <div id="only_frame_options">
                                                 <div class="col-12 col-sm-6 col-xl-12">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Material</h5><a class="fw-bold fs--1"
-                                                                                              href="{% url 'add_master_material' %}">Add
-                                                        new material</a>
+                                                        <h5 class="text-1000">Frame Type </h5>
                                                     </div>
-                                                    <select name="materialId" required class="form-select mb-3">
-                                                        <option value="{{product_data.ci_material_id}}">
-                                                            {{product_data.ci_material_name}}
-                                                        </option>
-                                                        {% for material in response.product_materials %}
-                                                        <option value="{{material.material_id}}">
-                                                            {{material.material_name}}
-                                                        </option>
-                                                        {% endfor %}
-                                                    </select>
-                                                    <div class="invalid-feedback">Please select material.</div>
-
-                                                </div>
-
-                                                <div class="col-12 col-sm-6 col-xl-12">
-                                                    <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Frame Type</h5><a class="fw-bold fs--1"
-                                                                                                href="{% url 'add_frame_type' %}">Add
-                                                        new frame type</a>
-                                                    </div>
-                                                    <select name="frameTypeId" required class="form-select mb-3">
+                                                    <select name="frameTypeId" required
+                                                            class="form-select mb-3">
                                                         <option value="{{product_data.ci_frame_type_id}}">
-                                                            {{product_data.ci_frame_type_name}}
+                                                            {{product_data.ftype_name}}
                                                         </option>
-                                                        {% for type in response.frame_types %}
-                                                        <option value="{{type.frame_id}}">{{type.frame_type_name}}
-                                                        </option>
-                                                        {% endfor %}
                                                     </select>
-                                                    <div class="invalid-feedback">Please select frame type.</div>
-
 
                                                 </div>
 
                                                 <div class="col-12 col-sm-6 col-xl-12">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Frame Shape</h5><a class="fw-bold fs--1"
-                                                                                                 href="{% url 'add_frame_shape' %}">Add
-                                                        new Shape</a>
+                                                        <h5 class="text-1000">Frame Shape</h5>
                                                     </div>
-                                                    <select name="frameShapeId" required class="form-select mb-3">
+                                                    <select name="frameShapeId" required
+                                                            class="form-select mb-3">
                                                         <option value="{{product_data.ci_frame_shape_id}}">
-                                                            {{product_data.ci_shape_name}}
+                                                            {{product_data.fshape_name}}
                                                         </option>
-                                                        {% for frame_shape in response.frame_shapes %}
-                                                        <option value="{{frame_shape.shape_id}}">
-                                                            {{frame_shape.shape_name}}
-                                                        </option>
-                                                        {% endfor %}
                                                     </select>
-                                                    <div class="invalid-feedback">Please select frame shape.</div>
 
                                                 </div>
                                             </div>
+                                            {% endif %}
 
 
                                         </div>
@@ -424,22 +395,13 @@
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="border-dashed-bottom pb-4 pb-xl-0">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Color</h5><a class="fw-bold fs--1"
-                                                                                           href="{% url 'add_master_color' %}">Add
-                                                        new Color</a>
+                                                        <h5 class="text-1000">Color</h5>
                                                     </div>
                                                     <select name="colorId" required class="form-select">
                                                         <option value="{{product_data.ci_color_id}}">
-                                                            {{product_data.ci_color_name}}
+                                                            {{product_data.pcol_color_name}}
                                                         </option>
-                                                        {% for color in response.colors %}
-                                                        <option value="{{color.color_id}}">
-                                                            {{color.color_name}} -
-                                                            {{color.color_code}}
-                                                        </option>
-                                                        {% endfor %}
                                                     </select>
-                                                    <div class="invalid-feedback">Please select color.</div>
 
                                                 </div>
                                             </div>
@@ -449,32 +411,27 @@
                                                 </div>
                                                 <select name="unitId" required class="form-select">
                                                     <option value="{{product_data.ci_unit_id}}">
-                                                        {{product_data.ci_unit_name}}
+                                                        {{product_data.unit_name}}
                                                     </option>
-                                                    {% for unit in response.master_units %}
-                                                    <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
-                                                    {% endfor %}
                                                 </select>
-                                                <div class="invalid-feedback">Please select unit.</div>
                                             </div>
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="mb-0 text-1000">Origin</h5>
                                                 </div>
-                                                <select name="origin" required aria-label="origin" class="form-select">
-                                                    <option value="{{product_data.ci_origin}}">{{product_data.ci_origin}}
+                                                <select name="origin" required aria-label="origin"
+                                                        class="form-select">
+                                                    <option value="{{product_data.ci_origin}}">
+                                                        {{product_data.ci_origin}}
                                                     </option>
-                                                    <option value="Indian">Indian</option>
-                                                    <option value="Foreign">Foreign</option>
-                                                    <option value="Domestic">Domestic</option>
+
                                                 </select>
-                                                <div class="invalid-feedback">Please select origin.</div>
 
                                             </div>
-                                            <input name="created_by" required type="hidden"
+                                            <input readonly name="created_by" required type="hidden"
 
                                                    value="{{ request.session.id }}">
-                                            <input name="last_updated_by" required type="hidden"
+                                            <input readonly name="last_updated_by" required type="hidden"
 
                                                    value="{{ request.session.id }}">
 

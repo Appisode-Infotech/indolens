@@ -77,12 +77,11 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for store in store_data %}
         <div class="content">
             <h2 class="mb-4">Edit Own Store</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_own_store' store.os_store_id %}" class="row g-3 needs-validation"
+                    <form action="{% url 'edit_own_store' store_data.os_store_id %}" class="row g-3 needs-validation"
                           method="post"
                           novalidate="">
                         {% csrf_token %}
@@ -91,7 +90,7 @@
                             <label class="form-label" for="storeName">Store name</label>
 
                             <input class="form-control" id="storeName" name="storeName" required="" type="text"
-                                   value="{{store.os_store_name}}"/>
+                                   value="{{store_data.os_store_name}}"/>
                             <div class="invalid-feedback">Enter valid store name.</div>
 
                         </div>
@@ -100,7 +99,7 @@
                             <label class="form-label" for="storeDisplayName">Store Display Name</label>
 
                             <input class="form-control" id="storeDisplayName" name="storeDisplayName" required=""
-                                   type="text" value="{{store.os_store_display_name}}"/>
+                                   type="text" value="{{store_data.os_store_display_name}}"/>
                                                         <div class="invalid-feedback">Enter valid store display name.</div>
 
                         </div>
@@ -110,7 +109,7 @@
                             <label class="form-label" for="storePhone">Store Phone</label>
 
                             <input class="form-control" id="storePhone" name="storePhone" required="" type="number"
-                                   min="1111111111" max="9999999999" value="{{store.os_store_phone}}"/>
+                                   min="1111111111" max="9999999999" value="{{store_data.os_store_phone}}"/>
                                                         <div class="invalid-feedback">Enter valid phone number with 10 digits.</div>
 
                         </div>
@@ -120,7 +119,7 @@
 
                             <input class="form-control" id="storeGSTIN" name="storeGSTIN" required="" type="text"
                                    minlength="15" maxlength="15"
-                                   value="{{store.os_store_gst}}" pattern="([0-9]{2}[a-z]{4}([a-z]{1}|[0-9]{1}).[0-9]{3}[a-z]{3}"/>
+                                   value="{{store_data.os_store_gst}}" pattern="([0-9]{2}[a-z]{4}([a-z]{1}|[0-9]{1}).[0-9]{3}[a-z]{3}"/>
                                                         <div class="invalid-feedback">Enter valid store GSTIN.</div>
 
                         </div>
@@ -130,7 +129,7 @@
                             <label class="form-label" for="storeEmail">Store Email</label>
 
                             <input class="form-control" id="storeEmail" name="storeEmail" required="" type="email"
-                                   value="{{store.store_email}}"/>
+                                   value="{{store_data.os_store_email}}"/>
                                                         <div class="invalid-feedback">Enter valid email.</div>
 
                         </div>
@@ -140,7 +139,7 @@
                             <label class="form-label" for="storeCity">City</label>
 
                             <input class="form-control" id="storeCity" name="storeCity" required="" type="text"
-                                   value="{{store.store_city}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{store_data.os_store_city}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                                         <div class="invalid-feedback">City is mandatory.</div>
 
                         </div>
@@ -149,7 +148,7 @@
                             <label class="form-label" for="storeState">State</label>
 
                             <input class="form-control" id="storeState" name="storeState" required="" type="text"
-                                   value="{{store.store_state}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{store_data.os_store_state}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                                                         <div class="invalid-feedback">State is mandatory.</div>
 
                         </div>
@@ -158,7 +157,7 @@
                             <label class="form-label" for="storeZipCode">Zip</label>
 
                             <input class="form-control" id="storeZipCode" name="storeZipCode" required="" type="number"
-                                  min="111111" max="999999" value="{{store.store_zip}}"/>
+                                  min="111111" max="999999" value="{{store_data.os_store_zip}}"/>
                                                         <div class="invalid-feedback">Zip code is mandatory.</div>
 
                         </div>
@@ -167,7 +166,7 @@
                             <label class="form-label" for="completeAddress">Complete Address</label>
 
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3" maxlength="255">{{store.store_address}}</textarea>
+                                      rows="3" maxlength="255">{{store_data.os_store_address}}</textarea>
                                                         <div class="invalid-feedback">Address is mandatory.</div>
 
                         </div>
@@ -178,13 +177,13 @@
                         <div class="col-sm-12">
                             <input class="form-control" id="store_lat_lng" name="storeLatLng" placeholder="Co Ordinates"
                                    readonly required
-                                   type="text" value="Latitude: {{store.store_lat}}, Longitude: {{store.store_lng}}">
+                                   type="text" value="Latitude: {{store_data.os_store_lat}}, Longitude: {{store_data.os_store_lng}}">
                         </div>
                         <div class="col-12" id="map"></div>
                         <input name="last_updated_by" required type="hidden"
                                value="{{ request.session.id }}">
                         <input name="store_id" required type="hidden"
-                               value="{{ store.store_id}}">
+                               value="{{ store_data.os_store_id}}">
 
                         <div class="col-12">
 
@@ -197,7 +196,6 @@
             {% include 'footer.html' %}
 
         </div>
-        {% endfor %}
 
     </div>
 </main>
@@ -242,8 +240,8 @@
 
         // Set the default center based on store_lat and store_lng
         var defaultCenter = {
-            lat: parseFloat({{ store_data.0.store_lat}}),
-            lng: parseFloat({{ store_data.0.store_lng}})
+            lat: parseFloat({{ store_data.os_store_lat}}),
+            lng: parseFloat({{ store_data.os_store_lng}})
         };
         map.setCenter(defaultCenter);
 

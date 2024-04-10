@@ -19,20 +19,30 @@ def get_order_stats(status, store_type):
     try:
         with getConnection().cursor() as cursor:
             get_order_query = f"""
-                    SELECT count(*)
-                    FROM sales_order
-                    WHERE so_order_status {status_condition} AND so_created_by_store_type = {store_type} 
-                    GROUP BY so_order_id          
-                    """
+                                SELECT *
+                                FROM sales_order
+                                WHERE so_order_status {status_condition} AND so_created_by_store_type = {store_type} 
+                                GROUP BY so_order_id          
+                                """
             cursor.execute(get_order_query)
-            orders_list = cursor.fetchone()
-            if orders_list is None:
-                count = 0
-            else:
-                count = orders_list['count(*)']
+            orders_list = cursor.fetchall()
+
+            # get_order_query = f"""
+            #         SELECT count(*)
+            #         FROM sales_order
+            #         WHERE so_order_status {status_condition} AND so_created_by_store_type = {store_type}
+            #         GROUP BY so_order_id
+            #         """
+            # cursor.execute(get_order_query)
+            # orders_list = cursor.fetchone()
+            # print(orders_list)
+            # if orders_list is None:
+            #     count = 0
+            # else:
+            #     count = len(orders_list)
             return {
                 "status": True,
-                "count": count
+                "count": len(orders_list)
             }, 200
 
     except pymysql.Error as e:

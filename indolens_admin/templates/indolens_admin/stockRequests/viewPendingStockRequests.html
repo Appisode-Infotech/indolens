@@ -98,11 +98,11 @@
                         </div>
                     </div>
                     <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all-type">All</a>
                         </li>
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-1">Own
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-OWN STORE-type">Own
                             Store</a></li>
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-2">Franchise
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-FRANCHISE STORE-type">Franchise
                             Store</a></li>
                     </ul>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -180,72 +180,74 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for stock in stocks_request_list %}
                             <tr class="position-static"
-                                data-category="{{ stock.store_type }}">
+                                data-category="{{ stock.pr_store_type }}">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
 
-                                <td class="align-middle white-space-nowrap py-4 requestId">{{stock.request_id}}</td>
+                                <td class="align-middle white-space-nowrap py-4 requestId">{{stock.pr_request_products_id}}</td>
 
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 name">
-                                    {% if stock.store_type == 1 %}
+                                    {% if stock.pr_store_type == 1 %}
                                     <a
                                             class="text-decoration-none fw-bold fs-0"
-                                            href="{% url 'view_own_store' stock.store_id %}">{{stock.store_name}}</a>
+                                            href="{% url 'view_own_store' stock.pr_store_id %}">{{stock.store_name}}</a>
                                     {% else %}
                                     <a
                                             class="text-decoration-none fw-bold fs-0"
-                                            href="{% url 'view_franchise_store' stock.store_id %}">{{stock.store_name}}</a>
+                                            href="{% url 'view_franchise_store' stock.pr_store_id %}">{{stock.store_name}}</a>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap py-4 type">
-                                    {% if stock.store_type == 1 %}
+                                    {% if stock.pr_store_type == 1 %}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 sendername">
-                                    {% if stock.request_to_store_id == 0 %}
+                                    {% if stock.pr_request_to_store_id == 0 %}
                                     CENTRAL INVENTORY
                                     {% else %}
                                     <a
                                             class="text-decoration-none fw-bold fs-0"
-                                            href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</a>
+                                            href="{% url 'view_own_store' stock.pr_request_to_store_id %}">{{stock.sender_store}}</a>
                                     {% endif %}
                                 </td>
 
-                                <td class="product align-middle">
+                                <td class="product align-middle product">
                                     <a class="fw-semi-bold line-clamp-3 mb-0"
-                                       href="{% url 'view_products' stock.product_id %}">{{stock.product_name}}</a></td>
+                                       href="{% url 'view_products' stock.pr_product_id %}">{{stock.ci_product_name}}</a></td>
+
                                 <td class="align-middle white-space-nowrap ps-3 py-4 quantity text-end">
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_quantity}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.pr_product_quantity}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 availableQuantity text-end">
-                                    {% if stock.request_to_store_id == 0 %}
-                                    <p class="mb-0 fs--1 text-900">{{stock.product_quantity}}</p>
+                                    {% if stock.pr_request_to_store_id == 0 %}
+                                    <p class="mb-0 fs--1 text-900">{{stock.ci_product_quantity}}</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">{{stock.sender_store_quantity}}</p>
                                     {% endif %}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 price text-end">
-                                    <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
+                                    <p class="mb-0 fs--1 text-900">₹{{stock.pr_unit_cost}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 req_date">
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.pr_created_on}}</p>
                                 </td>
+
                                 <td class="align-middle white-space-nowrap ps-3 py-4 moved_date">
-                                    {% if stock.delivery_status == 1 or stock.delivery_status == 2 %}
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_last_updated_on}}</p>
+                                    {% if stock.pr_delivery_status == 1 or stock.pr_delivery_status == 2 %}
+                                    <p class="mb-0 fs--1 text-900">{{stock.pr_last_updated_on}}</p>
                                     {% else %}
-                                    <p class="mb-0 fs--1 text-900">Not Delivered</p>
+                                    <p class="mb-0 fs--1 text-900">Not Dispatched</p>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end approvalStatus">
-                                    {% if stock.request_status == 0 %}
+                                    {% if stock.pr_request_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
-                                    {% elif stock.request_status == 1 %}
+                                    {% elif stock.pr_request_status == 1 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
                                     {% else %}
@@ -254,21 +256,21 @@
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end deliveryStatus">
-                                    {% if stock.delivery_status == 0 %}
+                                    {% if stock.pr_delivery_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>
-                                    {% elif stock.delivery_status == 1 %}
+                                    {% elif stock.pr_delivery_status == 1 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-primary">DISPATCHED</span>
-                                    {% elif stock.delivery_status == 2 %}
+                                    {% elif stock.pr_delivery_status == 2 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
-                                    {% elif stock.delivery_status == 3 %}
+                                    {% elif stock.pr_delivery_status == 3 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
-                                {% if stock.request_status == 0 %}
+                                {% if stock.pr_request_status == 0 %}
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
@@ -283,23 +285,23 @@
                                                data-bs-role="Accept request"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ stock.request_id }}"
+                                               data-employee-id="{{ stock.pr_request_products_id }}"
                                                data-employee-name="{{ stock.product_name }}"
                                                data-action-type="accept"
                                                data-action-store-type="{{stock.store_type}}"
                                                data-action-by="{{stock.store_name}}"
-                                               data-action-url="{% url 'change_stock_request_status' 'Pending' stock.request_id 1 %}">Accept</a>
+                                               data-action-url="{% url 'change_stock_request_status' 'Pending' stock.pr_request_products_id 1 %}">Accept</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item text-danger"
                                                data-bs-role="Reject request"
                                                data-bs-toggle="modal"
                                                data-bs-target="#reject_modal"
-                                               data-employee-id="{{ stock.request_id }}"
+                                               data-employee-id="{{ stock.pr_request_products_id }}"
                                                data-employee-name="{{ stock.product_name }}"
                                                data-action-type="reject"
                                                data-action-store-type="{{stock.store_type}}"
                                                data-action-by="{{stock.store_name}}"
-                                               data-action-url="{% url 'change_stock_request_status' 'Pending' stock.request_id 2 %}">Reject</a>
+                                               data-action-url="{% url 'change_stock_request_status' 'Pending' stock.pr_request_products_id 2 %}">Reject</a>
 
                                         </div>
                                     </div>

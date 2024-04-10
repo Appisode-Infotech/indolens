@@ -83,7 +83,7 @@
                     <li class="nav-item"><a aria-current="page" class="nav-link filter active" href="#filter-all-category">All</a></li>
                     {% for category in categories_List %}
                     <li class="nav-item">
-                        <a class="nav-link filter" href="#filter-filterIn_{{ category.category_name }}-category">{{ category.category_name }}</a>
+                        <a class="nav-link filter" href="#filter-filterIn_{{ category.pc_category_name }}-category">{{ category.pc_category_name }}</a>
                     </li>
                     {% endfor %}
                 </ul>
@@ -192,22 +192,22 @@
 
                                 {% for product in product_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
-                                    data-category="{{ product.category_name }}">
+                                    data-category="{{ product.ci_category_name }}">
                                     <td class="order align-middle white-space-nowrap py-0 slno"></td>
-                                    <td class="order align-middle white-space-nowrap py-0 productId"> PID{{product.product_id}}</td>
+                                    <td class="order align-middle white-space-nowrap py-0 productId"> PID{{product.ci_product_id}}</td>
                                     <td class="align-middle white-space-nowrap fw-bold text-700 ps-4">
-                                        <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
+                                        <a href="{{ MEDIA_URL }}{{ product.ci_product_images.0 }}" target="_blank">
                                             <div class="avatar avatar-m">
                                                 <img alt="..." data-dz-thumbnail="data-dz-thumbnail" class="rounded-circle"  onerror="this.src = 'http://via.placeholder.com/100x100';"
-                                                     src="{{ MEDIA_URL }}{{ product.product_images.0 }}"/>
+                                                     src="{{ MEDIA_URL }}{{ product.ci_product_images.0 }}"/>
                                             </div>
                                         </a>
                                     </td>
                                     <td class="align-middle white-space-nowrap fw-bold text-700 ps-4 ">
-                                        <a href="{{ MEDIA_URL }}{{ product.product_qr_code }}" target="_blank">
+                                        <a href="{{ MEDIA_URL }}{{ product.ci_product_qr_code }}" target="_blank">
                                             <div class="avatar avatar-m">
                                                 <img alt="" class="rounded-circle"
-                                                     src="{{ MEDIA_URL }}{{ product.product_qr_code }}"/>
+                                                     src="{{ MEDIA_URL }}{{ product.ci_product_qr_code }}"/>
                                             </div>
                                         </a>
                                     </td>
@@ -215,17 +215,17 @@
                                             class="fw-semi-bold line-clamp-3 mb-0"
                                             href="{% url 'view_products' product.ci_product_id %}">{{product.ci_product_name}} </a></td>
                                     <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4 text-end">
-                                        ₹{{product.sale_price}}
+                                        ₹{{product.ci_sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        <p style="display: none;">filterIn_{{product.category_name}}</p>{{product.category_name}}
+                                        <p style="display: none;">filterIn_{{product.pc_category_name}}</p>{{product.pc_category_name}}
                                     </td>
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{product.brand_name}}
                                     </td>
 
                                     <td class="quantity align-middle white-space-nowrap fw-bold text-700 ps-4 text-end">
-                                        {{product.product_quantity}}
+                                        {{product.ci_product_quantity}}
                                     </td>
                                     <td class="status align-middle white-space-nowrap fw-bold text-700 ps-4">
                                         {% if product.ci_status == 1 %}
@@ -235,7 +235,7 @@
                                         {% endif %}
                                     </td>
                                     <td class="date align-middle white-space-nowrap text-600 ps-4">
-                                        {{product.created_on}}
+                                        {{product.ci_created_on}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
                                         <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -252,8 +252,8 @@
                                                    data-bs-role="Product"
                                                    data-bs-toggle="modal"
                                                    data-bs-target="#restock_modal"
-                                                   data-employee-id="{{ product.product_id }}"
-                                                   data-employee-name="{{ product.product_name }}"
+                                                   data-employee-id="{{ product.ci_product_id }}"
+                                                   data-employee-name="{{ product.ci_product_name }}"
                                                    data-action-type="restock">Restock</a>
 
                                                 <a class="dropdown-item"

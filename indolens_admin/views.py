@@ -94,9 +94,9 @@ def resetPassword(request, code):
 def dashboard(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         own_store_count, status_code = own_store_controller.get_own_store_count()
-        print(own_store_count)
+        # print(own_store_count)
         franchise_store_count, status_code = franchise_store_controller.get_franchise_stores_count()
-        print(franchise_store_count)
+        # print(franchise_store_count)
         sales, status_code = orders_controller.get_all_orders('All', 'All', 'All')
         # print(sales)
         own_store_new_order, status_code = dashboard_controller.get_order_stats('New', 1)
@@ -104,17 +104,17 @@ def dashboard(request):
         own_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 1)
         print(own_store_delivered_orders)
         own_store_sales, status_code = dashboard_controller.get_sales_stats(1)
-        print(own_store_sales)
+        # print(own_store_sales)
         store_sales_expense_analytics, status_code = dashboard_controller.get_store_analytics()
         # print(store_sales_expense_analytics)
         franchise_store_new_order, status_code = dashboard_controller.get_order_stats('New', 2)
-        print(franchise_store_new_order)
+        # print(franchise_store_new_order)
         franchise_store_delivered_orders, status_code = dashboard_controller.get_order_stats('Completed', 2)
-        print(franchise_store_delivered_orders)
+        # print(franchise_store_delivered_orders)
         franchise_store_sales, status_code = dashboard_controller.get_sales_stats(2)
-        print(franchise_store_sales)
+        # print(franchise_store_sales)
         out_of_stock, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
-        print(out_of_stock)
+        # print(out_of_stock)
         return render(request, 'indolens_admin/dashboard.html',
                       {"own_store_count": own_store_count['own_stores'],
                        "franchise_store_list": franchise_store_count['franchise_store'],
@@ -177,6 +177,7 @@ def editOwnStore(request, ownStoreId):
         if request.method == 'POST':
             store_obj = own_store_model.own_store_model_from_dict(request.POST)
             response, status_code = own_store_controller.edit_own_store_by_id(store_obj)
+            print(response)
             if status_code != 200:
                 return render(request, 'indolens_admin/ownStore/editOwnStore.html', {"message": response['message']})
             else:
@@ -185,7 +186,7 @@ def editOwnStore(request, ownStoreId):
 
         else:
             response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
-            # print(response)
+            print(response)
             return render(request, 'indolens_admin/ownStore/editOwnStore.html',
                           {"store_data": response['own_stores'], "id": ownStoreId})
     else:
@@ -2958,14 +2959,17 @@ def restockProductOutOfStock(request):
 
 def centralInventoryUpdateProduct(request, productId):
     if request.method == 'POST':
+        print(request.POST)
         power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
         product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
+        print(vars(product_obj))
         response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId,
                                                                                                power_attributes)
         url = reverse('view_products', kwargs={'productId': productId})
         return redirect(url)
     else:
         response, status_code = get_central_inventory_product_single(productId)
+        print(response)
         types, status_code = central_inventory_controller.get_all_active_types()
         return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
                       {'product_data': response['product_data'], 'productId': productId, "response": types})
@@ -2993,6 +2997,7 @@ def centralInventoryViewProducts(request, productId):
 
 def centralInventoryViewProductRestockLogs(request, productId):
     response, status_code = get_central_inventory_product_restoc_log(productId)
+    print(response)
     return render(request, 'indolens_admin/centralInventory/centralInventoryProductLogs.html',
                   {"restock_logs": response['restock_logs']})
 
@@ -3036,6 +3041,7 @@ def centralInventoryAddProducts(request):
             power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
             response, status_code = central_inventory_controller.add_central_inventory_products(product_obj, file_data,
                                                                                                 power_attributes)
+            print(response)
             url = reverse('view_products', kwargs={'productId': response['productId']})
             return redirect(url)
         else:
@@ -3128,6 +3134,7 @@ def viewPendingStockRequests(request):
 def viewCompletedStockRequests(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_stock_requests('1')
+        print(response)
         return render(request, 'indolens_admin/stockRequests/viewCompletedStockRequests.html',
                       {"stocks_request_list": response['stocks_request_list']})
     else:
@@ -3144,18 +3151,23 @@ def viewRejectedStockRequests(request):
 
 
 def changeStockRequestStatus(request, route, requestId, status):
+    print(route, requestId, status)
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.POST:
+            print("Rejected")
             response, status_code = central_inventory_controller.change_stock_request_status_with_reason(requestId,
                                                                                                          status,
                                                                                                          request.session.get(
                                                                                                              'id'),
                                                                                                          request.POST[
                                                                                                              'reject_reason'])
+            print(response)
 
         else:
+            print("Accepted")
             response, status_code = central_inventory_controller.change_stock_request_status(requestId, status,
                                                                                              request.session.get('id'))
+            print(response)
 
         if route == 'All':
             if response['status']:

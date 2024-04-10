@@ -146,16 +146,16 @@
                                     <td class="order align-middle white-space-nowrap py-0 slno"></td></td>
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0"
-                                            href="{% url 'view_products' log.product_id %}">{{log.product_name}} </a></td>
+                                            href="{% url 'view_products' log.cirl_product_id %}">{{log.ci_product_name}} </a></td>
                                     <td class="price align-middle white-space-nowrap fw-bold text-700 text-end">
-                                        {{log.quantity}}
+                                        {{log.cirl_quantity}}
                                     </td>
 
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 ">
-                                        <a href="{% url 'view_sub_admin' log.created_by %}">{{log.creator_name}}</a>
+                                        <a href="{% url 'view_sub_admin' log.cirl_created_by %}">{{log.restocked_by}}</a>
                                     </td>
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        {{log.created_on}}
+                                        {{log.cirl_created_on}}
                                     </td>
                                 </tr>
                                 {% endfor %}

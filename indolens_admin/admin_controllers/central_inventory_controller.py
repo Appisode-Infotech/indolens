@@ -89,25 +89,51 @@ def add_central_inventory_products(product_obj, file, power_attributes):
     frame_shape_id_value = product_obj.frame_shape_id if product_obj.frame_shape_id != '' else 0
     try:
         with getConnection().cursor() as cursor:
-            add_product_query = f""" INSERT INTO central_inventory 
-                                    (ci_product_name, ci_product_description, ci_product_images, 
-                                    ci_category_id, ci_brand_id, ci_material_id, ci_frame_type_id, ci_frame_shape_id, 
-                                    ci_color_id, ci_unit_id, ci_origin, ci_cost_price, ci_sale_price, ci_model_number, ci_hsn, 
-                                    ci_created_on, ci_created_by, ci_last_updated_on, ci_last_updated_by, 
-                                    ci_product_quantity, ci_product_gst, ci_discount, ci_franchise_sale_price, ci_power_attribute, ci_status) 
-                                    VALUES ('{product_obj.product_title}','{product_obj.product_description}',
-                                    '{json.dumps(file.product_img)}','{product_obj.category_id}',
-                                    '{product_obj.brand_id}','{product_obj.material_id}',
-                                    '{frame_type_id_value}','{frame_shape_id_value}',
-                                    '{product_obj.color_id}','{product_obj.unit_id}','{product_obj.origin}',
-                                    '{product_obj.cost_price}','{product_obj.sale_price}', 
-                                    '{product_obj.model_number}', '{product_obj.hsn_number}',
-                                    '{getIndianTime()}','{product_obj.created_by}','{getIndianTime()}',
-                                    '{product_obj.last_updated_by}', '{product_obj.product_quantity}', 
-                                    '{product_obj.product_gstin}', {product_obj.discount}, 
-                                    {product_obj.franchise_sale_price}, '{power_attributes_json}', 1) """
+            add_product_query = """ 
+                INSERT INTO central_inventory (
+                    ci_product_name, ci_product_description, ci_product_images, ci_category_id, ci_brand_id,
+                    ci_material_id, ci_frame_type_id, ci_frame_shape_id, ci_color_id, ci_unit_id, ci_origin,
+                    ci_cost_price, ci_sale_price, ci_model_number, ci_hsn, ci_created_on, ci_created_by,
+                    ci_last_updated_on, ci_last_updated_by, ci_product_quantity, ci_product_gst, ci_discount,
+                    ci_franchise_sale_price, ci_power_attribute, ci_status
+                ) VALUES (
+                    %(product_name)s, %(product_description)s, %(product_images)s, %(category_id)s,
+                    %(brand_id)s, %(material_id)s, %(frame_type_id)s, %(frame_shape_id)s, %(color_id)s,
+                    %(unit_id)s, %(origin)s, %(cost_price)s, %(sale_price)s, %(model_number)s, %(hsn)s,
+                    %(created_on)s, %(created_by)s, %(last_updated_on)s, %(last_updated_by)s, 
+                    %(product_quantity)s, %(product_gst)s, %(discount)s, %(franchise_sale_price)s, 
+                    %(power_attribute)s, %(status)s
+                )"""
 
-            cursor.execute(add_product_query)
+            product_data = {
+                'product_name': product_obj.product_title,
+                'product_description': product_obj.product_description,
+                'product_images': json.dumps(file.product_img),
+                'category_id': product_obj.category_id,
+                'brand_id': product_obj.brand_id,
+                'material_id': product_obj.material_id,
+                'frame_type_id': frame_type_id_value,
+                'frame_shape_id': frame_shape_id_value,
+                'color_id': product_obj.color_id,
+                'unit_id': product_obj.unit_id,
+                'origin': product_obj.origin,
+                'cost_price': product_obj.cost_price,
+                'sale_price': product_obj.sale_price,
+                'model_number': product_obj.model_number,
+                'hsn': product_obj.hsn_number,
+                'created_on': getIndianTime(),
+                'created_by': product_obj.created_by,
+                'last_updated_on': getIndianTime(),
+                'last_updated_by': product_obj.last_updated_by,
+                'product_quantity': product_obj.product_quantity,
+                'product_gst': product_obj.product_gstin,
+                'discount': product_obj.discount,
+                'franchise_sale_price': product_obj.franchise_sale_price,
+                'power_attribute': json.dumps(power_attributes_json),
+                'status': 1
+            }
+
+            cursor.execute(add_product_query, product_data)
 
             import os
             import qrcode
@@ -169,11 +195,11 @@ def add_central_inventory_products(product_obj, file, power_attributes):
             QRimg.save(image_path, format='JPEG', quality=100)
 
             image_url = f"product_qr_codes/{productId}.png"
-            update_qr_sql = f"UPDATE central_inventory SET product_qr_code = '{image_url}' WHERE product_id = {productId}"
+            update_qr_sql = f"UPDATE central_inventory SET ci_product_qr_code = '{image_url}' WHERE ci_product_id = {productId}"
             cursor.execute(update_qr_sql)
 
             restock_log_query = f""" INSERT INTO central_inventory_restock_log 
-                                                            (product_id, quantity, created_by, created_on) 
+                                                            (cirl_product_id, cirl_quantity, cirl_created_by, cirl_created_on) 
                                                             VALUES ({productId}, {product_obj.product_quantity},
                                                             {product_obj.created_by},'{getIndianTime()}') """
             cursor.execute(restock_log_query)
@@ -191,32 +217,31 @@ def add_central_inventory_products(product_obj, file, power_attributes):
 
 def update_central_inventory_products(product_obj, productId, power_attribute):
     power_attributes_json = json.dumps(power_attribute)
-    print(power_attributes_json)
     try:
         with getConnection().cursor() as cursor:
             update_product_query = f"""
                 UPDATE central_inventory 
-                SET product_name = '{product_obj.product_title}',
-                    product_description = '{product_obj.product_description}',
-                    category_id = '{product_obj.category_id}',
-                    brand_id = '{product_obj.brand_id}',
-                    material_id = '{product_obj.material_id}',
-                    frame_type_id = '{product_obj.frame_type_id}',
-                    frame_shape_id = '{product_obj.frame_shape_id}',
-                    color_id = '{product_obj.color_id}',
-                    unit_id = '{product_obj.unit_id}',
-                    origin = '{product_obj.origin}',
-                    cost_price = '{product_obj.cost_price}',
-                    sale_price = '{product_obj.sale_price}',
-                    model_number = '{product_obj.model_number}',
-                    hsn = '{product_obj.hsn_number}',
-                    last_updated_on = '{getIndianTime()}',
-                    last_updated_by = '{product_obj.last_updated_by}',
-                    product_gst = '{product_obj.product_gstin}',
-                    discount = '{product_obj.discount}',
-                    franchise_sale_price = {product_obj.franchise_sale_price},
-                    power_attribute = '{power_attributes_json}'
-                WHERE product_id = '{productId}'
+                SET ci_product_name = '{product_obj.product_title}',
+                    ci_product_description = '{product_obj.product_description}',
+                    ci_category_id = '{product_obj.category_id}',
+                    ci_brand_id = '{product_obj.brand_id}',
+                    ci_material_id = '{product_obj.material_id}',
+                    ci_frame_type_id = '{product_obj.frame_type_id}',
+                    ci_frame_shape_id = '{product_obj.frame_shape_id}',
+                    ci_color_id = '{product_obj.color_id}',
+                    ci_unit_id = '{product_obj.unit_id}',
+                    ci_origin = '{product_obj.origin}',
+                    ci_cost_price = '{product_obj.cost_price}',
+                    ci_sale_price = '{product_obj.sale_price}',
+                    ci_model_number = '{product_obj.model_number}',
+                    ci_hsn = '{product_obj.hsn_number}',
+                    ci_last_updated_on = '{getIndianTime()}',
+                    ci_last_updated_by = '{product_obj.last_updated_by}',
+                    ci_product_gst = '{product_obj.product_gstin}',
+                    ci_discount = '{product_obj.discount}',
+                    ci_franchise_sale_price = {product_obj.franchise_sale_price},
+                    ci_power_attribute = '{power_attributes_json}'
+                WHERE ci_product_id = '{productId}'
             """
 
             cursor.execute(update_product_query)
@@ -236,14 +261,14 @@ def restock_central_inventory_products(productId, product_quantity, created_by):
         with getConnection().cursor() as cursor:
             restock_product_query = f"""
                 UPDATE central_inventory 
-                SET product_quantity = product_quantity + {product_quantity}
-                WHERE product_id = '{productId}'
+                SET ci_product_quantity = ci_product_quantity + {product_quantity}
+                WHERE ci_product_id = '{productId}'
             """
 
             cursor.execute(restock_product_query)
 
             restock_log_query = f""" INSERT INTO central_inventory_restock_log 
-                                                (product_id, quantity, created_by, created_on) 
+                                                (cirl_product_id, cirl_quantity, cirl_created_by, cirl_created_on) 
                                                 VALUES ({productId}, {product_quantity},{created_by},'{getIndianTime()}') """
 
             cursor.execute(restock_log_query)
@@ -382,11 +407,11 @@ def get_central_inventory_product_single(productId):
 def get_central_inventory_product_restoc_log(productId):
     with getConnection().cursor() as cursor:
         try:
-            get_all_product_query = f""" SELECT logs.*, ci.product_name, creator.name
+            get_all_product_query = f""" SELECT logs.*, ci.ci_product_name, creator.admin_name AS restocked_by
                                             FROM central_inventory_restock_log AS logs
-                                            LEFT JOIN admin AS creator ON logs.created_by = creator.admin_id
-                                            LEFT JOIN central_inventory As ci ON ci.product_id = logs.product_id
-                                            WHERE logs.product_id= {productId} """
+                                            LEFT JOIN admin AS creator ON logs.cirl_created_by = creator.admin_admin_id
+                                            LEFT JOIN central_inventory As ci ON ci.ci_product_id = logs.cirl_product_id
+                                            WHERE logs.cirl_product_id= {productId} """
             cursor.execute(get_all_product_query)
             product_list = cursor.fetchall()
             return {
@@ -613,28 +638,28 @@ def change_stock_request_status(requestId, status, updator):
     try:
         with getConnection().cursor() as cursor:
             fetch_req_product_query = f"""SELECT * FROM request_products 
-                        WHERE request_products_id = '{requestId}'"""
+                        WHERE pr_request_products_id = '{requestId}'"""
             cursor.execute(fetch_req_product_query)
             product_details = cursor.fetchone()
-            quantity = product_details[4]
-            dispenser_inventory = product_details[9]
+            quantity = product_details['pr_product_quantity']
+            dispenser_inventory = product_details['pr_request_to_store_id']
 
             # requested products from centre inventory
             if dispenser_inventory == 0:
-                fetch_inventory_product_query = f"""SELECT product_quantity FROM central_inventory 
-                            WHERE product_id = {product_details[3]} """
+                fetch_inventory_product_query = f"""SELECT ci_product_quantity AS ci_quantity FROM central_inventory 
+                            WHERE ci_product_id = {product_details['pr_product_id']} """
                 cursor.execute(fetch_inventory_product_query)
-                available_quantity = cursor.fetchone()[0]
+                available_quantity = cursor.fetchone()['ci_quantity']
 
                 if status == 1:
                     if available_quantity >= quantity:
-                        update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}', 
-                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', delivery_status = 1
-                        WHERE request_products_id = '{requestId}' """
+                        update_stock_request_query = f"""UPDATE request_products SET pr_request_status = '{status}', 
+                        pr_last_updated_on = '{getIndianTime()}', pr_last_updated_by = '{updator}', pr_delivery_status = 1
+                        WHERE pr_request_products_id = '{requestId}' """
                         cursor.execute(update_stock_request_query)
 
-                        update_central_Inventory = f"""UPDATE central_inventory SET product_quantity = product_quantity - {quantity} 
-                                                                            WHERE product_id = {product_details[3]}"""
+                        update_central_Inventory = f"""UPDATE central_inventory SET ci_product_quantity = ci_product_quantity - {quantity} 
+                                                                            WHERE ci_product_id = {product_details['pr_product_id']}"""
                         cursor.execute(update_central_Inventory)
 
                         return {
@@ -648,9 +673,9 @@ def change_stock_request_status(requestId, status, updator):
                             "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in inventory"
                         }, 200
                 else:
-                    update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
-                                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', delivery_status = 3
-                                        WHERE request_products_id = '{requestId}' """
+                    update_stock_request_query = f"""UPDATE request_products SET pr_request_status = '{status}',
+                                        pr_last_updated_on = '{getIndianTime()}', pr_last_updated_by = '{updator}', pr_delivery_status = 3
+                                        WHERE pr_request_products_id = '{requestId}' """
                     cursor.execute(update_stock_request_query)
                     return {
                         "status": True,
@@ -659,23 +684,23 @@ def change_stock_request_status(requestId, status, updator):
 
 
             else:
-                fetch_inventory_product_query = f"""SELECT product_quantity FROM store_inventory 
-                                            WHERE product_id = {product_details[3]} AND store_id = {dispenser_inventory} 
-                                            AND store_type = 1 """
+                fetch_inventory_product_query = f"""SELECT si_product_quantity AS si_quantity FROM store_inventory 
+                                            WHERE si_product_id = {product_details['pr_product_id']} AND si_store_id = {dispenser_inventory} 
+                                            AND si_store_type = 1 """
                 cursor.execute(fetch_inventory_product_query)
-                available_quantity = cursor.fetchone()[0]
+                available_quantity = cursor.fetchone()['si_quantity']
 
                 if status == 1:
                     if available_quantity >= quantity:
-                        update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
-                                        last_updated_on = '{getIndianTime()}', last_updated_by = '{updator}', delivery_status = 1
-                                        WHERE request_products_id = '{requestId}' """
+                        update_stock_request_query = f"""UPDATE request_products SET pr_request_status = '{status}',
+                                        pr_last_updated_on = '{getIndianTime()}', pr_last_updated_by = '{updator}', pr_delivery_status = 1
+                                        WHERE pr_request_products_id = '{requestId}' """
                         cursor.execute(update_stock_request_query)
 
                         update_central_Inventory = f"""UPDATE store_inventory SET 
-                                                        product_quantity = product_quantity - {quantity} 
-                                                        WHERE product_id = {product_details[3]} AND 
-                                                        store_id = {dispenser_inventory} AND store_type = 1"""
+                                                        si_product_quantity = si_product_quantity - {quantity} 
+                                                        WHERE si_product_id = {product_details['pr_product_id']} AND 
+                                                        si_store_id = {dispenser_inventory} AND si_store_type = 1"""
                         cursor.execute(update_central_Inventory)
 
                         return {
@@ -709,25 +734,25 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
     try:
         with getConnection().cursor() as cursor:
             fetch_req_product_query = f"""SELECT * FROM request_products 
-                        WHERE request_products_id = '{requestId}'"""
+                        WHERE pr_request_products_id = '{requestId}'"""
             cursor.execute(fetch_req_product_query)
             product_details = cursor.fetchone()
-            quantity = product_details[4]
-            dispenser_inventory = product_details[9]
+            quantity = product_details['pr_product_quantity']
+            dispenser_inventory = product_details['pr_request_to_store_id']
 
             # requested products from centre inventory
             if dispenser_inventory == 0:
-                fetch_inventory_product_query = f"""SELECT product_quantity FROM central_inventory 
-                            WHERE product_id = {product_details[3]} """
+                fetch_inventory_product_query = f"""SELECT ci_product_quantity AS ci_quantity FROM central_inventory 
+                            WHERE ci_product_id = {product_details['pr_product_id']} """
                 cursor.execute(fetch_inventory_product_query)
-                available_quantity = cursor.fetchone()[0]
+                available_quantity = cursor.fetchone()['ci_quantity']
 
                 if status == 1:
                     if available_quantity >= quantity:
-                        update_stock_request_query = f"""UPDATE request_products SET request_status = {status}, 
-                        last_updated_on = '{getIndianTime()}', last_updated_by = {updator}, delivery_status = 1,
-                        comment = '{comments}'
-                        WHERE request_products_id = {requestId} """
+                        update_stock_request_query = f"""UPDATE request_products SET pr_request_status = {status}, 
+                        pr_last_updated_on = '{getIndianTime()}', pr_last_updated_by = {updator}, pr_delivery_status = 1,
+                        pr_comment = '{comments}'
+                        WHERE pr_request_products_id = {requestId} """
                         # cursor.execute(update_stock_request_query)
                         try:
                             cursor.execute(update_stock_request_query)
@@ -738,8 +763,8 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                             cursor.close()
 
                         update_central_Inventory = f"""UPDATE central_inventory SET 
-                                                        product_quantity = product_quantity - {quantity} 
-                                                        WHERE product_id = {product_details[3]}"""
+                                                        ci_product_quantity = ci_product_quantity - {quantity} 
+                                                        WHERE ci_product_id = {product_details['pr_product_id']}"""
                         cursor.execute(update_central_Inventory)
 
                         return {
@@ -753,10 +778,10 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                             "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in inventory"
                         }, 200
                 else:
-                    update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
-                                        last_updated_on = '{getIndianTime()}', last_updated_by = {updator}, 
-                                        delivery_status = 3, comment = '{comments}'
-                                        WHERE request_products_id = {requestId}  """
+                    update_stock_request_query = f"""UPDATE request_products SET pr_request_status = '{status}',
+                                        pr_last_updated_on = '{getIndianTime()}', pr_last_updated_by = {updator}, 
+                                        pr_delivery_status = 3, pr_comment = '{comments}'
+                                        WHERE pr_request_products_id = {requestId}  """
                     cursor.execute(update_stock_request_query)
                     return {
                         "status": True,
@@ -764,24 +789,24 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                     }, 200
 
             else:
-                fetch_inventory_product_query = f"""SELECT product_quantity FROM store_inventory 
-                                            WHERE product_id = {product_details[3]} AND store_id = {dispenser_inventory} 
-                                            AND store_type = 1 """
+                fetch_inventory_product_query = f"""SELECT product_quantity AS si_quantity FROM store_inventory 
+                                            WHERE si_product_id = {product_details['pr_product_id']} AND si_store_id = {dispenser_inventory} 
+                                            AND si_store_type = 1 """
                 cursor.execute(fetch_inventory_product_query)
-                available_quantity = cursor.fetchone()[0]
+                available_quantity = cursor.fetchone()['si_quantity']
 
                 if status == 1:
                     if available_quantity >= quantity:
-                        update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
-                                        last_updated_on = '{getIndianTime()}', last_updated_by = {updator}, 
-                                        delivery_status = 1, comment = '{comments}'
-                                        WHERE request_products_id = '{requestId}' """
+                        update_stock_request_query = f"""UPDATE request_products SET pr_request_status = '{status}',
+                                        pr_last_updated_on = '{getIndianTime()}', pr_last_updated_by = {updator}, 
+                                        pr_delivery_status = 1, pr_comment = '{comments}'
+                                        WHERE pr_request_products_id = '{requestId}' """
                         cursor.execute(update_stock_request_query)
 
                         update_central_Inventory = f"""UPDATE store_inventory SET 
-                                                        product_quantity = product_quantity - {quantity} 
-                                                        WHERE product_id = {product_details[3]} AND 
-                                                        store_id = {dispenser_inventory} AND store_type = 1"""
+                                                        si_product_quantity = si_product_quantity - {quantity} 
+                                                        WHERE si_product_id = {product_details['pr_product_id']} AND 
+                                                        si_store_id = {dispenser_inventory} AND si_store_type = 1"""
                         cursor.execute(update_central_Inventory)
 
                         return {
@@ -795,11 +820,11 @@ def change_stock_request_status_with_reason(requestId, status, updator, comments
                             "message": f"The requested quantity is {quantity} and available quantity is {available_quantity} in store"
                         }, 200
                 else:
-                    update_stock_request_query = f"""UPDATE request_products SET request_status = '{status}',
-                                                        last_updated_on = '{getIndianTime()}', 
-                                                        last_updated_by = {updator}, delivery_status = 3, 
-                                                        comment = '{comments}'
-                                                        WHERE request_products_id = '{requestId}' """
+                    update_stock_request_query = f"""UPDATE request_products SET pr_request_status = '{status}',
+                                                        pr_last_updated_on = '{getIndianTime()}', 
+                                                        pr_last_updated_by = {updator}, pr_delivery_status = 3, 
+                                                        pr_comment = '{comments}'
+                                                        WHERE pr_request_products_id = '{requestId}' """
                     cursor.execute(update_stock_request_query)
                     return {
                         "status": True,

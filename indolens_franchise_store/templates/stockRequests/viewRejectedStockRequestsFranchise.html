@@ -191,10 +191,10 @@
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end approvalStatus">
-                                    {% if stock.request_status == 0 %}
+                                    {% if stock.pr_request_status == 0 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
-                                    {% elif stock.request_status == 1 %}
+                                    {% elif stock.pr_request_status == 1 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
                                     {% else %}

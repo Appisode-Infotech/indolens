@@ -88,11 +88,11 @@
                         </div>
                     </div>
                     <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all">All</a>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-all-type">All</a>
                         </li>
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-1">Own
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-OWN STORE-type">Own
                             Store</a></li>
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-2">Franchise
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-FRANCHISE STORE-type">Franchise
                             Store</a></li>
                     </ul>
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -279,7 +279,7 @@
                                                data-action-type="accept"
                                                data-action-store-type="{{stock.pr_store_type}}"
                                                data-action-by="{{stock.pr_store_name}}"
-                                               data-action-url="{% url 'change_stock_request_status' 'All' stock.pr_request_id 1 %}">
+                                               data-action-url="{% url 'change_stock_request_status' 'All' stock.pr_request_products_id 1 %}">
                                                 Accept</a>
                                             <div class="dropdown-divider"></div>
                                             <a class="dropdown-item text-danger"
@@ -291,7 +291,7 @@
                                                data-action-type="reject"
                                                data-action-store-type="{{stock.pr_store_type}}"
                                                data-action-by="{{stock.pr_store_name}}"
-                                               data-action-url="{% url 'change_stock_request_status' 'All' stock.pr_request_id 2 %}">Reject</a>
+                                               data-action-url="{% url 'change_stock_request_status' 'All' stock.pr_request_products_id 2 %}">Reject</a>
 
                                         </div>
                                     </div>

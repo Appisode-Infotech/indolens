@@ -184,24 +184,23 @@ def edit_own_store_by_id(store_obj):
             update_own_store_query = f"""
                 UPDATE own_store
                 SET 
-                    store_zip = '{store_obj.store_zip_code}',
-                    store_name = '{store_obj.store_name}',
-                    store_display_name = '{store_obj.store_display_name}',
-                    store_phone = '{store_obj.store_phone}',
-                    store_gst = '{store_obj.store_gstin}',
-                    store_email = '{store_obj.store_email}',
-                    store_city = '{store_obj.store_city}',
-                    store_state = '{store_obj.store_state}',
-                    store_lat = '{store_lat}',
-                    store_lng = '{store_lng}',
-                    store_address = '{store_obj.complete_address}',
-                    last_updated_on = '{getIndianTime()}',
-                    last_updated_by = {store_obj.last_updated_by}
-                WHERE store_id = {store_obj.store_id}
+                    os_store_zip = '{store_obj.store_zip_code}',
+                    os_store_name = '{store_obj.store_name}',
+                    os_store_display_name = '{store_obj.store_display_name}',
+                    os_store_phone = '{store_obj.store_phone}',
+                    os_store_gst = '{store_obj.store_gstin}',
+                    os_store_email = '{store_obj.store_email}',
+                    os_store_city = '{store_obj.store_city}',
+                    os_store_state = '{store_obj.store_state}',
+                    os_store_lat = '{store_lat}',
+                    os_store_lng = '{store_lng}',
+                    os_store_address = '{store_obj.complete_address}',
+                    os_last_updated_on = '{getIndianTime()}',
+                    os_last_updated_by = {store_obj.last_updated_by}
+                WHERE os_store_id = {store_obj.store_id}
             """
 
             cursor.execute(update_own_store_query)
-            connection.commit()  # Commit the transaction after executing the update query
 
             return {
                        "status": True,

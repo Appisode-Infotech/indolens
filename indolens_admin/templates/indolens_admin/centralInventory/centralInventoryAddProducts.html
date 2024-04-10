@@ -392,8 +392,8 @@
                                                 <select name="materialId" class="form-select mb-3" required>
                                                     <option value="">Select Material</option>
                                                     {% for material in product_materials %}
-                                                    <option value="{{material.material_id}}">
-                                                        {{material.material_name}}
+                                                    <option value="{{material.pm_material_id}}">
+                                                        {{material.pm_material_name}}
                                                     </option>
                                                     {% endfor %}
                                                 </select>
@@ -410,7 +410,7 @@
                                                     <select name="frameTypeId" class="form-select mb-3">
                                                         <option value="">Select Frame Type</option>
                                                         {% for type in frame_types %}
-                                                        <option value="{{type.frame_id}}">{{type.frame_type_name}}
+                                                        <option value="{{type.ftype_frame_id}}">{{type.ftype_name}}
                                                         </option>
                                                         {% endfor %}
                                                     </select>
@@ -425,8 +425,8 @@
                                                     <select name="frameShapeId" class="form-select mb-3">
                                                         <option value="">Select frame shape</option>
                                                         {% for frame_shape in frame_shapes %}
-                                                        <option value="{{frame_shape.shape_id}}">
-                                                            {{frame_shape.shape_name}}
+                                                        <option value="{{frame_shape.fshape_shape_id}}">
+                                                            {{frame_shape.fshape_name}}
                                                         </option>
                                                         {% endfor %}
                                                     </select>
@@ -452,9 +452,9 @@
                                                     <select name="colorId" class="form-select" required>
                                                         <option value="">Select Color</option>
                                                         {% for color in colors %}
-                                                        <option value="{{color.color_id}}">
-                                                            {{color.color_name}} -
-                                                            {{color.color_code}}
+                                                        <option value="{{color.pcol_color_id}}">
+                                                            {{color.pcol_color_name}} -
+                                                            {{color.pcol_color_code}}
                                                         </option>
                                                         {% endfor %}
                                                     </select>
@@ -469,7 +469,7 @@
                                                 <select name="unitId" class="form-select" required>
                                                     <option value="">Select unit</option>
                                                     {% for unit in master_units %}
-                                                    <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
+                                                    <option value="{{unit.unit_unit_id}}">{{unit.unit_name}}</option>
                                                     {% endfor %}
                                                 </select>
                                                 <div class="invalid-feedback">Please select unit.</div>

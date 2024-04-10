@@ -204,10 +204,10 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end approvalStatus">
-                                    {% if stock.request_status == 0 %}
+                                    {% if stock.pr_request_status == 0 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
-                                    {% elif stock.request_status == 1 %}
+                                    {% elif stock.pr_request_status == 1 %}
                                     <span
                                         class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
                                     {% else %}
@@ -230,7 +230,7 @@
                                         class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
-                                {% if stock.request_status == 1 and stock.delivery_status != 2 %}
+                                {% if stock.pr_request_status == 1 and stock.delivery_status != 2 %}
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
