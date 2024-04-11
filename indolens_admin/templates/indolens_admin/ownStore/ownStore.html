@@ -463,7 +463,7 @@
                                         data-category="{{ order.order_status }}">
                                         <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                         <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                                  href="{% url 'order_details' order.so_order_id %}">{{order.order_id}}</a>
+                                                                                                  href="{% url 'order_details' order.so_order_id %}">{{order.so_order_id}}</a>
                                         </td>
                                         <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700 text-end">
                                             ₹{{order.total_cost}}

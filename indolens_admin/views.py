@@ -2288,7 +2288,6 @@ def viewStoreReadyOrders(request, store):
 
 def viewCompletedOrders(request, store):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        print(store)
         response, status_code = orders_controller.get_completed_orders('Delivered Customer', 'All', store)
         print(response)
         return render(request, 'indolens_admin/orders/viewCompletedOrders.html',
@@ -2330,10 +2329,13 @@ def viewOrderDetails(request, orderId):
 def orderInvoice(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
+        print(order_detail['orders_details'][0])
         invoice_details, inv_status_code = orders_controller.get_invoice_details(orderId)
+        print(invoice_details)
         store_data, store_status_code = orders_controller.get_store_details(
-            order_detail['orders_details'][0]['created_by_store'],
-            order_detail['orders_details'][0]['created_by_store_type'])
+            order_detail['orders_details'][0]['so_created_by_store'],
+            order_detail['orders_details'][0]['so_created_by_store_type'])
+        print(store_data)
         return render(request, 'indolens_admin/orders/order_invoice.html',
                       {"order_detail": order_detail['orders_details'],
                        "store_data": store_data['store_data'], "invoice_details": invoice_details['invoice_details']})
@@ -3067,6 +3069,7 @@ def manageMoveStocks(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
+            print(vars(stock_obj))
             if request.POST['own_store_id'] != '':
                 store_id = request.POST['own_store_id']
             else:
@@ -3076,7 +3079,7 @@ def manageMoveStocks(request):
             return redirect('manageMoveStocks')
         else:
             moved_stocks, status_code = central_inventory_controller.get_all_moved_stocks_list('1')
-            # print(moved_stocks)
+            print(moved_stocks)
             own_store, status_code = own_store_controller.get_all_own_stores('Active')
             # print(own_store)
             franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('Active')
@@ -3111,13 +3114,16 @@ def viewAllStockRequests(request):
 def viewStockRequestInvoice(request, requestId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_stock_requests_by_id(requestId)
+        print(response['stocks_request'])
         store_data = []
-        if response['stocks_request_list'].get('request_to_store_id') != 0:
+        if response['stocks_request'].get('pr_request_to_store_id') != 0:
             store, resp_status_code = own_store_controller.get_own_store_by_id(
-                response['stocks_request_list'].get('request_to_store_id'))
-            store_data = store['own_stores'][0]
+                response['stocks_request']['pr_request_to_store_id'])
+            store_data = store['own_stores']
+
+        print(store_data)
         return render(request, 'indolens_admin/stockRequests/franchiseStockMovementInvoice.html',
-                      {"stocks_request_list": response['stocks_request_list'], "store_data": store_data})
+                      {"stocks_request": response['stocks_request'], "store_data": store_data})
     else:
         return redirect('login')
 

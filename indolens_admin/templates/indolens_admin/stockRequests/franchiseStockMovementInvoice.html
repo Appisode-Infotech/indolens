@@ -55,6 +55,7 @@
         userLinkRTL.setAttribute('disabled', true);
       }
 
+
     </script>
     <style>
     @media print {
@@ -88,6 +89,7 @@
             page-break-inside: avoid;
             page-break-after: auto;
         }
+
 
     </style>
 </head>
@@ -125,7 +127,7 @@
                                             </div>
                                             <div class="col-auto col-lg-6 col-xl-7">
                                                 <p class="fs--1 text-800 fw-semi-bold mb-0" id="invoiceDate">
-                                                   </p>
+                                                </p>
                                             </div>
                                         </div>
                                     </div>
@@ -136,24 +138,23 @@
                                             </div>
                                             <div class="col-auto col-lg-6 col-xl-7">
                                                 <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{stocks_request_list.request_id}}</p>
+                                                    {{stocks_request.pr_request_products_id}}</p>
                                             </div>
                                         </div>
                                     </div>
+                                    {% if stocks_request.pr_request_to_store_id != 0 %}
                                     <div class="col-12 col-sm-6 col-lg-12">
                                         <div class="row align-items-center g-0">
                                             <div class="col-auto col-lg-6 col-xl-5">
                                                 <h6 class="me-3">GST Reg No :</h6>
                                             </div>
                                             <div class="col-auto col-lg-6 col-xl-7">
-                                                {% if stocks_request_list.request_to_store_id == 0 %}
-                                                {% else %}
                                                 <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{store_data.store_gst}}</p>
-                                                {% endif %}
+                                                    {{store_data.os_store_gst}}</p>
                                             </div>
                                         </div>
                                     </div>
+                                    {% endif %}
                                     <div class="col-12 col-sm-6 col-lg-12">
                                         <div class="row align-items-center g-0">
                                             <div class="col-auto col-lg-6 col-xl-5">
@@ -161,7 +162,7 @@
                                             </div>
                                             <div class="col-auto col-lg-6 col-xl-7">
                                                 <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{stocks_request_list.request_product_created_on}}</p>
+                                                    {{stocks_request.pr_created_on}}</p>
                                             </div>
                                         </div>
                                     </div>
@@ -171,12 +172,12 @@
                                 <div class="d-flex justify-content-center">
                                     <div class="col-12 col-lg-4">
                                         <h6 class="mb-2 me-3">Sold by :</h6>
-                                        {% if stocks_request_list.request_to_store_id == 0 %}
+                                        {% if stocks_request.pr_request_to_store_id == 0 %}
                                         <p class="fs--1 text-800 fw-semi-bold mb-0">Central Inventory</p>
                                         {% else %}
-                                        <p class="fs--1 text-800 fw-semi-bold mb-0">{{store_data.store_name}}<br/>
-                                            {{store_data.store_address}} <br/>{{store_data.store_email}}
-                                            <br/>{{store_data.store_phone}}</p>
+                                        <p class="fs--1 text-800 fw-semi-bold mb-0">{{store_data.os_store_name}}<br/>
+                                            {{store_data.os_store_address}} <br/>{{store_data.os_store_email}}
+                                            <br/>{{store_data.os_store_phone}}</p>
                                         {% endif %}
 
                                     </div>
@@ -187,23 +188,23 @@
                                     <div class="col-12 col-lg-6">
                                         <h6 class="mb-2"> Billing Address :</h6>
                                         <div class="fs--1 text-800 fw-semi-bold mb-0">
-                                            <p class="mb-2">{{stocks_request_list.store_name}}</p>
+                                            <p class="mb-2">{{stocks_request.store_name}}</p>
                                             <div style="max-width: 200px;">
-                                                <p class="mb-2">{{stocks_request_list.store_address}}</p>
+                                                <p class="mb-2">{{stocks_request.store_address}}</p>
                                             </div>
-                                            <p class="mb-2">{{stocks_request_list.store_email}}</p>
-                                            <p class="mb-0">{{stocks_request_list.store_phone}}</p>
+                                            <p class="mb-2">{{stocks_request.store_email}}</p>
+                                            <p class="mb-0">{{stocks_request.store_phone}}</p>
                                         </div>
                                     </div>
                                     <div class="col-12 col-lg-6">
                                         <h6 class="mb-2"> Shipping Address :</h6>
                                         <div class="fs--1 text-800 fw-semi-bold mb-0">
-                                            <p class="mb-2">{{stocks_request_list.store_name}}</p>
+                                            <p class="mb-2">{{stocks_request.store_name}}</p>
                                             <div style="max-width: 200px;">
-                                                <p class="mb-2">{{stocks_request_list.store_address}}</p>
+                                                <p class="mb-2">{{stocks_request.store_address}}</p>
                                             </div>
-                                            <p class="mb-2">{{stocks_request_list.store_email}}</p>
-                                            <p class="mb-0">{{stocks_request_list.store_phone}}</p>
+                                            <p class="mb-2">{{stocks_request.store_email}}</p>
+                                            <p class="mb-0">{{stocks_request.store_phone}}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -216,8 +217,8 @@
                                 <thead class="bg-200">
                                 <tr>
                                     <th scope="col" style="width: 24px;"></th>
-                                    <th scope="col" colspan="3">Products</th>
-                                    <th scope="col" colspan="2">Quantity</th>
+                                    <th scope="col" colspan="1">Product ID</th>
+                                    <th scope="col" colspan="3">Product Name</th>
                                     <th class="text-end" colspan="2">Unit Price</th>
                                     <th class="text-end" colspan="2">Quantity</th>
                                     <th class="text-end" colspan="2">Billing Amount</th>
@@ -227,27 +228,32 @@
                                 <tbody>
                                 <tr>
                                     <td class="align-middle"></td>
+                                    <td class="align-middle" colspan="1">
+                                        <p class="line-clamp-1 mb-0 fw-semi-bold">
+                                            PID{{stocks_request.pr_product_id}}</p>
+                                    </td>
                                     <td class="align-middle" colspan="3">
                                         <p class="line-clamp-1 mb-0 fw-semi-bold">
-                                            {{stocks_request_list.product_name}}</p>
+                                            {{stocks_request.ci_product_name}}</p>
                                     </td>
-                                    <td class="align-middle text-700 fw-semi-bold text-end" colspan="2">
-                                        {{stocks_request_list.request_product_quantity}}</td>
                                     <td class="align-middle text-end text-1000 fw-semi-bold text-end" colspan="2">
-                                        ₹{{stocks_request_list.request_product_unit_cost}}
+                                        ₹{{stocks_request.pr_unit_cost}}
                                     </td>
                                     <td class="align-middle text-end fw-semi-bold" colspan="2">
-                                        {{stocks_request_list.request_product_quantity}}</td>
+                                        {{stocks_request.pr_product_quantity}}
+                                    </td>
                                     <td class="align-middle text-end" colspan="2">
-                                        ₹{{stocks_request_list.billing_amount}}</td>
+                                        ₹{{stocks_request.billing_amount}}
+                                    </td>
                                     <td class="border-0"></td>
                                 </tr>
 
                                 <tr class="bg-200">
                                     <td></td>
                                     <td class="align-middle fw-semi-bold" colspan="2">Subtotal</td>
-                                    <td class="align-middle text-end fw-bold" colspan="9">
-                                        ₹ {{stocks_request_list.billing_amount}}</td>
+                                    <td class="align-middle text-end fw-bold" colspan="8">
+                                        ₹ {{stocks_request.billing_amount}}
+                                    </td>
                                     <td></td>
                                 </tr>
 
@@ -305,6 +311,7 @@
     let formattedDate = currentDate.toISOString().split('T')[0];
 
     document.getElementById("invoiceDate").innerText = formattedDate;
+
 
 </script>
 

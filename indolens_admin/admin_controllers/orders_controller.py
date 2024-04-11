@@ -386,13 +386,13 @@ def get_payment_logs(orderId):
 def get_invoice_details(orderId):
     try:
         with getConnection().cursor() as cursor:
-            get_order_details_query = f""" SELECT * FROM invoice WHERE order_id = '{orderId}'"""
+            get_order_details_query = f""" SELECT * FROM invoice WHERE invoice_order_id = '{orderId}'"""
             cursor.execute(get_order_details_query)
             orders_details = cursor.fetchone()
             print(orders_details)
             return {
                 "status": True,
-                "invoice_details": get_invoice_detail(orders_details)
+                "invoice_details": orders_details
             }, 200
 
     except pymysql.Error as e:
@@ -443,19 +443,19 @@ def get_store_details(storeId, storeType):
             if storeType == 1:
                 get_own_stores_query = f""" SELECT own_store.*
                                                     FROM own_store
-                                                    WHERE own_store.store_id = '{storeId}' """
+                                                    WHERE own_store.os_store_id = '{storeId}' """
                 cursor.execute(get_own_stores_query)
-                stores_data = cursor.fetchall()
+                stores_data = cursor.fetchone()
 
             else:
                 get_franchise_stores_query = f""" SELECT franchise_store.* FROM franchise_store
-                                                    WHERE franchise_store.store_id = '{storeId}' """
+                                                    WHERE franchise_store.fs_store_id = '{storeId}' """
                 cursor.execute(get_franchise_stores_query)
-                stores_data = cursor.fetchall()
+                stores_data = cursor.fetchone()
 
             return {
                 "status": True,
-                "store_data": get_store(stores_data)
+                "store_data": stores_data
             }, 200
 
     except pymysql.Error as e:
@@ -467,50 +467,52 @@ def get_store_details(storeId, storeType):
 def get_order_track(orderId):
     try:
         with getConnection().cursor() as cursor:
-            get_own_stores_query = f""" SELECT ot.*
+            get_order_track_query = f""" SELECT ot.*
                                         FROM order_track AS ot
                                         WHERE ot.order_id = '{orderId}' """
-            cursor.execute(get_own_stores_query)
-            stores_data = cursor.fetchall()
+            cursor.execute(get_order_track_query)
+            order_trak = cursor.fetchall()
+            print(order_trak)
 
             get_order_store_details_query = f"""
                 SELECT 
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN os.store_name 
+                        WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
                         ELSE fs.fs_store_name 
                     END AS store_name,
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN os.store_address 
+                        WHEN so.so_created_by_store_type = 1 THEN os.os_store_address 
                         ELSE fs.fs_store_address 
                     END AS store_address,
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN os.store_lat 
+                        WHEN so.so_created_by_store_type = 1 THEN os.os_store_lat 
                         ELSE fs.fs_store_lat 
                     END AS store_lat,
                     CASE 
-                        WHEN so.so_created_by_store_type = 1 THEN os.store_lng 
+                        WHEN so.so_created_by_store_type = 1 THEN os.os_store_lng 
                         ELSE fs.fs_store_lng 
                     END AS store_lng
                 FROM sales_order AS so
-                LEFT JOIN own_store os ON so.so_created_by_store = os.store_id AND so.so_created_by_store_type = 1
+                LEFT JOIN own_store os ON so.so_created_by_store = os.os_store_id AND so.so_created_by_store_type = 1
                 LEFT JOIN franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
                 WHERE so.so_order_id = '{orderId}' 
                 GROUP BY so.so_sale_item_id  
             """
             cursor.execute(get_order_store_details_query)
+            store_data = cursor.fetchone()
+            print(store_data)
 
-            store_deta = cursor.fetchone()
             store_details = {
-                "store_name": store_deta[0],
-                "store_address": store_deta[1],
-                "store_lat": store_deta[2],
-                "store_lng": store_deta[3],
+                "store_name": store_data['store_name'],
+                "store_address": store_data['store_address'],
+                "store_lat": store_data['store_lat'],
+                "store_lng": store_data['store_lng'],
 
             }
 
             return {
                 "status": True,
-                "order_track": order_track(stores_data),
+                "order_track": order_trak,
                 "store_details": store_details
             }, 200
 

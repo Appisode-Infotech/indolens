@@ -81,8 +81,8 @@
                         <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 40px;">
                         <h1 class="mt-2">Indolens</h1>
                     </div>
-                    <h3>Order : {{order_detail.0.order_id}} Status</h3>
-                    <p class="text-800 mb-1">Order Date: <span class="ms-sm-1">{{order_detail.0.created_on}}</span></p>
+                    <h3>Order : {{order_detail.so_order_id}} Status</h3>
+                    <p class="text-800 mb-1">Order Date: <span class="ms-sm-1">{{order_detail.so_created_on}}</span></p>
                     <p class="text-800 mb-1">Store Name: <span class="ms-sm-1">{{store_details.store_name}}</span></p>
                     <p class="text-800 mb-0">Store Address: <span class="ms-sm-1">{{store_details.store_address}}</span>
                     </p>
@@ -267,7 +267,7 @@ function getItemByStatus(status) {
 
 
 for(let i = 1;i<8;i++){
-var assignedLab={{order_detail.0.assigned_lab}};
+var assignedLab={{order_detail.so_assigned_lab}};
 
 if(i==2 && assignedLab==0){
 continue;

@@ -189,7 +189,7 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap py-4 storeType">
-                                    {% if stock.store_type == 1 %}
+                                    {% if stock.pr_store_type == 1 %}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
@@ -200,7 +200,7 @@
                                     <a class="fw-semi-bold line-clamp-3 mb-0" href="{% url 'view_products' stock.pr_product_id %}">{{stock.ci_product_name}}</a></td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 categoryName">
-                                    <p class="mb-0 fs--1 text-900">{{stock.category_name}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.pc_category_name}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 quantity text-end">
@@ -208,7 +208,7 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 price text-end">
-                                    <p class="mb-0 fs--1 text-900">₹{{stock.sale_price}}</p>
+                                    <p class="mb-0 fs--1 text-900">₹{{stock.ci_cost_price}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 requestDate">
@@ -220,10 +220,10 @@
 
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 movedDate">
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_last_updated_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.pr_last_updated_on}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end movementType">
-                                    {% if stock.is_requested == 1 %}
+                                    {% if stock.pr_is_requested == 1 %}
                                     <p class="mb-0 fs--1 text-900">REQUESTED</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">SELF</p>
@@ -232,28 +232,29 @@
                                 <td class="align-middle white-space-nowrap text-end deliverFrom">
                                     {% if stock.sender_store != None %}
                                     <a class="fw-semi-bold line-clamp-3 mb-0"
-                                       href="{% url 'view_own_store' stock.request_to_store_id %}">{{stock.sender_store}}</a>
+                                       href="{% url 'view_own_store' stock.pr_request_to_store_id %}">{{stock.sender_store}}</a>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end deliverStatus">
-                                    {% if stock.delivery_status == 0 %}
+                                    {% if stock.pr_delivery_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
-                                    {% elif stock.delivery_status == 1 %}
+                                    {% elif stock.pr_delivery_status == 1 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">DISPATCHED</span>
-                                    {% elif stock.delivery_status == 2 %}
+                                    {% elif stock.pr_delivery_status == 2 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
-                                    {% elif stock.delivery_status == 3 %}
+                                    {% elif stock.pr_delivery_status == 3 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
-                                {% if stock.store_type == 2 %}
+
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                    {% if stock.pr_store_type == 2 %}
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
                                                 aria-haspopup="true"
@@ -270,8 +271,9 @@
 
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </td>
-                                {% endif %}
+
 
 <!--                                <td class="align-middle text-end white-space-nowrap pe-0 action">-->
 <!--                                    <div class="font-sans-serif btn-reveal-trigger position-static">-->
@@ -405,6 +407,9 @@
                             </div>
 
                             <input name="created_by" required type="hidden"
+                                   value="{{ request.session.id }}">
+
+                            <input name="unit_cost" required type="hidden"
                                    value="{{ request.session.id }}">
 
                             <div class="modal-footer">
