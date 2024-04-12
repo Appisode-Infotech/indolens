@@ -182,30 +182,30 @@
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
-                                    <a href="{{MEDIA_URL}}{{owner.profile_pic}}" target="_blank">
+                                    <a href="{{MEDIA_URL}}{{owner.fse_profile_pic}}" target="_blank">
                                     <div class="avatar avatar-m">
-                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{owner.profile_pic}}"/>
+                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{owner.fse_profile_pic}}"/>
                                     </div>
                                         </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 projectName py-4 name"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_franchise_owner' owner.franchise_owner_id %}">{{owner.name}}</a>
+                                        href="{% url 'view_franchise_owner' owner.fse_employee_id %}">{{owner.fse_name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">
-                                    <p class="mb-0 fs--1 text-900">{{owner.phone}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{owner.fse_phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 email">
-                                    <p class="mb-0 fs--1 text-900">{{owner.email}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{owner.fse_email}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 store">
-                                    {% if owner.franchise_store_id != 0 %}
+                                    {% if owner.fse_assigned_store_id != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
-                                       href="{%url 'view_franchise_store' owner.franchise_store_id %}">
-                                        {{owner.store_name}}
+                                       href="{%url 'view_franchise_store' owner.fse_assigned_store_id %}">
+                                        {{owner.fs_store_name}}
                                     </a>
                                     {% else %}
                                     <span
@@ -214,27 +214,27 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end status">
-                                    {% if owner.status == 0 %}
+                                    {% if owner.fse_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
-                                {% elif owner.status == 1 %}
+                                {% elif owner.fse_status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
                                 </td>
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdon">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{owner.created_on}}</p>-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{owner.fse_created_on}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdby">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{owner.creator_name}}</p>-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{owner.fse_creator_name}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedon">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{owner.last_updated_on}}</p>-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{owner.fse_last_updated_on}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedby">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{owner.updater_name}}</p>-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{owner.fse_updater_name}}</p>-->
 <!--                                </td>-->
                                 <td class="align-middle white-space-nowrap ps-3 py-4 address"
                                 style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{owner.address}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{owner.fse_address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -246,17 +246,17 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_franchise_owner' owner.franchise_owner_id %}">View</a>
+                                                                                             href="{% url 'view_franchise_owner' owner.fse_employee_id %}">View</a>
 
-                                            {% if owner.status == 1 %}
-                                            {% if owner.franchise_store_id == 0 %}
+                                            {% if owner.fse_status == 1 %}
+                                            {% if owner.fse_assigned_store_id == 0 %}
                                             <a class="dropdown-item"
                                                type="button"
                                                data-bs-role="Franchise Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#allocate_store_modal"
-                                               data-employee-id="{{ owner.franchise_owner_id }}"
-                                               data-employee-name="{{ owner.name }}"
+                                               data-employee-id="{{ owner.fse_employee_id }}"
+                                               data-employee-name="{{ owner.fse_name }}"
                                                data-bs-action="{% url 'assign_franchise_store_owner' status %}"
                                                data-action-type="allocate">
                                                 Allocate Store
@@ -267,48 +267,48 @@
                                                data-bs-role="Franchise Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ owner.franchise_owner_id }}"
-                                               data-employee-name="{{ owner.name }}"
-                                               data-store-name="{{owner.store_name}}"
+                                               data-employee-id="{{ owner.fse_employee_id }}"
+                                               data-employee-name="{{ owner.fse_name }}"
+                                               data-store-name="{{owner.fse_assigned_store_id}}"
                                                data-action-type="unallocate"
-                                               data-action-url="{% url 'un_assign_franchise_store_owner' status owner.franchise_owner_id owner.franchise_store_id %}">
+                                               data-action-url="{% url 'un_assign_franchise_store_owner' status owner.fse_employee_id owner.fse_assigned_store_id %}">
                                                 Un allocate Store
                                             </a>
                                             {% endif %}
                                             {% endif %}
                                             <a class="dropdown-item"
-                                               href="{% url 'edit_franchise_owner' owner.franchise_owner_id %}">Update Profile</a>
+                                               href="{% url 'edit_franchise_owner' owner.fse_employee_id %}">Update Profile</a>
 
 
                                             <a class="dropdown-item"
-                                               href="{% url 'update_franchise_owner_documents' owner.franchise_owner_id %}">Update
+                                               href="{% url 'update_franchise_owner_documents' owner.fse_employee_id %}">Update
                                                 Documents</a>
 
                                             <div class="dropdown-divider"></div>
 
-                                            {% if owner.status == 0 %}
+                                            {% if owner.fse_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Franchise Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ owner.franchise_owner_id }}"
-                                               data-employee-name="{{ owner.name }}"
+                                               data-employee-id="{{ owner.fse_employee_id }}"
+                                               data-employee-name="{{ owner.fse_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_franchise_owner' status owner.franchise_owner_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_franchise_owner' status owner.fse_employee_id 1 %}">
                                                 Make Active
                                             </a>
 
-                                            {% elif owner.status == 1 %}
+                                            {% elif owner.fse_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-role="Franchise Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ owner.franchise_owner_id }}"
-                                               data-employee-name="{{ owner.name }}"
+                                               data-employee-id="{{ owner.fse_employee_id }}"
+                                               data-employee-name="{{ owner.fse_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_franchise_owner' status owner.franchise_owner_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_franchise_owner' status owner.fse_employee_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

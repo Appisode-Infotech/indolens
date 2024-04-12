@@ -91,7 +91,7 @@ def get_emailjs_attribute():
             admin_setting_check = f""" SELECT emailjs_attribute FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
-            return json.loads(admin_check[0]) if admin_check is not None else {}
+            return json.loads(admin_check['emailjs_attribute']) if admin_check is not None else {}
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -117,7 +117,7 @@ def get_support_data():
             admin_setting_check = f""" SELECT support_attributes FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
-            return json.loads(admin_check[0]) if admin_check is not None else {}
+            return json.loads(admin_check['support_attributes']) if admin_check is not None else {}
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

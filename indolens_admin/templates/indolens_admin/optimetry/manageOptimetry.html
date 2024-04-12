@@ -186,30 +186,30 @@
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
-                                    <a href="{{MEDIA_URL}}{{opti.profile_pic}}" target="_blank">
+                                    <a href="{{MEDIA_URL}}{{opti.ose_profile_pic}}" target="_blank">
                                     <div class="avatar avatar-m">
-                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{opti.profile_pic}}"/>
+                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{opti.ose_profile_pic}}"/>
                                     </div>
                                         </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_optimetry' opti.employee_id %}">{{opti.name}}</a>
+                                        href="{% url 'view_optimetry' opti.ose_employee_id %}">{{opti.ose_name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 phone">
-                                    <p class="mb-0 fs--1 text-900">{{opti.phone}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{opti.ose_phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 email">
-                                    <p class="mb-0 fs--1 text-900">{{opti.email}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{opti.ose_email}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 store">
-                                    {% if opti.assigned_store_id != 0 %}
+                                    {% if opti.ose_assigned_store_id != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
-                                       href="{%url 'view_own_store' opti.assigned_store_id %}">
-                                        {{opti.store_name}}
+                                       href="{%url 'view_own_store' opti.ose_assigned_store_id %}">
+                                        {{opti.ose_store_name}}
                                     </a>
                                     {% else %}
                                     <span
@@ -218,26 +218,26 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end status">
-                                    {% if opti.status == 0 %}
+                                    {% if opti.ose_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
-                                {% elif opti.status == 1 %}
+                                {% elif opti.ose_status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
 <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 createdDate">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{opti.created_on}}</p>-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{opti.ose_created_on}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 createdBy">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{opti.creator_name}}</p>-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{opti.ose_creator_name}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap deadline ps-3 py-4 updatedDate">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{opti.last_updated_on}}</p>-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{opti.ose_last_updated_on}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap task ps-3 py-4 updatedBy">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{opti.updater_name}}</p>-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{opti.ose_updater_name}}</p>-->
 <!--                                </td>-->
                                 <td class="align-middle white-space-nowrap task ps-3 py-4 address"
                             style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{opti.address}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{opti.ose_address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -252,16 +252,16 @@
 
 
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
-                                                href="{% url 'view_optimetry' opti.employee_id %}" class="dropdown-item">View</a>
-                                            {% if opti.status == 1 %}
-                                            {% if opti.assigned_store_id == 0 %}
+                                                href="{% url 'view_optimetry' opti.ose_employee_id %}" class="dropdown-item">View</a>
+                                            {% if opti.ose_status == 1 %}
+                                            {% if opti.ose_assigned_store_id == 0 %}
                                             <a class="dropdown-item"
                                                type="button"
                                                data-bs-role="Optimetry"
                                                data-bs-toggle="modal"
                                                data-bs-target="#allocate_store_modal"
-                                               data-employee-id="{{ opti.employee_id }}"
-                                               data-employee-name="{{ opti.name }}"
+                                               data-employee-id="{{ opti.ose_employee_id }}"
+                                               data-employee-name="{{ opti.ose_name }}"
                                                data-bs-action="{% url 'assign_optimetry_own_store' status %}"
                                                data-action-type="allocate">
                                                 Allocate Store
@@ -272,48 +272,48 @@
                                                data-bs-role="Optimetry"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ opti.employee_id }}"
-                                               data-employee-name="{{ opti.name }}"
-                                               data-store-name="{{opti.store_name}}"
+                                               data-employee-id="{{ opti.ose_employee_id }}"
+                                               data-employee-name="{{ opti.ose_name }}"
+                                               data-store-name="{{opti.ose_store_name}}"
                                                data-action-type="unallocate"
-                                               data-action-url="{% url 'un_assign_optimetry_own_store' status opti.employee_id opti.assigned_store_id %}">
+                                               data-action-url="{% url 'un_assign_optimetry_own_store' status opti.ose_employee_id opti.ose_assigned_store_id %}">
                                                 Un allocate Store
                                             </a>
                                             {% endif %}
                                             {% endif %}
 
                                             <a class="dropdown-item"
-                                               href="{% url 'edit_optimetry' opti.employee_id %}">Update
+                                               href="{% url 'edit_optimetry' opti.ose_employee_id %}">Update
                                                 Profile</a>
 
                                             <a class="dropdown-item"
-                                               href="{% url 'update_optimetry_documents' opti.employee_id %}">Update
+                                               href="{% url 'update_optimetry_documents' opti.ose_employee_id %}">Update
                                                 Documents</a>
 
                                             <div class="dropdown-divider"></div>
-                                            {% if opti.status == 0 %}
+                                            {% if opti.ose_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Optimetry"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ opti.employee_id }}"
-                                               data-employee-name="{{ opti.name }}"
+                                               data-employee-id="{{ opti.ose_employee_id }}"
+                                               data-employee-name="{{ opti.ose_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_optimetry' status opti.employee_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_optimetry' status opti.ose_employee_id 1 %}">
                                                 Make Active
                                             </a>
 
-                                            {% elif opti.status == 1 %}
+                                            {% elif opti.ose_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-role="Optimetry"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ opti.employee_id }}"
-                                               data-employee-name="{{ opti.name }}"
+                                               data-employee-id="{{ opti.ose_employee_id }}"
+                                               data-employee-name="{{ opti.ose_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_optimetry' status opti.employee_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_optimetry' status opti.ose_employee_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

@@ -20,11 +20,11 @@ def create_franchise_owner(franchise_owner, files):
         with getConnection().cursor() as cursor:
             insert_franchise_owner_query = f"""
                 INSERT INTO franchise_store_employees (
-                    name, email, phone, password, profile_pic, 
-                    address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on, role,assigned_store_id
+                    fse_name, fse_email, fse_phone, fse_password, fse_profile_pic, 
+                    fse_address, fse_document_1_type, fse_document_1_url, fse_document_2_type, fse_document_2_url, 
+                    fse_status, fse_created_by, fse_created_on, fse_last_updated_by, fse_last_updated_on, fse_role, fse_assigned_store_id
                 ) VALUES (  
-                    '{franchise_owner.name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{hashed_password}',
+                     '{franchise_owner.name}', '{franchise_owner.email}', '{franchise_owner.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{franchise_owner.address}', '{franchise_owner.document_1_type}', 
                     '{json.dumps(files.document1)}', '{franchise_owner.document_2_type}', '{json.dumps(files.document2)}', 
                     1, '{franchise_owner.created_by}', '{getIndianTime()}', '{franchise_owner.last_updated_by}', 
@@ -32,7 +32,6 @@ def create_franchise_owner(franchise_owner, files):
                 )
             """
 
-            # Execute the query using your cursor
             cursor.execute(insert_franchise_owner_query)
 
             subject = email_template_controller.get_franchise_employee_creation_email_subject(franchise_owner.name)
@@ -64,18 +63,18 @@ def get_all_franchise_owner(status):
     status_condition = status_conditions[status]
     try:
         with getConnection().cursor() as cursor:
-            get_all_franchise_owner_query = f""" SELECT a.*, os.store_name, creator.name, updater.name 
-                                            FROM franchise_store_employees AS a
-                                            LEFT JOIN franchise_store AS os ON a.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id 
-                                            WHERE a.role = 1 AND a.status {status_condition}
-                                            ORDER BY a.employee_id DESC"""
+            get_all_franchise_owner_query = f""" SELECT fse.*, fs.fs_store_name, creator.admin_name, updater.admin_name 
+                                            FROM franchise_store_employees AS fse
+                                            LEFT JOIN franchise_store AS fs ON fse.fse_assigned_store_id = fs.fs_store_id
+                                            LEFT JOIN admin AS creator ON fse.fse_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON fse.fse_last_updated_by = updater.admin_admin_id 
+                                            WHERE fse.fse_role = 1 AND fse.fse_status {status_condition}
+                                            ORDER BY fse.fse_employee_id DESC"""
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchall()
             return {
                 "status": True,
-                "franchise_owners": get_franchise_owners(franchise_owners)
+                "franchise_owners": franchise_owners
             }, 200
 
     except pymysql.Error as e:
@@ -87,17 +86,24 @@ def get_all_franchise_owner(status):
 def get_franchise_owner_by_id(foid):
     try:
         with getConnection().cursor() as cursor:
-            get_all_franchise_owner_query = f""" SELECT a.*, os.store_name, creator.name, updater.name 
-                                            FROM franchise_store_employees AS a
-                                            LEFT JOIN franchise_store AS os ON a.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON a.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON a.last_updated_by = updater.admin_id
-                                             WHERE a.employee_id = '{foid}'"""
+            get_all_franchise_owner_query = f""" SELECT fse.*, fs.fs_store_name, creator.admin_name AS creator,
+                                            updater.admin_name AS updater
+                                            FROM franchise_store_employees AS fse
+                                            LEFT JOIN franchise_store AS fs ON fse.fse_assigned_store_id = fs.fs_store_id
+                                            LEFT JOIN admin AS creator ON fse.fse_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON fse.fse_last_updated_by = updater.admin_admin_id
+                                             WHERE fse.fse_employee_id = '{foid}'"""
             cursor.execute(get_all_franchise_owner_query)
-            franchise_owners = cursor.fetchall()
+            franchise_owners = cursor.fetchone()
+
+            franchise_owners['fse_document_1_url'] = json.loads(franchise_owners['fse_document_1_url']) if franchise_owners[
+                'fse_document_1_url'] else []
+            franchise_owners['fse_document_2_url'] = json.loads(franchise_owners['fse_document_2_url']) if franchise_owners[
+                'fse_document_2_url'] else []
+
             return {
                 "status": True,
-                "franchise_owner": get_franchise_owners(franchise_owners)
+                "franchise_owner": franchise_owners
             }, 200
 
     except pymysql.Error as e:
@@ -112,9 +118,9 @@ def enable_disable_franchise_owner(foid, status):
             update_franchise_owners_query = f"""
                 UPDATE franchise_store_employees
                 SET
-                    status = {status}
+                    fse_status = {status}
                 WHERE
-                    employee_id = {foid}
+                    fse_employee_id = {foid}
             """
 
             # Execute the update query using your cursor
@@ -137,14 +143,14 @@ def edit_franchise_owner(franchise_owner, files):
             update_franchise_owners_query = f"""
                 UPDATE franchise_store_employees
                 SET 
-                    name = '{franchise_owner.name}',
-                    email = '{franchise_owner.email}',
-                    phone = '{franchise_owner.phone}',
-                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                    address = '{franchise_owner.address}',
-                    last_updated_by = '{franchise_owner.last_updated_by}',
-                    last_updated_on = '{getIndianTime()}'
-                WHERE employee_id = {franchise_owner.employee_id}
+                    fse_name = '{franchise_owner.name}',
+                    fse_email = '{franchise_owner.email}',
+                    fse_phone = '{franchise_owner.phone}',
+                    {'fse_profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    fse_address = '{franchise_owner.address}',
+                    fse_last_updated_by = '{franchise_owner.last_updated_by}',
+                    fse_last_updated_on = '{getIndianTime()}'
+                WHERE fse_employee_id = {franchise_owner.employee_id}
             """
 
             # Execute the update query using your cursor
@@ -252,16 +258,12 @@ def unassign_store_franchise_owner(FranchiseOwnerId, storeId, role):
 def get_active_franchise_stores():
     try:
         with getConnection().cursor() as cursor:
-            unassigned_stores = []
-            get_unassigned_active_own_store_for_manager_query = f"""SELECT f.store_id, f.store_name FROM franchise_store f 
-            WHERE f.status = 1;"""
+            get_unassigned_active_own_store_for_manager_query = f"""SELECT fs.fs_store_id AS store_id, 
+            fs.fs_store_name AS store_name FROM franchise_store fs 
+            WHERE fs.fs_status = 1;"""
             cursor.execute(get_unassigned_active_own_store_for_manager_query)
-            stores_data = cursor.fetchall()
-            for store in stores_data:
-                unassigned_stores.append({
-                    "store_id": store[0],
-                    "store_name": store[1]
-                })
+            unassigned_stores = cursor.fetchall()
+
             return {
                        "status": True,
                        "available_stores": unassigned_stores
@@ -275,16 +277,12 @@ def get_active_unassigned_franchise_stores():
     try:
         with getConnection().cursor() as cursor:
             unassigned_stores = []
-            get_unassigned_active_own_store_for_manager_query = f"""SELECT f.store_id, f.store_name FROM franchise_store f 
-                    LEFT JOIN franchise_store_employees fse ON f.store_id = fse.assigned_store_id AND fse.role = 1
-                    WHERE fse.assigned_store_id IS NULL AND f.status = 1 """
+            get_unassigned_active_own_store_for_manager_query = f"""SELECT f.fs_store_id AS store_id, 
+                    f.fs_store_name AS store_name FROM franchise_store f 
+                    LEFT JOIN franchise_store_employees fse ON f.fs_store_id = fse.fse_assigned_store_id AND fse.fse_role = 1
+                    WHERE fse.fse_assigned_store_id IS NULL AND f.fs_status = 1 """
             cursor.execute(get_unassigned_active_own_store_for_manager_query)
-            stores_data = cursor.fetchall()
-            for store in stores_data:
-                unassigned_stores.append({
-                    "store_id": store[0],
-                    "store_name": store[1]
-                })
+            unassigned_stores = cursor.fetchall()
             return {
                        "status": True,
                        "available_stores": unassigned_stores

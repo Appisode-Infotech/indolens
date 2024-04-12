@@ -30,18 +30,19 @@ def send_email(subject, body, to_email):
     # print("Email sent successfully.")
 
     emailjs = get_emailjs_attribute()
+    print("===============")
+    print(emailjs)
     if any(emailjs.values()):
 
-        url = emailjs.get('emailjs_url')
+        url = emailjs['emailjs_url']
         data = {
-            'service_id': emailjs.get('emailjs_service_id'),
-            'template_id': emailjs.get('emailjs_template_id'),
-            'user_id': emailjs.get('emailjs_user_id'),
+            'service_id': emailjs['emailjs_service_id'],
+            'template_id': emailjs['emailjs_template_id'],
+            'user_id': emailjs['emailjs_user_id'],
             'template_params': {
                 'to_email': to_email,
                 'subject': subject,
-                'body': body,
-                'g-recaptcha-response': emailjs.get('emailjs_recaptcha')
+                'body': body
             }
         }
 

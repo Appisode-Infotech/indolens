@@ -78,13 +78,12 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for owner in franchise_owner %}
         <div class="content">
 
             <h2 class="mb-4">Edit Franchise Owner </h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_franchise_owner' owner.franchise_owner_id %}"
+                    <form action="{% url 'edit_franchise_owner' franchise_owner.fse_employee_id %}"
                           class="row g-3 needs-validation "
                           enctype="multipart/form-data" method="post" novalidate="">
                         {% csrf_token %}
@@ -92,7 +91,7 @@
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
                                                                 data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
-                                                                src="{{MEDIA_URL}}{{owner.profile_pic}}"/></div>
+                                                                src="{{MEDIA_URL}}{{franchise_owner.fse_profile_pic}}"/></div>
                         </div>
 
                         <div class="col-md-12">
@@ -105,7 +104,7 @@
                             <label class="form-label" for="fullName">Name</label>
 
                             <input class="form-control" id="fullName" name="name" required="" type="text"
-                                   value="{{owner.name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{franchise_owner.fse_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Please provide a valid Name.</div>
                         </div>
                         <div class="col-md-6">
@@ -113,7 +112,7 @@
                             <label class="form-label" for="email">Email</label>
 
                             <input readonly class="form-control" id="email" name="email" required=""
-                                   type="email" value="{{owner.email}}"/>
+                                   type="email" value="{{franchise_owner.fse_email}}"/>
                             <div class="invalid-feedback">Please provide a valid store display name.</div>
                         </div>
 
@@ -122,7 +121,7 @@
                             <label class="form-label" for="phone">Phone</label>
 
                             <input class="form-control" id="phone" name="phone" required="" type="number"
-                                  max="9999999999" min="1111111111" value="{{owner.phone}}"/>
+                                  max="9999999999" min="1111111111" value="{{franchise_owner.fse_phone}}"/>
                             <div class="invalid-feedback">Please provide a valid phone number.</div>
                         </div>
 
@@ -132,14 +131,14 @@
                             <label class="form-label" for="completeAddress">Complete Address</label>
 
                             <textarea class="form-control" id="completeAddress" name="address" required
-                                      rows="3" maxlength="255"> {{owner.address}}</textarea>
+                                      rows="3" maxlength="255"> {{franchise_owner.fse_address}}</textarea>
                             <div class="invalid-feedback">Please provide a valid address.</div>
                         </div>
 
                         <input name="last_updated_by" required type="hidden"
                                value="{{ request.session.id }}">
                         <input name="employee_id" required type="hidden"
-                               value="{{ owner.franchise_owner_id }}">
+                               value="{{ franchise_owner.fse_employee_id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -148,8 +147,6 @@
                 </div>
             </div>
             {% include 'footer.html' %}
-            {% endfor %}
-
         </div>
 
     </div>

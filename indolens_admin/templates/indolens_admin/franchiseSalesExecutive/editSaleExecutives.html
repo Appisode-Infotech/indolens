@@ -78,14 +78,13 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for sales_executive in franchise_sales_executive %}
 
         <div class="content">
 
             <h2 class="mb-4">Edit Sales Executive</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_franchise_sales_executives' sales_executive.employee_id %}"
+                    <form action="{% url 'edit_franchise_sales_executives' franchise_sales_executive.fse_employee_id %}"
                           class="row g-3 needs-validation " enctype="multipart/form-data" method="post"
                           novalidate="">
                         {% csrf_token %}
@@ -93,7 +92,7 @@
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
                                                                 data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
-                                                                src="{{MEDIA_URL}}{{sales_executive.profile_pic}}"/></div>
+                                                                src="{{MEDIA_URL}}{{franchise_sales_executive.fse_profile_pic}}"/></div>
                         </div>
 
                         <div class="col-md-12">
@@ -108,7 +107,7 @@
                             <label class="form-label" for="name">Name</label>
 
                             <input class="form-control" id="name" name="name" required type="text"
-                                   value="{{ sales_executive.name }}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{ franchise_sales_executive.fse_name }}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Name is mandatory.</div>
                         </div>
                         <div class="col-md-6">
@@ -116,7 +115,7 @@
                             <label class="form-label" for="email">Email</label>
 
                             <input readonly class="form-control" id="email" name="email" required=""
-                                   type="email" value="{{ sales_executive.email }}"/>
+                                   type="email" value="{{ franchise_sales_executive.fse_email }}"/>
                             <div class="invalid-feedback">Email is mandatory.</div>
                         </div>
 
@@ -125,7 +124,7 @@
                             <label class="form-label" for="phone">Phone</label>
 
                             <input class="form-control" id="phone" name="phone" required="" type="number"
-                                   max="9999999999" min="1111111111" value="{{ sales_executive.phone }}"/>
+                                   max="9999999999" min="1111111111" value="{{ franchise_sales_executive.fse_phone }}"/>
                             <div class="invalid-feedback">Phone is mandatory with 10 digits</div>
                         </div>
 
@@ -133,15 +132,14 @@
                         <div class="col-12">
 
                             <label class="form-label" for="address">Complete Address</label>
-                            <textarea class="form-control" id="address" name="address" rows="3" required maxlength="255">{{ sales_executive.address }}</textarea>
+                            <textarea class="form-control" id="address" name="address" rows="3" required maxlength="255">{{ franchise_sales_executive.fse_address }}</textarea>
                             <div class="invalid-feedback">Address is mandatory.</div>
                         </div>
 
                         <input name="employee_id" required type="hidden"
+                               value="{{ franchise_sales_executive.fse_employee_id }}">
 
-                               value="{{ sales_executive.employee_id }}">
                         <input name="last_updated_by" required type="hidden"
-
                                value="{{ request.session.id }}">
 
                         <div class="col-12">
@@ -153,7 +151,6 @@
             {% include 'footer.html' %}
 
         </div>
-        {% endfor %}
     </div>
 </main>
 <!-- ===============================================-->

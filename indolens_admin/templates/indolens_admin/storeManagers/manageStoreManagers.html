@@ -175,32 +175,32 @@
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
-                                    <a href="{{MEDIA_URL}}{{manager.profile_pic}}" target="_blank">
+                                    <a href="{{MEDIA_URL}}{{manager.ose_profile_pic}}" target="_blank">
                                         <div class="avatar avatar-m">
                                             <img alt="" class="rounded-circle"
-                                                 src="{{MEDIA_URL}}{{manager.profile_pic}}"/>
+                                                 src="{{MEDIA_URL}}{{manager.ose_profile_pic}}"/>
                                         </div>
                                     </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 managerName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_store_manager' manager.employee_id %}">
-                                    {{manager.name}}
+                                        href="{% url 'view_store_manager' manager.ose_employee_id %}">
+                                    {{manager.ose_name}}
                                 </a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start phone ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{manager.phone}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{manager.ose_phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 email">
-                                    <p class="mb-0 fs--1 text-900">{{manager.email}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{manager.ose_email}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 assignedStore py-4">
-                                    {% if manager.assigned_store_id != 0 %}
+                                    {% if manager.ose_assigned_store_id != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
-                                       href="{%url 'view_own_store' manager.assigned_store_id%}">
+                                       href="{%url 'view_own_store' manager.ose_assigned_store_id%}">
                                         {{manager.store_name}}</a>
                                     {% else %}
                                     <span
@@ -210,15 +210,15 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end status">
-                                    {% if manager.status == 0 %}
+                                    {% if manager.ose_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
-                                    {% elif manager.status == 1 %}
+                                    {% elif manager.ose_status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4 address"
                                     style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{manager.address}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{manager.ose_address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -230,18 +230,18 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
-                                                href="{% url 'view_store_manager' manager.employee_id %}"
+                                                href="{% url 'view_store_manager' manager.ose_employee_id %}"
                                                 class="dropdown-item">View</a>
-                                            {% if manager.status == 1 %}
-                                            {% if manager.assigned_store_id == 0 %}
+                                            {% if manager.ose_status == 1 %}
+                                            {% if manager.ose_assigned_store_id == 0 %}
                                             <a class="dropdown-item"
                                                type="button"
                                                data-bs-role="Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#allocate_store_modal"
                                                data-bs-action="{% url 'assign_manager_own_store' status %}"
-                                               data-employee-id="{{ manager.employee_id }}"
-                                               data-employee-name="{{ manager.name }}"
+                                               data-employee-id="{{ manager.ose_employee_id }}"
+                                               data-employee-name="{{ manager.ose_name }}"
                                                data-action-type="allocate">
                                                 Allocate Store
                                             </a>
@@ -251,47 +251,47 @@
                                                data-bs-role="Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ manager.employee_id }}"
-                                               data-employee-name="{{ manager.name }}"
-                                               data-store-name="{{manager.store_name}}"
+                                               data-employee-id="{{ manager.ose_employee_id }}"
+                                               data-employee-name="{{ manager.ose_name }}"
+                                               data-store-name="{{manager.ose_store_name}}"
                                                data-action-type="unallocate"
-                                               data-action-url="{% url 'un_assign_manager_own_store' status manager.employee_id manager.assigned_store_id %}">
+                                               data-action-url="{% url 'un_assign_manager_own_store' status manager.ose_employee_id manager.ose_assigned_store_id %}">
                                                 Un allocate Store
                                             </a>
                                             {% endif %}
                                             {% endif %}
 
                                             <a class="dropdown-item"
-                                               href="{% url 'edit_store_manager' manager.employee_id %}">Update
+                                               href="{% url 'edit_store_manager' manager.ose_employee_id %}">Update
                                                 Profile</a>
                                             <a class="dropdown-item"
-                                               href="{% url 'update_store_manager_documents' manager.employee_id %}">Update
+                                               href="{% url 'update_store_manager_documents' manager.ose_employee_id %}">Update
                                                 Documents</a>
 
                                             <div class="dropdown-divider"></div>
-                                            {% if manager.status == 0 %}
+                                            {% if manager.ose_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ manager.employee_id }}"
-                                               data-employee-name="{{ manager.name }}"
+                                               data-employee-id="{{ manager.ose_employee_id }}"
+                                               data-employee-name="{{ manager.ose_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_store_manager' status manager.employee_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_store_manager' status manager.ose_employee_id 1 %}">
                                                 Make Active
                                             </a>
 
-                                            {% elif manager.status == 1 %}
+                                            {% elif manager.ose_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-role="Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ manager.employee_id }}"
-                                               data-employee-name="{{ manager.name }}"
+                                               data-employee-id="{{ manager.ose_employee_id }}"
+                                               data-employee-name="{{ manager.ose_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_store_manager' status manager.employee_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_store_manager' status manager.ose_employee_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

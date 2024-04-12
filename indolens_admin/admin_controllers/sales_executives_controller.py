@@ -20,14 +20,14 @@ def create_own_sales_executives(sales_executives, files):
         with getConnection().cursor() as cursor:
             insert_sales_executives_query = f"""
                 INSERT INTO own_store_employees (
-                   name, email, phone, password, profile_pic, 
-                    address, document_1_type, document_1_url, 
-                    document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role,assigned_store_id
+                    ose_name, ose_email, ose_phone, ose_password, ose_profile_pic, 
+                    ose_address, ose_document_1_type, ose_document_1_url, 
+                    ose_document_2_type, ose_document_2_url, ose_status, ose_created_by, ose_created_on, 
+                    ose_last_updated_by, ose_last_updated_on, ose_role, ose_assigned_store_id
                 ) VALUES (
                     '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
-                    '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
+                    '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 1,
                     '{sales_executives.created_by}', '{getIndianTime()}', '{sales_executives.last_updated_by}', '{getIndianTime()}', 3, 0
                 )
             """
@@ -60,14 +60,14 @@ def update_own_sales_executives(sales_executives, files):
             update_sales_executives_query = f"""
                 UPDATE own_store_employees
                 SET 
-                    name = '{sales_executives.name}',
-                    email = '{sales_executives.email}',
-                    phone = '{sales_executives.phone}',
-                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                    address = '{sales_executives.address}',
-                    last_updated_by = '{sales_executives.last_updated_by}',
-                    last_updated_on = '{getIndianTime()}'
-                WHERE employee_id = {sales_executives.employee_id}
+                    ose_name = '{sales_executives.name}',
+                    ose_email = '{sales_executives.email}',
+                    ose_phone = '{sales_executives.phone}',
+                    {'ose_profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    ose_address = '{sales_executives.address}',
+                    ose_last_updated_by = '{sales_executives.last_updated_by}',
+                    ose_last_updated_on = '{getIndianTime()}'
+                WHERE ose_employee_id = {sales_executives.employee_id}
             """
 
             # Execute the update query using your cursor
@@ -91,14 +91,14 @@ def update_franchise_sales_executives(sales_executives, files):
             update_sales_executives_query = f"""
                 UPDATE franchise_store_employees
                 SET 
-                    name = '{sales_executives.name}',
-                    email = '{sales_executives.email}',
-                    phone = '{sales_executives.phone}',
-                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                    address = '{sales_executives.address}',
-                    last_updated_by = '{sales_executives.last_updated_by}',
-                    last_updated_on = '{getIndianTime()}'
-                WHERE employee_id = {sales_executives.employee_id}
+                    fse_name = '{sales_executives.name}',
+                    fse_email = '{sales_executives.email}',
+                    fse_phone = '{sales_executives.phone}',
+                    {'fse_profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    fse_address = '{sales_executives.address}',
+                    fse_last_updated_by = '{sales_executives.last_updated_by}',
+                    fse_last_updated_on = '{getIndianTime()}'
+                WHERE fse_employee_id = {sales_executives.employee_id}
             """
 
             # Execute the update query using your cursor
@@ -122,14 +122,14 @@ def create_franchise_sales_executives(sales_executives, files):
         with getConnection().cursor() as cursor:
             insert_sales_executives_query = f"""
                 INSERT INTO franchise_store_employees (
-                   name, email, phone, password, profile_pic, 
-                    address, document_1_type, document_1_url, 
-                    document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role,assigned_store_id
+                   fse_name, fse_email, fse_phone, fse_password, fse_profile_pic, 
+                    fse_address, fse_document_1_type, fse_document_1_url, 
+                    fse_document_2_type, fse_document_2_url, fse_status, fse_created_by, fse_created_on, 
+                    fse_last_updated_by, fse_last_updated_on, fse_role,fse_assigned_store_id
                 ) VALUES (
                     '{sales_executives.name}', '{sales_executives.email}', '{sales_executives.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{sales_executives.address}', '{sales_executives.document_1_type}', 
-                    '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 0,
+                    '{json.dumps(files.document1)}', '{sales_executives.document_2_type}', '{json.dumps(files.document2)}', 1,
                     '{sales_executives.created_by}', '{getIndianTime()}', '{sales_executives.last_updated_by}', '{getIndianTime()}', 3,0
                 )
             """
@@ -166,17 +166,18 @@ def get_all_own_sales_executive(status):
     status_condition = status_conditions[status]
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
-                                            LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.role = 3 AND sm.status {status_condition}
-                                            ORDER BY sm.employee_id DESC"""
+            get_store_manager_query = f""" SELECT sm.*, os.os_store_name AS store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater FROM own_store_employees AS sm
+                                            LEFT JOIN own_store AS os ON sm.ose_assigned_store_id = os.os_store_id
+                                            LEFT JOIN admin AS creator ON sm.ose_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON sm.ose_last_updated_by = updater.admin_admin_id
+                                            WHERE sm.ose_role = 3 AND sm.ose_status {status_condition}
+                                            ORDER BY sm.ose_employee_id DESC"""
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {
                 "status": True,
-                "sales_executive_list": get_own_store_employees(store_managers)
+                "sales_executive_list": store_managers
             }, 200
 
     except pymysql.Error as e:
@@ -194,18 +195,19 @@ def get_all_franchise_sales_executive(status):
     status_condition = status_conditions[status]
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name 
-                                            FROM franchise_store_employees AS sm
-                                            LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.role = 3 AND sm.status {status_condition}
-                                            ORDER BY sm.employee_id DESC"""
+            get_store_manager_query = f""" SELECT fse.*, fs.fs_store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater
+                                            FROM franchise_store_employees AS fse
+                                            LEFT JOIN franchise_store AS fs ON fse.fse_assigned_store_id = fs.fs_store_id
+                                            LEFT JOIN admin AS creator ON fse.fse_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON fse.fse_last_updated_by = updater.admin_admin_id
+                                            WHERE fse.fse_role = 3 AND fse.fse_status {status_condition}
+                                            ORDER BY fse.fse_employee_id DESC"""
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {
                 "status": True,
-                "franchise_sales_executive_list": get_own_store_employees(store_managers)
+                "franchise_sales_executive_list": store_managers
             }, 200
 
     except pymysql.Error as e:
@@ -217,16 +219,21 @@ def get_all_franchise_sales_executive(status):
 def get_own_sales_executive_by_id(seId):
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
-                                            LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id 
-                                            WHERE sm.employee_id = '{seId}'"""
+            get_store_manager_query = f""" SELECT sm.*, os.os_store_name AS store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater FROM own_store_employees AS sm
+                                            LEFT JOIN own_store AS os ON sm.ose_assigned_store_id = os.os_store_id
+                                            LEFT JOIN admin AS creator ON sm.ose_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON sm.ose_last_updated_by = updater.admin_admin_id
+                                            WHERE sm.ose_employee_id = '{seId}'"""
             cursor.execute(get_store_manager_query)
-            store_manager = cursor.fetchall()
+            store_manager = cursor.fetchone()
+            store_manager['ose_document_1_url'] = json.loads(store_manager['ose_document_1_url']) if store_manager[
+                'ose_document_1_url'] else []
+            store_manager['ose_document_2_url'] = json.loads(store_manager['ose_document_2_url']) if store_manager[
+                'ose_document_2_url'] else []
             return {
                 "status": True,
-                "sales_executive": get_own_store_employees(store_manager)
+                "sales_executive": store_manager
             }, 200
 
     except pymysql.Error as e:
@@ -238,17 +245,23 @@ def get_own_sales_executive_by_id(seId):
 def get_franchise_sales_executive_by_id(seId):
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name 
-                                            FROM franchise_store_employees AS sm
-                                            LEFT JOIN franchise_store AS os ON sm.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id 
-                                            WHERE sm.employee_id = '{seId}'"""
-            cursor.execute(get_store_manager_query)
-            store_manager = cursor.fetchall()
+            get_sales_executive_query = f""" SELECT fse.*, fs.fs_store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater
+                                            FROM franchise_store_employees AS fse
+                                            LEFT JOIN franchise_store AS fs ON fse.fse_assigned_store_id = fs.fs_store_id
+                                            LEFT JOIN admin AS creator ON fse.fse_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON fse.fse_last_updated_by = updater.admin_admin_id 
+                                            WHERE fse.fse_employee_id = '{seId}'"""
+            cursor.execute(get_sales_executive_query)
+            sales_executive = cursor.fetchone()
+            sales_executive['fse_document_1_url'] = json.loads(sales_executive['fse_document_1_url']) if \
+            sales_executive['fse_document_1_url'] else []
+            sales_executive['fse_document_2_url'] = json.loads(sales_executive['fse_document_2_url']) if \
+            sales_executive['fse_document_2_url'] else []
+
             return {
                 "status": True,
-                "franchise_sales_executive": get_own_store_employees(store_manager)
+                "franchise_sales_executive": sales_executive
             }, 200
 
     except pymysql.Error as e:
@@ -263,9 +276,9 @@ def enable_disable_sales_executive(seId, status):
             update_sales_executive_query = f"""
                 UPDATE own_store_employees
                 SET
-                    status = {status}
+                    ose_status = {status}
                 WHERE
-                    employee_id = {seId}
+                    ose_employee_id = {seId}
             """
 
             # Execute the update query using your cursor

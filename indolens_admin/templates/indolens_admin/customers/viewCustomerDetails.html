@@ -146,7 +146,7 @@
                                                 <div class="platinum-card">
                                                     <h4 style="color: white;">{{membership}} Member</h4>
                                                 </div>
-                                                {% elif membership == 'Luxuary' %}
+                                                {% elif membership == 'Luxury' %}
                                                 <div class="luxury-card">
                                                     <h4>{{membership}} Member</h4>
                                                 </div>
@@ -255,69 +255,49 @@
                                             </td>
                                             <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                                 {% if order.so_payment_status == 1 %}
-                                                <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                        class="badge-label">PENDING</span><span class="ms-1"
-                                                                                                data-feather="check"
-                                                                                                style="height:12.8px;width:12.8px;"></span></span>
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                        class="badge-label">PENDING</span></span>
                                                 {% elif order.so_payment_status == 2 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                        class="badge-label">COMPLETE</span><span class="ms-1"
-                                                                                                 data-feather="check"
-                                                                                                 style="height:12.8px;width:12.8px;"></span></span>
+                                                        class="badge-label">COMPLETE</span></span>
                                                 {% elif order.so_payment_status == 3 %}
-                                                <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                        class="badge-label">REFUNDED</span><span class="ms-1"
-                                                                                                 data-feather="check"
-                                                                                                 style="height:12.8px;width:12.8px;"></span></span>
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                        class="badge-label">REFUNDED</span></span>
                                                 {% endif %}
                                             </td>
                                             <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                                 {% if order.so_order_status == 1 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                        class="badge-label">NEW</span><span class="ms-1"
-                                                                                            data-feather="check"
-                                                                                            style="height:12.8px;width:12.8px;"></span></span>
+                                                        class="badge-label">NEW</span></span>
                                                 {% elif order.so_order_status == 2 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                        class="badge-label">PROCESSING</span><span class="ms-1"
-                                                                                                   data-feather="check"
-                                                                                                   style="height:12.8px;width:12.8px;"></span></span>
+                                                        class="badge-label">PROCESSING</span></span>
                                                 {% elif order.so_order_status == 3 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                        class="badge-label">READY</span><span class="ms-1"
-                                                                                              data-feather="check"
-                                                                                              style="height:12.8px;width:12.8px;"></span></span>
+                                                        class="badge-label">READY</span></span>
                                                 {% elif order.so_order_status == 4 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                        class="badge-label">DISPATCHED</span><span class="ms-1"
-                                                                                                   data-feather="check"
-                                                                                                   style="height:12.8px;width:12.8px;"></span></span>
+                                                        class="badge-label">DISPATCHED</span></span>
                                                 {% elif order.so_order_status == 5 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                        class="badge-label">READY IN STORE</span><span class="ms-1"
-                                                                                                       data-feather="check"
-                                                                                                       style="height:12.8px;width:12.8px;"></span></span>
+                                                        class="badge-label">READY IN STORE</span></span>
                                                 {% elif order.so_order_status == 6 %}
-                                                <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                        class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
-                                                                                                           data-feather="check"
-                                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                        class="badge-label">DELIVERED CUSTOMER</span></span>
                                                 {% elif order.so_order_status == 7 %}
-                                                <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                        class="badge-label">CANCELLED</span><span class="ms-1"
-                                                                                                  data-feather="check"
-                                                                                                  style="height:12.8px;width:12.8px;"></span></span>
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                        class="badge-label">CANCELLED</span></span>
                                                 {% endif %}
 
                                             </td>
                                             <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
-                                                {{order.creator_name}}
+                                                <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
                                             </td>
                                             <td class="date align-middle white-space-nowrap text-700 fs--1  ">
                                                 {{order.so_created_on}}
                                             </td>
                                             <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
-                                                {{order.updater_name}}
+                                                <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.updater_name}}</a>
                                             </td>
                                             <td class="date align-middle white-space-nowrap text-700 fs--1  ">
                                                 {{order.so_updated_on}}

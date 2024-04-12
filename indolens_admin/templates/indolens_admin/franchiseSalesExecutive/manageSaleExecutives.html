@@ -185,32 +185,32 @@
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
-                                    <a href="{{MEDIA_URL}}{{sales_executive.profile_pic}}" target="_blank">
+                                    <a href="{{MEDIA_URL}}{{sales_executive.fse_profile_pic}}" target="_blank">
                                     <div class="avatar avatar-m">
-                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{sales_executive.profile_pic}}"/>
+                                        <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{sales_executive.fse_profile_pic}}"/>
                                     </div>
                                         </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 name"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_franchise_sales_executives' sales_executive.employee_id %}">
-                                    {{sales_executive.name}}
+                                        href="{% url 'view_franchise_sales_executives' sales_executive.fse_employee_id %}">
+                                    {{sales_executive.fse_name}}
                                 </a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">
-                                    <p class="mb-0 fs--1 text-900">{{sales_executive.phone}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{sales_executive.fse_phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 email">
-                                    <p class="mb-0 fs--1 text-900">{{sales_executive.email}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{sales_executive.fse_email}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 store">
-                                    {% if sales_executive.store_name|length != 0 %}
+                                    {% if sales_executive.fse_store_name|length != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
-                                       href="{%url 'view_franchise_store' sales_executive.assigned_store_id %}">
-                                        {{sales_executive.store_name}}
+                                       href="{%url 'view_franchise_store' sales_executive.fse_assigned_store_id %}">
+                                        {{sales_executive.fse_store_name}}
                                     </a>
                                     {% else %}
                                     <span
@@ -219,27 +219,27 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end status">
-                                    {% if sales_executive.status == 0 %}
+                                    {% if sales_executive.fse_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
-                                {% elif sales_executive.status == 1 %}
+                                {% elif sales_executive.fse_status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
                                 </td>
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdon">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{sales_executive.created_on}}</p>-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{sales_executive.fse_created_on}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdby">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{sales_executive.creator_name}}</p>-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{sales_executive.fse_creator_name}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedon">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{sales_executive.last_updated_on}}</p>-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{sales_executive.fse_last_updated_on}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedby">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{sales_executive.updater_name}}</p>-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{sales_executive.fse_updater_name}}</p>-->
 <!--                                </td>-->
                                 <td class="align-middle white-space-nowrap ps-3 py-4 address"
                                 style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{sales_executive.address}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{sales_executive.fse_address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -251,17 +251,17 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_franchise_sales_executives' sales_executive.employee_id %}">View</a>
+                                                                                             href="{% url 'view_franchise_sales_executives' sales_executive.fse_employee_id %}">View</a>
 
-                                            {% if sales_executive.status == 1 %}
-                                            {% if sales_executive.assigned_store_id == 0 %}
+                                            {% if sales_executive.fse_status == 1 %}
+                                            {% if sales_executive.fse_assigned_store_id == 0 %}
                                             <a class="dropdown-item"
                                                type="button"
                                                data-bs-role="Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#allocate_store_modal"
-                                               data-employee-id="{{ sales_executive.employee_id }}"
-                                               data-employee-name="{{ sales_executive.name }}"
+                                               data-employee-id="{{ sales_executive.fse_employee_id }}"
+                                               data-employee-name="{{ sales_executive.fse_name }}"
                                                data-bs-action="{% url 'assign_franchise_store_sales_executive' status %}"
                                                data-action-type="allocate">
                                                 Allocate Store
@@ -272,46 +272,46 @@
                                                data-bs-role="Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ sales_executive.employee_id }}"
-                                               data-employee-name="{{ sales_executive.name }}"
-                                               data-store-name="{{sales_executive.store_name}}"
+                                               data-employee-id="{{ sales_executive.fse_employee_id }}"
+                                               data-employee-name="{{ sales_executive.fse_name }}"
+                                               data-store-name="{{sales_executive.fse_store_name}}"
                                                data-action-type="unallocate"
-                                               data-action-url="{% url 'un_assign_franchise_store_sales_executive' status sales_executive.employee_id sales_executive.assigned_store_id %}">
+                                               data-action-url="{% url 'un_assign_franchise_store_sales_executive' status sales_executive.fse_employee_id sales_executive.fse_assigned_store_id %}">
                                                 Un allocate Store
                                             </a>
                                             {% endif %}
                                             {% endif %}
-                                            <a class="dropdown-item" href="{% url 'edit_franchise_sales_executives' sales_executive.employee_id %}">Update Profile
+                                            <a class="dropdown-item" href="{% url 'edit_franchise_sales_executives' sales_executive.fse_employee_id %}">Update Profile
                                                 </a>
                                             <a class="dropdown-item"
-                                               href="{% url 'update_franchise_sales_executives_documents' sales_executive.employee_id %}">Update
+                                               href="{% url 'update_franchise_sales_executives_documents' sales_executive.fse_employee_id %}">Update
                                                 Documents</a>
 
                                             <div class="dropdown-divider"></div>
 
-                                            {% if sales_executive.status == 0 %}
+                                            {% if sales_executive.fse_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Sales executive"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ sales_executive.employee_id }}"
-                                               data-employee-name="{{ sales_executive.name }}"
+                                               data-employee-id="{{ sales_executive.fse_employee_id }}"
+                                               data-employee-name="{{ sales_executive.fse_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_franchise_sales_executive' status sales_executive.employee_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_franchise_sales_executive' status sales_executive.fse_employee_id 1 %}">
                                                 Make Active
                                             </a>
 
-                                            {% elif sales_executive.status == 1 %}
+                                            {% elif sales_executive.fse_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-role="Sales executive"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ sales_executive.employee_id }}"
-                                               data-employee-name="{{ sales_executive.name }}"
+                                               data-employee-id="{{ sales_executive.fse_employee_id }}"
+                                               data-employee-name="{{ sales_executive.fse_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_franchise_sales_executive' status sales_executive.employee_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_franchise_sales_executive' status sales_executive.fse_employee_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

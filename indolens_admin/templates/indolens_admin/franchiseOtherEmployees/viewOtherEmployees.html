@@ -79,7 +79,6 @@
     <div class="container-fluid px-0">
 
         {% include 'nav_bar.html' %}
-        {% for emp in other_employee %}
 
         <div class="content">
 
@@ -91,7 +90,7 @@
                     <div class="col-auto">
                         <div class="row g-3">
                             <div class="col-auto">
-                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_franchise_other_employees' emp.employee_id %}">
+                                <a class="btn btn-phoenix-secondary" href="{% url 'edit_franchise_other_employees' other_employee.fse_employee_id %}">
                                     <span class="fas fa-refresh me-2"></span> Update
                                 </a>
 
@@ -108,17 +107,17 @@
                                         <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
                                             <div class="col-12 col-sm-auto mb-sm-2">
                                                 <div class="avatar avatar-5xl">
-                                                    <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{emp.profile_pic}}"/>
+                                                    <img alt="" class="rounded-circle" src="{{MEDIA_URL}}{{other_employee.fse_profile_pic}}"/>
                                                 </div>
 
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
-                                                <h3>{{emp.name}}</h3>
-                                                <p class="text-800">Joined on {{emp.created_on}}</p>
-                                                {% if emp.assigned_store_id != 0 %}
+                                                <h3>{{other_employee.fse_name}}</h3>
+                                                <p class="text-800">Joined on {{other_employee.fse_created_on|date:"d/m/Y h:i A" }}</p>
+                                                {% if other_employee.fse_assigned_store_id != 0 %}
                                                 <p class="text-800">Employee - <a
-                                                        href="{%url 'view_own_store' emp.assigned_store_id %}">
-                                                    {{emp.store_name}}
+                                                        href="{%url 'view_own_store' other_employee.fse_assigned_store_id %}">
+                                                    {{other_employee.fse_store_name}}
                                                 </a></p>
                                                 {% else %}
                                                 <p class="text-800">Employee - UNASSIGNED</p>
@@ -129,10 +128,10 @@
                                         <div class="border-top border-dashed border-300 pt-4">
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
-                                                <h6>{{ emp.document_1_type }}</h6>
+                                                <h6>{{ other_employee.fse_document_1_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in emp.document_1_url %}
+                                                    {% for doc in other_employee.fse_document_1_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -151,10 +150,10 @@
 
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
-                                                <h6>{{ emp.document_2_type }}</h6>
+                                                <h6>{{ other_employee.fse_document_2_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in emp.document_2_url %}
+                                                    {% for doc in other_employee.fse_document_2_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -182,30 +181,29 @@
                                             <button class="btn btn-link p-0"></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
-                                        <p class="text-800">{{emp.address}}
+                                        <p class="text-800">{{other_employee.fse_address}}
                                         </p>
                                         <div class="mb-3">
                                             <h5 class="text-800">Email</h5><a
-                                                href="mailto:{{emp.email}}">{{emp.email}}</a>
+                                                href="mailto:{{other_employee.fse_email}}">{{other_employee.fse_email}}</a>
                                         </div>
-                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:{{emp.phone}}">{{emp.phone}}</a>
+                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:{{other_employee.fse_phone}}">{{other_employee.fse_phone}}</a>
                                         <h5 class="text-800 mt-3">Created On</h5>
-                                        <p class="text-800">{{emp.created_on}}
+                                        <p class="text-800">{{other_employee.fse_created_on|date:"d/m/Y h:i A" }}
                                         </p>
                                         <h5 class="text-800 mt-3">Created By</h5>
-                                        <a href="{% url 'view_sub_admin' emp.created_by %}">{{emp.creator_name}}</a>
+                                        <a href="{% url 'view_sub_admin' other_employee.fse_created_by %}">{{other_employee.creator}}</a>
                                         <h5 class="text-800 mt-3">Updated On</h5>
-                                        <p class="text-800">{{emp.last_updated_on}}
+                                        <p class="text-800">{{other_employee.fse_last_updated_on|date:"d/m/Y h:i A" }}
                                         </p>
                                         <h5 class="text-800 mt-3">Updated By</h5>
-                                        <a href="{% url 'view_sub_admin' emp.last_updated_by %}">{{emp.updater_name}}</a>
+                                        <a href="{% url 'view_sub_admin' other_employee.fse_last_updated_by %}">{{other_employee.updater}}</a>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     {% include 'footer.html' %}
-                    {% endfor %}
 
                 </div>
             </div>

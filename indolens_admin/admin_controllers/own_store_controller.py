@@ -103,23 +103,16 @@ def get_own_store_count():
 def get_unassigned_active_own_store_for_manager():
     try:
         with getConnection().cursor() as cursor:
-            unassigned_stores = []
-            # get_unassigned_active_own_store_for_manager_query = f"""SELECT o.store_id, o.store_name FROM own_store AS o
-            # LEFT JOIN own_store_employees e ON o.store_id = e.assigned_store_id WHERE (e.employee_id IS NULL OR e.role
-            #  <> 1 OR e.assigned_store_id = 0) AND o.status = 1 GROUP BY o.store_id"""
 
-            get_unassigned_active_own_store_for_manager_query = f"""SELECT os.store_id, os.store_name
+            get_unassigned_active_own_store_for_manager_query = f"""SELECT os.os_store_id AS store_id, os.os_store_name 
+                    AS store_name
                     FROM own_store os
-                    LEFT JOIN own_store_employees ose ON os.store_id = ose.assigned_store_id AND ose.role = 1
-                    WHERE ose.assigned_store_id IS NULL AND os.status = 1 """
+                    LEFT JOIN own_store_employees ose ON os.os_store_id = ose.ose_assigned_store_id AND ose.ose_role = 1
+                    WHERE ose.ose_assigned_store_id IS NULL AND os.os_status = 1 """
 
             cursor.execute(get_unassigned_active_own_store_for_manager_query)
-            stores_data = cursor.fetchall()
-            for store in stores_data:
-                unassigned_stores.append({
-                    "store_id": store[0],
-                    "store_name": store[1]
-                })
+            unassigned_stores = cursor.fetchall()
+
             return {
                        "status": True,
                        "available_stores": unassigned_stores
@@ -134,18 +127,14 @@ def get_active_own_stores():
     try:
         with getConnection().cursor() as cursor:
             unassigned_stores = []
-            get_unassigned_active_own_store_for_manager_query = f"""SELECT o.store_id, o.store_name FROM own_store o 
-            WHERE o.status = 1;"""
+            get_unassigned_active_own_store_for_manager_query = f"""SELECT o.os_store_id AS store_id, o.os_store_name 
+            AS store_name FROM own_store o 
+            WHERE o.os_status = 1;"""
             cursor.execute(get_unassigned_active_own_store_for_manager_query)
             stores_data = cursor.fetchall()
-            for store in stores_data:
-                unassigned_stores.append({
-                    "store_id": store[0],
-                    "store_name": store[1]
-                })
             return {
                        "status": True,
-                       "available_stores": unassigned_stores
+                       "available_stores": stores_data
                    }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

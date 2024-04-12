@@ -14,7 +14,8 @@ from indolens_admin.admin_controllers import admin_auth_controller, own_store_co
     master_shape_controller, master_frame_type_controller, master_color_controller, master_material_controller, \
     optimetry_controller, master_units_controller, central_inventory_controller, delete_documents_controller, \
     customers_controller, stores_inventory_controller, lens_power_attribute_controller, add_documents_controller, \
-    orders_controller, store_expenses, dashboard_controller, eye_test_controller, admin_setting_controller
+    orders_controller, store_expenses, dashboard_controller, eye_test_controller, admin_setting_controller, \
+    email_template_controller, send_notification_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single, \
     get_central_inventory_product_restoc_log
 from indolens_admin.admin_models.admin_req_model import admin_auth_model, own_store_model, franchise_store_model, \
@@ -444,7 +445,9 @@ def updateSubAdminDocuments(request, subAdminId):
 def manageStoreManagers(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = store_manager_controller.get_all_store_manager(status)
+        print(response)
         available_stores_response, available_stores_status_code = own_store_controller.get_unassigned_active_own_store_for_manager()
+        print(available_stores_response)
         return render(request, 'indolens_admin/storeManagers/manageStoreManagers.html',
                       {"store_managers": response['store_managers'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -597,7 +600,9 @@ def enableDisableStoreManager(request, route, storeManagerId, status):
 def manageFranchiseOwners(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_all_franchise_owner(status)
+        print(response)
         available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_unassigned_franchise_stores()
+        print(available_stores_response)
         return render(request, 'indolens_admin/franchiseOwners/manageFranchiseOwners.html',
                       {"franchise_owners": response['franchise_owners'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -645,6 +650,8 @@ def createFranchiseOwners(request):
 
             franchise_owner_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = franchise_manager_controller.create_franchise_owner(franchise_owner_obj, file_data)
+            print("==================response=============")
+            print(response)
             if status_code == 200:
                 url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': response['franchiseOwnersId']})
                 return redirect(url)
@@ -719,6 +726,7 @@ def enableDisableFranchiseOwner(request, route, franchiseOwnersId, status):
 def viewFranchiseOwners(request, franchiseOwnersId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
+        print(response)
         return render(request, 'indolens_admin/franchiseOwners/viewFranchiseOwner.html',
                       {"franchise_owner": response['franchise_owner']})
     else:
@@ -1035,8 +1043,10 @@ def enableDisableMarketingHead(request, route, marketingHeadId, status):
 def manageOptimetry(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_all_optimetry(status)
+        print(response)
 
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
+        print(available_stores_response)
         return render(request, 'indolens_admin/optimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1084,6 +1094,7 @@ def createOptimetry(request):
             file_data = FileData(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.create_optimetry(optimetry_obj, file_data)
+            print(response)
             if status_code == 200:
                 url = reverse('view_optimetry', kwargs={'ownOptimetryId': response['empid']})
                 return redirect(url)
@@ -1134,6 +1145,7 @@ def editOptimetry(request, ownOptimetryId):
             file_data = FileData(form_data)
             optimetry_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = optimetry_controller.update_optimetry(optimetry_obj, file_data)
+            print(response)
             url = reverse('view_optimetry', kwargs={'ownOptimetryId': ownOptimetryId})
             return redirect(url)
         else:
@@ -1146,6 +1158,7 @@ def editOptimetry(request, ownOptimetryId):
 def viewOptimetry(request, ownOptimetryId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_optimetry_by_id(ownOptimetryId)
+        print(response)
         return render(request, 'indolens_admin/optimetry/viewOptimetry.html',
                       {"optimetry": response['optimetry']})
     else:
@@ -1190,7 +1203,9 @@ def enableDisableOptimetry(request, route, ownOptimetryId, status):
 def manageFranchiseOptimetry(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_all_franchise_optimetry(status)
+        print(response)
         available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
+        print(available_stores_response)
         return render(request, 'indolens_admin/franchiseOptimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1300,6 +1315,7 @@ def editFranchiseOptimetry(request, franchiseOptimetryId):
 def viewFranchiseOptimetry(request, franchiseOptimetryId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = optimetry_controller.get_franchise_optimetry_by_id(franchiseOptimetryId)
+        print(response)
         return render(request, 'indolens_admin/franchiseOptimetry/viewOptimetry.html',
                       {"optimetry": response['optimetry']})
     else:
@@ -1342,7 +1358,9 @@ def enableDisableFranchiseOptimetry(request, route, franchiseOptimetryId, status
 def manageSaleExecutives(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sales_executives_controller.get_all_own_sales_executive(status)
+        print(response)
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
+        print(available_stores_response)
         return render(request, 'indolens_admin/salesExecutive/manageSaleExecutives.html',
                       {"sales_executive_list": response['sales_executive_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1452,6 +1470,7 @@ def editSaleExecutives(request, ownSaleExecutivesId):
 def viewSaleExecutives(request, ownSaleExecutivesId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sales_executives_controller.get_own_sales_executive_by_id(ownSaleExecutivesId)
+        print(response)
         return render(request, 'indolens_admin/salesExecutive/viewSaleExecutives.html',
                       {"sales_executive": response['sales_executive']})
     else:
@@ -1494,7 +1513,9 @@ def enableDisableSaleExecutives(request, route, ownSaleExecutivesId, status):
 def manageFranchiseSaleExecutives(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sales_executives_controller.get_all_franchise_sales_executive(status)
+        print(response)
         available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
+        print(available_stores_response)
         return render(request, 'indolens_admin/franchiseSalesExecutive/manageSaleExecutives.html',
                       {"franchise_sales_executive_list": response['franchise_sales_executive_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1608,6 +1629,7 @@ def viewFranchiseSaleExecutives(request, franchiseSaleExecutivesId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sales_executives_controller.get_franchise_sales_executive_by_id(
             franchiseSaleExecutivesId)
+        print(response)
         return render(request, 'indolens_admin/franchiseSalesExecutive/viewSaleExecutives.html',
                       {"franchise_sales_executive": response['franchise_sales_executive']})
     else:
@@ -1933,7 +1955,9 @@ def enableDisableLabTechnician(request, route, labTechnicianId, status):
 def manageOtherEmployees(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_all_other_emp(status)
+        print(response)
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
+        print(available_stores_response)
         return render(request, 'indolens_admin/otherEmployees/manageOtherEmployees.html',
                       {"other_employee_list": response['other_emp_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -2045,6 +2069,7 @@ def editOtherEmployees(request, ownEmployeeId):
 def viewOtherEmployees(request, ownEmployeeId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = other_employee_controller.get_other_emp_by_id(ownEmployeeId)
+        print(response)
         return render(request, 'indolens_admin/otherEmployees/viewOtherEmployees.html',
                       {"other_employee": response['other_employee']})
     else:
@@ -2397,7 +2422,7 @@ def viewCustomerDetails(request, customerId):
         if response['customer']['total_spend'] > 5000 and response['customer']['total_spend'] < 25000:
             membership = "Platinum"
         elif response['customer']['total_spend'] > 25000:
-            membership = "Luxuary"
+            membership = "Luxury"
         return render(request, 'indolens_admin/customers/viewCustomerDetails.html', {"customer": response['customer'],
                                                                                      "sales_data": sales_data[
                                                                                          'orders_list'],

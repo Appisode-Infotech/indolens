@@ -20,10 +20,10 @@ def create_store_manager(store_manager, files):
         with getConnection().cursor() as cursor:
             insert_store_manager_query = f"""
                 INSERT INTO own_store_employees (
-                    name, email, phone, password, profile_pic, 
-                    assigned_store_id, address, document_1_type, document_1_url, 
-                    document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role
+                    ose_name, ose_email, ose_phone, ose_password, ose_profile_pic, 
+                    ose_assigned_store_id, ose_address, ose_document_1_type, ose_document_1_url, 
+                    ose_document_2_type, ose_document_2_url, ose_status, ose_created_by, ose_created_on, 
+                    ose_last_updated_by, ose_last_updated_on, ose_role
                 ) VALUES (
                     '{store_manager.name}', '{store_manager.email}', '{store_manager.phone}', '{hashed_password}', 
                     '{files.profile_pic}', 0, '{store_manager.address}', 
@@ -35,13 +35,14 @@ def create_store_manager(store_manager, files):
 
             # Execute the query using your cursor
             cursor.execute(insert_store_manager_query)
+            mid = cursor.lastrowid
+
             subject = email_template_controller.get_employee_creation_email_subject(store_manager.name)
             body = email_template_controller.get_employee_creation_email_body(store_manager.name, 'Manager',
                                                                               store_manager.email,
                                                                               store_manager.password)
             send_notification_controller.send_email(subject, body, store_manager.email)
 
-            mid = cursor.lastrowid
             return {
                 "status": True,
                 "message": "sub admin added",
@@ -60,16 +61,15 @@ def update_store_manager(store_manager, files):
             update_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
-                    name = '{store_manager.name}',
-                    email = '{store_manager.email}',
-                    phone = '{store_manager.phone}',
-                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                    address = '{store_manager.address}',
-                    last_updated_by = '{store_manager.last_updated_by}',
-                    last_updated_on = '{getIndianTime()}'
-                WHERE employee_id = {store_manager.employee_id} 
+                    ose_name = '{store_manager.name}',
+                    ose_email = '{store_manager.email}',
+                    ose_phone = '{store_manager.phone}',
+                    {'ose_profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    ose_address = '{store_manager.address}',
+                    ose_last_updated_by = '{store_manager.last_updated_by}',
+                    ose_last_updated_on = '{getIndianTime()}'
+                WHERE ose_employee_id = {store_manager.employee_id} 
             """
-            print(update_store_manager_query)
             cursor.execute(update_store_manager_query)
 
             subject = email_template_controller.get_employee_update_email_subject(store_manager.name)
@@ -98,17 +98,18 @@ def get_all_store_manager(status):
     status_condition = status_conditions[status]
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
-                                            LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.role = 1 AND sm.status {status_condition} 
-                                            ORDER BY sm.employee_id DESC"""
+            get_store_manager_query = f""" SELECT sm.*, os.os_store_name AS store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater FROM own_store_employees AS sm
+                                            LEFT JOIN own_store AS os ON sm.ose_assigned_store_id = os.os_store_id
+                                            LEFT JOIN admin AS creator ON sm.ose_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON sm.ose_last_updated_by = updater.admin_admin_id
+                                            WHERE sm.ose_role = 1 AND sm.ose_status {status_condition} 
+                                            ORDER BY sm.ose_employee_id DESC"""
             cursor.execute(get_store_manager_query)
             store_managers = cursor.fetchall()
             return {
                 "status": True,
-                "store_managers": get_own_store_employees(store_managers)
+                "store_managers": store_managers
             }, 200
 
     except pymysql.Error as e:
@@ -120,16 +121,20 @@ def get_all_store_manager(status):
 def get_store_manager_by_id(mid):
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
-                                            LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id 
-                                            WHERE sm.employee_id = {mid} """
+            get_store_manager_query = f""" SELECT sm.*, os.os_store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater FROM own_store_employees AS sm
+                                            LEFT JOIN own_store AS os ON sm.ose_assigned_store_id = os.os_store_id
+                                            LEFT JOIN admin AS creator ON sm.ose_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON sm.ose_last_updated_by = updater.admin_admin_id 
+                                            WHERE sm.ose_employee_id = {mid} """
             cursor.execute(get_store_manager_query)
-            store_manager = cursor.fetchall()
+            store_manager = cursor.fetchone()
+
+            store_manager['ose_document_1_url'] = json.loads(store_manager['ose_document_1_url']) if store_manager['ose_document_1_url'] else []
+            store_manager['ose_document_2_url'] = json.loads(store_manager['ose_document_2_url']) if store_manager['ose_document_2_url'] else []
             return {
                 "status": True,
-                "store_manager": get_own_store_employees(store_manager)
+                "store_manager": store_manager
             }, 200
 
     except pymysql.Error as e:
@@ -144,9 +149,9 @@ def enable_disable_store_manager(mid, status):
             update_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
-                    status = {status}
+                    ose_status = {status}
                 WHERE
-                    employee_id = {mid}
+                    ose_employee_id = {mid}
             """
 
             # Execute the update query using your cursor

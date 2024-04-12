@@ -457,7 +457,7 @@
                                 data-category="{{ order.so_order_status }}">
                                     <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                              href="{% url 'order_details' order.so_order_id %}">#{{order.so_order_id}}</a>
+                                                                                              href="{% url 'order_details' order.so_order_id %}">{{order.so_order_id}}</a>
                                     </td>
                                     <td class="total align-middle text-end fw-semi-bold text-1000 text-end">
                                         ₹{{order.total_cost}}
@@ -628,7 +628,7 @@
                                         data-category="{{ order.so_order_status }}">
                                         <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                         <td class="id align-middle white-space-nowrap py-0">
-                                            #{{expense.se_store_expense_id}}</a>
+                                            {{expense.se_store_expense_id}}</a>
                                         </td>
                                         <td class="reason align-middle fw-semi-bold text-1000">
                                             {{expense.se_expense_reason}}

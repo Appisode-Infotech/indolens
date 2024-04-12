@@ -20,15 +20,15 @@ def create_other_employee(other_emp, files):
         with getConnection().cursor() as cursor:
             insert_other_emp_query = f"""
                 INSERT INTO own_store_employees (
-                    name, email, phone, password, profile_pic, 
-                    address, document_1_type, document_1_url, 
-                    document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role,assigned_store_id
+                    ose_name, ose_email, ose_phone, ose_password, ose_profile_pic, 
+                    ose_address, ose_document_1_type, ose_document_1_url, 
+                    ose_document_2_type, ose_document_2_url, ose_status, ose_created_by, ose_created_on, 
+                    ose_last_updated_by, ose_last_updated_on, ose_role, ose_assigned_store_id
                 ) VALUES (
                     '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{other_emp.address}', '{other_emp.document_1_type}', 
                     '{json.dumps(files.document1)}', '{other_emp.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{other_emp.created_by}', '{getIndianTime()}', '{other_emp.last_updated_by}', '{getIndianTime()}', 4,0
+                    1, '{other_emp.created_by}', '{getIndianTime()}', '{other_emp.last_updated_by}', '{getIndianTime()}', 4,0
                 )
             """
 
@@ -59,14 +59,14 @@ def update_other_employee(other_emp, files):
             update_other_emp_query = f"""
                 UPDATE own_store_employees
                 SET 
-                    name = '{other_emp.name}',
-                    email = '{other_emp.email}',
-                    phone = '{other_emp.phone}',
-                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                    address = '{other_emp.address}',
-                    last_updated_by = '{other_emp.last_updated_by}',
-                    last_updated_on = '{getIndianTime()}'
-                WHERE employee_id = {other_emp.employee_id}
+                    ose_name = '{other_emp.name}',
+                    ose_email = '{other_emp.email}',
+                    ose_phone = '{other_emp.phone}',
+                    {'ose_profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    ose_address = '{other_emp.address}',
+                    ose_last_updated_by = '{other_emp.last_updated_by}',
+                    ose_last_updated_on = '{getIndianTime()}'
+                WHERE ose_employee_id = {other_emp.employee_id}
             """
 
             # Execute the update query using your cursor
@@ -90,14 +90,14 @@ def update_franchise_other_employee(other_emp, files):
             update_other_emp_query = f"""
                 UPDATE franchise_store_employees
                 SET 
-                    name = '{other_emp.name}',
-                    email = '{other_emp.email}',
-                    phone = '{other_emp.phone}',
-                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                    address = '{other_emp.address}',
-                    last_updated_by = '{other_emp.last_updated_by}',
-                    last_updated_on = '{getIndianTime()}'
-                WHERE employee_id = {other_emp.employee_id}
+                    fse_name = '{other_emp.name}',
+                    fse_email = '{other_emp.email}',
+                    fse_phone = '{other_emp.phone}',
+                    {'fse_profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                    fse_address = '{other_emp.address}',
+                    fse_last_updated_by = '{other_emp.last_updated_by}',
+                    fse_last_updated_on = '{getIndianTime()}'
+                WHERE fse_employee_id = {other_emp.employee_id}
             """
             # Execute the update query using your cursor
             cursor.execute(update_other_emp_query)
@@ -120,15 +120,15 @@ def create_franchise_other_employee(other_emp, files):
         with getConnection().cursor() as cursor:
             insert_other_emp_query = f"""
                 INSERT INTO franchise_store_employees (
-                    name, email, phone, password, profile_pic, 
-                    address, document_1_type, document_1_url, 
-                    document_2_type, document_2_url, status, created_by, created_on, 
-                    last_updated_by, last_updated_on, role, assigned_store_id
+                    fse_name, fse_email, fse_phone, fse_password, fse_profile_pic, 
+                    fse_address, fse_document_1_type, fse_document_1_url, 
+                    fse_document_2_type, fse_document_2_url, fse_status, fse_created_by, fse_created_on, 
+                    fse_last_updated_by, fse_last_updated_on, fse_role, fse_assigned_store_id
                 ) VALUES (
                     '{other_emp.name}', '{other_emp.email}', '{other_emp.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{other_emp.address}', '{other_emp.document_1_type}', 
                     '{json.dumps(files.document1)}', '{other_emp.document_2_type}', '{json.dumps(files.document2)}', 
-                    0, '{other_emp.created_by}', '{getIndianTime()}', '{other_emp.last_updated_by}', '{getIndianTime()}', 4,0
+                    1, '{other_emp.created_by}', '{getIndianTime()}', '{other_emp.last_updated_by}', '{getIndianTime()}', 4,0
                 )
             """
 
@@ -162,18 +162,18 @@ def get_all_other_emp(status):
     status_condition = status_conditions[status]
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name 
-                                            FROM own_store_employees AS op
-                                            LEFT JOIN own_store AS os ON op.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id
-                                            WHERE op.role = 4 AND op.status {status_condition} 
-                                            ORDER BY op.employee_id DESC"""
-            cursor.execute(get_store_manager_query)
-            store_managers = cursor.fetchall()
+            get_other_employee_query = f""" SELECT sm.*, os.os_store_name AS store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater FROM own_store_employees AS sm
+                                            LEFT JOIN own_store AS os ON sm.ose_assigned_store_id = os.os_store_id
+                                            LEFT JOIN admin AS creator ON sm.ose_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON sm.ose_last_updated_by = updater.admin_admin_id
+                                            WHERE sm.ose_role = 4 AND sm.ose_status {status_condition} 
+                                            ORDER BY sm.ose_employee_id DESC"""
+            cursor.execute(get_other_employee_query)
+            other_employees = cursor.fetchall()
             return {
                 "status": True,
-                "other_emp_list": get_own_store_employees(store_managers)
+                "other_emp_list": other_employees
             }, 200
 
     except pymysql.Error as e:
@@ -191,18 +191,19 @@ def get_all_franchise_other_emp(status):
     status_condition = status_conditions[status]
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT op.*, os.store_name, creator.name, updater.name 
-                                            FROM franchise_store_employees AS op
-                                            LEFT JOIN franchise_store AS os ON op.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON op.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON op.last_updated_by = updater.admin_id
-                                            WHERE op.role = 4 AND op.status {status_condition} 
-                                            ORDER BY op.employee_id DESC"""
-            cursor.execute(get_store_manager_query)
-            store_managers = cursor.fetchall()
+            get_other_employee_query = f""" SELECT fse.*, fs.fs_store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater
+                                            FROM franchise_store_employees AS fse
+                                            LEFT JOIN franchise_store AS fs ON fse.fse_assigned_store_id = fs.fs_store_id
+                                            LEFT JOIN admin AS creator ON fse.fse_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON fse.fse_last_updated_by = updater.admin_admin_id
+                                            WHERE fse.fse_role = 4 AND fse.fse_status {status_condition} 
+                                            ORDER BY fse.fse_employee_id DESC"""
+            cursor.execute(get_other_employee_query)
+            other_employees = cursor.fetchall()
             return {
                 "status": True,
-                "other_emp_list": get_own_store_employees(store_managers)
+                "other_emp_list": other_employees
             }, 200
 
     except pymysql.Error as e:
@@ -214,17 +215,22 @@ def get_all_franchise_other_emp(status):
 def get_other_emp_by_id(empid):
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT foe.*, os.store_name, creator.name, updater.name 
-                                            FROM own_store_employees AS foe
-                                            LEFT JOIN own_store AS os ON foe.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON foe.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON foe.last_updated_by = updater.admin_id 
-                                            WHERE foe.employee_id = '{empid}'"""
-            cursor.execute(get_store_manager_query)
-            store_manager = cursor.fetchall()
+            get_other_employee_query = f""" SELECT sm.*, os.os_store_name AS store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater FROM own_store_employees AS sm
+                                            LEFT JOIN own_store AS os ON sm.ose_assigned_store_id = os.os_store_id
+                                            LEFT JOIN admin AS creator ON sm.ose_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON sm.ose_last_updated_by = updater.admin_admin_id
+                                            WHERE sm.ose_employee_id = '{empid}'"""
+            cursor.execute(get_other_employee_query)
+            other_employee = cursor.fetchone()
+
+            other_employee['ose_document_1_url'] = json.loads(other_employee['ose_document_1_url']) if other_employee[
+                'ose_document_1_url'] else []
+            other_employee['ose_document_2_url'] = json.loads(other_employee['ose_document_2_url']) if other_employee[
+                'ose_document_2_url'] else []
             return {
                 "status": True,
-                "other_employee": get_own_store_employees(store_manager)
+                "other_employee": other_employee
             }, 200
 
     except pymysql.Error as e:
@@ -236,17 +242,23 @@ def get_other_emp_by_id(empid):
 def get_franchise_other_emp_by_id(empid):
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT foe.*, os.store_name, creator.name, updater.name 
-                                            FROM franchise_store_employees AS foe
-                                            LEFT JOIN franchise_store AS os ON foe.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON foe.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON foe.last_updated_by = updater.admin_id 
-                                            WHERE foe.employee_id = '{empid}'"""
-            cursor.execute(get_store_manager_query)
-            store_manager = cursor.fetchall()
+            get_other_employee_query = f""" SELECT fse.*, fs.fs_store_name, creator.admin_name AS creator, 
+                                                        updater.admin_name AS updater
+                                                        FROM franchise_store_employees AS fse
+                                                        LEFT JOIN franchise_store AS fs ON fse.fse_assigned_store_id = fs.fs_store_id
+                                                        LEFT JOIN admin AS creator ON fse.fse_created_by = creator.admin_admin_id
+                                                        LEFT JOIN admin AS updater ON fse.fse_last_updated_by = updater.admin_admin_id
+                                                        WHERE fse.fse_employee_id = '{empid}' 
+                                                        ORDER BY fse.fse_employee_id DESC"""
+            cursor.execute(get_other_employee_query)
+            other_employee = cursor.fetchone()
+            other_employee['fse_document_1_url'] = json.loads(other_employee['fse_document_1_url']) if other_employee[
+                'fse_document_1_url'] else []
+            other_employee['fse_document_2_url'] = json.loads(other_employee['fse_document_2_url']) if other_employee[
+                'fse_document_2_url'] else []
             return {
                 "status": True,
-                "other_employee": get_own_store_employees(store_manager)
+                "other_employee": other_employee
             }, 200
 
     except pymysql.Error as e:
@@ -308,14 +320,14 @@ def enable_disable_franchise_other_employees(empid, status):
 def assign_store_own_store_other_employee(empId, storeId):
     try:
         with getConnection().cursor() as cursor:
-            update_store_manager_query = f"""
+            update_other_employee_query = f"""
                 UPDATE own_store_employees
                 SET
                     assigned_store_id = {storeId}
                 WHERE
                     employee_id = {empId}
             """
-            cursor.execute(update_store_manager_query)
+            cursor.execute(update_other_employee_query)
 
             get_employee_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
                                                 """
@@ -351,7 +363,7 @@ def assign_store_own_store_other_employee(empId, storeId):
 def unassign_store_own_store_other_employee(empId, storeId):
     try:
         with getConnection().cursor() as cursor:
-            update_store_manager_query = f"""
+            update_other_employee_query = f"""
                 UPDATE own_store_employees
                 SET
                     assigned_store_id = 0
@@ -359,7 +371,7 @@ def unassign_store_own_store_other_employee(empId, storeId):
                     employee_id = {empId}
             """
             # Execute the update query using your cursor
-            cursor.execute(update_store_manager_query)
+            cursor.execute(update_other_employee_query)
 
             get_employee_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
                                                 """
