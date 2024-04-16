@@ -187,6 +187,8 @@
                                                        type="button"
                                                        href="{% url 'lab_job_item_details' order.so_sale_item_id %}">
                                                         Line Item Details</a>
+                                                    <a class="dropdown-item" target="_blank"
+                                                   href="{% url 'manage_authenticity_card' order.so_sale_item_id 'NA' %}">Authenticity Card</a>
                                                     {% elif order.ci_category_id == 3 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button" target="_blank"

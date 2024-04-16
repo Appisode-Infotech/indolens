@@ -210,10 +210,10 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 store">
-                                    {% if sales_executive.ose_store_name|length != 0 %}
+                                    {% if sales_executive.store_name|length != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
                                        href="{%url 'view_own_store' sales_executive.ose_assigned_store_id %}">
-                                        {{sales_executive.ose_store_name}}
+                                        {{sales_executive.store_name}}
                                     </a>
                                     {% else %}
                                     <span

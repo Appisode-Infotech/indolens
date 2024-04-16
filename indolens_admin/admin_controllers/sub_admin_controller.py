@@ -145,9 +145,9 @@ def enable_disable_sub_admin(said, status):
             update_sub_admin_query = f"""
                 UPDATE admin
                 SET
-                    status = {status}
+                    admin_status = {status}
                 WHERE
-                    admin_id = {said}
+                    admin_admin_id = {said}
             """
 
             # Execute the update query using your cursor

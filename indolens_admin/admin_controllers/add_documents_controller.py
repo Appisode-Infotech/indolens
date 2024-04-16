@@ -189,27 +189,27 @@ def add_sub_admin_doc(file_data, subAdminId, emp_obj, updated_by):
     try:
         with getConnection().cursor() as cursor:
             get_document1_query = f"""
-                        SELECT document_1_url FROM admin Where admin_id = {subAdminId}
+                        SELECT admin_document_1_url FROM admin Where admin_admin_id = {subAdminId}
                         """
             cursor.execute(get_document1_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['admin_document_1_url'])
             document1 = old_images + file_data.document1
 
             cursor.execute(
-                f""" UPDATE admin SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{emp_obj.document_1_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE admin_id = {subAdminId}""")
+                f""" UPDATE admin SET admin_document_1_url = '{json.dumps(document1)}', 
+                admin_document_1_type = '{emp_obj.document_1_type}', admin_last_updated_on = '{getIndianTime()}', 
+                admin_last_updated_by = {updated_by} WHERE admin_admin_id = {subAdminId}""")
 
             get_document2_query = f"""
-                        SELECT document_2_url FROM admin Where admin_id = {subAdminId}
+                        SELECT admin_document_2_url FROM admin Where admin_admin_id = {subAdminId}
                         """
             cursor.execute(get_document2_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['admin_document_2_url'])
             document2 = old_images + file_data.document2
             cursor.execute(
-                f""" UPDATE admin SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{emp_obj.document_2_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE admin_id = {subAdminId}""")
+                f""" UPDATE admin SET admin_document_2_url = '{json.dumps(document2)}', 
+                admin_document_2_type = '{emp_obj.document_2_type}', admin_last_updated_on = '{getIndianTime()}', 
+                admin_last_updated_by = {updated_by} WHERE admin_admin_id = {subAdminId}""")
 
         return {
             "status": True,
@@ -226,27 +226,27 @@ def add_area_head_doc(file_data, areaHeadId, area_head, updated_by):
     try:
         with getConnection().cursor() as cursor:
             get_document1_query = f"""
-                        SELECT document_1_url FROM area_head Where area_head_id = {areaHeadId}
+                        SELECT ah_document_1_url FROM area_head Where ah_area_head_id = {areaHeadId}
                         """
             cursor.execute(get_document1_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['ah_document_1_url'])
             document1 = old_images + file_data.document1
 
             cursor.execute(
-                f""" UPDATE area_head SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{area_head.document1_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE area_head_id = {areaHeadId}""")
+                f""" UPDATE area_head SET ah_document_1_url = '{json.dumps(document1)}', 
+                ah_document_1_type = '{area_head.document1_type}', ah_last_updated_on = '{getIndianTime()}', 
+                ah_last_updated_by = {updated_by} WHERE ah_area_head_id = {areaHeadId}""")
 
             get_document2_query = f"""
-                        SELECT document_2_url FROM area_head Where area_head_id = {areaHeadId}
+                        SELECT ah_document_2_url FROM area_head Where ah_area_head_id = {areaHeadId}
                         """
             cursor.execute(get_document2_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['ah_document_2_url'])
             document2 = old_images + file_data.document2
             cursor.execute(
-                f""" UPDATE area_head SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{area_head.document2_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE area_head_id = {areaHeadId}""")
+                f""" UPDATE area_head SET ah_document_2_url = '{json.dumps(document2)}', 
+                ah_document_2_type = '{area_head.document2_type}', ah_last_updated_on = '{getIndianTime()}', 
+                ah_last_updated_by = {updated_by} WHERE ah_area_head_id = {areaHeadId}""")
 
         return {
             "status": True,
@@ -300,27 +300,27 @@ def add_accountant_doc(file_data, accountantId, accountant, updated_by):
     try:
         with getConnection().cursor() as cursor:
             get_document1_query = f"""
-                        SELECT document_1_url FROM accountant Where accountant_id = {accountantId}
+                        SELECT ac_document_1_url FROM accountant Where ac_accountant_id = {accountantId}
                         """
             cursor.execute(get_document1_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['ac_document_1_url'])
             document1 = old_images + file_data.document1
 
             cursor.execute(
-                f""" UPDATE accountant SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{accountant.document_1_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE accountant_id = {accountantId}""")
+                f""" UPDATE accountant SET ac_document_1_url = '{json.dumps(document1)}', 
+                ac_document_1_type = '{accountant.document_1_type}', ac_last_updated_on = '{getIndianTime()}', 
+                ac_last_updated_by = {updated_by} WHERE ac_accountant_id = {accountantId}""")
 
             get_document2_query = f"""
-                        SELECT document_2_url FROM accountant Where accountant_id = {accountantId}
+                        SELECT ac_document_2_url FROM accountant Where ac_accountant_id = {accountantId}
                         """
             cursor.execute(get_document2_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['ac_document_2_url'])
             document2 = old_images + file_data.document2
             cursor.execute(
-                f""" UPDATE accountant SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{accountant.document_2_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE accountant_id = {accountantId}""")
+                f""" UPDATE accountant SET ac_document_2_url = '{json.dumps(document2)}', 
+                ac_document_2_type = '{accountant.document_2_type}', ac_last_updated_on = '{getIndianTime()}', 
+                ac_last_updated_by = {updated_by} WHERE ac_accountant_id = {accountantId}""")
 
         return {
             "status": True,
@@ -337,28 +337,28 @@ def add_lab_technician_doc(file_data, LabTechnicianId, lab_technician, updated_b
     try:
         with getConnection().cursor() as cursor:
             get_document1_query = f"""
-                        SELECT document_1_url FROM lab_technician Where lab_technician_id = {LabTechnicianId}
+                        SELECT lt_document_1_url FROM lab_technician Where lt_lab_technician_id = {LabTechnicianId}
                         """
             cursor.execute(get_document1_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['lt_document_1_url'])
             document1 = old_images + file_data.document1
 
             cursor.execute(
-                f""" UPDATE lab_technician SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{lab_technician.document_1_type}',
-                 last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by} 
-                 WHERE lab_technician_id = {LabTechnicianId}""")
+                f""" UPDATE lab_technician SET lt_document_1_url = '{json.dumps(document1)}', 
+                lt_document_1_type = '{lab_technician.document_1_type}',
+                 lt_last_updated_on = '{getIndianTime()}', lt_last_updated_by = {updated_by} 
+                 WHERE lt_lab_technician_id = {LabTechnicianId}""")
 
             get_document2_query = f"""
-                        SELECT document_2_url FROM lab_technician Where lab_technician_id = {LabTechnicianId}
+                        SELECT lt_document_2_url FROM lab_technician Where lt_lab_technician_id = {LabTechnicianId}
                         """
             cursor.execute(get_document2_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['lt_document_2_url'])
             document2 = old_images + file_data.document2
             cursor.execute(
-                f""" UPDATE lab_technician SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{lab_technician.document_2_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE lab_technician_id = {LabTechnicianId}""")
+                f""" UPDATE lab_technician SET lt_document_2_url = '{json.dumps(document2)}', 
+                lt_document_2_type = '{lab_technician.document_2_type}', lt_last_updated_on = '{getIndianTime()}', 
+                lt_last_updated_by = {updated_by} WHERE lt_lab_technician_id = {LabTechnicianId}""")
 
         return {
             "status": True,

@@ -273,9 +273,9 @@ def enable_disable_other_employees(empid, status):
             update_other_employees_query = f"""
                 UPDATE own_store_employees
                 SET
-                    status = {status}
+                    ose_status = {status}
                 WHERE
-                    employee_id = {empid}
+                    ose_employee_id = {empid}
             """
 
             # Execute the update query using your cursor
@@ -298,9 +298,9 @@ def enable_disable_franchise_other_employees(empid, status):
             update_other_employees_query = f"""
                 UPDATE franchise_store_employees
                 SET
-                    status = {status}
+                    fse_status = {status}
                 WHERE
-                    employee_id = {empid}
+                    fse_employee_id = {empid}
             """
 
             # Execute the update query using your cursor
@@ -320,39 +320,42 @@ def enable_disable_franchise_other_employees(empid, status):
 def assign_store_own_store_other_employee(empId, storeId):
     try:
         with getConnection().cursor() as cursor:
-            update_other_employee_query = f"""
+            assign_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
-                    assigned_store_id = {storeId}
+                    ose_assigned_store_id = {storeId}
                 WHERE
-                    employee_id = {empId}
+                    ose_employee_id = {empId}
             """
-            cursor.execute(update_other_employee_query)
+            # Execute the update query using your cursor
+            cursor.execute(assign_store_manager_query)
 
-            get_employee_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
-                                                """
+            get_employee_query = f""" SELECT ose_name, ose_email, ose_phone 
+                                    FROM own_store_employees WHERE ose_employee_id = {empId} """
+
             # Execute the update query using your cursor
             cursor.execute(get_employee_query)
             manager_data = cursor.fetchone()
 
-            get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
-                                                                        WHERE store_id = {storeId}"""
+            get_store_query = f""" SELECT os_store_name, os_store_phone, os_store_address FROM own_store 
+                                    WHERE os_store_id = {storeId}"""
 
             cursor.execute(get_store_query)
             store_data = cursor.fetchone()
 
             subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data[0])
-            body = email_template_controller.get_employee_assigned_store_email_body(manager_data[0], 'Store Employee',
-                                                                                    manager_data[1],
-                                                                                    store_data[0],
-                                                                                    store_data[1], store_data[2])
+            body = email_template_controller.get_employee_assigned_store_email_body(manager_data['ose_name'], 'Store Employee',
+                                                                                    manager_data['ose_email'],
+                                                                                    store_data['os_store_name'],
+                                                                                    store_data['os_store_phone'],
+                                                                                    store_data['os_store_address'])
 
             send_notification_controller.send_email(subject, body, manager_data[1])
 
             return {
-                       "status": True,
-                       "message": "Store assigned"
-                   }, 200
+                "status": True,
+                "message": "Store assigned"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -363,39 +366,41 @@ def assign_store_own_store_other_employee(empId, storeId):
 def unassign_store_own_store_other_employee(empId, storeId):
     try:
         with getConnection().cursor() as cursor:
-            update_other_employee_query = f"""
+            unassign_store_manager_query = f"""
                 UPDATE own_store_employees
                 SET
-                    assigned_store_id = 0
+                    ose_assigned_store_id = 0
                 WHERE
-                    employee_id = {empId}
+                    ose_employee_id = {empId}
             """
             # Execute the update query using your cursor
-            cursor.execute(update_other_employee_query)
-
-            get_employee_query = f""" SELECT name,email,phone FROM own_store_employees WHERE employee_id = {empId}
-                                                """
+            cursor.execute(unassign_store_manager_query)
+            get_employee_query = f""" SELECT ose_name,ose_email,ose_phone 
+            FROM own_store_employees WHERE ose_employee_id = {empId}
+                        """
             # Execute the update query using your cursor
             cursor.execute(get_employee_query)
             manager_data = cursor.fetchone()
 
-            get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
-                                                                        WHERE store_id = {storeId}"""
+            get_store_query = f""" SELECT os_store_name, os_store_phone, os_store_address FROM own_store 
+                                                WHERE os_store_id = {storeId}"""
 
             cursor.execute(get_store_query)
             store_data = cursor.fetchone()
 
             subject = email_template_controller.get_employee_unassigned_store_email_subject(manager_data[0])
-            body = email_template_controller.get_employee_unassigned_store_email_body(manager_data[0], 'Store Employee',
-                                                                                      manager_data[1], store_data[0],
-                                                                                      store_data[1], store_data[2])
+            body = email_template_controller.get_employee_unassigned_store_email_body(manager_data['ose_name'], 'Store Employee',
+                                                                                      manager_data['ose_email'],
+                                                                                      store_data['os_store_name'],
+                                                                                      store_data['os_store_phone'],
+                                                                                      store_data['os_store_address'])
 
-            send_notification_controller.send_email(subject, body, manager_data[1])
+            send_notification_controller.send_email(subject, body, manager_data['ose_email'])
 
             return {
-                       "status": True,
-                       "message": "Store un assigned"
-                   }, 200
+                "status": True,
+                "message": "Store un assigned"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

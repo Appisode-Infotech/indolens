@@ -332,8 +332,6 @@ def get_lab_job_authenticity_card(saleId):
             get_order_details_query = f"""
                             SELECT 
                                 so.*,
-                                SUM(so.so_unit_sale_price * so.so_purchase_quantity) AS total_cost,
-                                SUM(so.so_product_total_cost) AS discount_cost,
                                 CASE 
                                     WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
                                     ELSE fs.fs_store_name 
@@ -392,6 +390,10 @@ def get_lab_job_authenticity_card(saleId):
 
             sale_item_details['so_linked_item'] = json.loads(sale_item_details['so_linked_item']) if sale_item_details[
                 'so_linked_item'] else []
+            sale_item_details['so_power_attribute'] = json.loads(sale_item_details['so_power_attribute']) if sale_item_details[
+                'so_power_attribute'] else []
+            sale_item_details['ci_power_attribute'] = json.loads(sale_item_details['ci_power_attribute']) if sale_item_details[
+                'ci_power_attribute'] else []
             all_frame_details = []
 
             if sale_item_details['so_linked_item'] != 0:

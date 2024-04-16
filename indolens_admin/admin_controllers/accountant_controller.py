@@ -150,9 +150,9 @@ def enable_disable_accountant(aid, status):
             update_accountant_query = f"""
                 UPDATE accountant
                 SET
-                    status = {status}
+                    ac_status = {status}
                 WHERE
-                    accountant_id = {aid}
+                    ac_accountant_id = {aid}
             """
 
             # Execute the update query using your cursor

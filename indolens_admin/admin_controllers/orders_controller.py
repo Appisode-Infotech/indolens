@@ -284,8 +284,10 @@ def get_order_details(orderId):
             get_order_details_query = f"""
                 SELECT 
                     so.*,
-                    SUM(so.so_unit_sale_price * so.so_purchase_quantity) AS total_cost,
-                    SUM(so.so_product_total_cost) AS discount_cost,
+                    (SELECT SUM(so_unit_sale_price * so_purchase_quantity)  FROM sales_order 
+                    WHERE so_order_id = '{orderId}' GROUP BY so_order_id) AS total_cost ,
+                    (SELECT SUM(so_product_total_cost)  FROM sales_order 
+                    WHERE so_order_id = '{orderId}' GROUP BY so_order_id) AS discount_cost,
                     CASE 
                         WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
                         ELSE fs.fs_store_name 
@@ -338,8 +340,6 @@ def get_order_details(orderId):
                     franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fse_employee_id AND so.so_created_by_store_type = 2
                 WHERE 
                     so.so_order_id = '{orderId}'
-                GROUP BY 
-                    so.so_order_id
             """
             cursor.execute(get_order_details_query)
 

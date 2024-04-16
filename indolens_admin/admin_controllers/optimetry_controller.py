@@ -299,9 +299,9 @@ def enable_disable_franchise_optimetry(franchiseOptimetryId, status):
             update_optimetry_query = f"""
                 UPDATE franchise_store_employees
                 SET
-                    status = {status}
+                    fse_status = {status}
                 WHERE
-                    employee_id = {franchiseOptimetryId}
+                    fse_employee_id = {franchiseOptimetryId}
             """
 
             # Execute the update query using your cursor

@@ -762,8 +762,9 @@ def deleteFranchiseOwnersDocuments(request, franchiseOwnersId, documentURL, docu
 def manageAreaHead(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_all_area_head(status)
-        print(response)
+        # print(response)
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
+        print(available_stores_response)
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
                       {"area_heads_list": response['area_heads_list'],
                        "available_stores": available_stores_response['available_stores'],
@@ -898,6 +899,7 @@ def viewAreaHead(request, areaHeadId):
 def UpdateAreaHeadDocuments(request, areaHeadId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
+        print(response)
         return render(request, 'indolens_admin/areaHead/updateDocuments.html',
                       {"area_head": response['area_head']})
     else:
@@ -2530,6 +2532,7 @@ def labcontactLensPowerCard(request, saleId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get(
             'is_admin_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        print(job_detail)
         return render(request, 'indolens_admin/labs/contactLensPowerCard.html',
                       {"order_detail": job_detail['orders_details']})
     else:
@@ -2540,6 +2543,7 @@ def manageAuthenticityCard(request, saleId, frame):
     if request.session.get('is_admin_logged_in') is not None and request.session.get(
             'is_admin_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        print(job_detail)
         return render(request, 'Tasks/authenticityCar.html', {"order_detail": job_detail['orders_details'],
                                                               "frame": frame})
     else:
@@ -3232,26 +3236,27 @@ def changeStockRequestStatus(request, route, requestId, status):
 
 def assignManagerOwnStore(request, route):
     if request.method == 'POST':
-        response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
+        response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'],
+                                                                     'Manager')
         url = reverse('manage_store_managers', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignManagerOwnStore(request, route, empId, storeId):
-    response, status_code = store_manager_controller.unAssignStore(empId, storeId)
+    response, status_code = store_manager_controller.unAssignStore(empId, storeId, 'Manager')
     url = reverse('manage_store_managers', kwargs={'status': route})
     return redirect(url)
 
 
 def assignOptimetryOwnStore(request, route):
     if request.method == 'POST':
-        response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'])
+        response, status_code = store_manager_controller.assignStore(request.POST['emp_id'], request.POST['store_id'], 'Optometry')
         url = reverse('manage_store_optimetry', kwargs={'status': route})
         return redirect(url)
 
 
 def unAssignOptimetryOwnStore(request, route, empId, storeId):
-    response, status_code = store_manager_controller.unAssignStore(empId, storeId)
+    response, status_code = store_manager_controller.unAssignStore(empId, storeId, 'Optometry')
     url = reverse('manage_store_optimetry', kwargs={'status': route})
     return redirect(url)
 
@@ -3359,7 +3364,7 @@ def assignAreaHeadOwnStore(request):
 
 
 def unAssignAreaHeadOwnStore(request, empId, storeId):
-    response, status_code = area_head_controller.unAssignStore(empId, storeId)
+    response, status_code = area_head_controller.unAssignStore(empId, storeId, 'Optometry')
     url = reverse('manage_area_head', kwargs={'status': 'All'})
     return redirect(url)
 
@@ -3382,8 +3387,8 @@ def unAssignLabTechnician(request, route, LabTechnicianId, labId):
 
 def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'admin', 'admin_id', subAdminId
+        response, status_code = delete_documents_controller.delete_admin_document(documentURL, document_Type,
+                                                                            'admin', 'admin_admin_id', subAdminId
                                                                             , request.session.get('id'))
         url = reverse('update_sub_admin_documents', kwargs={'subAdminId': subAdminId})
         return redirect(url)
@@ -3393,8 +3398,8 @@ def deleteSubAdminDocuments(request, subAdminId, documentURL, document_Type):
 
 def deleteAreaHeadDocuments(request, areaHeadId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'area_head', 'area_head_id', areaHeadId
+        response, status_code = delete_documents_controller.delete_ah_document(documentURL, document_Type,
+                                                                            'area_head', 'ah_area_head_id', areaHeadId
                                                                             , request.session.get('id'))
         url = reverse('update_area_head_documents', kwargs={'areaHeadId': areaHeadId})
         return redirect(url)
@@ -3416,8 +3421,8 @@ def deleteMarketingHeadDocuments(request, marketingHeadId, documentURL, document
 
 def deleteAccountantDocuments(request, accountantId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'accountant', 'accountant_id', accountantId
+        response, status_code = delete_documents_controller.delete_accountant_document(documentURL, document_Type,
+                                                                            'accountant', 'ac_accountant_id', accountantId
                                                                             , request.session.get('id'))
         url = reverse('update_accountant_documents', kwargs={'accountantId': accountantId})
         return redirect(url)
@@ -3427,8 +3432,8 @@ def deleteAccountantDocuments(request, accountantId, documentURL, document_Type)
 
 def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'lab_technician', 'lab_technician_id',
+        response, status_code = delete_documents_controller.delete_lt_document(documentURL, document_Type,
+                                                                            'lab_technician', 'lt_lab_technician_id',
                                                                             labTechnicianId
                                                                             , request.session.get('id'))
         url = reverse('update_lab_technician_documents', kwargs={'labTechnicianId': labTechnicianId})
@@ -3764,7 +3769,11 @@ def addAreaHeadDocuments(request, areaHeadId):
                 form_data[key] = value
 
             file_data = FileData(form_data)
+
             area_head = area_head_model.area_head_model_from_dict(request.POST)
+            print("+++++++++++++++++++++++++++")
+            print(request.POST)
+            print(vars(area_head))
             response, status_code = add_documents_controller.add_area_head_doc(file_data, areaHeadId, area_head,
                                                                                request.session.get('id'))
 

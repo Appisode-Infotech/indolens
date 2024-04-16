@@ -146,9 +146,9 @@ def enable_disable_lab_technician(ltid, status):
             update_lab_technician_query = f"""
                 UPDATE lab_technician
                 SET
-                    status = {status}
+                    lt_status = {status}
                 WHERE
-                    lab_technician_id = {ltid}
+                    lt_lab_technician_id = {ltid}
             """
 
             # Execute the update query using your cursor

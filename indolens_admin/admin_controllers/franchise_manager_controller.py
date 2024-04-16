@@ -10,9 +10,12 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.franchise_owner_resp_model import get_franchise_owners
 
 ist = pytz.timezone('Asia/Kolkata')
+
+
 def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
+
 
 def create_franchise_owner(franchise_owner, files):
     try:
@@ -35,9 +38,10 @@ def create_franchise_owner(franchise_owner, files):
             cursor.execute(insert_franchise_owner_query)
 
             subject = email_template_controller.get_franchise_employee_creation_email_subject(franchise_owner.name)
-            body = email_template_controller.get_franchise_employee_creation_email_body(franchise_owner.name, 'Franchise Owner',
-                                                                              franchise_owner.email,
-                                                                              franchise_owner.password)
+            body = email_template_controller.get_franchise_employee_creation_email_body(franchise_owner.name,
+                                                                                        'Franchise Owner',
+                                                                                        franchise_owner.email,
+                                                                                        franchise_owner.password)
             send_notification_controller.send_email(subject, body, franchise_owner.email)
 
             foid = cursor.lastrowid
@@ -97,10 +101,12 @@ def get_franchise_owner_by_id(foid):
             franchise_owners = cursor.fetchone()
             print(franchise_owners)
 
-            franchise_owners['fse_document_1_url'] = json.loads(franchise_owners['fse_document_1_url']) if franchise_owners[
-                'fse_document_1_url'] else []
-            franchise_owners['fse_document_2_url'] = json.loads(franchise_owners['fse_document_2_url']) if franchise_owners[
-                'fse_document_2_url'] else []
+            franchise_owners['fse_document_1_url'] = json.loads(franchise_owners['fse_document_1_url']) if \
+                franchise_owners[
+                    'fse_document_1_url'] else []
+            franchise_owners['fse_document_2_url'] = json.loads(franchise_owners['fse_document_2_url']) if \
+                franchise_owners[
+                    'fse_document_2_url'] else []
 
             return {
                 "status": True,
@@ -174,32 +180,34 @@ def assign_store_franchise_owner(empId, storeId, role):
             update_store_manager_query = f"""
                 UPDATE franchise_store_employees
                 SET
-                    assigned_store_id = {storeId}
+                    fse_assigned_store_id = {storeId}
                 WHERE
-                    employee_id = {empId}
+                    fse_employee_id = {empId}
             """
             # Execute the update query using your cursor
             cursor.execute(update_store_manager_query)
 
-            get_employee_query = f""" SELECT name,email,phone FROM franchise_store_employees WHERE employee_id = {empId}
-                                                """
+            get_employee_query = f""" SELECT fse_name, fse_email, fse_phone FROM franchise_store_employees
+             WHERE fse_employee_id = {empId} """
             # Execute the update query using your cursor
             cursor.execute(get_employee_query)
             manager_data = cursor.fetchone()
 
-            get_store_query = f""" SELECT store_name, store_phone, store_address FROM franchise_store 
-                                                                        WHERE store_id = {storeId}"""
+            get_store_query = f""" SELECT fs_store_name, fs_store_phone, fs_store_address FROM franchise_store 
+                                                                        WHERE fs_store_id = {storeId}"""
 
             cursor.execute(get_store_query)
             store_data = cursor.fetchone()
 
             subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data[0])
-            body = email_template_controller.get_employee_assigned_store_email_body(manager_data[0], 'Franchise Owner',
-                                                                                    manager_data[1],
-                                                                                    store_data[0],
-                                                                                    store_data[1], store_data[2])
+            body = email_template_controller.get_employee_assigned_store_email_body(manager_data['fse_name'],
+                                                                                    role,
+                                                                                    manager_data['fse_email'],
+                                                                                    store_data['fs_store_name'],
+                                                                                    store_data['fs_store_phone'],
+                                                                                    store_data['fs_store_address'])
 
-            send_notification_controller.send_email(subject, body, manager_data[1])
+            send_notification_controller.send_email(subject, body, manager_data['fse_email'])
 
             return {
                 "status": True,
@@ -216,39 +224,41 @@ def unassign_store_franchise_owner(FranchiseOwnerId, storeId, role):
     try:
         with getConnection().cursor() as cursor:
             update_store_manager_query = f"""
-                UPDATE franchise_store_employees
-                SET
-                    assigned_store_id = 0
-                WHERE
-                    employee_id = {FranchiseOwnerId}
-            """
+                            UPDATE franchise_store_employees
+                            SET
+                                fse_assigned_store_id = 0
+                            WHERE
+                                fse_employee_id = {FranchiseOwnerId}
+                        """
             # Execute the update query using your cursor
             cursor.execute(update_store_manager_query)
 
-            get_employee_query = f""" SELECT name,email,phone FROM franchise_store_employees WHERE employee_id = {FranchiseOwnerId}
-                                                            """
+            get_employee_query = f""" SELECT fse_name, fse_email, fse_phone FROM franchise_store_employees
+                         WHERE fse_employee_id = {FranchiseOwnerId} """
             # Execute the update query using your cursor
             cursor.execute(get_employee_query)
             manager_data = cursor.fetchone()
 
-            get_store_query = f""" SELECT store_name, store_phone, store_address FROM franchise_store 
-                                                                                    WHERE store_id = {storeId}"""
+            get_store_query = f""" SELECT fs_store_name, fs_store_phone, fs_store_address FROM franchise_store 
+                                                                                    WHERE fs_store_id = {storeId}"""
 
             cursor.execute(get_store_query)
             store_data = cursor.fetchone()
 
             subject = email_template_controller.get_employee_unassigned_store_email_subject(manager_data[0])
-            body = email_template_controller.get_employee_unassigned_store_email_body(manager_data[0],
-                                                                                      'Sales Executive',
-                                                                                      manager_data[1], store_data[0],
-                                                                                      store_data[1], store_data[2])
+            body = email_template_controller.get_employee_unassigned_store_email_body((manager_data['fse_name'],
+                                                                                       role,
+                                                                                       manager_data['fse_email'],
+                                                                                       store_data['fs_store_name'],
+                                                                                       store_data['fs_store_phone'],
+                                                                                       store_data['fs_store_address']))
 
-            send_notification_controller.send_email(subject, body, manager_data[1])
+            send_notification_controller.send_email(subject, body, manager_data['fse_email'])
 
             return {
-                       "status": True,
-                       "message": "Store un assigned"
-                   }, 200
+                "status": True,
+                "message": "Store un assigned"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -266,13 +276,14 @@ def get_active_franchise_stores():
             unassigned_stores = cursor.fetchall()
 
             return {
-                       "status": True,
-                       "available_stores": unassigned_stores
-                   }, 200
+                "status": True,
+                "available_stores": unassigned_stores
+            }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def get_active_unassigned_franchise_stores():
     try:
@@ -285,9 +296,9 @@ def get_active_unassigned_franchise_stores():
             cursor.execute(get_unassigned_active_own_store_for_manager_query)
             unassigned_stores = cursor.fetchall()
             return {
-                       "status": True,
-                       "available_stores": unassigned_stores
-                   }, 200
+                "status": True,
+                "available_stores": unassigned_stores
+            }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:

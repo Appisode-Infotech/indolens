@@ -147,7 +147,7 @@ def enable_disable_area_head(ahId, status):
     try:
         with getConnection().cursor() as cursor:
             set_area_head_query = f"""
-            UPDATE area_head SET status = '{status}' WHERE area_head_id = '{ahId}';
+            UPDATE area_head SET ah_status = '{status}' WHERE ah_area_head_id = '{ahId}';
             """
             cursor.execute(set_area_head_query)
 

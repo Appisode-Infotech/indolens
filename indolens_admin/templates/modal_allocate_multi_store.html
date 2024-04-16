@@ -35,7 +35,8 @@
     var modalTitle = document.querySelector('#allocate_modal_title');
     var modalContent = document.querySelector('#modal_content');
     var modalSubmit = document.querySelector('#modal_submit');
-    var modalForm = document.querySelector('.allocate-store-form2'); // Select the existing form
+    var modalForm = document.querySelector('.allocate-store-form2');
+    console.log({{available_stores|safe}});
 
     document.body.addEventListener('click', function (event) {
         if (event.target.matches('[data-bs-target="#allocate_multi_store_modal"]')) {
@@ -56,9 +57,10 @@
 
             let selectCard = document.createElement("div");
             selectCard.innerHTML = `
+
             <select name="store_id" class="form-select" id="store_id" multiple="multiple">
                         <option value="">Select a store</option>
-                        {% for store in available_stores %}
+                        {% for store in available_stores|safe %}
                         <option value="{{store.store_id}}" ${actualArray.includes({{ store.store_id }}) ? 'selected' : ''}>{{store.store_name}}</option>
                         {% endfor %}
             </select>
