@@ -78,8 +78,24 @@
         <div class="content">
 
             <div class="mb-9">
-                <div class="d-flex flex-wrap flex-between-center mb-1">
-                    <p class="text-800 lh-sm mb-0">Job ID : {{order_detail.0.order_id}}</p>
+                <div class="d-flex flex-wrap flex-between-center mb-3 mt-3">
+                    <p class="text-800 lh-sm mb-0">Lab :{{order_detail.0.so_order_id}}</p>
+                    <p class="text-800 lh-sm mb-0">Store :
+                        {% if order_detail.0.so_created_by_store_type == 1%}
+                        <a class="fw-semi-bold"
+                           href="{% url 'view_own_store' order_detail.0.so_created_by_store %}">
+                            {{order_detail.0.store_name}}
+                        </a>
+                        {% else %}
+                        <a class="fw-semi-bold"
+                           href="{% url 'view_franchise_store' order_detail.0.so_created_by_store %}">
+                            {{order_detail.0.store_name}}
+                        </a>
+                        {% endif %}
+                    </p>
+
+
+
                 </div>
                 <div class="row g-5 gy-7">
                     <div class="col-12 col-xl-8 col-xxl-9">
@@ -125,49 +141,49 @@
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                         <td class="align-middle white-space-nowrap py-2">
                                             <div class="border rounded-2"><img
-                                                    alt="" src="{{ MEDIA_URL }}{{ order.product_images.0 }}"
+                                                    alt="" src="{{ MEDIA_URL }}{{ order.so_product_images.0 }}"
                                                     width="53"/>
                                             </div>
                                         </td>
                                         <td class="products align-middle py-0">
-                                            <a class="fw-semi-bold line-clamp-2 mb-0" href="{% url 'view_products' order.product_id %}">
-                                                {{order.product_name}}
+                                            <a class="fw-semi-bold line-clamp-2 mb-0" href="{% url 'view_products' order.so_product_id %}">
+                                                {{order.ci_product_name}}
                                             </a>
                                         </td>
                                         <td class="color align-middle white-space-nowrap text-900 py-0 ps-4">
-                                            {% if order.category_name == None %}
+                                            {% if order.pc_category_name == None %}
                                             N/A
                                             {% else %}
-                                            {{order.category_name}}
+                                            {{order.pc_category_name}}
                                             {% endif %}
 
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            {% if order.material_name == None %}
+                                            {% if order.pm_material_name == None %}
                                             N/A
                                             {% else %}
-                                            {{order.material_name}}
+                                            {{order.pm_material_name}}
                                             {% endif %}
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            {% if order.frame_type_name == None %}
+                                            {% if order.ftype_name == None %}
                                             N/A
                                             {% else %}
-                                            {{order.frame_type_name}}
+                                            {{order.ftype_name}}
                                             {% endif %}
                                         </td>
                                         <td class="quantity align-middle text-end py-0 ps-4 text-700">
-                                            {% if order.shape_name == None %}
+                                            {% if order.fshape_name == None %}
                                             N/A
                                             {% else %}
-                                            {{order.shape_name}}
+                                            {{order.fshape_name}}
                                             {% endif %}
                                         </td>
                                         <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
-                                            {% if order.color_name == None %}
+                                            {% if order.pcol_color_name == None %}
                                             N/A
                                             {% else %}
-                                            {{order.color_name}}
+                                            {{order.pcol_color_name}}
                                             {% endif %}
                                         </td>
                                         <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
@@ -184,7 +200,7 @@
                                             {{order.brand_name}}
                                             {% endif %}
                                         </td>
-                                        {% if order.category_id == 2 or order.category_id == 3 %}
+                                        {% if order.ci_category_id == 2 or order.ci_category_id == 3 %}
                                         <td class="align-middle text-end white-space-nowrap pe-0 action">
                                             <div class="font-sans-serif btn-reveal-trigger position-static" >
                                                 <button aria-expanded="false"
@@ -195,15 +211,17 @@
                                                         type="button">
                                                     <span class="fas fa-ellipsis-h fs--2"></span></button>
                                                 <div class="dropdown-menu dropdown-menu-end py-2">
-                                                    {% if order.category_id == 2 %}
+                                                    {% if order.ci_category_id == 2 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button"
-                                                       href="{% url 'lab_job_item_details' order.sale_item_id %}">
+                                                       href="{% url 'lab_job_item_details' order.so_sale_item_id %}">
                                                         Line Item Details</a>
-                                                    {% elif order.category_id == 3 %}
+                                                    <a class="dropdown-item" target="_blank"
+                                                   href="{% url 'manage_authenticity_card' order.so_sale_item_id 'NA' %}">Authenticity Card</a>
+                                                    {% elif order.ci_category_id == 3 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button" target="_blank"
-                                                       href="{% url 'lab_contact_Lens_power_card' order.sale_item_id %}">
+                                                       href="{% url 'lab_contact_Lens_power_card' order.so_sale_item_id %}">
                                                         Contact Lens Power</a>
                                                     {% endif %}
                                                 </div>
@@ -230,7 +248,7 @@
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="{% url 'customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
+                                           href="{% url 'customer_details' order_detail.0.so_customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -239,7 +257,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:{{order_detail.0.email}}::">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.0.customer_email}}::">{{order_detail.0.customer_email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -248,7 +266,7 @@
                                             <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="ms-4" style="max-width: 200px;">
-                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.customer_address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -257,7 +275,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.customer_phone}}">{{order_detail.0.customer_phone}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -271,7 +289,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:shatinon@jeemail.com:">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.0.customer_email}}::">{{order_detail.0.customer_email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -279,7 +297,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.customer_phone}}">{{order_detail.0.customer_phone}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -288,7 +306,7 @@
                                             <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="ms-4" style="max-width: 200px;">
-                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.customer_address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -298,7 +316,7 @@
                                             <h6 class="mb-0">Shipping Date</h6>
                                         </div>
                                         <p class="mb-0 text-800 fs--1 ms-4">
-                                            {{order_detail.0.estimated_delivery_date}}</p>
+                                            {{order_detail.0.so_estimated_delivery_date |date:"d/m/Y"}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -352,41 +370,43 @@
                                         <h6 class="mb-2">Payment status</h6>
                                         <select disabled aria-label="delivery type" class="form-select mb-4"
                                                 id="paymentStatusSelect">
+                                            {% if order_detail.0.so_payment_status == 1 %}
                                             <option value="1">Pending</option>
+                                            {% elif order_detail.0.so_payment_status == 2 %}
                                             <option value="2">Complete</option>
+                                            {% elif order_detail.0.so_payment_status == 3 %}
                                             <option value="3">Refund</option>
+                                            {% endif %}
+
+
+
                                         </select>
 
                                         <h6 class="mb-2">Order status</h6>
                                         <select disabled aria-label="delivery type" class="form-select"
                                                 id="orderStatusSelect">
-                                            <option value="2">Process</option>
-                                            <option value="3">Ready</option>
-                                            <option value="4">Dispatch</option>
-                                            <option value="5">Complete</option>
-                                            <option value="6">Cancel</option>
+                                            {% if order_detail.0.so_order_status == 1 %}
+                                            <option value="1" selected>New</option>
+                                            {% elif order_detail.0.so_order_status == 2 %}
+                                            <option value="2" selected>Processing</option>
+                                            {% elif order_detail.0.so_order_status == 3 %}
+                                            <option value="3" selected>Ready in Lab</option>
+                                            {% elif order_detail.0.so_order_status == 4 %}
+                                            <option value="4" selected>Dispatch to Store</option>
+                                            {% elif order_detail.0.so_order_status == 5 %}
+                                            <option value="5" selected>Ready in Store</option>
+                                            {% elif order_detail.0.so_order_status == 6 %}
+                                            <option value="6" selected>Completed </option>
+                                            {% elif order_detail.0.so_order_status == 7 %}
+                                            <option value="7" selected>Cancel</option>
+                                            {% endif %}
                                         </select>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="d-flex flex-wrap align-items-center justify-content-between py-3 pe-0 fs--1 border-bottom border-200">
-                        <div class="d-flex">
-                            <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
-                               data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*" href="#!">View
-                            all<span class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
-                                class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
-                                class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
-                        </div>
-                        <div class="d-flex">
-                            <button class="page-link" data-list-pagination="prev"><span
-                                    class="fas fa-chevron-left"></span></button>
-                            <ul class="mb-0 pagination"></ul>
-                            <button class="page-link pe-0" data-list-pagination="next"><span
-                                    class="fas fa-chevron-right"></span></button>
-                        </div>
-                    </div>
+
                     {% include 'modal_master_view.html' %}
                 </div>
             </div>

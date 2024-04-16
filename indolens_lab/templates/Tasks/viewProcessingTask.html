@@ -156,110 +156,104 @@
                                 <tbody class="list" id="order-table-body">
                                 {% for order in all_task %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
-                                    data-category="{{ order.order_status }}">
-                                    <td class="fs--1 align-middle px-0 py-3 slno"></td>
-                                    <td class="jobId align-middle py-0">
-                                        <a class="fw-semi-bold line-clamp-2 mb-0"
-                                           href="{% url 'lab_job_details' order.order_id %}">
-                                            {{order.order_id}}
-                                        </a>
-                                    </td>
-                                    <td class="store align-middle white-space-nowrap ">
-                                        {{order.store_name}}
-                                    </td>
-                                    <td class="category align-middle white-space-nowrap text-900 py-0 ps-4">
-                                        {% if order.category_name == None %}
-                                        N/A
-                                        {% else %}
-                                        {{order.category_name}}
-                                        {% endif %}
+                                            data-category="{{ order.so_order_status }}">
+                                            <td class="fs--1 align-middle px-0 py-3 slno"></td>
+                                            <td class="jobId align-middle py-0">
+                                                <a class="fw-semi-bold line-clamp-2 mb-0"
+                                                   href="{% url 'lab_job_details' order.so_order_id %}">
+                                                    {{order.so_order_id}}
+                                                </a>
+                                            </td>
+                                            <td class="jobId align-middle py-0">
+                                                {{order.store_name}}
+                                            </td>
 
-                                    </td>
-                                    <td class="material align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                        {% if order.material_name == None %}
-                                        N/A
-                                        {% else %}
-                                        {{order.material_name}}
-                                        {% endif %}
-                                    </td>
-                                    <td class="type align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                        {% if order.frame_type_name == None %}
-                                        N/A
-                                        {% else %}
-                                        {{order.frame_type_name}}
-                                        {% endif %}
-                                    </td>
-                                    <td class="shape align-middle text-end py-0 ps-4 text-700">
-                                        {% if order.shape_name == None %}
-                                        N/A
-                                        {% else %}
-                                        {{order.shape_name}}
-                                        {% endif %}
-                                    </td>
-                                    <td class="color align-middle text-900 fw-semi-bold text-end py-0 ps-4">
-                                        {% if order.color_name == None %}
-                                        N/A
-                                        {% else %}
-                                        {{order.color_name}}
-                                        {% endif %}
-                                    </td>
-                                    <td class="unit align-middle text-900 fw-semi-bold text-end py-0 ps-4">
-                                        {% if order.unit_name == None %}
-                                        N/A
-                                        {% else %}
-                                        {{order.unit_name}}
-                                        {% endif %}
-                                    </td>
-                                    <td class="brand align-middle text-900 fw-semi-bold text-end py-0 ps-4">
-                                        {% if order.brand_name == None %}
-                                        N/A
-                                        {% else %}
-                                        {{order.brand_name}}
-                                        {% endif %}
-                                    </td>
-                                    <td class="jobStatus align-middle text-900 fw-semi-bold text-end py-0 ps-4">
-                                        {% if order.order_status == 1 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">NEW</span></span>
-                                        {% elif order.order_status == 2 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PROCESSING</span></span>
-                                        {% elif order.order_status == 3 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">READY</span></span>
-                                        {% elif order.order_status == 4 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DISPATCHED</span></span>
-                                        {% elif order.order_status == 5 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">READY IN STORE</span></span>
-                                        {% elif order.order_status == 6 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">DELIVERED CUSTOMER</span></span>
-                                        {% elif order.order_status == 7 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">CANCELLED</span></span>
-                                        {% endif %}
-                                    </td>
+                                            <td class="category align-middle white-space-nowrap text-900 py-0 ps-4">
+                                                {% if order.pc_category_name == None %}
+                                                N/A
+                                                {% else %}
+                                                {{order.pc_category_name}}
+                                                {% endif %}
 
-                                    <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
-                                        <div class="font-sans-serif btn-reveal-trigger position-static">
-                                            <button aria-expanded="false"
-                                                    aria-haspopup="true"
-                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                    data-boundary="window"
-                                                    data-bs-reference="parent" data-bs-toggle="dropdown"
-                                                    type="button">
-                                                <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                            <div class="dropdown-menu dropdown-menu-end py-2">
-                                                <a class="dropdown-item"
-                                                   href="{% url 'lab_job_details' order.order_id %}">View Job</a>
+                                            </td>
+                                            <td class="material align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                                {% if order.pm_material_name == None %}
+                                                N/A
+                                                {% else %}
+                                                {{order.pm_material_name}}
+                                                {% endif %}
+                                            </td>
+                                            <td class="type align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                                {% if order.ftype_name == None %}
+                                                N/A
+                                                {% else %}
+                                                {{order.ftype_name}}
+                                                {% endif %}
+                                            </td>
+                                            <td class="shape align-middle text-end py-0 ps-4 text-700">
+                                                {% if order.fshape_name == None %}
+                                                N/A
+                                                {% else %}
+                                                {{order.fshape_name}}
+                                                {% endif %}
+                                            </td>
+                                            <td class="color align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                                {% if order.pcol_color_name == None %}
+                                                N/A
+                                                {% else %}
+                                                {{order.pcol_color_name}}
+                                                {% endif %}
+                                            </td>
+                                            <td class="unit align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                                {% if order.unit_name == None %}
+                                                N/A
+                                                {% else %}
+                                                {{order.unit_name}}
+                                                {% endif %}
+                                            </td>
+                                            <td class="brand align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                                {% if order.brand_name == None %}
+                                                N/A
+                                                {% else %}
+                                                {{order.brand_name}}
+                                                {% endif %}
+                                            </td>
+                                            <td class="jobStatus align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                                {% if order.so_order_status == 1 %}
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                                        class="badge-label">NEW</span></span>
+                                                {% elif order.so_order_status == 2 %}
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                        class="badge-label">PROCESSING</span></span>
+                                                {% elif order.so_order_status == 3 %}
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                        class="badge-label">READY IN LAB</span></span>
+                                                {% else %}
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                        class="badge-label">DISPATCHED</span></span>
 
-                                            </div>
-                                        </div>
-                                    </td>
+                                                {% endif %}
+                                            </td>
 
-                                </tr>
+                                            <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                                <div class="font-sans-serif btn-reveal-trigger position-static">
+                                                    <button aria-expanded="false"
+                                                            aria-haspopup="true"
+                                                            class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                            data-boundary="window"
+                                                            data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                            type="button">
+                                                        <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                                    <div class="dropdown-menu dropdown-menu-end py-2">
+                                                        <a class="dropdown-item"
+                                                           href="{% url 'lab_job_details' order.so_order_id %}">View
+                                                            Job</a>
+
+                                                    </div>
+                                                </div>
+                                            </td>
+
+                                        </tr>
                                 {% endfor %}
 
                                 </tbody>

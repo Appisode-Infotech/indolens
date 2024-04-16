@@ -762,7 +762,7 @@ def deleteFranchiseOwnersDocuments(request, franchiseOwnersId, documentURL, docu
 def manageAreaHead(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_all_area_head(status)
-        # print(response)
+        print(response)
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         print(available_stores_response)
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
@@ -2513,6 +2513,7 @@ def viewAllJobs(request, labId):
 
 def jobDetails(request, jobId):
     job_detail, status_code = orders_controller.get_order_details(jobId)
+    print(job_detail)
     return render(request, 'indolens_admin/labs/jobDetails.html', {"order_detail": job_detail['orders_details']})
 
 

@@ -8,7 +8,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>{{order_detail.0.order_id}}-Authenticity_Card</title>
+    <title>{{order_detail.so_order_id}}-Authenticity_Card</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -108,10 +108,10 @@
                                         </thead>
                                         <tbody>
                                         <tr>
-                                            <td>{{ order_detail.0.store_name }}</td>
-                                            <td>{{ order_detail.0.created_on }}</td>
-                                            <td>{{ order_detail.0.customer_name }}</td>
-                                            <td>{{ order_detail.0.order_id }}</td>
+                                            <td>{{ order_detail.store_name }}</td>
+                                            <td>{{ order_detail.so_created_on }}</td>
+                                            <td>{{ order_detail.customer_name }}</td>
+                                            <td>{{ order_detail.so_order_id }}</td>
                                         </tr>
                                         </tbody>
                                     </table>
@@ -120,7 +120,7 @@
                         </div>
 
 
-                        {% if order_detail.0.category_id == 3 %}
+                        {% if order_detail.ci_category_id == 3 %}
                         <div class="row mb-3 cl_rx_power_card" id="cl_rx_power_card[${productCardCount}]">
                             <div class="col-12">
                                 <table class="table">
@@ -135,16 +135,14 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    {% for lens in order_detail %}
                                     <tr>
-                                        <td class="col-auto col-lg-2">{{ lens.power_attribute.eye }}</td>
-                                        <td class="col-auto col-lg-2">{{ lens.power_attribute.power }}</td>
-                                        <td class="col-auto col-lg-2">{{ lens.power_attribute.bc }}</td>
-                                        <td class="col-auto col-lg-2">{{ lens.power_attribute.dia }}</td>
-                                        <td class="col-auto col-lg-2">{{ lens.power_attribute.cyl }}</td>
-                                        <td class="col-auto col-lg-2">{{ lens.power_attribute.axis }}</td>
+                                        <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.eye }}</td>
+                                        <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.power }}</td>
+                                        <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.bc }}</td>
+                                        <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.dia }}</td>
+                                        <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.cyl }}</td>
+                                        <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.axis }}</td>
                                     </tr>
-                                    {% endfor %}
                                     </tbody>
                                 </table>
                             </div>
@@ -157,20 +155,20 @@
                                     <tbody>
                                     <tr>
                                         <th scope="row" class="mb-3">Lens</th>
-                                        <td>{{ order_detail.0.product_name }}</td>
+                                        <td>{{ order_detail.ci_product_name }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="mb-3">Lens Type</th>
-                                        <td>{{ order_detail.0.power_attribute.contact_lens_type }}</td>
+                                        <td>{{ order_detail.ci_power_attribute.contact_lens_type }}</td>
                                     </tr>
                                     <tr>
                                         <th scope="row" class="mb-3">Stock Type</th>
-                                        <td>{{ order_detail.0.power_attribute.stock_type }}</td>
+                                        <td>{{ order_detail.so_power_attribute.stock_type }}</td>
                                     </tr>
 
                                     <tr>
                                         <th scope="row" class="mb-3">Contact Lens Disposablity</th>
-                                        <td>{{ order_detail.0.power_attribute.contact_lens_disposability }}</td>
+                                        <td>{{ order_detail.ci_power_attribute.contact_lens_disposability }}</td>
                                     </tr>
                                     </tbody>
                                 </table>

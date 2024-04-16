@@ -121,7 +121,7 @@
                                     <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                     <td class="store align-middle white-space-nowrap ">
                                         <a href="{% url 'view_products' job_item_detail.so_product_id %}">
-                                            {{job_item_detail.so_product_name}} </a>
+                                            {{job_item_detail.ci_product_name}} </a>
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-900">
                                         {{job_item_detail.so_power_attribute.lens_type}}
@@ -130,8 +130,8 @@
                                         {{job_item_detail.so_power_attribute.stock_type}}
                                     </td>
                                     <td class="material align-middle white-space-nowrap text-700 fw-semi-bold">
-                                        <a href="{% url 'view_products' frame.frame_id %}">
-                                        {{frame.frame_name}} </a>
+                                        <a href="{% url 'view_products' frame.ci_product_id %}">
+                                        {{frame.ci_product_name}} </a>
                                     </td>
                                     <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
                                         <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -144,7 +144,7 @@
                                                 <span class="fas fa-ellipsis-h fs--2"></span></button>
                                             <div class="dropdown-menu dropdown-menu-end py-2">
                                                 <a class="dropdown-item" target="_blank"
-                                                   href="{% url 'manage_authenticity_card' job_item_detail.so_sale_item_id frame.frame_name %}">Authenticity Card</a>
+                                                   href="{% url 'manage_authenticity_card' job_item_detail.so_sale_item_id frame.ci_product_name %}">Authenticity Card</a>
                                             </div>
                                         </div>
                                     </td>

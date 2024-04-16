@@ -32,49 +32,47 @@ def generate_random_string(length=16):
 def lab_login(lab_obj):
     try:
         with getConnection().cursor() as cursor:
-            login_query = f"""SELECT lt.*, creator.name, updater.name, l.lab_name
+            login_query = f"""SELECT lt.*, l.lab_name AS lab_name
                         FROM lab_technician AS lt
-                        LEFT JOIN lab AS l ON lt.assigned_lab_id = l.lab_id
-                        LEFT JOIN admin AS creator ON lt.created_by = creator.admin_id
-                        LEFT JOIN admin AS updater ON lt.last_updated_by = updater.admin_id
-                        WHERE lt.email = '{lab_obj.email}'
+                        LEFT JOIN lab AS l ON lt.lt_assigned_lab_id = l.lab_lab_id
+                        WHERE lt.lt_email = '{lab_obj.email}'
                         """
             cursor.execute(login_query)
-            lab_tech_data = cursor.fetchall()
+            lab_tech_data = cursor.fetchone()
             if not lab_tech_data:
                 return {
                     "status": False,
                     "message": "Invalid user email",
                     "lab_tech": None
                 }, 301
-            elif lab_tech_data[0][12] == 0:
+            elif lab_tech_data['lt_status'] == 0:
                 return {
                     "status": False,
                     "message": "Your Account is locked, please contact your Admin",
                     "lab_tech": None
                 }, 301
-            elif lab_tech_data[0][6] == 0:
+            elif lab_tech_data['lt_assigned_lab_id'] == 0:
                 return {
                     "status": False,
                     "message": "Your Account is not assigned to any Lab, please contact your Admin",
                     "lab_tech": None
                 }, 301
-            elif bcrypt.checkpw(lab_obj.password.encode('utf-8'), lab_tech_data[0][4].encode('utf-8')):
-                lab = get_lab_tech(lab_tech_data)
-                get_lab_query = f""" SELECT status FROM lab WHERE lab_id = '{lab[0]['assigned_lab_id']}'"""
+            elif bcrypt.checkpw(lab_obj.password.encode('utf-8'), lab_tech_data['lt_password'].encode('utf-8')):
+
+                get_lab_query = f""" SELECT lab_status FROM lab WHERE lab_lab_id = '{lab_tech_data['lt_assigned_lab_id']}'"""
                 cursor.execute(get_lab_query)
                 assigned_lab_status = cursor.fetchone()
-                if assigned_lab_status[0] == 0:
+                if assigned_lab_status['lab_status'] == 0:
                     return {
                         "status": False,
                         "message": "Your Account is assigned to an inactive lab, please contact your Admin",
-                        "store": lab
+                        "store": lab_tech_data
                     }, 200
                 else:
                     return {
                         "status": True,
                         "message": "user login successfull",
-                        "lab_tech": lab
+                        "lab_tech": lab_tech_data
                     }, 200
             else:
                 return {
@@ -92,11 +90,11 @@ def lab_login(lab_obj):
 def get_assigned_lab(lab_tech_id):
     try:
         with getConnection().cursor() as cursor:
-            get_assigned_lab = f"""SELECT assigned_lab_id FROM lab_technician 
-                                WHERE lab_technician_id = '{lab_tech_id}'"""
+            get_assigned_lab = f"""SELECT lt_assigned_lab_id FROM lab_technician 
+                                WHERE lt_lab_technician_id = '{lab_tech_id}'"""
             cursor.execute(get_assigned_lab)
             assigned_lab = cursor.fetchone()
-            return assigned_lab[0]
+            return assigned_lab['lt_assigned_lab_id']
     except pymysql.Error as e:
         return 0
     except Exception as e:

@@ -213,8 +213,8 @@
                                     <p class="mb-0 fs--1 text-900">{{area_head.ah_email}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 stores">
-                                    {% if area_head.ah_id_name_pair|length != 0 %}
-                                    {% for id, name in area_head.ah_id_name_pair %}
+                                    {% if area_head.id_name_pair|length != 0 %}
+                                    {% for id, name in area_head.id_name_pair %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
                                        href="{% url 'view_own_store' id %}">
                                         {{name}}

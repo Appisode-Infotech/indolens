@@ -17,18 +17,18 @@ def login(request):
     if request.method == 'POST':
         lab_obj = lab_tech_model.lab_technician_model_from_dict(request.POST)
         response, status_code = lab_auth_controller.lab_login(lab_obj)
+
         if response['status']:
             if request.session.get('id') is not None:
                 request.session.clear()
-            for data in response['lab_tech']:
-                request.session.update({
-                    'is_lab_tech_logged_in': True,
-                    'id': data['lab_technician_id'],
-                    'name': data['name'],
-                    'email': data['email'],
-                    'lab_name': data['lab_name'],
-                    'profile_pic': data['profile_pic'],
-                })
+            request.session.update({
+                'is_lab_tech_logged_in': True,
+                'id': response['lab_tech']['lt_lab_technician_id'],
+                'name': response['lab_tech']['lt_name'],
+                'email': response['lab_tech']['lt_email'],
+                'lab_name': response['lab_tech']['lab_name'],
+                'profile_pic': response['lab_tech']['lt_profile_pic'],
+            })
             return redirect('dashboard_lab')
         else:
             return render(request, 'auth/lab_sign_in.html', {"message": response['message']})
@@ -84,7 +84,9 @@ def labDashboard(request):
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
         latest_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "All")
+        print(latest_task)
         lab_stats, lab_stats_code = lab_task_controller.get_lab_job_stats(assigned_lab)
+        print(lab_stats)
         return render(request, 'lab_dashboard.html', {"latest_task": latest_task['task_list'][:10],
                                                       "lab_stats": lab_stats})
     else:
@@ -146,6 +148,7 @@ def labJobDetails(request, jobId):
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
         job_detail, status_code = lab_task_controller.get_lab_job_details(jobId, assigned_lab)
+        print(job_detail)
         return render(request, 'Tasks/jobDetails.html', {"order_detail": job_detail['orders_details']})
     else:
         return redirect('lab_login')

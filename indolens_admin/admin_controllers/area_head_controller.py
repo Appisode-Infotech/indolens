@@ -10,9 +10,12 @@ from indolens_admin.admin_controllers import email_template_controller, send_not
 from indolens_admin.admin_models.admin_resp_model.area_head_resp_model import get_area_heads
 
 ist = pytz.timezone('Asia/Kolkata')
+
+
 def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
+
 
 def create_area_head(area_head, files):
     try:
@@ -42,10 +45,10 @@ def create_area_head(area_head, files):
             send_notification_controller.send_email(subject, body, area_head.email)
 
             return {
-                       "status": True,
-                       "message": "Area Head added",
-                       "areaHeadId": ahid
-                   }, 200
+                "status": True,
+                "message": "Area Head added",
+                "areaHeadId": ahid
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -63,7 +66,7 @@ def get_all_area_head(status):
     try:
         with getConnection().cursor() as cursor:
             get_area_head_query = f"""
-            SELECT ah.*, GROUP_CONCAT(os.os_store_name SEPARATOR ', ') AS assigned_stores_names, creator.admin_name, 
+            SELECT ah.*, GROUP_CONCAT(os.os_store_name SEPARATOR ', ') AS assigned_stores_names, creator.admin_name,
             updater.admin_name
             FROM area_head AS ah
             LEFT JOIN own_store AS os ON FIND_IN_SET(os.os_store_id, ah.ah_assigned_stores)
@@ -73,10 +76,22 @@ def get_all_area_head(status):
             cursor.execute(get_area_head_query)
             area_heads = cursor.fetchall()
 
+            for area_head in area_heads:
+                area_head['ah_assigned_stores'] = [int(store_id) for store_id in
+                                                   area_head['ah_assigned_stores'].split(',')] if area_head[
+                    'ah_assigned_stores'] else []
+
+                area_head['assigned_stores_names'] = [store.strip() for store in
+                                                      area_head['assigned_stores_names'].split(',')] if area_head[
+                    'assigned_stores_names'] else []
+
+                area_head['id_name_pair'] = list(
+                    zip(area_head['ah_assigned_stores'], area_head['assigned_stores_names']))
+
             return {
-                       "status": True,
-                       "area_heads_list": area_heads
-                   }, 200
+                "status": True,
+                "area_heads_list": area_heads
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -105,14 +120,15 @@ def get_area_head_by_id(ahid):
                 'ah_document_2_url'] else []
 
             return {
-                       "status": True,
-                       "area_head": area_heads
-                   }, 200
+                "status": True,
+                "area_head": area_heads
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def edit_area_head(area_head, files):
     try:
@@ -152,9 +168,9 @@ def enable_disable_area_head(ahId, status):
             cursor.execute(set_area_head_query)
 
             return {
-                       "status": True,
-                       "message": "Updated"
-                   }, 200
+                "status": True,
+                "message": "Updated"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -181,7 +197,7 @@ def assignStore(empId, storeId):
             cursor.execute(get_employee_query)
             manager_data = cursor.fetchone()
             if len(storeId) == 1:
-                 storeId = f"""({storeId})"""
+                storeId = f"""({storeId})"""
 
             get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
                                                                                     WHERE store_id IN {tuple(storeId)}"""
@@ -191,15 +207,15 @@ def assignStore(empId, storeId):
 
             subject = email_template_controller.get_area_head_assigned_store_email_subject(manager_data[0])
             body = email_template_controller.get_area_head_assigned_store_email_body(manager_data[0], 'Area Head',
-                                                                                    manager_data[1],
-                                                                                    store_data)
+                                                                                     manager_data[1],
+                                                                                     store_data)
 
             response = send_notification_controller.send_email(subject, body, manager_data[1])
 
             return {
-                       "status": True,
-                       "message": "Store assigned"
-                   }, 200
+                "status": True,
+                "message": "Store assigned"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
@@ -221,9 +237,9 @@ def unAssignStore(empId, storeId):
             cursor.execute(update_store_manager_query)
 
             return {
-                       "status": True,
-                       "message": "Store un assigned"
-                   }, 200
+                "status": True,
+                "message": "Store un assigned"
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
