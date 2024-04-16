@@ -21,9 +21,9 @@ def create_accountant(accountant, files):
         with getConnection().cursor() as cursor:
             insert_accountant_query = f"""
                 INSERT INTO accountant (
-                    name, email, phone, password, profile_pic, 
-                    address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on
+                    ac_name, ac_email, ac_phone, ac_password, ac_profile_pic, 
+                    ac_address, ac_document_1_type, ac_document_1_url, ac_document_2_type, ac_document_2_url, 
+                    ac_status, ac_created_by, ac_created_on, ac_last_updated_by, ac_last_updated_on
                 ) VALUES (
                     '{accountant.name}', '{accountant.email}', '{accountant.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{accountant.address}', '{accountant.document_1_type}', 
@@ -65,19 +65,19 @@ def get_all_accountant(status):
     try:
         with getConnection().cursor() as cursor:
             get_accountant_query = f"""
-            SELECT ac.*, creator.name, updater.name
+            SELECT ac.*, creator.admin_name AS creator_name, updater.admin_name AS updater_name
             FROM accountant AS ac
-            LEFT JOIN admin AS creator ON ac.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON ac.last_updated_by = updater.admin_id
-            WHERE ac.status {status_condition}
-            GROUP BY ac.accountant_id ORDER BY ac.accountant_id DESC
+            LEFT JOIN admin AS creator ON ac.ac_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON ac.ac_last_updated_by = updater.admin_admin_id
+            WHERE ac.ac_status {status_condition}
+            GROUP BY ac.ac_accountant_id ORDER BY ac.ac_accountant_id DESC
             """
             cursor.execute(get_accountant_query)
             accountant = cursor.fetchall()
 
             return {
                        "status": True,
-                       "accountant_list": get_accountants(accountant)
+                       "accountant_list": accountant
                    }, 200
 
     except pymysql.Error as e:
@@ -90,19 +90,24 @@ def get_accountant_by_id(aid):
     try:
         with getConnection().cursor() as cursor:
             get_accountant_query = f"""
-            SELECT ac.*, creator.name, updater.name
-            FROM accountant AS ac
-            LEFT JOIN admin AS creator ON ac.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON ac.last_updated_by = updater.admin_id
-            WHERE accountant_id = '{aid}'
-            GROUP BY ac.accountant_id
-            """
+                        SELECT ac.*, creator.admin_name AS creator_name, updater.admin_name AS updater_name
+                        FROM accountant AS ac
+                        LEFT JOIN admin AS creator ON ac.ac_created_by = creator.admin_admin_id
+                        LEFT JOIN admin AS updater ON ac.ac_last_updated_by = updater.admin_admin_id
+                        WHERE ac.ac_accountant_id = '{aid}'
+                        GROUP BY ac.ac_accountant_id
+                        """
             cursor.execute(get_accountant_query)
-            accountant = cursor.fetchall()
+            accountant = cursor.fetchone()
+
+            accountant['ac_document_1_url'] = json.loads(accountant['ac_document_1_url']) if accountant[
+                'ac_document_1_url'] else []
+            accountant['ac_document_2_url'] = json.loads(accountant['ac_document_2_url']) if accountant[
+                'ac_document_2_url'] else []
 
             return {
                        "status": True,
-                       "accountant": get_accountants(accountant)
+                       "accountant": accountant
                    }, 200
 
     except pymysql.Error as e:
@@ -117,14 +122,14 @@ def edit_accountant(accountant_obj, files):
             update_accountant_obj_query = f"""
                                 UPDATE accountant
                                 SET 
-                                    name = '{accountant_obj.name}',
-                                    email = '{accountant_obj.email}',
-                                    phone = '{accountant_obj.phone}',
-                                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                                    address = '{accountant_obj.address}',
-                                    last_updated_by = '{accountant_obj.last_updated_by}',
-                                    last_updated_on = '{getIndianTime()}'
-                                WHERE accountant_id = {accountant_obj.accountant_id}
+                                    ac_name = '{accountant_obj.name}',
+                                    ac_email = '{accountant_obj.email}',
+                                    ac_phone = '{accountant_obj.phone}',
+                                    {'ac_profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                                    ac_address = '{accountant_obj.address}',
+                                    ac_last_updated_by = '{accountant_obj.last_updated_by}',
+                                    ac_last_updated_on = '{getIndianTime()}'
+                                WHERE ac_accountant_id = {accountant_obj.accountant_id}
                             """
             cursor.execute(update_accountant_obj_query)
 

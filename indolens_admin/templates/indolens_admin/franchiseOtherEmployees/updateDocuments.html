@@ -89,7 +89,7 @@
             <h2 class="mb-4">Update documents - House keeping and others</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'add_franchise_store_employee_image' emp.employee_id %}" class="row g-3"
+                    <form action="{% url 'add_franchise_store_employee_image' other_employee.fse_employee_id %}" class="row g-3"
                           method="post" enctype="multipart/form-data">
                         {% csrf_token %}
                         <div class="border-top border-dashed border-300 pt-4">
@@ -98,22 +98,22 @@
                                 <div class="mb-3">
                                     <select id="document1Type" aria-label="Default select example" class="form-select"
                                             name="document_1_type">
-                                        {% if emp.document_1_type == "Aadhar" %}
+                                        {% if other_employee.fse_document_1_type == "Aadhar" %}
                                         <option selected value="Aadhar">Aadhar</option>
                                         <option value="Driving Licence">Driving Licence</option>
                                         <option value="Ration Card">Ration Card</option>
                                         <option value="Voter Id">Voter Id</option>
-                                        {% elif emp.document_1_type == "Driving Licence" %}
+                                        {% elif other_employee.fse_document_1_type == "Driving Licence" %}
                                         <option value="Aadhar">Aadhar</option>
                                         <option selected value="Driving Licence">Driving Licence</option>
                                         <option value="Ration Card">Ration Card</option>
                                         <option value="Voter Id">Voter Id</option>
-                                        {% elif emp.document_1_type == "Voter Id" %}
+                                        {% elif other_employee.fse_document_1_type == "Voter Id" %}
                                         <option value="Aadhar">Aadhar</option>
                                         <option value="Driving Licence">Driving Licence</option>
                                         <option value="Ration Card">Ration Card</option>
                                         <option selected value="Voter Id">Voter Id</option>
-                                        {% elif emp.document_1_type == "Ration Card" %}
+                                        {% elif other_employee.fse_document_1_type == "Ration Card" %}
                                         <option value="Aadhar">Aadhar</option>
                                         <option value="Driving Licence">Driving Licence</option>
                                         <option selected value="Ration Card">Ration Card</option>
@@ -122,7 +122,7 @@
                                     </select>
                                 </div>
                                 <div class="d-flex flex-wrap">
-                                    {% for doc in emp.document_1_url %}
+                                    {% for doc in other_employee.fse_document_1_url %}
                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3">
                                         <div class="border border-300 p-2 rounded-2 me-2 mb-2">
                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -134,16 +134,16 @@
                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                             </a>
                                         </div>
-                                        {% if emp.document_1_url.1|length == 0 %}
+                                        {% if other_employee.fse_document_1_url.1|length == 0 %}
                                         <p style="color: red; text-align: center;"> One image is Mandatory </p>
                                         {% else %}
                                         <a data-bs-toggle="modal"
                                            data-bs-target="#delete_document"
-                                           data-employee-id="{{ emp.employee_id }}"
-                                           data-employee-name="{{ emp.name }}"
+                                           data-employee-id="{{ other_employee.fse_employee_id }}"
+                                           data-employee-name="{{ other_employee.fse_name }}"
                                            data-document-preview="{{ MEDIA_URL }}{{ doc }}"
                                            data-action-type="delete"
-                                           data-action-href="{% url 'delete_franchise_store_employee_document' emp.employee_id doc 'document_1_url' %}"
+                                           data-action-href="{% url 'delete_franchise_store_employee_document' other_employee.fse_employee_id doc 'fse_document_1_url' %}"
                                            class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
                                         </a>
@@ -170,14 +170,13 @@
                                 <div class="mb-3">
                                     <select aria-label="Default select example" class="form-select"
                                             name="document_2_type">
-                                        {% if emp.document_2_type == "Pan Card" %}
-                                        <option>Open this select menu</option>
+                                        {% if other_employee.fse_document_2_type == "Pan Card" %}
                                         <option selected value="Pan Card">Pan Card</option>
                                         {% endif %}
                                     </select>
                                 </div>
                                 <div class="d-flex flex-wrap">
-                                    {% for doc in emp.document_2_url %}
+                                    {% for doc in other_employee.fse_document_2_url %}
                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column me-3">
                                         <div class="border border-300 p-2 rounded-2 me-2 mb-2">
                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -189,16 +188,16 @@
                                                      alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                             </a>
                                         </div>
-                                        {% if emp.document_2_url.1|length == 0 %}
+                                        {% if other_employee.fse_document_2_url.1|length == 0 %}
                                         <p style="color: red; text-align: center;"> One image is Mandatory </p>
                                         {% else %}
                                         <a data-bs-toggle="modal"
                                            data-bs-target="#delete_document"
-                                           data-employee-id="{{ emp.employee_id }}"
-                                           data-employee-name="{{ emp.name }}"
+                                           data-employee-id="{{ other_employee.fse_employee_id }}"
+                                           data-employee-name="{{ other_employee.fse_name }}"
                                            data-document-preview="{{ MEDIA_URL }}{{ doc }}"
                                            data-action-type="delete"
-                                           data-action-href="{% url 'delete_franchise_store_employee_document' emp.employee_id doc 'document_2_url' %}"
+                                           data-action-href="{% url 'delete_franchise_store_employee_document' other_employee.fse_employee_id doc 'fse_document_2_url' %}"
                                            class="btn btn-soft-danger me-1 mb-1" type="button">
                                             <i class="fa fa-trash me-1"></i> Delete
                                         </a>

@@ -95,6 +95,7 @@ def get_franchise_owner_by_id(foid):
                                              WHERE fse.fse_employee_id = '{foid}'"""
             cursor.execute(get_all_franchise_owner_query)
             franchise_owners = cursor.fetchone()
+            print(franchise_owners)
 
             franchise_owners['fse_document_1_url'] = json.loads(franchise_owners['fse_document_1_url']) if franchise_owners[
                 'fse_document_1_url'] else []

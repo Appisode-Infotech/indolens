@@ -72,13 +72,12 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for accountant in accountant %}
         <div class="content">
 
             <h2 class="mb-4">Edit Accountant</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_accountant' accountant.accountant_id %}" class="row g-3
+                    <form action="{% url 'edit_accountant' accountant.ac_accountant_id %}" class="row g-3
                     needs-validation " method="post" enctype="multipart/form-data"
                           novalidate="">
                         {% csrf_token %}
@@ -86,7 +85,7 @@
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
                                                                 data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
-                                                                src="{{MEDIA_URL}}{{accountant.profile_pic}}"/></div>
+                                                                src="{{MEDIA_URL}}{{accountant.ac_profile_pic}}"/></div>
                         </div>
 
                         <div class="col-md-12">
@@ -100,7 +99,7 @@
                             <label class="form-label" for="name">Name</label>
 
                             <input class="form-control" id="name" name="name" required="" type="text"
-                                   value="{{accountant.name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{accountant.ac_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Name is mandatory.</div>
                         </div>
                         <div class="col-md-6">
@@ -108,7 +107,7 @@
                             <label class="form-label" for="email">Email</label>
 
                             <input readonly class="form-control" id="email" name="email" required=""
-                                   type="email" value="{{accountant.email}}"/>
+                                   type="email" value="{{accountant.ac_email}}"/>
                             <div class="invalid-feedback">Email is mandatory.</div>
                         </div>
 
@@ -117,7 +116,7 @@
                             <label class="form-label" for="phone">Phone</label>
 
                             <input class="form-control" id="phone" name="phone" required="" type="number"
-                                  max="9999999999" min="1111111111" value="{{accountant.phone}}"/>
+                                  max="9999999999" min="1111111111" value="{{accountant.ac_phone}}"/>
                             <div class="invalid-feedback">Phone Number is mandatory.</div>
                         </div>
 
@@ -126,13 +125,13 @@
                             <label class="form-label" for="address">Complete Address</label>
 
                             <textarea class="form-control" id="address" name="address" required
-                                      rows="3" maxlength="255"> {{accountant.address}} </textarea>
+                                      rows="3" maxlength="255"> {{accountant.ac_address}} </textarea>
                             <div class="invalid-feedback">Address is mandatory.</div>
                         </div>
 
                         <input name="accountant_id" required type="hidden"
 
-                               value="{{ accountant.accountant_id }}">
+                               value="{{ accountant.ac_accountant_id }}">
 
                         <input name="last_updated_by" required type="hidden"
 
@@ -146,8 +145,6 @@
                 </div>
             </div>
             {% include 'footer.html' %}
-            {% endfor %}
-
         </div>
     </div>
 </main>

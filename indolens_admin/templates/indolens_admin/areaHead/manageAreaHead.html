@@ -192,29 +192,29 @@
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
-                                    <a href="{{MEDIA_URL}}{{area_head.profile_pic}}" target="_blank">
+                                    <a href="{{MEDIA_URL}}{{area_head.ah_profile_pic}}" target="_blank">
                                         <div class="avatar avatar-m">
                                             <img alt="" class="rounded-circle"
-                                                 src="{{MEDIA_URL}}{{area_head.profile_pic}}"/>
+                                                 src="{{MEDIA_URL}}{{area_head.ah_profile_pic}}"/>
                                         </div>
                                     </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_area_head' area_head.area_head_id %}">
-                                    {{area_head.name}}</a>
+                                        href="{% url 'view_area_head' area_head.ah_area_head_id %}">
+                                    {{area_head.ah_name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">
-                                    <p class="mb-0 fs--1 text-900">{{area_head.phone}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{area_head.ah_phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 email">
-                                    <p class="mb-0 fs--1 text-900">{{area_head.email}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{area_head.ah_email}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 stores">
-                                    {% if area_head.id_name_pair|length != 0 %}
-                                    {% for id, name in area_head.id_name_pair %}
+                                    {% if area_head.ah_id_name_pair|length != 0 %}
+                                    {% for id, name in area_head.ah_id_name_pair %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
                                        href="{% url 'view_own_store' id %}">
                                         {{name}}
@@ -227,15 +227,15 @@
 
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end status">
-                                    {% if area_head.status == 0 %}
+                                    {% if area_head.ah_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
-                                    {% elif area_head.status == 1 %}
+                                    {% elif area_head.ah_status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 address"
                                     style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{area_head.address}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{area_head.ah_address}}</p>
                                 </td>
 
 
@@ -248,55 +248,55 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
-                                                class="dropdown-item" href="{% url 'view_area_head' area_head.area_head_id %}">View</a>
-                                            {% if area_head.status == 1 %}
+                                                class="dropdown-item" href="{% url 'view_area_head' area_head.ah_area_head_id %}">View</a>
+                                            {% if area_head.ah_status == 1 %}
                                             <a class="dropdown-item"
                                                type="button"
                                                data-bs-role="Area Head"
                                                data-bs-toggle="modal"
-                                               data-bs-active-list="{{area_head.assigned_stores}}"
+                                               data-bs-active-list="{{area_head.ah_assigned_stores}}"
                                                data-bs-target="#allocate_multi_store_modal"
                                                data-bs-action="{% url 'assign_area_head_own_store' %}"
-                                               data-employee-id="{{ area_head.area_head_id }}"
-                                               data-employee-name="{{ area_head.name }}"
+                                               data-employee-id="{{ area_head.ah_area_head_id }}"
+                                               data-employee-name="{{ area_head.ah_name }}"
                                                data-action-type="allocate">
                                                 Manage store allocation
                                             </a>
                                             {% endif %}
 
                                             <a class="dropdown-item"
-                                               href="{% url 'edit_area_head' area_head.area_head_id %}">Update
+                                               href="{% url 'edit_area_head' area_head.ah_area_head_id %}">Update
                                                 Profile</a>
 
                                             <a class="dropdown-item"
-                                               href="{% url 'update_area_head_documents' area_head.area_head_id %}">Update
+                                               href="{% url 'update_area_head_documents' area_head.ah_area_head_id %}">Update
                                                 Documents</a>
 
 
                                             <div class="dropdown-divider"></div>
-                                            {% if area_head.status == 0 %}
+                                            {% if area_head.ah_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Area Head"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ area_head.area_head_id }}"
-                                               data-employee-name="{{ area_head.name }}"
+                                               data-employee-id="{{ area_head.ah_area_head_id }}"
+                                               data-employee-name="{{ area_head.ah_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_area_head' status area_head.area_head_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_area_head' status area_head.ah_area_head_id 1 %}">
                                                 Make Active
                                             </a>
 
-                                            {% elif area_head.status == 1 %}
+                                            {% elif area_head.ah_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-role="Area Head"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ area_head.area_head_id }}"
-                                               data-employee-name="{{ area_head.name }}"
+                                               data-employee-id="{{ area_head.ah_area_head_id }}"
+                                               data-employee-name="{{ area_head.ah_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_area_head' status area_head.area_head_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_area_head' status area_head.ah_area_head_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

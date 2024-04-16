@@ -178,50 +178,50 @@
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
-                                    <a href="{{MEDIA_URL}}{{accountant.profile_pic}}" target="_blank">
+                                    <a href="{{MEDIA_URL}}{{accountant.ac_profile_pic}}" target="_blank">
                                         <div class="avatar avatar-m">
                                             <img alt="" class="rounded-circle"
-                                                 src="{{MEDIA_URL}}{{accountant.profile_pic}}"/>
+                                                 src="{{MEDIA_URL}}{{accountant.ac_profile_pic}}"/>
                                         </div>
                                     </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_accountant' accountant.accountant_id %}">{{accountant.name}}</a>
+                                        href="{% url 'view_accountant' accountant.ac_accountant_id %}">{{accountant.ac_name}}</a>
 
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">
-                                    <p class="mb-0 fs--1 text-900">{{accountant.phone}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{accountant.ac_phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 email">
-                                    <p class="mb-0 fs--1 text-900">{{accountant.email}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{accountant.ac_email}}</p>
                                 </td>
 
 
                                 <td class="align-middle white-space-nowrap text-end status">
-                                    {% if accountant.status == 0 %}
+                                    {% if accountant.ac_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
-                                    {% elif accountant.status == 1 %}
+                                    {% elif accountant.ac_status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                     {% endif %}
                                 </td>
                                 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdDate">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{accountant.created_on}}</p>-->
+                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{accountant.ac_created_on}}</p>-->
                                 <!--                                </td>-->
                                 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdBy">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{accountant.creator_name}}</p>-->
+                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{accountant.ac_creator_name}}</p>-->
                                 <!--                                </td>-->
                                 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedDate">-->
-                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{accountant.last_updated_on}}</p>-->
+                                <!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{accountant.ac_last_updated_on}}</p>-->
                                 <!--                                </td>-->
                                 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedBy">-->
-                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{accountant.updater_name}}</p>-->
+                                <!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{accountant.ac_updater_name}}</p>-->
                                 <!--                                </td>-->
                                 <td class="align-middle white-space-nowrap ps-3 py-4 address"
                                     style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{accountant.address}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{accountant.ac_address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -233,42 +233,42 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_accountant' accountant.accountant_id %}">View</a>
+                                                                                             href="{% url 'view_accountant' accountant.ac_accountant_id %}">View</a>
 
 
                                             <a class="dropdown-item"
-                                               href="{% url 'edit_accountant' accountant.accountant_id %}">Update
+                                               href="{% url 'edit_accountant' accountant.ac_accountant_id %}">Update
                                                 Profile</a>
                                             <a class="dropdown-item"
-                                               href="{% url 'update_accountant_documents' accountant.accountant_id %}">Update
+                                               href="{% url 'update_accountant_documents' accountant.ac_accountant_id %}">Update
                                                 Documents</a>
 
 
                                             <div class="dropdown-divider"></div>
 
-                                            {% if accountant.status == 0 %}
+                                            {% if accountant.ac_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-toggle="modal"
                                                data-bs-role="Accountant"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ accountant.accountant_id }}"
-                                               data-employee-name="{{ accountant.name }}"
+                                               data-employee-id="{{ accountant.ac_accountant_id }}"
+                                               data-employee-name="{{ accountant.ac_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_accountant' status accountant.accountant_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_accountant' status accountant.ac_accountant_id 1 %}">
                                                 Make Active
                                             </a>
 
-                                            {% elif accountant.status == 1 %}
+                                            {% elif accountant.ac_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-toggle="modal"
                                                data-bs-role="Accountant"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ accountant.accountant_id }}"
-                                               data-employee-name="{{ accountant.name }}"
+                                               data-employee-id="{{ accountant.ac_accountant_id }}"
+                                               data-employee-name="{{ accountant.ac_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_accountant' status accountant.accountant_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_accountant' status accountant.ac_accountant_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

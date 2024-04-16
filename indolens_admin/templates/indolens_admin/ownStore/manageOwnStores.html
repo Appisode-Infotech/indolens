@@ -174,9 +174,9 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap storeAdmin ">
-                                    {% if store.manager_name != None %}
+                                    {% if store.ose_name != None %}
                                     <a class="text-decoration-none fw-bold fs-0"
-                                       href="{% url 'view_store_manager' store.employee_id %}">{{store.manager_name}}</a>
+                                       href="{% url 'view_store_manager' store.ose_employee_id %}">{{store.ose_name}}</a>
                                     {% else %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                     {% endif %}

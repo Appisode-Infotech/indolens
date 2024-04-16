@@ -78,13 +78,12 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for area_head in area_head %}
         <div class="content">
 
             <h2 class="mb-4">Edit Area Head</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_area_head' area_head.area_head_id %}" class="row g-3 needs-validation"
+                    <form action="{% url 'edit_area_head' area_head.ah_area_head_id %}" class="row g-3 needs-validation"
                           method="post" enctype="multipart/form-data"
                           novalidate="">
                         {% csrf_token %}
@@ -92,7 +91,7 @@
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
                                                                 data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
-                                                                src="{{MEDIA_URL}}{{area_head.profile_pic}}"/></div>
+                                                                src="{{MEDIA_URL}}{{area_head.ah_profile_pic}}"/></div>
                         </div>
 
                         <div class="col-md-12">
@@ -106,7 +105,7 @@
                             <label class="form-label" for="full_name">Name</label>
 
                             <input class="form-control" id="full_name" name="full_name" required="" type="text"
-                                   value="{{area_head.name}}"
+                                   value="{{area_head.ah_name}}"
                                     oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Name is mandatory.</div>
                         </div>
@@ -115,7 +114,7 @@
                             <label class="form-label" for="email">Email</label>
 
                             <input readonly class="form-control" id="email" name="email" required=""
-                                   type="email" value="{{area_head.email}}"/>
+                                   type="email" value="{{area_head.ah_email}}"/>
                             <div class="invalid-feedback">Email is mandatory.</div>
                         </div>
 
@@ -124,7 +123,7 @@
                             <label class="form-label" for="phone">Phone</label>
 
                             <input class="form-control" id="phone" name="phone" required="" type="number"
-                                  max="9999999999" min="1111111111" value="{{area_head.phone}}"/>
+                                  max="9999999999" min="1111111111" value="{{area_head.ah_phone}}"/>
                             <div class="invalid-feedback">Phone is mandatory with 10 digits</div>
                         </div>
 
@@ -134,13 +133,13 @@
                             <label class="form-label" for="completeAddress">Complete Address</label>
 
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3" maxlength="255"> {{area_head.address}} </textarea>
+                                      rows="3" maxlength="255"> {{area_head.ah_address}} </textarea>
                             <div class="invalid-feedback">Address is mandatory.</div>
                         </div>
 
                         <input name="area_head_id" required type="hidden"
 
-                               value="{{ area_head.area_head_id }}">
+                               value="{{ area_head.ah_area_head_id }}">
 
                         <input name="last_updated_by" required type="hidden"
 
@@ -153,8 +152,6 @@
                 </div>
             </div>
             {% include 'footer.html' %}
-            {% endfor %}
-
         </div>
     </div>
 </main>

@@ -6,8 +6,8 @@ import pymysql
 import pytz
 from indolens.db_connection import getConnection
 
-
 ist = pytz.timezone('Asia/Kolkata')
+
 
 def getIndianTime():
     today = datetime.datetime.now(ist)
@@ -58,7 +58,7 @@ def add_products_image(new_images, productId, updated_by):
             old_images = cursor.fetchone()
             print(old_images)
             print(json.loads(old_images['ci_product_images']))
-            product_image = json.loads(old_images['ci_product_images'])+new_images.product_img
+            product_image = json.loads(old_images['ci_product_images']) + new_images.product_img
             print(product_image)
             cursor.execute(
                 f""" UPDATE central_inventory SET ci_product_images = '{json.dumps(product_image)}', 
@@ -73,51 +73,54 @@ def add_products_image(new_images, productId, updated_by):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def add_own_store_employee_image(file_data, employeeId, emp_obj, updated_by):
     try:
         with getConnection().cursor() as cursor:
-            get_role = f""" SELECT role from own_store_employees Where employee_id = {employeeId}"""
+            get_role = f""" SELECT ose_role from own_store_employees Where ose_employee_id = {employeeId}"""
             cursor.execute(get_role)
             role = cursor.fetchone()
 
             get_document1_query = f"""
-                        SELECT document_1_url FROM own_store_employees Where employee_id = {employeeId}
+                        SELECT ose_document_1_url FROM own_store_employees Where ose_employee_id = {employeeId}
                         """
             cursor.execute(get_document1_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['ose_document_1_url'])
             document1 = old_images + file_data.document1
 
             cursor.execute(
-                f""" UPDATE own_store_employees SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{emp_obj.document_1_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE employee_id = {employeeId}""")
+                f""" UPDATE own_store_employees SET ose_document_1_url = '{json.dumps(document1)}', 
+                ose_document_1_type = '{emp_obj.document_1_type}', ose_last_updated_on = '{getIndianTime()}', 
+                ose_last_updated_by = {updated_by} WHERE ose_employee_id = {employeeId}""")
 
             get_document2_query = f"""
-                        SELECT document_2_url FROM own_store_employees Where employee_id = {employeeId}
+                        SELECT ose_document_2_url FROM own_store_employees Where ose_employee_id = {employeeId}
                         """
             cursor.execute(get_document2_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['ose_document_2_url'])
             document2 = old_images + file_data.document2
             cursor.execute(
-                f""" UPDATE own_store_employees SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{emp_obj.document_2_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE employee_id = {employeeId}""")
+                f""" UPDATE own_store_employees SET ose_document_2_url = '{json.dumps(document2)}', 
+                ose_document_2_type = '{emp_obj.document_2_type}', ose_last_updated_on = '{getIndianTime()}', 
+                ose_last_updated_by = {updated_by} WHERE ose_employee_id = {employeeId}""")
 
             get_certificates_query = f"""
-                        SELECT certificates FROM own_store_employees Where employee_id = {employeeId}
+                        SELECT ose_certificates FROM own_store_employees Where ose_employee_id = {employeeId}
                         """
             cursor.execute(get_certificates_query)
-            old_images = json.loads(cursor.fetchone()[0])
-            certificates = old_images + file_data.certificates
-            cursor.execute(
-                f""" UPDATE own_store_employees SET certificates = '{json.dumps(certificates)}', 
-                last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by}
-                WHERE employee_id = {employeeId}""")
+            certificates = cursor.fetchone()['ose_certificates']
 
+            if certificates is not None:
+                old_images = json.loads(certificates)
+                certificates = old_images + file_data.certificates
+                cursor.execute(
+                    f""" UPDATE own_store_employees SET ose_certificates = '{json.dumps(certificates)}', 
+                    ose_last_updated_on = '{getIndianTime()}', ose_last_updated_by = {updated_by}
+                    WHERE ose_employee_id = {employeeId}""")
 
         return {
             "status": True,
-            "role": role[0],
+            "role": role['ose_role'],
             "message": "Document Inserted Successfully"
         }, 200
 
@@ -130,47 +133,49 @@ def add_own_store_employee_image(file_data, employeeId, emp_obj, updated_by):
 def add_franchise_store_employee_image(file_data, employeeId, emp_obj, updated_by):
     try:
         with getConnection().cursor() as cursor:
-            get_role = f""" SELECT role from franchise_store_employees Where employee_id = {employeeId}"""
+            get_role = f""" SELECT fse_role from franchise_store_employees Where fse_employee_id = {employeeId}"""
             cursor.execute(get_role)
             role = cursor.fetchone()
 
             get_document1_query = f"""
-                        SELECT document_1_url FROM franchise_store_employees Where employee_id = {employeeId}
+                        SELECT fse_document_1_url FROM franchise_store_employees Where fse_employee_id = {employeeId}
                         """
             cursor.execute(get_document1_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['fse_document_1_url'])
             document1 = old_images + file_data.document1
 
             cursor.execute(
-                f""" UPDATE franchise_store_employees SET document_1_url = '{json.dumps(document1)}', 
-                document_1_type = '{emp_obj.document_1_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE employee_id = {employeeId}""")
+                f""" UPDATE franchise_store_employees SET fse_document_1_url = '{json.dumps(document1)}', 
+                fse_document_1_type = '{emp_obj.document_1_type}', fse_last_updated_on = '{getIndianTime()}', 
+                fse_last_updated_by = {updated_by} WHERE fse_employee_id = {employeeId}""")
 
             get_document2_query = f"""
-                        SELECT document_2_url FROM franchise_store_employees Where employee_id = {employeeId}
+                        SELECT fse_document_2_url FROM franchise_store_employees Where fse_employee_id = {employeeId}
                         """
             cursor.execute(get_document2_query)
-            old_images = json.loads(cursor.fetchone()[0])
+            old_images = json.loads(cursor.fetchone()['fse_document_2_url'])
             document2 = old_images + file_data.document2
             cursor.execute(
-                f""" UPDATE franchise_store_employees SET document_2_url = '{json.dumps(document2)}', 
-                document_2_type = '{emp_obj.document_2_type}', last_updated_on = '{getIndianTime()}', 
-                last_updated_by = {updated_by} WHERE employee_id = {employeeId}""")
+                f""" UPDATE franchise_store_employees SET fse_document_2_url = '{json.dumps(document2)}', 
+                fse_document_2_type = '{emp_obj.document_2_type}', fse_last_updated_on = '{getIndianTime()}', 
+                fse_last_updated_by = {updated_by} WHERE fse_employee_id = {employeeId}""")
 
             get_certificates_query = f"""
-                        SELECT certificates FROM franchise_store_employees Where employee_id = {employeeId}
+                        SELECT fse_certificates FROM franchise_store_employees Where fse_employee_id = {employeeId}
                         """
             cursor.execute(get_certificates_query)
-            old_images = json.loads(cursor.fetchone()[0])
-            certificates = old_images + file_data.certificates
-            cursor.execute(
-                f""" UPDATE franchise_store_employees SET certificates = '{json.dumps(certificates)}',
-                last_updated_on = '{getIndianTime()}', last_updated_by = {updated_by}
-                WHERE employee_id = {employeeId}""")
+            certificate = cursor.fetchone()['fse_certificates']
+            if certificate is not None:
+                old_images = json.loads(certificate)
+                certificates = old_images + file_data.certificates
+                cursor.execute(
+                    f""" UPDATE franchise_store_employees SET fse_certificates = '{json.dumps(certificates)}',
+                    fse_last_updated_on = '{getIndianTime()}', fse_last_updated_by = {updated_by}
+                    WHERE fse_employee_id = {employeeId}""")
 
         return {
             "status": True,
-            "role": role[0],
+            "role": role['fse_role'],
             "message": "Document Inserted Successfully"
         }, 200
 
@@ -253,6 +258,7 @@ def add_area_head_doc(file_data, areaHeadId, area_head, updated_by):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def add_marketing_heads_doc(file_data, marketingHeadId, marketing_head, updated_by):
     try:
         with getConnection().cursor() as cursor:
@@ -289,6 +295,7 @@ def add_marketing_heads_doc(file_data, marketingHeadId, marketing_head, updated_
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def add_accountant_doc(file_data, accountantId, accountant, updated_by):
     try:
         with getConnection().cursor() as cursor:
@@ -324,6 +331,7 @@ def add_accountant_doc(file_data, accountantId, accountant, updated_by):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
 
 def add_lab_technician_doc(file_data, LabTechnicianId, lab_technician, updated_by):
     try:

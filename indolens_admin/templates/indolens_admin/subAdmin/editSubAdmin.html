@@ -80,33 +80,33 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar.html' %}
-        {% for admin in sub_admin %}
+
         <div class="content">
 
             <h2 class="mb-4">Edit admin {{ request.session.id }}</h2>
             <div class="row mb-4">
                 <div class="col-xl-9">
-                    <form action="{% url 'edit_sub_admin' admin.admin_id %}" enctype="multipart/form-data"
+                    <form action="{% url 'edit_sub_admin' sub_admin.admin_admin_id %}" enctype="multipart/form-data"
                           class="row g-3 needs-validation " method="post" novalidate="">
                         {% csrf_token %}
                         <div class="dz-preview-cover d-flex align-items-center justify-content-center mb-2 mb-md-0">
                             <div class="avatar avatar-4xl"><img alt="..."
                                                                 class="rounded-circle avatar-placeholder"
                                                                 data-dz-thumbnail="data-dz-thumbnail" id="previewImage"
-                                                                src="{{MEDIA_URL}}{{admin.profile_pic}}"/></div>
+                                                                src="{{MEDIA_URL}}{{sub_admin.admin_profile_pic}}"/></div>
                         </div>
 
                         <div class="col-md-12">
                             <label class="form-label" for="profilePic">Upload profile pic</label>
                             <input accept="image/*" class="form-control" id="profilePic" name="profilePic"
-                                   type="file" value="{{ admin.profile_pic }}"/>
+                                   type="file" value="{{ sub_admin.admin_profile_pic }}"/>
                         </div>
                         <div class="col-md-6">
 
                             <label class="form-label" for="fullName">Name</label>
 
                             <input class="form-control" id="fullName" name="fullName" required="" type="text"
-                                   value="{{admin.name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{sub_admin.admin_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Please provide a valid Name.</div>
                         </div>
                         <div class="col-md-6">
@@ -114,7 +114,7 @@
                             <label class="form-label" for="email">Email</label>
 
                             <input readonly class="form-control" id="email" name="email" required=""
-                                   type="email" value="{{admin.email}}"/>
+                                   type="email" value="{{sub_admin.admin_email}}"/>
                             <div class="invalid-feedback">Please provide a valid store display name.</div>
                         </div>
 
@@ -123,7 +123,7 @@
                             <label class="form-label" for="phone">Phone</label>
 
                             <input class="form-control" id="phone" name="phone" required="" type="number"
-                                  max="9999999999" min="1111111111" value="{{admin.phone}}"/>
+                                  max="9999999999" min="1111111111" value="{{sub_admin.admin_phone}}"/>
                             <div class="invalid-feedback">Please provide a valid phone number.</div>
                         </div>
 
@@ -132,13 +132,13 @@
                             <label class="form-label" for="completeAddress">Complete Address</label>
 
                             <textarea class="form-control" id="completeAddress" name="completeAddress" required
-                                      rows="3" maxlength="255"> {{admin.address}}</textarea>
+                                      rows="3" maxlength="255"> {{sub_admin.admin_address}}</textarea>
                             <div class="invalid-feedback">Please provide a valid address.</div>
                         </div>
                         <input name="last_updated_by" required type="hidden"
                                value="{{ request.session.id }}">
                         <input name="admin_id" required type="hidden"
-                               value="{{ admin.admin_id }}">
+                               value="{{ sub_admin.admin_admin_id }}">
 
                         <div class="col-12">
                             <button class="btn btn-primary" type="submit">Submit</button>
@@ -149,7 +149,7 @@
             {% include 'footer.html' %}
 
         </div>
-        {% endfor %}
+
     </div>
 </main>
 <!-- ===============================================-->

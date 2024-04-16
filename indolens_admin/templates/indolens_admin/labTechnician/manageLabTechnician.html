@@ -178,37 +178,37 @@
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                 <td>
-                                    <a href="{{MEDIA_URL}}{{lab_technician.profile_pic}}" target="_blank">
+                                    <a href="{{MEDIA_URL}}{{lab_technician.lt_profile_pic}}" target="_blank">
                                         <div class="avatar avatar-m">
                                             <img alt="" class="rounded-circle"
-                                                 src="{{MEDIA_URL}}{{lab_technician.profile_pic}}"/>
+                                                 src="{{MEDIA_URL}}{{lab_technician.lt_profile_pic}}"/>
                                         </div>
                                     </a>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_lab_technician' lab_technician.lab_technician_id %}">{{lab_technician.name}}</a>
+                                        href="{% url 'view_lab_technician' lab_technician.lt_lab_technician_id %}">{{lab_technician.lt_name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 phone">
-                                    <p class="mb-0 fs--1 text-900">{{lab_technician.phone}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{lab_technician.lt_phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 email">
-                                    <p class="mb-0 fs--1 text-900">{{lab_technician.email}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{lab_technician.lt_email}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end status">
-                                    {% if lab_technician.status == 0 %}
+                                    {% if lab_technician.lt_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
-                                    {% elif lab_technician.status == 1 %}
+                                    {% elif lab_technician.lt_status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 assignedLab">
                                     {% if lab_technician.lab_name|length != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
-                                       href="{% url 'view_lab' lab_technician.assigned_lab_id %}">
+                                       href="{% url 'view_lab' lab_technician.lt_assigned_lab_id %}">
                                         {{lab_technician.lab_name}}
                                     </a>
                                     {% else %}
@@ -218,20 +218,20 @@
                                 </td>
 
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdDate">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{lab_technician.created_on}}</p>-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{lab_technician.lt_created_on}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 createdBy">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{lab_technician.creator_name}}</p>-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{lab_technician.lt_creator_name}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedDate">-->
-<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{lab_technician.last_updated_on}}</p>-->
+<!--                                    <p class="mb-0 fs&#45;&#45;1 text-900">{{lab_technician.lt_last_updated_on}}</p>-->
 <!--                                </td>-->
 <!--                                <td class="align-middle white-space-nowrap ps-3 py-4 updatedBy">-->
-<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{lab_technician.updater_name}}</p>-->
+<!--                                    <p class="fw-bo text-900 fs&#45;&#45;1 mb-0">{{lab_technician.lt_updater_name}}</p>-->
 <!--                                </td>-->
                                 <td class="align-middle white-space-nowrap ps-3 py-4 address"
                                 style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{lab_technician.address}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{lab_technician.lt_address}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -243,16 +243,16 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_lab_technician' lab_technician.lab_technician_id %}">View</a>
-                                            {% if lab_technician.status == 1 %}
-                                            {% if lab_technician.assigned_lab_id == 0 %}
+                                                                                             href="{% url 'view_lab_technician' lab_technician.lt_lab_technician_id %}">View</a>
+                                            {% if lab_technician.lt_status == 1 %}
+                                            {% if lab_technician.lt_assigned_lab_id == 0 %}
                                             <a class="dropdown-item"
                                                type="button"
                                                data-bs-role="Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#allocate_lab_modal"
-                                               data-employee-id="{{ lab_technician.lab_technician_id }}"
-                                               data-employee-name="{{ lab_technician.name }}"
+                                               data-employee-id="{{ lab_technician.lt_lab_technician_id }}"
+                                               data-employee-name="{{ lab_technician.lt_name }}"
                                                data-action-type="allocate">
                                                 Allocate Lab
                                             </a>
@@ -262,11 +262,11 @@
                                                data-bs-role="Manager"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ lab_technician.lab_technician_id }}"
-                                               data-employee-name="{{ lab_technician.name }}"
-                                               data-store-name="{{lab_technician.lab_name}}"
+                                               data-employee-id="{{ lab_technician.lt_lab_technician_id }}"
+                                               data-employee-name="{{ lab_technician.lt_name }}"
+                                               data-store-name="{{lab_technician.lt_lab_name}}"
                                                data-action-type="unallocate"
-                                               data-action-url="{% url 'un_assign_lab_technician' status lab_technician.lab_technician_id lab_technician.assigned_lab_id %}">
+                                               data-action-url="{% url 'un_assign_lab_technician' status lab_technician.lt_lab_technician_id lab_technician.lt_assigned_lab_id %}">
                                                 Un allocate Lab
                                             </a>
 
@@ -274,37 +274,37 @@
                                             {% endif %}
 
                                             <a class="dropdown-item"
-                                               href="{% url 'edit_lab_technician' lab_technician.lab_technician_id %}">Update
+                                               href="{% url 'edit_lab_technician' lab_technician.lt_lab_technician_id %}">Update
                                                 Profile</a>
                                             <a class="dropdown-item"
-                                               href="{% url 'update_lab_technician_documents' lab_technician.lab_technician_id %}">Update
+                                               href="{% url 'update_lab_technician_documents' lab_technician.lt_lab_technician_id %}">Update
                                                 Documents</a>
                                             <div class="dropdown-divider"></div>
 
 
-                                            {% if lab_technician.status == 0 %}
+                                            {% if lab_technician.lt_status == 0 %}
                                             <a class="dropdown-item text-success"
                                                type="button"
                                                data-bs-role="Lab Technician"
                                                data-bs-toggle="modal"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ lab_technician.lab_technician_id }}"
-                                               data-employee-name="{{ lab_technician.name }}"
+                                               data-employee-id="{{ lab_technician.lt_lab_technician_id }}"
+                                               data-employee-name="{{ lab_technician.lt_name }}"
                                                data-action-type="enable"
-                                               data-action-url="{% url 'enable_disable_lab_technician' status lab_technician.lab_technician_id 1 %}">
+                                               data-action-url="{% url 'enable_disable_lab_technician' status lab_technician.lt_lab_technician_id 1 %}">
                                                 Make Active
                                             </a>
 
-                                            {% elif lab_technician.status == 1 %}
+                                            {% elif lab_technician.lt_status == 1 %}
                                             <a class="dropdown-item text-danger"
                                                type="button"
                                                data-bs-toggle="modal"
                                                data-bs-role="Lab Technician"
                                                data-bs-target="#operations_modal"
-                                               data-employee-id="{{ lab_technician.lab_technician_id }}"
-                                               data-employee-name="{{ lab_technician.name }}"
+                                               data-employee-id="{{ lab_technician.lt_lab_technician_id }}"
+                                               data-employee-name="{{ lab_technician.lt_name }}"
                                                data-action-type="disable"
-                                               data-action-url="{% url 'enable_disable_lab_technician' status lab_technician.lab_technician_id 0 %}">
+                                               data-action-url="{% url 'enable_disable_lab_technician' status lab_technician.lt_lab_technician_id 0 %}">
                                                 Make Inactive
                                             </a>
                                             {% endif %}

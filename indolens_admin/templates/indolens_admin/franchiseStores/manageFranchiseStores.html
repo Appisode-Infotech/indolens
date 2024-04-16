@@ -190,10 +190,10 @@
 
 
                                 <td class="align-middle white-space-nowrap storeAdmin ">
-                                    {% if store.fs_owner_name != None %}
+                                    {% if store.fse_name != None %}
                                     <a
                                             class="text-decoration-none fw-bold fs-0"
-                                            href="{% url 'view_franchise_owner' store.fs_employee_id %}">{{store.fs_owner_name}}</a>
+                                            href="{% url 'view_franchise_owner' store.fse_employee_id %}">{{store.fse_name}}</a>
                                     {% else %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>

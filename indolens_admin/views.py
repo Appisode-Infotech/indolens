@@ -138,6 +138,7 @@ def dashboard(request):
 def manageOwnStores(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = own_store_controller.get_all_own_stores(status)
+        print(response)
         return render(request, 'indolens_admin/ownStore/manageOwnStores.html',
                       {"own_store_list": response['own_stores'], "status": status})
     else:
@@ -308,6 +309,7 @@ def enableDisableFranchiseStore(request, franchiseStoreId, status, route):
 def manageSubAdmins(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sub_admin_controller.get_all_sub_admin(status)
+        print(response)
         return render(request, 'indolens_admin/subAdmin/manageSubAdmins.html',
                       {"sub_admin_list": response['sub_admins'], "status": status})
     else:
@@ -417,6 +419,7 @@ def editSubAdmin(request, subAdminId):
 def viewSubAdmin(request, subAdminId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = sub_admin_controller.get_sub_admin_by_id(subAdminId)
+        print(response)
         return render(request, 'indolens_admin/subAdmin/viewSubAdmin.html', {"sub_admin": response['sub_admin']})
     else:
         return redirect('login')
@@ -736,6 +739,7 @@ def viewFranchiseOwners(request, franchiseOwnersId):
 def updateFranchiseOwnersDocuments(request, franchiseOwnersId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = franchise_manager_controller.get_franchise_owner_by_id(franchiseOwnersId)
+        print(response)
         return render(request, 'indolens_admin/franchiseOwners/updateDocuments.html',
                       {"franchise_owner": response['franchise_owner']})
     else:
@@ -758,6 +762,7 @@ def deleteFranchiseOwnersDocuments(request, franchiseOwnersId, documentURL, docu
 def manageAreaHead(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_all_area_head(status)
+        print(response)
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
                       {"area_heads_list": response['area_heads_list'],
@@ -883,6 +888,7 @@ def enableDisableAreaHead(request, route, areaHeadId, status):
 def viewAreaHead(request, areaHeadId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
+        print(response)
         return render(request, 'indolens_admin/areaHead/viewAreaHead.html',
                       {"area_head": response['area_head']})
     else:
@@ -1784,6 +1790,7 @@ def editAccountant(request, accountantId):
 def viewAccountant(request, accountantId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = accountant_controller.get_accountant_by_id(accountantId)
+        print(response)
         return render(request, 'indolens_admin/accountant/viewAccountant.html',
                       {"accountant": response['accountant']})
     else:
@@ -1813,7 +1820,9 @@ def enableDisableAccountant(request, route, accountantId, status):
 def manageLabTechnician(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_technician_controller.get_all_lab_technician(status)
+        print(response)
         lab_list, status_code = lab_controller.get_all_active_labs()
+        print(lab_list)
         return render(request, 'indolens_admin/labTechnician/manageLabTechnician.html',
                       {"lab_technician_list": response['lab_technician_list'], "lab_list": lab_list['lab_list'],
                        "status": status})
@@ -2436,7 +2445,7 @@ def viewCustomerDetails(request, customerId):
 def manageLabs(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_controller.get_all_labs()
-        # print(response)
+        print(response)
         return render(request, 'indolens_admin/labs/manageLabs.html', {"lab_list": response['lab_list']})
     else:
         return redirect('login')
@@ -3431,8 +3440,9 @@ def deleteLabTechnicianDocuments(request, labTechnicianId, documentURL, document
 def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'own_store_employees', 'employee_id',
+                                                                            'own_store_employees', 'ose_employee_id',
                                                                             employeeId, request.session.get('id'))
+        print(response)
 
         role = response['role']
 
@@ -3456,9 +3466,10 @@ def deleteOwnStoreEmployeeDocuments(request, employeeId, documentURL, document_T
 
 def deleteFranchiseStoreEmployeeDocuments(request, employeeId, documentURL, document_Type):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
-        response, status_code = delete_documents_controller.delete_document(documentURL, document_Type,
-                                                                            'franchise_store_employees', 'employee_id',
+        response, status_code = delete_documents_controller.delete_fse_document(documentURL, document_Type,
+                                                                            'franchise_store_employees', 'fse_employee_id',
                                                                             employeeId, request.session.get('id'))
+        print(response)
         role = response['role']
 
         # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3584,6 +3595,7 @@ def addOwnStoreEmployeeImage(request, employeeId):
             response, status_code = add_documents_controller.add_own_store_employee_image(file_data, employeeId,
                                                                                           emp_obj,
                                                                                           request.session.get('id'))
+            print(response)
             role = response['role']
 
             # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3647,6 +3659,7 @@ def addFranchiseStoreEmployeeImage(request, employeeId):
                                                                                                 emp_obj,
                                                                                                 request.session.get(
                                                                                                     'id'))
+            print(response)
             role = response['role']
 
             # Dictionary mapping roles to URLs and their respective keyword arguments
@@ -3927,6 +3940,7 @@ def getEyeTestById(request, testId):
 def eyeTestPrint(request, testId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = eye_test_controller.get_eye_test_by_id(testId)
+        print(response)
         return render(request, 'indolens_admin/eyeTest/adminEyeTestPrint.html',
                       {'eye_test_list': response['eye_test']})
 

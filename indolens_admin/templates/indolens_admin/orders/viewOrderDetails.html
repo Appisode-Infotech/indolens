@@ -163,7 +163,7 @@
                                             {{order.so_discount_percentage}}%
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 text-end">
-                                            {{order.so_product_gst}}%
+                                            {{order.ci_product_gst}}%
                                         </td>
                                         <td class="quantity align-middle  py-0 ps-4 text-700 text-end">
                                             {{order.so_purchase_quantity}}
@@ -171,7 +171,7 @@
                                         <td class="price align-middle text-900 fw-semi-bold text-end">₹
                                             {{order.so_product_total_cost}}
                                         </td>
-                                        {% if order.so_category_id == 2 or order.so_category_id == 3 %}
+                                        {% if order.ci_category_id == 2 or order.ci_category_id == 3 %}
                                         <td class="align-middle text-end white-space-nowrap pe-0">
                                             <div class="font-sans-serif btn-reveal-trigger position-static" >
                                                 <button aria-expanded="false"
@@ -182,15 +182,15 @@
                                                         type="button">
                                                     <span class="fas fa-ellipsis-h fs--2"></span></button>
                                                 <div class="dropdown-menu dropdown-menu-end py-2">
-                                                    {% if order.so_category_id == 2 %}
+                                                    {% if order.ci_category_id == 2 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button"
-                                                       href="{% url 'lab_job_item_details' orders_details.so_sale_item_id %}">
+                                                       href="{% url 'lab_job_item_details' order.so_sale_item_id %}">
                                                         Line Item Details</a>
-                                                    {% elif order.so_category_id == 3 %}
+                                                    {% elif order.ci_category_id == 3 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button" target="_blank"
-                                                       href="{% url 'lab_contact_Lens_power_card' orders_details.so_sale_item_id %}">
+                                                       href="{% url 'lab_contact_Lens_power_card' order.so_sale_item_id %}">
                                                         Contact Lens Power</a>
                                                     {% endif %}
                                                 </div>

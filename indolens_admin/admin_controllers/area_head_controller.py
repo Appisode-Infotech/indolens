@@ -20,9 +20,9 @@ def create_area_head(area_head, files):
         with getConnection().cursor() as cursor:
             insert_area_head_query = f"""
                 INSERT INTO area_head (
-                    name, email, phone, password, profile_pic, 
-                    address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on,assigned_stores
+                    ah_name, ah_email, ah_phone, ah_password, ah_profile_pic, 
+                    ah_address, ah_document_1_type, ah_document_1_url, ah_document_2_type, ah_document_2_url, 
+                    ah_status, ah_created_by, ah_created_on, ah_last_updated_by, ah_last_updated_on,ah_assigned_stores
                 ) VALUES (
                     '{area_head.full_name}', '{area_head.email}', '{area_head.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{area_head.complete_address}', '{area_head.document1_type}', 
@@ -63,19 +63,19 @@ def get_all_area_head(status):
     try:
         with getConnection().cursor() as cursor:
             get_area_head_query = f"""
-            SELECT ah.*, GROUP_CONCAT(os.store_name SEPARATOR ', ') AS assigned_stores_names, creator.name, updater.name
+            SELECT ah.*, GROUP_CONCAT(os.os_store_name SEPARATOR ', ') AS assigned_stores_names, creator.admin_name, 
+            updater.admin_name
             FROM area_head AS ah
-            LEFT JOIN own_store AS os
-            ON FIND_IN_SET(os.store_id, ah.assigned_stores)
-            LEFT JOIN admin AS creator ON ah.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON ah.last_updated_by = updater.admin_id
-            WHERE ah.status {status_condition} GROUP BY ah.area_head_id ORDER BY ah.area_head_id DESC"""
+            LEFT JOIN own_store AS os ON FIND_IN_SET(os.os_store_id, ah.ah_assigned_stores)
+            LEFT JOIN admin AS creator ON ah.ah_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON ah.ah_last_updated_by = updater.admin_admin_id
+            WHERE ah.ah_status {status_condition} GROUP BY ah.ah_area_head_id ORDER BY ah.ah_area_head_id DESC"""
             cursor.execute(get_area_head_query)
             area_heads = cursor.fetchall()
 
             return {
                        "status": True,
-                       "area_heads_list": get_area_heads(area_heads)
+                       "area_heads_list": area_heads
                    }, 200
 
     except pymysql.Error as e:
@@ -88,21 +88,25 @@ def get_area_head_by_id(ahid):
     try:
         with getConnection().cursor() as cursor:
             get_area_head_query = f"""
-            SELECT ah.*, GROUP_CONCAT(os.store_name SEPARATOR ', ') AS assigned_stores_names, creator.name, updater.name
-            FROM area_head AS ah
-            LEFT JOIN own_store AS os
-            ON FIND_IN_SET(os.store_id, ah.assigned_stores)
-            LEFT JOIN admin AS creator ON ah.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON ah.last_updated_by = updater.admin_id
-            WHERE area_head_id = '{ahid}'
-            GROUP BY ah.area_head_id
-            """
+                        SELECT ah.*, GROUP_CONCAT(os.os_store_name SEPARATOR ', ') AS assigned_stores_names, 
+                        creator.admin_name AS creator, 
+                        updater.admin_name AS updater
+                        FROM area_head AS ah
+                        LEFT JOIN own_store AS os ON FIND_IN_SET(os.os_store_id, ah.ah_assigned_stores)
+                        LEFT JOIN admin AS creator ON ah.ah_created_by = creator.admin_admin_id
+                        LEFT JOIN admin AS updater ON ah.ah_last_updated_by = updater.admin_admin_id
+                        WHERE ah_area_head_id = '{ahid}'"""
             cursor.execute(get_area_head_query)
-            area_heads = cursor.fetchall()
+            area_heads = cursor.fetchone()
+
+            area_heads['ah_document_1_url'] = json.loads(area_heads['ah_document_1_url']) if area_heads[
+                'ah_document_1_url'] else []
+            area_heads['ah_document_2_url'] = json.loads(area_heads['ah_document_2_url']) if area_heads[
+                'ah_document_2_url'] else []
 
             return {
                        "status": True,
-                       "area_head": get_area_heads(area_heads)
+                       "area_head": area_heads
                    }, 200
 
     except pymysql.Error as e:
@@ -116,14 +120,14 @@ def edit_area_head(area_head, files):
             update_area_head_query = f"""
                                 UPDATE area_head
                                 SET 
-                                    name = '{area_head.full_name}',
-                                    email = '{area_head.email}',
-                                    phone = '{area_head.phone}',
-                                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                                    address = '{area_head.complete_address}',
-                                    last_updated_by = '{area_head.last_updated_by}',
-                                    last_updated_on = '{getIndianTime()}'
-                                WHERE area_head_id = {area_head.area_head_id}
+                                    ah_name = '{area_head.full_name}',
+                                    ah_email = '{area_head.email}',
+                                    ah_phone = '{area_head.phone}',
+                                    {'ah_profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                                    ah_address = '{area_head.complete_address}',
+                                    ah_last_updated_by = '{area_head.last_updated_by}',
+                                    ah_last_updated_on = '{getIndianTime()}'
+                                WHERE ah_area_head_id = {area_head.area_head_id}
                             """
             cursor.execute(update_area_head_query)
 

@@ -20,9 +20,9 @@ def create_lab_technician(lab_technician, files):
         with getConnection().cursor() as cursor:
             insert_marketing_head_query = f"""
                 INSERT INTO lab_technician (
-                    name, email, phone, password, profile_pic, 
-                    address, document_1_type, document_1_url, document_2_type, document_2_url, 
-                    status, created_by, created_on, last_updated_by, last_updated_on,assigned_lab_id 
+                    lt_name, lt_email, lt_phone, lt_password, lt_profile_pic, 
+                    lt_address, lt_document_1_type, lt_document_1_url, lt_document_2_type, lt_document_2_url, 
+                    lt_status, lt_created_by, lt_created_on, lt_last_updated_by, lt_last_updated_on, lt_assigned_lab_id 
                 ) VALUES (
                     '{lab_technician.name}', '{lab_technician.email}', '{lab_technician.phone}', '{hashed_password}',
                     '{files.profile_pic}', '{lab_technician.address}', '{lab_technician.document_1_type}', 
@@ -63,20 +63,20 @@ def get_all_lab_technician(status):
     try:
         with getConnection().cursor() as cursor:
             get_lab_technician_query = f"""
-            SELECT lt.*, creator.name, updater.name, l.lab_name
+            SELECT lt.*, creator.admin_name AS creator, updater.admin_name AS updater, l.lab_name AS lab_name
             FROM lab_technician AS lt
-            LEFT JOIN lab AS l ON lt.assigned_lab_id = l.lab_id
-            LEFT JOIN admin AS creator ON lt.created_by = creator.admin_id
-            LEFT JOIN admin AS updater ON lt.last_updated_by = updater.admin_id
-            WHERE lt.status {status_condition}
-            GROUP BY lt.lab_technician_id ORDER BY lt.lab_technician_id DESC
+            LEFT JOIN lab AS l ON lt.lt_assigned_lab_id = l.lab_lab_id
+            LEFT JOIN admin AS creator ON lt.lt_created_by = creator.admin_admin_id
+            LEFT JOIN admin AS updater ON lt.lt_last_updated_by = updater.admin_admin_id
+            WHERE lt.lt_status {status_condition}
+            GROUP BY lt.lt_lab_technician_id ORDER BY lt.lt_lab_technician_id DESC
             """
             cursor.execute(get_lab_technician_query)
             lab_technician = cursor.fetchall()
 
             return {
                 "status": True,
-                "lab_technician_list": get_lab_technicians(lab_technician)
+                "lab_technician_list": lab_technician
             }, 200
 
     except pymysql.Error as e:
@@ -89,19 +89,23 @@ def get_lab_technician_by_id(ltid):
     try:
         with getConnection().cursor() as cursor:
             get_lab_technician_query = f"""
-                        SELECT lt.*, creator.name, updater.name, l.lab_name
+                        SELECT lt.*, creator.admin_name AS creator, updater.admin_name AS updater, l.lab_name AS lab_name
                         FROM lab_technician AS lt
-                        LEFT JOIN lab AS l ON lt.assigned_lab_id = l.lab_id
-                        LEFT JOIN admin AS creator ON lt.created_by = creator.admin_id
-                        LEFT JOIN admin AS updater ON lt.last_updated_by = updater.admin_id
-                        WHERE lt.lab_technician_id = {ltid}
-                        GROUP BY lt.lab_technician_id
+                        LEFT JOIN lab AS l ON lt.lt_assigned_lab_id = l.lab_lab_id
+                        LEFT JOIN admin AS creator ON lt.lt_created_by = creator.admin_admin_id
+                        LEFT JOIN admin AS updater ON lt.lt_last_updated_by = updater.admin_admin_id
+                        WHERE lt.lt_lab_technician_id = {ltid}
                         """
             cursor.execute(get_lab_technician_query)
-            lab_technician = cursor.fetchall()
+            lab_technician = cursor.fetchone()
+
+            lab_technician['lt_document_1_url'] = json.loads(lab_technician['lt_document_1_url']) if lab_technician[
+                'lt_document_1_url'] else []
+            lab_technician['lt_document_2_url'] = json.loads(lab_technician['lt_document_2_url']) if lab_technician[
+                'lt_document_2_url'] else []
             return {
                 "status": True,
-                "lab_technician": get_lab_technicians(lab_technician)
+                "lab_technician": lab_technician
             }, 200
 
     except pymysql.Error as e:
@@ -114,14 +118,14 @@ def edit_lab_technician(lab_tech_obj, files):
             update_lab_tech_obj_query = f"""
                                 UPDATE lab_technician
                                 SET 
-                                    name = '{lab_tech_obj.name}',
-                                    email = '{lab_tech_obj.email}',
-                                    phone = '{lab_tech_obj.phone}',
-                                    {'profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
-                                    address = '{lab_tech_obj.address}',
-                                    last_updated_by = '{lab_tech_obj.last_updated_by}',
-                                    last_updated_on = '{getIndianTime()}'
-                                WHERE lab_technician_id = {lab_tech_obj.lab_technician_id}
+                                    lt_name = '{lab_tech_obj.name}',
+                                    lt_email = '{lab_tech_obj.email}',
+                                    lt_phone = '{lab_tech_obj.phone}',
+                                    {'lt_profile_pic = ' + f"'{files.profile_pic}'," if files.profile_pic is not None else ''}
+                                    lt_address = '{lab_tech_obj.address}',
+                                    lt_last_updated_by = '{lab_tech_obj.last_updated_by}',
+                                    lt_last_updated_on = '{getIndianTime()}'
+                                WHERE lt_lab_technician_id = {lab_tech_obj.lab_technician_id}
                             """
             cursor.execute(update_lab_tech_obj_query)
 
