@@ -200,8 +200,9 @@
                                             {{order.brand_name}}
                                             {% endif %}
                                         </td>
-                                        {% if order.ci_category_id == 2 or order.ci_category_id == 3 %}
+
                                         <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                            {% if order.ci_category_id == 2 or order.ci_category_id == 3 %}
                                             <div class="font-sans-serif btn-reveal-trigger position-static" >
                                                 <button aria-expanded="false"
                                                         aria-haspopup="true"
@@ -226,8 +227,9 @@
                                                     {% endif %}
                                                 </div>
                                             </div>
+                                            {% endif %}
                                         </td>
-                                        {% endif %}
+
                                     </tr>
                                     {% endfor %}
 

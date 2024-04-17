@@ -137,7 +137,7 @@
 
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3 class="name">{{ customer.customer_name }}</h3>
-                                                <p class="text-800">Joined on {{ customer.customer_created_on }}</p>
+                                                <p class="text-800">Joined on {{ customer.customer_created_on |date:"d/m/Y h:i A" }}</p>
                                                 {% if membership == 'Gold' %}
                                                 <div class="golden-card">
                                                     <h4>{{membership}} Member</h4>
@@ -294,13 +294,13 @@
                                                 <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
                                             </td>
                                             <td class="date align-middle white-space-nowrap text-700 fs--1  ">
-                                                {{order.so_created_on}}
+                                                {{order.so_created_on|date:"d/m/Y h:i A"}}
                                             </td>
                                             <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
                                                 <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.updater_name}}</a>
                                             </td>
                                             <td class="date align-middle white-space-nowrap text-700 fs--1  ">
-                                                {{order.so_updated_on}}
+                                                {{order.so_updated_on|date:"d/m/Y h:i A"}}
                                             </td>
                                         </tr>
                                         {% endfor %}

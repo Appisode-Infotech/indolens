@@ -67,6 +67,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -84,7 +85,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["id","name","description","status"],"page":20,"pagination":true}'
+                <div data-list='{"valueNames":["id","name","description","status","createdOn"],"page":20,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -94,10 +95,13 @@
                     </div>
 
                     <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter active" href="#filter-all-status">All</a>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter active"
+                                                href="#filter-all-status">All</a>
                         </li>
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-filterIn_Active-status">Active</a></li>
-                        <li class="nav-item"><a aria-current="page" class="nav-link filter" href="#filter-filterIn_InActive-status">Inactive</a></li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter"
+                                                href="#filter-filterIn_Active-status">Active</a></li>
+                        <li class="nav-item"><a aria-current="page" class="nav-link filter"
+                                                href="#filter-filterIn_InActive-status">Inactive</a></li>
                     </ul>
 
                     <div class="row g-3 justify-content-between align-items-end mb-4">
@@ -122,18 +126,21 @@
                             <thead>
                             <tr>
 
-                                <th class="sort align-middle ps-3" data-sort="id"
+                                <th class="sort align-middle " data-sort="id"
                                     scope="col" style="width:10%;">SL NO
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="name" scope="col" style="width:10%;">
+                                <th class="sort align-middle " data-sort="name" scope="col" style="width:10%;">
                                     BRAND NAME
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="description" scope="col"
+                                <th class="sort align-middle " data-sort="description" scope="col"
                                     style="width:10%;">DESCRIPTION
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="status" scope="col" style="width:10%;">
+                                <th class="sort align-middle" data-sort="status" scope="col" style="width:10%;">
                                     STATUS
+                                </th>
+                                <th class="sort align-middle" data-sort="createdOn" scope="col" style="width:10%;">
+                                    CREATED ON
                                 </th>
                                 <th class="sort align-middle text-end" scope="col" style="width:10%;">ACTION</th>
                             </tr>
@@ -143,15 +150,15 @@
 
                             <tr class="position-static" data-category="{{ brand.brand_status }}">
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 id">
+                                <td class="align-middle white-space-nowrap  py-4 id">
                                     <p class="mb-0 fs--1 text-900">{{brand.brand_id}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 name">
+                                <td class="align-middle white-space-nowrap  py-4 name">
                                     <p class="mb-0 fs--1 text-900">{{brand.brand_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 description">
+                                <td class="align-middle white-space-nowrap  py-4 description">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{brand.brand_description}}</p>
                                 </td>
 
@@ -163,6 +170,10 @@
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">
                                     <p style="display: none;">filterIn_Active</p>Active</span>
                                 {% endif %}
+                                </td>
+                                </td>
+                                <td class="align-middle white-space-nowrap createdOn">
+                                    <p class="mb-0 fs--1 text-900">{{brand.brand_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -250,6 +261,7 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
+
 
 
 

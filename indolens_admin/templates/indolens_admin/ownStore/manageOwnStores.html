@@ -156,7 +156,7 @@
                                 </th>
 
 
-                                <th class="sort align-middle ps-3" data-sort="action" scope="col">ACTION
+                                <th class="sort align-middle ps-3"  scope="col">ACTION
                                 </th>
                             </tr>
                             </thead>
@@ -182,7 +182,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap date ps-3 py-4 date">
-                                    <p class="mb-0 fs--1 text-900">{{store.os_created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{store.os_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4 city">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{store.os_store_city}}</p>

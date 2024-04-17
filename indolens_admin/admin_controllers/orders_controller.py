@@ -467,9 +467,10 @@ def get_store_details(storeId, storeType):
 def get_order_track(orderId):
     try:
         with getConnection().cursor() as cursor:
-            get_order_track_query = f""" SELECT ot.*
-                                        FROM order_track AS ot
-                                        WHERE ot.order_id = '{orderId}' """
+            get_order_track_query = f""" SELECT track_id, order_id, status, 
+                                        DATE_FORMAT(created_on, '%d/%m/%Y %h:%i %p') AS created_on
+                                        FROM order_track
+                                        WHERE order_id = '{orderId}' """
             cursor.execute(get_order_track_query)
             order_trak = cursor.fetchall()
             print(order_trak)

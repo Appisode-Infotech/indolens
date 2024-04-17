@@ -290,7 +290,7 @@
                                             <h6 class="mb-0">Shipping Date</h6>
                                         </div>
                                         <p class="mb-0 text-800 fs--1 ms-4">
-                                            {{order_detail.0.so_estimated_delivery_date}}</p>
+                                            {{order_detail.0.so_estimated_delivery_date |date:"d/m/Y"}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -393,7 +393,7 @@
                                                 {{log.creator_name}}
                                             </td>
                                             <td class="createdOn align-middle text-900 fw-semi-bold  py-0 ps-4">
-                                                {{log.sopt_created_on}}
+                                                {{log.sopt_created_on|date:"d/m/Y h:i A"}}
                                             </td>
                                         </tr>
                                         {% endfor %}

@@ -123,7 +123,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{lab_data.lab_created_on}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{lab_data.lab_created_on|date:"d/m/Y h:i A"}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Created On</p>
                             </div>
@@ -143,7 +143,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{lab_data.lab_last_updated_on}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{lab_data.lab_last_updated_on|date:"d/m/Y h:i A"}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0">Updated On</p>
                             </div>
@@ -263,7 +263,7 @@
                                         <form class="position-relative" data-bs-display="static"
                                               data-bs-toggle="search">
                                             <input aria-label="Search" class="form-control search-input search"
-                                                   placeholder="Search orders" type="search"/>
+                                                   placeholder="Search Jobs" type="search"/>
                                             <span class="fas fa-search search-box-icon"></span>
 
                                         </form>
@@ -393,7 +393,7 @@
 
                                         </td>
                                         <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                            {{job.so_created_on}}
+                                            {{job.so_created_on|date:"d/m/Y h:i A"}}
                                         </td>
                                     </tr>
                                     {% endfor %}

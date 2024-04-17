@@ -225,12 +225,12 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 req_date">
-                                    <p class="mb-0 fs--1 text-900">{{stock.pr_created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.pr_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 moved_date">
                                     {% if stock.pr_delivery_status == 1 or stock.pr_delivery_status == 2 %}
-                                    <p class="mb-0 fs--1 text-900">{{stock.pr_last_updated_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{stock.pr_last_updated_on|date:"d/m/Y h:i A"}}</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">Not Dispatched</p>
                                     {% endif %}
@@ -262,8 +262,9 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
-                                {% if stock.pr_store_type == 2 %}
+
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                    {% if stock.pr_store_type == 2 %}
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
                                                 aria-haspopup="true"
@@ -280,8 +281,9 @@
 
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </td>
-                                {% endif %}
+
                             </tr>
                             {% endfor %}
                             </tbody>

@@ -68,13 +68,33 @@ def edit_product_category(product_cat_obj):
 
 
 def get_all_central_inventory_category():
+
     try:
         with getConnection().cursor() as cursor:
-            get_product_category_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
-            FROM product_categories AS pc 
-            LEFT JOIN admin AS creator ON pc.pc_created_by = creator.admin_admin_id
-            LEFT JOIN admin AS updater ON pc.pc_last_updated_by = updater.admin_admin_id 
-            ORDER BY pc.pc_category_id ASC"""
+            get_product_category_query = f""" 
+            SELECT 
+                pc_category_id, 
+                pc_category_name, 
+                pc_category_prefix, 
+                pc_category_description,
+                pc_status, 
+                CASE 
+                    WHEN pc_status = 1 THEN 'Active'
+                    ELSE 'Inactive'
+                END AS status,
+                DATE_FORMAT(pc_created_on, '%d/%m/%Y %h:%i %p') AS pc_created_on, 
+                DATE_FORMAT(pc_last_updated_on, '%d/%m/%Y %h:%i %p') AS pc_last_updated_on, 
+                creator.admin_name AS Creator, 
+                updater.admin_name AS Updater
+            FROM 
+                product_categories AS pc 
+            LEFT JOIN 
+                admin AS creator ON pc.pc_created_by = creator.admin_admin_id
+            LEFT JOIN 
+                admin AS updater ON pc.pc_last_updated_by = updater.admin_admin_id 
+            ORDER BY 
+                pc.pc_category_id ASC
+            """
             cursor.execute(get_product_category_query)
             product_category = cursor.fetchall()
             return {

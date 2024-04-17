@@ -83,7 +83,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <div data-list='{"valueNames":["id","name","description","status"],"page":20,"pagination":true}'
+                <div data-list='{"valueNames":["id","name","description","status","createdOn"],"page":20,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -122,27 +122,27 @@
                                 <th class="sort white-space-nowrap align-middle ps-0" data-sort="id"
                                     scope="col" style="width:10%;">SL NO
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="name" scope="col" style="width:10%;">
+                                <th class="sort align-middle " data-sort="name" scope="col" style="width:10%;">
                                     MATERIAL NAME
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="description" scope="col"
+                                <th class="sort align-middle " data-sort="description" scope="col"
                                     style="width:5%;">DESCRIPTION
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="status" scope="col" style="width:10%;">
+                                <th class="sort align-middle " data-sort="status" scope="col" style="width:10%;">
                                     STATUS
                                 </th>
-                                <!--                                <th class="sort align-middle ps-3" data-sort="start" scope="col" style="width:10%;">-->
-                                <!--                                    CREATED ON-->
-                                <!--                                </th>-->
-                                <!--                                <th class="sort align-middle ps-3" data-sort="deadline" scope="col" style="width:15%;">-->
+                                <th class="sort align-middle" data-sort="createdOn" scope="col" style="width:10%;">
+                                    CREATED ON
+                                </th>
+                                <!--                                <th class="sort align-middle " data-sort="deadline" scope="col" style="width:15%;">-->
                                 <!--                                    CREATED BY-->
                                 <!--                                </th>-->
-                                <!--                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"-->
+                                <!--                                <th class="sort align-middle " data-sort="projectprogress" scope="col"-->
                                 <!--                                    style="width:5%;">UPDATED ON-->
                                 <!--                                </th>-->
 
-                                <!--                                <th class="sort align-middle ps-3" data-sort="projectprogress" scope="col"-->
+                                <!--                                <th class="sort align-middle " data-sort="projectprogress" scope="col"-->
                                 <!--                                    style="width:5%;">UPDATED BY-->
                                 <!--                                </th>-->
 
@@ -154,15 +154,15 @@
 
                             <tr class="position-static" data-category="{{ material.pm_status }}">
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 id">
+                                <td class="align-middle white-space-nowrap  py-4 id">
                                     <p class="mb-0 fs--1 text-900">{{material.pm_material_id}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 name">
+                                <td class="align-middle white-space-nowrap  py-4 name">
                                     <p class="mb-0 fs--1 text-900">{{material.pm_material_name}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 description">
+                                <td class="align-middle white-space-nowrap  py-4 description">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{material.pm_material_description}}</p>
                                 </td>
 
@@ -174,6 +174,9 @@
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">
                                         <p style="display: none;">filterIn_Active</p>Active</span>
                                     {% endif %}
+                                </td>
+                                <td class="align-middle white-space-nowrap createdOn">
+                                    <p class="mb-0 fs--1 text-900">{{material.pm_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">

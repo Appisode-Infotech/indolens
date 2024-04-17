@@ -199,7 +199,7 @@ body {
                                 <th scope="row" class="align-middle">Invoice No</th>
                                 <td class="align-middle"><b>{{invoice_details.invoice_invoice_number}}</b></td>
                                 <th scope="row" class="align-middle">Invoice Date</th>
-                                <td class="align-middle">{{invoice_details.invoice_invoice_date}}</td>
+                                <td class="align-middle">{{invoice_details.invoice_invoice_date|date:"d/m/Y "}}</td>
                             </tr>
                             {% endif %}
                             <tr>
@@ -214,7 +214,7 @@ body {
                             </tr>
                             <tr>
                                 <th scope="row" class="align-middle">Order Date</th>
-                                <td class="align-middle">{{order_detail.0.so_created_on}}</td>
+                                <td class="align-middle">{{order_detail.0.so_created_on|date:"d/m/Y h:i A"}}</td>
                                 <th scope="row" class="align-middle">Sold by</th>
                                 {% if order_detail.0.so_created_by_store == 1 %}
                                 <td class="align-middle" colspan="3">{{store_data.os_store_name}}<br/>{{store_data.os_store_address}}

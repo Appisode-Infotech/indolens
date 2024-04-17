@@ -109,7 +109,7 @@
                                         <tbody>
                                         <tr>
                                             <td>{{ order_detail.store_name }}</td>
-                                            <td>{{ order_detail.so_created_on }}</td>
+                                            <td>{{ order_detail.so_created_on |date:"d/m/Y h:i A" }}</td>
                                             <td>{{ order_detail.customer_name }}</td>
                                             <td>{{ order_detail.so_order_id }}</td>
                                         </tr>

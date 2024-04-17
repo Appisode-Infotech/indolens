@@ -131,7 +131,7 @@
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="action" scope="col"
+                                <th class="sort align-middle ps-3" scope="col"
                                     style="width:5%;">ACTION
                                 </th>
 
@@ -147,7 +147,8 @@
                                     {{lab.lab_name}}
                                 </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 py-4 name">
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 name"
+                                style="max-width: 200px; word-wrap: break-word; overflow: hidden;">
                                     {{lab.lab_display_name}}
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 jobs">{{lab.jobs_count}}
@@ -169,7 +170,7 @@
                                 <!--                                <td class="align-middle white-space-nowrap text-end statuses"><span-->
                                 <!--                                        class="badge badge-phoenix fs&#45;&#45;2 badge-phoenix-danger">UNASSIGNED</span></td>-->
                                 <td class="align-middle white-space-nowrap ps-3 py-4 createdon">
-                                    <p class="mb-0 fs--1 text-900">{{lab.lab_created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{lab.lab_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 city ">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{lab.lab_city}}</p>

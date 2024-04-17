@@ -170,7 +170,7 @@
                                     <th class="sort align-middle ps-4" data-sort="date" scope="col"
                                         style="width:50px;">PUBLISHED ON
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="action" scope="col"
+                                    <th class="sort align-middle ps-4"  scope="col"
                                         style="width:50px;">ACTION
                                     </th>
 
@@ -206,7 +206,7 @@
                                         {{product.ci_product_quantity}}
                                     </td>
                                     <td class="date align-middle white-space-nowrap text-600 ps-4">
-                                        {{product.ci_created_on}}
+                                        {{product.ci_created_on |date:"d/m/Y h:i A"}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
                                         <div class="font-sans-serif btn-reveal-trigger position-static">

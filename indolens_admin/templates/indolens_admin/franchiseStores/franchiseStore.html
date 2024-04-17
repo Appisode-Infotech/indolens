@@ -124,7 +124,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="ms-2">
                                     <div class="d-flex align-items-end">
-                                        <span class="fs-1 fw-semi-bold text-900">{{franchise_store.fs_created_on}}</span>
+                                        <span class="fs-1 fw-semi-bold text-900">{{franchise_store.fs_created_on|date:"d/m/Y h:i A"}}</span>
                                     </div>
                                     <p class="text-800 fs--1 mb-0">Created On</p>
                                 </div>
@@ -144,7 +144,7 @@
                             <div class="d-flex align-items-center">
                                 <div class="ms-2">
                                     <div class="d-flex align-items-end">
-                                        <span class="fs-1 fw-semi-bold text-900">{{franchise_store.fs_last_updated_on}}</span>
+                                        <span class="fs-1 fw-semi-bold text-900">{{franchise_store.fs_last_updated_on|date:"d/m/Y h:i A"}}</span>
                                     </div>
                                     <p class="text-800 fs--1 mb-0">Updated On</p>
                                 </div>
@@ -360,7 +360,7 @@
                                     </td>
 
                                     <td class="publishedOn align-middle white-space-nowrap text-600 ps-4">
-                                        {{stock.si_last_updated_on}}
+                                        {{stock.si_last_updated_on|date:"d/m/Y h:i A"}}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -530,14 +530,14 @@
                                         <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
                                     </td>
                                     <td class="created_on align-middle white-space-nowrap text-700 fs--1">
-                                        {{order.so_created_on}}
+                                        {{order.so_created_on|date:"d/m/Y h:i A"}}
                                     </td>
                                     <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
                                         <a href="{% url 'view_record_creator' order.so_updated_by order.so_created_by_store_type %}">
                                             {{order.updater_name}} </a>
                                     </td>
                                     <td class="updated_on align-middle white-space-nowrap text-700 fs--1">
-                                        {{order.so_updated_on}}
+                                        {{order.so_updated_on|date:"d/m/Y h:i A"}}
                                     </td>
                                 </tr>
                                 {% endfor %}
@@ -637,14 +637,14 @@
                                             ₹{{expense.se_expense_amount}}
                                         </td>
                                         <td class="date align-middle fw-semi-bold text-1000">
-                                            {{expense.se_expense_date}}
+                                            {{expense.se_expense_date|date:"d/m/Y h:i A"}}
                                         </td>
                                         <td class="createdBy align-middle fw-semi-bold text-1000">
                                             <a href="{% url 'view_record_creator' expense.se_created_by expense.se_store_type %}">
                                                 {{expense.creator_name}}</a>
                                         </td>
                                         <td class="createdOn align-middle fw-semi-bold text-1000">
-                                            {{expense.se_created_on}}
+                                            {{expense.se_created_on|date:"d/m/Y h:i A"}}
                                         </td>
 
                                     </tr>

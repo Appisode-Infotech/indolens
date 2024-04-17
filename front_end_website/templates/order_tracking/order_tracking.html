@@ -82,7 +82,7 @@
                         <h1 class="mt-2">Indolens</h1>
                     </div>
                     <h3>Order : {{order_detail.so_order_id}} Status</h3>
-                    <p class="text-800 mb-1">Order Date: <span class="ms-sm-1">{{order_detail.so_created_on}}</span></p>
+                    <p class="text-800 mb-1">Order Date: <span class="ms-sm-1">{{order_detail.0.so_created_on|date:"d/m/Y h:i A"}}</span></p>
                     <p class="text-800 mb-1">Store Name: <span class="ms-sm-1">{{store_details.store_name}}</span></p>
                     <p class="text-800 mb-0">Store Address: <span class="ms-sm-1">{{store_details.store_address}}</span>
                     </p>
@@ -254,6 +254,7 @@
 </script>
 <script>
 var orderList = {{ order_track | safe}};
+console.log(orderList);
 
 // Function to check if a given status is present in the list
 function isStatusPresent(status) {
@@ -267,7 +268,7 @@ function getItemByStatus(status) {
 
 
 for(let i = 1;i<8;i++){
-var assignedLab={{order_detail.so_assigned_lab}};
+var assignedLab={{order_detail.0.so_assigned_lab}};
 
 if(i==2 && assignedLab==0){
 continue;

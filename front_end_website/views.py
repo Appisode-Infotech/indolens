@@ -16,11 +16,9 @@ def index(request):  # new
 
 def customerOrderTracking(request, orderId):
     order_detail, status_code = orders_controller.get_order_details(orderId)
-    print("=============================")
-    print(order_detail)
     order_track, track_status_code = orders_controller.get_order_track(orderId)
-    print(order_track['order_track'])
-    print(order_track['store_details'])
+    print("=====================")
+    print(order_detail)
     print("=============================")
     return render(request, 'order_tracking/order_tracking.html', {"order_detail": order_detail['orders_details'],
                                                                   "order_track": order_track['order_track'],
