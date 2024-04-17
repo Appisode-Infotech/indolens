@@ -115,15 +115,16 @@
                                                 <h3>{{area_head.ah_name}}</h3>
                                                 <p class="text-800">Joined on {{area_head.ah_created_on|date:"d/m/Y h:i A"}}</p>
                                                 <p class="text-800">Assigned Stores:</p>
-                                                {% if area_head.ah_id_name_pair|length != 0 %}
-                                                {% for id, name in area_head.ah_id_name_pair %}
+                                                {% if area_head.id_name_pair|length != 0 %}
+                                                {% for id, name in area_head.id_name_pair %}
                                                 <a class="text-decoration-none fw-semi-bold fs-0"
                                                    href="{% url 'view_own_store' id %}">
                                                     {{name}}
                                                 </a><br>
                                                 {% endfor %}
                                                 {% else %}
-                                                <p class="text-800">UNASSIGNED</p>
+                                                <span
+                                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                                 {% endif %}
                                             </div>
                                         </div>

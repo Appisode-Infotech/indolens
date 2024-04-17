@@ -114,10 +114,10 @@
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3>{{other_employee.fse_name}}</h3>
                                                 <p class="text-800">Joined on {{other_employee.fse_created_on|date:"d/m/Y h:i A" }}</p>
-                                                {% if other_employee.fse_assigned_store_id != 0 %}
+                                                {% if other_employee.fs_assigned_store_id != 0 %}
                                                 <p class="text-800">Employee - <a
                                                         href="{%url 'view_own_store' other_employee.fse_assigned_store_id %}">
-                                                    {{other_employee.fse_store_name}}
+                                                    {{other_employee.fs_store_name}}
                                                 </a></p>
                                                 {% else %}
                                                 <p class="text-800">Employee - UNASSIGNED</p>

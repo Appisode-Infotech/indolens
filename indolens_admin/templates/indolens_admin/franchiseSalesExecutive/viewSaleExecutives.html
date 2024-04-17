@@ -116,10 +116,10 @@
                                                 <h3>{{franchise_sales_executive.fse_name}}</h3>
                                                 <p class="text-800">Joined on {{franchise_sales_executive.fse_created_on|date:"d/m/Y h:i A" }}
                                                 </p>
-                                                {% if franchise_sales_executive.fse_store_name|length != 0 %}
+                                                {% if franchise_sales_executive.fs_store_name|length != 0 %}
                                                 <p class="text-800">Sales Executive - <a
                                                         href="{%url 'view_franchise_store' franchise_sales_executive.fse_assigned_store_id %}">
-                                                    {{franchise_sales_executive.fse_store_name}}
+                                                    {{franchise_sales_executive.fs_store_name}}
                                                 </a></p>
                                                 {% else %}
                                                 <p class="text-800">Sales Executive - UNASSIGNED</p>

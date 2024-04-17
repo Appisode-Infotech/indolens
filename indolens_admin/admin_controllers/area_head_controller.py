@@ -103,25 +103,47 @@ def get_area_head_by_id(ahid):
     try:
         with getConnection().cursor() as cursor:
             get_area_head_query = f"""
-                        SELECT ah.*, GROUP_CONCAT(os.os_store_name SEPARATOR ', ') AS assigned_stores_names, 
-                        creator.admin_name AS creator, 
-                        updater.admin_name AS updater
+                        SELECT ah.*, GROUP_CONCAT(os.os_store_name SEPARATOR ', ') AS assigned_stores_names, creator.admin_name,
+                        updater.admin_name
                         FROM area_head AS ah
                         LEFT JOIN own_store AS os ON FIND_IN_SET(os.os_store_id, ah.ah_assigned_stores)
                         LEFT JOIN admin AS creator ON ah.ah_created_by = creator.admin_admin_id
                         LEFT JOIN admin AS updater ON ah.ah_last_updated_by = updater.admin_admin_id
-                        WHERE ah_area_head_id = '{ahid}'"""
+                        WHERE ah_area_head_id = '{ahid}' """
             cursor.execute(get_area_head_query)
-            area_heads = cursor.fetchone()
+            area_head = cursor.fetchone()
 
-            area_heads['ah_document_1_url'] = json.loads(area_heads['ah_document_1_url']) if area_heads[
+            area_head['ah_assigned_stores'] = [int(store_id) for store_id in
+                                               area_head['ah_assigned_stores'].split(',')] if area_head[
+                'ah_assigned_stores'] else []
+
+            area_head['assigned_stores_names'] = [store.strip() for store in
+                                                  area_head['assigned_stores_names'].split(',')] if area_head[
+                'assigned_stores_names'] else []
+
+            area_head['id_name_pair'] = list(
+                zip(area_head['ah_assigned_stores'], area_head['assigned_stores_names']))
+
+            # get_area_head_query = f"""
+            #             SELECT ah.*, GROUP_CONCAT(os.os_store_name SEPARATOR ', ') AS assigned_stores_names,
+            #             creator.admin_name AS creator,
+            #             updater.admin_name AS updater
+            #             FROM area_head AS ah
+            #             LEFT JOIN own_store AS os ON FIND_IN_SET(os.os_store_id, ah.ah_assigned_stores)
+            #             LEFT JOIN admin AS creator ON ah.ah_created_by = creator.admin_admin_id
+            #             LEFT JOIN admin AS updater ON ah.ah_last_updated_by = updater.admin_admin_id
+            #             WHERE ah_area_head_id = '{ahid}'"""
+            # cursor.execute(get_area_head_query)
+            # area_heads = cursor.fetchone()
+
+            area_head['ah_document_1_url'] = json.loads(area_head['ah_document_1_url']) if area_head[
                 'ah_document_1_url'] else []
-            area_heads['ah_document_2_url'] = json.loads(area_heads['ah_document_2_url']) if area_heads[
+            area_head['ah_document_2_url'] = json.loads(area_head['ah_document_2_url']) if area_head[
                 'ah_document_2_url'] else []
 
             return {
                 "status": True,
-                "area_head": area_heads
+                "area_head": area_head
             }, 200
 
     except pymysql.Error as e:
