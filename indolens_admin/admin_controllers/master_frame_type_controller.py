@@ -64,7 +64,18 @@ def edit_frame_type(frame_obj):
 def get_all_central_inventory_frame_types():
     try:
         with getConnection().cursor() as cursor:
-            get_frame_types_query = f""" SELECT ft.* , creator.admin_name, updater.admin_name
+            get_frame_types_query = f""" SELECT  
+            ft.ftype_frame_id, 
+            ft.ftype_name, 
+            ft.ftype_description, 
+            ft.ftype_status, 
+            CASE 
+                WHEN ft.ftype_status = 1 THEN 'Active'
+                ELSE 'Inactive'
+            END AS Status,
+            DATE_FORMAT(ft.ftype_created_on, '%d/%m/%Y %h:%i %p') AS ftype_created_on, 
+            DATE_FORMAT(ft.ftype_last_updated_on, '%d/%m/%Y %h:%i %p') AS ftype_last_updated_on, 
+            creator.admin_name AS creator, updater.admin_name AS updater
             FROM frame_types AS ft
             LEFT JOIN admin AS creator ON ft.ftype_created_by = creator.admin_admin_id
             LEFT JOIN admin AS updater ON ft.ftype_last_updated_by = updater.admin_admin_id

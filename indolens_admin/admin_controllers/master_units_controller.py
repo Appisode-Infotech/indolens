@@ -69,12 +69,22 @@ def edit_master_units(data):
 def get_all_units():
     try:
         with getConnection().cursor() as cursor:
-            get_units_query = f""" SELECT u.*, creator.admin_name, updater.admin_name 
-                                           FROM units AS u
-                                            LEFT JOIN admin AS creator ON u.unit_created_by = creator.admin_admin_id
-                                            LEFT JOIN admin AS updater ON u.unit_last_updated_by = updater.admin_admin_id
-                                            ORDER BY u.unit_unit_id ASC
-                                             """
+            get_units_query = f""" SELECT  
+                u.unit_unit_id, 
+                u.unit_name, 
+                u.unit_status,
+                CASE 
+                    WHEN u.unit_status = 1 THEN 'Active'
+                    ELSE 'Inactive'
+                END AS status, 
+                DATE_FORMAT(u.unit_created_on, '%d/%m/%Y %h:%i %p') AS unit_created_on, 
+                DATE_FORMAT(u.unit_last_updated_on, '%d/%m/%Y %h:%i %p') AS unit_last_updated_on, 
+                creator.admin_name AS creator, updater.admin_name AS updater
+                FROM units AS u
+                LEFT JOIN admin AS creator ON u.unit_created_by = creator.admin_admin_id
+                LEFT JOIN admin AS updater ON u.unit_last_updated_by = updater.admin_admin_id
+                ORDER BY u.unit_unit_id ASC
+                 """
             cursor.execute(get_units_query)
             master_units = cursor.fetchall()
             return {

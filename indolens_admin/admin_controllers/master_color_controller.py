@@ -67,7 +67,19 @@ def edit_master_color(color_obj):
 def get_all_central_inventory_color():
     try:
         with getConnection().cursor() as cursor:
-            get_frame_color_query = f""" SELECT pc.* , creator.admin_name, updater.admin_name
+            get_frame_color_query = f""" SELECT  
+            pc.pcol_color_id, 
+            pc.pcol_color_code, 
+            pc.pcol_color_name, 
+            pc.pcol_color_description, 
+            pc.pcol_status, 
+            CASE 
+                WHEN pc.pcol_status = 1 THEN 'Active'
+                ELSE 'Inactive'
+            END AS status, 
+            DATE_FORMAT(pc.pcol_created_on, '%d/%m/%Y %h:%i %p') AS pcol_created_on, 
+            DATE_FORMAT(pc.pcol_last_updated_on, '%d/%m/%Y %h:%i %p') AS pcol_last_updated_on, 
+            creator.admin_name AS creator, updater.admin_name AS updater
             FROM product_colors AS pc
             LEFT JOIN admin AS creator ON pc.pcol_created_by = creator.admin_admin_id
             LEFT JOIN admin AS updater ON pc.pcol_last_updated_by = updater.admin_admin_id

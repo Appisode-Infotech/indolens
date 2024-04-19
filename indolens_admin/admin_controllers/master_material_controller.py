@@ -65,7 +65,18 @@ def edit_master_material(material_obj):
 def get_all_central_inventory_materials():
     try:
         with getConnection().cursor() as cursor:
-            get_material_query = f""" SELECT pm.* , creator.admin_name, updater.admin_name
+            get_material_query = f""" SELECT  
+            pm.pm_material_id, 
+            pm.pm_material_name, 
+            pm.pm_material_description, 
+            pm.pm_status,
+            CASE 
+                WHEN pm.pm_status = 1 THEN 'Active'
+                ELSE 'Inactive'
+            END AS status, 
+            DATE_FORMAT(pm.pm_created_on, '%d/%m/%Y %h:%i %p') AS pm_created_on, 
+            DATE_FORMAT(pm.pm_last_updated_on, '%d/%m/%Y %h:%i %p') AS pm_last_updated_on,  
+            creator.admin_name AS creator, updater.admin_name AS updater
             FROM product_materials AS pm
             LEFT JOIN admin AS creator ON pm.pm_created_by = creator.admin_admin_id
             LEFT JOIN admin AS updater ON pm.pm_last_updated_by = updater.admin_admin_id

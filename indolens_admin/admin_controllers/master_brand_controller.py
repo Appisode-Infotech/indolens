@@ -64,7 +64,19 @@ def edit_product_brand(brand_obj):
 def get_all_central_inventory_brand():
     try:
         with getConnection().cursor() as cursor:
-            get_product_brand_query = f""" SELECT br.* , creator.admin_name, updater.admin_name
+            get_product_brand_query = f""" SELECT 
+            br.brand_brand_id, 
+            br.brand_name, 
+            br.brand_category_id, 
+            br.brand_description, 
+            CASE 
+                WHEN br.brand_status = 1 THEN 'Active'
+                ELSE 'Inactive'
+            END AS Status,
+            br.brand_status, 
+            DATE_FORMAT(br.brand_created_on, '%d/%m/%Y %h:%i %p') AS brand_created_on,
+            DATE_FORMAT(br.brand_last_updated_on, '%d/%m/%Y %h:%i %p') AS brand_last_updated_on, 
+            creator.admin_name AS creator, updater.admin_name AS updater
             FROM brands AS br 
             LEFT JOIN admin AS creator ON br.brand_created_by = creator.admin_admin_id
             LEFT JOIN admin AS updater ON br.brand_last_updated_by = updater.admin_admin_id

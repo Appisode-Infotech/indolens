@@ -66,7 +66,18 @@ def edit_frame_shape(shape_obj):
 def get_all_central_inventory_shapes():
     try:
         with getConnection().cursor() as cursor:
-            get_product_shape_query = f""" SELECT fs.* , creator.admin_name, updater.admin_name
+            get_product_shape_query = f""" SELECT  
+            fs.fshape_shape_id, 
+            fs.fshape_name, 
+            fs.fshape_description, 
+            fs.fshape_status, 
+            CASE 
+                WHEN fs.fshape_status = 1 THEN 'Active'
+                ELSE 'Inactive'
+            END AS status,
+            DATE_FORMAT(fs.fshape_created_on, '%d/%m/%Y %h:%i %p') AS fshape_created_on, 
+            DATE_FORMAT(fs.fshape_last_updated_on, '%d/%m/%Y %h:%i %p') AS fshape_last_updated_on, 
+            creator.admin_name, updater.admin_name
             FROM frame_shapes AS fs 
             LEFT JOIN admin AS creator ON fs.fshape_created_by = creator.admin_admin_id
             LEFT JOIN admin AS updater ON fs.fshape_last_updated_by = updater.admin_admin_id
