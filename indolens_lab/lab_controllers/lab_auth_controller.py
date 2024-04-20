@@ -108,7 +108,7 @@ def forgot_password(email):
             reset_pwd_link = f"{get_base_url()}/lab/lab_reset_password/code={pwd_code}"
             print(reset_pwd_link)
 
-            check_email_query = f"""SELECT email,status, name FROM lab_technician WHERE email = '{email}'"""
+            check_email_query = f"""SELECT lt_email, lt_status, lt_name FROM lab_technician WHERE lt_email = '{email}'"""
             cursor.execute(check_email_query)
             check_email = cursor.fetchone()
 
@@ -118,13 +118,13 @@ def forgot_password(email):
                     "message": "Please enter the valid email to reset the password"
                 }, 200
 
-            elif check_email is not None and check_email[1] != 0:
-                update_pwd_code_query = f"""INSERT INTO reset_password (email, code, status, created_on) 
+            elif check_email is not None and check_email['lt_status'] != 0:
+                update_pwd_code_query = f"""INSERT INTO reset_password (rpwd_email, rpwd_code, rpwd_status, rpwd_created_on) 
                                             VALUES (%s, %s, %s, %s)"""
                 cursor.execute(update_pwd_code_query, (email, pwd_code, 0, getIndianTime()))
 
-                subject = email_template_controller.get_password_reset_email_subject(check_email[1])
-                body = email_template_controller.get_password_reset_email_body(check_email[1], reset_pwd_link, email)
+                subject = email_template_controller.get_password_reset_email_subject(check_email['lt_name'])
+                body = email_template_controller.get_password_reset_email_body(check_email['lt_name'], reset_pwd_link, email)
                 email_response = send_notification_controller.send_email(subject, body, email)
 
                 if email_response.status_code == 200:
@@ -137,7 +137,7 @@ def forgot_password(email):
                         "status": False,
                         "message": f"Failed to send password reset link to {email}. Please try again or contact your admin."
                     }, 200
-            elif check_email is not None and check_email[1] == 0:
+            elif check_email is not None and check_email['lt_status'] == 0:
                 return {
                     "status": False,
                     "message": "Password reset Failed due to Inactive Account. Please contact your Admin"
@@ -152,8 +152,9 @@ def forgot_password(email):
 def check_link_validity(code):
     try:
         with getConnection().cursor() as cursor:
-            check_link_validity_query = f""" SELECT status, created_on, email FROM reset_password WHERE code = '{code}'
-                                                ORDER BY reset_password_id DESC LIMIT 1"""
+            check_link_validity_query = f""" SELECT rpwd_status, rpwd_created_on, rpwd_email FROM reset_password 
+                                                WHERE rpwd_code = '{code}'
+                                                ORDER BY rpwd_reset_password_id DESC LIMIT 1"""
             cursor.execute(check_link_validity_query)
             link_validity = cursor.fetchone()
 
@@ -165,19 +166,19 @@ def check_link_validity(code):
                 }, 200
 
             else:
-                email = link_validity[2]
-                query_datetime = ist.localize(link_validity[1])
+                email = link_validity['rpwd_email']
+                query_datetime = ist.localize(link_validity['rpwd_created_on'])
                 current_datetime = datetime.datetime.now(ist)
                 time_difference = current_datetime - query_datetime
                 time_difference_mins = time_difference.total_seconds() / 60
 
-                if link_validity is not None and (link_validity[0] == 1 or time_difference_mins > 15):
+                if link_validity is not None and (link_validity['rpwd_status'] == 1 or time_difference_mins > 15):
                     return {
                         "status": True,
                         "message": "Password reset link has been expired",
                         "email": ""
                     }, 200
-                elif link_validity is not None and link_validity[0] == 0 and time_difference_mins < 15:
+                elif link_validity is not None and link_validity['rpwd_status'] == 0 and time_difference_mins < 15:
                     return {
                         "status": True,
                         "message": "",
@@ -194,10 +195,10 @@ def update_lab_tech_password(password, email):
     try:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         with getConnection().cursor() as cursor:
-            login_query = f"""UPDATE lab_technician SET password = %s WHERE email = '{email}'"""
+            login_query = f"""UPDATE lab_technician SET lt_password = %s WHERE lt_email = '{email}'"""
             cursor.execute(login_query, (hashed_password,))
 
-            login_query = f"""UPDATE reset_password SET status = 1 WHERE email = '{email}'"""
+            login_query = f"""UPDATE reset_password SET rpwd_status = 1 WHERE rpwd_email = '{email}'"""
             cursor.execute(login_query)
 
             return {
