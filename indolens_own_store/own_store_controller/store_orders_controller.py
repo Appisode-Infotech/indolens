@@ -205,9 +205,9 @@ def order_status_change(orderID, orderStatus, updated_by, store_id):
     try:
         with getConnection().cursor() as cursor:
             order_status_change_query = f"""
-                UPDATE sales_order SET order_status = {orderStatus}, updated_on = '{getIndianTime()}',
-                updated_by_employee_id = {updated_by}, updated_by_store_id = {store_id}, updated_by_store_type = 1,
-                WHERE order_id = '{orderID}'
+                UPDATE sales_order SET so_order_status = {orderStatus}, so_updated_on = '{getIndianTime()}',
+                so_updated_by_employee_id = {updated_by}, so_updated_by_store_id = {store_id}, so_updated_by_store_type = 1,
+                WHERE so_order_id = '{orderID}'
                 """
             cursor.execute(order_status_change_query)
 
@@ -219,7 +219,7 @@ def order_status_change(orderID, orderStatus, updated_by, store_id):
             get_order_details_query = f"""
                             SELECT 
                                 so.*,
-                                (SELECT SUM(unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{orderID}' 
+                                (SELECT SUM(so_unit_sale_price*purchase_quantity) AS total_cost FROM sales_order WHERE order_id = '{orderID}' 
                                 GROUP BY order_id ), 
                                 (SELECT SUM(product_total_cost) AS discount_cost FROM sales_order WHERE order_id = '{orderID}' 
                                 GROUP BY order_id ), 

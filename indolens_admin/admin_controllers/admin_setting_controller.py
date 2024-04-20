@@ -104,7 +104,7 @@ def get_base_url():
             admin_setting_check = f""" SELECT base_url FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
-            return admin_check[0] if admin_check is not None else ''
+            return admin_check['base_url'] if admin_check is not None else ''
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

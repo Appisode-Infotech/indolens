@@ -120,7 +120,7 @@
                                         <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
                                             style="width:250px;">BRAND
                                         </th>
-                                        <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
+                                        <th class="sort align-middle text-end ps-4" scope="col"
                                             style="width:250px;">ACTION
                                         </th>
                                     </tr>
@@ -204,14 +204,14 @@
                                                     {% if order.ci_category_id == 2 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button"
-                                                       href="{% url 'lab_job_item_details' order.so_sale_item_id %}">
+                                                       href="{% url 'job_item_details' order.so_sale_item_id %}">
                                                         Line Item Details</a>
                                                     <a class="dropdown-item" target="_blank"
-                                                   href="{% url 'manage_authenticity_card' order.so_sale_item_id 'NA' %}">Authenticity Card</a>
+                                                   href="{% url 'job_authenticity_card' order.so_sale_item_id 'NA' %}">Authenticity Card</a>
                                                     {% elif order.ci_category_id == 3 %}
                                                     <a class="dropdown-item view-button"
                                                        type="button" target="_blank"
-                                                       href="{% url 'lab_contact_Lens_power_card' order.so_sale_item_id %}">
+                                                       href="{% url 'contact_Lens_power_card' order.so_sale_item_id %}">
                                                         Contact Lens Power</a>
                                                     {% endif %}
                                                 </div>
@@ -351,42 +351,37 @@
                     <div class="col-12 col-xl-4 col-xxl-3">
                         <div class="row">
                             <div class="col-12">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h3 class="card-title mb-4">Sales Note</h3>
+                                        <h6 class="mb-2">{{order_detail.0.so_sales_note}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
-                                        <h6 class="mb-2">Payment status</h6>
-                                        <select aria-label="delivery type" class="form-select mb-4"
-                                                id="paymentStatusSelect">
-                                            {% if order_detail.0.so_payment_status == 1 %}
-                                            <option value="1">Pending</option>
-                                            {% elif order_detail.0.so_payment_status == 2 %}
-                                            <option value="2">Complete</option>
-                                            {% elif order_detail.0.so_payment_status == 3 %}
-                                            <option value="3">Refund</option>
-                                            {% endif %}
-
-
-
-                                        </select>
-
                                         <h6 class="mb-2">Order status</h6>
                                         <select aria-label="delivery type" class="form-select"
+                                                onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')"
                                                 id="orderStatusSelect">
-                                            {% if order_detail.0.so_order_status == 1 %}
-                                            <option value="1" selected>New</option>
-                                            {% elif order_detail.0.so_order_status == 2 %}
-                                            <option value="2" selected>Processing</option>
-                                            {% elif order_detail.0.so_order_status == 3 %}
-                                            <option value="3" selected>Ready in Lab</option>
-                                            {% elif order_detail.0.so_order_status == 4 %}
-                                            <option value="4" selected>Dispatch to Store</option>
-                                            {% elif order_detail.0.so_order_status == 5 %}
-                                            <option value="5" selected>Ready in Store</option>
-                                            {% elif order_detail.0.so_order_status == 6 %}
-                                            <option value="6" selected>Completed </option>
-                                            {% elif order_detail.0.so_order_status == 7 %}
-                                            <option value="7" selected>Cancel</option>
-                                            {% endif %}
+                                            <option value="1">New</option>
+                                            <option value="2">Process</option>
+                                            <option value="3">Ready</option>
+                                            <option value="4">Dispatch</option>
+                                            <option value="5" style="display:none;"
+                                                    {% if order_detail.0.order_status == 5 %}selected{% endif %}>
+                                                Dispatch
+                                            </option>
+                                            <option value="6" style="display:none;"
+                                                    {% if order_detail.0.order_status == 6 %}selected{% endif %}>
+                                                Dispatch
+                                            </option>
+                                            <option value="7" style="display:none;"
+                                                    {% if order_detail.0.order_status == 7 %}selected{% endif %}>
+                                                Dispatch
+                                            </option>
                                         </select>
                                     </div>
                                 </div>
