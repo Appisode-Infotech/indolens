@@ -27,50 +27,48 @@ def generate_random_string(length=16):
 def login(store_ob):
     try:
         with getConnection().cursor() as cursor:
-            login_query = f"""SELECT ose.*, os.store_name, creator.name, updater.name FROM own_store_employees AS ose 
-                                LEFT JOIN own_store AS os ON ose.assigned_store_id = os.store_id
-                                LEFT JOIN admin AS creator ON ose.created_by = creator.admin_id
-                                LEFT JOIN admin AS updater ON ose.last_updated_by = updater.admin_id
-                                WHERE ose.email = '{store_ob.email}' AND ose.role != 4 """
+            login_query = f"""SELECT ose.*, os.os_store_name AS store_name
+                                FROM own_store_employees AS ose 
+                                LEFT JOIN own_store AS os ON ose.ose_assigned_store_id = os.os_store_id
+                                WHERE ose.ose_email = '{store_ob.email}' AND ose.ose_role != 4 """
             cursor.execute(login_query)
-            admin_data = cursor.fetchall()
+            admin_data = cursor.fetchone()
 
             if not admin_data:
                 return {
                     "status": False,
                     "message": "Invalid user email",
-                    "store": None
+                    "user": None
                 }, 301
-            elif admin_data[0][12] == 0:
+            elif admin_data['ose_status'] == 0:
                 return {
                     "status": False,
                     "message": "Your Account is locked, please contact your Admin",
-                    "store": None
+                    "user": None
                 }, 301
-            elif admin_data[0][6] == 0:
+            elif admin_data['ose_assigned_store_id'] == 0:
                 return {
                     "status": False,
                     "message": "Your Account is not assigned to any store, please contact your Admin",
-                    "store": None
+                    "user": None
                 }, 301
-            elif bcrypt.checkpw(store_ob.password.encode('utf-8'), admin_data[0][4].encode('utf-8')):
-                store = get_own_store_employees(admin_data)
-                get_assigned_store_status = f"""SELECT status FROM own_store
-                                                 WHERE store_id = '{store[0]['assigned_store_id']}'"""
+            elif bcrypt.checkpw(store_ob.password.encode('utf-8'), admin_data['ose_password'].encode('utf-8')):
+                get_assigned_store_status = f"""SELECT os_status FROM own_store
+                                                 WHERE os_store_id = '{admin_data['ose_assigned_store_id']}'"""
                 cursor.execute(get_assigned_store_status)
                 assigned_store_status = cursor.fetchone()
 
-                if assigned_store_status[0] == 0:
+                if assigned_store_status['os_status'] == 0:
                     return {
                         "status": False,
                         "message": "Your Account is assigned to an inactive store, please contact your Admin",
-                        "store": store
+                        "user": admin_data
                     }, 200
                 else:
                     return {
                         "status": True,
                         "message": "user login successfull",
-                        "store": store
+                        "user": admin_data
                     }, 200
 
 
@@ -89,23 +87,22 @@ def login(store_ob):
 def get_assigned_store(employee_id):
     try:
         with getConnection().cursor() as cursor:
-            get_assigned_store = f"""SELECT assigned_store_id FROM own_store_employees 
-                                WHERE employee_id = '{employee_id}'"""
+            get_assigned_store = f"""SELECT ose_assigned_store_id FROM own_store_employees 
+                                WHERE ose_employee_id = '{employee_id}'"""
             cursor.execute(get_assigned_store)
             assigned_store = cursor.fetchone()
 
-            if assigned_store[0] != 0:
-                get_assigned_store_status = f"""SELECT status FROM own_store 
-                                                WHERE store_id = '{assigned_store[0]}'"""
+            if assigned_store['ose_assigned_store_id'] != 0:
+                get_assigned_store_status = f"""SELECT os_status FROM own_store 
+                                                WHERE os_store_id = '{assigned_store['ose_assigned_store_id']}'"""
                 cursor.execute(get_assigned_store_status)
                 assigned_store_status = cursor.fetchone()
-                if assigned_store_status[0] == 0:
+                if assigned_store_status['os_status'] == 0:
                     return 0
                 else:
-                    return assigned_store[0]
-
+                    return assigned_store['ose_assigned_store_id']
             else:
-                return assigned_store[0]
+                return assigned_store['ose_assigned_store_id']
 
     except pymysql.Error as e:
         return 0

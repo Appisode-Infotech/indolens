@@ -19,38 +19,38 @@ def getIndianTime():
 def get_all_out_of_stock_products_for_store(quantity, store_id):
     try:
         with getConnection().cursor() as cursor:
-            get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.name, updater.name, pc.category_name, pm.material_name,
-                                    ft.frame_type_name, fs.shape_name,c.color_name, u.unit_name, b.brand_name,
-                                    os.store_name
+            get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.admin_name, updater.admin_name, 
+                                    pc.pc_category_name, pm.pm_material_name,
+                                    ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name,
+                                    os.os_store_name
                                     FROM store_inventory As si
-                                    LEFT JOIN central_inventory AS ci ON ci.product_id = si.product_id
-                                    LEFT JOIN admin AS creator ON si.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON si.last_updated_by = updater.admin_id
-                                    LEFT JOIN product_categories AS pc ON ci.category_id = pc.category_id
-                                    LEFT JOIN product_materials AS pm ON ci.material_id = pm.material_id
-                                    LEFT JOIN frame_types AS ft ON ci.frame_type_id = ft.frame_id
-                                    LEFT JOIN frame_shapes AS fs ON ci.frame_shape_id = fs.shape_id
-                                    LEFT JOIN product_colors AS c ON ci.color_id = c.color_id
-                                    LEFT JOIN units AS u ON ci.unit_id = u.unit_id
-                                    LEFT JOIN brands AS b ON ci.brand_id = b.brand_id
-                                    LEFT JOIN own_store AS os ON os.store_id = '{store_id}'
-                                    WHERE si.product_quantity <= {quantity} AND si.store_id = '{store_id}' AND si.store_type = 1 
-                                    ORDER BY si.store_inventory_id DESC"""
+                                    LEFT JOIN central_inventory AS ci ON ci.ci_product_id = si.si_product_id
+                                    LEFT JOIN admin AS creator ON si.si_created_by = creator.admin_admin_id
+                                    LEFT JOIN admin AS updater ON si.si_last_updated_by = updater.admin_admin_id
+                                    LEFT JOIN product_categories AS pc ON ci.ci_category_id = pc.pc_category_id
+                                    LEFT JOIN product_materials AS pm ON ci.ci_material_id = pm.pm_material_id
+                                    LEFT JOIN frame_types AS ft ON ci.ci_frame_type_id = ft.ftype_frame_id
+                                    LEFT JOIN frame_shapes AS fs ON ci.ci_frame_shape_id = fs.fshape_shape_id
+                                    LEFT JOIN product_colors AS c ON ci.ci_color_id = c.pcol_color_id
+                                    LEFT JOIN units AS u ON ci.ci_unit_id = u.unit_unit_id
+                                    LEFT JOIN brands AS b ON ci.ci_brand_id = b.brand_brand_id
+                                    LEFT JOIN own_store AS os ON os.os_store_id = '{store_id}'
+                                    WHERE si.si_product_quantity <= {quantity} AND si.si_store_id = '{store_id}' 
+                                    AND si.si_store_type = 1 
+                                    ORDER BY si.si_store_inventory_id DESC"""
 
             cursor.execute(get_all_out_of_stock_product_query)
             product_list = cursor.fetchall()
 
-            get_product_category_query = f""" SELECT pc.* , creator.name, updater.name
+            get_product_category_query = f""" SELECT pc.*
                                     FROM product_categories AS pc 
-                                    LEFT JOIN admin AS creator ON pc.created_by = creator.admin_id
-                                    LEFT JOIN admin AS updater ON pc.last_updated_by = updater.admin_id 
-                                    ORDER BY pc.category_id DESC"""
+                                    ORDER BY pc.pc_category_id DESC"""
             cursor.execute(get_product_category_query)
             stores_data = cursor.fetchall()
             return {
                 "status": True,
-                "stocks_list": get_store_inventory_stocks(product_list),
-                "product_category": get_product_categories(stores_data)
+                "stocks_list": product_list,
+                "product_category": stores_data
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e), "stocks_list": []}, 301

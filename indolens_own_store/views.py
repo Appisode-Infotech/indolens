@@ -25,21 +25,21 @@ def login(request):
     if request.method == 'POST':
         store_obj = own_store_employee_model.store_employee_from_dict(request.POST)
         response, status_code = own_store_auth_controller.login(store_obj)
+        print(response)
         if response['status']:
             if request.session.get('id') is not None:
                 request.session.clear()
-            for data in response['store']:
-                request.session.update({
-                    'is_store_logged_in': True,
-                    'id': data['employee_id'],
-                    'name': data['name'],
-                    'email': data['email'],
-                    'store_name': data['store_name'],
-                    'store_type': '1',
-                    'assigned_store_id': data['assigned_store_id'],
-                    'profile_pic': data['profile_pic'],
-                    'role': data['role'],
-                })
+            request.session.update({
+                'is_store_logged_in': True,
+                'id': response['user']['ose_employee_id'],
+                'name': response['user']['ose_name'],
+                'email': response['user']['ose_email'],
+                'store_name': response['user']['store_name'],
+                'store_type': '1',
+                'assigned_store_id': response['user']['ose_assigned_store_id'],
+                'profile_pic': response['user']['ose_profile_pic'],
+                'role': response['user']['ose_role'],
+            })
             return redirect('own_store_dashboard')
         else:
             return render(request, 'auth/own_store_sign_in.html', {"message": response['message']})
@@ -98,13 +98,18 @@ def dashboard(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         own_store_new_order, status_code = own_store_dashboard_controller.get_order_stats('New', 1, assigned_store)
+        # print(own_store_new_order)
         own_store_delivered_orders, status_code = own_store_dashboard_controller.get_order_stats('Completed', 1,
                                                                                                  assigned_store)
+        # print(own_store_delivered_orders)
         own_store_sales, status_code = own_store_dashboard_controller.get_sales_stats(1, assigned_store)
+        # print(own_store_sales)
         out_of_stock, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15,
                                                                                                        assigned_store)
+        # print(out_of_stock)
         orders_list, status_code = store_orders_controller.get_all_orders('All', 'All',
                                                                           assigned_store)
+        print(orders_list)
         return render(request, 'dashboardOwnStore.html',
                       {"own_store_new_order": own_store_new_order['count'],
                        "own_store_delivered_orders": own_store_delivered_orders['count'],
@@ -197,7 +202,7 @@ def readyStoreOrders(request):
 def completedStoreOrders(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        orders_list, status_code = store_orders_controller.get_completed_orders('Delivered Customer', 'All',
+        orders_list, status_code = store_orders_controller.get_all_orders('Delivered Customer', 'All',
                                                                                 assigned_store)
         return render(request, 'orders/deliveredStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
@@ -237,9 +242,10 @@ def refundedStoreOrders(request):
 def orderDetails(request, orderId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        order_detail, status_code = orders_controller.get_order_details(orderId)
-        payment_logs, status_code = orders_controller.get_payment_logs(orderId)
-        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['assigned_lab'])
+        order_detail, order_status_code = orders_controller.get_order_details(orderId)
+        print(order_detail['orders_details'])
+        payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
+        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['so_assigned_lab'])
         return render(request, 'orders/orderDetails.html', {"order_detail": order_detail['orders_details'],
                                                             "payment_logs": payment_logs['payment_logs'],
                                                             "lab_details": lab_details['lab_data']})
@@ -499,9 +505,11 @@ def ownStoreEyeTest(request):
         if request.method == 'POST':
             response = own_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
                                                                   assigned_store)
+            print(response)
             return redirect('get_eye_test')
         else:
             customerResponse, cust_status_code = store_customers_controller.get_all_customers()
+            print(customerResponse)
             optometryResponse, cust_status_code = store_employee_controller.get_all_active_store_optometry(
                 assigned_store)
             return render(request, 'ownStoreEyeTest/ownStoreEyeTest.html',

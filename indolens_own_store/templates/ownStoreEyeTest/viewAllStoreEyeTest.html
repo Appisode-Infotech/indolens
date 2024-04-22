@@ -144,58 +144,55 @@
                                 {% for test in eye_test_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                     <td class="fs--1 align-middle px-0 py-3 slNo"></td>
-                                    <td class="fs--1 align-middle px-0 py-3 testId ">TEST{{test.eye_test_id}}
+                                    <td class="testId align-middle white-space-nowrap py-0">
+                                        <a class="fw-semi-bold" target="_blank"
+                                           href="{% url 'own_store_eye_test_print' test.et_eye_test_id %}">TEST{{test.et_eye_test_id}}</a>
                                     </td>
                                     <td class="customer align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
-                                            href="{% url 'view_store_customer_details' test.customer_id %}">
+                                            href="{% url 'view_store_customer_details' test.et_customer_id %}">
                                         <div class="avatar avatar-m">
                                             <div class="avatar-name rounded-circle"><span class="first-letter"></span>
                                             </div>
                                         </div>
                                         <p class="mb-0 ms-3 text-1100 fw-bold name">{{test.customer_name}}</p>
                                     </a></td>
-                                    <td class="customerphone align-middle white-space-nowrap pe-5">
-                                        {{test.customer_phone}}
-                                    </td>
+                                    <td class="customerphone align-middle white-space-nowrap pe-5">{{test.customer_phone}}</td>
 
                                     <td class="createdBy align-middle white-space-nowrap fw-semi-bold text-1000">
-                                        {% if test.created_by_store_type == 1%}
-                                        <a href="{% url 'view_employee' test.created_by %}">{{test.creator_name}}</a>
-                                        {% else %}
-                                        <a href="{% url 'view_franchise_employee' test.created_by %}">{{test.creator_name}}</a>
-                                        {% endif %}
+                                        <a href="{% url 'view_record_creator' test.et_created_by test.et_created_by_store_type %}">{{test.creator_name}}</a>
                                     </td>
 
-                                    <td class="createdOn align-middle white-space-nowrap fw-semi-bold text-1000">
-                                        {{test.created_on}}
+                                    <td class="createdOn align-middle white-space-nowrap fw-semi-bold  text-1000">
+                                        {{test.et_created_on|date:"d/m/Y h:i A"}}
                                     </td>
 
-                                    <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                        <div class="font-sans-serif btn-reveal-trigger position-static">
-                                            <button aria-expanded="false"
-                                                    aria-haspopup="true"
-                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
-                                                    data-boundary="window"
-                                                    data-bs-reference="parent" data-bs-toggle="dropdown"
-                                                    type="button">
-                                                <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                            <div class="dropdown-menu dropdown-menu-end py-2">
-<!--                                                <a class="dropdown-item view-button" data-bs-toggle="modalView"-->
-<!--                                                   type="button"-->
-<!--                                                   style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"-->
-<!--                                                   data-category-info="{{ test.power_attributes | safe }}"-->
-<!--                                                >View Lens Powers</a>-->
 
-                                                <a class="dropdown-item view-button" target="_blank"
-                                                   href="{% url 'own_store_eye_test_print' test.eye_test_id %}"
-                                                   type="button">Eye Test Report</a>
+                                    <td class="align-middle text-end  white-space-nowrap pe-0 action">
+                                            <div class="font-sans-serif btn-reveal-trigger position-static" >
+                                                <button aria-expanded="false"
+                                                        aria-haspopup="true"
+                                                        class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                        data-boundary="window"
+                                                        data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                    <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                                <div class="dropdown-menu dropdown-menu-end py-2">
+<!--                                                    <a class="dropdown-item view-button" data-bs-toggle="modalView"-->
+<!--                                                       type="button"-->
+<!--                                                           style="display: block; max-width: 200px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;"-->
+<!--                                                       data-category-info="{{ test.et_power_attributes | safe }}"-->
+<!--                                                    >View Lens Powers</a>-->
+                                                    <a class="dropdown-item view-button" target="_blank"
+                                                       href="{% url 'own_store_eye_test_print' test.et_eye_test_id %}"
+                                                       type="button">Eye Test Report</a>
 
+                                                </div>
                                             </div>
-                                        </div>
-                                    </td>
+                                        </td>
 
                                 </tr>
+
                                 {% endfor %}
                                 </tbody>
                             </table>

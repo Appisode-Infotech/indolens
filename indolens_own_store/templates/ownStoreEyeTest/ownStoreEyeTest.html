@@ -100,8 +100,8 @@
                                         name="customers">
                                     <option value="">Select Customer</option>
                                     {% for customer in customers_list %}
-                                    <option value="{{customer.phone}}">
-                                        {{customer.phone}}
+                                    <option value="{{customer.customer_phone}}">
+                                        {{customer.customer_phone}}
                                     </option>
                                     {% endfor %}
                                 </select>
@@ -228,7 +228,7 @@
                                         <option value="" selected="selected">Please select Optometry
                                         </option>
                                         {% for optometry in optometry_list %}
-                                        <option value="{{optometry.employee_id}}">{{optometry.name}}</option>
+                                        <option value="{{optometry.ose_employee_id}}">{{optometry.ose_name}}</option>
                                         {% endfor %}
                                     </select>
                                     <div class="invalid-feedback">This field is required.</div>
@@ -534,7 +534,7 @@
 <script>
    function updateCustomerFields(selectCustomerField) {
     var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
+    let selectCustomer = customers_list.find(customer => customer.customer_phone == selectCustomerField.value);
 
     var customerNameInput = document.getElementsByName("customer_name")[0];
     var customerEmailInput = document.getElementsByName("customer_email")[0];
@@ -547,14 +547,14 @@
     //customerDataField
     var customerDataTextarea = document.getElementsByName("customerData")[0];
     if (selectCustomer) {
-        customerNameInput.value = selectCustomer.name;
-        customerEmailInput.value = selectCustomer.email;
-        customerPhoneInput.value = selectCustomer.phone;
-        customerAgeInput.value = selectCustomer.age;
-        customerGenderSelect.value = selectCustomer.gender;
-        customerCityInput.value = selectCustomer.city;
-        customerLanguageSelect.value = selectCustomer.language;
-        customerAddressTextarea.value = selectCustomer.address;
+        customerNameInput.value = selectCustomer.customer_name;
+        customerEmailInput.value = selectCustomer.customer_email;
+        customerPhoneInput.value = selectCustomer.customer_phone;
+        customerAgeInput.value = selectCustomer.customer_age;
+        customerGenderSelect.value = selectCustomer.customer_gender;
+        customerCityInput.value = selectCustomer.customer_city;
+        customerLanguageSelect.value = selectCustomer.customer_language;
+        customerAddressTextarea.value = selectCustomer.customer_address;
     } else {
         customerNameInput.value = '';
         customerEmailInput.value = '';

@@ -57,18 +57,19 @@ def get_all_active_store_employee(store_id):
 def get_all_active_store_optometry(store_id):
     try:
         with getConnection().cursor() as cursor:
-            get_store_employee_query = f""" SELECT sm.*, os.store_name, creator.name, updater.name FROM own_store_employees AS sm
-                                            LEFT JOIN own_store AS os ON sm.assigned_store_id = os.store_id
-                                            LEFT JOIN admin AS creator ON sm.created_by = creator.admin_id
-                                            LEFT JOIN admin AS updater ON sm.last_updated_by = updater.admin_id
-                                            WHERE sm.assigned_store_id = '{store_id}' AND sm.assigned_store_id != 0 
-                                            AND sm.status = 1 AND sm.role = 2
-                                            ORDER BY sm.employee_id DESC"""
+            get_store_employee_query = f""" SELECT sm.*, os.os_store_name, creator.admin_name, updater.admin_name 
+                                            FROM own_store_employees AS sm
+                                            LEFT JOIN own_store AS os ON sm.ose_assigned_store_id = os.os_store_id
+                                            LEFT JOIN admin AS creator ON sm.ose_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON sm.ose_last_updated_by = updater.admin_admin_id
+                                            WHERE sm.ose_assigned_store_id = '{store_id}' AND sm.ose_assigned_store_id != 0 
+                                            AND sm.ose_status = 1 AND sm.ose_role = 2
+                                            ORDER BY sm.ose_employee_id DESC"""
             cursor.execute(get_store_employee_query)
             store_employees = cursor.fetchall()
             return {
                 "status": True,
-                "optometry_list": get_own_store_employees(store_employees)
+                "optometry_list": store_employees
             }, 200
 
     except pymysql.Error as e:
