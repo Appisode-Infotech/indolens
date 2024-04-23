@@ -342,8 +342,8 @@ def createStockRequestStore(request):
             route = request.POST.get('route')
             return redirect(route)
         else:
-            response, status_code = store_inventory_controller.get_all_central_inventory_products(
-                assigned_store)
+            response, status_code = store_inventory_controller.get_all_central_inventory_products(assigned_store)
+            print(response)
             return render(request, 'stockRequests/createStockRequestStore.html',
                           {"product_list": response['product_list']})
     else:
@@ -410,8 +410,8 @@ def stockRequestDeliveryStatusChange(request, requestId, status):
 def storeInventoryProducts(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
-        response, status_code = store_inventory_controller.get_all_products_for_store(
-            assigned_store)
+        response, status_code = store_inventory_controller.get_all_products_for_store(assigned_store)
+        print(response)
         return render(request, 'inventory/storeInventoryProducts.html', {"stocks_list": response['stocks_list'],
                                                                          "categories_List": response[
                                                                              'product_category']})
@@ -423,6 +423,7 @@ def viewStoreInventoryProducts(request, productId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_inventory_controller.getstore_product_by_id(assigned_store, productId)
+        print(response)
         return render(request, 'inventory/storeInventoryProductsView.html', {"stocks_list": response['stocks_list']})
     else:
         return redirect('own_store_login')
