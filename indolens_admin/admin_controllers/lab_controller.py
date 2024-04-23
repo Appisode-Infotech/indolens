@@ -403,7 +403,6 @@ def get_lab_job_authenticity_card(saleId):
                                     FROM central_inventory
                                     WHERE ci_product_id = {product_id}
                                 """
-
                     cursor.execute(get_frame_details_query)
                     frame_details = cursor.fetchone()
                     all_frame_details.append(frame_details)

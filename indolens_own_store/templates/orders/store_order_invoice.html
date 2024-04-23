@@ -310,7 +310,7 @@ body {
                                 <td colspan="1"></td>
                                 <td class="align-middle fw-semi-bold" colspan="1"><b>Subtotal</b></td>
                                 <td style="text-align: end;" class="align-middle text-end fw-bold" colspan="2">₹
-                                    {{order_detail.0.total_cost }}
+                                    {{order_detail.0.discount_cost }}
                                 </td>
                             </tr>
                             <tr>
@@ -408,8 +408,8 @@ body {
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var totalCost = {{ order_detail.0.so_total_cost }};
-        var discountCost = {{ order_detail.0.so_discount_cost }};
+        var totalCost = {{ order_detail.0.total_cost }};
+        var discountCost = {{ order_detail.0.discount_cost }};
         var amountPaid = {{order_detail.0.so_amount_paid}};
 
         var discountedAmount = totalCost - discountCost;

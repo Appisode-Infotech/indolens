@@ -75,7 +75,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>{{order_detail.0.order_id}}-Authenticity_Card</title>
+    <title>{{order_detail.so_order_id}}-Authenticity_Card</title>
 
     {% load static %}
     <!-- ===============================================-->
@@ -101,15 +101,15 @@
                              id="bootstrap-wizard-validation-tab2">
                             <div>
                                 <div id="customer_info" class="horizontal">
-                                        <h4 class="item">Order ID : {{order_detail.0.order_id}}</h4>
-                                        <h4 class="item">Manufacturing Date : {{order_detail.0.created_on}}</h4>
+                                        <h4 class="item">Order ID : {{order_detail.so_order_id}}</h4>
+                                        <h4 class="item">Manufacturing Date : {{order_detail.so_created_on|date:"d/m/Y h:i A"}}</h4>
                                 </div>
                             </div>
                         </div>
 
                         <div class="row mb-3 mt-3 mb-3">
                             <div class="col-12">
-                                {% if order_detail.0.category_id == 2 %}
+                                {% if order_detail.ci_category_id == 2 %}
                                 <table class="table mb-0 border-top border-200">
                                     <thead>
                                     <tr>
@@ -132,44 +132,44 @@
                                         </th>
                                     </tr>
                                     </thead>
-                                    {% if order_detail.0.power_attribute.stock_type == 'stock' %}
+                                    {% if order_detail.so_power_attribute.stock_type == 'stock' %}
                                     <tbody>
                                     <tr>
                                         <th scope="row">R</th>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensSphStock}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensSphStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensCylStock}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensCylStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensAxisStock}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensAxisStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensAddStock}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensAddStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensPdStock}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensPdStock}}</p>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <th scope="row">L</th>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.rightLensSphStock}}</p>
+                                            <p>{{order_detail.so_power_attribute.rightLensSphStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.rightLensCylStock}}</p>
+                                            <p>{{order_detail.so_power_attribute.rightLensCylStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.rightLensAxisStock}}</p>
+                                            <p>{{order_detail.so_power_attribute.rightLensAxisStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-3">
-                                            <p>{{order_detail.0.power_attribute.rightLensAddStock}}</p>
+                                            <p>{{order_detail.so_power_attribute.rightLensAddStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-3">
                                             <p>
-                                                {{order_detail.0.power_attribute.rightLensPdStock}}
+                                                {{order_detail.so_power_attribute.rightLensPdStock}}
                                             </p>
                                         </td>
                                     </tr>
@@ -179,38 +179,38 @@
                                     <tr>
                                         <th scope="row">R</th>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensSphRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensSphRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensCylRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensCylRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensAxisRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensAxisRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensAddRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensAddRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.leftLensPdRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.leftLensPdRx}}</p>
                                         </td>
                                     </tr>
 
                                     <tr>
                                         <th scope="row">L</th>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.rightLensSphRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.rightLensSphRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.rightLensCylRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.rightLensCylRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.0.power_attribute.rightLensAxisRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.rightLensAxisRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-3">
-                                            <p>{{order_detail.0.power_attribute.rightLensAddRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.rightLensAddRx}}</p>
                                         </td>
                                         <td class="col-6 col-lg-3">
-                                            <p>{{order_detail.0.power_attribute.rightLensPdRx}}</p>
+                                            <p>{{order_detail.so_power_attribute.rightLensPdRx}}</p>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -226,19 +226,19 @@
 <!--                                               type="text" value="{{frame}}"/>-->
 <!--                                    </div>-->
                                     <div class="mb2 col-12">
-                                        <h5 class="mb-3">Lens: {{order_detail.0.product_name}}</h5>
+                                        <h5 class="mb-3">Lens: {{order_detail.ci_product_name}}</h5>
                                     </div>
                                 </div>
 <!--                                <div class="row g-3 mt-3 mb-3">-->
 <!--                                    <div class="mb2 col-6">-->
 <!--                                        <h5 class="mb-3">Lens Type</h5>-->
 <!--                                        <input disabled class="form-control" style="color: black;"-->
-<!--                                               type="text" value="{{order_detail.0.power_attribute.lens_type}}"/>-->
+<!--                                               type="text" value="{{order_detail.so_power_attribute.lens_type}}"/>-->
 <!--                                    </div>-->
 <!--                                    <div class="mb2 col-6">-->
 <!--                                        <h5 class="mb-3">Stock Type</h5>-->
 <!--                                        <input disabled class="form-control" style="color: black;"-->
-<!--                                               type="text" value="{{order_detail.0.power_attribute.stock_type}}"/>-->
+<!--                                               type="text" value="{{order_detail.so_power_attribute.stock_type}}"/>-->
 <!--                                    </div>-->
 <!--                                </div>-->
                             </div>

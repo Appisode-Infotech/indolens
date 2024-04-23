@@ -580,6 +580,7 @@ def viewJobItemDetails(request, saleId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        print(job_detail['frame_list'])
         return render(request, 'orders/jobItemDetails.html',
                       {"job_item_detail": job_detail['orders_details'],
                        "frame_list": job_detail['frame_list']})
@@ -591,6 +592,7 @@ def viewJobAuthenticityCard(request, saleId, frame):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        print(job_detail)
         return render(request, 'orders/authenticityCar.html', {"order_detail": job_detail['orders_details'],
                                                                "frame": frame})
     else:
