@@ -259,8 +259,8 @@ def orderInvoice(request, orderId):
         order_detail, status_code = orders_controller.get_order_details(orderId)
         invoice_details, inv_status_code = orders_controller.get_invoice_details(orderId)
         store_data, store_status_code = orders_controller.get_store_details(
-            order_detail['orders_details'][0]['created_by_store'],
-            order_detail['orders_details'][0]['created_by_store_type'])
+            order_detail['orders_details'][0]['so_created_by_store'],
+            order_detail['orders_details'][0]['so_created_by_store_type'])
         return render(request, 'orders/store_order_invoice.html', {"order_detail": order_detail['orders_details'],
                                                                    "store_data": store_data['store_data'],
                                                                    "invoice_details": invoice_details[
