@@ -312,8 +312,11 @@ def viewStoreCustomerDetails(request, customerId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_customers_controller.get_customers_by_id(customerId)
+        print(response)
         spending, status_code = customers_controller.get_customer_spend(customerId)
+        print(spending)
         sales_data, resp_code = orders_controller.get_all_customer_orders(customerId)
+        print(sales_data)
 
         membership = "Gold"
 
@@ -322,7 +325,7 @@ def viewStoreCustomerDetails(request, customerId):
         elif spending['total_spending'] > 25000:
             membership = "Luxuary"
         return render(request, 'customers/viewCustomerDetailsStore.html',
-                      {"customers": response['customers'], "sales_data": sales_data['orders_list'],
+                      {"customer": response['customers'], "sales_data": sales_data['orders_list'],
                        "membership": membership})
     else:
         return redirect('own_store_login')

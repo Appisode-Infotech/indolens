@@ -59,6 +59,7 @@
 
 
 
+
     </script>
 </head>
 
@@ -78,7 +79,8 @@
             <div class="mb-9">
                 <div class="row g-2 mb-4">
                     <div class="col-auto">
-                        <h2 class="mb-0">Customers<span class="fw-normal text-700 ms-3">({{store_customers_list|length}})</span></h2>
+                        <h2 class="mb-0">Customers<span class="fw-normal text-700 ms-3">({{store_customers_list|length}})</span>
+                        </h2>
                     </div>
                 </div>
 
@@ -123,7 +125,8 @@
                                     <th class="sort align-middle pe-5" data-sort="email" scope="col" style="width:20%;">
                                         EMAIL
                                     </th>
-                                    <th class="sort align-middle pe-5" data-sort="language" scope="col" style="width:20%;">
+                                    <th class="sort align-middle pe-5" data-sort="language" scope="col"
+                                        style="width:20%;">
                                         LANGUAGE
                                     </th>
                                     <th class="sort align-middle text-end" data-sort="totalOrders" scope="col"
@@ -135,6 +138,12 @@
                                     <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
                                         CITY
                                     </th>
+                                    <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
+                                        CREATED BY
+                                    </th>
+                                    <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
+                                        CREATED ON
+                                    </th>
 
                                 </tr>
                                 </thead>
@@ -144,21 +153,21 @@
                                     <td class="fs--1 align-middle px-0 py-3 slNo"></td>
                                     <td class="customer align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
-                                            href="{% url 'view_store_customer_details' customer.customer_id %}">
+                                            href="{% url 'view_store_customer_details' customer.customer_customer_id %}">
                                         <div class="avatar avatar-m">
                                             <div class="avatar-name rounded-circle"><span class="first-letter"></span>
                                             </div>
                                         </div>
-                                        <p class="mb-0 ms-3 text-1100 fw-bold name">{{customer.name}}</p>
+                                        <p class="mb-0 ms-3 text-1100 fw-bold name">{{customer.customer_name}}</p>
                                     </a></td>
-                                    <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold">{{customer.email}}</a>
+                                    <td class="email align-middle white-space-nowrap pe-5"><a class="fw-semi-bold">{{customer.customer_email}}</a>
                                     </td>
                                     <td class="language align-middle white-space-nowrap fw-semi-bold text-1000">
-                                        {{customer.language}}
+                                        {{customer.customer_language}}
                                     </td>
 
                                     <td class="totalOrders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
-                                        {{customer.total_order_counts}}
+                                        {{customer.order_count}}
                                     </td>
                                     <td class="totalSpent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100 text-end">
                                         {% if customer.total_spend == None %}
@@ -167,7 +176,16 @@
                                         ₹ {{customer.total_spend}}
                                         {% endif %}
                                     </td>
-                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.city}}
+                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">
+                                        {{customer.customer_city}}
+                                    </td>
+                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">
+                                        <a class="d-flex align-items-center"
+                                           href="{% url 'view_employee' customer.customer_created_by_employee_id %}">
+                                            {{customer.creator_name}}</a>
+                                    </td>
+                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">
+                                        {{customer.customer_created_on|date:"d/m/Y h:i A"}}
                                     </td>
 
                                 </tr>
@@ -221,6 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
 
 </script>
 <script src="{% static 'vendors/popper/popper.min.js' %}"></script>

@@ -53,7 +53,7 @@ def get_customer_spend(cust_id):
     try:
         with getConnection().cursor() as cursor:
             get_customer_spend_query = f"""
-                            SELECT COALESCE(SUM(so.so_product_total_cost), 0) 
+                            SELECT COALESCE(SUM(so.so_product_total_cost), 0) AS total_spending
                             FROM sales_order AS so 
                             WHERE so.so_customer_id = {cust_id} AND so.so_order_status != 7
                         """
@@ -61,7 +61,7 @@ def get_customer_spend(cust_id):
             total_spending = cursor.fetchone()
             return {
                 "status": True,
-                "total_spending": int(total_spending[0])
+                "total_spending": int(total_spending['total_spending'])
             }, 200
 
     except pymysql.Error as e:
