@@ -456,6 +456,7 @@ def allExpenseStore(request):
         if request.method == 'POST':
             expense_obj = store_expense_model.store_expense_model_from_dict(request.POST)
             response, status_code = expense_controller.create_store_expense(expense_obj)
+            print(response)
             return redirect('all_expenses_store')
         else:
             response, status_code = expense_controller.get_all_store_expense(assigned_store,

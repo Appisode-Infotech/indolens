@@ -191,13 +191,13 @@
                                 {% endif %}
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 createdOn">
-                                    <p class="mb-0 fs--1 text-900">{{employee.ose_created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.ose_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 createdBy">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{employee.creator}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 updatedOn">
-                                    <p class="mb-0 fs--1 text-900">{{employee.ose_last_updated_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.ose_last_updated_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 updatedBy">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{employee.updater}}</p>

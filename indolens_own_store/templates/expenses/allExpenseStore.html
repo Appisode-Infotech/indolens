@@ -185,17 +185,17 @@
                         <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="SlNo"
-                                    scope="col" style="width:10%;">SL NO
+                                <th class="sort white-space-nowrap align-middle " data-sort="SlNo"
+                                    scope="col" style="width:5%;">SL NO
                                 </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="reason"
-                                    scope="col" style="width:10%;">REASON
+                                <th class="sort white-space-nowrap align-middle " data-sort="reason"
+                                    scope="col" style="width:5%;">REASON
                                 </th>
-                                <th class="sort align-middle" data-sort="amount" scope="col" style="width:5%;">
+                                <th class="sort align-middle text-end" data-sort="amount" scope="col" style="width:5%;">
                                     AMOUNT
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="date" scope="col" style="width:10%;">
+                                <th class="sort align-middle " data-sort="date" scope="col" style="width:5%;">
                                     DATE
                                 </th>
 
@@ -207,24 +207,24 @@
                             <tbody class="list" id="project-list-table-body">
                             {% for expense in stor_expense_list %}
                             <tr class="position-static">
-                                <td class="align-middle white-space-nowrap py-0 SlNo"></td>
+                                <td class="align-middle white-space-nowrap SlNo"></td>
 
-                                <td class="align-middle white-space-nowrap py-4 reason">
-                                    <p class="mb-0 fs--1 text-900">{{expense.expense_reason}}</p>
+                                <td class="align-middle white-space-nowrap reason">
+                                    <p class="mb-0 fs--1 text-900">{{expense.se_expense_reason}}</p>
                                 </td>
 
 
                                 <td class="align-middle white-space-nowrap text-end amount">
-                                    <p class="mb-0 fs--1 text-900 text-end">₹{{expense.expense_amount}}</p>
+                                    <p class="mb-0 fs--1 text-900 text-end">₹{{expense.se_expense_amount}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 date">
-                                    <p class="mb-0 fs--1 text-900">{{expense.created_on}}</p>
+                                <td class="align-middle white-space-nowrap date">
+                                    <p class="mb-0 text-900">{{expense.se_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap createdBy">
                                     <a class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_employee' expense.created_by %}">{{expense.creator_name}}</a>
+                                        href="{% url 'view_employee' expense.se_created_by %}">{{expense.creator_name}}</a>
                                 </td>
 
                             </tr>

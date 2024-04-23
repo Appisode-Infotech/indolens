@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 16, 2024 at 05:09 PM
+-- Generation Time: Apr 23, 2024 at 07:58 AM
 -- Server version: 10.4.27-MariaDB
 -- PHP Version: 8.2.0
 
@@ -86,8 +86,8 @@ CREATE TABLE `admin` (
 
 INSERT INTO `admin` (`admin_admin_id`, `admin_name`, `admin_email`, `admin_phone`, `admin_password`, `admin_role`, `admin_profile_pic`, `admin_address`, `admin_document_1_type`, `admin_document_1_url`, `admin_document_2_type`, `admin_document_2_url`, `admin_status`, `admin_created_by`, `admin_created_on`, `admin_last_updated_by`, `admin_last_updated_on`) VALUES
 (1, 'Accelstack', 'accelstack@gmail.com', '8660225610', '$2b$12$L7AxukKyeRLxXq8E3TNMbuo7sRZ37U76bG6eVFehSETQoeIOo2eyC', 1, 'logo/admin.png', '123 Main St, City', 'Aadhar Card', NULL, 'Pan Card', NULL, 1, 1, '2024-02-29 12:49:37', 1, '2024-02-29 12:49:37'),
-(2, 'Santhosh', 'devsandy12@gmail.com', '9876554322', '$2b$12$KUSGu9KOrCV5MFzf4DjZGOZIvy5zS5DR9t9RaJh50bCUy7VLpV/2i', 2, 'profile_pic/profile_pic_1712922486_greeting_logo (2).png', ' address', 'Aadhar', '[\"documents/documents_1709194045_dsrhfghjfdxfghxgdxghgjfxfgyfxcfgygfcvgjhcvghcxvfgcvfgcvfcv.jpeg\"]', 'Pan Card', '[\"documents/documents_1709194045_dsrhfghjfdxfghxgdxghgjfxfgyfxcfgygfcvgjhcvghcxvfgcvfgcvfcv.jpeg\"]', 0, 1, '2024-02-29 13:37:25', 1, '2024-04-12 17:18:06'),
-(3, 'Mary M S', 'mary23@gmail.com', '8976543212', '$2b$12$goBplP2Cz009/XNC7eWmeOK1oUPBCTAXYBQh9uc/ZNAtn3jTm8Ke6', 2, 'profile_pic/profile_pic_1713250513_person3.jpg', '  Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1713250513_pan.png\"]', 'Pan Card', '[\"documents/documents_1713250513_aadhar.jpg\", \"documents/document2_1713251143_accountant.webp\"]', 1, 1, '2024-04-16 12:25:13', 1, '2024-04-16 13:47:29');
+(2, 'Santhosh', 'devsandy12@gmail.com', '9876554322', '$2b$12$KHWvIzftd/PvS3slGPBJpOLBXofLhU9mVBv.7ooHAimsJetCo6vCC', 2, 'profile_pic/profile_pic_1712922486_greeting_logo (2).png', ' address', 'Aadhar', '[\"documents/documents_1709194045_dsrhfghjfdxfghxgdxghgjfxfgyfxcfgygfcvgjhcvghcxvfgcvfgcvfcv.jpeg\"]', 'Pan Card', '[\"documents/documents_1709194045_dsrhfghjfdxfghxgdxghgjfxfgyfxcfgygfcvgjhcvghcxvfgcvfgcvfcv.jpeg\"]', 1, 1, '2024-02-29 13:37:25', 1, '2024-04-12 17:18:06'),
+(3, 'Mary M', 'mary23@gmail.com', '8976543212', '$2b$12$goBplP2Cz009/XNC7eWmeOK1oUPBCTAXYBQh9uc/ZNAtn3jTm8Ke6', 2, 'profile_pic/profile_pic_1713250513_person3.jpg', '   Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1713250513_pan.png\"]', 'Pan Card', '[\"documents/document2_1713251143_accountant.webp\"]', 1, 1, '2024-04-16 12:25:13', 1, '2024-04-19 14:00:37');
 
 -- --------------------------------------------------------
 
@@ -111,7 +111,7 @@ CREATE TABLE `admin_setting` (
 --
 
 INSERT INTO `admin_setting` (`setting_id`, `emailjs_attribute`, `base_url`, `created_by`, `created_on`, `updated_by`, `updated_on`, `support_attributes`) VALUES
-(1, '{\"emailjs_url\": \"https://api.emailjs.com/api/v1.0/email/send_disable\", \"emailjs_service_id\": \"service_7eqv3fu\", \"emailjs_template_id\": \"template_1c47e6b\", \"emailjs_user_id\": \"qbWAgwqHOFbcgoJRF\"}', 'http://127.0.0.1:8000', 1, '2024-03-31 12:59:27', 1, '2024-04-12 13:00:37', '{\"support_email\": \"support@indolens.com\", \"support_phone\": \"8660225160\", \"support_hour\": \"09 AM - 06 PM \"}');
+(1, '{\"emailjs_url\": \"https://api.emailjs.com/api/v1.0/email/send\", \"emailjs_service_id\": \"service_7eqv3fu\", \"emailjs_template_id\": \"template_1c47e6b\", \"emailjs_user_id\": \"qbWAgwqHOFbcgoJRF\"}', 'http://127.0.0.1:8000', 1, '2024-03-31 12:59:27', 1, '2024-04-20 12:40:27', '{\"support_email\": \"support@indolens.com\", \"support_phone\": \"8660225160\", \"support_hour\": \"09 AM - 06 PM \"}');
 
 -- --------------------------------------------------------
 
@@ -144,10 +144,10 @@ CREATE TABLE `area_head` (
 --
 
 INSERT INTO `area_head` (`ah_area_head_id`, `ah_name`, `ah_email`, `ah_phone`, `ah_password`, `ah_profile_pic`, `ah_assigned_stores`, `ah_address`, `ah_document_1_type`, `ah_document_1_url`, `ah_document_2_type`, `ah_document_2_url`, `ah_status`, `ah_created_by`, `ah_created_on`, `ah_last_updated_by`, `ah_last_updated_on`) VALUES
-(1, 'Area head crete test update', 'areaheadcreate001@test.com', '9089089098', '$2b$12$S9gnqzzAKfzFZivK2pQlPuMJJ6rbzLqBIWwsQ0kRY8n7T991x/tUi', 'profile_pic/profile_pic_1712995810_accountant.webp', '0', ' 4rd Cross\r\n#A148 ', 'Aadhar', '[\"documents/documents_1712995810_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712995810_pan.jpg\"]', 1, 1, '2024-04-13 13:40:10', 1, '2024-04-13 13:46:10'),
+(1, 'Area head crete test update', 'areaheadcreate001@test.com', '9089089098', '$2b$12$S9gnqzzAKfzFZivK2pQlPuMJJ6rbzLqBIWwsQ0kRY8n7T991x/tUi', 'profile_pic/profile_pic_1712995810_accountant.webp', '1,2,3', ' 4rd Cross\r\n#A148 ', 'Aadhar', '[\"documents/documents_1712995810_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712995810_pan.jpg\"]', 1, 1, '2024-04-13 13:40:10', 1, '2024-04-13 13:46:10'),
 (2, 'Shehanazz', 'shehanaz723@gmail.com', '8792103815', '$2b$12$YkGahwoPGvtxH1VCfdXJPeAeReHaKDG2utfxwTe.xCEADFVESjKOe', 'profile_pic/profile_pic_1713250805_person4.jpg', '0', ' Peenya, Banglore ', 'Aadhar', '[\"documents/documents_1713250805_aadhar.jpg\", \"documents/document1_1713251613_accountant.webp\"]', 'Pan Card', '[\"documents/documents_1713250805_pan.png\", \"documents/document2_1713251613_eyeglass-png.png\"]', 1, 1, '2024-04-16 12:30:05', 1, '2024-04-16 12:45:46'),
 (3, 'Poorvi R', 'poorvi0703@gmail.com', '08792103812', '$2b$12$Zlp3EiMfHxrucpgy5umvF.7OpaQ4I2rG6OWza9Ejujw0Bo9rPz/o2', 'profile_pic/profile_pic_1713253659_person3.jpg', '0', '2\r\nPeenya\r\npeenya', 'Aadhar', '[\"documents/documents_1713253659_pan.png\", \"documents/document1_1713253709_person3.jpg\"]', 'Pan Card', '[\"documents/documents_1713253659_pan.png\", \"documents/document2_1713255349_profile_pic_1700635966_accountant.webp\"]', 1, 1, '2024-04-16 13:17:40', 1, '2024-04-16 13:45:49'),
-(4, 'Riyaz', 'riyaz8123@gmail.com', '8792103817', '$2b$12$JPZ.wj.xaobfZ6ZpQ1SK4efAKjPD8UfN0CQR8lNQ.qAesivH4FqFu', 'profile_pic/profile_pic_1713253975_person2.jpg', '0', 'Chennai, Tamil nadu', 'Aadhar', '[\"documents/documents_1713253975_aadhar.jpg\", \"documents/document1_1713254049_lab_tech - Copy.png\", \"documents/document1_1713255353_pan.png\"]', 'Pan Card', '[\"documents/documents_1713253975_pan.png\"]', 0, 1, '2024-04-16 13:22:56', 1, '2024-04-16 13:45:53');
+(4, 'Riyaz', 'riyaz8123@gmail.com', '8792103817', '$2b$12$JPZ.wj.xaobfZ6ZpQ1SK4efAKjPD8UfN0CQR8lNQ.qAesivH4FqFu', 'profile_pic/profile_pic_1713253975_person2.jpg', '0', 'Chennai, Tamil nadu', 'Aadhar', '[\"documents/documents_1713253975_aadhar.jpg\", \"documents/document1_1713254049_lab_tech - Copy.png\", \"documents/document1_1713255353_pan.png\"]', 'Pan Card', '[\"documents/documents_1713253975_pan.png\"]', 1, 1, '2024-04-16 13:22:56', 1, '2024-04-16 13:45:53');
 
 -- --------------------------------------------------------
 
@@ -175,7 +175,7 @@ INSERT INTO `brands` (`brand_brand_id`, `brand_name`, `brand_category_id`, `bran
 (1, 'Rayban', 0, 'Description for Rayban', 1, '2024-02-29 12:59:09', 1, '2024-04-10 12:16:25', 1),
 (2, 'Vincent Chase', 0, 'Description for vincent Chase', 1, '2024-02-29 12:59:22', 1, '2024-04-10 12:18:05', 1),
 (5, 'Test dict', 0, 'Test dict update', 0, '2024-03-28 13:31:49', 1, '2024-04-10 12:18:18', 1),
-(6, 'LensMart', 0, 'LensMart update', 1, '2024-04-10 12:18:48', 1, '2024-04-10 12:19:03', 1);
+(6, 'LensMart up', 0, 'LensMart update', 1, '2024-04-10 12:18:48', 1, '2024-04-19 13:57:03', 1);
 
 -- --------------------------------------------------------
 
@@ -219,7 +219,7 @@ CREATE TABLE `central_inventory` (
 
 INSERT INTO `central_inventory` (`ci_product_id`, `ci_product_name`, `ci_product_description`, `ci_product_images`, `ci_product_qr_code`, `ci_category_id`, `ci_brand_id`, `ci_material_id`, `ci_frame_type_id`, `ci_frame_shape_id`, `ci_color_id`, `ci_unit_id`, `ci_origin`, `ci_cost_price`, `ci_sale_price`, `ci_model_number`, `ci_hsn`, `ci_power_attribute`, `ci_franchise_sale_price`, `ci_product_quantity`, `ci_product_gst`, `ci_status`, `ci_discount`, `ci_created_on`, `ci_created_by`, `ci_last_updated_on`, `ci_last_updated_by`) VALUES
 (1, 'Indolens  Full shell frame BLACK', '<p>Hello</p>', '[\"products/products_1709192184_Design.png\", \"products/products_1709192184_sandyf.png\"]', 'product_qr_codes/1.png', 1, 1, 1, 1, 1, 1, 1, 'Indian', 1000, 1400, '01', '01', '{}', 1100, 28, 12, 1, 50, '2024-02-29 13:06:24', 1, '2024-02-29 13:08:56', 1),
-(2, 'Indolens  Full shell frame BLACK  No discount', '', '[\"products/products_1709192495_Gemini_Generated_Image.jpeg\", \"products/products_1709192495_Design.png\"]', 'product_qr_codes/2.png', 1, 2, 1, 1, 1, 1, 1, 'Indian', 600, 1200, '09', '09', '{}', 900, 52, 5, 0, 25, '2024-02-29 13:11:35', 1, '2024-02-29 13:11:35', 1),
+(2, 'Indolens  Full shell frame BLACK  No discoun', '', '[\"products/products_1709192495_Gemini_Generated_Image.jpeg\", \"products/products_1709192495_Design.png\"]', 'product_qr_codes/2.png', 1, 2, 1, 1, 1, 1, 1, 'Indian', 600, 1200, '09', '09', '{}', 900, 50, 5, 0, 25, '2024-02-29 13:11:35', 1, '2024-04-19 14:11:56', 1),
 (3, 'Indolens Lens HMC  Stock', '<p>Description for lens</p>', '[\"products/products_1709192687_Design.png\", \"products/products_1709192687_sandyf.png\"]', 'product_qr_codes/3.png', 2, 1, 2, 0, 0, 1, 2, 'Indian', 100, 250, '07', '07', '{\"vision_type\": \"single_vision\", \"stock_type\": \"stock\", \"index\": \"1.56\"}', 150, 82, 5, 1, 10, '2024-02-29 13:14:47', 1, '2024-04-11 15:27:57', 1),
 (4, 'Indolens Lens HMC  RX', '<p>updated</p>', '[\"products/products_1709192744_Design.png\", \"products/products_1709192744_sandyf.png\"]', 'product_qr_codes/4.png', 2, 1, 1, 0, 0, 1, 1, 'Indian', 400, 600, '04', '04', '{\"vision_type\": \"bifocal\", \"stock_type\": \"rx\", \"index\": \"1.49\"}', 500, 102, 5, 1, 10, '2024-02-29 13:15:44', 1, '2024-03-22 19:24:53', 1),
 (5, 'Indolens Contact Lens Stock BL three month soft', '<p>Desdc</p>', '[\"products/products_1709192845_Design.png\", \"products/products_1712821626_ryban.webp\"]', 'product_qr_codes/5.png', 3, 1, 1, 0, 0, 1, 2, 'Indian', 900, 2000, '012', '12', '{\"stock_type\": \"stock\", \"contact_lens_type\": \"Soft\", \"contact_lens_disposability\": \"3 Month\"}', 1400, 1000, 12, 1, 25, '2024-02-29 13:17:25', 1, '2024-04-11 13:17:06', 1),
@@ -305,8 +305,9 @@ CREATE TABLE `customers` (
 --
 
 INSERT INTO `customers` (`customer_customer_id`, `customer_name`, `customer_gender`, `customer_age`, `customer_phone`, `customer_email`, `customer_language`, `customer_city`, `customer_address`, `customer_created_by_employee_id`, `customer_created_by_store_id`, `customer_created_by_store_type`, `customer_created_on`, `customer_updated_by_employee_id`, `customer_updated_by_store_id`, `customer_updated_by_store_type`, `customer_updated_on`) VALUES
-(1, 'Deeraj', 'M', 23, '08792103813', 'smitharaj0703@gmail.com', 'Kannada', 'banglore', 'Rajajinagar, Banglore', 2, 1, 1, '2024-02-29 13:51:34', 2, 1, 1, '2024-03-05 13:12:42'),
-(8, 'Santhosh', 'M', 23, '8660225160', 'devsandy12@gmail.com', 'English', 'Bangalore', 'Hello', 2, 2, 1, '2024-03-05 15:35:10', 2, 2, 1, '2024-03-23 13:02:52');
+(1, 'Deeraj', 'M', 23, '08792103813', 'smitharaj0703@gmail.com', 'Kannada', 'banglore', 'Rajajinagar, Banglore', 2, 1, 1, '2024-03-29 13:51:34', 2, 1, 1, '2024-03-05 13:12:42'),
+(8, 'Santhosh', 'M', 23, '8660225160', 'devsandy12@gmail.com', 'English', 'Bangalore', 'Hello', 2, 2, 1, '2024-03-05 15:35:10', 2, 1, 1, '2024-04-22 13:56:59'),
+(29, 'preethi raj', 'F', 25, '09876543210', 'rsmitha@gmail.com', 'Kannada', 'BAnglore', 'Peenya\r\nPeenya\r\nSBI', 2, 1, 1, '2024-04-22 14:00:57', 2, 1, 1, '2024-04-22 14:00:57');
 
 -- --------------------------------------------------------
 
@@ -328,7 +329,8 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('0zshlruhgofd07wmmegmadjvlmgyzcyo', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rnHgB:4O4miMEhHnnx4dSjuUVQbVozycGtv0EJBRAV5axucB4', '2024-03-21 13:07:55.396097'),
 ('125ub48wmuej7gcgr90i7zwovntlqa07', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rkrW6:T_kV4QK0GIsxTtPPEBGG4PJ3lo56t9E5tYwh8C1JlIE', '2024-03-14 20:47:30.275458'),
 ('27elhiqfs3oc95n1wlv5reu9oy376joq', '.eJxNjDsOwjAQRK8SbR0FHAqIK0SbkgOslnhjW_JPdoKEEHfHQRTpZuZp3htsQUcPXHgy6KLWrNAGkEteuQWrQIoWAnkGCXcKi4nFNOPqKUML7Mm6ChQ_CwX1Ev1Vb1M3RV_x5v1fbxQ0ucxN3SpJOc7WMSY7Vbhrh11GcT4OYjhdRI8__dyloOHzBerVPcA:1rhRvg:tJN55zU6ukPH2zmb6pxIjrfd0WOOpInpGN17B8UkApo', '2024-03-19 10:21:48.707967'),
-('29eqnzn5ojxjpifxjbymwxmtnetd6hnh', '.eJwdzDsOgCAQRdG9vJpoaOlcCSHDSCbyC2Bl3LsT65tzH8j0IRapPreUOHqpcGvcbCARzhrUUBgOBxHnuQJdMOijnZLZdyFNKtv-T7Zek-bRshL7fhCRIAo:1rurjd:xt3w6LTRfGqIdlGpeGh_G_-Eugi3_Gxd-Vlp3hLJOvg', '2024-04-25 10:32:49.842873'),
+('29eqnzn5ojxjpifxjbymwxmtnetd6hnh', '.eJxNjlELgjAQx79K3LOYM0L0KUGJwCzoA4yh1zrRbWzrIaLv3kSJ3u5-97v_3RvIcee1RT5qKbHnpKDw9okRUA9FGoESE0IBFaIVA0SAk6AxADeRf4jAkizZHeRM405PwVjy1r1TW12aur1t2ropz2V7LJvy5_iXmR0WgHCOpAoPLJP5OIvAWH2nEbmhLnh_3Xatr9RxliU5y9Nsz7hB67RK48HIkGn1GOLZ5wuJf0wo:1ryoRN:sVWoXS_Jk1ShD8l6WzgJKBsHCQWJ1acvNG_0UbxgIvM', '2024-05-06 07:50:17.996900'),
+('3hgsm6rucsaae08dpisd723akw3qti2e', '.eJwdzDsOgCAQRdG9vJpoaOlcCSHDSCbyC2Bl3LsT65tzH8j0IRapPreUOHqpcGvcbCARzhrUUBgOBxHnuQJdMOijnZLZdyFNKtv-T7Zek-bRshL7fhCRIAo:1rwqUy:qGoWVoXhxJW2W9hjl3Aiv_4HMOjCNjeySRQRy-eBKS8', '2024-04-30 21:37:52.962833'),
 ('4umdvly9pcpu7knux5kqbkrlr98v8grs', '.eJxNjTEOwjAMRe_iOSpNK4TaiYmJjQNYUeumhjSJkjAgxN1JKKBu9vv2-0_giFNQdpg5EsbkAqFxWtOIbKFP4U4CeIR-L8CqhaCHM984zSCAFsUmA_MBR13WanBLjlbR9-H0818Klf84PXyJmwxUjKxtLl2TUigF-OAmNoSeh3y32XabGeWh7mTXdm2NnkJ0tqmuXmdpcCb75esNEslPEw:1rndXg:qb11etxvsChGMs7b6f66BxM_vFHRnoA_b0u1GUVPsFc', '2024-03-22 12:28:36.130255'),
 ('52xzuyf8wdzha5eve41t0mj3vu98kf5m', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rm7MZ:6MjX6nVY3R-UN7jDi3x4D8-zrr1nHmWtDN6_gRUF66c', '2024-03-18 07:54:51.815148'),
 ('67lmy95h6ky9k028ewzr1o5eeicy94ej', '.eJxNjc0KwjAQhN9lz6E2FSntyYN3BR8ghHaNW_JHEhER390NLeJt55vZmTdQVrmEhMoGY3BW5GEs6YECaIaxE-C1QxjhhJj0AgLQabIMsqNy18zavt0fTaXNFBwn1r7t7_z016rlzyivWI0KdM5kPK-uTl2UAmIKN7KoIk2c-1O77b7QpGTfDnLo-oNUEVMOvmuWaLgzBcv18vMFCtZKDQ:1rfcCa:slj5PG7zCwDvltNr-TZqL6FtVcl-hlLeruqGYUvjLFc', '2024-03-14 08:55:40.905909'),
@@ -338,12 +340,14 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('879cxpqeo0hxvlimsyxlpjqiul0ap8en', 'e30:1rkrHG:41pQF2wpZelQwxR2Bd0YZrRajFcAejHsxKDbBFDF-B4', '2024-03-14 20:32:10.415083'),
 ('ar2lijrpeb9dqrte3go6xu9uc99fikpw', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rnIwL:QqmwswSkUSkIcYEH58xpxOhBfuwG5niK-gUrc5v9KxI', '2024-03-21 14:28:41.300189'),
 ('avrvdhd94tzy3kg7ewumuys9o3de59q9', '.eJxNjc0KwjAQhN9lz6E2FSntyYN3BR8ghHaNW_JHEhER390NLeJt55vZmTdQVrmEhMoGY3BW5GEs6YECaIaxE-C1QxjhhJj0AgLQabIMsqNy18zavt0fTaXNFBwn1r7t7_z016rlzyivWI0KdM5kPK-uTl2UAmIKN7KoIk2c-1O77b7QpGTfDnLo-oNUEVMOvmuWaLgzBcv18vMFCtZKDQ:1rfdgp:JqVGDtg3nudYK9LpuLDpusbjnihmlVssW2W3aOEo-7Y', '2024-03-14 10:30:59.724899'),
+('az71wupqsutzhqusv6l6xvxkpr98o9r9', '.eJwdzDsOgCAQRdG9vJpoaOlcCSHDSCbyC2Bl3LsT65tzH8j0IRapPreUOHqpcGvcbCARzhrUUBgOBxHnuQJdMOijnZLZdyFNKtv-T7Zek-bRshL7fhCRIAo:1ry4rT:RqEMUGXc1EPoAc7ZdYl82xhJ3kqzrnKRjbqdoJuTnWY', '2024-05-04 07:10:11.226743'),
 ('b4yhgoeeb3l94rb5fbcz8aobqhj6kuya', '.eJwdzDsOgCAQRdG9vJpoaOlcCSHDSCbyC2Bl3LsT65tzH8j0IRapPreUOHqpcGvcbCARzhrUUBgOBxHnuQJdMOijnZLZdyFNKtv-T7Zek-bRshL7fhCRIAo:1ruR1F:xtFSt0tZOWhytPxj46SO4dkmQwytJBGZ1ezxA8h0qNE', '2024-04-24 06:01:13.102545'),
 ('cssneroui9tg3nllokrxdjjs9jp1pxtm', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rnw04:mj7IX40o0FnQuCdo8gNkCwTgVYH-bh1NReBF_v4tKj4', '2024-03-23 08:11:08.081066'),
 ('d2dtis94dd53pbn81udn8dtgo7nfiftz', '.eJwdzDsOgCAQRdG9vJpoaOlcCSHDSCbyC2Bl3LsT65tzH8j0IRapPreUOHqpcGvcbCARzhrUUBgOBxHnuQJdMOijnZLZdyFNKtv-T7Zek-bRshL7fhCRIAo:1rpBze:EKyQZMJyrKDyo-OYuDqeXoGfLuHy-RcM9N5WlFGTDz4', '2024-04-09 18:57:54.951428'),
 ('dq0lp424ceduruoou1aknghby5qsmmki', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rm9FR:TG6ilrddJjxUOieoykUR9jodQ-smDI8HxbyChHsIirc', '2024-03-18 09:55:37.824112'),
 ('etqfoaklxmqocc0ztqltv93ukhew6d8f', '.eJxNjc0KwjAQhN9lz6E2FSntyYN3BR8ghHaNW_JHEhER390NLeJt55vZmTdQVrmEhMoGY3BW5GEs6YECaIaxE-C1QxjhhJj0AgLQabIMsqNy18zavt0fTaXNFBwn1r7t7_z016rlzyivWI0KdM5kPK-uTl2UAmIKN7KoIk2c-1O77b7QpGTfDnLo-oNUEVMOvmuWaLgzBcv18vMFCtZKDQ:1rnwjY:u0MU9t9xQrwcm-THeeu3zOthuD2hP6mFMbxxkX41G0k', '2024-03-23 08:58:08.422060'),
 ('fdz2b4ecifx63mockcx5ny7zb14gwgoi', '.eJxNjc0KwjAQhN9lz6E2FSntyYN3BR8ghHaNW_JHEhER390NLeJt55vZmTdQVrmEhMoGY3BW5GEs6YECaIaxE-C1QxjhhJj0AgLQabIMsqNy18zavt0fTaXNFBwn1r7t7_z016rlzyivWI0KdM5kPK-uTl2UAmIKN7KoIk2c-1O77b7QpGTfDnLo-oNUEVMOvmuWaLgzBcv18vMFCtZKDQ:1rkra6:YoCeX52__K9-0DyoDng-G2THh3S-rNZkuoPSFqShm1A', '2024-03-14 20:51:38.189562'),
+('fkquekcwqqz793vxb4anangxhzu76yqd', '.eJxNjlELgjAQx79K3LOYM0L0KUGJwCzoA4yh1zrRbWzrIaLv3kSJ3u5-97v_3RvIcee1RT5qKbHnpKDw9okRUA9FGoESE0IBFaIVA0SAk6AxADeRf4jAkizZHeRM405PwVjy1r1TW12aur1t2ropz2V7LJvy5_iXmR0WgHCOpAoPLJP5OIvAWH2nEbmhLnh_3Xatr9RxliU5y9Nsz7hB67RK48HIkGn1GOLZ5wuJf0wo:1ryrJw:jC2mKOB4z4J52NsZm0w1r90Ncvx2BpXLju5AGYyX6kQ', '2024-05-06 10:54:48.453526'),
 ('fm6szmit23oht40xxb0hxpyrlw37nwfi', '.eJwdzDsOgCAQRdG9vJpoaOlcCSHDSCbyC2Bl3LsT65tzH8j0IRapPreUOHqpcGvcbCARzhrUUBgOBxHnuQJdMOijnZLZdyFNKtv-T7Zek-bRshL7fhCRIAo:1rp7BB:HFGMb0z4Pv5XCuxzkd7rJpd89p6BDretufsw5aIKWeo', '2024-03-26 14:19:29.846725'),
 ('fzk9xrlff8fcmdwxrtnfbi7iqiuluizz', '.eJxNyUsKgCAURuG9_GPpRRG5jRZwkTS7UFdRG0S09xo2Ox_nBmcy9mChPXjvLLFAl3Q6BbbQnYKYw0FjNlK2kDcoxBRW3h1FXr7xU_1rasdmaqe-6QfKRuy1VlE8nhf2KieB:1rnfU4:M7CizYALKEjtPrO8ysrCqWjOvjdoLM7b2YFN7AxnvBM', '2024-03-22 14:33:00.452062'),
 ('g218tj5eu45zi5q6dhwbqf07dr3i22vc', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rlkg0:kgLGj3WkOv_I5RFjy43lzwaS-2jicyyCtJ3hA3ufkdc', '2024-03-17 07:41:24.229476'),
@@ -362,8 +366,10 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('lk2b653gavuncl6yzwn4sv21obfb1qqm', '.eJxNjc0KwjAQhN9lz6E2FSntyYN3BR8ghHaNW_JHEhER390NLeJt55vZmTdQVrmEhMoGY3BW5GEs6YECaIaxE-C1QxjhhJj0AgLQabIMsqNy18zavt0fTaXNFBwn1r7t7_z016rlzyivWI0KdM5kPK-uTl2UAmIKN7KoIk2c-1O77b7QpGTfDnLo-oNUEVMOvmuWaLgzBcv18vMFCtZKDQ:1rkocQ:qLGYmO9N6SfAY3gLgUDLwefbWciZcsEiN9tufDGU-Lo', '2024-03-14 17:41:50.849355'),
 ('m59ruxiq67psx9q9g78bssti6c63ow08', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rjxXC:C5y_X3Hj1XKrKDy5RQwd_NXCosRGxF64ghsdTtg7zRM', '2024-03-12 09:00:54.025286'),
 ('m5dfpbx2tnxngh71jy6uvifilaieq2ij', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rmfTn:QvAoIQMzWCSE3t3qEvH3iOPHZqEFbYgn9kZ7YoBWdS8', '2024-03-19 20:20:35.761843'),
+('m6m4tkdy6wjdyln7t9xy8jb2286xs0yz', '.eJxNjlELgjAQx79K3LOYM0L0KUGJwCzoA4yh1zrRbWzrIaLv3kSJ3u5-97v_3RvIcee1RT5qKbHnpKDw9okRUA9FGoESE0IBFaIVA0SAk6AxADeRf4jAkizZHeRM405PwVjy1r1TW12aur1t2ropz2V7LJvy5_iXmR0WgHCOpAoPLJP5OIvAWH2nEbmhLnh_3Xatr9RxliU5y9Nsz7hB67RK48HIkGn1GOLZ5wuJf0wo:1ryrxU:_QKHtpd1HzGOfaZi6ztS5CfJ-T5ar43Tyt2vNqELLxs', '2024-05-06 11:35:40.671143'),
 ('ndxj26zj7f0e7uekxjupmzbpnbmcvkci', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rndOi:tw3SNL7bw8p9oYq2lSfs2YopEcTLCQWgdLhK2qlXCpw', '2024-03-22 12:19:20.784030'),
 ('nuhl8e3v9xdse65595yo0ri2c5u0cqfm', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rm6r3:34gQiqoH5eLVByLQliWkewMnUyvWQhsAmzNF1R9qR-A', '2024-03-18 07:22:17.648493'),
+('ozm3kq3h1qw76de8gau3w50qqjofdfes', '.eJxNjlELgjAQx79K3LOYM0L0KUGJwCzoA4yh1zrRbWzrIaLv3kSJ3u5-97v_3RvIcee1RT5qKbHnpKDw9okRUA9FGoESE0IBFaIVA0SAk6AxADeRf4jAkizZHeRM405PwVjy1r1TW12aur1t2ropz2V7LJvy5_iXmR0WgHCOpAoPLJP5OIvAWH2nEbmhLnh_3Xatr9RxliU5y9Nsz7hB67RK48HIkGn1GOLZ5wuJf0wo:1rz9AW:cuuJUJpBnkO5YHQPdOLA3NqUVhItNfo3SvGmxuryd7U', '2024-05-07 05:58:16.775247'),
 ('p6sujixl6teix9k2yenxnaes4d6y60w7', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rhNJy:hVOypzrzDVl3Cok92pKgiyNquyb5m4fd8WKj1OOnJIc', '2024-03-19 05:26:34.651290'),
 ('pdh20d543nj1zr08e0624vvkqtimnw5w', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rnxWy:18sjkSvBkapMgeDg3F-cT1kBTavieQGyyG418evVkX4', '2024-03-23 09:49:12.115016'),
 ('qvyalruhn1c61lzpg4jlm2coe32dpuw5', '.eJxNjc0KwjAQhN9lz6E2FSntyYN3BR8ghHaNW_JHEhER390NLeJt55vZmTdQVrmEhMoGY3BW5GEs6YECaIaxE-C1QxjhhJj0AgLQabIMsqNy18zavt0fTaXNFBwn1r7t7_z016rlzyivWI0KdM5kPK-uTl2UAmIKN7KoIk2c-1O77b7QpGTfDnLo-oNUEVMOvmuWaLgzBcv18vMFCtZKDQ:1rkh1G:8mO2SOZ4eRUlL4_VqnMyGzNMCOeypADrJp328m47V8U', '2024-03-14 09:34:58.108121'),
@@ -378,7 +384,7 @@ INSERT INTO `django_session` (`session_key`, `session_data`, `expire_date`) VALU
 ('urm123ngakabi56jaaht688dvcbxmtu7', 'e30:1rmcs9:N8deC84t0QKhlb4fAnvH6lIzmQDvdDvL7jzRlgeLe3U', '2024-03-19 17:33:33.148887'),
 ('w50xyz1otuamtrt2vm1hz1zky6t6dlyp', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rkgOj:YQ5n3lZeMsvGLVOcsc7PsvOe66QIO8ZZYhUoIOQ5wJk', '2024-03-14 08:55:09.924577'),
 ('wetwzd8ysug3splrfyfmjhc0x7710jl0', '.eJwdzDsOgCAQRdG9vJpoaOlcCSHDSCbyC2Bl3LsT65tzH8j0IRapPreUOHqpcGvcbCARzhrUUBgOBxHnuQJdMOijnZLZdyFNKtv-T7Zek-bRshL7fhCRIAo:1rp6G1:UM-L0aovyuXdj27wZ07H5FIk2cJE50wF7FvWrDjFHxk', '2024-03-26 13:20:25.960223'),
-('x8qclr1nzem1f94f8wrnhirpddrem12z', '.eJwdzDsOgCAQRdG9vJpoaOlcCSHDSCbyC2Bl3LsT65tzH8j0IRapPreUOHqpcGvcbCARzhrUUBgOBxHnuQJdMOijnZLZdyFNKtv-T7Zek-bRshL7fhCRIAo:1rwcDB:F1Al6jslToR1fsvmedNjNJEkYwb9LQsQpu_6A2golzM', '2024-04-30 06:22:33.922589'),
+('x8qclr1nzem1f94f8wrnhirpddrem12z', '.eJxNjDsOwjAQRK8SbR0FHAqIK0SbkgOslnhjW_JPdoKEEHfHQRTpZuZp3htsQUcPXHgy6KLWrNAGkEteuQWrQIoWAnkGCXcKi4nFNOPqKUML7Mm6ChQ_CwX1Ev1Vb1M3RV_x5v1fbxS0i5mbulWScpytY0x2qnDXDruM4nwcxHC6iB5_-rlLQcPnC-7CPc4:1rxkL4:bRTfOCoBelBgJcogRu6HY5NoPgeIxJEG_ROE9YxCDVQ', '2024-05-03 09:15:22.479490'),
 ('xwqcgvo5qx2ynm2dyu4sfsqcb19agl9d', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rnHjR:GlJOnqVKs6kIG2pip6R_YKpaJEuyM5zP1D0E8V3YRUo', '2024-03-21 13:11:17.837899'),
 ('z10c1qnnwx79hdzk844sxgznno9sar6e', '.eJxNjc0KwjAQhN9lz6E2FSntyYN3BR8ghHaNW_JHEhER390NLeJt55vZmTdQVrmEhMoGY3BW5GEs6YECaIaxE-C1QxjhhJj0AgLQabIMsqNy18zavt0fTaXNFBwn1r7t7_z016rlzyivWI0KdM5kPK-uTl2UAmIKN7KoIk2c-1O77b7QpGTfDnLo-oNUEVMOvmuWaLgzBcv18vMFCtZKDQ:1rmcNq:htcmp5tLuhXCPEz4fVLxVal6J0pWWrkrqMK04BSUWvo', '2024-03-19 17:02:14.929835'),
 ('zyztd2mx1tyj7yvc6lejulwe1kq22bs5', 'eyJpc19hZG1pbl9sb2dnZWRfaW4iOnRydWUsImlkIjoxLCJuYW1lIjoiQWNjZWxzdGFjayIsInByb2ZpbGVfcGljIjoibG9nby9hZG1pbi5wbmcifQ:1rm79l:pHrsVgmbOi8l4OfPe4WcdikOPNgGrfmUuD1Ai48mlOk', '2024-03-18 07:41:37.623194');
@@ -410,7 +416,9 @@ INSERT INTO `eye_test` (`et_eye_test_id`, `et_customer_id`, `et_power_attributes
 (2, 8, '{\"RightDvSph\": \"1\", \"RightDvCyl\": \"\", \"RightDvAxis\": \"\", \"RightDvVision\": \"\", \"RightNvSph\": \"\", \"RightNvCyl\": \"\", \"RightNvAxis\": \"2\", \"RightNvVision\": \"\", \"LeftDvSph\": \"\", \"LeftDvCyl\": \"\", \"LeftDvAxis\": \"\", \"LeftDvVision\": \"\", \"LeftNvSph\": \"\", \"LeftNvCyl\": \"\", \"LeftNvAxis\": \"7.9\", \"LeftNvVision\": \"\", \"unifocal\": \"\", \"bifocal\": \"\", \"progressive\": \"1\", \"cr39\": \"\", \"arc\": \"\", \"pdr\": \"\", \"pdl\": \"\", \"glass\": \"\", \"highIndex\": \"\", \"pg\": \"\", \"constant\": \"\", \"distance\": \"\", \"near\": \"\"}', 1, 1, 2, '2024-03-22 20:42:20', 2, '2024-03-22 20:42:20'),
 (3, 8, '{\"test_type\": \"\", \"RightDvSph\": \"1\", \"RightDvCyl\": \"\", \"RightDvAxis\": \"3\", \"RightDvVision\": \"1\", \"RightNvSph\": \"6\", \"RightNvCyl\": \"\", \"RightNvAxis\": \"6\", \"RightNvVision\": \"\", \"LeftDvSph\": \"1\", \"LeftDvCyl\": \"\", \"LeftDvAxis\": \"6\", \"LeftDvVision\": \"\", \"LeftNvSph\": \"1\", \"LeftNvCyl\": \"2\", \"LeftNvAxis\": \"\", \"LeftNvVision\": \"4\", \"unifocal\": \"1\", \"bifocal\": \"\", \"progressive\": \"\", \"cr39\": \"\", \"arc\": \"1\", \"pdr\": \"1.2\", \"pdl\": \"\", \"glass\": \"\", \"highIndex\": \"\", \"pg\": \"\", \"constant\": \"\", \"distance\": \"\", \"near\": \"\"}', 1, 1, 2, '2024-03-23 12:56:58', 2, '2024-03-23 12:56:58'),
 (4, 8, '{\"test_type\": \"Specticale\", \"RightDvSph\": \"1\", \"RightDvCyl\": \"\", \"RightDvAxis\": \"3\", \"RightDvVision\": \"\", \"RightNvSph\": \"5\", \"RightNvCyl\": \"\", \"RightNvAxis\": \"7\", \"RightNvVision\": \"8\", \"LeftDvSph\": \"1\", \"LeftDvCyl\": \"2\", \"LeftDvAxis\": \"\", \"LeftDvVision\": \"\", \"LeftNvSph\": \"5\", \"LeftNvCyl\": \"\", \"LeftNvAxis\": \"7\", \"LeftNvVision\": \"8\", \"unifocal\": \"\", \"bifocal\": \"1\", \"progressive\": \"\", \"cr39\": \"\", \"arc\": \"\", \"pdr\": \"1.1\", \"pdl\": \"\", \"glass\": \"1\", \"highIndex\": \"\", \"pg\": \"\", \"constant\": \"\", \"distance\": \"\", \"near\": \"\"}', 1, 1, 2, '2024-03-23 13:01:24', 2, '2024-03-23 13:01:24'),
-(5, 8, '{\"test_type\": \"Contact Lens\", \"RightDvSph\": \"1\", \"RightDvCyl\": \"2\", \"RightDvAxis\": \"\", \"RightDvVision\": \"\", \"RightNvSph\": \"5\", \"RightNvCyl\": \"6\", \"RightNvAxis\": \"\", \"RightNvVision\": \"\", \"LeftDvSph\": \"\", \"LeftDvCyl\": \"\", \"LeftDvAxis\": \"3\", \"LeftDvVision\": \"4\", \"LeftNvSph\": \"\", \"LeftNvCyl\": \"\", \"LeftNvAxis\": \"7\", \"LeftNvVision\": \"8\", \"unifocal\": \"\", \"bifocal\": \"\", \"progressive\": \"1\", \"cr39\": \"\", \"arc\": \"\", \"pdr\": \"\", \"pdl\": \"1.5\", \"glass\": \"\", \"highIndex\": \"1\", \"pg\": \"\", \"constant\": \"\", \"distance\": \"\", \"near\": \"1\"}', 1, 1, 2, '2024-03-23 13:02:52', 2, '2024-03-23 13:02:52');
+(5, 8, '{\"test_type\": \"Contact Lens\", \"RightDvSph\": \"1\", \"RightDvCyl\": \"2\", \"RightDvAxis\": \"\", \"RightDvVision\": \"\", \"RightNvSph\": \"5\", \"RightNvCyl\": \"6\", \"RightNvAxis\": \"\", \"RightNvVision\": \"\", \"LeftDvSph\": \"\", \"LeftDvCyl\": \"\", \"LeftDvAxis\": \"3\", \"LeftDvVision\": \"4\", \"LeftNvSph\": \"\", \"LeftNvCyl\": \"\", \"LeftNvAxis\": \"7\", \"LeftNvVision\": \"8\", \"unifocal\": \"\", \"bifocal\": \"\", \"progressive\": \"1\", \"cr39\": \"\", \"arc\": \"\", \"pdr\": \"\", \"pdl\": \"1.5\", \"glass\": \"\", \"highIndex\": \"1\", \"pg\": \"\", \"constant\": \"\", \"distance\": \"\", \"near\": \"1\"}', 1, 1, 2, '2024-03-23 13:02:52', 2, '2024-03-23 13:02:52'),
+(6, 8, '{\"test_type\": \"Contact Lens\", \"RightDvSph\": \"12\", \"RightDvCyl\": \"14\", \"RightDvAxis\": \"15\", \"RightDvVision\": \"16\", \"RightNvSph\": \"9\", \"RightNvCyl\": \"8\", \"RightNvAxis\": \"7\", \"RightNvVision\": \"6\", \"LeftDvSph\": \"13\", \"LeftDvCyl\": \"15\", \"LeftDvAxis\": \"17\", \"LeftDvVision\": \"19\", \"LeftNvSph\": \"7\", \"LeftNvCyl\": \"6\", \"LeftNvAxis\": \"5\", \"LeftNvVision\": \"4\", \"unifocal\": \"1\", \"bifocal\": \"\", \"progressive\": \"\", \"cr39\": \"\", \"arc\": \"\", \"pdr\": \"7\", \"pdl\": \"8\", \"glass\": \"1\", \"highIndex\": \"\", \"pg\": \"\", \"constant\": \"1\", \"distance\": \"\", \"near\": \"1\"}', 1, 1, 29, '2024-04-22 13:56:59', 29, '2024-04-22 13:56:59'),
+(7, 29, '{\"test_type\": \"Specticale\", \"RightDvSph\": \"12\", \"RightDvCyl\": \"14\", \"RightDvAxis\": \"15\", \"RightDvVision\": \"27\", \"RightNvSph\": \"2\", \"RightNvCyl\": \"\", \"RightNvAxis\": \"\", \"RightNvVision\": \"\", \"LeftDvSph\": \"16\", \"LeftDvCyl\": \"\", \"LeftDvAxis\": \"\", \"LeftDvVision\": \"\", \"LeftNvSph\": \"\", \"LeftNvCyl\": \"4\", \"LeftNvAxis\": \"\", \"LeftNvVision\": \"6\", \"unifocal\": \"\", \"bifocal\": \"1\", \"progressive\": \"\", \"cr39\": \"\", \"arc\": \"1\", \"pdr\": \"7\", \"pdl\": \"8\", \"glass\": \"\", \"highIndex\": \"\", \"pg\": \"\", \"constant\": \"1\", \"distance\": \"1\", \"near\": \"\"}', 1, 1, 29, '2024-04-22 14:00:57', 29, '2024-04-22 14:00:57');
 
 -- --------------------------------------------------------
 
@@ -434,7 +442,7 @@ CREATE TABLE `frame_shapes` (
 --
 
 INSERT INTO `frame_shapes` (`fshape_shape_id`, `fshape_name`, `fshape_description`, `fshape_status`, `fshape_created_on`, `fshape_created_by`, `fshape_last_updated_on`, `fshape_last_updated_by`) VALUES
-(1, 'Round', 'Description for round\r\n', 1, '2024-02-29 12:59:43', 1, '2024-02-29 12:59:43', 1),
+(1, 'Round', 'Description for round\r\n', 0, '2024-02-29 12:59:43', 1, '2024-02-29 12:59:43', 1),
 (2, 'Hexa', 'rtdf update', 1, '2024-02-29 12:59:48', 1, '2024-04-10 12:19:33', 1),
 (3, 'test dict update', 'test dict update', 0, '2024-03-28 13:35:40', 1, '2024-03-28 13:43:33', 1),
 (4, 'curve', 'curve update', 0, '2024-04-10 12:20:07', 1, '2024-04-10 12:20:07', 1);
@@ -571,11 +579,11 @@ INSERT INTO `franchise_store_employees` (`fse_employee_id`, `fse_name`, `fse_ema
 (7, 'Divya', 'devsandy123@gmail.com', '08792103817', '$2b$12$6HlV1BJA5aqEByujYqHyzu/YfnJXDjR7wjC8yGLiKPMhZJBn.X7j2', 'profile_pic/profile_pic_1712910428_user2-160x160.jpg', 0, 'Chennai, Tamil nadu', 'Aadhar', '[\"documents/documents_1709194028_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1709194028_pan.png\"]', 0, 3, 1, '2024-02-29 13:37:09', 1, '2024-04-12 13:57:08', NULL),
 (8, 'Deeraj', 'der123@gmail.com', '08792103813', '$2b$12$VWfkYoqO.3CKEyZtYBEdhuVFjDuG07x3KztO7k.1VxWLqsgOdBzPC', 'profile_pic/profile_pic_1712908790_person2.jpg', 2, 'Peenya, Banglore', 'Aadhar', '[\"documents/documents_1712908790_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712908790_pan.png\"]', 1, 1, 1, '2024-04-12 13:29:51', 1, '2024-04-12 13:29:51', NULL),
 (9, 'Deeraj up', 'deeraj34@gmail.com', '08792103813', '$2b$12$An71ttPwf4TI2dqugeT1seYq.Oav9aJG14bZISXVdO2JM8wyNWO/e', 'profile_pic/profile_pic_1712908846_person1.jpg', 0, '   Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1712908846_aadhar.jpg\", \"documents/document1_1713250005_pan.png\"]', 'Pan Card', '[\"documents/documents_1712908846_pan.png\", \"documents/document2_1713249308_marketing_head - Copy.jpg\"]', 0, 1, 1, '2024-04-12 13:30:46', 1, '2024-04-16 12:16:53', NULL),
-(10, 'kavya shree', 'kavya678@gmail.com', '08792103812', '$2b$12$ReA7s.KQj3xy/W8E2taL3Ogriu.cZMu3CwY7Il5mM74ed2pkCmGTG', 'profile_pic/profile_pic_1712909619_person3.jpg', 2, 'Peenya\r\npeenya', 'Aadhar', '[\"documents/documents_1712909619_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712909619_pan.png\"]', 1, 2, 1, '2024-04-12 13:43:39', 1, '2024-04-12 13:44:21', '[\"certificates/certificates_1712909619_pan.png\"]'),
+(10, 'kavya shree', 'kavya678@gmail.com', '08792103812', '$2b$12$ReA7s.KQj3xy/W8E2taL3Ogriu.cZMu3CwY7Il5mM74ed2pkCmGTG', 'profile_pic/profile_pic_1712909619_person3.jpg', 2, 'Peenya\r\npeenya', 'Aadhar', '[\"documents/documents_1712909619_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712909619_pan.png\"]', 1, 2, 1, '2024-04-12 13:43:39', 1, '2024-04-17 12:38:19', '[\"certificates/certificates_1713337692_pan.png\"]'),
 (11, 'Deeraj Rathod updat', 'deerajR@gmail.com', '08792103813', '$2b$12$NldRB22nZJUd1mP0Q.JGBem7hbL8dJwdNEkD7TQSOK/MlC.8tg6/y', 'profile_pic/profile_pic_1712910482_person2.jpg', 0, 'Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1712910482_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712910482_pan.png\"]', 1, 3, 1, '2024-04-12 13:58:02', 1, '2024-04-12 13:58:39', NULL),
 (12, 'Deeraj Rathod', 'deeraj1@gmail.com', '08792103813', '$2b$12$tt65d5dQEvuKFCS2yuGluu0nUj5ows3rxyh7VvrysjfV1gT1KQZFS', 'profile_pic/profile_pic_1712910590_person2.jpg', 2, 'Peenya Banglore', 'Driving Licence', '[\"documents/documents_1712910590_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712910590_pan.png\"]', 1, 3, 1, '2024-04-12 13:59:50', 1, '2024-04-16 12:20:39', NULL),
-(13, 'Deeraj', 'abc@gmail.com', '08792103813', '$2b$12$vFLGcfqvoucKeguNUvTsyefCfzjxxgW3w1R0tmVEl4JyOfrgH3y8K', 'profile_pic/profile_pic_1712911672_person2.jpg', 2, 'Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1712911672_aadhar.jpg\", \"documents/document1_1713250068_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712911672_pan.png\", \"documents/document2_1713250068_pan.png\"]', 1, 2, 1, '2024-04-12 14:17:52', 1, '2024-04-16 13:49:03', '[\"certificates/certificates_1712911672_aadhar.jpg\"]'),
-(14, 'Mary M', 'mary09@gmail.com', '08976543219', '$2b$12$77rC083FNKgd7mYFhcHiTObKHdtYvlG/LDXeMFt4L/wuovWZppkN2', 'profile_pic/profile_pic_1712918813_person3.jpg', 0, 'Rajajinagar, Banglore\r\n                            ', 'Aadhar', '[\"documents/documents_1712918813_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712918813_pan.png\", \"documents/document2_1713250354_aadhar.jpg\"]', 1, 4, 1, '2024-04-12 16:16:54', 1, '2024-04-16 12:22:53', NULL);
+(13, 'Deeraj', 'abc@gmail.com', '08792103813', '$2b$12$vFLGcfqvoucKeguNUvTsyefCfzjxxgW3w1R0tmVEl4JyOfrgH3y8K', 'profile_pic/profile_pic_1712911672_person2.jpg', 2, 'Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1712911672_aadhar.jpg\", \"documents/document1_1713250068_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712911672_pan.png\", \"documents/document2_1713250068_pan.png\"]', 1, 2, 1, '2024-04-12 14:17:52', 1, '2024-04-17 12:29:13', '[\"certificates/certificates_1712911672_aadhar.jpg\"]'),
+(14, 'Mary M', 'mary09@gmail.com', '08976543219', '$2b$12$77rC083FNKgd7mYFhcHiTObKHdtYvlG/LDXeMFt4L/wuovWZppkN2', 'profile_pic/profile_pic_1712918813_person3.jpg', 2, 'Rajajinagar, Banglore\r\n                            ', 'Aadhar', '[\"documents/documents_1712918813_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712918813_pan.png\", \"documents/document2_1713250354_aadhar.jpg\"]', 1, 4, 1, '2024-04-12 16:16:54', 1, '2024-04-16 12:22:53', NULL);
 
 -- --------------------------------------------------------
 
@@ -638,7 +646,7 @@ CREATE TABLE `lab` (
 
 INSERT INTO `lab` (`lab_lab_id`, `lab_name`, `lab_display_name`, `lab_phone`, `lab_gst`, `lab_email`, `lab_city`, `lab_state`, `lab_zip`, `lab_lat`, `lab_lng`, `lab_address`, `lab_status`, `lab_created_by`, `lab_created_on`, `lab_last_updated_by`, `lab_last_updated_on`) VALUES
 (1, 'Banglore lab', 'Bangalore lab', '8660225160', 'GSTIN09876543', 'lab.bangalore@gmail.com', 'Bangalore', 'Karnataka', '562123', 13.1006804, 77.39045519999999, '  Indolens, Indolens Solutions Pvt Ltd, BH Road, Jyothi Nagar, Nelamangala Town, Karnataka, India', 1, 1, '2024-02-29 13:31:41', 1, '2024-04-10 13:33:24'),
-(2, 'Tumkur lab update tumkur lab', 'Tumkur lab', '8660225160', 'GSTIN09876543', 'lab.tumkur@gmail.com', 'Bangalore', 'Karnataka', '111111', 12.9853859, 77.5352348, '    Tumkur, Stage 1, KHB Colony, Basaveshwar Nagar, Bengaluru, Karnataka, India', 0, 1, '2024-02-29 13:32:29', 1, '2024-04-10 17:03:29');
+(2, 'Tumkur lab', 'Tumkur lab', '8660225160', 'GSTIN09876543', 'lab.tumkur@gmail.com', 'Bangalore', 'Karnataka', '111111', 12.9853859, 77.5352348, '      Tumkur, Stage 1, KHB Colony, Basaveshwar Nagar, Bengaluru, Karnataka, India', 0, 1, '2024-02-29 13:32:29', 1, '2024-04-17 14:49:53');
 
 -- --------------------------------------------------------
 
@@ -671,10 +679,10 @@ CREATE TABLE `lab_technician` (
 --
 
 INSERT INTO `lab_technician` (`lt_lab_technician_id`, `lt_name`, `lt_email`, `lt_phone`, `lt_password`, `lt_profile_pic`, `lt_assigned_lab_id`, `lt_address`, `lt_document_1_type`, `lt_document_1_url`, `lt_document_2_type`, `lt_document_2_url`, `lt_status`, `lt_created_by`, `lt_created_on`, `lt_last_updated_by`, `lt_last_updated_on`) VALUES
-(1, 'Santhosh Kumar', 'devsandy12@gmail.com', '8660225160', '$2b$12$jRbmzj.REjfZWB2Qyfnfe.SLvmgbFwyBZ1TFl2w70EoNjob0NE71m', 'profile_pic/profile_pic_1709193812_sandyf.png', 1, 'Address of technician', 'Aadhar', '[\"documents/documents_1709193812_sandyf.png\"]', 'Pan Card', '[\"documents/documents_1709193812_sandyf.png\"]', 1, 1, '2024-02-29 13:33:33', 1, '2024-02-29 13:33:33'),
+(1, 'Santhosh Kumar', 'devsandy12@gmail.com', '8660225160', '$2b$12$/d3/LGbdiwftPb9tEuQL8e1jIOvtQ808vyhi19gHMCufD7.gDBDzW', 'profile_pic/profile_pic_1709193812_sandyf.png', 1, 'Address of technician', 'Aadhar', '[\"documents/documents_1709193812_sandyf.png\"]', 'Pan Card', '[\"documents/documents_1709193812_sandyf.png\"]', 1, 1, '2024-02-29 13:33:33', 1, '2024-02-29 13:33:33'),
 (2, 'Roop Raj Thapa', 'accelstack@gmail.com', '09876543210', '$2b$12$Agz9c3IVn.zt59sNr5q0Z.hNtYwfuDmAMLGF3ZMvqraREx0wO8Ace', 'profile_pic/profile_pic_1709193883_dsrhfghjfdxfghxgdxghgjfxfgyfxcfgygfcvgjhcvghcxvfgcvfgcvfcv.jpeg', 0, 'Address here', 'Aadhar', '[\"documents/documents_1709193883_sandyf.png\"]', 'Pan Card', '[\"documents/documents_1709193883_dsrhfghjfdxfghxgdxghgjfxfgyfxcfgygfcvgjhcvghcxvfgcvfgcvfcv.jpeg\"]', 1, 1, '2024-02-29 13:34:44', 1, '2024-02-29 13:34:44'),
 (3, 'lab tech add test update', 'labtechadd001@test.com', '9809890989', '$2b$12$XzWjl7K0mFf6aMKU3cw3seSjYoEA3Y88yELalP4TWzjbQb2urrwwi', 'profile_pic/profile_pic_1713001359_lab_tech - Copy.png', 1, ' poiuyt5r4 asdfghj mnbvcx', 'Aadhar', '[\"documents/documents_1713001359_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1713001359_pan.jpg\"]', 1, 1, '2024-04-13 15:12:39', 1, '2024-04-13 15:14:33'),
-(4, 'Riyazz', 'riyaz223@gmail.com', '8792103818', '$2b$12$Jss1HeW9CCjvzXGorWX7Texen.sHCZ1XRWEPyqoYFF5z5BTPX.p0e', 'profile_pic/profile_pic_1713251294_person1.jpg', 0, ' Chennai, Tamil nadu', 'Aadhar', '[\"documents/documents_1713251294_aadhar.jpg\", \"documents/document1_1713254046_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1713251294_pan.png\"]', 0, 1, '2024-04-16 12:38:14', 1, '2024-04-16 13:24:06');
+(4, 'Riyazzzzzz', 'riyaz223@gmail.com', '8792103818', '$2b$12$Jss1HeW9CCjvzXGorWX7Texen.sHCZ1XRWEPyqoYFF5z5BTPX.p0e', 'profile_pic/profile_pic_1713251294_person1.jpg', 0, '   Chennai, Tamil nadu', 'Ration Card', '[\"documents/document1_1713340004_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1713251294_pan.png\"]', 1, 1, '2024-04-16 12:38:14', 1, '2024-04-19 14:27:22');
 
 -- --------------------------------------------------------
 
@@ -792,7 +800,8 @@ INSERT INTO `order_track` (`track_id`, `order_id`, `status`, `created_on`) VALUE
 (44, 'OS_1_1710447651', 5, '2024-03-15 01:51:35'),
 (45, 'OS_1_1710865113', 1, '2024-03-19 21:48:33'),
 (46, 'OS_1_1711023482', 1, '2024-03-21 17:48:02'),
-(47, 'OS_1_1711177991', 1, '2024-03-23 12:43:11');
+(47, 'OS_1_1711177991', 1, '2024-03-23 12:43:11'),
+(48, 'OS_1_1709624562', 7, '2024-04-17 13:12:42');
 
 -- --------------------------------------------------------
 
@@ -851,7 +860,7 @@ CREATE TABLE `own_store` (
 --
 
 INSERT INTO `own_store` (`os_store_id`, `os_store_name`, `os_store_display_name`, `os_store_phone`, `os_store_gst`, `os_store_email`, `os_store_city`, `os_store_state`, `os_store_zip`, `os_store_lat`, `os_store_lng`, `os_store_address`, `os_status`, `os_created_by`, `os_created_on`, `os_last_updated_by`, `os_last_updated_on`) VALUES
-(1, 'OwnStore1', 'OwnStore1', '08792103812', '26AATCA501G1Z11', 'ownstore123@gmail.com', 'banglore', 'karnataka', '111111', 13.1006804, 77.39045519999999, 'Indolens, Indolens Solutions Pvt Ltd, BH Road, Jyothi ', 1, 1, '2024-02-29 13:00:32', 1, '2024-04-10 18:27:49'),
+(1, 'INDOLENS NELAMANGALA', 'INDOLENS NELAMANGALA', '08792103812', '26AATCA501G1Z11', 'ownstore123@gmail.com', 'banglore', 'karnataka', '111111', 13.1006804, 77.39045519999999, 'Indolens, Indolens Solutions Pvt Ltd, BH Road, Jyothi ', 1, 1, '2024-02-29 13:00:32', 1, '2024-04-17 13:57:54'),
 (2, 'OwnStore2', 'OwnStore2', '8792103814', '26AATCA501G1Z12', 'ownstore124@gmail.com', 'chennai', 'tamil nadu', '111234', 13.0826802, 80.2707184, 'Chennai, Tamil Nadu', 1, 1, '2024-02-29 13:02:11', 1, '2024-02-29 13:02:11'),
 (3, 'OwnStore3', 'OwnStore3', '8792103815', '26AATCA501G1Z14', 'ownstore125@gmail.com', 'Shivmogga', 'Karnataka', '123456', 14.1670402, 75.0403, 'Sagara, Shivmogga', 1, 1, '2024-02-29 13:03:45', 1, '2024-02-29 13:03:45'),
 (4, 'INDOLENS OWN STORE 01', 'INDOLENS OWN STORE 01', '3456788874', 'tfjghjkfcghbggg', 'devsandy12@gmail.com', 'bangalore', 'Karnataka', '560057', 13.0524556, 77.4697055, 'No.23, Hessargatta road ,AGBG layout,chikkasandra bengaluru', 1, 1, '2024-03-15 01:26:47', 1, '2024-03-15 01:26:47'),
@@ -913,13 +922,13 @@ INSERT INTO `own_store_employees` (`ose_employee_id`, `ose_name`, `ose_email`, `
 (24, 'Rita', 'rita@gmail.com', '9876543456', '$2b$12$icb0Ed9IvsdJN9b1AoGL0OHLXTb7ev41ERq/fjgzLKdGkc3rydYhq', 'profile_pic/profile_pic_1712905739_person3.jpg', 0, 'Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1712905739_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712905739_pan.png\"]', 0, 3, 1, '2024-04-12 12:38:59', 1, '2024-04-12 12:38:59', NULL),
 (26, 'test list sync', 'testlistsync@test.com', '9897898789', '$2b$12$BNIPcBq9.nDpwQFAjL9lCe4K.7IoTGhhOssKzIsJaTZmcxxBYmEbi', 'profile_pic/profilePic_1712906410_eyeglass-png.png', 0, 'poiuytrew oiuytre mnbvcxz kjhgfd', 'Aadhar', '[\"documents/document1_1712906410_aadhar.jpg\"]', 'Pan Card', '[\"documents/document2_1712906410_pan.jpg\"]', 1, 1, 1, '2024-04-12 12:50:10', 1, '2024-04-12 12:50:10', NULL),
 (28, 'Deeraj', 'smitharaj0707@gmail.com', '08792103814', '$2b$12$Uc3CEwW6HeHsX49/CRstT.E4QMOz9TrOkh7FR25iSw3wU6/WLqSle', 'profile_pic/profilePic_1712906488_person2.jpg', 5, 'Rajajinagar, Banglore', 'Aadhar', '[\"documents/document1_1712906488_aadhar.jpg\", \"documents/document1_1713248721_pan.png\"]', 'Pan Card', '[\"documents/document2_1712906488_pan.png\"]', 1, 1, 1, '2024-04-12 12:51:28', 1, '2024-04-16 11:55:52', NULL),
-(29, 'Maryu update', 'mary1@gmail.com', '08976543219', '$2b$12$opWn0B5D4YgMjZIc4DWTe.3e7OBFWL3RtoPL8ETnTgiSNlyWMT48W', 'profile_pic/profile_pic_1712906740_person4.jpg', 1, 'Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1712906740_aadhar.jpg\", \"documents/document1_1713248801_pan.png\"]', 'Pan Card', '[\"documents/document2_1713248801_aadhar.jpg\"]', 1, 2, 1, '2024-04-12 12:55:41', 1, '2024-04-16 11:57:07', '[\"certificates/certificates_1712906740_pan.png\"]'),
+(29, 'Maryu update', 'mary1@gmail.com', '08976543219', '$2b$12$opWn0B5D4YgMjZIc4DWTe.3e7OBFWL3RtoPL8ETnTgiSNlyWMT48W', 'profile_pic/profile_pic_1712906740_person4.jpg', 1, 'Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1712906740_aadhar.jpg\", \"documents/document1_1713248801_pan.png\"]', 'Pan Card', '[\"documents/document2_1713248801_aadhar.jpg\"]', 1, 2, 1, '2024-04-12 12:55:41', 1, '2024-04-17 12:38:34', '[\"certificates/certificates_1713337714_aadhar.jpg\"]'),
 (30, 'Maryu updated', 'mary2@gmail.com', '08976543219', '$2b$12$YDvM4o5rT3FLqfoJn7EQquZf7Q4C1CyDfQAmYESR3d1qnjxfPCAlK', 'profile_pic/profile_pic_1712906874_person4.jpg', 0, 'Chennai, Tamil nadu', 'Aadhar', '[\"documents/documents_1712906874_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712906874_pan.png\"]', 1, 3, 1, '2024-04-12 12:57:55', 1, '2024-04-16 12:15:46', NULL),
 (31, 'Maryu update', 'mary3@gmail.com', '08976543219', '$2b$12$wCE43QHelYkaoOeAihYfhupPT1mp6iWmLYbJbUsvsw/Ck6N0qj7wG', 'profile_pic/profile_pic_1712907122_person3.jpg', 0, 'Peenya\r\nPeenya\r\nSBI\r\n                            ', 'Driving Licence', '[\"documents/documents_1712907122_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712907122_pan.png\"]', 0, 4, 1, '2024-04-12 13:02:03', 1, '2024-04-12 13:02:36', NULL),
 (33, 'Maryu update', 'mary4@gmail.com', '08976543219', '$2b$12$5kPzw8NsQ9ddkfVlZllC1eye1mXv3eAQb4NK80fCcf78ZrIRYYfoa', 'profile_pic/profile_pic_1712907374_person3.jpg', 0, 'Chennai, Tamil nadu', 'Driving Licence', '[\"documents/documents_1712907374_pan.png\", \"documents/documents_1712907374_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712907374_aadhar.jpg\", \"documents/documents_1712907374_person4.jpg\"]', 0, 4, 1, '2024-04-12 13:06:14', 1, '2024-04-12 13:06:14', NULL),
 (34, 'Deeraj', 'de7@gmail.com', '08792103813', '$2b$12$yyVtY8MQjvzEX58JqGXnguA.LXD06F7KQjPJybvjG3782kyMb.It.', 'profile_pic/profile_pic_1712909379_person2.jpg', 0, 'Rajajinagar, Banglore', 'Aadhar', '[\"documents/documents_1712909379_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712909379_pan.png\"]', 1, 4, 1, '2024-04-12 13:39:39', 1, '2024-04-12 13:39:39', NULL),
 (36, 'Deeraj', 'de8@gmail.com', '08792103813', '$2b$12$vDMx3K5V9DEQ3NF5vAHbae5VDRN8GraPILdjeMNbFVAj8yoBuOHwu', 'profile_pic/profile_pic_1712909413_person2.jpg', 1, 'Rajajinagar, Banglore\r\n                            \r\n                            ', 'Aadhar', '[\"documents/documents_1712909413_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712909413_pan.png\"]', 1, 4, 1, '2024-04-12 13:40:13', 1, '2024-04-12 13:41:17', NULL),
-(37, 'pavan', 'pavan@gmail.com', '9876543234', '$2b$12$Kri35vGAn.Nntw639VfXkutChWx/ccY60O5MhWTZpsbZ5HzQ3xMtC', 'profile_pic/profile_pic_1712909554_person2.jpg', 3, 'Peenya, bnaglore', 'Aadhar', '[\"documents/documents_1712909554_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712909554_pan.png\"]', 1, 4, 1, '2024-04-12 13:42:34', 1, '2024-04-16 12:14:44', NULL);
+(37, 'pavan m', 'pavan@gmail.com', '9876543234', '$2b$12$Kri35vGAn.Nntw639VfXkutChWx/ccY60O5MhWTZpsbZ5HzQ3xMtC', 'profile_pic/profile_pic_1712909554_person2.jpg', 5, 'Peenya, bnaglore\r\n                            ', 'Aadhar', '[\"documents/documents_1712909554_aadhar.jpg\"]', 'Pan Card', '[\"documents/documents_1712909554_pan.png\"]', 1, 4, 1, '2024-04-12 13:42:34', 1, '2024-04-17 12:28:16', NULL);
 
 -- --------------------------------------------------------
 
@@ -944,11 +953,12 @@ CREATE TABLE `product_categories` (
 --
 
 INSERT INTO `product_categories` (`pc_category_id`, `pc_category_name`, `pc_category_prefix`, `pc_category_description`, `pc_status`, `pc_created_on`, `pc_created_by`, `pc_last_updated_on`, `pc_last_updated_by`) VALUES
-(1, 'Frames', 'IND-FR', 'description for frames goes here', 1, '2024-02-29 12:49:37', 1, '2024-02-29 12:49:37', 1),
+(1, 'Frames', 'IND-FR', 'description for frames goes here', 0, '2024-02-29 12:49:37', 1, '2024-02-29 12:49:37', 1),
 (2, 'Lens', 'IND-LENS', 'description for lens goes here', 1, '2024-02-29 12:49:37', 1, '2024-02-29 12:49:37', 1),
 (3, 'Contact Lens', 'IND-CL', 'description for lens goes here', 0, '2024-02-29 12:49:37', 1, '2024-02-29 12:49:37', 1),
 (4, 'Accessories', 'IND-ACC', 'Description for accessories goes here', 1, '2024-02-29 12:58:50', 1, '2024-02-29 12:58:50', 1),
-(5, 'ContactLens', 'ContactLens', 'ContactLens', 0, '2024-03-21 18:59:07', 1, '2024-03-21 18:59:07', 1);
+(5, 'ContactLens', 'ContactLens', 'ContactLens', 0, '2024-03-21 18:59:07', 1, '2024-03-21 18:59:07', 1),
+(8, 'Contact Lens', 'IND-FR', 'abc', 0, '2024-04-17 14:01:39', 1, '2024-04-17 15:00:09', 1);
 
 -- --------------------------------------------------------
 
@@ -1039,8 +1049,8 @@ INSERT INTO `request_products` (`pr_request_products_id`, `pr_store_id`, `pr_sto
 (1, 1, 1, 1, 10, 900, 0, 0, 0, 0, 0, 'Enjoy', '2024-02-29 13:38:19', 1, '2024-02-29 13:38:19', 1),
 (2, 1, 1, 2, 10, 900, 0, 0, 0, 0, 0, 'enjoy', '2024-02-29 13:40:44', 1, '2024-02-29 13:40:44', 1),
 (3, 1, 2, 2, 4, 900, 2, 3, 1, 0, 0, 'i dont want it\r\n', '2024-02-29 13:42:28', 2, '2024-04-11 13:14:50', 1),
-(4, 1, 1, 2, 5, 900, 1, 1, 1, 0, 0, 'test2', '2024-02-29 13:43:51', 2, '2024-04-10 15:34:42', 1),
-(5, 1, 1, 2, 2, 900, 1, 1, 1, 0, 0, 'test', '2024-02-29 13:45:26', 2, '2024-04-10 15:33:48', 1),
+(4, 1, 1, 2, 5, 900, 0, 1, 1, 0, 0, 'test2', '2024-02-29 13:43:51', 2, '2024-04-10 15:34:42', 1),
+(5, 1, 1, 2, 2, 900, 1, 1, 1, 0, 0, 'test', '2024-02-29 13:45:26', 2, '2024-04-17 14:42:35', 1),
 (6, 2, 1, 1, 3, 900, 0, 0, 0, 0, 0, 'gfh', '2024-03-05 10:57:06', 1, '2024-03-05 10:57:06', 1),
 (7, 3, 1, 1, 4, 900, 0, 0, 0, 0, 0, 'DFGHJ\r\n', '2024-03-05 10:57:19', 1, '2024-03-05 10:57:19', 1),
 (8, 3, 1, 1, 10, 900, 0, 0, 0, 0, 0, 'hg', '2024-03-05 13:46:39', 1, '2024-03-05 13:46:39', 1),
@@ -1085,14 +1095,20 @@ CREATE TABLE `reset_password` (
 INSERT INTO `reset_password` (`rpwd_reset_password_id`, `rpwd_email`, `rpwd_code`, `rpwd_status`, `rpwd_created_on`) VALUES
 (1, 'smitharaj0703@gmail.com', 'gt2HXpadCeAhtSt0', 1, '2024-03-04 16:03:11'),
 (2, 'accelstack@gmail.com', 'OkQFUjMkZ3NfY97J', 1, '2024-03-04 16:03:29'),
-(3, 'devsandy12@gmail.com', 'NFDjSDaKgC9xSWcI', 0, '2024-03-04 16:04:15'),
+(3, 'devsandy12@gmail.com', 'NFDjSDaKgC9xSWcI', 1, '2024-03-04 16:04:15'),
 (4, 'smitharaj0703@gmail.com', 'avQrDQPF7h6noweL', 1, '2024-03-04 16:05:34'),
 (5, 'smitharaj0703@gmail.com', 'DkaiyRVjJFlw5NTz', 1, '2024-03-04 16:13:19'),
 (6, 'accelstack@gmail.com', '8FkPCkdLY6qpeUCb', 1, '2024-03-04 16:14:24'),
 (7, 'smitharaj0703@gmail.com', 'VCa8qabIRyYYuhJi', 1, '2024-03-04 16:17:22'),
 (8, 'accelstack@gmail.com', 'fT3m3qJHxAPreGVD', 0, '2024-03-23 14:18:21'),
 (9, 'accelstack@gmail.com', 'AQbP97b8fBgIfFVE', 0, '2024-03-23 14:19:31'),
-(10, 'accelstack@gmail.com', 'wgejzlTOcHdkBUEy', 0, '2024-03-23 14:21:19');
+(10, 'accelstack@gmail.com', 'wgejzlTOcHdkBUEy', 0, '2024-03-23 14:21:19'),
+(11, 'accelstack@gmail.com', 'IrfqYkumMdEMCLm4', 0, '2024-04-20 12:38:56'),
+(12, 'accelstack@gmail.com', 'fKBKiGDW1gTev53a', 0, '2024-04-20 12:40:34'),
+(13, 'accelstack@gmail.com', 'tKnnEKPh9UJKJpu3', 0, '2024-04-20 12:41:37'),
+(14, 'devsandy12@gmail.com', 'YDF6oLwRbxWrpdEW', 1, '2024-04-20 12:42:46'),
+(15, 'devsandy12@gmail.com', 'MW1B90R2e1WECbdK', 1, '2024-04-20 12:49:04'),
+(16, 'devsandy12@gmail.com', '5vALNHPrEZXjFP12', 1, '2024-04-20 12:51:15');
 
 -- --------------------------------------------------------
 
@@ -1182,12 +1198,12 @@ INSERT INTO `sales_order` (`so_sale_item_id`, `so_order_id`, `so_product_id`, `s
 (19, 'OS_1_1710225250', 6, '097', 2000, 'Pair', 1, 2000, 9, 1, '{\"stock_type\": \"rx\", \"contact_lens_type\": \"Hard\", \"contact_lens_disposability\": \"3 Month\", \"power\": \"1\", \"bc\": \"1\", \"dia\": \"1\", \"cyl\": \"1\", \"axis\": \"1\", \"eye\": \"Right\"}', 1, 8, 1, 1, 1, 1, 0, '2024-03-15', NULL, 'sdf', 1, 1, 2, '2024-03-12 12:04:10', 2, '2024-03-12 12:04:10'),
 (20, 'OS_1_1710225582', 2, '09', 1200, 'Pair', 1, 1200, 25, 1, '{}', 1, 8, 1, 1, 1, 1, 0, '2024-03-15', NULL, 'r', 1, 1, 2, '2024-03-12 12:09:42', 2, '2024-03-12 12:09:42'),
 (21, 'OS_1_1710225616', 2, '09', 1200, 'Pair', 1, 1200, 25, 1, '{}', 0, 8, 6, 2, 1, 1, 1200, '2024-03-15', NULL, 'df', 1, 1, 2, '2024-03-12 12:10:16', 2, '2024-03-12 12:10:16'),
-(22, 'OS_1_1710446587', 4, '04', 600, 'Pair', 1, 600, 10, 1, '{\"lens_type\": \"bifocal\", \"stock_type\": \"rx\", \"leftLensSphRx\": \"56\", \"leftLensCylRx\": \"6\", \"leftLensAxisRx\": \"7\", \"leftLensAddRx\": \"897\", \"leftLensPdRx\": \"90\", \"rightLensSphRx\": \"86434\", \"rightLensCylRx\": \"6\", \"rightLensAxisRx\": \"7\", \"rightLensAddRx\": \"9\", \"rightLensPdRx\": \"764\"}', 1, 8, 1, 1, 1, 1, 0, '2024-03-18', '[]', 'werfg', 1, 1, 2, '2024-03-15 01:33:07', 2, '2024-03-15 01:33:07'),
-(23, 'OS_1_1710446715', 4, '04', 600, 'Pair', 2, 1200, 10, 1, '{\"lens_type\": \"bifocal\", \"stock_type\": \"rx\", \"leftLensSphRx\": \"6\", \"leftLensCylRx\": \"5\", \"leftLensAxisRx\": \"6\", \"leftLensAddRx\": \"89\", \"leftLensPdRx\": \"6\", \"rightLensSphRx\": \"0\", \"rightLensCylRx\": \"7\", \"rightLensAxisRx\": \"5\", \"rightLensAddRx\": \"7\", \"rightLensPdRx\": \"8\"}', 1, 8, 1, 1, 1, 1, 10, '2024-03-18', '[2, 2]', 'fgchj', 1, 1, 2, '2024-03-15 01:35:15', 2, '2024-03-15 01:35:15'),
-(24, 'OS_1_1710446715', 2, '09', 1200, 'Pair', 2, 2400, 25, 1, '{}', 1, 8, 1, 1, 1, 1, 10, '2024-03-18', NULL, 'fgchj', 1, 1, 2, '2024-03-15 01:35:15', 2, '2024-03-15 01:35:15'),
+(22, 'OS_1_1710446587', 4, '04', 600, 'Pair', 1, 600, 10, 1, '{\"lens_type\": \"bifocal\", \"stock_type\": \"rx\", \"leftLensSphRx\": \"56\", \"leftLensCylRx\": \"6\", \"leftLensAxisRx\": \"7\", \"leftLensAddRx\": \"897\", \"leftLensPdRx\": \"90\", \"rightLensSphRx\": \"86434\", \"rightLensCylRx\": \"6\", \"rightLensAxisRx\": \"7\", \"rightLensAddRx\": \"9\", \"rightLensPdRx\": \"764\"}', 1, 8, 3, 1, 1, 1, 0, '2024-03-18', '[]', 'werfg', 1, 1, 2, '2024-03-15 01:33:07', 2, '2024-03-15 01:33:07'),
+(23, 'OS_1_1710446715', 4, '04', 600, 'Pair', 2, 1200, 10, 1, '{\"lens_type\": \"bifocal\", \"stock_type\": \"rx\", \"leftLensSphRx\": \"6\", \"leftLensCylRx\": \"5\", \"leftLensAxisRx\": \"6\", \"leftLensAddRx\": \"89\", \"leftLensPdRx\": \"6\", \"rightLensSphRx\": \"0\", \"rightLensCylRx\": \"7\", \"rightLensAxisRx\": \"5\", \"rightLensAddRx\": \"7\", \"rightLensPdRx\": \"8\"}', 1, 8, 2, 1, 1, 1, 10, '2024-03-18', '[2, 2]', 'fgchj', 1, 1, 2, '2024-03-15 01:35:15', 2, '2024-03-15 01:35:15'),
+(24, 'OS_1_1710446715', 2, '09', 1200, 'Pair', 2, 2400, 25, 1, '{}', 1, 8, 2, 1, 1, 1, 10, '2024-03-18', NULL, 'fgchj', 1, 1, 2, '2024-03-15 01:35:15', 2, '2024-03-15 01:35:15'),
 (25, 'OS_1_1710446969', 2, '09', 1200, 'Pair', 1, 1200, 25, 1, '{}', 0, 8, 6, 2, 1, 1, 1200, '2024-03-18', NULL, 'wdf', 1, 1, 2, '2024-03-15 01:39:29', 2, '2024-03-15 01:39:29'),
 (26, 'OS_1_1710447298', 2, '09', 1200, 'Pair', 1, 1200, 25, 1, '{}', 0, 8, 1, 1, 1, 1, 0, '2024-03-18', NULL, 'dfg', 1, 1, 2, '2024-03-15 01:44:58', 2, '2024-03-15 01:44:58'),
-(27, 'OS_1_1710447484', 4, '04', 600, 'Pair', 1, 600, 10, 1, '{\"lens_type\": \"bifocal\", \"stock_type\": \"rx\", \"leftLensSphRx\": \"7\", \"leftLensCylRx\": \"7\", \"leftLensAxisRx\": \"7\", \"leftLensAddRx\": \"7\", \"leftLensPdRx\": \"7\", \"rightLensSphRx\": \"77\", \"rightLensCylRx\": \"7\", \"rightLensAxisRx\": \"7\", \"rightLensAddRx\": \"7\", \"rightLensPdRx\": \"7\"}', 0, 8, 5, 1, 1, 1, 0, '2024-03-18', '[]', 'fchg', 1, 1, 2, '2024-03-15 01:48:04', 2, '2024-03-15 01:48:04'),
+(27, 'OS_1_1710447484', 4, '04', 600, 'Pair', 1, 600, 10, 1, '{\"lens_type\": \"bifocal\", \"stock_type\": \"rx\", \"leftLensSphRx\": \"7\", \"leftLensCylRx\": \"7\", \"leftLensAxisRx\": \"7\", \"leftLensAddRx\": \"7\", \"leftLensPdRx\": \"7\", \"rightLensSphRx\": \"77\", \"rightLensCylRx\": \"7\", \"rightLensAxisRx\": \"7\", \"rightLensAddRx\": \"7\", \"rightLensPdRx\": \"7\"}', 0, 8, 4, 1, 1, 1, 0, '2024-03-18', '[]', 'fchg', 1, 1, 2, '2024-03-15 01:48:04', 2, '2024-03-15 01:48:04'),
 (28, 'OS_1_1710447651', 4, '04', 600, 'Pair', 1, 600, 10, 1, '{\"lens_type\": \"bifocal\", \"stock_type\": \"rx\", \"leftLensSphRx\": \"4\", \"leftLensCylRx\": \"4\", \"leftLensAxisRx\": \"4\", \"leftLensAddRx\": \"4\", \"leftLensPdRx\": \"4\", \"rightLensSphRx\": \"4\", \"rightLensCylRx\": \"4\", \"rightLensAxisRx\": \"4\", \"rightLensAddRx\": \"4\", \"rightLensPdRx\": \"4\"}', 0, 8, 5, 1, 1, 1, 0, '2024-03-18', '[]', 'fdgg', 1, 1, 2, '2024-03-15 01:50:51', 2, '2024-03-15 01:50:51'),
 (29, 'OS_1_1710865113', 2, '09', 1200, 'Pair', 1, 1200, 0, 0, '{}', 0, 8, 1, 1, 1, 1, 0, '2024-03-22', NULL, 'df', 1, 1, 2, '2024-03-19 21:48:33', 2, '2024-03-19 21:48:33'),
 (30, 'OS_1_1711023482', 2, '09', 1200, 'Pair', 2, 1800, 25, 1, '{}', 0, 8, 2, 1, 1, 1, 0, '2024-03-24', NULL, 'one with discount and another without discount', 1, 1, 2, '2024-03-21 17:48:02', 2, '2024-03-21 17:48:02'),
@@ -1259,7 +1275,9 @@ INSERT INTO `store_expense` (`se_store_expense_id`, `se_store_id`, `se_store_typ
 (1, 1, 2, 1200, 'i dont know', '2024-02-29 13:53:42', '2024-02-29 13:53:42', 2),
 (2, 1, 1, 100, 'hgh', '2024-03-20 01:03:25', '2024-03-20 01:03:25', 2),
 (3, 1, 1, 100, '89', '2024-03-20 01:03:54', '2024-03-20 01:03:54', 2),
-(4, 1, 1, 100, 'ljhv', '2024-03-20 01:04:46', '2024-03-20 01:04:46', 2);
+(4, 1, 1, 100, 'ljhv', '2024-03-20 01:04:46', '2024-03-20 01:04:46', 2),
+(5, 1, 1, 50, 'this expense is added to test the expense amount', '2024-04-23 11:25:44', '2024-04-23 11:25:44', 2),
+(6, 1, 1, 50, 'Others who use this device wont see your activity, so you can browse more privately. This wont change how data is collected by websites you visit and the services they use, including Google. Downloads, bookmarks and reading list items will be saved', '2024-04-23 11:28:16', '2024-04-23 11:28:16', 2);
 
 -- --------------------------------------------------------
 
@@ -1340,7 +1358,7 @@ CREATE TABLE `units` (
 --
 
 INSERT INTO `units` (`unit_unit_id`, `unit_name`, `unit_status`, `unit_created_on`, `unit_created_by`, `unit_last_updated_on`, `unit_last_updated_by`) VALUES
-(1, 'Pairs', 1, '2024-02-29 13:00:42', 1, '2024-04-10 15:48:03', 1),
+(1, 'Pair upd', 1, '2024-02-29 13:00:42', 1, '2024-04-19 13:57:49', 1),
 (2, 'Single', 0, '2024-02-29 13:00:46', 1, '2024-02-29 13:00:46', 1),
 (3, 'Pack', 1, '2024-02-29 13:01:07', 1, '2024-02-29 13:01:07', 1),
 (8, 'dict test update', 0, '2024-03-28 19:13:58', 1, '2024-03-28 19:14:12', 1),
@@ -1636,13 +1654,13 @@ ALTER TABLE `central_inventory_restock_log`
 -- AUTO_INCREMENT for table `customers`
 --
 ALTER TABLE `customers`
-  MODIFY `customer_customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
+  MODIFY `customer_customer_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
 
 --
 -- AUTO_INCREMENT for table `eye_test`
 --
 ALTER TABLE `eye_test`
-  MODIFY `et_eye_test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `et_eye_test_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `frame_shapes`
@@ -1708,7 +1726,7 @@ ALTER TABLE `optimetry`
 -- AUTO_INCREMENT for table `order_track`
 --
 ALTER TABLE `order_track`
-  MODIFY `track_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=48;
+  MODIFY `track_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=49;
 
 --
 -- AUTO_INCREMENT for table `other_employees`
@@ -1732,7 +1750,7 @@ ALTER TABLE `own_store_employees`
 -- AUTO_INCREMENT for table `product_categories`
 --
 ALTER TABLE `product_categories`
-  MODIFY `pc_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `pc_category_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `product_colors`
@@ -1756,7 +1774,7 @@ ALTER TABLE `request_products`
 -- AUTO_INCREMENT for table `reset_password`
 --
 ALTER TABLE `reset_password`
-  MODIFY `rpwd_reset_password_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+  MODIFY `rpwd_reset_password_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- AUTO_INCREMENT for table `sales_executive`
@@ -1780,7 +1798,7 @@ ALTER TABLE `sales_order_payment_track`
 -- AUTO_INCREMENT for table `store_expense`
 --
 ALTER TABLE `store_expense`
-  MODIFY `se_store_expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `se_store_expense_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `store_inventory`
