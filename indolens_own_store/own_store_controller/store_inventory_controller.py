@@ -203,20 +203,20 @@ def create_store_stock_request(stock_obj):
     try:
         with getConnection().cursor() as cursor:
             stock_req_query = """INSERT INTO request_products ( 
-                               store_id, 
-                               store_type, 
-                               product_id, 
-                               product_quantity, 
-                               request_status, 
-                               delivery_status, 
-                               is_requested,
-                               request_to_store_id,
-                               payment_status,
-                               created_on, 
-                               created_by, 
-                               last_updated_on, 
-                               last_updated_by,
-                               unit_cost
+                               pr_store_id, 
+                               pr_store_type, 
+                               pr_product_id, 
+                               pr_product_quantity, 
+                               pr_request_status, 
+                               pr_delivery_status, 
+                               pr_is_requested,
+                               pr_request_to_store_id,
+                               pr_payment_status,
+                               pr_created_on, 
+                               pr_created_by, 
+                               pr_last_updated_on, 
+                               pr_last_updated_by,
+                               pr_unit_cost
                            ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
             cursor.execute(stock_req_query, (
