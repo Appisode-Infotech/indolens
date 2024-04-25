@@ -152,82 +152,78 @@
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
 
-                                <td class="align-middle time white-space-nowrap ps-0 py-4 name">
-                                    <p
-                                        class="text-decoration-none fw-bold fs-0">{{stock.store_name}}</p>
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 name" >
+                                    {{stock.store_name}}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap py-4" type>
-                                    {% if stock.store_type == 1 %}
+                                    {% if stock.pr_store_type == 1 %}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
                                     {% endif %}
                                 </td>
-
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 sendername">
-                                    {% if stock.request_to_store_id == 0 %}
-                                    <p class="text-decoration-none fw-bold fs-0">CENTRAL INVENTORY</p>
+                                    {% if stock.pr_request_to_store_id == 0 %}
+                                    CENTRAL INVENTORY
                                     {% else %}
-                                    <p class="text-decoration-none fw-bold fs-0">{{stock.from_store_name}}</p>
+                                    {{stock.sender_store}}
                                     {% endif %}
                                 </td>
 
                                 <td class="product align-middle">
-                                    <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_central_inventory_products' stock.product_id %}">
-                                                {{stock.product_name}}</a>
+                                    <a class="fw-semi-bold line-clamp-2 mb-0 "
+                                       href="{% url 'view_central_inventory_products' stock.pr_product_id %}">
+                                        {{stock.ci_product_name}}</a>
                                 </td>
 
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 quantity">
-                                    <p class="mb-0 fs--1 text-900 text-end">{{stock.request_product_quantity}}</p>
+                                <td class="align-middle white-space-nowrap ps-3  py-4 quantity">
+                                    <p class="mb-0 fs--1 text-900 text-end">{{stock.pr_product_quantity}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 price">
-                                    <p class="mb-0 fs--1 text-900 text-end">₹{{stock.sale_price}}</p>
+                                    <p class="mb-0 fs--1 text-900 text-end">₹{{stock.ci_sale_price}}</p>
                                 </td>
-
                                 <td class="align-middle white-space-nowrap ps-3 py-4 req_date">
-                                    {% if stock.is_requested == 1 %}
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_created_on}}</p>
+                                    {% if stock.pr_is_requested == 1 %}
+                                    <p class="mb-0 fs--1 text-900">{{stock.pr_created_on|date:"d/m/Y h:i A"}}</p>
                                     {% else %}
                                     NOT APPLICABLE
                                     {% endif %}
                                 </td>
-
                                 <td class="align-middle white-space-nowrap ps-3 py-4 moved_date">
-                                    {% if stock.delivery_status == 1 or stock.delivery_status == 2 %}
-                                    <p class="mb-0 fs--1 text-900">{{stock.request_product_last_updated_on}}</p>
+                                    {% if stock.pr_delivery_status == 1 or stock.pr_delivery_status == 2  %}
+                                    <p class="mb-0 fs--1 text-900">{{stock.pr_last_updated_on|date:"d/m/Y h:i A"}}</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">Not Delivered</p>
                                     {% endif %}
                                 </td>
-
                                 <td class="align-middle white-space-nowrap text-end approvalStatus">
                                     {% if stock.pr_request_status == 0 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
                                     {% elif stock.pr_request_status == 1 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-success">APPROVED</span>
                                     {% else %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end deliveryStatus">
-                                    {% if stock.delivery_status == 0 %}
+                                    {% if stock.pr_delivery_status == 0 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>
-                                    {% elif stock.delivery_status == 1 %}
+                                            class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>
+                                    {% elif stock.pr_delivery_status == 1 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-primary">DISPATCHED</span>
-                                    {% elif stock.delivery_status == 2 %}
+                                            class="badge badge-phoenix fs--2 badge-phoenix-primary">DISPATCHED</span>
+                                    {% elif stock.pr_delivery_status == 2 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
-                                    {% elif stock.delivery_status == 3 %}
+                                            class="badge badge-phoenix fs--2 badge-phoenix-success">DELIVERED</span>
+                                    {% elif stock.pr_delivery_status == 3 %}
                                     <span
-                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
+                                            class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
                                 {% if stock.pr_request_status == 1 and stock.delivery_status != 2 %}
