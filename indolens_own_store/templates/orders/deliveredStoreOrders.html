@@ -80,7 +80,7 @@
             <div class="mb-9">
                 <div class="row g-3 mb-4">
                     <div class="col-auto">
-                        <h2 class="mb-0">Ready Orders<span class="fw-normal text-700 ms-3">({{orders_list|length}})</span></h2>
+                        <h2 class="mb-0">Delivered Orders<span class="fw-normal text-700 ms-3">({{orders_list|length}})</span></h2>
                     </div>
                 </div>
 
@@ -185,55 +185,37 @@
                                     <td class="paymentStatus align-middle white-space-nowrap text-start fw-bold text-700">
                                         {% if order.so_payment_status == 1 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PENDING</span><span class="ms-1"
-                                                                                        data-feather="check"
-                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">PENDING</span></span>
                                         {% elif order.so_payment_status == 2 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">COMPLETE</span><span class="ms-1"
-                                                                                         data-feather="check"
-                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">COMPLETE</span></span>
                                         {% elif order.so_payment_status == 3 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">REFUNDED</span><span class="ms-1"
-                                                                                         data-feather="check"
-                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">REFUNDED</span></span>
                                         {% endif %}
                                     </td>
                                     <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                         {% if order.so_order_status == 1 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">NEW</span><span class="ms-1" data-feather="check"
-                                                                                    style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">NEW</span></span>
                                         {% elif order.so_order_status == 2 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PROCESSING</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">PROCESSING</span></span>
                                         {% elif order.so_order_status == 3 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">READY</span><span class="ms-1" data-feather="check"
-                                                                                      style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">READY</span></span>
                                         {% elif order.so_order_status == 4 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DISPATCHED</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">DISPATCHED</span></span>
                                         {% elif order.so_order_status == 5 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">READY IN STORE</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">READY IN STORE</span></span>
                                         {% elif order.so_order_status == 6 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">DELIVERED CUSTOMER</span></span>
                                         {% elif order.so_order_status == 7 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">CANCELLED</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">CANCELLED</span></span>
                                         {% endif %}
 
                                     </td>
@@ -241,14 +223,14 @@
                                         <a href="{% url 'view_employee' order.so_created_by %}">{{order.creator_name}}</a>
                                     </td>
                                     <td class="createdOn align-middle white-space-nowrap text-700">
-                                        {{order.so_created_on}}
+                                        {{order.so_created_on | date:"d/m/Y h:i A"}}
                                     </td>
                                     <td class="updatedBy align-middle white-space-nowrap text-900 fs--1 text-start">
                                         <a href="{% url 'view_employee' order.so_updated_by %}">{{order.updater_name}}</a>
 
                                     </td>
                                     <td class="updatedOn align-middle white-space-nowrap text-700 ">
-                                        {{order.so_updated_on}}
+                                        {{order.so_updated_on | date:"d/m/Y h:i A"}}
                                     </td>
                                 </tr>
                                 {% endfor %}

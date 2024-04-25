@@ -627,8 +627,11 @@
                                 <td class="orderId align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                             href="{% url 'order_details_store' order.so_order_id %}">{{order.so_order_id}}</a>
                                 </td>
-                                <td class="orderStatus align-middle white-space-nowrap text-start fw-bold text-700 text-end">
+                                <td class="align-middle white-space-nowrap text-start fw-bold text-700 text-end">
                                     ₹{{order.total_cost}}
+                                </td>
+                                <td style="display:none;" class="total align-middle white-space-nowrap text-start fw-bold text-700 text-end">
+                                    {{order.total_cost}}
                                 </td>
                                 <td class="customer align-middle white-space-nowrap ps-8">
                                     <a class="d-flex align-items-center" href="{% url 'view_store_customer_details' order.so_customer_id %}">
@@ -653,7 +656,7 @@
                                 </td>
                                 <td class="orderStatus align-middle white-space-nowrap text-start fw-bold text-700">
                                     {% if order.so_order_status == 1 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                             class="badge-label">NEW</span></span>
                                     {% elif order.so_order_status == 2 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
@@ -680,14 +683,14 @@
                                     <a href="{% url 'view_employee' order.so_created_by %}">{{order.creator_name}}</a>
                                 </td>
                                 <td class="createdOn align-middle white-space-nowrap text-700 ">
-                                    {{order.so_created_on}}
+                                    {{order.so_created_on | date:"d/m/Y h:i A"}}
                                 </td>
                                 <td class="updatedBy align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_employee' order.so_updated_by %}">{{order.updater_name}}</a>
 
                                 </td>
                                 <td class="updatedOn align-middle white-space-nowrap text-700 ">
-                                    {{order.so_updated_on}}
+                                    {{order.so_updated_on | date:"d/m/Y h:i A"}}
                                 </td>
                             </tr>
                             {% endfor %}

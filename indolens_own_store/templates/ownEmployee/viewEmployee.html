@@ -104,7 +104,13 @@
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3>{{store_employee.ose_name}}</h3>
                                                 <p class="text-800">Joined {{store_employee.ose_created_on|date:"d/m/Y h:i A"}}</p>
-                                                <p class="text-800">Manager - {{store_employee.store_name}}</p>
+                                                <p class="text-800">Manager -
+                                                    {% if store_employee.store_name == None %}
+                                                    Not Assigned
+                                                    {% else %}
+                                                    {{store_employee.store_name}}
+                                                    {% endif %}
+                                                </p>
 
                                             </div>
                                         </div>

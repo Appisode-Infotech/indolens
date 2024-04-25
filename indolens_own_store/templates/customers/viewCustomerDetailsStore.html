@@ -191,10 +191,10 @@
                                         <tr>
                                             <th class="sort white-space-nowrap align-middle pe-3" data-sort="order"
                                                 scope="col"
-                                                style="width:5%;">ORDER ID
+                                                style="width:10%;">ORDER ID
                                             </th>
-                                            <th class="sort align-middle " data-sort="total" scope="col"
-                                                style="width:6%; min-width: 100px;">TOTAL
+                                            <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                                style="width:10%; min-width: 100px;">TOTAL
                                             </th>
                                             <th class="sort align-middle ps-8" data-sort="customer" scope="col"
                                                 style="width:28%; min-width: 250px;">CUSTOMER
@@ -230,10 +230,13 @@
                                         <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                             <td class="order align-middle white-space-nowrap py-0"><a
                                                     class="fw-semi-bold"
-                                                    href="{% url 'order_details_store' order.so_order_id %}">#{{order.so_order_id}}</a>
+                                                    href="{% url 'order_details_store' order.so_order_id %}">{{order.so_order_id}}</a>
                                             </td>
-                                            <td class="total align-middle  fw-semi-bold text-1000 ">
+                                            <td class="align-middle  fw-semi-bold text-1000 text-end ">
                                                 ₹{{order.total_cost}}
+                                            </td>
+                                            <td style="display:none;" class="total align-middle white-space-nowrap text-start fw-bold text-700 text-end">
+                                                {{order.total_cost}}
                                             </td>
                                             <td class="customer align-middle white-space-nowrap ps-8">
                                                 <a class="d-flex align-items-center">
