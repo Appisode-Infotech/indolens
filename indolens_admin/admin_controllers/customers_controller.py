@@ -27,7 +27,7 @@ def get_all_stores_customers():
                                                 WHEN c.customer_updated_by_store_type = 1 THEN updater_os.ose_name 
                                                 ELSE updater_fs.fse_name 
                                             END AS updater_name,
-                                            (SELECT SUM(so.so_product_total_cost) FROM sales_order AS so WHERE so.so_customer_id = c.customer_customer_id AND so.so_order_status != 7) AS total_spend,
+                                            COALESCE((SELECT SUM(so.so_product_total_cost) FROM sales_order AS so WHERE so.so_customer_id = c.customer_customer_id AND so.so_order_status != 7), 0) AS total_spend,
                                             (SELECT COUNT(DISTINCT so.so_order_id) FROM sales_order AS so WHERE so.so_customer_id = c.customer_customer_id) AS order_count
                                             FROM customers AS c
                                             LEFT JOIN own_store AS os ON c.customer_created_by_store_id = os.os_store_id

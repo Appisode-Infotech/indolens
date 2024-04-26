@@ -78,12 +78,12 @@
 <main class="main" id="top">
     <div class="container-fluid px-0">
         {% include 'nav_bar_area_head.html' %}
-        {% for store in store_data %}
+
         <div class="content">
             <div class="row gy-3 mb-6 justify-content-between">
                 <div class="col-md-9 col-auto">
-                    <h2 class="mb-2 text-1100">{{store.store_display_name}} - {{store.store_name}}</h2>
-                    <h5 class="text-700 fw-semi-bold mb-3 mt-3"><b>Address: </b>{{store.store_address}}</h5>
+                    <h2 class="mb-2 text-1100">{{store_data.os_store_display_name}} - {{store_data.os_store_name}}</h2>
+                    <h5 class="text-700 fw-semi-bold mb-3 mt-3"><b>Address: </b>{{store_data.os_store_address}}</h5>
                 </div>
 <!--                <div class="col-md-3 col-auto">-->
 <!--                    <div class="flatpickr-input-container">-->
@@ -102,7 +102,7 @@
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
                                         <span
-                                                class="fs-1 fw-semi-bold text-900">{{store.store_gst}}</span>
+                                                class="fs-1 fw-semi-bold text-900">{{store_data.os_store_gst}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0"><b>Store GSTIN</b></p>
                             </div>
@@ -112,8 +112,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <a href="{% url 'view_sub_admin' 1 %}" class="fs-1 fw-semi-bold ">
-                                        {{store.creator}}</a>
+                                    <span class="fs-1 fw-semi-bold text-900">{{store_data.creator}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0"><b>Created By </b></p>
                             </div>
@@ -123,7 +122,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{store.created_on}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{store_data.os_created_on|date:"d/m/Y h:i A"}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0"><b>Created On</b></p>
                             </div>
@@ -133,8 +132,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <a href="{% url 'view_sub_admin' 1 %}"
-                                       class="fs-1 fw-semi-bold ">{{store.updater}}</a>
+                                    <span class="fs-1 fw-semi-bold text-900">{{store_data.updater}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0"><b>Updated By</b></p>
                             </div>
@@ -144,7 +142,7 @@
                         <div class="d-flex align-items-center">
                             <div class="ms-2">
                                 <div class="d-flex align-items-end">
-                                    <span class="fs-1 fw-semi-bold text-900">{{store.last_updated_on}}</span>
+                                    <span class="fs-1 fw-semi-bold text-900">{{store_data.os_last_updated_on|date:"d/m/Y h:i A"}}</span>
                                 </div>
                                 <p class="text-800 fs--1 mb-0"><b>Updated On</b></p>
                             </div>
@@ -210,56 +208,47 @@
                 <div class="col-12 col-xl-12 col-xxl-5">
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-7 pb-3 border-y border-300">
                         <div class="row">
-                            <div class="col-12 col-xl-7 col-xxl-6">
-                                <div class="row g-3 mb-3">
-                                    <div class="col-12 col-md-6">
-                                        <h3 class="text-1100 text-nowrap">Economics</h3>
-                                        <p class="text-700 mb-md-7">Analytics of this store from past 1 month</p>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <p class="mb-0 fw-bold">Type </p>
-                                            <p class="mb-0 fw-bold">Amount </p>
-                                        </div>
-                                        <hr class="bg-200 mb-2 mt-2"/>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <p class="mb-0 fw-semi-bold text-900"><img alt=""
-                                                                                       height="8"
-                                                                                       src="../assets/img/icons/green.png"
-                                            />Sales
-                                            </p>
-                                            <h5 style="color:green">₹12,567</h5>
-                                        </div>
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <p class="mb-0 fw-semi-bold text-900"><img alt=""
-
-                                                                                       height="8"
-                                                                                       src="../assets/img/icons/blue.png"
-                                            />Expenses
-                                            </p>
-                                            <h5 style="color:red">₹1,567</h5>
-                                        </div>
-                                        <hr class="bg-200 mb-2 mt-2"/>
-
-                                        <div class="d-flex align-items-center justify-content-between">
-                                            <p class="mb-0 fw-semi-bold text-900"><img alt=""
-
-                                                                                       height="8"
-                                                                                       src="../assets/img/icons/blue.png"
-                                            />Net
-                                                Income
-                                            </p>
-                                            <h5 style="color:green">₹10,567</h5>
-                                        </div>
-
-                                    </div>
-                                    <div class="col-12 col-md-6">
-                                        <div class="position-relative mb-sm-4 mb-xl-0">
-                                            <div class="echart-issue-chart" style="min-height:390px;width:100%"></div>
-                                        </div>
-                                    </div>
-                                </div>
+                            <div class="col-12 col-xl-6 col-xxl-6">
+                                <table class="table">
+                                    <thead>
+                                    <tr>
+                                        <th colspan="2" class="text-1100 text-nowrap">Overview</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <td colspan="2" class="text-700 mb-md-7">Analytics of this store
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mb-0 fw-bold">Type</td>
+                                        <td class="mb-0 fw-bold text-end">Amount</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mb-0 fw-semi-bold text-900">
+                                            Sales
+                                        </td>
+                                        <td class="text-end">₹{{revenue_generated}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mb-0 fw-semi-bold text-900">
+                                            Expenses
+                                        </td>
+                                        <td class="text-end" style="color:red">₹{{store_expense}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="mb-0 fw-semi-bold text-900">
+                                            Net Income
+                                        </td>
+                                        <td class="text-end" style="color:green">₹{{net_income}}</td>
+                                    </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <div class="col-12 col-xl-5 col-xxl-6">
-                                <div class="echart-zero-burnout-chart" style="min-height:320px;width:100%"></div>
+                            <div class="col-12 col-md-6">
+                                <div class="position-relative mb-sm-4 mb-xl-0">
+                                    <div class="echart-issue-chart" style="min-height:390px;width:100%"></div>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -300,8 +289,8 @@
                                 <table class="table fs--1 mb-0">
                                     <thead>
                                     <tr>
-                                        <th class="white-space-nowrap fs--1 align-middle"
-                                            style="max-width:20px; width:18px;">
+                                        <th class="sort white-space-nowrap align-middle" data-sort="slno" scope="col"
+                                            style="width:5%;">SL NO
                                         </th>
                                         <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                             scope="col" style="width:350px;">PRODUCT NAME
@@ -326,29 +315,35 @@
                                     </tr>
                                     </thead>
                                     <tbody class="list" id="products-table-body">
-                                    {% for products in products_list %}
-                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                        <td class="fs--1 align-middle">
+                                    {% for stock in products_list %}
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                        data-category="{{ stock.category_name }}">
+                                        <td class="fs--1 align-middle px-0 py-3 slno"></td>
+                                        <td class="product align-middle "><a
+                                                class="fw-semi-bold line-clamp-3 mb-0"
+                                                href="{% url 'view_products' stock.si_product_id %}">
+                                            {{stock.ci_product_name}}</a>
                                         </td>
-                                        <td class="product align-middle ps-4"><a
-                                                class="fw-semi-bold line-clamp-3 mb-0" href="#!">
-                                            {{products.product_name}}
-                                        </a></td>
-                                        <td class="price align-middle white-space-nowrap  fw-bold text-700 ps-4">
-                                            {{products.sale_price}}
+                                        <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700 text-end">
+                                            ₹{{stock.ci_sale_price}}
                                         </td>
-                                        <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                            {{products.category_name}}
+                                        <td class="category align-middle white-space-nowrap text-600 fs--1  fw-semi-bold">
+                                            {{stock.pc_category_name}}
                                         </td>
-                                        <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                            {{products.brand_name}}
+                                        <td class="brand align-middle white-space-nowrap text-600 fs--1  fw-semi-bold">
+                                            {{stock.brand_name}}
                                         </td>
 
-                                        <td class="price align-middle white-space-nowrap  fw-bold text-700 ps-4">
-                                            {{products.store_product_quantity}}
+                                        <td class="inStock align-middle white-space-nowrap  fw-bold text-700 ">
+                                            {% if stock.si_product_quantity == None%}
+                                            0
+                                            {% else %}
+                                            {{stock.si_product_quantity}}
+                                            {% endif %}
                                         </td>
-                                        <td class="time align-middle white-space-nowrap text-600 ps-4">
-                                            {{products.store_product_created_on}}
+
+                                        <td class="publishedOn align-middle white-space-nowrap text-600 ">
+                                            {{stock.si_last_updated_on|date:"d/m/Y h:i A"}}
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -375,13 +370,12 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-12 col-xxl-2">
-                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-7 border-y border-300">
-                        <div data-list='{"valueNames":["product","customer","rating","review","time"],"page":20}'>
+                <div class="mt-3 mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-7 border-y border-300">
+                        <div data-list='{"valueNames":["slno","order","total","customer","payment_status","fulfilmentStatus","createdby","created_on","updated_by","updated_on","date"],"page":5}'>
                             <div class="row align-items-end justify-content-between pb-5 g-3">
                                 <div class="col-auto">
-                                    <h3>Sales</h3>
-                                    <p class="text-700 lh-sm mb-0">Latest sales in this Store</p>
+                                    <h3>Sales ({{sales_data|length}}) </h3>
+                                    <p class="text-700 lh-sm mb-0">sales in this Store</p>
                                 </div>
                                 <div class="col-12 col-md-auto">
                                     <div class="row g-2 gy-3">
@@ -402,124 +396,124 @@
                                 </div>
                             </div>
                             <div class="table-responsive mx-n1 px-1 scrollbar">
-                                <table class="table fs--1 mb-0 border-top border-200">
-                            <thead>
-                            <tr>
-                                <th class="white-space-nowrap fs--1 align-middle ps-0" style="width:26px;">
-                                </th>
-                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
-                                    style="width:5%;">ORDER ID
-                                </th>
-                                <th class="sort align-middle text-end" data-sort="total" scope="col"
-                                    style="width:6%; min-width: 100px;">TOTAL
-                                </th>
-                                <th class="sort align-middle ps-8" data-sort="customer" scope="col"
-                                    style="width:28%; min-width: 250px;">CUSTOMER
-                                </th>
-                                <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
-                                    style="width:10%;">PAYMENT STATUS
-                                </th>
-                                <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
-                                    scope="col" style="width:12%; min-width: 200px;">ORDER
-                                    STATUS
-                                </th>
-                                <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
-                                    style="width:30%;">CREATED BY
-                                </th>
-                                <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
-                                    style="width:30%;">CREATED ON
-                                </th>
-                                <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
-                                    style="width:30%;">UPDATED BY
-                                </th>
-                                <th class="sort align-middle text-start" data-sort="delivery_type" scope="col"
-                                    style="width:30%;">UPDATED ON
-                                </th>
+                                <table class="table table-sm fs--1 mb-0" id="myTable1">
+                                    <thead>
+                                    <tr>
+                                        <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno"
+                                            scope="col"
+                                            style="width:5%;">SL NO
+                                        </th>
+                                        <th class="sort white-space-nowrap align-middle pe-3" data-sort="order"
+                                            scope="col"
+                                            style="width:5%;">ORDER ID
+                                        </th>
+                                        <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                            style="width:6%; min-width: 100px;">TOTAL
+                                        </th>
+                                        <th class="sort align-middle ps-8" data-sort="customer" scope="col"
+                                            style="width:28%; min-width: 250px;">CUSTOMER
+                                        </th>
+                                        <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
+                                            style="width:10%;">PAYMENT STATUS
+                                        </th>
+                                        <th class="sort align-middle text-start pe-3" data-sort="fulfilmentStatus"
+                                            scope="col" style="width:12%; min-width: 200px;">ORDER
+                                            STATUS
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="createdby" scope="col"
+                                            style="width:30%;">CREATED BY
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="created_on" scope="col"
+                                            style="width:30%;">CREATED ON
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
+                                            style="width:30%;">UPDATED BY
+                                        </th>
+                                        <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
+                                            style="width:30%;">UPDATED ON
+                                        </th>
 
-                            </tr>
-                            </thead>
-                            <tbody class="list" id="order-table-body">
-                            {% for order in orders_list %}
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="fs--1 align-middle px-0 py-3">
-                                </td>
-                                <td class="order align-middle white-space-nowrap py-0">#{{order.order_id}}
-                                </td>
-                                <td class="total align-middle  fw-semi-bold text-1000">{{order.total_cost}}</td>
-                                <td class="customer align-middle white-space-nowrap ps-8">
-                                    <a class="d-flex align-items-center"
-                                       href="{% url 'customer_details_area_head' order.customer_id %}">
-                                        <div class="avatar avatar-m">
-                                            <div class="avatar-name rounded-circle">
-                                                <span>{{order.customer_name.0}}</span></div>
-                                        </div>
-                                        <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
-                                    </a>
-                                </td>
-                                <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                    {% if order.payment_status == 1 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                            class="badge-label">PENDING</span><span class="ms-1"
-                                                                                    data-feather="check"
-                                                                                    style="height:12.8px;width:12.8px;"></span></span>
-                                    {% elif order.payment_status == 2 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                            class="badge-label">COMPLETE</span><span class="ms-1"
-                                                                                     data-feather="check"
-                                                                                     style="height:12.8px;width:12.8px;"></span></span>
-                                    {% elif order.payment_status == 3 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                            class="badge-label">REFUNDED</span><span class="ms-1"
-                                                                                     data-feather="check"
-                                                                                     style="height:12.8px;width:12.8px;"></span></span>
-                                    {% endif %}
-                                </td>
-                                <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                    {% if order.order_status == 1 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">NEW</span><span class="ms-1" data-feather="check"
-                                                                                style="height:12.8px;width:12.8px;"></span></span>
-                                    {% elif order.order_status == 2 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">PROCESSING</span><span class="ms-1" data-feather="check"
-                                                                                       style="height:12.8px;width:12.8px;"></span></span>
-                                    {% elif order.order_status == 3 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">READY</span><span class="ms-1" data-feather="check"
-                                                                                  style="height:12.8px;width:12.8px;"></span></span>
-                                    {% elif order.order_status == 4 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">DISPATCHED</span><span class="ms-1" data-feather="check"
-                                                                                       style="height:12.8px;width:12.8px;"></span></span>
-                                    {% elif order.order_status == 5 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">READY IN STORE</span><span class="ms-1" data-feather="check"
-                                                                                      style="height:12.8px;width:12.8px;"></span></span>
-                                    {% elif order.order_status == 6 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">CANCELLED</span><span class="ms-1" data-feather="check"
-                                                                                      style="height:12.8px;width:12.8px;"></span></span>
-                                    {% endif %}
+                                    </tr>
+                                    </thead>
+                                    <tbody class="list" id="order-table-body">
+                                    {% for order in sales_data %}
+                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                        data-category="{{ order.order_status }}">
+                                        <td class="fs--1 align-middle px-0 py-3 slno"></td>
+                                        <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                                  href="{% url 'order_details' order.so_order_id %}">{{order.so_order_id}}</a>
+                                        </td>
+                                        <td class="align-middle white-space-nowrap text-start fw-bold text-700 text-end">
+                                            ₹{{order.total_cost}}
+                                        </td>
+                                        <td style="display:none;" class="total align-middle white-space-nowrap text-start fw-bold text-700 text-end">
+                                            {{order.total_cost}}
+                                        </td>
+                                        <td class="customer align-middle white-space-nowrap ps-8">
+                                            <a class="d-flex align-items-center"
+                                               href="{% url 'customer_details' order.so_customer_id %}">
+                                                <div class="avatar avatar-m">
+                                                    <div class="avatar-name rounded-circle">
+                                                        <span>{{order.customer_name.0}}</span></div>
+                                                </div>
+                                                <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
+                                            </a>
+                                        </td>
+                                        <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                            {% if order.so_payment_status == 1 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                    class="badge-label">PENDING</span></span>
+                                            {% elif order.so_payment_status == 2 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                    class="badge-label">COMPLETE</span></span>
+                                            {% elif order.so_payment_status == 3 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
+                                                    class="badge-label">REFUNDED</span></span>
+                                            {% endif %}
+                                        </td>
+                                        <td class="fulfilmentStatus align-middle white-space-nowrap text-start fw-bold text-700">
+                                            {% if order.so_order_status == 1 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                    class="badge-label">NEW</span></span>
+                                            {% elif order.so_order_status == 2 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                    class="badge-label">PROCESSING</span></span>
+                                            {% elif order.so_order_status == 3 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                    class="badge-label">READY</span></span>
+                                            {% elif order.so_order_status == 4 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                    class="badge-label">DISPATCHED</span></span>
+                                            {% elif order.so_order_status == 5 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                    class="badge-label">READY IN STORE</span></span>
+                                            {% elif order.so_order_status == 6 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                    class="badge-label">DELIVERED CUSTOMER</span></span>
+                                            {% elif order.so_order_status == 7 %}
+                                            <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                    class="badge-label">CANCELLED</span></span></span>
+                                            {% endif %}
 
-                                </td>
-                                <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
-                                    <a href="{% url 'view_employees' order.created_by %}">{{order.creator_name}}</a>
-                                </td>
-                                <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 ">
-                                    {{order.created_on}}
-                                </td>
-                                <td class="delivery_type align-middle white-space-nowrap text-900 fs--1 text-start">
-                                    <a href="{% url 'view_employees' order.updated_by %}">{{order.updater_name}}</a>
+                                        </td>
+                                        <td class="createdby align-middle white-space-nowrap text-900 fs--1 text-start">
+                                            <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
+                                        </td>
+                                        <td class="created_on align-middle white-space-nowrap text-700 fs--1  ">
+                                            {{order.so_created_on|date:"d/m/Y h:i A"}}
+                                        </td>
+                                        <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                            <a href="{% url 'view_record_creator' order.so_updated_by order.so_created_by_store_type %}">
+                                                {{order.updater_name}} </a>
+                                        </td>
+                                        <td class="updated_on align-middle white-space-nowrap text-700 fs--1  ">
+                                            {{order.so_updated_on|date:"d/m/Y h:i A"}}
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
 
-                                </td>
-                                <td class="date align-middle white-space-nowrap text-700 fs--1 ps-4 ">
-                                    {{order.updated_on}}
-                                </td>
-                            </tr>
-                            {% endfor %}
-
-                            </tbody>
-                        </table>
+                                    </tbody>
+                                </table>
                             </div>
                             <div class="row align-items-center py-1">
                                 <div class="pagination d-none"></div>
@@ -543,12 +537,31 @@
                             </div>
                         </div>
                     </div>
-                </div>
                 {% include 'footer.html' %}
             </div>
         </div>
-        {% endfor %}
+
     </div>
+    <script>
+  // Function to add serial numbers to table rows
+  function addSerialNumbersToTables() {
+    var tables = document.querySelectorAll('table');
+    tables.forEach(function(table) {
+      // Check if the table contains the class 'sort'
+      if (table.querySelector('.sort')) {
+        var rows = table.querySelectorAll('tbody tr');
+        for (var i = 0; i < rows.length; i++) {
+          var cell = rows[i].querySelector('.slno');
+          cell.textContent = i + 1;
+        }
+      }
+    });
+  }
+
+  // Call the function to add serial numbers
+  addSerialNumbersToTables();
+
+</script>
     <script>
         var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
         var navbarTop = document.querySelector('.navbar-top');
@@ -561,14 +574,89 @@
         if (navbarVerticalStyle === 'darker') {
           navbarVertical.classList.add('navbar-darker');
         }
-
-
-
-
-
-
-
     </script>
+    <script>
+    const { getColor, getData, resize } = window.phoenix.utils;
+    const issuesDiscoveredChartEl = document.querySelector('.echart-issue-chart');
+
+    const userOptions = getData(issuesDiscoveredChartEl, 'echarts');
+      const chart = window.echarts.init(issuesDiscoveredChartEl);
+
+      const getDefaultOptions = () => ({
+        color: [
+          getColor('info-300'),
+          getColor('warning-300'),
+          getColor('danger-300'),
+          getColor('success-300'),
+          getColor('primary')
+        ],
+        tooltip: {
+          trigger: 'item'
+        },
+        responsive: true,
+        maintainAspectRatio: false,
+
+        series: [
+          {
+<!--            name: 'Tasks assigned to me',-->
+            type: 'pie',
+            radius: ['48%', '90%'],
+            startAngle: 30,
+            avoidLabelOverlap: false,
+            // label: {
+            //   show: false,
+            //   position: 'center'
+            // },
+
+            label: {
+              show: false,
+              position: 'center',
+              formatter: '{x|{d}%} \n {y|{b}}',
+              rich: {
+                x: {
+                  fontSize: 31.25,
+                  fontWeight: 800,
+                  color: getColor('gray-700'),
+                  padding: [0, 0, 5, 15]
+                },
+                y: {
+                  fontSize: 12.8,
+                  color: getColor('gray-700'),
+                  fontWeight: 600
+                }
+              }
+            },
+            emphasis: {
+              label: {
+                show: true
+              }
+            },
+            labelLine: {
+              show: false
+            },
+            data: [
+              { value: {{store_expense}}, name: 'Expenses' },
+              { value: {{net_income}}, name: 'Net income' },
+            ]
+          }
+        ],
+        grid: {
+          bottom: 0,
+          top: 0,
+          left: 0,
+          right: 0,
+          containLabel: false
+        }
+      });
+
+      echartSetOption(chart, userOptions, getDefaultOptions);
+
+      resize(() => {
+        chart.resize();
+      });
+
+
+</script>
 </main>
 <!-- ===============================================-->
 <!--    End of Main Content-->

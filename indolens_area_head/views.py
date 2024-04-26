@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from indolens_admin.admin_controllers import own_store_controller, \
     lab_technician_controller, lab_controller, \
     stores_inventory_controller, central_inventory_controller, customers_controller, area_head_controller, \
-    orders_controller
+    orders_controller, store_expenses
 from indolens_area_head.area_head_controller import area_head_auth_controller, stores_controller, \
     area_stores_inventory_controller, area_head_customers_controller, store_employee_controller, \
     area_head_store_orders_controller, area_head_dashboard_controller
@@ -101,7 +101,6 @@ def manageOwnStores(request, status):
             'is_area_head_logged_in') is True:
 
         response, status_code = stores_controller.get_area_head_own_stores(status, assigned_sores)
-        print(response)
         return render(request, 'ownStore/manageOwnStores.html',
                       {"own_stores": response['own_stores'], "status": status})
     else:
@@ -112,15 +111,19 @@ def viewOwnStore(request, ownStoreId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
+        print(response)
         products_list, status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
         store_stats, status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
+        revenue_generated, sale_status_code = orders_controller.get_store_sales(ownStoreId, 1)
+        store_expense, store_exp_status_code = store_expenses.get_store_expense_amount(ownStoreId, 1)
         orders_list, status_code = area_head_store_orders_controller.get_all_store_orders(ownStoreId)
         return render(request, 'ownStore/ownStore.html',
                       {"store_data": response['own_stores'], "products_list": products_list['products_list'],
                        "total_employee_count": store_stats['total_employee_count'],
                        "total_customer_count": store_stats['total_customer_count'],
                        "orders_list": orders_list['orders_list'], "sales_data": orders_list['orders_list'],
-                       "revenue_generated": sum(item['total_cost'] for item in orders_list['orders_list']), })
+                       "store_expense": store_expense['store_expense'], "revenue_generated": revenue_generated['sale'],
+                       "net_income": int(revenue_generated['sale']) - store_expense['store_expense']})
     else:
         return redirect('login_area_head')
 
@@ -141,7 +144,6 @@ def manageEmployee(request):
 def viewEmployee(request, employeeId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        print(employeeId)
         response, status_code = store_employee_controller.get_store_employee_by_id(employeeId)
         
         return render(request, 'storeEmployee/viewStoreEmployee.html',
@@ -270,6 +272,7 @@ def viewAllCustomers(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = area_head_customers_controller.get_all_area_stores_customers(assigned_sores)
+        print(response)
         return render(request, 'customers/viewAllCustomers.html', {"customers_list": response['customers_list']})
     else:
         return redirect('login_area_head')
@@ -280,14 +283,13 @@ def viewCustomerDetails(request, customerId):
             'is_area_head_logged_in') is True:
         response, status_code = area_head_customers_controller.get_customers_by_id(customerId)
         spending, status_code = customers_controller.get_customer_spend(customerId)
-        orders_list, status_code = area_head_store_orders_controller.get_all_customer_orders(customerId)
+        orders_list, orders_status_code = orders_controller.get_all_customer_orders(customerId)
 
         membership = "Gold"
-
         if spending['total_spending'] > 5000 and spending['total_spending'] < 25000:
             membership = "Platinum"
         elif spending['total_spending'] > 25000:
-            membership = "Luxuary"
+            membership = "Luxury"
         return render(request, 'customers/viewCustomerDetails.html',
                       {"customer": response['customer'], "orders_list": orders_list['orders_list'],
                        "membership": membership})

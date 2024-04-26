@@ -80,7 +80,6 @@
     <div class="container-fluid px-0">
 
         {% include 'nav_bar_area_head.html' %}
-        {% for employee in store_employee %}
 
         <div class="content">
 
@@ -100,18 +99,18 @@
                                             <div class="col-12 col-sm-auto mb-sm-2">
 
                                                 <div class="avatar avatar-5xl"><img alt=""
-                                                                               src="{{MEDIA_URL}}{{employee.profile_pic}}"
+                                                                               src="{{MEDIA_URL}}{{store_employee.ose_profile_pic}}"
                                                                                width="53"/>
                                                 </div>
 
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
-                                                <h3>{{employee.name}}</h3>
-                                                <p class="text-800">Joined on: {{employee.created_on}} </p>
-                                                {% if employee.assigned_store_id != 0 %}
+                                                <h3>{{store_employee.ose_name}}</h3>
+                                                <p class="text-800">Joined on: {{store_employee.ose_created_on}} </p>
+                                                {% if store_employee.ose_assigned_store_id != 0 %}
                                                 <p class="text-800">Manager - <a
-                                                        href="{%url 'view_own_store_area_head' employee.assigned_store_id %}">
-                                                    {{employee.store_name}}
+                                                        href="{%url 'view_own_store_area_head' store_employee.ose_assigned_store_id %}">
+                                                    {{store_employee.ose_store_name}}
                                                 </a></p>
                                                 {% else %}
                                                 Manager - Not Assigned
@@ -123,10 +122,10 @@
                                         <div class="border-top border-dashed border-300 pt-4">
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
-                                                <h6>{{ employee.document_1_type }}</h6>
+                                                <h6>{{ store_employee.ose_document_1_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in employee.document_1_url %}
+                                                    {% for doc in store_employee.ose_document_1_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -146,10 +145,10 @@
 
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
-                                                <h6>{{ employee.document_2_type }}</h6>
+                                                <h6>{{ store_employee.ose_document_2_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in employee.document_2_url %}
+                                                    {% for doc in store_employee.ose_document_2_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -178,15 +177,15 @@
                                             <button class="btn btn-link p-0"></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
-                                        <p class="text-800">{{ employee.address }}
+                                        <p class="text-800">{{ store_employee.ose_address }}
                                         </p>
                                         <div class="mb-3">
-                                            <h5 class="text-800">Email</h5><a href="mailto:{{ employee.email }}">
-                                            {{employee.email }}</a>
+                                            <h5 class="text-800">Email</h5><a href="mailto:{{ store_employee.ose_email }}">
+                                            {{store_employee.ose_email }}</a>
                                         </div>
                                         <h5 class="text-800">Phone</h5><a class="text-800"
-                                                                          href="tel:{{ employee.phone }}">
-                                        {{employee.phone }}</a>
+                                                                          href="tel:{{ store_employee.ose_phone }}">
+                                        {{store_employee.ose_phone }}</a>
                                     </div>
                                 </div>
                             </div>
@@ -198,7 +197,7 @@
                 </div>
             </div>
         </div>
-        {% endfor %}
+
     </div>
 </main>
 <!-- ===============================================-->

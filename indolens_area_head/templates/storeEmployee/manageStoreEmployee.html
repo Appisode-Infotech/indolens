@@ -157,23 +157,23 @@
                                 <td>
 
                                     <div class="avatar avatar-m"><img alt=""
-                                                                               src="{{MEDIA_URL}}{{employee.profile_pic}}"
+                                                                               src="{{MEDIA_URL}}{{employee.ose_profile_pic}}"
                                                                                width="53"/>
                                     </div>
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_employees' employee.employee_id %}">
-                                    {{employee.name}}
+                                        href="{% url 'view_employees' employee.ose_employee_id %}">
+                                    {{employee.ose_name}}
                                 </a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 role">
-                                    {% if employee.role == 1 %}
+                                    {% if employee.ose_role == 1 %}
                                     <p class="mb-0 fs--1 text-900">MANAGER</p>
-                                    {% elif employee.role == 2 %}
+                                    {% elif employee.ose_role == 2 %}
                                     <p class="mb-0 fs--1 text-900">OPTOMETRY</p>
-                                    {% elif employee.role == 3 %}
+                                    {% elif employee.ose_role == 3 %}
                                     <p class="mb-0 fs--1 text-900">SALES EXECUTIVE</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">OTHER EMPLOYEE</p>
@@ -181,11 +181,11 @@
 
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">
-                                    <p class="mb-0 fs--1 text-900">{{employee.phone}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.ose_phone}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 email">
-                                    <p class="mb-0 fs--1 text-900">{{employee.email}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.ose_email}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 store">
@@ -193,26 +193,26 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end status">
-                                    {% if employee.status == 0 %}
+                                    {% if employee.ose_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
-                                {% elif employee.status == 1 %}
+                                {% elif employee.ose_status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 createdOn">
-                                    <p class="mb-0 fs--1 text-900">{{employee.created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.ose_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 createdBy">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.creator_name}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.creator}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 updatedOn">
-                                    <p class="mb-0 fs--1 text-900">{{employee.last_updated_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.ose_last_updated_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 updatedOn">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.updater_name}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.updater}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 address">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.address}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{employee.ose_address}}</p>
                                 </td>
 
 

@@ -139,11 +139,11 @@
                                 <td class="align-middle white-space-nowrap py-0 slno"></td>
                                 <td class="align-middle time white-space-nowrap ps-0 storeName py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
-                                        href="{% url 'view_own_store_area_head' store.store_id %}">{{store.store_name}}</a>
+                                        href="{% url 'view_own_store_area_head' store.os_store_id %}">{{store.os_store_name}}</a>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap displayName ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">{{store.store_display_name}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{store.os_store_display_name}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap storeAdmin ">
@@ -156,16 +156,16 @@
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap date ps-3 py-4 date">
-                                    <p class="mb-0 fs--1 text-900">{{store.created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{store.os_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4 city">
-                                    <p class="fw-bo text-900 fs--1 mb-0">{{store.store_city}}</p>
+                                    <p class="fw-bo text-900 fs--1 mb-0">{{store.os_store_city}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-center status">
-                                    {% if store.status == 0 %}
+                                    {% if store.os_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span>
-                                    {% elif store.status == 1 %}
+                                    {% elif store.os_status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span></td>
                                 {% endif %}
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
@@ -177,7 +177,7 @@
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a class="dropdown-item"
-                                                                                             href="{% url 'view_own_store_area_head' store.store_id %}">View</a>
+                                                                                             href="{% url 'view_own_store_area_head' store.os_store_id %}">View</a>
 
 
 
