@@ -124,26 +124,26 @@
                                     scope="col" style="width:30%;">PRODUCT NAME
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="quantity" scope="col" style="width:10%;">
+                                <th class="sort align-middle " data-sort="quantity" scope="col" style="width:10%;">
                                     QUANTITY
                                 </th>
 
 
-                                <th class="sort align-middle ps-3" data-sort="price" scope="col" style="width:10%;">
+                                <th class="sort align-middle " data-sort="price" scope="col" style="width:10%;">
                                     PRICE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="req_date" scope="col" style="width:10%;">
+                                <th class="sort align-middle " data-sort="req_date" scope="col" style="width:10%;">
                                     REQUESTED DATE
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="moved_date" scope="col"
+                                <th class="sort align-middle" data-sort="moved_date" scope="col"
                                     style="width:10%;">
                                     MOVED DATE
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="approvalStatus" scope="col"
+                                <th class="sort align-middle " data-sort="approvalStatus" scope="col"
                                     style="width:5%;">APPROVAL STATUS
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="deliveryStatus" scope="col"
+                                <th class="sort align-middle" data-sort="deliveryStatus" scope="col"
                                     style="width:5%;">DELIVERY STATUS
                                 </th>
 
@@ -160,7 +160,7 @@
                                     {{stock.store_name}}
                                 </td>
 
-                                <td class="align-middle white-space-nowrap py-4" type>
+                                <td class="align-middle white-space-nowrap py-4 type" >
                                     {% if stock.pr_store_type == 1 %}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
                                     {% else %}
@@ -200,10 +200,10 @@
                                     {% if stock.pr_delivery_status == 1 or stock.pr_delivery_status == 2  %}
                                     <p class="mb-0 fs--1 text-900">{{stock.pr_last_updated_on|date:"d/m/Y h:i A"}}</p>
                                     {% else %}
-                                    <p class="mb-0 fs--1 text-900">Not Delivered</p>
+                                    <p class="mb-0 fs--1 text-900">NOT DELIVERED</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end approvalStatus">
+                                <td class="align-middle white-space-nowrap approvalStatus">
                                     {% if stock.pr_request_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
@@ -215,7 +215,7 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end deliveryStatus">
+                                <td class="align-middle white-space-nowrap deliveryStatus">
                                     {% if stock.pr_delivery_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>

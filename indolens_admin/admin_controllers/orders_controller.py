@@ -288,6 +288,10 @@ def get_order_details(orderId):
                     WHERE so_order_id = '{orderId}' GROUP BY so_order_id) AS total_cost ,
                     (SELECT SUM(so_product_total_cost)  FROM sales_order 
                     WHERE so_order_id = '{orderId}' GROUP BY so_order_id) AS discount_cost,
+                    (SELECT SUM(so_product_total_cost) - so_amount_paid FROM sales_order 
+                    WHERE so_order_id = '{orderId}' GROUP BY so_order_id) AS balance_amount,
+                    (SELECT SUM(so_unit_sale_price * so_purchase_quantity) - SUM(so_product_total_cost) FROM sales_order 
+                    WHERE so_order_id = '{orderId}' GROUP BY so_order_id) AS discounted_amount,
                     CASE 
                         WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
                         ELSE fs.fs_store_name 

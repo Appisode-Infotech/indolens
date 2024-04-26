@@ -25,19 +25,13 @@ def login(request):
         if response['status']:
             if request.session.get('id') is not None:
                 request.session.clear()
-            for data in response['area_head']:
-                if len(data['assigned_stores']) == 1:
-                    assigned_stores = f"({data['assigned_stores'][0]})"
-                else:
-                    assigned_stores = tuple(data['assigned_stores'])
-                request.session.update({
-                    'is_area_head_logged_in': True,
-                    'id': data['area_head_id'],
-                    'assigned_stores': assigned_stores,
-                    'name': data['name'],
-                    'email': data['email'],
-                    'profile_pic': data['profile_pic'],
-                })
+            request.session.update({
+                'is_area_head_logged_in': True,
+                'id': response['area_head']['ah_area_head_id'],
+                'name': response['area_head']['ah_name'],
+                'email': response['area_head']['ah_email'],
+                'profile_pic': response['area_head']['ah_profile_pic'],
+            })
             return redirect('dashboard_area_head')
         else:
             return render(request, 'auth/sign_in.html', {"message": response['message']})
@@ -90,9 +84,9 @@ def dashboard(request):
     assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        new_order, status_code = area_head_dashboard_controller.get_order_stats('New', 1)
-        delivered_orders, status_code = area_head_dashboard_controller.get_order_stats('Completed', 1)
-        store_sales, status_code = area_head_dashboard_controller.get_sales_stats(1)
+        # new_order, status_code = area_head_dashboard_controller.get_order_stats('New', 1)
+        # delivered_orders, status_code = area_head_dashboard_controller.get_order_stats('Completed', 1)
+        # store_sales, status_code = area_head_dashboard_controller.get_sales_stats(1)
         orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All', assigned_sores)
         return render(request, 'dashboard.html', {"orders_list": orders_list['dash_orders_list']})
     else:
@@ -103,11 +97,11 @@ def dashboard(request):
 
 def manageOwnStores(request, status):
     assigned_sores = getAreaHeadAssignedStores(request)
-    print(assigned_sores)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
 
         response, status_code = stores_controller.get_area_head_own_stores(status, assigned_sores)
+        print(response)
         return render(request, 'ownStore/manageOwnStores.html',
                       {"own_stores": response['own_stores'], "status": status})
     else:
@@ -272,10 +266,10 @@ def viewOrderDetails(request, orderId):
 # =================================ADMIN CUSTOMERS MANAGEMENT======================================
 
 def viewAllCustomers(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        response, status_code = area_head_customers_controller.get_all_area_stores_customers(
-            request.session.get('assigned_stores'))
+        response, status_code = area_head_customers_controller.get_all_area_stores_customers(assigned_sores)
         return render(request, 'customers/viewAllCustomers.html', {"customers_list": response['customers_list']})
     else:
         return redirect('login_area_head')

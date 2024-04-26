@@ -17,17 +17,17 @@ def get_order_stats(status, store_type):
     try:
         with getConnection().cursor() as cursor:
             get_order_query = f"""
-                    SELECT *
-                    FROM sales_order
-                    WHERE order_status {status_condition} AND created_by_store_type = {store_type} 
-                    GROUP BY order_id          
-                    """
+                                    SELECT COUNT(DISTINCT so_order_id)  AS order_stats
+                                    FROM sales_order
+                                    WHERE so_order_status {status_condition} AND so_created_by_store_type = {store_type} 
+                                    GROUP BY so_order_id  
+                                """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchall()
 
             return {
                 "status": True,
-                "count": len(orders_list)
+                "count": orders_list['order_stats']
             }, 200
 
     except pymysql.Error as e:

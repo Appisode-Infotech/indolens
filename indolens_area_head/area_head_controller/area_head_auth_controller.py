@@ -28,9 +28,9 @@ def login(area_head):
         with getConnection().cursor() as cursor:
             login_query = f""" SELECT * 
                                 FROM area_head                                
-                                WHERE email = '{area_head.email}'"""
+                                WHERE ah_email = '{area_head.email}'"""
             cursor.execute(login_query)
-            area_head_data = cursor.fetchall()
+            area_head_data = cursor.fetchone()
 
             if not area_head_data:
                 return {
@@ -38,23 +38,23 @@ def login(area_head):
                     "message": "Invalid user email",
                     "area_head": None
                 }, 301
-            elif area_head_data[0][12] == 0:
+            elif area_head_data['ah_status'] == 0:
                 return {
                     "status": False,
                     "message": "Your Account is locked, please contact your Admin",
                     "area_head": None
                 }, 301
-            elif area_head_data[0][6] == "0":
+            elif area_head_data['ah_assigned_stores'] == "0":
                 return {
                     "status": False,
                     "message": "Your Account is not assigned to any store, please contact your Admin",
                     "area_head": None
                 }, 301
-            elif bcrypt.checkpw(area_head.password.encode('utf-8'), area_head_data[0][4].encode('utf-8')):
+            elif bcrypt.checkpw(area_head.password.encode('utf-8'), area_head_data['ah_password'].encode('utf-8')):
                 return {
                     "status": True,
                     "message": "user login successfull",
-                    "area_head": get_area_heads(area_head_data)
+                    "area_head": area_head_data
                 }, 200
             else:
                 return {
@@ -195,11 +195,11 @@ def check_link_validity(code):
 def get_area_head_assigned_store(aread_head_id):
     try:
         with getConnection().cursor() as cursor:
-            get_assigned_store = f"""SELECT assigned_stores FROM area_head 
-                                WHERE area_head_id = '{aread_head_id}'"""
+            get_assigned_store = f"""SELECT ah_assigned_stores FROM area_head 
+                                WHERE ah_area_head_id = '{aread_head_id}'"""
             cursor.execute(get_assigned_store)
             assigned_store = cursor.fetchone()
-            return assigned_store[0]
+            return assigned_store['ah_assigned_stores']
 
     except pymysql.Error as e:
         return 0

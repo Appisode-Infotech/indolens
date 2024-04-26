@@ -222,14 +222,14 @@
                                 <td class="align-middle white-space-nowrap ps-3 py-4 movedDate">
                                     <p class="mb-0 fs--1 text-900">{{stock.pr_last_updated_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end movementType">
+                                <td class="align-middle white-space-nowrap movementType">
                                     {% if stock.pr_is_requested == 1 %}
                                     <p class="mb-0 fs--1 text-900">REQUESTED</p>
                                     {% else %}
                                     <p class="mb-0 fs--1 text-900">SELF</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end deliverFrom">
+                                <td class="align-middle white-space-nowrap deliverFrom">
                                     {% if stock.sender_store != None %}
                                     <a class="fw-semi-bold line-clamp-3 mb-0"
                                        href="{% url 'view_own_store' stock.pr_request_to_store_id %}">{{stock.sender_store}}</a>
@@ -237,7 +237,7 @@
                                     <p class="mb-0 fs--1 text-900">CENTRAL INVENTORY</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end deliverStatus">
+                                <td class="align-middle white-space-nowrap deliverStatus">
                                     {% if stock.pr_delivery_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>

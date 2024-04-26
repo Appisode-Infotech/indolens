@@ -323,7 +323,7 @@ def viewStoreCustomerDetails(request, customerId):
         if spending['total_spending'] > 5000 and spending['total_spending'] < 25000:
             membership = "Platinum"
         elif spending['total_spending'] > 25000:
-            membership = "Luxuary"
+            membership = "Luxury"
         return render(request, 'customers/viewCustomerDetailsStore.html',
                       {"customer": response['customers'], "sales_data": sales_data['orders_list'],
                        "membership": membership})

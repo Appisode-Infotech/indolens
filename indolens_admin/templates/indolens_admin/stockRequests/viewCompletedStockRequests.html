@@ -235,7 +235,7 @@
                                     <p class="mb-0 fs--1 text-900">Not Dispatched</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end approvalStatus">
+                                <td class="align-middle white-space-nowrap approvalStatus">
                                     {% if stock.pr_request_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
@@ -247,7 +247,7 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end deliveryStatus">
+                                <td class="align-middle white-space-nowrap deliveryStatus">
                                     {% if stock.pr_delivery_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>

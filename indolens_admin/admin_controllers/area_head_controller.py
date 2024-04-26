@@ -103,8 +103,9 @@ def get_area_head_by_id(ahid):
     try:
         with getConnection().cursor() as cursor:
             get_area_head_query = f"""
-                        SELECT ah.*, GROUP_CONCAT(os.os_store_name SEPARATOR ', ') AS assigned_stores_names, creator.admin_name,
-                        updater.admin_name
+                        SELECT ah.*, GROUP_CONCAT(os.os_store_name SEPARATOR ', ') AS assigned_stores_names, 
+                        creator.admin_name AS creator,
+                        updater.admin_name AS updater
                         FROM area_head AS ah
                         LEFT JOIN own_store AS os ON FIND_IN_SET(os.os_store_id, ah.ah_assigned_stores)
                         LEFT JOIN admin AS creator ON ah.ah_created_by = creator.admin_admin_id

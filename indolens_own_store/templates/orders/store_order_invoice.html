@@ -309,8 +309,7 @@ body {
                                 <td colspan="1"></td>
                                 <td colspan="1"></td>
                                 <td class="align-middle fw-semi-bold" colspan="1"><b>Subtotal</b></td>
-                                <td style="text-align: end;" class="align-middle text-end fw-bold" colspan="2">₹
-                                    {{order_detail.0.discount_cost }}
+                                <td style="text-align: end;" class="align-middle text-end fw-bold" colspan="2">₹{{order_detail.0.discount_cost }}
                                 </td>
                             </tr>
                             <tr>
@@ -342,8 +341,7 @@ body {
                             <tr class="bg-200">
                                 <td class="align-middle ps-4 fw-bold text-1000" colspan="2"><b>Balance Amount</b></td>
                                 <td id="totalWords" class="align-middle fw-bold text-1000" colspan="7"></td>
-                                <td class="align-middle text-end fw-bold" style="text-align: end; font-weight: bold;"
-                                    id="balance">
+                                <td class="align-middle text-end fw-bold" style="text-align: end; font-weight: bold;"> ₹{{order_detail.0.balance_amount}}
                                 </td>
                             </tr>
                             {% else %}
@@ -487,11 +485,11 @@ body {
     }
     console.log(discountCostText);
 
-    const totalWords2 = numberToWords({{ order_detail.0.so_discount_cost }});
+    const totalWords2 = numberToWords({{ order_detail.0.discount_cost }});
     if(document.getElementById('totalWords2')){
         document.getElementById('totalWords2').innerText = totalWords2 + ' Rupees Only';
     }
-        const totalWords = numberToWords(grandTotalInNumber);
+    const totalWords = numberToWords({{order_detail.0.balance_amount}});
 
     if(document.getElementById('totalWords')){
         document.getElementById('totalWords').innerText = totalWords + ' Rupees Only';

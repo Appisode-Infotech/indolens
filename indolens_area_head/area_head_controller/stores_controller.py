@@ -25,20 +25,21 @@ def get_area_head_own_stores(status, assigned_stores):
         with getConnection().cursor() as cursor:
 
             get_own_stores_query = f"""
-                                        SELECT own_store.*, own_store_employees.name, own_store_employees.employee_id AS manager_name,
-                                        creator.name, updater.name
+                                        SELECT own_store.*, own_store_employees.ose_name manager_name, 
+                                        own_store_employees.ose_employee_id AS manager_id,
+                                        creator.admin_name AS creator, updater.admin_name AS updater
                                         FROM own_store
-                                        LEFT JOIN admin AS creator ON own_store.created_by = creator.admin_id
-                                        LEFT JOIN admin AS updater ON own_store.last_updated_by = updater.admin_id
-                                        LEFT JOIN own_store_employees ON own_store.store_id = own_store_employees.assigned_store_id AND own_store_employees.role = 1
-                                        WHERE own_store.status {status_condition} AND own_store.store_id IN {assigned_stores}
-                                        ORDER BY own_store.store_id DESC
+                                        LEFT JOIN admin AS creator ON own_store.os_created_by = creator.admin_admin_id
+                                        LEFT JOIN admin AS updater ON own_store.os_last_updated_by = updater.admin_admin_id
+                                        LEFT JOIN own_store_employees ON own_store.os_store_id = own_store_employees.ose_assigned_store_id AND own_store_employees.ose_role = 1
+                                        WHERE own_store.os_status {status_condition} AND own_store.os_store_id IN {assigned_stores}
+                                        ORDER BY own_store.os_store_id DESC
                                         """
             cursor.execute(get_own_stores_query)
             stores_data = cursor.fetchall()
             return {
                 "status": True,
-                "own_stores": get_own_store(stores_data)
+                "own_stores": stores_data
             }, 200
 
     except pymysql.Error as e:
