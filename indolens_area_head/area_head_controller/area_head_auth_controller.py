@@ -8,6 +8,7 @@ import pymysql
 import pytz
 import requests
 from indolens.db_connection import getConnection
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 
 from indolens_admin.admin_controllers.admin_setting_controller import get_base_url
 from indolens_area_head.area_head_model.area_head_resp_models.area_head_resp_model import get_area_heads
@@ -75,7 +76,7 @@ def forgot_password(email):
             reset_pwd_link = f"{get_base_url()}/area_head/reset_password/code={pwd_code}"
             print(reset_pwd_link)
 
-            check_email_query = f"""SELECT email,status FROM area_head WHERE email = '{email}'"""
+            check_email_query = f"""SELECT ah_email,ah_status, ah_name FROM area_head WHERE ah_email = '{email}'"""
             cursor.execute(check_email_query)
             check_email = cursor.fetchone()
             print(check_email)
@@ -86,26 +87,16 @@ def forgot_password(email):
                     "message": "Please enter the valid email to reset the password"
                 }, 200
 
-            elif check_email is not None and check_email[1] != 0:
-                update_pwd_code_query = f"""INSERT INTO reset_password (email, code, status, created_on) 
+            elif check_email is not None and check_email['ah_status'] != 0:
+                update_pwd_code_query = f"""INSERT INTO reset_password (rpwd_email, rpwd_code, rpwd_status, rpwd_created_on) 
                                             VALUES (%s, %s, %s, %s)"""
                 cursor.execute(update_pwd_code_query, (email, pwd_code, 0, getIndianTime()))
 
-                url = 'https://api.emailjs.com/api/v1.0/email/send'
-                data = {
-                    'service_id': 'default_service',
-                    'template_id': 'template_ycnjmqh',
-                    'user_id': 'qbWAgwqHOFbcgoJRF',
-                    'template_params': {
-                        'to_email': email,
-                        'new_password': reset_pwd_link,
-                        'g-recaptcha-response': '03AHJ_ASjnLA214KSNKFJAK12sfKASfehbmfd...'
-                    }
-                }
+                subject = email_template_controller.get_password_reset_email_subject(check_email['ah_name'])
+                body = email_template_controller.get_password_reset_email_body(check_email['ah_name'], reset_pwd_link,
+                                                                               email)
+                email_response = send_notification_controller.send_email(subject, body, email)
 
-                headers = {'Content-Type': 'application/json'}
-
-                email_response = requests.post(url, data=json.dumps(data), headers=headers)
                 if email_response.status_code == 200:
                     return {
                         "status": True,
@@ -132,11 +123,11 @@ def update_area_head_password(password, email):
     try:
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         with getConnection().cursor() as cursor:
-            login_query = f"""UPDATE area_head SET password = %s WHERE email = '{email}'"""
+            login_query = f"""UPDATE area_head SET ah_password = %s WHERE ah_email = '{email}'"""
             cursor.execute(login_query, (hashed_password,))
             admin_data = cursor.fetchone()
 
-            login_query = f"""UPDATE reset_password SET status = 1 WHERE email = '{email}'"""
+            login_query = f"""UPDATE reset_password SET rpwd_status = 1 WHERE rpwd_email = '{email}'"""
             cursor.execute(login_query)
 
             return {
@@ -150,12 +141,12 @@ def update_area_head_password(password, email):
         return {"status": False, "message": str(e)}, 301
 
 
-
 def check_link_validity(code):
     try:
         with getConnection().cursor() as cursor:
-            check_link_validity_query = f""" SELECT status, created_on, email FROM reset_password WHERE code = '{code}'
-                                                ORDER BY reset_password_id DESC LIMIT 1"""
+            check_link_validity_query = f""" SELECT rpwd_status, rpwd_created_on, rpwd_email FROM reset_password 
+                                                            WHERE rpwd_code = '{code}'
+                                                            ORDER BY rpwd_reset_password_id DESC LIMIT 1"""
             cursor.execute(check_link_validity_query)
             link_validity = cursor.fetchone()
 
@@ -167,19 +158,19 @@ def check_link_validity(code):
                 }, 200
 
             else:
-                email = link_validity[2]
-                query_datetime = ist.localize(link_validity[1])
+                email = link_validity['rpwd_email']
+                query_datetime = ist.localize(link_validity['rpwd_created_on'])
                 current_datetime = datetime.datetime.now(ist)
                 time_difference = current_datetime - query_datetime
                 time_difference_mins = time_difference.total_seconds() / 60
 
-                if link_validity is not None and (link_validity[0] == 1 or time_difference_mins > 15):
+                if link_validity is not None and (link_validity['rpwd_status'] == 1 or time_difference_mins > 15):
                     return {
                         "status": True,
                         "message": "Password reset link has been expired",
                         "email": ""
                     }, 200
-                elif link_validity is not None and link_validity[0] == 0 and time_difference_mins < 15:
+                elif link_validity is not None and link_validity['rpwd_status'] == 0 and time_difference_mins < 15:
                     return {
                         "status": True,
                         "message": "",

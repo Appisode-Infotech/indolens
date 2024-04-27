@@ -79,8 +79,7 @@
     <div class="container-fluid px-0">
 
         {% include 'nav_bar_area_head.html' %}
-        {% for area_head in area_head %}
-
+        
         <div class="content">
 
             <div class="mb-9">
@@ -95,32 +94,32 @@
                                             <div class="col-12 col-sm-auto mb-sm-2">
                                                 <div class="avatar avatar-5xl">
                                                     <img alt="" class="rounded-circle"
-                                                         src="{{MEDIA_URL}}{{area_head.profile_pic}}"/>
+                                                         src="{{MEDIA_URL}}{{area_head.ah_profile_pic}}"/>
                                                 </div>
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
-                                                <h3>{{area_head.name}}</h3>
-                                                <p class="text-800">Joined on {{area_head.created_on}}</p>
-                                                <p class="text-800">Assigned Stores:</p>
+                                                <h3>{{area_head.ah_name}}</h3>
+                                                <p class="text-800">Joined on {{area_head.ah_created_on}}</p>
                                                 {% if area_head.id_name_pair|length != 0 %}
                                                 {% for id, name in area_head.id_name_pair %}
                                                 <a class="text-decoration-none fw-semi-bold fs-0"
-                                                   href="{% url 'view_own_store' id %}">
+                                                   href="{% url 'view_own_store_area_head' id %}">
                                                     {{name}}
                                                 </a><br>
                                                 {% endfor %}
                                                 {% else %}
-                                                <p class="text-800">UNASSIGNED</p>
+                                                <span
+                                                        class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                                 {% endif %}
                                             </div>
                                         </div>
                                         <div class="border-top border-dashed border-300 pt-4">
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
-                                                <h6>{{ area_head.document_1_type }}</h6>
+                                                <h6>{{ area_head.ah_document_1_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in area_head.document_1_url %}
+                                                    {% for doc in area_head.ah_document_1_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -140,10 +139,10 @@
 
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
-                                                <h6>{{ area_head.document_2_type }}</h6>
+                                                <h6>{{ area_head.ah_document_2_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in area_head.document_2_url %}
+                                                    {% for doc in area_head.ah_document_2_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -172,23 +171,21 @@
                                             <button class="btn btn-link p-0"></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
-                                        <p class="text-800">{{area_head.address}}
+                                        <p class="text-800">{{area_head.ah_address}}
                                         </p>
                                         <div class="mb-3">
-                                            <h5 class="text-800">Email</h5><a href="mailto:{{lab_technician.email}}">{{area_head.email}}</a>
+                                            <h5 class="text-800">Email</h5><a href="mailto:{{lab_technician.email}}">{{area_head.ah_email}}</a>
                                         </div>
                                         <h5 class="text-800">Phone</h5><a class="text-800"
-                                                                          href="tel:{{lab_technician.phone}}">{{area_head.phone}}</a>
+                                                                          href="tel:{{lab_technician.phone}}">{{area_head.ah_phone}}</a>
                                         <h5 class="text-800 mt-3">Created On</h5>
-                                        <p class="text-800">{{area_head.created_on}}
+                                        <p class="text-800">{{area_head.ah_created_on}}
                                         </p>
-                                        <h5 class="text-800 mt-3">Created By</h5>
-                                        <a href="{% url 'view_sub_admin' area_head.created_by %}">{{area_head.creator_name}}</a>
+                                        <h5 class="text-800 mt-3">Created By</h5>{{area_head.creator}}
                                         <h5 class="text-800 mt-3">Updated On</h5>
-                                        <p class="text-800">{{area_head.last_updated_on}}
+                                        <p class="text-800">{{area_head.ah_last_updated_on}}
                                         </p>
-                                        <h5 class="text-800 mt-3">Updated By</h5>
-                                        <a href="{% url 'view_sub_admin' area_head.last_updated_by %}">{{area_head.updater_name}}</a>
+                                        <h5 class="text-800 mt-3">Updated By</h5>{{area_head.updater}}
                                     </div>
                                 </div>
                             </div>
@@ -199,7 +196,7 @@
                 </div>
             </div>
         </div>
-        {% endfor %}
+
     </div>
 </main>
 <!-- ===============================================-->

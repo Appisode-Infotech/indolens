@@ -19,24 +19,28 @@ def index(request):
 # =================================ADMIN AUTH======================================
 
 def login(request):
-    if request.method == 'POST':
-        area_head_obj = area_head_auth_model.area_head_model_from_dict(request.POST)
-        response, status_code = area_head_auth_controller.login(area_head_obj)
-        if response['status']:
-            if request.session.get('id') is not None:
-                request.session.clear()
-            request.session.update({
-                'is_area_head_logged_in': True,
-                'id': response['area_head']['ah_area_head_id'],
-                'name': response['area_head']['ah_name'],
-                'email': response['area_head']['ah_email'],
-                'profile_pic': response['area_head']['ah_profile_pic'],
-            })
-            return redirect('dashboard_area_head')
-        else:
-            return render(request, 'auth/sign_in.html', {"message": response['message']})
+    if request.session.get('is_area_head_logged_in') is not None and request.session.get(
+            'is_area_head_logged_in') is True:
+        return redirect('dashboard_area_head')
     else:
-        return render(request, 'auth/sign_in.html')
+        if request.method == 'POST':
+            area_head_obj = area_head_auth_model.area_head_model_from_dict(request.POST)
+            response, status_code = area_head_auth_controller.login(area_head_obj)
+            if response['status']:
+                if request.session.get('id') is not None:
+                    request.session.clear()
+                request.session.update({
+                    'is_area_head_logged_in': True,
+                    'id': response['area_head']['ah_area_head_id'],
+                    'name': response['area_head']['ah_name'],
+                    'email': response['area_head']['ah_email'],
+                    'profile_pic': response['area_head']['ah_profile_pic'],
+                })
+                return redirect('dashboard_area_head')
+            else:
+                return render(request, 'auth/sign_in.html', {"message": response['message']})
+        else:
+            return render(request, 'auth/sign_in.html')
 
 
 def areaHeadLogout(request):
