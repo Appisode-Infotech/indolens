@@ -209,20 +209,22 @@
                                 <td class="align-middle white-space-nowrap py-0 slNo"></td>
 
                                 <td class="align-middle white-space-nowrap py-4 reason">
-                                    <p class="mb-0 fs--1 text-900">{{expense.expense_reason}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{expense.se_expense_reason}}</p>
                                 </td>
-
-                                <td class="align-middle white-space-nowrap ps-3 py-4 amount">
-                                    <p class="mb-0 fs--1 text-900">₹{{expense.expense_amount}}</p>
+                                <td class="align-middle white-space-nowrap ps-3 py-4">
+                                    <p class="mb-0 fs--1 text-900">₹{{expense.se_expense_amount}}</p>
+                                </td>
+                                <td style="display:none;" class="align-middle white-space-nowrap ps-3 py-4 amount">
+                                    <p class="mb-0 fs--1 text-900">₹{{expense.se_expense_amount}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 date">
-                                    <p class="mb-0 fs--1 text-900">{{expense.created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{expense.se_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap text-end createdBy">
                                     <a class="text-decoration-none fw-bold fs-0"
-                                       href="{% url 'view_franchise_store_employee_details' expense.created_by %}">
+                                       href="{% url 'view_franchise_store_employee_details' expense.se_created_by %}">
                                         {{expense.creator_name}}</a>
                                 </td>
 

@@ -78,7 +78,7 @@
 <!-- ===============================================-->
 <main class="main" id="top">
     <div class="container-fluid px-0">
-        {% include 'nav_bar_store.html' %}
+        {% include 'nav_bar_franchise.html' %}
         <div class="content">
 
             <h2 class="mb-4">Eye Testing for Customers</h2>
@@ -98,8 +98,8 @@
                                         name="customers">
                                     <option value="">Select Customer</option>
                                     {% for customer in customers_list %}
-                                    <option value="{{customer.phone}}">
-                                        {{customer.phone}}
+                                    <option value="{{customer.customer_phone}}">
+                                        {{customer.customer_phone}}
                                     </option>
                                     {% endfor %}
                                 </select>
@@ -218,10 +218,24 @@
                                         <div class="invalid-feedback">This field is required.</div>
                                     </div>
                                 </div>
+                                <div class="mb2 col-12">
+                                    <h5 class="mb-3">Optometry</h5>
+                                    <select name="optometry_id" class="form-select"
+                                            aria-label="Default select example"
+                                            required="required">
+                                        <option value="" selected="selected">Please select Optometry
+                                        </option>
+                                        {% for optometry in optometry_list %}
+                                        <option value="{{optometry.fse_employee_id}}">{{optometry.fse_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <div class="invalid-feedback">This field is required.</div>
+                                </div>
+
                             </div>
                         </div>
 
-                        <div class="row mb-3 stock_power_card[${productCardCount}]"
+                        <div class="row mt-3 mb-3 stock_power_card[${productCardCount}]"
                              id="stock_power_card[${productCardCount}]">
                             <div class="col-12">
                                 <h5 class="mb-3">Right Eye Test Data</h5>
@@ -243,28 +257,28 @@
                                                    name="RightDvSph"
                                                    placeholder="Right DV SPH"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightDvCyl"
                                                    placeholder="Right DV CYL"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightDvAxis"
                                                    placeholder="Right DV AXIS"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightDvVision"
                                                    placeholder="Right DV VISION"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                     </tr>
 
@@ -275,28 +289,28 @@
                                                    name="RightNvSph"
                                                    placeholder="Right NV SPH"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightNvCyl"
                                                    placeholder="Right NV CYL"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightNvAxis"
                                                    placeholder="Right NV AXIS"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="RightNvVision"
                                                    placeholder="Right NV VISION"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -320,28 +334,28 @@
                                                    name="LeftDvSph"
                                                    placeholder="Left DV SPH"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftDvCyl"
                                                    placeholder="Left DV CYL"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftDvAxis"
                                                    placeholder="Left DV AXIS"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftDvVision"
                                                    placeholder="Left DV VISION"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
 
                                     </tr>
@@ -353,28 +367,28 @@
                                                    name="LeftNvSph"
                                                    placeholder="Left NV SPH"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftNvCyl"
                                                    placeholder="Left NV CYL"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftNvAxis"
                                                    placeholder="Left NV AXIS"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                         <td class="col-6 col-lg-2">
                                             <input class="form-control"
                                                    name="LeftNvVision"
                                                    placeholder="Left NV VISION"
                                                    type="text" value=""
-                                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                                                   oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -512,11 +526,13 @@
             });
         }
     }
+
+
 </script>
 <script>
    function updateCustomerFields(selectCustomerField) {
     var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
+    let selectCustomer = customers_list.find(customer => customer.customer_phone == selectCustomerField.value);
 
     var customerNameInput = document.getElementsByName("customer_name")[0];
     var customerEmailInput = document.getElementsByName("customer_email")[0];
@@ -529,14 +545,14 @@
     //customerDataField
     var customerDataTextarea = document.getElementsByName("customerData")[0];
     if (selectCustomer) {
-        customerNameInput.value = selectCustomer.name;
-        customerEmailInput.value = selectCustomer.email;
-        customerPhoneInput.value = selectCustomer.phone;
-        customerAgeInput.value = selectCustomer.age;
-        customerGenderSelect.value = selectCustomer.gender;
-        customerCityInput.value = selectCustomer.city;
-        customerLanguageSelect.value = selectCustomer.language;
-        customerAddressTextarea.value = selectCustomer.address;
+        customerNameInput.value = selectCustomer.customer_name;
+        customerEmailInput.value = selectCustomer.customer_email;
+        customerPhoneInput.value = selectCustomer.customer_phone;
+        customerAgeInput.value = selectCustomer.customer_age;
+        customerGenderSelect.value = selectCustomer.customer_gender;
+        customerCityInput.value = selectCustomer.customer_city;
+        customerLanguageSelect.value = selectCustomer.customer_language;
+        customerAddressTextarea.value = selectCustomer.customer_address;
     } else {
         customerNameInput.value = '';
         customerEmailInput.value = '';
@@ -549,6 +565,8 @@
         customerDataTextarea.value = '';
     }
 }
+
+
 
 </script>
 </body>

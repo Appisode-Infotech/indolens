@@ -98,18 +98,13 @@ def dashboard(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         own_store_new_order, status_code = own_store_dashboard_controller.get_order_stats('New', 1, assigned_store)
-        # print(own_store_new_order)
         own_store_delivered_orders, status_code = own_store_dashboard_controller.get_order_stats('Completed', 1,
                                                                                                  assigned_store)
-        # print(own_store_delivered_orders)
         own_store_sales, status_code = own_store_dashboard_controller.get_sales_stats(1, assigned_store)
-        # print(own_store_sales)
         out_of_stock, status_code = store_inventory_controller.get_all_out_of_stock_products_for_store(15,
                                                                                                        assigned_store)
-        # print(out_of_stock)
         orders_list, status_code = store_orders_controller.get_all_orders('All', 'All',
                                                                           assigned_store)
-        print(orders_list)
         return render(request, 'dashboardOwnStore.html',
                       {"own_store_new_order": own_store_new_order['count'],
                        "own_store_delivered_orders": own_store_delivered_orders['count'],
@@ -312,11 +307,8 @@ def viewStoreCustomerDetails(request, customerId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = store_customers_controller.get_customers_by_id(customerId)
-        print(response)
         spending, status_code = customers_controller.get_customer_spend(customerId)
-        print(spending)
         sales_data, resp_code = orders_controller.get_all_customer_orders(customerId)
-        print(sales_data)
 
         membership = "Gold"
 

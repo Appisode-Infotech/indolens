@@ -17,17 +17,18 @@ def get_order_stats(status, store_type, store_id):
     try:
         with getConnection().cursor() as cursor:
             get_order_query = f"""
-                    SELECT *
-                    FROM sales_order
-                    WHERE order_status {status_condition} AND created_by_store_type = {store_type} AND created_by_store = {store_id}
-                    GROUP BY order_id          
+                        SELECT COUNT(DISTINCT so_order_id)  AS order_stats
+                        FROM sales_order
+                        WHERE so_order_status {status_condition} 
+                            AND so_created_by_store_type = '{store_type}' 
+                            AND so_created_by_store = '{store_id}'
                     """
             cursor.execute(get_order_query)
-            orders_list = cursor.fetchall()
+            orders_list = cursor.fetchone()
 
             return {
                 "status": True,
-                "count": len(orders_list)
+                "count": orders_list['order_stats']
             }, 200
 
     except pymysql.Error as e:
@@ -40,18 +41,17 @@ def get_sales_stats(store_type, store_id):
     try:
         with getConnection().cursor() as cursor:
             get_order_query = f"""
-                                SELECT IFNULL(SUM(product_total_cost), 0) AS total_sale
+                                SELECT IFNULL(SUM(so_product_total_cost), 0) AS total_sale
                                 FROM sales_order
-                                WHERE created_by_store_type = {store_type} AND created_by_store = {store_id}
-                                AND order_status != 7
+                                WHERE so_created_by_store_type = {store_type} AND so_created_by_store = {store_id} AND
+                                so_order_status != 7
                                 """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchone()
-            total_sale = orders_list[0] if orders_list[0] is not None else 0
 
             return {
                 "status": True,
-                "sale": total_sale
+                "sale": orders_list['total_sale'] if orders_list['total_sale'] is not None else 0
             }, 200
 
 

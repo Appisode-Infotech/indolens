@@ -29,7 +29,8 @@ def create_franchise_store_expense(expense_obj):
         with getConnection().cursor() as cursor:
             insert_expense_obj_query = f"""
                             INSERT INTO store_expense (
-                                store_id, store_type, expense_amount, expense_reason, expense_date, created_on, created_by
+                                se_store_id, se_store_type, se_expense_amount, se_expense_reason, se_expense_date, 
+                                se_created_on, se_created_by
                             ) VALUES ( 
                                 '{expense_obj.store_id}', '{expense_obj.store_type}', '{expense_obj.expense_amount}', 
                                 '{expense_obj.expense_reason}', '{getIndianTime()}', '{getIndianTime()}', '{expense_obj.created_by}') """
@@ -49,17 +50,18 @@ def create_franchise_store_expense(expense_obj):
 def get_all_franchise_store_expense(store_id, store_type):
     try:
         with getConnection().cursor() as cursor:
-            insert_expense_obj_query = f""" SELECT se.*, creator.name FROM store_expense AS se
-                                            LEFT JOIN franchise_store_employees AS creator ON se.created_by = creator.employee_id
-                                            WHERE se.store_id = {store_id} AND se.store_type= {store_type}
-                                            ORDER BY se.store_expense_id DESC"""
-            cursor.execute(insert_expense_obj_query)
+            get_expense_obj_query = f""" SELECT se.*, creator.fse_name AS creator_name FROM store_expense AS se
+                                                        LEFT JOIN franchise_store_employees AS creator ON se.se_created_by = creator.fse_employee_id
+                                                        WHERE se.se_store_id = {store_id} AND se.se_store_type= {store_type}
+                                                        ORDER BY se.se_store_expense_id DESC"""
+            cursor.execute(get_expense_obj_query)
             store_expense_data = cursor.fetchall()
             return {
                 "status": True,
                 "message": "success",
-                "stor_expense_list": get_store_expenses(store_expense_data)
+                "stor_expense_list": store_expense_data
             }, 200
+
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

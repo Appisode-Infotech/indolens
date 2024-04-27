@@ -81,7 +81,7 @@
         <div class="content">
 
             <div class="mb-9">
-                <h2 class="mb-0">Order : <span>{{order_detail.0.order_id}}</span></h2>
+                <h2 class="mb-0">Order : <span>{{order_detail.0.so_order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
                     {% if lab_details.0.lab_name != None %}
                     <p class="text-800 lh-sm mb-0">Lab : {{lab_details.0.lab_name}}
@@ -92,7 +92,7 @@
                     {% endif %}
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><a target="_blank"
-                                                                  href="{% url 'order_invoice_franchise_store' order_detail.0.order_id %}"><span
+                                                                  href="{% url 'order_invoice_franchise_store' order_detail.0.so_order_id %}"><span
                                 class="fas fa-file-invoice"></span> Invoice</a></button>
                         
                     </div>
@@ -135,23 +135,23 @@
                                         </td>
                                         <td class="products align-middle py-0">
                                             <a class="fw-semi-bold line-clamp-2 mb-0 "
-                                               href="{% url 'view_franchise_central_inventory_products' order.product_id %}">
-                                                {{order.product_name}}</a>
+                                               href="{% url 'view_franchise_central_inventory_products' order.so_product_id %}">
+                                                {{order.ci_product_name}}</a>
                                         </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 text-end ps-4">₹
-                                            {{order.unit_sale_price}}
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 text-end ps-4">
+                                            ₹{{order.so_unit_sale_price}}
                                         </td>
-                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            {{order.discount_percentage}}%
+                                        <td class="size align-middle white-space-nowrap text-700 text-end">
+                                            {{order.so_discount_percentage}}%
                                         </td>
-                                        <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            {{order.product_gst}}%
+                                        <td class="size align-middle white-space-nowrap text-700 text-end">
+                                            {{order.ci_product_gst}}%
                                         </td>
                                         <td class="quantity align-middle text-end py-0 ps-4 text-700">
-                                            {{order.purchase_quantity}}
+                                            {{order.so_purchase_quantity}}
                                         </td>
                                         <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹
-                                            {{order.product_total_cost}}
+                                            {{order.so_product_total_cost}}
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -175,7 +175,7 @@
                                             <h6 class="mb-0">Customer</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="{% url 'view_franchise_store_customer_details' order_detail.0.customer_id %}">{{order_detail.0.customer_name}}</a>
+                                           href="{% url 'view_franchise_store_customer_details' order_detail.0.so_customer_id %}">{{order_detail.0.customer_name}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -184,7 +184,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:{{order_detail.0.email}}:">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.0.customer_email}}:">{{order_detail.0.customer_email}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -193,7 +193,7 @@
                                             <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="ms-4" style="max-width: 200px;">
-                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.customer_address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -202,7 +202,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.customer_phone}}">{{order_detail.0.customer_phone}}</a>
                                     </div>
                                 </div>
                             </div>
@@ -216,7 +216,7 @@
                                             <h6 class="mb-0">Email</h6>
                                         </div>
                                         <a class="fs--1 ms-4"
-                                           href="mailto:{{order_detail.0.email}}:">{{order_detail.0.email}}</a>
+                                           href="mailto:{{order_detail.0.customer_email}}:">{{order_detail.0.customer_email}}</a>
 
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -225,7 +225,7 @@
                                                                                           style="stroke-width:2.5;">  </span>
                                             <h6 class="mb-0">Phone</h6>
                                         </div>
-                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.phone}}">{{order_detail.0.phone}}</a>
+                                        <a class="fs--1 ms-4" href="tel:{{order_detail.0.customer_phone}}">{{order_detail.0.customer_phone}}</a>
                                     </div>
                                     <div class="col-6 col-sm-12 order-sm-1">
                                         <div class="d-flex align-items-center mb-1"><span class="me-2"
@@ -234,7 +234,7 @@
                                             <h6 class="mb-0">Address</h6>
                                         </div>
                                         <div class="ms-4" style="max-width: 200px;">
-                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.address}}</p>
+                                            <p class="text-800 mb-0 fs--1">{{order_detail.0.customer_address}}</p>
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-12">
@@ -244,7 +244,7 @@
                                             <h6 class="mb-0">Shipping Date</h6>
                                         </div>
                                         <p class="mb-0 text-800 fs--1 ms-4">
-                                            {{order_detail.0.estimated_delivery_date}}</p>
+                                            {{order_detail.0.so_estimated_delivery_date | date:"d/m/Y"}}</p>
                                     </div>
                                 </div>
                             </div>
@@ -294,21 +294,21 @@
                                 <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                                     <thead>
                                     <tr>
-                                        <th class="sort white-space-nowrap align-middle" data-sort="slno" scope="col">SLNO</th>
-                                        <th class="sort align-middle ps-4" data-sort="amount" scope="col"
-                                            style="width:150px;">Payment Amount
+                                        <th class="sort white-space-nowrap align-middle" scope="col">SLNO</th>
+                                        <th class="sort align-middle ps-4" scope="col"
+                                            style="width:150px;">PAYMENT AMOUNT
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="mode" scope="col"
-                                            style="width:300px;">Payment Mode
+                                        <th class="sort align-middle ps-4" scope="col"
+                                            style="width:300px;">PAYMENT MODE
                                         </th>
-                                        <th class="sort align-middle ps-4" data-sort="type" scope="col"
-                                            style="width:300px;">Payment Type
+                                        <th class="sort align-middle ps-4" scope="col"
+                                            style="width:300px;">PAYMENT TYPE
                                         </th>
-                                        <th class="sort align-middle  ps-4" data-sort="createdBy" scope="col"
-                                            style="width:250px;">Created By
+                                        <th class="sort align-middle  ps-4" scope="col"
+                                            style="width:250px;">CREATED BY
                                         </th>
-                                        <th class="sort align-middle  ps-4" data-sort="createdOn" scope="col"
-                                            style="width:250px;">Created On
+                                        <th class="sort align-middle  ps-4" scope="col"
+                                            style="width:250px;">CREATED ON
                                         </th>
                                     </tr>
                                     </thead>
@@ -319,33 +319,33 @@
                                         <td class="align-middle white-space-nowrap py-2 slno">
                                         </td>
                                         <td class="amount align-middle white-space-nowrap text-900 py-0 text-end">
-                                            ₹{{log.payment_amount}}
+                                            ₹{{log.sopt_payment_amount}}
                                         </td>
                                         <td class="mode align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            {% if log.payment_mode == 1%}
+                                            {% if log.sopt_payment_mode == 1%}
                                             CASH
-                                            {% elif log.payment_mode == 2%}
+                                            {% elif log.sopt_payment_mode == 2%}
                                             UPI
-                                            {% elif log.payment_mode == 3%}
+                                            {% elif log.sopt_payment_mode == 3%}
                                             CREDIT CARD
-                                            {% elif log.payment_mode == 4%}
+                                            {% elif log.sopt_payment_mode == 4%}
                                             DEBIT CARD
                                             {% endif %}
                                         </td>
                                         <td class="type align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
-                                            {% if log.payment_type == 1%}
+                                            {% if log.sopt_payment_type == 1%}
                                             ADVANCE
-                                            {% elif log.payment_type == 2%}
+                                            {% elif log.sopt_payment_type == 2%}
                                             DUE CLEARANCE
-                                            {% elif log.payment_type == 3%}
+                                            {% elif log.sopt_payment_type == 3%}
                                             REFUND
                                             {% endif %}
                                         </td>
                                         <td class="createdBy align-middle  py-0 ps-4 text-700">
-                                            {{log.created_by_name}}
+                                                {{log.creator_name}}
                                         </td>
                                         <td class="createdOn align-middle text-900 fw-semi-bold  py-0 ps-4">
-                                            {{log.created_on}}
+                                            {{log.sopt_created_on|date:"d/m/Y h:i A"}}
                                         </td>
                                     </tr>
                                     {% endfor %}
@@ -366,11 +366,11 @@
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Total Amount :</p>
                                                 <p id="total_amount" class="text-1100 fw-semi-bold">
-                                                    ₹ {{order_detail.0.total_cost }}</p>
+                                                    ₹{{ order_detail.0.total_cost}}</p>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Discount Amount :</p>
-                                                <p id="discount_amount" class="text-1100 fw-semi-bold"></p>
+                                                <p class="text-1100 fw-semi-bold">₹{{ order_detail.0.discounted_amount}}</p>
                                             </div>
                                             <div class="d-flex justify-content-between">
                                                 <p class="text-900 fw-semi-bold">Shipping Cost :</p>
@@ -385,11 +385,11 @@
                                             <div class="d-flex justify-content-between mt-3">
                                                 <p class="text-900 fw-semi-bold">Amount Paid :</p>
                                                 <p class="text-1100 fw-semi-bold" id="amountPaid">
-                                                    ₹{{order_detail.0.amount_paid}}</p>
+                                                    ₹{{order_detail.0.so_amount_paid}}</p>
                                             </div>
                                             <div class="d-flex justify-content-between border-top border-dashed pt-4">
                                                 <h4 class="mb-0">Balance :</h4>
-                                                <h4 class="mb-0" id="balance"></h4>
+                                                <h4 class="mb-0">₹{{order_detail.0.balance_amount}}</h4>
                                             </div>
                                         </div>
 
@@ -401,19 +401,19 @@
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
                                         <h6 class="mb-2">Payment status</h6>
-                                        <select onchange="changePaymentStatus(this,'{{order_detail.0.order_id}}')"
+                                        <select onchange="changePaymentStatus(this,'{{order_detail.0.so_order_id}}')"
                                                 aria-label="delivery type" class="form-select mb-4"
                                                 id="paymentStatusSelect">
                                             <option value="1">Pending</option>
                                             <option value="2">Complete</option>
-                                            {% if order_detail.0.order_status != 6 %}
+                                            {% if order_detail.0.so_order_status != 6 %}
                                             <option value="3">Refund</option>
                                             {% endif %}
                                         </select>
 
                                         <h6 class="mb-2">Order status</h6>
-                                        {% if order_detail.0.assigned_lab == 0 %}
-                                        <select onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')"
+                                        {% if order_detail.0.so_assigned_lab == 0 %}
+                                        <select onchange="changeOrderStatus(this,'{{order_detail.0.so_order_id}}')"
                                                 aria-label="delivery type" class="form-select" id="orderStatusSelect">
                                             <option value="1">New</option>
                                             <option value="5">Ready</option>
@@ -421,33 +421,33 @@
                                             <option value="7">Cancel</option>
                                         </select>
                                         {% else %}
-                                        <select onchange="changeOrderStatus(this,'{{order_detail.0.order_id}}')"
+                                        <select onchange="changeOrderStatus(this,'{{order_detail.0.so_order_id}}')"
                                                 aria-label="delivery type" class="form-select" id="orderStatusSelect1">
                                             <option value="1" style="display:none;"
-                                                    {% if order_detail.0.order_status == 1 %}selected{% endif %}>
+                                                    {% if order_detail.0.so_order_status == 1 %}selected{% endif %}>
                                                 New
                                             </option>
                                             <option value="2" style="display:none;"
-                                                    {% if order_detail.0.order_status == 2 %}selected{% endif %}>
+                                                    {% if order_detail.0.so_order_status == 2 %}selected{% endif %}>
                                                 Processing
                                             </option>
                                             <option value="3" style="display:none;"
-                                                    {% if order_detail.0.order_status == 3 %}selected{% endif %}>Ready
+                                                    {% if order_detail.0.so_order_status == 3 %}selected{% endif %}>Ready
                                             </option>
                                             <option value="4" style="display:none;"
-                                                    {% if order_detail.0.order_status == 4 %}selected{% endif %}>
+                                                    {% if order_detail.0.so_order_status == 4 %}selected{% endif %}>
                                                 Dispatched to store
                                             </option>
                                             <option value="5"
-                                                    {% if order_detail.0.order_status == 5 %}selected{% endif %}>
+                                                    {% if order_detail.0.so_order_status == 5 %}selected{% endif %}>
                                                 Delivered to store
                                             </option>
                                             <option value="6"
-                                                    {% if order_detail.0.order_status == 6 %}selected{% endif %}>
+                                                    {% if order_detail.0.so_order_status == 6 %}selected{% endif %}>
                                                 Delivered to customer
                                             </option>
                                             <option value="7"
-                                                    {% if order_detail.0.order_status == 7 %}selected{% endif %}>Cancel
+                                                    {% if order_detail.0.so_order_status == 7 %}selected{% endif %}>Cancel
                                             </option>
                                         </select>
                                         {% endif %}
@@ -553,9 +553,9 @@
      $('#orderId').val(order_id);
      $('#orderPaymentStatus').val(statusWidget.value);
 
-     var totalCost = {{ order_detail.0.total_cost }};
-    var discountCost = {{ order_detail.0.discount_cost }};
-    var amountPaid = {{order_detail.0.amount_paid}};
+     var totalCost = {{ order_detail.0.so_total_cost }};
+    var discountCost = {{ order_detail.0.so_discount_cost }};
+    var amountPaid = {{order_detail.0.so_amount_paid}};
 
     var balanceAmount = discountCost - amountPaid;
 
@@ -579,7 +579,7 @@
 
 <script>
     document.addEventListener("DOMContentLoaded", function () {
-        var status = "{{order_detail.0.payment_status}}";
+        var status = "{{order_detail.0.so_payment_status}}";
         var select = document.getElementById("paymentStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -615,7 +615,7 @@
         });
     });
     document.addEventListener("DOMContentLoaded", function() {
-        var status = {{ order_detail.0.order_status }};
+        var status = {{ order_detail.0.so_order_status }};
         console.log(status);
 
         var select = document.getElementById("orderStatusSelect");
@@ -663,7 +663,7 @@
 
     document.addEventListener("DOMContentLoaded", function () {
         var orderStatusSelect = document.getElementById("orderStatusSelect1");
-        var orderStatus = {{ order_detail.0.order_status }};
+        var orderStatus = {{ order_detail.0.so_order_status }};
 
         // Disable all options by default
         for (var i = 0; i < orderStatusSelect.options.length; i++) {
@@ -688,9 +688,9 @@
         }
     });
     document.addEventListener('DOMContentLoaded', function() {
-        var totalCost = {{ order_detail.0.total_cost }};
-        var discountCost = {{ order_detail.0.discount_cost }};
-        var amountPaid = {{order_detail.0.amount_paid}};
+        var totalCost = {{ order_detail.0.so_total_cost }};
+        var discountCost = {{ order_detail.0.so_discount_cost }};
+        var amountPaid = {{order_detail.0.so_amount_paid}};
 
         var discountedAmount = totalCost - discountCost;
         var balanceAmount = discountCost - amountPaid;

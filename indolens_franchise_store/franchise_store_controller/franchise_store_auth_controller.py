@@ -27,55 +27,53 @@ def generate_random_string(length=16):
 def login(store_ob):
     try:
         with getConnection().cursor() as cursor:
-            login_query = f"""SELECT fse.*, fs.store_name, creator.name, updater.name FROM franchise_store_employees AS fse 
-                                LEFT JOIN franchise_store AS fs ON fse.assigned_store_id = fs.store_id
-                                LEFT JOIN admin AS creator ON fse.created_by = creator.admin_id
-                                LEFT JOIN admin AS updater ON fse.last_updated_by = updater.admin_id
-                                WHERE fse.email = '{store_ob.email}' AND fse.role != 4 """
+            login_query = f"""SELECT fse.*, fs.fs_store_name AS store_name FROM franchise_store_employees AS fse 
+                                LEFT JOIN franchise_store AS fs ON fse.fse_assigned_store_id = fs.fs_store_id
+                                WHERE fse.fse_email = '{store_ob.email}' AND fse.fse_role != 4 """
             cursor.execute(login_query)
-            admin_data = cursor.fetchall()
-            if not admin_data:
+            fse_data = cursor.fetchone()
+            print(fse_data)
+            if not fse_data:
                 return {
                     "status": False,
                     "message": "Invalid user email",
-                    "store": None
+                    "fse": None
                 }, 301
-            elif admin_data[0][12] == 0:
+            elif fse_data['fse_status'] == 0:
                 return {
                     "status": False,
                     "message": "Your Account is locked, please contact your Admin",
-                    "store": None
+                    "fse": None
                 }, 301
-            elif admin_data[0][6] == 0:
+            elif fse_data['fse_assigned_store_id'] == 0:
                 return {
                     "status": False,
                     "message": "Your Account is not assigned to any store, please contact your Admin",
-                    "store": None
+                    "fse": None
                 }, 301
-            elif bcrypt.checkpw(store_ob.password.encode('utf-8'), admin_data[0][4].encode('utf-8')):
-                store = get_franchise_store_employees(admin_data)
-                get_assigned_store_status = f"""SELECT status FROM franchise_store
-                                                WHERE store_id = '{store[0]['assigned_store_id']}'"""
+            elif bcrypt.checkpw(store_ob.password.encode('utf-8'), fse_data['fse_password'].encode('utf-8')):
+                get_assigned_store_status = f"""SELECT fs_status FROM franchise_store
+                                                WHERE fs_store_id = {fse_data['fse_assigned_store_id']} """
                 cursor.execute(get_assigned_store_status)
                 assigned_store_status = cursor.fetchone()
 
-                if assigned_store_status[0] == 0:
+                if assigned_store_status['fs_status'] == 0:
                     return {
                         "status": False,
                         "message": "Your Account is assigned to an inactive store, please contact your Admin",
-                        "store": store
+                        "fse": fse_data
                     }, 200
                 else:
                     return {
                         "status": True,
                         "message": "user login successfull",
-                        "store": store
+                        "fse": fse_data
                     }, 200
             else:
                 return {
                     "status": False,
                     "message": "Invalid user password",
-                    "store": None
+                    "fse": None
                 }, 301
 
     except pymysql.Error as e:
@@ -87,23 +85,23 @@ def login(store_ob):
 def get_assigned_store(employee_id):
     try:
         with getConnection().cursor() as cursor:
-            get_assigned_store = f"""SELECT assigned_store_id FROM franchise_store_employees 
-                                WHERE employee_id = '{employee_id}'"""
+            get_assigned_store = f"""SELECT fse_assigned_store_id FROM franchise_store_employees 
+                                WHERE fse_employee_id = '{employee_id}'"""
             cursor.execute(get_assigned_store)
             assigned_store = cursor.fetchone()
 
-            if assigned_store[0] != 0:
-                get_assigned_store_status = f"""SELECT status FROM franchise_store 
-                                                WHERE store_id = '{assigned_store[0]}'"""
+            if assigned_store['fse_assigned_store_id'] != 0:
+                get_assigned_store_status = f"""SELECT fs_status FROM franchise_store 
+                                                WHERE fs_store_id = '{assigned_store['fse_assigned_store_id']}'"""
                 cursor.execute(get_assigned_store_status)
                 assigned_store_status = cursor.fetchone()
-                if assigned_store_status[0] == 0:
+                if assigned_store_status['fs_status'] == 0:
                     return 0
                 else:
-                    return assigned_store[0]
+                    return assigned_store['fse_assigned_store_id']
 
             else:
-                return assigned_store[0]
+                return assigned_store['fse_assigned_store_id']
     except pymysql.Error as e:
         return 0
     except Exception as e:

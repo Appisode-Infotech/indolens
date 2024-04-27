@@ -112,8 +112,6 @@ def get_store_order_analytics(request):
     store_type = request.data['storeType']
     store_id = request.data['storeId']
     Controller_response, status_code = get_store_orders_stats(days, store_type, store_id)
-    print("+++++++++++++++++++++++++")
-    print(Controller_response)
 
     response = {
         "list": Controller_response['order_stats'],
