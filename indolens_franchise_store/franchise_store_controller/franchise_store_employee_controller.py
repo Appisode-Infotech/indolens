@@ -46,6 +46,8 @@ def get_franchise_emp_by_id(store, employeeId):
             cursor.execute(get_store_employee_query)
 
             store_employees = cursor.fetchone()
+            store_employees['fse_document_1_url'] = json.loads(store_employees['fse_document_1_url']) if store_employees['fse_document_1_url'] else []
+            store_employees['fse_document_2_url'] = json.loads(store_employees['fse_document_2_url']) if store_employees['fse_document_2_url'] else []
             return {
                 "status": True,
                 "franchise_employee": store_employees

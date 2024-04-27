@@ -153,12 +153,11 @@
                                     <td class="totalOrders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
                                         {{customer.order_count}}
                                     </td>
-                                    <td class="totalSpent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
-                                        {% if customer.total_spend == None %}
-                                        ₹0
-                                        {% else %}
+                                    <td class=" align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
                                         ₹ {{customer.total_spend}}
-                                        {% endif %}
+                                    </td>
+                                    <td style="display:none;" class="totalSpent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100">
+                                        {{customer.total_spend}}
                                     </td>
                                     <td class="city align-middle white-space-nowrap text-1000 ps-7">{{customer.customer_city}}
                                     </td>

@@ -237,33 +237,33 @@ def get_all_customer_orders(customerId):
     try:
         with getConnection().cursor() as cursor:
             get_order_query = f"""
-                                        SELECT 
-                                            so.*, 
-                                            c.customer_name, 
-                                            SUM(so_product_total_cost) AS total_cost, 
-                                            CASE 
-                                                WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
-                                                ELSE fs.fs_store_name 
-                                            END AS store_name,
-                                            CASE 
-                                                WHEN so.so_created_by_store_type = 1 THEN creator_os.ose_name 
-                                                ELSE creator_fs.fse_name 
-                                            END AS creator_name,
-                                            CASE 
-                                                WHEN so.so_created_by_store_type = 1 THEN updater_os.ose_name 
-                                                ELSE updater_fs.fse_name 
-                                            END AS updater_name
-                                        FROM sales_order AS so
-                                        LEFT JOIN customers AS c ON c.customer_customer_id = so.so_customer_id
-                                        LEFT JOIN own_store os ON so.so_created_by_store = os.os_store_id AND so.so_created_by_store_type = 1
-                                        LEFT JOIN franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
-                                        LEFT JOIN own_store_employees creator_os ON so.so_created_by = creator_os.ose_employee_id AND so.so_created_by_store_type = 1
-                                        LEFT JOIN franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fse_employee_id AND so.so_created_by_store_type = 2
-                                        LEFT JOIN own_store_employees updater_os ON so.so_updated_by = updater_os.ose_employee_id AND so.so_created_by_store_type = 1
-                                        LEFT JOIN franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fse_employee_id AND so.so_created_by_store_type = 2
-                                        WHERE so.so_customer_id = {customerId}
-                                        GROUP BY so.so_order_id ORDER BY so.so_sale_item_id DESC         
-                                        """
+                                SELECT 
+                                    so.*, 
+                                    c.customer_name, 
+                                    SUM(so_product_total_cost) AS total_cost, 
+                                    CASE 
+                                        WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
+                                        ELSE fs.fs_store_name 
+                                    END AS store_name,
+                                    CASE 
+                                        WHEN so.so_created_by_store_type = 1 THEN creator_os.ose_name 
+                                        ELSE creator_fs.fse_name 
+                                    END AS creator_name,
+                                    CASE 
+                                        WHEN so.so_created_by_store_type = 1 THEN updater_os.ose_name 
+                                        ELSE updater_fs.fse_name 
+                                    END AS updater_name
+                                FROM sales_order AS so
+                                LEFT JOIN customers AS c ON c.customer_customer_id = so.so_customer_id
+                                LEFT JOIN own_store os ON so.so_created_by_store = os.os_store_id AND so.so_created_by_store_type = 1
+                                LEFT JOIN franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
+                                LEFT JOIN own_store_employees creator_os ON so.so_created_by = creator_os.ose_employee_id AND so.so_created_by_store_type = 1
+                                LEFT JOIN franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                                LEFT JOIN own_store_employees updater_os ON so.so_updated_by = updater_os.ose_employee_id AND so.so_created_by_store_type = 1
+                                LEFT JOIN franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                                WHERE so.so_customer_id = {customerId}
+                                GROUP BY so.so_order_id ORDER BY so.so_sale_item_id DESC         
+                                """
             cursor.execute(get_order_query)
             orders_list = cursor.fetchall()
 

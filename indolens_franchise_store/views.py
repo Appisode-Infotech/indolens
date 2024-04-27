@@ -214,7 +214,8 @@ def orderDetailsFranchise(request, orderId):
             'is_franchise_store_logged_in') is True:
         order_detail, status_code = franchise_store_orders_controller.get_order_details(orderId)
         payment_logs, status_code = orders_controller.get_payment_logs(orderId)
-        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['so_assigned_lab'])
+        lab_details, lab_status_code = lab_controller.get_lab_by_id(
+            order_detail['orders_details'][0]['so_assigned_lab'])
         return render(request, 'orders/orderDetailsFranchise.html', {"order_detail": order_detail['orders_details'],
                                                                      "payment_logs": payment_logs['payment_logs'],
                                                                      "lab_details": lab_details['lab_data']})
@@ -285,7 +286,7 @@ def viewCustomerDetailsFranchise(request, customerId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        response, status_code = franchise_store_customers_controller.get_customers_by_id(customerId, )
+        response, status_code = franchise_store_customers_controller.get_customers_by_id(customerId)
         spending, status_code = customers_controller.get_customer_spend(customerId)
         sales_data, sale_status_code = franchise_store_orders_controller.get_all_customer_orders(customerId)
 
@@ -294,7 +295,7 @@ def viewCustomerDetailsFranchise(request, customerId):
         if spending['total_spending'] > 5000 and spending['total_spending'] < 25000:
             membership = "Platinum"
         elif spending['total_spending'] > 25000:
-            membership = "Luxuary"
+            membership = "Luxury"
         return render(request, 'customers/viewCustomerDetailsFranchise.html', {"customers": response['customers'],
                                                                                "sales_data": sales_data[
                                                                                    'orders_list'],
@@ -310,6 +311,7 @@ def viewAllEmployeFranchise(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_store_employee_controller.get_all_franchise_emp(assigned_store)
+        print(response)
         return render(request, 'employee/manageFranchiseEmployees.html',
                       {"franchise_employee_list": response['franchise_employee_list']})
     else:
