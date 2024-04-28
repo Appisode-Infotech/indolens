@@ -24,7 +24,8 @@ def get_all_out_of_stock_products_for_store(quantity, store_id):
             get_all_out_of_stock_product_query = f""" SELECT si.*, ci.*, creator.admin_name, updater.admin_name, 
                                     pc.pc_category_name, pm.pm_material_name,
                                     ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name,
-                                    os.os_store_name
+                                    os.os_store_name, 
+                                    JSON_UNQUOTE(JSON_EXTRACT(ci.ci_product_images, '$[0]')) AS product_images
                                     FROM store_inventory As si
                                     LEFT JOIN central_inventory AS ci ON ci.ci_product_id = si.si_product_id
                                     LEFT JOIN admin AS creator ON si.si_created_by = creator.admin_admin_id
@@ -66,7 +67,8 @@ def get_all_products_for_store(store_id):
             get_all_store_stock_query = f""" SELECT si.*, ci.*, creator.admin_name AS creator, 
                                     updater.admin_name AS updater, pc.pc_category_name, pm.pm_material_name,
                                     ft.ftype_name, fsh.fshape_name,co.pcol_color_name, u.unit_name, b.brand_name,
-                                    os.os_store_name
+                                    os.os_store_name, 
+                                    JSON_UNQUOTE(JSON_EXTRACT(ci.ci_product_images, '$[0]')) AS product_images
                                     FROM store_inventory As si
                                     LEFT JOIN central_inventory AS ci ON ci.ci_product_id = si.si_product_id
                                     LEFT JOIN admin AS creator ON si.si_created_by = creator.admin_admin_id
@@ -90,11 +92,11 @@ def get_all_products_for_store(store_id):
                         FROM product_categories AS pc 
                         ORDER BY pc.pc_category_id DESC"""
             cursor.execute(get_product_category_query)
-            stores_data = cursor.fetchall()
+            product_category = cursor.fetchall()
             return {
                 "status": True,
                 "stocks_list": product_list,
-                "product_category": stores_data
+                "product_category": product_category
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

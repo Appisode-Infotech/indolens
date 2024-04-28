@@ -196,10 +196,10 @@
                                     <td class="order align-middle white-space-nowrap py-0 slno"></td>
                                     <td class="order align-middle white-space-nowrap py-0 productId"> PID{{product.ci_product_id}}</td>
                                     <td class="align-middle white-space-nowrap fw-bold text-700 ps-4">
-                                        <a href="{{ MEDIA_URL }}{{ product.ci_product_images.0 }}" target="_blank">
+                                        <a href="{{ MEDIA_URL }}{{ product.product_images }}" target="_blank">
                                             <div class="avatar avatar-m">
                                                 <img alt="..." data-dz-thumbnail="data-dz-thumbnail" class="rounded-circle"  onerror="this.src = 'http://via.placeholder.com/100x100';"
-                                                     src="{{ MEDIA_URL }}{{ product.ci_product_images.0 }}"/>
+                                                     src="{{ MEDIA_URL }}{{ product.product_images }}"/>
                                             </div>
                                         </a>
                                     </td>
@@ -213,12 +213,12 @@
                                     </td>
                                     <td class="product align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0"
-                                            href="{% url 'view_products' product.ci_product_id %}">{{product.ci_product_name}} </a></td>
+                                            href="{% url 'view_products' product.ci_product_id %}">{{product.ci_product_name}}</a></td>
                                     <td class="align-middle white-space-nowrap fw-bold text-700 ps-4 text-end">
                                         ₹{{product.ci_sale_price}}
                                     </td>
                                     <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4 text-end" style="display: none;">
-                                        {{product.ci_sale_price}}
+                                        ₹{{product.ci_sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         <p style="display: none;">filterIn_{{product.pc_category_name}}</p>{{product.pc_category_name}}

@@ -292,7 +292,8 @@ def get_all_central_inventory_products(status):
         status_condition = status_conditions[status]
         with getConnection().cursor() as cursor:
             get_all_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
-                                                ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
+                                                ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name,
+                                                JSON_UNQUOTE(JSON_EXTRACT(ci_product_images, '$[0]')) AS product_images
                                                 FROM central_inventory As ci
                                                 LEFT JOIN admin AS creator ON ci.ci_created_by = creator.admin_admin_id
                                                 LEFT JOIN admin AS updater ON ci.ci_last_updated_by = updater.admin_admin_id
@@ -428,7 +429,8 @@ def get_all_out_of_stock_central_inventory_products(quantity):
     try:
         with getConnection().cursor() as cursor:
             get_all_product_query = f""" SELECT ci.*, creator.admin_name, updater.admin_name, pc.pc_category_name, pm.pm_material_name,
-                                    ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name
+                                    ft.ftype_name, fs.fshape_name,c.pcol_color_name, u.unit_name, b.brand_name,
+                                    JSON_UNQUOTE(JSON_EXTRACT(ci_product_images, '$[0]')) AS product_images
                                     FROM central_inventory As ci
                                     LEFT JOIN admin AS creator ON ci.ci_created_by = creator.admin_admin_id
                                     LEFT JOIN admin AS updater ON ci.ci_last_updated_by = updater.admin_admin_id

@@ -77,7 +77,7 @@
         <div class="content">
 
             <div class="col-12 col-xxl-6">
-                <div data-list='{"valueNames":["slNo","product","price","category","brand","store","inStock","publishedOn"],"page":20,"pagination":true}'
+                <div data-list='{"valueNames":["SlNo","prodId","product","price","category","brand","store","inStock","publishedOn"],"page":20,"pagination":true}'
                      id="projectSummary">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -104,13 +104,12 @@
                         <table class="table fs--1 mb-0" id="myTable">
                             <thead>
                             <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="SlNo"
-                                    scope="col" style="width:10%;">SL NO
-                                    </th>
-                                <th class="sort white-space-nowrap align-middle fs--2" scope="col"
-                                    style="width:70px;"></th>
-                                <th class="sort white-space-nowrap align-middle fs--2" scope="col"
-                                    style="width:70px;"></th>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="SlNo" scope="col"
+                                    style="width:5%;">SL NO
+                                </th>
+                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="prodId" scope="col"
+                                    style="width:5%;">PRODUCT ID
+                                </th>
                                 <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                     scope="col" style="width:350px;">PRODUCT NAME
                                 </th>
@@ -127,7 +126,7 @@
                                     style="width:150px;">STORE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="inStock" scope="col"
-                                    style="width:250px;">STORE STOCK
+                                    style="width:250px;">MY STOCK
                                 </th>
                                 <th class="sort align-middle ps-4" data-sort="publishedOn" scope="col"
                                     style="width:50px;">PUBLISHED ON
@@ -139,27 +138,21 @@
 
                             {% for product in product_list %}
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                <td class="align-middle white-space-nowrap py-0 slNo"></td>
-                                <td class="fs--1 align-middle">
-                                </td>
-                                <td class="align-middle white-space-nowrap py-0">
-                                    <a href="{{ MEDIA_URL }}{{ product.product_images.0 }}" target="_blank">
-                                        <div class="avatar avatar-m">
-                                            <img alt="" class="rounded-circle"
-                                                 src="{{ MEDIA_URL }}{{ product.product_images.0 }}"/>
-                                        </div>
-                                    </a>
+
+                                <td class="align-middle white-space-nowrap py-0 SlNo"></td>
+                                <td class="align-middle white-space-nowrap py-0 prodId">PID{{ product.ci_product_id }}</td>
+
+                                <td class="product align-middle ps-4">
+                                    <a class="fw-semi-bold line-clamp-2 mb-0 "
+                                       href="{% url 'view_franchise_central_inventory_products' product.ci_product_id %}">
+                                        {{product.ci_product_name}}</a>
 
                                 </td>
-                                <td class="product align-middle ps-4">
-                                    <a class="fw-semi-bold line-clamp-2 mb-0 " href="{% url 'view_franchise_central_inventory_products' product.product_id %}">
-                                                {{product.product_name}}</a>
-                                    </td>
                                 <td class="price align-middle white-space-nowrap fw-bold text-700 ps-4">
-                                    ₹{{product.sale_price}}
+                                    ₹{{product.ci_sale_price}}
                                 </td>
                                 <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                    {{product.category_name}}
+                                    {{product.pc_category_name}}
                                 </td>
                                 <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                     {{product.brand_name}}
@@ -172,16 +165,16 @@
                                     {% endif %}
                                 </td>
 
-
                                 <td class="inStock align-middle white-space-nowrap fw-bold text-700 ps-4">
                                     {% if product.store_quantity == None %}
                                     0
                                     {% else %}
                                     {{product.store_quantity}}
                                     {% endif %}
+
                                 </td>
                                 <td class="publishedOn align-middle white-space-nowrap text-600 ps-4">
-                                    {{product.created_on}}
+                                    {{product.ci_created_on|date:"d/m/Y h:i A"}}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -193,9 +186,9 @@
                                                 class="fas fa-ellipsis-h fs--2"></span></button>
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
                                                 class="dropdown-item" data-bs-target="#verticallyCentered"
-                                                data-bs-product-id="{{product.product_id}}"
-                                                data-bs-target-store-id="{{product.target_store_id}}"
-                                                data-bs-unit-cost ="{{product.franchise_sale_price}}"
+                                                data-bs-product-id="{{product.ci_product_id}}"
+                                                data-bs-target-store-id="{{product.ci_target_store_id}}"
+                                                data-bs-unit-cost="{{product.ci_franchise_sale_price}}"
                                                 data-bs-toggle="modal">Request</a>
                                         </div>
                                     </div>

@@ -76,14 +76,13 @@
     <div class="container-fluid px-0">
         {% include 'nav_bar_franchise.html' %}
         <div class="content">
-            {% for product_data in stocks_list %}
             <form class="mb-9 ">
                 {% csrf_token %}
                 <div class="row g-3 flex-between-end mb-5">
                     <div class="col-auto">
                         <h2 class="mb-2">View product</h2>
-                        <h5 class="text-700 fw-semi-bold">Product Name: <b>{{product_data.product_name}}</b></h5>
-                        <h5 class="text-700 fw-semi-bold">Product Id: <b>{{product_data.product_id}}</b></h5>
+                        <h5 class="text-700 fw-semi-bold">Product Name: <b>{{stocks_list.ci_product_name}}</b></h5>
+                        <h5 class="text-700 fw-semi-bold">Product Id: <b>{{stocks_list.si_product_id}}</b></h5>
                     </div>
 
                 </div>
@@ -93,7 +92,7 @@
                         <div class="mb-5">
                             <input readonly class="form-control" name="productTitle"
                                    placeholder="Write product title here..."
-                                   type="text" value="{{product_data.product_name}}" required/>
+                                   type="text" value="{{stocks_list.ci_product_name}}" required/>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3 mb-6">
                             <h4 class="mb-3"> Product QR Code</h4>
@@ -101,9 +100,9 @@
                                 <!-- Add a container for horizontal alignment -->
                                 <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                     <div class="border border-300 p-2 rounded-2 me-2">
-                                        <a href="{{ MEDIA_URL }}{{ product_data.product_qr_code }}" target="_blank">
+                                        <a href="{{ MEDIA_URL }}{{ stocks_list.ci_product_qr_code }}" target="_blank">
                                             <img class="rounded-2 dz-image" width="100px"
-                                                 height="100px" src="{{ MEDIA_URL }}{{ product_data.product_qr_code }}"
+                                                 height="100px" src="{{ MEDIA_URL }}{{ stocks_list.ci_product_qr_code }}"
                                                  onerror="if(this.src.endsWith('.pdf'))
                                                      { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
                                                      else { this.src = 'http://via.placeholder.com/100x100'; }"
@@ -117,7 +116,7 @@
                             <h4 class="mb-3"> Product Images</h4>
                             <div class="d-flex flex-wrap">
                                 <!-- Add a container for horizontal alignment -->
-                                {% for images in product_data.product_images %}
+                                {% for images in stocks_list.ci_product_images %}
                                 <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                     <div class="border border-300 p-2 rounded-2 me-2">
                                         <a href="{{ MEDIA_URL }}{{ images }}" target="_blank">
@@ -136,168 +135,25 @@
                         </div>
                         <div class="mb-6">
                             <h4 class="mb-3"> Product Description</h4>
-                            {{product_data.product_description|safe}}
+                            {{stocks_list.ci_product_description|safe}}
                         </div>
-
-                        <!--                        New code-->
-                        {% if product_data.category_id == 2 %}
-                        <div class="row mb-3 pt-3  bg-200 lens-widget ">
-
-                            <div class="row mb-3">
-                                <div class="mb-3">
-                                    <h5 class="text-1000 ">Type</h5>
-                                    <div class="col-12 col-lg-3 stockType">
-                                        <input onclick="return false;" class="form-check-input" id="stockType"
-                                               type="checkbox"
-                                               name="stockType"
-                                               value="stock"/>
-                                        <label class="form-check-label" for="stockType">Stock</label>
-                                    </div>
-                                    <div class="col-12 col-lg-3 visionType4">
-                                        <input onclick="return false;" class="form-check-input" id="visionType4"
-                                               type="checkbox"
-                                               name="stockType"
-                                               value="rx"/>
-                                        <label class="form-check-label" for="visionType4">Rx</label>
-                                    </div>
-                                </div>
-
-                                <h5 class="text-1000 ">Vision Type</h5>
-                                <div class="col-12 col-lg-3 visionType1">
-                                    <input onclick="return false;" class="form-check-input" id="visionType1"
-                                           type="checkbox"
-                                           name="visionType"
-                                           value="single_vision"/>
-                                    <label class="form-check-label" for="visionType1">Single Vision</label>
-                                </div>
-                                <div class="col-12 col-lg-3 visionType2">
-                                    <input onclick="return false;" class="form-check-input" id="visionType2"
-                                           type="checkbox"
-                                           name="visionType"
-                                           value="bifocal"/>
-                                    <label class="form-check-label" for="visionType2">Bi-Focal</label>
-                                </div>
-                                <div class="col-12 col-lg-3 visionType3">
-                                    <input onclick="return false;" class="form-check-input" id="visionType3"
-                                           type="checkbox"
-                                           name="visionType"
-                                           value="progressive"/>
-                                    <label class="form-check-label" for="visionType3">Progressive</label>
-                                </div>
-                            </div>
-                            <div class="mb-3">
-                                <h4 class="mb-3">Index</h4>
-                                <select disabled class="form-select" id="index" name="index" required="required">
-                                    <option value="0.1">0.1</option>
-                                    <option value="0.2">0.2</option>
-                                    <option value="0.3">0.3</option>
-                                </select>
-                            </div>
-                        </div>
-                        {% endif %}
-
-                        {% if product_data.category_id == 3 %}
-                        <div id="contactLensForm" class="row mb-3 pt-3 pb-3 bg-200 contact-lens-widget">
-                            <div class="row mb-3">
-                                <div class="mb-3">
-                                    <h5 class="text-1000 ">Type</h5>
-                                    <div class="col-12 col-lg-3 ContactLensStockType">
-                                        <input onclick="return false;" class="form-check-input"
-                                               id="ContactLensStockType" type="checkbox"
-                                               name="ContactLensStockType"
-                                               value="stock"/>
-                                        <label class="form-check-label" for="ContactLensStockType">Stock</label>
-                                    </div>
-                                    <div class="col-12 col-lg-3 ContactLensRxType">
-                                        <input onclick="return false;" class="form-check-input" id="ContactLensRxType"
-                                               type="checkbox"
-                                               name="ContactLensStockType"
-                                               value="rx"/>
-                                        <label class="form-check-label" for="ContactLensRxType">Rx</label>
-                                    </div>
-                                </div>
-                                <h5 class="text-1000 ">Contact Lens Type</h5>
-                                <div class="col-12 col-lg-3 contact_lens_type1">
-                                    <input onclick="return false;" class="form-check-input" id="contact_lens_type1"
-                                           type="checkbox"
-                                           name="contact_lens_type"
-                                           value="Soft"/>
-                                    <label class="form-check-label" for="contact_lens_type1">Soft</label>
-                                </div>
-                                <div class="col-12 col-lg-3 contact_lens_type2">
-                                    <input onclick="return false;" class="form-check-input" id="contact_lens_type2"
-                                           type="checkbox"
-                                           name="contact_lens_type"
-                                           value="Semi Soft"/>
-                                    <label class="form-check-label" for="contact_lens_type2">Semi Soft</label>
-                                </div>
-                                <div class="col-12 col-lg-3 contact_lens_type3">
-                                    <input onclick="return false;" class="form-check-input" id="contact_lens_type3"
-                                           type="checkbox"
-                                           name="contact_lens_type"
-                                           value="Hard"/>
-                                    <label class="form-check-label" for="contact_lens_type3">Hard</label>
-                                </div>
-                            </div>
-
-                            <div class="row mb-2">
-                                <h5 class="text-1000 ">Contact Lens Disposablity</h5>
-                                <div class="col-12 col-lg-3 contact_lens_disposability1">
-                                    <input onclick="return false;" class="form-check-input"
-                                           id="contact_lens_disposability1" type="checkbox"
-                                           name="contact_lens_disposability"
-                                           value="Daily"/>
-                                    <label class="form-check-label" for="contact_lens_disposability1">Daily</label>
-                                </div>
-                                <div class="col-12 col-lg-3 contact_lens_disposability2">
-                                    <input onclick="return false;" class="form-check-input"
-                                           id="contact_lens_disposability2" type="checkbox"
-                                           name="contact_lens_disposability"
-                                           value="1 Month"/>
-                                    <label class="form-check-label" for="contact_lens_disposability2">1 Month</label>
-                                </div>
-                                <div class="col-12 col-lg-3 contact_lens_disposability3">
-                                    <input onclick="return false;" class="form-check-input"
-                                           id="contact_lens_disposability3" type="checkbox"
-                                           name="contact_lens_disposability"
-                                           value="3 Month"/>
-                                    <label class="form-check-label" for="contact_lens_disposability3">3 Month</label>
-                                </div>
-                                <div class="col-12 col-lg-3 contact_lens_disposability4">
-                                    <input onclick="return false;" class="form-check-input"
-                                           id="contact_lens_disposability4" type="checkbox"
-                                           name="contact_lens_disposability"
-                                           value="6 Month"/>
-                                    <label class="form-check-label" for="contact_lens_disposability4">6 Month</label>
-                                </div>
-                                <div class="col-12 col-lg-3 contact_lens_disposability5">
-                                    <input onclick="return false;" class="form-check-input"
-                                           id="contact_lens_disposability5" type="checkbox"
-                                           name="contact_lens_disposability"
-                                           value="Yearly"/>
-                                    <label class="form-check-label" for="contact_lens_disposability5">Yearly</label>
-                                </div>
-                            </div>
-                        </div>
-                        {% endif %}
-
 
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Quantity</h5>
                                 <input readonly name="productQuantity" class="form-control" placeholder="Quantity"
                                        type="text"
-                                       value="{{product_data.store_product_quantity}}" required/>
+                                       value="{{stocks_list.si_product_quantity}}" required/>
                             </div>
                             <div class="col-12 col-lg-6">
-                                <h5 class="mb-2 text-1000">GSTIN</h5>
+                                <h5 class="mb-2 text-1000">GST</h5>
                                 <input readonly name="productGSTIN" class="form-control" placeholder="%" type="text"
-                                       value="{{product_data.product_gst}}" required/>
+                                       value="{{stocks_list.ci_product_gst}}" required/>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Discount</h5>
                                 <input readonly name="discount" class="form-control" placeholder="%" type="number"
-                                       maxlength="2" max="99" value="{{product_data.discount}}" required/>
+                                       maxlength="2" max="99" value="{{stocks_list.ci_discount}}" required/>
                             </div>
                         </div>
 
@@ -306,7 +162,7 @@
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Sale price(₹)</h5>
                                 <input readonly name="salePrice" class="form-control" placeholder="₹" type="text"
-                                       value="{{product_data.sale_price}}" required/>
+                                       value="{{stocks_list.ci_sale_price}}" required/>
                             </div>
                         </div>
                         <h4 class="mb-3">Models Data</h4>
@@ -314,13 +170,13 @@
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Model Number</h5>
                                 <input readonly name="modelNumber" class="form-control" placeholder="Model Number"
-                                       value="{{product_data.model_number}}" type="text"
+                                       value="{{stocks_list.ci_model_number}}" type="text"
                                        required/>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">HSN Number</h5>
                                 <input readonly name="hsnNumber" class="form-control" placeholder="HSN Number"
-                                       value="{{product_data.hsn}}" type="text"
+                                       value="{{stocks_list.ci_hsn}}" type="text"
                                        required/>
                             </div>
                         </div>
@@ -337,11 +193,11 @@
                                                     <h5 class="mb-0 text-1000">Category</h5>
 
                                                 </div>
-                                                <select disabled id="categorySelect" name="categoryId" required
+                                                <select disabled  id="categorySelect" name="categoryId" required
                                                         aria-label="category" class="form-select mb-3"
                                                         onchange="handleCategoryChange()">
-                                                    <option value="{{product_data.category_id}}">
-                                                        {{product_data.category_name}}
+                                                    <option value="{{stocks_list.pc_category_id}}">
+                                                        {{stocks_list.pc_category_name}}
                                                     </option>
                                                 </select>
                                             </div>
@@ -349,10 +205,10 @@
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="mb-0 text-1000">Brand</h5>
                                                 </div>
-                                                <select disabled name="brandId" required aria-label="brands"
+                                                <select disabled  name="brandId" required aria-label="brands"
                                                         class="form-select mb-3">
-                                                    <option value="{{product_data.brand_id}}">
-                                                        {{product_data.brand_name}}
+                                                    <option value="{{stocks_list.brand_brand_id}}">
+                                                        {{stocks_list.brand_name}}
                                                     </option>
                                                     {% for brand in response.product_brands %}
                                                     <option value="{{brand.brand_id}}">{{brand.brand_name}}</option>
@@ -360,28 +216,31 @@
                                                 </select>
                                             </div>
                                             <div class="col-12 col-sm-6 col-xl-12">
-                                                    <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Material</h5>
-                                                    </div>
-                                                    <select disabled name="materialId" required
-                                                            class="form-select mb-3">
-                                                        <option value="{{product_data.material_id}}">
-                                                            {{product_data.material_name}}
-                                                        </option>
-
-                                                    </select>
+                                                <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                    <h5 class="text-1000">Material</h5>
                                                 </div>
-                                            {% if product_data.category_id == 1 %}
+                                                <select disabled  name="materialId" required
+                                                        class="form-select mb-3">
+                                                    <option value="{{stocks_list.pm_material_id}}">
+                                                        {{stocks_list.pm_material_name}}
+                                                    </option>
+
+                                                </select>
+                                            </div>
+                                            {% if stocks_list.ci_category_id == 1 %}
                                             <div id="only_frame_options">
+
+
                                                 <div class="col-12 col-sm-6 col-xl-12">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
                                                         <h5 class="text-1000">Frame Type</h5>
                                                     </div>
-                                                    <select disabled name="frameTypeId" required
+                                                    <select disabled  name="frameTypeId" required
                                                             class="form-select mb-3">
-                                                        <option value="{{product_data.frame_type_id}}">
-                                                            {{product_data.frame_type_name}}
+                                                        <option value="{{stocks_list.ci_frame_type_id}}">
+                                                            {{stocks_list.ftype_name}}
                                                         </option>
+
                                                     </select>
 
                                                 </div>
@@ -390,11 +249,12 @@
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
                                                         <h5 class="text-1000">Frame Shape</h5>
                                                     </div>
-                                                    <select disabled name="frameShapeId" required
+                                                    <select disabled  name="frameShapeId" required
                                                             class="form-select mb-3">
-                                                        <option value="{{product_data.frame_shape_id}}">
-                                                            {{product_data.shape_name}}
+                                                        <option value="{{stocks_list.ci_frame_shape_id}}">
+                                                            {{stocks_list.fshape_name}}
                                                         </option>
+
                                                     </select>
 
                                                 </div>
@@ -416,16 +276,10 @@
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
                                                         <h5 class="text-1000">Color</h5>
                                                     </div>
-                                                    <select disabled name="colorId" required class="form-select">
-                                                        <option value="{{product_data.color_id}}">
-                                                            {{product_data.color_name}}
+                                                    <select disabled  name="colorId" required class="form-select">
+                                                        <option value="{{stocks_list.ci_color_id}}">
+                                                            {{stocks_list.pcol_color_name}}
                                                         </option>
-                                                        {% for color in response.colors %}
-                                                        <option value="{{color.color_id}}">
-                                                            {{color.color_name}} -
-                                                            {{color.color_code}}
-                                                        </option>
-                                                        {% endfor %}
                                                     </select>
 
                                                 </div>
@@ -434,36 +288,23 @@
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="text-1000">Unit</h5>
                                                 </div>
-                                                <select disabled name="unitId" required class="form-select">
-                                                    <option value="{{product_data.unit_id}}">
-                                                        {{product_data.unit_name}}
+                                                <select disabled  name="unitId" required class="form-select">
+                                                    <option value="{{stocks_list.ci_unit_id}}">
+                                                        {{stocks_list.unit_name}}
                                                     </option>
-                                                    {% for unit in response.master_units %}
-                                                    <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
-                                                    {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-12 col-sm-6 col-xl-12">
                                                 <div class="d-flex flex-wrap justify-content-between mb-2">
                                                     <h5 class="mb-0 text-1000">Origin</h5>
                                                 </div>
-                                                <select disabled name="origin" required aria-label="origin"
+                                                <select disabled  name="origin" required aria-label="origin"
                                                         class="form-select">
-                                                    <option value="{{product_data.origin}}">{{product_data.origin}}
+                                                    <option value="{{stocks_list.ci_origin}}">{{stocks_list.ci_origin}}
                                                     </option>
-                                                    <option value="Indian">Indian</option>
-                                                    <option value="Foreign">Foreign</option>
-                                                    <option value="Domestic">Domestic</option>
                                                 </select>
 
                                             </div>
-                                            <input readonly name="created_by" required type="hidden"
-
-                                                   value="{{ request.session.id }}">
-                                            <input readonly name="last_updated_by" required type="hidden"
-
-                                                   value="{{ request.session.id }}">
-
 
                                         </div>
 
@@ -474,7 +315,6 @@
                     </div>
                 </div>
             </form>
-            {% endfor %}
             {% include 'footer.html' %}
         </div>
     </div>
@@ -524,9 +364,9 @@
     //set valuesfor lens power attribute
     document.addEventListener("DOMContentLoaded", function() {
         var stockData = {
-            "vision_type": "{{product_data.power_attribute.vision_type}}",
-            "stock_type": "{{product_data.power_attribute.stock_type}}",
-            "index": "{{product_data.power_attribute.index}}",
+            "vision_type": "{{stocks_list.si_power_attribute.vision_type}}",
+            "stock_type": "{{stocks_list.si_power_attribute.stock_type}}",
+            "index": "{{stocks_list.si_power_attribute.index}}",
             };
 
         // Function to check the corresponding checkbox based on the value
@@ -571,15 +411,16 @@
 
 
 
+
 </script>
 
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var stockData = {
-            "stock_type": "{{product_data.power_attribute.stock_type}}",
-            "contact_lens_type": "{{product_data.power_attribute.contact_lens_type}}",
-            "contact_lens_disposability": "{{product_data.power_attribute.contact_lens_disposability}}"
+            "stock_type": "{{stocks_list.si_power_attribute.stock_type}}",
+            "contact_lens_type": "{{stocks_list.si_power_attribute.contact_lens_type}}",
+            "contact_lens_disposability": "{{stocks_list.si_power_attribute.contact_lens_disposability}}"
         };
 
         // Function to set the checked attribute for checkboxes
@@ -608,6 +449,7 @@
         setCheckboxValue("contact_lens_disposability5", stockData.contact_lens_disposability);
 
         });
+
 
 
 </script>

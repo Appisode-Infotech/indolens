@@ -78,11 +78,11 @@
         <div class="content">
             <form class="mb-9 ">
                 {% csrf_token %}
-                <div class="row g-3 flex-between-end mb-5">
+                <div class="row align-items-center justify-content-between g-3 mb-4">
                     <div class="col-auto">
                         <h2 class="mb-2">View product</h2>
-                        <h5 class="text-700 fw-semi-bold">Product Name: <b>{{product_data.product_name}}</b></h5>
-                        <h5 class="text-700 fw-semi-bold">Product Id: <b>{{product_data.product_id}}</b></h5>
+                        <h5 class="text-700 fw-semi-bold">Product Name: <b>{{product_data.ci_product_name}}</b></h5>
+                        <h5 class="text-700 fw-semi-bold">Product Id: <b>{{product_data.ci_product_id}}</b></h5>
                     </div>
 
                 </div>
@@ -92,7 +92,7 @@
                         <div class="mb-5">
                             <input readonly class="form-control" name="productTitle"
                                    placeholder="Write product title here..."
-                                   type="text" value="{{product_data.product_name}}" required/>
+                                   type="text" value="{{product_data.ci_product_name}}" required/>
                         </div>
                         <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3 mb-6">
                             <h4 class="mb-3"> Product QR Code</h4>
@@ -100,9 +100,10 @@
                                 <!-- Add a container for horizontal alignment -->
                                 <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                     <div class="border border-300 p-2 rounded-2 me-2">
-                                        <a href="{{ MEDIA_URL }}{{ product_data.product_qr_code }}" target="_blank">
+                                        <a href="{{ MEDIA_URL }}{{ product_data.ci_product_qr_code }}" target="_blank">
                                             <img class="rounded-2 dz-image" width="100px"
-                                                 height="100px" src="{{ MEDIA_URL }}{{ product_data.product_qr_code }}"
+                                                 height="100px"
+                                                 src="{{ MEDIA_URL }}{{ product_data.ci_product_qr_code }}"
                                                  onerror="if(this.src.endsWith('.pdf'))
                                                      { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
                                                      else { this.src = 'http://via.placeholder.com/100x100'; }"
@@ -116,7 +117,7 @@
                             <h4 class="mb-3"> Product Images</h4>
                             <div class="d-flex flex-wrap">
                                 <!-- Add a container for horizontal alignment -->
-                                {% for images in product_data.product_images %}
+                                {% for images in product_data.ci_product_images %}
                                 <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                     <div class="border border-300 p-2 rounded-2 me-2">
                                         <a href="{{ MEDIA_URL }}{{ images }}" target="_blank">
@@ -125,7 +126,6 @@
                                                  onerror="if(this.src.endsWith('.pdf'))
                                                      { this.src = '{{ MEDIA_URL }}/logo/PDF_file_icon.svg.png'; }
                                                      else { this.src = 'http://via.placeholder.com/100x100'; }"
-
                                                  alt="..." data-dz-thumbnail="data-dz-thumbnail"/>
                                         </a>
                                     </div>
@@ -133,13 +133,17 @@
                                 {% endfor %}
                             </div>
                         </div>
+
                         <div class="mb-6">
-                            <h4 class="mb-3"> Product Description</h4>
-                            {{product_data.product_description|safe}}
+                            <h4 class="mb-3">Product Description</h4>
+                            <div class="product-description" style="word-break: break-all;">
+                                {{product_data.ci_product_description|safe}}
+                            </div>
                         </div>
 
+
                         <!--                        New code-->
-                        {% if product_data.category_id == 2 %}
+                        {% if product_data.ci_category_id == 2 %}
                         <div class="row mb-3 pt-3  bg-200 lens-widget ">
 
                             <div class="row mb-3">
@@ -187,15 +191,13 @@
                             <div class="mb-3">
                                 <h4 class="mb-3">Index</h4>
                                 <select disabled class="form-select" id="index" name="index" required="required">
-                                    <option value="0.1">0.1</option>
-                                    <option value="0.2">0.2</option>
-                                    <option value="0.3">0.3</option>
+                                    <option value="{{product_data.ci_power_attribute.index}}">{{product_data.ci_power_attribute.index}}</option>
                                 </select>
                             </div>
                         </div>
                         {% endif %}
 
-                        {% if product_data.category_id == 3 %}
+                        {% if product_data.ci_category_id == 3 %}
                         <div id="contactLensForm" class="row mb-3 pt-3 pb-3 bg-200 contact-lens-widget">
                             <div class="row mb-3">
                                 <div class="mb-3">
@@ -281,31 +283,42 @@
                         {% endif %}
 
 
-                        <div class="row g-3 mb-3 ">
-<!--                            <div class="col-12 col-lg-6">-->
-<!--                                <h5 class="mb-2 text-1000">Quantity</h5>-->
-<!--                                <input readonly name="productQuantity" class="form-control" placeholder="Quantity"-->
-<!--                                       type="text"-->
-<!--                                       value="{{product_data.product_quantity}}" required/>-->
-<!--                            </div>-->
+                        <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-6">
-                                <h5 class="mb-2 text-1000">GSTIN</h5>
+                                <h5 class="mb-2 text-1000">Quantity</h5>
+                                <input readonly name="productQuantity" class="form-control" placeholder="Quantity"
+                                       type="text"
+                                       value="{{product_data.ci_product_quantity}}" required/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">GST</h5>
                                 <input readonly name="productGSTIN" class="form-control" placeholder="%" type="text"
-                                       value="{{product_data.product_gst}}" required/>
+                                       value="{{product_data.ci_product_gst}}" required/>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Discount</h5>
                                 <input readonly name="discount" class="form-control" placeholder="%" type="number"
-                                       maxlength="2" max="99" value="{{product_data.discount}}" required/>
+                                       maxlength="2" max="99" value="{{product_data.ci_discount}}" required/>
                             </div>
                         </div>
 
                         <h4 class="mb-3">Pricing</h4>
                         <div class="row g-3 mb-3">
                             <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">Cost price(₹)</h5>
+                                <input readonly name="costPrice" class="form-control" placeholder="₹"
+                                       value="{{product_data.ci_cost_price}}" type="text" required/>
+                            </div>
+                            <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Sale price(₹)</h5>
                                 <input readonly name="salePrice" class="form-control" placeholder="₹" type="text"
-                                       value="{{product_data.sale_price}}" required/>
+                                       value="{{product_data.ci_sale_price}}" required/>
+                            </div>
+                            <div class="col-12 col-lg-6">
+                                <h5 class="mb-2 text-1000">Franchise Sale price(₹)</h5>
+                                <input readonly name="franchiseSalePrice" class="form-control" placeholder="₹"
+                                       type="text"
+                                       value="{{product_data.ci_franchise_sale_price}}" required/>
                             </div>
                         </div>
                         <h4 class="mb-3">Models Data</h4>
@@ -313,13 +326,13 @@
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">Model Number</h5>
                                 <input readonly name="modelNumber" class="form-control" placeholder="Model Number"
-                                       value="{{product_data.model_number}}" type="text"
+                                       value="{{product_data.ci_model_number}}" type="text"
                                        required/>
                             </div>
                             <div class="col-12 col-lg-6">
                                 <h5 class="mb-2 text-1000">HSN Number</h5>
                                 <input readonly name="hsnNumber" class="form-control" placeholder="HSN Number"
-                                       value="{{product_data.hsn}}" type="text"
+                                       value="{{product_data.ci_hsn}}" type="text"
                                        required/>
                             </div>
                         </div>
@@ -339,8 +352,8 @@
                                                 <select disabled id="categorySelect" name="categoryId" required
                                                         aria-label="category" class="form-select mb-3"
                                                         onchange="handleCategoryChange()">
-                                                    <option value="{{product_data.category_id}}">
-                                                        {{product_data.category_name}}
+                                                    <option value="{{product_data.ci_category_id}}">
+                                                        {{product_data.pc_category_name}}
                                                     </option>
                                                 </select>
                                             </div>
@@ -350,41 +363,36 @@
                                                 </div>
                                                 <select disabled name="brandId" required aria-label="brands"
                                                         class="form-select mb-3">
-                                                    <option value="{{product_data.brand_id}}">
+                                                    <option value="{{product_data.ci_brand_id}}">
                                                         {{product_data.brand_name}}
                                                     </option>
-                                                    {% for brand in response.product_brands %}
-                                                    <option value="{{brand.brand_id}}">{{brand.brand_name}}</option>
-                                                    {% endfor %}
+
                                                 </select>
                                             </div>
                                             <div class="col-12 col-sm-6 col-xl-12">
-                                                    <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Material</h5>
-                                                    </div>
-                                                    <select disabled name="materialId" required
-                                                            class="form-select mb-3">
-                                                        <option value="{{product_data.material_id}}">
-                                                            {{product_data.material_name}}
-                                                        </option>
-
-                                                    </select>
+                                                <div class="d-flex flex-wrap justify-content-between mb-2">
+                                                    <h5 class="text-1000">Material</h5>
                                                 </div>
+                                                <select disabled name="materialId" required
+                                                        class="form-select mb-3">
+                                                    <option value="{{product_data.ci_material_id}}">
+                                                        {{product_data.pm_material_name}}
+                                                    </option>
 
-                                            {% if product_data.category_id == 1 %}
+                                                </select>
+                                            </div>
+
+                                            {% if product_data.ci_category_id == 1 %}
                                             <div id="only_frame_options">
-
-
                                                 <div class="col-12 col-sm-6 col-xl-12">
                                                     <div class="d-flex flex-wrap justify-content-between mb-2">
-                                                        <h5 class="text-1000">Frame Type</h5>
+                                                        <h5 class="text-1000">Frame Type </h5>
                                                     </div>
                                                     <select disabled name="frameTypeId" required
                                                             class="form-select mb-3">
-                                                        <option value="{{product_data.frame_type_id}}">
-                                                            {{product_data.frame_type_name}}
+                                                        <option value="{{product_data.ci_frame_type_id}}">
+                                                            {{product_data.ftype_name}}
                                                         </option>
-
                                                     </select>
 
                                                 </div>
@@ -395,10 +403,9 @@
                                                     </div>
                                                     <select disabled name="frameShapeId" required
                                                             class="form-select mb-3">
-                                                        <option value="{{product_data.frame_shape_id}}">
-                                                            {{product_data.shape_name}}
+                                                        <option value="{{product_data.ci_frame_shape_id}}">
+                                                            {{product_data.fshape_name}}
                                                         </option>
-
                                                     </select>
 
                                                 </div>
@@ -421,15 +428,9 @@
                                                         <h5 class="text-1000">Color</h5>
                                                     </div>
                                                     <select disabled name="colorId" required class="form-select">
-                                                        <option value="{{product_data.color_id}}">
-                                                            {{product_data.color_name}}
+                                                        <option value="{{product_data.ci_color_id}}">
+                                                            {{product_data.pcol_color_name}}
                                                         </option>
-                                                        {% for color in response.colors %}
-                                                        <option value="{{color.color_id}}">
-                                                            {{color.color_name}} -
-                                                            {{color.color_code}}
-                                                        </option>
-                                                        {% endfor %}
                                                     </select>
 
                                                 </div>
@@ -439,12 +440,9 @@
                                                     <h5 class="text-1000">Unit</h5>
                                                 </div>
                                                 <select disabled name="unitId" required class="form-select">
-                                                    <option value="{{product_data.unit_id}}">
+                                                    <option value="{{product_data.ci_unit_id}}">
                                                         {{product_data.unit_name}}
                                                     </option>
-                                                    {% for unit in response.master_units %}
-                                                    <option value="{{unit.unit_id}}">{{unit.unit_name}}</option>
-                                                    {% endfor %}
                                                 </select>
                                             </div>
                                             <div class="col-12 col-sm-6 col-xl-12">
@@ -453,11 +451,10 @@
                                                 </div>
                                                 <select disabled name="origin" required aria-label="origin"
                                                         class="form-select">
-                                                    <option value="{{product_data.origin}}">{{product_data.origin}}
+                                                    <option value="{{product_data.ci_origin}}">
+                                                        {{product_data.ci_origin}}
                                                     </option>
-                                                    <option value="Indian">Indian</option>
-                                                    <option value="Foreign">Foreign</option>
-                                                    <option value="Domestic">Domestic</option>
+
                                                 </select>
 
                                             </div>
@@ -527,9 +524,9 @@
     //set valuesfor lens power attribute
     document.addEventListener("DOMContentLoaded", function() {
         var stockData = {
-            "vision_type": "{{product_data.power_attribute.vision_type}}",
-            "stock_type": "{{product_data.power_attribute.stock_type}}",
-            "index": "{{product_data.power_attribute.index}}",
+            "vision_type": "{{product_data.ci_power_attribute.vision_type}}",
+            "stock_type": "{{product_data.ci_power_attribute.stock_type}}",
+            "index": "{{product_data.ci_power_attribute.index}}",
             };
 
         // Function to check the corresponding checkbox based on the value
@@ -574,15 +571,17 @@
 
 
 
+
+
 </script>
 
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         var stockData = {
-            "stock_type": "{{product_data.power_attribute.stock_type}}",
-            "contact_lens_type": "{{product_data.power_attribute.contact_lens_type}}",
-            "contact_lens_disposability": "{{product_data.power_attribute.contact_lens_disposability}}"
+            "stock_type": "{{product_data.ci_power_attribute.stock_type}}",
+            "contact_lens_type": "{{product_data.ci_power_attribute.contact_lens_type}}",
+            "contact_lens_disposability": "{{product_data.ci_power_attribute.contact_lens_disposability}}"
         };
 
         // Function to set the checked attribute for checkboxes
@@ -613,8 +612,9 @@
         });
 
 
-</script>
 
+
+</script>
 
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
 

@@ -42,7 +42,7 @@ def get_franchise_emp_by_id(store, employeeId):
                                             LEFT JOIN franchise_store AS fs ON sm.fse_assigned_store_id = fs.fs_store_id
                                             LEFT JOIN admin AS creator ON sm.fse_created_by = creator.admin_admin_id
                                             LEFT JOIN admin AS updater ON sm.fse_last_updated_by = updater.admin_admin_id
-                                            WHERE sm.fse_assigned_store_id = '{store}' AND sm.fse_employee_id = {employeeId} """
+                                            WHERE sm.fse_employee_id = {employeeId} """
             cursor.execute(get_store_employee_query)
 
             store_employees = cursor.fetchone()

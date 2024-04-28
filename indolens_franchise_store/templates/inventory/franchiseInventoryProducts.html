@@ -156,43 +156,43 @@
                                 <tbody class="list" id="products-table-body">
                                 {% for stock in stocks_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
-                                    data-category="{{ stock.category_name }}">
+                                    data-category="{{ stock.si_category_name }}">
                                     <td class="align-middle white-space-nowrap py-0 SlNo"></td>
-                                    <td class="align-middle white-space-nowrap py-0 productId">PID{{stock.product_id}}</td>
+                                    <td class="align-middle white-space-nowrap py-0 productId">PID{{stock.si_product_id}}</td>
 
                                     <td class="align-middle white-space-nowrap py-0">
-                                        <a href="{{ MEDIA_URL }}{{ stock.product_images.0 }}" target="_blank">
+                                        <a href="{{ MEDIA_URL }}{{ stock.product_images }}" target="_blank">
                                             <div class="avatar avatar-m">
                                                 <img alt="" class="rounded-circle"
-                                                     src="{{ MEDIA_URL }}{{ stock.product_images.0 }}"/>
+                                                     src="{{ MEDIA_URL }}{{ stock.product_images }}"/>
                                             </div>
                                         </a>
                                     </td>
 
-                                    <td class="product align-middle ps-4"><a href="{% url 'view_franchise_store_inventory_products' stock.store_inventory_id %}"
-                                            class="fw-semi-bold line-clamp-3 mb-0" > {{stock.product_name}}</a>
+                                    <td class="product align-middle ps-4"><a href="{% url 'view_franchise_store_inventory_products' stock.si_store_inventory_id %}"
+                                            class="fw-semi-bold line-clamp-3 mb-0" > {{stock.ci_product_name}}</a>
                                     </td>
 
                                     <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
-                                        {{stock.sale_price}}
+                                        ₹{{stock.ci_sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        <p style="display: none;">filterIn_{{stock.category_name}}</p>{{stock.category_name}}
+                                        <p style="display: none;">filterIn_{{stock.pc_category_name}}</p>{{stock.pc_category_name}}
                                     </td>
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{stock.brand_name}}
                                     </td>
 
-                                    <td class="inStock align-middle white-space-nowrap  fw-bold text-700 ps-4">
-                                        {% if stock.store_product_quantity == None%}
+                                    <td class="inStock align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                        {% if stock.si_product_quantity == None%}
                                         0
                                         {% else %}
-                                        {{stock.store_product_quantity}}
+                                        {{stock.si_product_quantity}}
                                         {% endif %}
                                     </td>
 
                                     <td class="publishedOn align-middle white-space-nowrap text-600 ps-4">
-                                        {{stock.store_product_created_on}}
+                                        {{stock.si_last_updated_on|date:"d/m/Y h:i A"}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-end pe-0 ps-4">
                                         <div class="font-sans-serif btn-reveal-trigger position-static">
@@ -203,12 +203,12 @@
                                                     class="fas fa-ellipsis-h fs--2"></span></button>
                                             <div class="dropdown-menu dropdown-menu-end py-2">
                                                 <!--                                                <a class="dropdown-item" data-bs-target="#verticallyCentered"-->
-                                                <!--                                                   data-bs-product-id="{{stock.product_id}}"-->
-                                                <!--                                                   data-bs-target-store-id="{{stock.target_store_id}}"-->
-                                                <!--                                                   data-bs-unit-cost="{{stock.franchise_sale_price}}"-->
+                                                <!--                                                   data-bs-product-id="{{stock.si_product_id}}"-->
+                                                <!--                                                   data-bs-target-store-id="{{stock.si_target_store_id}}"-->
+                                                <!--                                                   data-bs-unit-cost="{{stock.si_franchise_sale_price}}"-->
                                                 <!--                                                   data-bs-toggle="modal">Request</a>-->
                                                 <a class="dropdown-item"
-                                                   href="{% url 'view_franchise_store_inventory_products' stock.store_inventory_id %}">View</a>
+                                                   href="{% url 'view_franchise_store_inventory_products' stock.si_store_inventory_id %}">View</a>
                                             </div>
                                         </div>
                                     </td>

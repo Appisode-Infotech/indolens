@@ -97,24 +97,29 @@
                                             <div class="col-12 col-sm-auto mb-sm-2">
                                                 <div class="avatar avatar-5xl"><img alt=""
                                                                                     class="rounded-circle"
-                                                                                    src="{{MEDIA_URL}}{{employee.profile_pic}}"/>
+                                                                                    src="{{MEDIA_URL}}{{franchise_employee.fse_profile_pic}}"/>
                                                 </div>
 
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
-                                                <h3>{{employee.name}}</h3>
-                                                <p class="text-800">Joined {{employee.created_on}}</p>
-                                                <p class="text-800">Store - {{employee.store_name}}</p>
+                                                <h3>{{franchise_employee.fse_name}}</h3>
+                                                <p class="text-800">Joined {{franchise_employee.fse_created_on}}</p>
+                                                <p class="text-800">Store -
+                                                    {% if franchise_employee.fs_store_name == none %}
+                                                    NOT ASSIGNED
+                                                    {% else %}
+                                                    {{franchise_employee.fs_store_name}}</p>
+                                                {% endif %}
 
                                             </div>
                                         </div>
                                         <div class="border-top border-dashed border-300 pt-4">
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
-                                                <h6>{{ employee.document_1_type }}</h6>
+                                                <h6>{{ franchise_employee.fse_document_1_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in employee.document_1_url %}
+                                                    {% for doc in franchise_employee.fse_document_1_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -134,10 +139,10 @@
 
 
                                             <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column mt-3">
-                                                <h6>{{ employee.document_2_type }}</h6>
+                                                <h6>{{ franchise_employee.fse_document_2_type }}</h6>
                                                 <div class="d-flex flex-wrap">
                                                     <!-- Add a container for horizontal alignment -->
-                                                    {% for doc in employee.document_2_url %}
+                                                    {% for doc in franchise_employee.fse_document_2_url %}
                                                     <div class="dz-preview dz-preview-multiple m-0 d-flex flex-column">
                                                         <div class="border border-300 p-2 rounded-2 me-2">
                                                             <a href="{{ MEDIA_URL }}{{ doc }}" target="_blank">
@@ -166,12 +171,12 @@
                                             <button class="btn btn-link p-0"></button>
                                         </div>
                                         <h5 class="text-800">Address</h5>
-                                        <p class="text-800">{{employee.address}}
+                                        <p class="text-800">{{franchise_employee.fse_address}}
                                         </p>
                                         <div class="mb-3">
-                                            <h5 class="text-800">Email</h5><a href="mailto:{{employee.email}}">{{employee.email}}</a>
+                                            <h5 class="text-800">Email</h5><a href="mailto:{{franchise_employee.fse_email}}">{{franchise_employee.fse_email}}</a>
                                         </div>
-                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:{{employee.phone}}">{{employee.phone}}</a>
+                                        <h5 class="text-800">Phone</h5><a class="text-800" href="tel:{{franchise_employee.fse_phone}}">{{franchise_employee.fse_phone}}</a>
                                     </div>
                                 </div>
                             </div>
