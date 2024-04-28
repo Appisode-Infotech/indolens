@@ -230,8 +230,8 @@ def orderInvoiceFranchise(request, orderId):
         order_detail, status_code = franchise_store_orders_controller.get_order_details(orderId)
         invoice_details, inv_status_code = orders_controller.get_invoice_details(orderId)
         store_data, store_status_code = franchise_store_orders_controller.get_store_details(
-            order_detail['orders_details'][0]['created_by_store'],
-            order_detail['orders_details'][0]['created_by_store_type'])
+            order_detail['orders_details'][0]['so_created_by_store'],
+            order_detail['orders_details'][0]['so_created_by_store_type'])
         return render(request, 'orders/franchise_order_invoice.html', {"order_detail": order_detail['orders_details'],
                                                                        "store_data": store_data['store_data'],
                                                                        "invoice_details": invoice_details[
@@ -585,5 +585,36 @@ def franchiseStoreEyeTestPrint(request, testId):
         return render(request, 'franchiseStoreEyeTest/franchiseStoreEyeTestPrint.html',
                       {'eye_test_list': response['eye_test']})
 
+    else:
+        return redirect('franchise_store_login')
+
+def viewFranchiseJobAuthenticityCard(request, saleId, frame):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        print(job_detail)
+        return render(request, 'orders/authenticityCar.html', {"order_detail": job_detail['orders_details'],
+                                                               "frame": frame})
+    else:
+        return redirect('franchise_store_login')
+
+def franchiseStoreContactLensPowerCard(request, saleId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        print(job_detail)
+        return render(request, 'indolens_admin/labs/contactLensPowerCard.html',
+                      {"order_detail": job_detail['orders_details']})
+    else:
+        return redirect('franchise_store_login')
+
+def viewFranchiseJobItemDetails(request, saleId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+        job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        print(job_detail['frame_list'])
+        return render(request, 'orders/franchiseJobItemDetails.html',
+                      {"job_item_detail": job_detail['orders_details'],
+                       "frame_list": job_detail['frame_list']})
     else:
         return redirect('franchise_store_login')

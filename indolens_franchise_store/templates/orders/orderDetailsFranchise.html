@@ -106,24 +106,27 @@
                                     <thead>
                                     <tr>
                                         <th class="sort white-space-nowrap align-middle fs--2" scope="col"></th>
-                                        <th class="sort white-space-nowrap align-middle" data-sort="products"
+                                        <th class="sort white-space-nowrap align-middle"
                                             scope="col" style="min-width:200px;">PRODUCTS
                                         </th>
-                                        <th class="sort align-middle ps-4 text-end" data-sort="color" scope="col"
+                                        <th class="sort align-middle ps-4 text-end" scope="col"
                                             style="width:150px;">SALE PRICE
                                         </th>
-                                        <th class="sort align-middle ps-4 text-end" data-sort="size" scope="col"
+                                        <th class="sort align-middle ps-4 text-end" scope="col"
                                             style="width:300px;">DISCOUNT
                                         </th>
-                                        <th class="sort align-middle ps-4 text-end" data-sort="size" scope="col"
+                                        <th class="sort align-middle ps-4 text-end" scope="col"
                                             style="width:300px;">GST
                                         </th>
-                                        <th class="sort align-middle text-end" data-sort="quantity" scope="col"
+                                        <th class="sort align-middle text-end" scope="col"
                                             style="width:200px;">QUANTITY
                                         </th>
 
-                                        <th class="sort align-middle text-end ps-4" data-sort="total" scope="col"
+                                        <th class="sort align-middle text-end ps-4" scope="col"
                                             style="width:250px;">TOTAL
+                                        </th>
+                                        <th class="sort align-middle text-end" scope="col"
+                                            style="width:250px; min-width:100px;">ACTION
                                         </th>
                                     </tr>
                                     </thead>
@@ -152,6 +155,38 @@
                                         </td>
                                         <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">₹
                                             {{order.so_product_total_cost}}
+                                        </td>
+                                        <td class="align-middle  white-space-nowrap pe-0 action text-end">
+                                            {% if order.ci_category_id == 2 or order.ci_category_id == 3 %}
+                                            <div class="font-sans-serif btn-reveal-trigger position-static">
+                                                <button aria-expanded="false"
+                                                        aria-haspopup="true"
+                                                        class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                        data-boundary="window"
+                                                        data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                        type="button">
+                                                    <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                                <div class="dropdown-menu dropdown-menu-end py-2">
+                                                    {% if order.ci_category_id == 2 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button"
+                                                       href="{% url 'franchise_store_job_item_details' order.so_sale_item_id %}">
+                                                        Line Item Details</a>
+                                                    <a class="dropdown-item view-button" target="_blank"
+                                                       type="button"
+                                                       href="{% url 'franchise_store_job_authenticity_card' order.so_sale_item_id 'NA' %}">
+                                                        Authenticity Card</a>
+                                                    {% elif order.ci_category_id == 3 %}
+                                                    <a class="dropdown-item view-button"
+                                                       type="button" target="_blank"
+                                                       href="{% url 'franchise_store_contact_lens_power_card' order.so_sale_item_id %}">
+                                                        Contact Lens Power</a>
+                                                    {% endif %}
+
+                                                </div>
+                                            </div>
+                                            {% endif %}
+
                                         </td>
                                     </tr>
                                     {% endfor %}

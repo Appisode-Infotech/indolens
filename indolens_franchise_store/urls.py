@@ -71,4 +71,11 @@ urlpatterns = [
     path('get_franchise_eye_test_by_id/testId=<int:testId>', getfranchiseStoreEyeTestById, name='get_franchise_eye_test_by_id'),
     path('print_eye_test/testId=<int:testId>', franchiseStoreEyeTestPrint, name='franchise_store_eye_test_print'),
 
+    path('franchise_store_job_authenticity_card/saleId=<str:saleId>/frame=<str:frame>', viewFranchiseJobAuthenticityCard,
+                 name='franchise_store_job_authenticity_card'),
+    path('franchise_store_contact_lens_power_card/saleId=<str:saleId>', franchiseStoreContactLensPowerCard,
+                 name='franchise_store_contact_lens_power_card'),
+    path('franchise_store_job_item_details/saleId=<str:saleId>', viewFranchiseJobItemDetails,
+                 name='franchise_store_job_item_details'),
+
 ]

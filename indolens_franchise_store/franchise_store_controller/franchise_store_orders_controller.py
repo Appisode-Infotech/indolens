@@ -553,19 +553,19 @@ def get_store_details(storeId, storeType):
             if storeType == 1:
                 get_own_stores_query = f""" SELECT own_store.*
                                                     FROM own_store
-                                                    WHERE own_store.store_id = '{storeId}' """
+                                                    WHERE own_store.os_store_id = '{storeId}' """
                 cursor.execute(get_own_stores_query)
-                stores_data = cursor.fetchall()
+                stores_data = cursor.fetchone()
 
             else:
                 get_franchise_stores_query = f""" SELECT franchise_store.* FROM franchise_store
-                                                    WHERE franchise_store.store_id = '{storeId}' """
+                                                    WHERE franchise_store.fs_store_id = '{storeId}' """
                 cursor.execute(get_franchise_stores_query)
-                stores_data = cursor.fetchall()
+                stores_data = cursor.fetchone()
 
             return {
                 "status": True,
-                "store_data": get_store(stores_data)
+                "store_data": stores_data
             }, 200
 
     except pymysql.Error as e:
