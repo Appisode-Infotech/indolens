@@ -103,7 +103,7 @@
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3>{{franchise_employee.fse_name}}</h3>
-                                                <p class="text-800">Joined {{franchise_employee.fse_created_on}}</p>
+                                                <p class="text-800">Joined {{franchise_employee.fse_created_on|date:"d/m/Y h:i A"}}</p>
                                                 <p class="text-800">Store -
                                                     {% if franchise_employee.fs_store_name == none %}
                                                     NOT ASSIGNED

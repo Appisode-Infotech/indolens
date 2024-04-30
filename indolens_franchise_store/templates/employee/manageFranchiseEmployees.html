@@ -157,11 +157,14 @@
                                     </div>
                                         </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 py-4 name"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_franchise_store_employee_details' employee.fse_employee_id %}">
                                     {{employee.fse_name}}
                                 </a>
+                                </td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 py-4 name">
+                                    {{employee.fse_name}}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">
@@ -172,7 +175,7 @@
                                     <p class="mb-0 fs--1 text-900">{{employee.fse_email}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end role">
+                                <td class="align-middle white-space-nowrap role">
                                     {% if employee.fse_role == 1 %}
                                     <p class="mb-0 fs--1 text-900">Store Manager</p>
 
@@ -184,20 +187,20 @@
                                     <p class="mb-0 fs--1 text-900">House Keeping</p>
                                 {% endif %}
 
-                                <td class="align-middle white-space-nowrap text-end status">
+                                <td class="align-middle white-space-nowrap status">
                                     {% if employee.fse_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
                                 {% elif employee.fse_status == 1 %}
                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                 {% endif %}
                                 <td class="align-middle white-space-nowrap ps-3 py-4 createdOn">
-                                    <p class="mb-0 fs--1 text-900">{{employee.fse_created_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.fse_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap task ps-3 py-4 createdBy">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{employee.creator}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 updatedOn">
-                                    <p class="mb-0 fs--1 text-900">{{employee.fse_last_updated_on}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{employee.fse_last_updated_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 updatedBy">
                                     <p class="fw-bo text-900 fs--1 mb-0">{{employee.updater}}</p>

@@ -76,17 +76,17 @@
             <div class="mb-1">
                 <div class="row g-3 mb-4">
                     <div class="col-auto">
-                        <h2 class="mb-0">Products({{stocks_list|length}})</h2>
+                        <h2 class="mb-0">Products<span class="fw-normal text-700 ms-3">({{stocks_list|length}})</span></h2>
                     </div>
                 </div>
 
                 <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
                     <li class="nav-item"><a aria-current="page" class="nav-link filter active" href="#filter-all-category">All</a></li>
                     {% for category in categories_List %}
-                    {% if category.category_id != 2 and category.category_id != 3 %}
+                    {% if category.pc_category_id != 2 and category.pc_category_id != 3 %}
                     <li class="nav-item">
-                        <a class="nav-link filter" href="#filter-filterIn_{{ category.category_name }}-category">
-                            {{ category.category_name}}</a>
+                        <a class="nav-link filter" href="#filter-filterIn_{{ category.pc_category_name }}-category">
+                            {{ category.pc_category_name}}</a>
                     </li>
                     {% endif %}
                     {% endfor %}

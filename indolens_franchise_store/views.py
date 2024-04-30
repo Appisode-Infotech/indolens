@@ -24,28 +24,32 @@ def index(request):
 # ================================= FRANCHISE STORE AUTH ======================================
 
 def login(request):
-    if request.method == 'POST':
-        store_obj = franchise_store_employee_model.store_employee_from_dict(request.POST)
-        response, status_code = franchise_store_auth_controller.login(store_obj)
-        if response['status']:
-            if request.session.get('id') is not None:
-                request.session.clear()
-            request.session.update({
-                'is_franchise_store_logged_in': True,
-                'id': response['fse']['fse_employee_id'],
-                'name': response['fse']['fse_name'],
-                'email': response['fse']['fse_email'],
-                'store_name': response['fse']['store_name'],
-                'store_type': '2',
-                'assigned_store_id': response['fse']['fse_assigned_store_id'],
-                'profile_pic': response['fse']['fse_profile_pic'],
-                'role': response['fse']['fse_role'],
-            })
-            return redirect('franchise_store_dashboard')
-        else:
-            return render(request, 'auth/franchise_sign_in.html', {"message": response['message']})
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        return redirect('franchise_store_dashboard')
     else:
-        return render(request, 'auth/franchise_sign_in.html')
+        if request.method == 'POST':
+            store_obj = franchise_store_employee_model.store_employee_from_dict(request.POST)
+            response, status_code = franchise_store_auth_controller.login(store_obj)
+            if response['status']:
+                if request.session.get('id') is not None:
+                    request.session.clear()
+                request.session.update({
+                    'is_franchise_store_logged_in': True,
+                    'id': response['fse']['fse_employee_id'],
+                    'name': response['fse']['fse_name'],
+                    'email': response['fse']['fse_email'],
+                    'store_name': response['fse']['store_name'],
+                    'store_type': '2',
+                    'assigned_store_id': response['fse']['fse_assigned_store_id'],
+                    'profile_pic': response['fse']['fse_profile_pic'],
+                    'role': response['fse']['fse_role'],
+                })
+                return redirect('franchise_store_dashboard')
+            else:
+                return render(request, 'auth/franchise_sign_in.html', {"message": response['message']})
+        else:
+            return render(request, 'auth/franchise_sign_in.html')
 
 
 def forgotPassword(request):
@@ -180,7 +184,7 @@ def deliveredFranchiseOrders(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
-        orders_list, status_code = franchise_store_orders_controller.get_completed_orders('Delivered Customer', 'All',
+        orders_list, status_code = franchise_store_orders_controller.get_all_orders('Delivered Customer', 'All',
                                                                                           assigned_store)
         return render(request, 'orders/deliveredFranchiseOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
@@ -414,6 +418,7 @@ def stockRequestDeliveryStatusChange(request, requestId, status):
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_inventory_controller.request_delivery_status_change(requestId, status,
                                                                                               request.session.get('id'))
+        print(response)
 
         return redirect('completed_franchise_store_stock_requests')
     else:
@@ -535,8 +540,10 @@ def franchiseStoreEyeTest(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         if request.method == 'POST':
+            print(request.POST)
             response = franchise_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
                                                                         assigned_store)
+            print(response)
             return redirect('get_franchise_eye_test')
         else:
             customerResponse, cust_status_code = franchise_store_customers_controller.get_all_customers()

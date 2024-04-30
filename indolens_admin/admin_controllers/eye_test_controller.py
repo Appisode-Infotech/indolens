@@ -68,11 +68,17 @@ def get_eye_test_by_id(testId):
                                         CASE
                                             WHEN et.et_created_by_store_type = 1 THEN os.os_store_address
                                             ELSE fs.fs_store_address
-                                        END AS store_address
+                                        END AS store_address,
+                                        CASE 
+                                            WHEN et.et_created_by_store_type = 1 THEN optometry_os.ose_name 
+                                            ELSE optometry_fs.fse_name 
+                                        END AS optometry_name 
                                         FROM eye_test as et
                                         LEFT JOIN own_store os ON et.et_created_by_store_id = os.os_store_id AND et.et_created_by_store_type = 1
                                         LEFT JOIN franchise_store fs ON et.et_created_by_store_id = fs.fs_store_id AND et.et_created_by_store_type = 2
                                         LEFT JOIN customers AS c ON et.et_customer_id = c.customer_customer_id
+                                        LEFT JOIN own_store_employees optometry_os ON et.et_optometry_id = optometry_os.ose_employee_id AND et.et_created_by_store_type = 1
+                                        LEFT JOIN franchise_store_employees optometry_fs ON et.et_optometry_id = optometry_fs.fse_employee_id AND et.et_created_by_store_type = 2
                                         LEFT JOIN own_store_employees creator_os ON et.et_created_by = creator_os.ose_employee_id AND et.et_created_by_store_type = 1
                                         LEFT JOIN franchise_store_employees creator_fs ON et.et_created_by = creator_fs.fse_employee_id AND et.et_created_by_store_type = 2
                                         LEFT JOIN own_store_employees updater_os ON et.et_updated_by = updater_os.ose_employee_id AND et.et_created_by_store_type = 1

@@ -679,15 +679,20 @@
                                     {% endif %}
 
                                 </td>
-                                <td class="createdBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_employee' order.so_created_by %}">{{order.creator_name}}</a>
+                                </td>
+                                <td style="display:none;" class="createdBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    {{order.creator_name}}
                                 </td>
                                 <td class="createdOn align-middle white-space-nowrap text-700 ">
                                     {{order.so_created_on | date:"d/m/Y h:i A"}}
                                 </td>
                                 <td class="updatedBy align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_employee' order.so_updated_by %}">{{order.updater_name}}</a>
-
+                                </td>
+                                <td style="display:none;" class="createdBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    {{order.updater_name}}
                                 </td>
                                 <td class="updatedOn align-middle white-space-nowrap text-700 ">
                                     {{order.so_updated_on | date:"d/m/Y h:i A"}}

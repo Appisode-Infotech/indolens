@@ -229,8 +229,8 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
-                                {% if stock.pr_request_status == 1 and stock.delivery_status != 2 %}
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                    {% if stock.pr_request_status == 1 and stock.pr_delivery_status != 2 and stock.pr_request_to_store_id != request.session.assigned_store_id %}
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
                                                 aria-haspopup="true"
@@ -244,8 +244,9 @@
 
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </td>
-                                {% endif %}
+
                             </tr>
                             {% endfor %}
                             </tbody>

@@ -17,6 +17,7 @@ def getIndianTime():
     return today
 
 def add_eye_test(customerData, created_by, store_id):
+    print("controller")
     try:
         with getConnection().cursor() as cursor:
             create_update_customer = f"""INSERT INTO `customers`(`customer_name`, `customer_gender`, `customer_age`, 
@@ -30,7 +31,7 @@ def add_eye_test(customerData, created_by, store_id):
                                                 '{customerData.get('customer_age')}','{customerData.get('customer_phone')}',
                                                 '{customerData.get('customer_email')}','{customerData.get('customer_language')}',
                                                 '{customerData.get('customer_city')}','{customerData.get('customer_address')}',
-                                                {created_by},{store_id}, 1, '{getIndianTime()}',{created_by},{store_id},'2', 
+                                                {created_by},{store_id}, 2, '{getIndianTime()}',{created_by},{store_id},'2', 
                                                 '{getIndianTime()}')
                                                 ON DUPLICATE KEY UPDATE 
                                                 `customer_name` = '{customerData.get('customer_name')}', 
@@ -50,9 +51,10 @@ def add_eye_test(customerData, created_by, store_id):
             power_attributes = lens_sale_power_attribute_controller.get_eye_test_power_attribute(customerData)
 
             add_eye_test_query = f""" INSERT INTO eye_test (et_customer_id, et_power_attributes, 
-            et_created_by_store_id, et_created_by_store_type, et_created_by, et_created_on, et_updated_by, et_updated_on)
+            et_created_by_store_id, et_created_by_store_type, et_created_by, et_created_on, et_updated_by, et_updated_on,
+            et_optometry_id)
             VALUES({customer_id}, '{json.dumps(power_attributes)}', {store_id},2, {created_by}, '{getIndianTime()}', {created_by}, 
-            '{getIndianTime()}')"""
+            '{getIndianTime()}', {customerData.get('optometry_id')})"""
             cursor.execute(add_eye_test_query)
 
             return {
@@ -77,13 +79,19 @@ def get_eye_test():
                                         CASE 
                                             WHEN et.et_created_by_store_type = 1 THEN updater_os.ose_name 
                                             ELSE updater_fs.fse_name 
-                                        END AS updater_name 
+                                        END AS updater_name ,
+                                        CASE 
+                                            WHEN et.et_created_by_store_type = 1 THEN optometry_os.ose_name 
+                                            ELSE optometry_fs.fse_name 
+                                        END AS optometry_name 
                                         FROM eye_test as et
                                         LEFT JOIN customers AS c ON et.et_customer_id = c.customer_customer_id
                                         LEFT JOIN own_store_employees creator_os ON et.et_created_by = creator_os.ose_employee_id AND et.et_created_by_store_type = 1
                                         LEFT JOIN franchise_store_employees creator_fs ON et.et_created_by = creator_fs.fse_employee_id AND et.et_created_by_store_type = 2
                                         LEFT JOIN own_store_employees updater_os ON et.et_updated_by = updater_os.ose_employee_id AND et.et_created_by_store_type = 1
                                         LEFT JOIN franchise_store_employees updater_fs ON et.et_updated_by = updater_fs.fse_employee_id AND et.et_created_by_store_type = 2
+                                        LEFT JOIN own_store_employees optometry_os ON et.et_optometry_id = optometry_os.ose_employee_id AND et.et_created_by_store_type = 1
+                                        LEFT JOIN franchise_store_employees optometry_fs ON et.et_optometry_id = optometry_fs.fse_employee_id AND et.et_created_by_store_type = 2
                                         ORDER BY et.et_eye_test_id DESC
                                          """
             cursor.execute(get_eye_test_query)

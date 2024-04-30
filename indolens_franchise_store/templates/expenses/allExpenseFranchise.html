@@ -100,7 +100,7 @@
                                 <div class="search-box me-3">
                                     <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
                                         <input aria-label="Search" class="form-control search-input search"
-                                               placeholder="Search by Name" type="search"/>
+                                               placeholder="Search Expense" type="search"/>
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
                                 </div>
@@ -215,17 +215,20 @@
                                     <p class="mb-0 fs--1 text-900">₹{{expense.se_expense_amount}}</p>
                                 </td>
                                 <td style="display:none;" class="align-middle white-space-nowrap ps-3 py-4 amount">
-                                    <p class="mb-0 fs--1 text-900">₹{{expense.se_expense_amount}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{expense.se_expense_amount}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 date">
-                                    <p class="mb-0 fs--1 text-900">{{expense.se_created_on|date:"d/m/Y h:i A"}}</p>
+                                    <p class="mb-0 fs--1 text-900">{{expense.se_expense_date | date:"d/m/Y H:i A"}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end createdBy">
+                                <td class="align-middle white-space-nowrap">
                                     <a class="text-decoration-none fw-bold fs-0"
                                        href="{% url 'view_franchise_store_employee_details' expense.se_created_by %}">
                                         {{expense.creator_name}}</a>
+                                </td>
+                                <td style="display:none;" class="createdBy align-middle white-space-nowrap">
+                                        {{expense.creator_name}}
                                 </td>
 
 <!--                                <td class="align-middle text-end white-space-nowrap pe-0 action">-->

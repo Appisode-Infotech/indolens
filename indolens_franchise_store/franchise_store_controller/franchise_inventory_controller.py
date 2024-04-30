@@ -311,28 +311,29 @@ def get_all_products_for_store(store_id):
 def request_delivery_status_change(request_id, status, updated_by):
     try:
         with getConnection().cursor() as cursor:
-            update_stock_request_query = f"""UPDATE request_products SET delivery_status = {status}
-                                                WHERE request_products_id = '{request_id}' """
+            update_stock_request_query = f"""UPDATE request_products SET pr_delivery_status = {status}
+                                                WHERE pr_request_products_id = '{request_id}' """
             cursor.execute(update_stock_request_query)
             if status == 2:
                 fetch_req_product_query = f"""SELECT * FROM request_products 
-                                        WHERE request_products_id = '{request_id}'"""
+                                        WHERE pr_request_products_id = '{request_id}'"""
                 cursor.execute(fetch_req_product_query)
                 product_details = cursor.fetchone()
-                quantity = product_details[4]
+                quantity = product_details['pr_product_quantity']
 
                 update_store_Inventory = f"""INSERT INTO store_inventory 
-                                               (store_id, store_type, product_id, product_quantity, created_on, 
-                                               created_by, last_updated_on, last_updated_by) 
+                                               (si_store_id, si_store_type, si_product_id, si_product_quantity,  
+                                               si_created_on, si_created_by, si_last_updated_on, si_last_updated_by) 
                                                VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
                                                ON DUPLICATE KEY UPDATE
-                                               product_quantity = product_quantity + {quantity}, 
-                                               last_updated_on = '{getIndianTime()}', 
-                                               last_updated_by = {updated_by}"""
+                                               si_product_quantity = si_product_quantity + {quantity}, 
+                                               si_last_updated_on = '{getIndianTime()}', 
+                                               si_last_updated_by = {updated_by}"""
 
                 cursor.execute(update_store_Inventory,
-                               (product_details[1], product_details[2], product_details[3],
-                                product_details[4], getIndianTime(), updated_by, getIndianTime(), updated_by))
+                               (product_details['pr_store_id'], product_details['pr_store_type'],
+                                product_details['pr_product_id'], product_details['pr_product_quantity'],
+                                getIndianTime(), updated_by, getIndianTime(), updated_by))
             return {
                 "status": True,
                 "message": "updated delivery status"

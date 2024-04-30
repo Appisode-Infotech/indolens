@@ -129,8 +129,10 @@
                                     <div class="card-body d-flex flex-column justify-content-between pb-3">
                                         <div class="row align-items-center g-5 mb-3 text-center text-sm-start">
                                             <div class="col-12 col-sm-auto mb-sm-2">
-                                                <div class="avatar avatar-5xl">
-                                                    <span class="rounded-circle avatar-initial first-letter"></span>
+                                                <div class="avatar avatar-xl align-items-center m-3"
+                                                     style="display: flex; justify-content: center; align-items: center;">
+                                                    <span class="avatar-name rounded-circle avatar-initial first-letter"
+                                                          style="display: inline-block; width: 80px; height: 80px; text-align: center; line-height: 80px; border-radius: 50%; background-color: #e0e0e0;"></span>
                                                 </div>
                                             </div>
 
@@ -180,7 +182,7 @@
                         <div class="mb-6">
                             <h3 class="mb-4">Orders <span class="text-700 fw-normal">({{sales_data|length}})</span></h3>
                             <div class="border-top border-bottom border-200"
-                                 data-list='{"valueNames":["order","total","payment_status","fulfilment_status","delivery_type","date"],"page":20,"pagination":true}'
+                                 data-list='{"valueNames":["order","total","paymentStatus","fulfilment_status","delivery_type","date"],"page":20,"pagination":true}'
                                  id="customerOrdersTable">
                                 <div class="table-responsive scrollbar">
                                     <table class="table table-sm fs--1 mb-0">
@@ -199,7 +201,7 @@
                                             <th class="sort align-middle ps-8" data-sort="customer" scope="col"
                                                 style="width:28%; min-width: 250px;">CUSTOMER
                                             </th>
-                                            <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
+                                            <th class="sort align-middle pe-3" data-sort="paymentStatus" scope="col"
                                                 style="width:10%;">PAYMENT STATUS
                                             </th>
                                             <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
@@ -233,7 +235,7 @@
                                             </td>
                                             <td class="order align-middle white-space-nowrap py-0"><a
                                                     class="fw-semi-bold"
-                                                    href="{% url 'order_details_franchise_store' order.so_order_id %}">#{{order.so_order_id}}</a>
+                                                    href="{% url 'order_details_franchise_store' order.so_order_id %}">{{order.so_order_id}}</a>
                                             </td>
                                             <td class="align-middle text-end fw-semi-bold text-1000">
                                                 ₹{{order.total_cost}}
@@ -262,7 +264,7 @@
                                                         class="badge-label">REFUNDED</span></span>
                                                 {% endif %}
                                             </td>
-                                            <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                            <td class=" align-middle white-space-nowrap text-start fw-bold text-700">
                                                 {% if order.so_order_status == 1 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">NEW</span></span>
@@ -287,17 +289,35 @@
                                                 {% endif %}
 
                                             </td>
+                                            <td style="display:none;" class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                                {% if order.so_order_status == 1 %}
+                                                NEW
+                                                {% elif order.so_order_status == 2 %}
+                                                PROCESSING
+                                                {% elif order.so_order_status == 3 %}
+                                                READY IN LAB
+                                                {% elif order.so_order_status == 4 %}
+                                                DISPATCHED
+                                                {% elif order.so_order_status == 5 %}
+                                                READY IN STORE
+                                                {% elif order.so_order_status == 6 %}
+                                                DELIVERED CUSTOMER
+                                                {% elif order.so_order_status == 7 %}
+                                                CANCELLED
+                                                {% endif %}
+
+                                            </td>
                                             <td class="delivery_type align-middle white-space-nowrap text-900">
                                                 {{order.creator_name}}
                                             </td>
                                             <td class="date align-middle white-space-nowrap text-700 ">
-                                                {{order.so_created_on}}
+                                                {{order.so_created_on|date:"d/m/Y H:i A"}}
                                             </td>
                                             <td class="delivery_type align-middle white-space-nowrap text-900 ">
                                                 {{order.updater_name}}
                                             </td>
                                             <td class="date align-middle white-space-nowrap text-700 ">
-                                                {{order.so_updated_on}}
+                                                {{order.so_updated_on|date:"d/m/Y H:i A"}}
                                             </td>
                                         </tr>
                                         {% endfor %}
