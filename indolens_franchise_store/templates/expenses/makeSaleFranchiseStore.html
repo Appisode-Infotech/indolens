@@ -579,8 +579,8 @@ function addLensContainer() {
             name="product" required="required">
             <option value="">Select Lens</option>
             {% for product in lens_list %}
-            <option value="{{product.product_id}}">
-                {{product.product_name}}
+            <option value="{{product.ci_product_id}}">
+                {{product.ci_product_name}}
             </option>
             {% endfor %}
         </select>
@@ -909,9 +909,9 @@ function addStockContactLensContainer() {
                 name="product" required="required">
             <option value="">Select Contact Lens</option>
             {% for product in contact_lens_list %}
-            {% if product.category_id == 3 %}
-            <option value="{{product.product_id}}">
-                {{product.product_name}}
+            {% if product.ci_category_id == 3 %}
+            <option value="{{product.ci_product_id}}">
+                {{product.ci_product_name}}
             </option>
             {% endif %}
             {% endfor %}
@@ -1146,9 +1146,9 @@ function addRxContactLensContainer() {
                 name="product" required="required">
             <option value="">Select Contact Lens</option>
             {% for product in contact_lens_list %}
-            {% if product.category_id == 3 %}
-            <option value="{{product.product_id}}">
-                {{product.product_name}}
+            {% if product.ci_category_id == 3 %}
+            <option value="{{product.ci_product_id}}">
+                {{product.ci_product_name}}
             </option>
             {% endif %}
             {% endfor %}
@@ -1665,12 +1665,12 @@ document.getElementById('confirmSale').addEventListener('click', function () {
 
 
 function updateLensProductFields(selectElement, cardIndex) {
-    let selectedProduct = lens_list.find(product => product.product_id == selectElement.value);
-    let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
-    let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
-    let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
+    let selectedProduct = lens_list.find(product => product.ci_product_id == selectElement.value);
+    let productUnitTypeField = document.querySelector(`[name='unit_name[${cardIndex}]']`);
+    let productCategoryIdField = document.querySelector(`[name='ci_category_id[${cardIndex}]']`);
+    let productNameField = document.querySelector(`[name='ci_product_name[${cardIndex}]']`);
     let stockTypeField = document.querySelector(`[name='stock_type[${cardIndex}]']`);
-    let productLensTypeField = document.querySelector(`[name='lens_type[${cardIndex}]']`);
+    let productLensTypeField = document.querySelector(`[name='contact_lens_type[${cardIndex}]']`);
     let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
     let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
     let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
