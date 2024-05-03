@@ -129,62 +129,32 @@ def add_central_inventory_products(product_obj, file, power_attributes):
 
             import os
             import qrcode
-            from PIL import Image, ImageDraw, ImageOps
             from django.conf import settings
 
             productId = cursor.lastrowid
 
-            logo_path = "media/logo/logo.png"
-            logo = Image.open(logo_path)
-
-            # Convert the logo to RGBA mode
-            logo = logo.convert("RGBA")
-
-            # Create a white background image with the same size as the logo
-            background = Image.new("RGBA", logo.size, (255, 255, 255, 255))
-
-            # Composite the logo onto the white background
-            logo_with_white_background = Image.alpha_composite(background, logo)
-
-            basewidth = 100
-
-            # adjust image size
-            wpercent = basewidth / float(logo_with_white_background.size[0])
-            hsize = int(float(logo_with_white_background.size[1]) * float(wpercent))
-
-            logo_resized = logo_with_white_background.resize(
-                (basewidth, hsize), Image.ANTIALIAS)
-
-            QRdata = f""" {get_base_url()}/view_product_detail/productId={productId}"""
-            QRcode = qrcode.QRCode(error_correction=qrcode.constants.ERROR_CORRECT_H)
+            # Generate QR code with higher error correction level and smaller size
+            QRdata = f"{get_base_url()}/view_product_detail/productId/{productId}"
+            QRcode = qrcode.QRCode(
+                version=1,
+                error_correction=qrcode.constants.ERROR_CORRECT_L,
+                box_size=10,
+                border=4,
+            )
             QRcode.add_data(QRdata)
             QRcode.make()
             QRcolor = '#000000'
 
-            # adding color to QR code
-            QRimg = QRcode.make_image(
-                fill_color=QRcolor, back_color="white").convert('RGB')
-
-            # set size of QR code
-            pos = ((QRimg.size[0] - logo_resized.size[0]) // 2,
-                   (QRimg.size[1] - logo_resized.size[1]) // 2)
-            QRimg.paste(logo_resized, pos, mask=logo_resized)
-
-            # Annotate the QR image with productId below the QR code
-            draw = ImageDraw.Draw(QRimg)
-            font = ImageFont.load_default()
-            text = f"Product ID: {productId}"
-            text_width, text_height = draw.textsize(text, font)
-            text_position = (
-            (QRimg.width - text_width) // 2, QRimg.height - text_height - 10)
-            draw.text(text_position, text, fill="#000000", font=font)
+            # Create the QR code image
+            QRimg = QRcode.make_image(fill_color=QRcolor, back_color="white").convert('RGB')
 
             # Construct the path to save the image in the media directory
             media_dir = os.path.join(settings.MEDIA_ROOT, 'product_qr_codes')
             os.makedirs(media_dir, exist_ok=True)
             image_path = os.path.join(media_dir, f"{productId}.png")
 
-            QRimg.save(image_path, format='JPEG', quality=100)
+            # Save the QR code image
+            QRimg.save(image_path, format='PNG', quality=100)
 
             image_url = f"product_qr_codes/{productId}.png"
             update_qr_sql = f"UPDATE central_inventory SET product_qr_code = '{image_url}' WHERE product_id = {productId}"
