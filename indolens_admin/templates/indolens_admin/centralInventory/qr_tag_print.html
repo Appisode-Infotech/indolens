@@ -6,18 +6,17 @@
     }
 
     .info {
-        margin-left: 10px;
         display: flex;
         flex-direction: column;
     }
 
     img {
-        margin-right: 20px; /* Adjusted margin-right */
+        margin-right: 20px;
         margin-left: 10px;
     }
 
     .info span {
-        font-size: 14px; /* Adjusted font size */
+        font-size: 12px;
     }
 
     .print-button {
@@ -41,8 +40,6 @@
             display: none;
         }
     }
-
-
     </style>
 </head>
 
@@ -55,3 +52,34 @@
 </div>
 
 <button class="print-button" onclick="window.print()">Print</button>
+
+
+<script>
+     var walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+        );
+
+        while (walker.nextNode()) {
+            var textNode = walker.currentNode;
+            var match = textNode.nodeValue.match(/₹\s?(\d+)/);
+            if (match) {
+                var currentAmount = parseInt(match[1]);
+                var formattedAmount = formatIndianNumberingSystem(currentAmount);
+                textNode.nodeValue = textNode.nodeValue.replace(/₹\s?(\d+)/, "₹ " + formattedAmount);
+            }
+        }
+
+        function formatIndianNumberingSystem(number) {
+        number = number.toString();
+        var lastThree = number.substring(number.length - 3);
+        var otherNumbers = number.substring(0, number.length - 3);
+        if (otherNumbers !== '') {
+            lastThree = ',' + lastThree;
+        }
+        var formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+        return formattedNumber;
+    }
+</script>
