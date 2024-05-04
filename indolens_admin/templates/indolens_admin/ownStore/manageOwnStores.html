@@ -71,7 +71,7 @@
         {% include 'nav_bar.html' %}
         <div class="content">
             <div class="mb-9">
-                <div data-list='{"valueNames":["slno","storeName","displayName","storeAdmin","date","city","status","action"],"page":20,"pagination":true}'
+                <div data-list='{"valueNames":["slno","storeName","displayName","storeAdmin","date","city","status"],"page":20,"pagination":true}'
                      id="ownStoresList">
                     <div class="row mb-4 gx-6 gy-3 align-items-center">
                         <div class="col-auto">
@@ -154,8 +154,6 @@
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col">STATUS
                                 </th>
-
-
                                 <th class="sort align-middle ps-3"  scope="col">ACTION
                                 </th>
                             </tr>
@@ -164,21 +162,29 @@
                             {% for store in own_store_list %}
                             <tr class="position-static">
                                 <td class="order align-middle white-space-nowrap py-0 slno"></td>
-                                <td class="align-middle time white-space-nowrap ps-0 storeName py-4"><a
+                                <td class="align-middle time white-space-nowrap"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_own_store' store.os_store_id %}">{{store.os_store_name}}</a>
                                 </td>
-
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 storeName py-4">
+                                    {{store.os_store_name}}
+                                </td>
                                 <td class="align-middle white-space-nowrap displayName ps-3 py-4">
                                     <p class="mb-0 fs--1 text-900">{{store.os_store_display_name}}</p>
                                 </td>
-
-                                <td class="align-middle white-space-nowrap storeAdmin ">
+                                <td class="align-middle white-space-nowrap">
                                     {% if store.ose_name != None %}
                                     <a class="text-decoration-none fw-bold fs-0"
                                        href="{% url 'view_store_manager' store.ose_employee_id %}">{{store.ose_name}}</a>
                                     {% else %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
+                                </td>
+                                <td style="display:none;" class="align-middle white-space-nowrap storeAdmin ">
+                                    {% if store.ose_name != None %}
+                                    {{store.ose_name}}
+                                    {% else %}
+                                    UNASSIGNED
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap date ps-3 py-4 date">

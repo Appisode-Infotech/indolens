@@ -157,7 +157,7 @@
                                     DISPLAY NAME
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="storeAdmin" scope="col">
-                                    STORE ADMIN
+                                    STORE MANAGER
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="date" scope="col">
                                     CREATED DATE
@@ -179,17 +179,17 @@
                             {% for store in franchise_store_list %}
                             <tr class="position-static">
                                 <td class="order align-middle white-space-nowrap py-0 slno"></td>
-                                <td class="align-middle time white-space-nowrap ps-0 storeName py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_franchise_store' store.fs_store_id  %}">{{store.fs_store_name}}</a>
                                 </td>
-
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 storeName py-4">
+                                    {{store.fs_store_name}}
+                                </td>
                                 <td class="align-middle white-space-nowrap start ps-3 displayName py-4">
                                     <p class="mb-0 fs--1 text-900">{{store.fs_store_display_name}}</p>
                                 </td>
-
-
-                                <td class="align-middle white-space-nowrap storeAdmin ">
+                                <td class="align-middle white-space-nowrap">
                                     {% if store.fse_name != None %}
                                     <a
                                             class="text-decoration-none fw-bold fs-0"
@@ -197,6 +197,13 @@
                                     {% else %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
+                                </td>
+                                <td style="display:none;" class="align-middle white-space-nowrap storeAdmin ">
+                                    {% if store.fse_name != None %}
+                                    {{store.fse_name}}
+                                    {% else %}
+                                    UNASSIGNED
                                     {% endif %}
                                 </td>
                                 <td class="align-middle white-space-nowrap deadline ps-3 date py-4">

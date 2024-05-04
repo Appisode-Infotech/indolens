@@ -180,17 +180,20 @@
                                 </thead>
                                 <tbody class="list" id="order-table-body">
                                 {% for order in orders_list %}
-                                <tr class="hover-actions-trigger btn-reveal-trigger position-static">
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                    data-category="{{ order.so_order_status }}">
                                     <td class="fs--1 align-middle px-0 py-3 slno"></td>
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details' order.so_order_id %}">{{order.so_order_id}}</a>
                                     </td>
-                                    <td class="total align-middle  fw-semi-bold text-1000 text-end">
-                                        ₹{{order.total_cost}}
+                                    <td class="align-middle  fw-semi-bold text-1000 text-end">₹{{order.total_cost}}
                                     </td>
-                                    <td class="customer align-middle white-space-nowrap ps-8">
+                                    <td style="display:none;" class="total align-middle  fw-semi-bold text-1000 text-end">
+                                        {{order.total_cost}}
+                                    </td>
+                                    <td class="align-middle white-space-nowrap ps-8">
                                         <a class="d-flex align-items-center"
-                                           href="{% url 'customer_details' order.so_customer_id%}">
+                                           href="{% url 'customer_details' order.so_customer_id %}">
                                             <div class="avatar avatar-m">
                                                 <div class="avatar-name rounded-circle">
                                                     <span>{{order.customer_name.0}}</span></div>
@@ -198,7 +201,10 @@
                                             <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
                                         </a>
                                     </td>
-                                    <td class="store align-middle white-space-nowrap ">
+                                    <td style="display:none;" class="customer align-middle white-space-nowrap ps-8">
+                                        {{order.customer_name}}
+                                    </td>
+                                    <td class="align-middle white-space-nowrap ">
                                         {% if order.so_created_by_store_type == 1%}
                                         <a class="fw-semi-bold"
                                            href="{% url 'view_own_store' order.so_created_by_store %}">
@@ -211,67 +217,81 @@
                                         </a>
                                         {% endif %}
                                     </td>
+                                    <td style="display:none;" class="store align-middle white-space-nowrap ">
+                                        {{order.store_name}}
+                                    </td>
                                     <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                         {% if order.so_payment_status == 1 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PENDING</span><span class="ms-1"
-                                                                                        data-feather="check"
-                                                                                        style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">PENDING</span></span>
                                         {% elif order.so_payment_status == 2 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">COMPLETE</span><span class="ms-1"
-                                                                                         data-feather="check"
-                                                                                         style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">COMPLETE</span></span>
+                                        {% elif order.so_payment_status == 3 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">REFUNDED</span></span>
                                         {% endif %}
                                     </td>
-                                    <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                    <td class="align-middle white-space-nowrap text-start fw-bold text-700">
                                         {% if order.so_order_status == 1 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">NEW</span><span class="ms-1" data-feather="check"
-                                                                                    style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">NEW</span></span>
                                         {% elif order.so_order_status == 2 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PROCESSING</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">PROCESSING</span></span>
                                         {% elif order.so_order_status == 3 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">READY</span><span class="ms-1" data-feather="check"
-                                                                                      style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label"><span style="display: none;">filterIn_READY IN LAB</span>READY IN LAB</span></span>
                                         {% elif order.so_order_status == 4 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">DISPATCHED</span><span class="ms-1"
-                                                                                           data-feather="check"
-                                                                                           style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">DISPATCHED</span></span>
                                         {% elif order.so_order_status == 5 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">READY IN STORE</span><span class="ms-1"
-                                                                                                data-feather="check"
-                                                                                                style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">READY IN STORE</span></span>
                                         {% elif order.so_order_status == 6 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">DELIVERED CUSTOMER</span><span class="ms-1"
-                                                                                                   data-feather="check"
-                                                                                                   style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">DELIVERED CUSTOMER</span></span>
                                         {% elif order.so_order_status == 7 %}
                                         <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                                class="badge-label">CANCELLED</span><span class="ms-1"
-                                                                                          data-feather="check"
-                                                                                          style="height:12.8px;width:12.8px;"></span></span>
+                                                class="badge-label">CANCELLED</span></span>
                                         {% endif %}
 
                                     </td>
-                                    <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <td style="display:none;" class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        {% if order.so_order_status == 1 %}
+                                        NEW
+                                        {% elif order.so_order_status == 2 %}
+                                        PROCESSING
+                                        {% elif order.so_order_status == 3 %}
+                                        READY IN LAB
+                                        {% elif order.so_order_status == 4 %}
+                                        DISPATCHED
+                                        {% elif order.so_order_status == 5 %}
+                                        READY IN STORE
+                                        {% elif order.so_order_status == 6 %}
+                                        DELIVERED CUSTOMER
+                                        {% elif order.so_order_status == 7 %}
+                                        CANCELLED
+                                        {% endif %}
+
+                                    </td>
+                                    <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
                                         <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
                                     </td>
-                                    <td class="created_on align-middle white-space-nowrap text-700 fs--1  ">
+                                    <td style="display:none;" class="createdby align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        {{order.creator_name}}
+                                    </td>
+                                    <td class="created_on align-middle white-space-nowrap text-700 fs--1 ">
                                         {{order.so_created_on|date:"d/m/Y h:i A"}}
                                     </td>
-                                    <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
                                         <a href="{% url 'view_record_creator' order.so_updated_by order.so_created_by_store_type %}">
                                             {{order.updater_name}} </a>
                                     </td>
-                                    <td class="updated_on align-middle white-space-nowrap text-700 fs--1  ">
+                                    <td style="display:none;" class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        {{order.updater_name}}
+                                    </td>
+                                    <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ">
                                         {{order.so_updated_on|date:"d/m/Y h:i A"}}
                                     </td>
                                 </tr>

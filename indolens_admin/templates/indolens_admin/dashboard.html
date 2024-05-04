@@ -424,139 +424,172 @@
                     </div>
                 </div>
             </div>
-            <div data-list='{"valueNames":["slno", "order","total","customer","store","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":5,"pagination":true}'
+            <div data-list='{"valueNames":["slno","order","total","customer","store","payment_status","fulfilment_status","created_by","created_on","updated_by","updated_on"],"page":5,"pagination":true}'
                  id="orderTable">
                 <h3 class="mb-3">Latest Sales</h3>
                 <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                     <div class="table-responsive scrollbar mx-n1 px-1">
                         <table class="table table-sm fs--1 mb-0" id="myTable">
-                            <thead>
-                            <tr>
-                                <th class="sort white-space-nowrap align-middle pe-3 slno" data-sort="order" scope="col"
-                                    style="width:5%;">SL NO
-                                </th>
-                                <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
-                                    style="width:5%;">ORDER ID
-                                </th>
-                                <th class="sort align-middle text-end" data-sort="total" scope="col"
-                                    style="width:6%; min-width: 100px;">TOTAL
-                                </th>
-                                <th class="sort align-middle " data-sort="customer" scope="col"
-                                    style="width:28%; min-width: 200px;">CUSTOMER
-                                </th>
-                                <th class="sort align-middle " data-sort="store" scope="col"
-                                    style="width:28%; min-width: 250px;">STORE
-                                </th>
-                                <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
-                                    style="width:10%;">PAYMENT STATUS
-                                </th>
-                                <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
-                                    scope="col" style="width:12%;">ORDER
-                                    STATUS
-                                </th>
-                                <th class="sort align-middle text-start" data-sort="created_by" scope="col"
-                                    style="width:30%;">CREATED BY
-                                </th>
-                                <th class="sort align-middle text-start" data-sort="created_on" scope="col"
-                                    style="width:30%;">CREATED ON
-                                </th>
-                                <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
-                                    style="width:30%;">UPDATED BY
-                                </th>
-                                <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
-                                    style="width:30%;">UPDATED ON
-                                </th>
 
-                            </tr>
-                            </thead>
-                            <tbody class="list" id="order-table-body">
-                            {% for order in orders_list %}
-                            <tr class="hover-actions-trigger btn-reveal-trigger position-static"
-                                data-category="{{ order.order_status }}">
-                                <td class="order align-middle white-space-nowrap py-0 slno"></td>
-                                <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                          href="{% url 'order_details' order.so_order_id %}">{{order.so_order_id}}</a>
-                                </td>
-                                <td class="align-middle white-space-nowrap text-start fw-bold text-700 text-end ps-3 pe-3">
-                                    ₹{{order.total_cost}}
-                                </td>
-                                <td style="display:none" class="total align-middle white-space-nowrap text-start fw-bold text-700 text-end ps-3 pe-3">
-                                    {{order.total_cost}}
-                                </td>
-                                <td class="align-middle white-space-nowrap ">
-                                    <a class="d-flex align-items-center" href="{% url 'customer_details' order.so_customer_id %}">
-                                        <div class="avatar avatar-m">
-                                            <div class="avatar-name rounded-circle">
-                                                <span>{{order.customer_name.0}}</span>
+                                <thead>
+                                <tr>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
+                                        style="width:5%;">ORDER ID
+                                    </th>
+                                    <th class="sort align-middle text-end" data-sort="total" scope="col"
+                                        style="width:6%; min-width: 100px;">TOTAL
+                                    </th>
+                                    <th class="sort align-middle ps-8" data-sort="customer" scope="col"
+                                        style="width:28%; min-width: 250px;">CUSTOMER
+                                    </th>
+                                    <th class="sort align-middle" data-sort="store" scope="col"
+                                        style="width:28%; min-width: 250px;">STORE
+                                    </th>
+                                    <th class="sort align-middle pe-3" data-sort="payment_status" scope="col"
+                                        style="width:10%;">PAYMENT STATUS
+                                    </th>
+                                    <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
+                                        scope="col" style="width:12%; min-width: 200px;">ORDER
+                                        STATUS
+                                    </th>
+                                    <th class="sort align-middle text-start" data-sort="created_by" scope="col"
+                                        style="width:30%;">CREATED BY
+                                    </th>
+                                    <th class="sort align-middle text-start" data-sort="created_on" scope="col"
+                                        style="width:30%;">CREATED ON
+                                    </th>
+                                    <th class="sort align-middle text-start" data-sort="updated_by" scope="col"
+                                        style="width:30%;">UPDATED BY
+                                    </th>
+                                    <th class="sort align-middle text-start" data-sort="updated_on" scope="col"
+                                        style="width:30%;">UPDATED ON
+                                    </th>
+                                </tr>
+                                </thead>
+                                <tbody class="list" id="order-table-body">
+                                {% for order in orders_list %}
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                    data-category="{{ order.so_order_status }}">
+                                    <td class="fs--1 align-middle px-0 py-3 slno"></td>
+                                    <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="{% url 'order_details' order.so_order_id %}">{{order.so_order_id}}</a>
+                                    </td>
+                                    <td class="align-middle  fw-semi-bold text-1000 text-end">₹{{order.total_cost}}
+                                    </td>
+                                    <td style="display:none;" class="total align-middle  fw-semi-bold text-1000 text-end">
+                                        {{order.total_cost}}
+                                    </td>
+                                    <td class="align-middle white-space-nowrap ps-8">
+                                        <a class="d-flex align-items-center"
+                                           href="{% url 'customer_details' order.so_customer_id %}">
+                                            <div class="avatar avatar-m">
+                                                <div class="avatar-name rounded-circle">
+                                                    <span>{{order.customer_name.0}}</span></div>
                                             </div>
-                                        </div>
-                                        <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
-                                    </a>
-                                </td>
-                                <td style="display:none" class="customer align-middle white-space-nowrap ">
-                                    {{order.customer_name}}
-                                </td>
-                                <td class="store align-middle white-space-nowrap ">
-                                    {% if order.created_by_store_type == 1 %}
-                                    <a class="fw-semi-bold" href="{% url 'view_own_store' order.created_by_store %}">{{order.store_name}}</a>
-                                    {% else %}
-                                    <a class="fw-semi-bold" href="{% url 'view_franchise_store' 1 %}">{{order.store_name}}</a>
-                                    {% endif %}
-                                </td>
-                                <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                    {% if order.so_payment_status == 1 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">PENDING</span></span>
-                                    {% elif order.so_payment_status == 2 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                            class="badge-label">COMPLETE</span></span>
-                                    {% elif order.so_payment_status == 3 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                            class="badge-label">REFUNDED</span></span>
-                                    {% endif %}
-                                </td>
-                                <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
-                                    {% if order.so_order_status == 1 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">NEW</span></span>
-                                    {% elif order.so_order_status == 2 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">PROCESSING</span></span>
-                                    {% elif order.so_order_status == 3 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">READY</span></span>
-                                    {% elif order.so_order_status == 4 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">DISPATCHED</span></span>
-                                    {% elif order.so_order_status == 5 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                            class="badge-label">READY IN STORE</span></span>
-                                    {% elif order.so_order_status == 6 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                            class="badge-label">DELIVERED CUSTOMER</span></span>
-                                    {% elif order.so_order_status == 7 %}
-                                    <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
-                                            class="badge-label">CANCELLED</span></span>
-                                    {% endif %}
-                                </td>
-                                <td class="created_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                    <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
-                                </td>
-                                <td class="created_on align-middle white-space-nowrap text-700 fs--1  ">
-                                    {{order.so_created_on|date:"d/m/Y h:i A"}}
-                                </td>
-                                <td class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
-                                    <a href="{% url 'view_record_creator' order.so_updated_by order.so_created_by_store_type %}">{{order.updater_name}}</a>
-                                </td>
-                                <td class="updated_on align-middle white-space-nowrap text-700 fs--1  ">
-                                    {{order.so_updated_on|date:"d/m/Y h:i A"}}
-                                </td>
-                            </tr>
+                                            <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
+                                        </a>
+                                    </td>
+                                    <td style="display:none;" class="customer align-middle white-space-nowrap ps-8">
+                                        {{order.customer_name}}
+                                    </td>
+                                    <td class="align-middle white-space-nowrap ">
+                                        {% if order.so_created_by_store_type == 1%}
+                                        <a class="fw-semi-bold"
+                                           href="{% url 'view_own_store' order.so_created_by_store %}">
+                                            {{order.store_name}}
+                                        </a>
+                                        {% else %}
+                                        <a class="fw-semi-bold"
+                                           href="{% url 'view_franchise_store' order.so_created_by_store %}">
+                                            {{order.store_name}}
+                                        </a>
+                                        {% endif %}
+                                    </td>
+                                    <td style="display:none;" class="store align-middle white-space-nowrap ">
+                                        {{order.store_name}}
+                                    </td>
+                                    <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        {% if order.so_payment_status == 1 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">PENDING</span></span>
+                                        {% elif order.so_payment_status == 2 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">COMPLETE</span></span>
+                                        {% elif order.so_payment_status == 3 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">REFUNDED</span></span>
+                                        {% endif %}
+                                    </td>
+                                    <td class="align-middle white-space-nowrap text-start fw-bold text-700">
+                                        {% if order.so_order_status == 1 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">NEW</span></span>
+                                        {% elif order.so_order_status == 2 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">PROCESSING</span></span>
+                                        {% elif order.so_order_status == 3 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label"><span style="display: none;">filterIn_READY IN LAB</span>READY IN LAB</span></span>
+                                        {% elif order.so_order_status == 4 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
+                                                class="badge-label">DISPATCHED</span></span>
+                                        {% elif order.so_order_status == 5 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">READY IN STORE</span></span>
+                                        {% elif order.so_order_status == 6 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
+                                                class="badge-label">DELIVERED CUSTOMER</span></span>
+                                        {% elif order.so_order_status == 7 %}
+                                        <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                class="badge-label">CANCELLED</span></span>
+                                        {% endif %}
 
-                            {% endfor %}
+                                    </td>
+                                    <td style="display:none;" class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        {% if order.so_order_status == 1 %}
+                                        NEW
+                                        {% elif order.so_order_status == 2 %}
+                                        PROCESSING
+                                        {% elif order.so_order_status == 3 %}
+                                        READY IN LAB
+                                        {% elif order.so_order_status == 4 %}
+                                        DISPATCHED
+                                        {% elif order.so_order_status == 5 %}
+                                        READY IN STORE
+                                        {% elif order.so_order_status == 6 %}
+                                        DELIVERED CUSTOMER
+                                        {% elif order.so_order_status == 7 %}
+                                        CANCELLED
+                                        {% endif %}
 
-                            </tbody>
-                        </table>
+                                    </td>
+                                    <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        <a href="{% url 'view_record_creator' order.so_created_by order.so_created_by_store_type %}">{{order.creator_name}}</a>
+                                    </td>
+                                    <td style="display:none;" class="createdby align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        {{order.creator_name}}
+                                    </td>
+                                    <td class="created_on align-middle white-space-nowrap text-700 fs--1 ">
+                                        {{order.so_created_on|date:"d/m/Y h:i A"}}
+                                    </td>
+                                    <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        <a href="{% url 'view_record_creator' order.so_updated_by order.so_created_by_store_type %}">
+                                            {{order.updater_name}} </a>
+                                    </td>
+                                    <td style="display:none;" class="updated_by align-middle white-space-nowrap text-900 fs--1 text-start">
+                                        {{order.updater_name}}
+                                    </td>
+                                    <td class="updated_on align-middle white-space-nowrap text-700 fs--1 ">
+                                        {{order.so_updated_on|date:"d/m/Y h:i A"}}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
                     </div>
                     <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
                         <div class="col-auto d-flex">
