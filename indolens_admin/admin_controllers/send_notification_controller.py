@@ -30,8 +30,6 @@ def send_email(subject, body, to_email):
     # print("Email sent successfully.")
 
     emailjs = get_emailjs_attribute()
-    print("===============")
-    print(emailjs)
     if any(emailjs.values()):
 
         url = emailjs['emailjs_url']

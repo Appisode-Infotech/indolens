@@ -238,7 +238,6 @@ def orderDetails(request, orderId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, order_status_code = orders_controller.get_order_details(orderId)
-        print(order_detail['orders_details'])
         payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
         lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['so_assigned_lab'])
         return render(request, 'orders/orderDetails.html', {"order_detail": order_detail['orders_details'],
@@ -270,6 +269,7 @@ def orderStatusChange(request, orderId, status):
         order_update, status_code = store_orders_controller.order_status_change(orderId, status,
                                                                                 request.session.get('id'),
                                                                                 assigned_store)
+        print(order_update)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:
@@ -283,6 +283,7 @@ def orderPaymentStatusChange(request):
 
         order_detail, status_code = store_orders_controller.order_payment_status_change(vars(order_obj), assigned_store,
                                                                                         request.session.get('id'))
+        print(order_detail)
         url = reverse('order_details_store', kwargs={'orderId': order_obj.get_attribute('order_id')})
 
         return redirect(url)

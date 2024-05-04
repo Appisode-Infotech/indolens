@@ -525,8 +525,7 @@
                                            name="orderPaymentStatus"
                                            type="hidden" >
                                  <input class="form-control" id="orderPaymentAmount" maxlength="256" required
-                                           name="orderPaymentAmount"
-                                           type="hidden" >
+                                           name="orderPaymentAmount" type="hidden">
                                 <div class="col-12">
                                     <h5 class="mb-3">Payment mode</h5>
                                     <select id="payment_mode"
@@ -603,9 +602,10 @@
 
     console.log(statusWidget.value);
 
-     var totalCost = {{ order_detail.0.so_total_cost }};
-    var discountCost = {{ order_detail.0.so_discount_cost }};
+     var totalCost = {{ order_detail.0.total_cost }};
+    var discountCost = {{ order_detail.0.discount_cost }};
     var amountPaid = {{order_detail.0.so_amount_paid}};
+
 
     var balanceAmount = discountCost - amountPaid;
 
