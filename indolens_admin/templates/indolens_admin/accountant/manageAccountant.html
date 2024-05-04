@@ -185,10 +185,12 @@
                                         </div>
                                     </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_accountant' accountant.ac_accountant_id %}">{{accountant.ac_name}}</a>
-
+                                </td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 name py-4">
+                                    {{accountant.ac_name}}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">

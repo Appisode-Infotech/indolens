@@ -156,7 +156,7 @@
                                 <th class="sort align-middle ps-3" data-sort="email" scope="col" style="width:10%;">
                                     EMAIL
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="stores" scope="col" style="width:10%;">
+                                <th class="sort align-middle ps-3"  scope="col" style="width:10%;">
                                     STORES
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
@@ -191,7 +191,7 @@
                             {% for area_head in area_heads_list %}
                             <tr class="position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
-                                <td class="align-middle time white-space-nowrap ps-0 name py-4">
+                                <td class="align-middle time white-space-nowrap ps-0 py-4">
                                     <a href="{{MEDIA_URL}}{{area_head.ah_profile_pic}}" target="_blank">
                                         <div class="avatar avatar-m">
                                             <img alt="" class="rounded-circle"
@@ -199,12 +199,14 @@
                                         </div>
                                     </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_area_head' area_head.ah_area_head_id %}">
                                     {{area_head.ah_name}}</a>
                                 </td>
-
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 name py-4">
+                                    {{area_head.ah_name}}
+                                </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">
                                     <p class="mb-0 fs--1 text-900">{{area_head.ah_phone}}</p>
                                 </td>

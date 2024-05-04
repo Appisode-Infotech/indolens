@@ -182,11 +182,14 @@
                                         </div>
                                     </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 managerName py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_store_manager' manager.ose_employee_id %}">
                                     {{manager.ose_name}}
                                 </a>
+                                </td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 managerName py-4">
+                                    {{manager.ose_name}}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start phone ps-3 py-4">
@@ -197,7 +200,7 @@
                                     <p class="mb-0 fs--1 text-900">{{manager.ose_email}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 assignedStore py-4">
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
                                     {% if manager.ose_assigned_store_id != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
                                        href="{%url 'view_own_store' manager.ose_assigned_store_id%}">
@@ -205,6 +208,14 @@
                                     {% else %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
+
+                                </td>
+                                <td style="display:none;" class="align-middle white-space-nowrap start ps-3 assignedStore py-4">
+                                    {% if manager.ose_assigned_store_id != 0 %}
+                                        {{manager.store_name}}
+                                    {% else %}
+                                    UNASSIGNED
                                     {% endif %}
 
                                 </td>

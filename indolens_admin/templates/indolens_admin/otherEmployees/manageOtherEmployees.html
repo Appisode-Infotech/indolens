@@ -185,14 +185,14 @@
                                     </div>
                                         </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_other_employees' emp.ose_employee_id %}">
                                     {{emp.ose_name}}
-
-                                </a>
+                                </a></td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 name py-4">
+                                    {{emp.ose_name}}
                                 </td>
-
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 phone">
                                     <p class="mb-0 fs--1 text-900">{{emp.ose_phone}}</p>
                                 </td>
@@ -201,7 +201,7 @@
                                     <p class="mb-0 fs--1 text-900">{{emp.ose_email}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 store">
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
                                     {% if emp.store_name|length != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
                                        href="{%url 'view_own_store' emp.ose_assigned_store_id %}">
@@ -210,6 +210,13 @@
                                     {% else %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle white-space-nowrap start ps-3 py-4 store">
+                                    {% if emp.store_name|length != 0 %}
+                                    {{emp.store_name}}
+                                    {% else %}
+                                    UNASSIGNED
                                     {% endif %}
                                 </td>
 

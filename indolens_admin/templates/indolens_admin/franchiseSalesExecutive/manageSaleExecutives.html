@@ -191,13 +191,15 @@
                                     </div>
                                         </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 py-4 name"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_franchise_sales_executives' sales_executive.fse_employee_id %}">
                                     {{sales_executive.fse_name}}
                                 </a>
                                 </td>
-
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 name py-4">
+                                    {{sales_executive.fse_name}}
+                                </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">
                                     <p class="mb-0 fs--1 text-900">{{sales_executive.fse_phone}}</p>
                                 </td>
@@ -206,7 +208,7 @@
                                     <p class="mb-0 fs--1 text-900">{{sales_executive.fse_email}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 store">
+                                <td class="align-middle white-space-nowrap ps-3 py-4">
                                     {% if sales_executive.fs_store_name|length != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
                                        href="{%url 'view_franchise_store' sales_executive.fse_assigned_store_id %}">
@@ -215,6 +217,13 @@
                                     {% else %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle white-space-nowrap ps-3 py-4 store">
+                                    {% if sales_executive.fs_store_name|length != 0 %}
+                                    {{sales_executive.fs_store_name}}
+                                    {% else %}
+                                    UNASSIGNED
                                     {% endif %}
                                 </td>
 

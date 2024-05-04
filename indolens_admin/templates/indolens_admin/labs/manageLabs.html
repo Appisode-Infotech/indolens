@@ -141,11 +141,14 @@
                             {% for lab in lab_list %}
                             <tr class="position-static" data-category="{{ lab.status }}">
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 slno"></td>
-                                <td class="align-middle time white-space-nowrap ps-0 py-4 name"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4 "><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_lab' lab.lab_lab_id %}">
                                     {{lab.lab_name}}
                                 </a>
+                                </td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 py-4 name">
+                                    {{lab.lab_name}}
                                 </td>
                                 <td class="align-middle time white-space-nowrap ps-0 py-4 name"
                                 style="max-width: 200px; word-wrap: break-word; overflow: hidden;">

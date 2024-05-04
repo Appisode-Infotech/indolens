@@ -144,7 +144,7 @@
                                     style="width:5%;">STATUS
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="assignedLabs" scope="col"
+                                <th class="sort align-middle ps-3" data-sort="assignedLab" scope="col"
                                     style="width:5%;">ASSIGNED LAB
                                 </th>
 
@@ -185,9 +185,12 @@
                                         </div>
                                     </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_lab_technician' lab_technician.lt_lab_technician_id %}">{{lab_technician.lt_name}}</a>
+                                </td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 name py-4">
+                                    {{lab_technician.lt_name}}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap start ps-3 py-4 phone">
@@ -205,7 +208,7 @@
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap start ps-3 py-4 assignedLab">
+                                <td class="align-middle white-space-nowrap start ps-3 py-4">
                                     {% if lab_technician.lab_name|length != 0 %}
                                     <a class="text-decoration-none fw-semi-bold fs-0"
                                        href="{% url 'view_lab' lab_technician.lt_assigned_lab_id %}">
@@ -214,6 +217,13 @@
                                     {% else %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
+                                    {% endif %}
+                                </td>
+                                <td style="display:none;" class="align-middle white-space-nowrap start ps-3 py-4 assignedLab">
+                                    {% if lab_technician.lab_name|length != 0 %}
+                                    {{lab_technician.lab_name}}
+                                    {% else %}
+                                    UNASSIGNED
                                     {% endif %}
                                 </td>
 
