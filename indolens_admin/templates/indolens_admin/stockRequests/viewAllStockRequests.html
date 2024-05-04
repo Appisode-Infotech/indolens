@@ -171,10 +171,8 @@
                             <tr class="position-static"
                                 data-category="{{ stock.pr_store_type }}">
                                 <td class="fs--1 align-middle px-0 py-3 slno"></td>
-
-                                <td class="align-middle white-space-nowrap py-4 requestId">{{stock.pr_request_products_id}}</td>
-
-                                <td class="align-middle time white-space-nowrap ps-0 py-4 name">
+                                <td class="align-middle white-space-nowrap py-4 requestId">REQ{{stock.pr_request_products_id}}</td>
+                                <td class="align-middle time white-space-nowrap ps-0 py-4">
                                     {% if stock.pr_store_type == 1 %}
                                     <a
                                             class="text-decoration-none fw-bold fs-0"
@@ -185,6 +183,13 @@
                                             href="{% url 'view_franchise_store' stock.pr_store_id %}">{{stock.store_name}}</a>
                                     {% endif %}
                                 </td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 py-4 name">
+                                    {% if stock.pr_store_type == 1 %}
+                                    {{stock.store_name}}
+                                    {% else %}
+                                    {{stock.store_name}}
+                                    {% endif %}
+                                </td>
                                 <td class="align-middle white-space-nowrap py-4 type">
                                     {% if stock.pr_store_type == 1 %}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
@@ -192,7 +197,7 @@
                                     <p class="mb-0 fs--1 text-900">FRANCHISE STORE</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 py-4 sendername">
+                                <td class="align-middle time white-space-nowrap ps-0 py-4">
                                     {% if stock.pr_request_to_store_id == 0 %}
                                     CENTRAL INVENTORY
                                     {% else %}
@@ -201,10 +206,19 @@
                                             href="{% url 'view_own_store' stock.pr_request_to_store_id %}">{{stock.sender_store}}</a>
                                     {% endif %}
                                 </td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 py-4 sendername">
+                                    {% if stock.pr_request_to_store_id == 0 %}
+                                    CENTRAL INVENTORY
+                                    {% else %}
+                                    {{stock.sender_store}}
+                                    {% endif %}
+                                </td>
 
-                                <td class="product align-middle product">
+                                <td class="align-middle">
                                     <a class="fw-semi-bold line-clamp-3 mb-0"
                                        href="{% url 'view_products' stock.pr_product_id %}">{{stock.ci_product_name}}</a></td>
+                                <td style="display:none;" class="align-middle product">
+                                    {{stock.ci_product_name}}</td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 quantity text-end">
                                     <p class="mb-0 fs--1 text-900">{{stock.pr_product_quantity}}</p>
@@ -244,7 +258,7 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap deliveryStatus">
+                                <td class="align-middle white-space-nowrap">
                                     {% if stock.pr_delivery_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>
@@ -259,8 +273,20 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
                                     {% endif %}
                                 </td>
-                                {% if stock.pr_request_status == 0 %}
+                                <td style="display:none" class="align-middle white-space-nowrap delivery_status">
+                                    {% if stock.pr_delivery_status == 0 %}
+                                    NOT DELIVERED YET
+                                    {% elif stock.pr_delivery_status == 1 %}
+                                    DISPATCHED
+                                    {% elif stock.pr_delivery_status == 2 %}
+                                    DELIVERED
+                                    {% elif stock.pr_delivery_status == 3 %}
+                                    CANCELLED
+                                    {% endif %}
+                                </td>
+
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
+                                    {% if stock.pr_request_status == 0 %}
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
                                                 aria-haspopup="true"
@@ -295,8 +321,9 @@
 
                                         </div>
                                     </div>
+                                    {% endif %}
                                 </td>
-                                {% endif %}
+
                             </tr>
                             {% endfor %}
                             </tbody>

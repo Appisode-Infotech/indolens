@@ -221,8 +221,10 @@ def create_store_stock_request(stock_obj):
                                    pr_unit_cost
                                ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)"""
 
-            cursor.execute(stock_req_query, (stock_obj.request_from_store_id, 2, stock_obj.product_id, stock_obj.product_quantity, 0, 0, 1,
-                                             stock_obj.request_to_store_id, 0, getIndianTime(), stock_obj.created_by, getIndianTime(), stock_obj.created_by))
+            cursor.execute(stock_req_query, (stock_obj.request_from_store_id, 2, stock_obj.product_id,
+                                             stock_obj.product_quantity, 0, 0, 1,
+                                             stock_obj.request_to_store_id, 0, getIndianTime(), stock_obj.created_by,
+                                             getIndianTime(), stock_obj.created_by,stock_obj.unit_cost))
             return {
                 "status": True,
                 "message": "success"

@@ -145,7 +145,7 @@
                                     <td class="fs--1 align-middle px-0 py-3 slNo"></td>
                                     <td class="fs--1 align-middle px-0 py-3 testNo">TEST{{test.et_eye_test_id}}
                                     </td>
-                                    <td class="customer align-middle white-space-nowrap pe-5"><a
+                                    <td class="align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
                                             href="{% url 'customer_details' test.et_customer_id %}">
                                         <div class="avatar avatar-m">
@@ -154,10 +154,15 @@
                                         </div>
                                         <p class="mb-0 ms-3 text-1100 fw-bold name">{{test.customer_name}}</p>
                                     </a></td>
+                                    <td style="display:none;" class="customer align-middle white-space-nowrap pe-5">
+                                        {{test.customer_name}}</td>
                                     <td class="customerphone align-middle white-space-nowrap pe-5">{{test.customer_phone}}</td>
 
-                                    <td class="createdBy align-middle white-space-nowrap fw-semi-bold text-1000">
+                                    <td class="align-middle white-space-nowrap fw-semi-bold text-1000">
                                         <a href="{% url 'view_record_creator' test.et_created_by test.et_created_by_store_type %}">{{test.creator_name}}</a>
+                                    </td>
+                                    <td class="createdBy align-middle white-space-nowrap fw-semi-bold text-1000">
+                                        {{test.creator_name}}
                                     </td>
 
                                     <td class="createdOn align-middle white-space-nowrap text-1000">
