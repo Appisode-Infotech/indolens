@@ -217,6 +217,7 @@ def orderDetailsFranchise(request, orderId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         order_detail, status_code = franchise_store_orders_controller.get_order_details(orderId)
+        print(order_detail)
         payment_logs, status_code = orders_controller.get_payment_logs(orderId)
         lab_details, lab_status_code = lab_controller.get_lab_by_id(
             order_detail['orders_details'][0]['so_assigned_lab'])
@@ -252,6 +253,7 @@ def franchiseOrderStatusChange(request, orderId, status):
                                                                                                     request.session.get(
                                                                                                         'id'),
                                                                                                     assigned_store)
+        print(order_detail)
         url = reverse('order_details_franchise_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:
@@ -267,6 +269,7 @@ def franchisePaymentStatusChange(request):
                                                                                                       assigned_store,
                                                                                                       request.session.get(
                                                                                                           'id'))
+        print(order_detail)
         url = reverse('order_details_franchise_store', kwargs={'orderId': order_obj.get_attribute('order_id')})
         return redirect(url)
     else:

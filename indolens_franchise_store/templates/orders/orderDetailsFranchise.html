@@ -432,10 +432,18 @@
                                 </div>
                             </div>
                             <div class="col-12">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h3 class="card-title mb-4">Sales Note</h3>
+                                        <h6 class="mb-2">{{order_detail.0.so_sales_note}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
-                                        <h6 class="mb-2">Payment status</h6>
+                                        <h6 class="mb-2">Payment status </h6>
                                         <select onchange="changePaymentStatus(this,'{{order_detail.0.so_order_id}}')"
                                                 aria-label="delivery type" class="form-select mb-4"
                                                 id="paymentStatusSelect">
@@ -446,10 +454,9 @@
                                             {% endif %}
                                         </select>
 
-                                        <h6 class="mb-2">Order status</h6>
+                                        <h6 class="mb-2">Order status </h6>
                                         {% if order_detail.0.so_assigned_lab == 0 %}
-                                        <select onchange="changeOrderStatus(this,'{{order_detail.0.so_order_id}}')"
-                                                aria-label="delivery type" class="form-select" id="orderStatusSelect">
+                                        <select onchange="changeOrderStatus(this, '{{order_detail.0.so_order_id}}');" aria-label="delivery type" class="form-select" id="orderStatusSelect">
                                             <option value="1">New</option>
                                             <option value="5">Ready</option>
                                             <option value="6">Delivered to customer</option>
@@ -588,8 +595,8 @@
      $('#orderId').val(order_id);
      $('#orderPaymentStatus').val(statusWidget.value);
 
-     var totalCost = {{ order_detail.0.so_total_cost }};
-    var discountCost = {{ order_detail.0.so_discount_cost }};
+     var totalCost = {{ order_detail.0.total_cost }};
+    var discountCost = {{ order_detail.0.discount_cost }};
     var amountPaid = {{order_detail.0.so_amount_paid}};
 
     var balanceAmount = discountCost - amountPaid;
@@ -615,6 +622,7 @@
 <script>
     document.addEventListener("DOMContentLoaded", function () {
         var status = "{{order_detail.0.so_payment_status}}";
+        var order_status = "{{order_detail.0.so_order_status}}";
         var select = document.getElementById("paymentStatusSelect");
 
         for (var i = 0; i < select.options.length; i++) {
@@ -630,6 +638,10 @@
                 for (var k = i + 1; k < select.options.length; k++) {
                     select.options[k].disabled = false;
                 }
+                if (order_status == 7){
+                    select.options[1].disabled = true;
+                }
+
                 break;
             }
         }
@@ -651,10 +663,11 @@
     });
     document.addEventListener("DOMContentLoaded", function() {
         var status = {{ order_detail.0.so_order_status }};
+        var paymentstatus = {{ order_detail.0.so_payment_status }};
         console.log(status);
 
         var select = document.getElementById("orderStatusSelect");
-
+        if(select){
         for (var i = 0; i < select.options.length; i++) {
             if (select.options[i].value == status) {
                 select.selectedIndex = i;
@@ -668,10 +681,13 @@
                 if (i < select.options.length - 1) {
                     select.options[i + 1].disabled = false;
                     if (status != "6"){
-                    select.options[4].disabled = false;
+                    select.options[3].disabled = false;
                     }
                     if (status == "6"){
-                    select.options[4].disabled = true;
+                    select.options[3].disabled = true;
+                    }
+                    if (paymentstatus != 2){
+                    select.options[2].disabled = true;
                     }
                 }
 
@@ -694,16 +710,23 @@
                 break;
             }
         }
+        }
+
+
     });
 
     document.addEventListener("DOMContentLoaded", function () {
         var orderStatusSelect = document.getElementById("orderStatusSelect1");
+        var paymentstatus = {{ order_detail.0.so_payment_status }};
+
+        if(orderStatusSelect){
         var orderStatus = {{ order_detail.0.so_order_status }};
 
         // Disable all options by default
         for (var i = 0; i < orderStatusSelect.options.length; i++) {
             orderStatusSelect.options[i].disabled = true;
         }
+
 
         // Enable the next option based on the order status
         if (orderStatus <= 3) {
@@ -712,6 +735,7 @@
                 var optionValue = parseInt(orderStatusSelect.options[i].value);
                 if (optionValue <= orderStatus) {
                     orderStatusSelect.options[i].disabled = false;
+                    orderStatusSelect.options[6].disabled = false;
                 }
             }
         } else if (orderStatus === 4) {
@@ -721,19 +745,10 @@
             orderStatusSelect.options[5].disabled = false;
             orderStatusSelect.options[6].disabled = false;
         }
-    });
-    document.addEventListener('DOMContentLoaded', function() {
-        var totalCost = {{ order_detail.0.so_total_cost }};
-        var discountCost = {{ order_detail.0.so_discount_cost }};
-        var amountPaid = {{order_detail.0.so_amount_paid}};
-
-        var discountedAmount = totalCost - discountCost;
-        var balanceAmount = discountCost - amountPaid;
-
-        document.getElementById('discount_amount').textContent = '₹ ' + discountedAmount;
-        document.getElementById('balance').textContent = '₹ ' + balanceAmount;
-
-
+        if (paymentstatus != 2){
+            orderStatusSelect.options[5].disabled = true;
+            }
+        }
 
 
     });
