@@ -4,10 +4,13 @@ import json
 import pymysql
 import pytz
 from indolens.db_connection import getConnection
+from indolens_admin.admin_controllers import email_template_controller, send_notification_controller
 
-from indolens_admin.admin_models.admin_resp_model.sales_detail_resp_model import get_order_detail
-from indolens_lab.lab_models.response_model.lab_job_resp_model import get_lab_jobs_list
 
+def getIndianTime():
+    ist = pytz.timezone('Asia/Kolkata')
+    today = datetime.datetime.now(ist)
+    return today
 
 def get_lab_jobs(labId, status):
     status_conditions = {
@@ -321,6 +324,111 @@ def get_lab_job_stats(labId):
                 "processing_jobs": processing_jobs['total_count'],
                 "ready_jobs": ready_jobs['total_count'],
                 "dispatched_jobs": dispatched_jobs['total_count'],
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+def task_status_change(orderID, orderStatus):
+    print(orderStatus)
+    status_conditions = {
+        "2": "Processing",
+        "3": "Ready",
+        "4": "Dispatched to store",
+        "5": "Ready in store",
+        "6": "Delivered to customer",
+        "7": "Cancelled"
+    }
+    status_condition = status_conditions[orderStatus]
+
+    try:
+        with getConnection().cursor() as cursor:
+            order_status_change_query = f"""
+                UPDATE sales_order SET so_order_status = {orderStatus}
+                WHERE so_order_id = '{orderID}' """
+            cursor.execute(order_status_change_query)
+
+            add_order_track_query = f""" 
+                            INSERT INTO order_track (order_id, status, created_on) 
+                            VALUES ('{orderID}', {orderStatus}, '{getIndianTime()}' ) """
+            cursor.execute(add_order_track_query)
+
+            get_order_details_query = f"""
+                            SELECT 
+                                so.*, c.customer_name AS customer_name, c.customer_email AS customer_email
+                            FROM sales_order AS so
+                            LEFT JOIN customers AS c ON c.customer_customer_id = so.so_customer_id
+                            WHERE so.so_order_id = '{orderID}' GROUP BY so.so_sale_item_id  
+                            """
+            cursor.execute(get_order_details_query)
+            order = cursor.fetchall()
+            print(order)
+
+            if orderStatus == "6":
+                get_last_invoice_query = f""" SELECT invoice_invoice_number
+                                                FROM invoice
+                                                WHERE invoice_store_id = {order[0]['so_created_by_store']} 
+                                                AND invoice_store_type = {order[0]['so_created_by_store_type']}
+                                                ORDER BY invoice_invoice_id DESC
+                                                LIMIT 1;
+                                                """
+                cursor.execute(get_last_invoice_query)
+                existing_invoice = cursor.fetchone()
+
+                if existing_invoice:
+                    last_invoice_number = existing_invoice['invoice_invoice_number']
+                    store_code, store_id, date_part, number_part = last_invoice_number.split('_')
+                    number_part = str(int(number_part) + 1).zfill(8)
+                    invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
+                else:
+                    number_part = '00000001'
+                    store_code = 'OS' if order[0]['created_by_store_type'] == 1 else 'FS'
+
+                    store_id = order[0]['created_by_store']
+                    date_part = getIndianTime().strftime('%d%m%Y')
+
+                    invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
+
+                create_invoice_query = f""" 
+                                            INSERT INTO invoice (invoice_invoice_number, invoice_order_id , 
+                                            invoice_invoice_status, invoice_invoice_date,
+                                            invoice_store_id,invoice_store_type) 
+                                            VALUES ('{invoice_number}', '{orderID}', 1, '{getIndianTime().date()}', 
+                                            {order[0]['so_created_by_store']},{order[0]['so_created_by_store_type']}) """
+                cursor.execute(create_invoice_query)
+
+                subject = email_template_controller.get_order_completion_email_subject(order[0]['so_order_id'])
+                body = email_template_controller.get_order_completion_email_body(order[0]['customer_name'],
+                                                                                 order[0]['so_order_id'],
+                                                                                 status_condition, getIndianTime())
+                print(subject)
+                print(body)
+                send_notification_controller.send_email(subject, body, order[0]['customer_email'])
+
+            if orderStatus == "7":
+                subject = email_template_controller.get_order_cancelled_email_subject(order[0]['so_order_id'])
+                body = email_template_controller.get_order_cancelled_email_body(order[0]['customer_name'],
+                                                                                    order[0]['so_order_id'],
+                                                                                    status_condition, getIndianTime())
+                print(subject)
+                print(body)
+                email_resp = send_notification_controller.send_email(subject, body, order[0]['customer_email'])
+                print(email_resp)
+
+            else:
+                subject = email_template_controller.get_order_status_change_email_subject(order[0]['so_order_id'])
+                body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
+                                                                                    order[0]['so_order_id'],
+                                                                                    status_condition, getIndianTime())
+                print(subject)
+                print(body)
+                email_resp = send_notification_controller.send_email(subject, body, order[0]['customer_email'])
+                print(email_resp)
+
+            return {
+                "status": True,
             }, 200
 
     except pymysql.Error as e:
