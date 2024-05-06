@@ -239,6 +239,7 @@ def orderDetails(request, orderId):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
         payment_logs, status_code = orders_controller.get_payment_logs(orderId)
+        print(payment_logs)
         lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['assigned_lab'])
         return render(request, 'orders/orderDetails.html', {"order_detail": order_detail['orders_details'],
                                                             "payment_logs": payment_logs['payment_logs'],
