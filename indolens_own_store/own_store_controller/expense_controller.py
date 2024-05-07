@@ -119,6 +119,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     linked_items = [int(x) for x in new_data.get('linkedFrameIds', [])]
 
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
+                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     if discount_percentage == "" or is_discount_applied == 0 or None:
@@ -155,6 +156,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                 elif new_data.get('product_category_id') == '3':
                     discount_percentage = new_data.get('discount_percentage')
                     power_attributes = lens_sale_power_attribute_controller.get_power_attribute(new_data)
+                    print(power_attributes)
                     discount_checked = new_data.get('discount_checked')
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     if discount_percentage == "" or is_discount_applied == 0 or None:

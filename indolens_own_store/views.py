@@ -471,6 +471,7 @@ def makeSaleOwnStore(request):
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),
                                                                    assigned_store, order_id)
+            print(make_order)
             url = reverse('order_details_store', kwargs={'orderId': order_id})
             return redirect(url)
         else:
