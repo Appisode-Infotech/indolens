@@ -348,6 +348,14 @@
                     <div class="col-12 col-xl-4 col-xxl-3">
                         <div class="row">
                             <div class="col-12">
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h3 class="card-title mb-4">Sales Note</h3>
+                                        <h6 class="mb-2">{{order_detail.0.sales_note}}</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
                                         <h3 class="card-title mb-4">Order Status</h3>
@@ -362,11 +370,13 @@
                                         <h6 class="mb-2">Order status</h6>
                                         <select disabled aria-label="delivery type" class="form-select"
                                                 id="orderStatusSelect">
-                                            <option value="2">Process</option>
-                                            <option value="3">Ready</option>
-                                            <option value="4">Dispatch</option>
-                                            <option value="5">Complete</option>
-                                            <option value="6">Cancel</option>
+                                            <option value="1">New</option>
+                                            <option value="2">Processing</option>
+                                            <option value="3">Ready In Lab</option>
+                                            <option value="4">Dispatch to Store</option>
+                                            <option value="5">Ready In Store</option>
+                                            <option value="6">Delivered Customer</option>
+                                            <option value="7">Cancel</option>
                                         </select>
                                     </div>
                                 </div>
@@ -419,7 +429,37 @@
 <script src="{% static 'js/custom_modals.js' %}"></script>
 <script src="{% static 'js/custom_master_view_modals.js' %}"></script>
 <script src="{% static 'js/breadcrumbs.js' %}"></script>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        var status = "{{order_detail.0.payment_status}}";
+        var select = document.getElementById("paymentStatusSelect");
 
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value === status) {
+                select.selectedIndex = i;
+                for (var j = 0; j < i; j++) {
+                    select.options[j].disabled = true;
+                }
+                break;
+            }
+        }
+    });
+    document.addEventListener("DOMContentLoaded", function() {
+        var status = {{order_detail.0.order_status}};
+        var select = document.getElementById("orderStatusSelect");
+
+        for (var i = 0; i < select.options.length; i++) {
+            if (select.options[i].value == status) {
+                select.selectedIndex = i;
+                for (var j = 0; j < i; j++) {
+                    select.options[j].disabled = true;
+                }
+                break;
+            }
+        }
+    });
+
+</script>
 
 </body>
 <script>
@@ -436,5 +476,6 @@
         }
 
     </script>
+
 
 </html>

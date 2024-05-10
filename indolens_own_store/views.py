@@ -478,10 +478,10 @@ def makeSaleOwnStore(request):
             employee_list, emp_status_code = store_employee_controller.get_all_active_store_employee(
                 assigned_store)
             lab_list, lab_status_code = own_store_lab_controller.get_all_active_labs()
-            store_products, status_code = store_inventory_controller.get_all_products_for_store(
+            store_products, status_code = store_inventory_controller.get_all_available_products_for_store(
                 assigned_store)
             customerResponse, cust_status_code = store_customers_controller.get_all_customers()
-            lens_response, lens_status_code = central_inventory_controller.get_central_inventory_lens(
+            lens_response, lens_status_code = central_inventory_controller.get_available_central_inventory_lens(
                 assigned_store)
             return render(request, 'expenses/makeSaleOwnStore.html',
                           {"other_products_list": store_products['stocks_list'],

@@ -993,7 +993,7 @@ function addLensContainer() {
                         <td class="col-auto col-lg-2">
                         <input name="rightLensPdStock[${productCardCount}]" class="form-control" aria-label="Default select example"
                             placeholder = "PD value"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
 
                                                                     <div class="invalid-feedback">This field is required.
 
@@ -1291,7 +1291,7 @@ function addLensContainer() {
                         <td class="col-auto col-lg-2">
                         <input name="leftLensPdStock[${productCardCount}]" class="form-control" aria-label="Default select example"
                         placeholder = "PD value"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
 
                             <div class="invalid-feedback">This field is required.
 
@@ -1319,31 +1319,31 @@ function addLensContainer() {
                         <th scope="row">Right</th>
                         <td class="col-auto col-lg-2">
                             <input name="rightLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-auto col-lg-2">
                             <input name="rightLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-auto col-lg-2">
                             <input name="rightLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-auto col-lg-2">
                             <input name="rightLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-auto col-lg-2">
                             <input name="rightLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
@@ -1352,31 +1352,31 @@ function addLensContainer() {
                         <th scope="row">Left</th>
                         <td class="col-6 col-lg-2">
                             <input name="leftLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-auto col-lg-2">
                             <input name="leftLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-auto col-lg-2">
                             <input name="leftLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-auto col-lg-2">
                             <input name="leftLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
                         <td class="col-auto col-lg-2">
                             <input name="leftLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
                         </td>
                     </tr>
@@ -1588,30 +1588,30 @@ function addStockContactLensContainer() {
                     <td class="col-auto col-lg-2">
                         <input readonly name="cl_power[${productCardCount}]"
                                class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
                     <td class="col-auto col-lg-2">
                         <input readonly name="cl_bc[${productCardCount}]"
                                class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example">
                     </td>
                     <td class="col-auto col-lg-2">
                         <input readonly name="cl_dia[${productCardCount}]"
                                class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
                     <td class="col-auto col-lg-2">
                         <input readonly name="cl_cylinder[${productCardCount}]"
                                class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                     </td>
                     <td class="col-auto col-lg-2">
                         <input readonly name="cl_axis[${productCardCount}]"
-                        oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                        oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                class="form-control"
                                aria-label="Default select example"/>
                     </td>
@@ -1842,7 +1842,7 @@ function addRxContactLensContainer() {
                     <td class="col-auto col-lg-2">
                         <input name="cl_power[${productCardCount}]"
                                class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
@@ -1850,7 +1850,7 @@ function addRxContactLensContainer() {
                     <td class="col-auto col-lg-2">
                         <input name="cl_bc[${productCardCount}]"
                                class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example">
                                            <div class="invalid-feedback">This field is required.
 
@@ -1858,7 +1858,7 @@ function addRxContactLensContainer() {
                     <td class="col-auto col-lg-2">
                         <input name="cl_dia[${productCardCount}]"
                                class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
@@ -1866,7 +1866,7 @@ function addRxContactLensContainer() {
                     <td class="col-auto col-lg-2">
                         <input name="cl_cylinder[${productCardCount}]"
                                class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
@@ -1874,7 +1874,7 @@ function addRxContactLensContainer() {
                     <td class="col-auto col-lg-2">
                         <input name="cl_axis[${productCardCount}]"
                                class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
