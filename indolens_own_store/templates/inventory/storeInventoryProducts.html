@@ -188,14 +188,20 @@
 
                                     </td>
 
-                                    <td class="product align-middle ps-4"><a
+                                    <td class="align-middle ps-4"><a
                                             class="fw-semi-bold line-clamp-3 mb-0"
                                             href="{% url 'view_store_inventory_products' stock.si_store_inventory_id %}">
                                         {{stock.ci_product_name}}</a>
                                     </td>
+                                    <td style="display:none;" class="product align-middle ps-4">
+                                        {{stock.ci_product_name}}
+                                    </td>
 
-                                    <td class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                    <td class="align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
                                         ₹{{stock.ci_sale_price}}
+                                    </td>
+                                    <td style="display:none;" class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
+                                        {{stock.ci_sale_price}}
                                     </td>
                                     <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         <p style="display: none;">filterIn_{{stock.pc_category_name}}</p>{{stock.pc_category_name}}

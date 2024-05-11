@@ -654,7 +654,7 @@
                                             class="badge-label">REFUNDED</span></span>
                                     {% endif %}
                                 </td>
-                                <td class="orderStatus align-middle white-space-nowrap text-start fw-bold text-700">
+                                <td class="align-middle white-space-nowrap text-start fw-bold text-700">
                                     {% if order.so_order_status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                             class="badge-label">NEW</span></span>
@@ -679,19 +679,37 @@
                                     {% endif %}
 
                                 </td>
+                                <td style="display:none;" class="orderStatus align-middle white-space-nowrap text-start fw-bold text-700">
+                                        {% if order.so_order_status == 1 %}
+                                        NEW
+                                        {% elif order.so_order_status == 2 %}
+                                        PROCESSING
+                                        {% elif order.so_order_status == 3 %}
+                                        READY IN LAB
+                                        {% elif order.so_order_status == 4 %}
+                                        DISPATCHED
+                                        {% elif order.so_order_status == 5 %}
+                                        READY IN STORE
+                                        {% elif order.so_order_status == 6 %}
+                                        DELIVERED CUSTOMER
+                                        {% elif order.so_order_status == 7 %}
+                                        CANCELLED
+                                        {% endif %}
+
+                                    </td>
                                 <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_employee' order.so_created_by %}">{{order.creator_name}}</a>
                                 </td>
-                                <td style="display:none;" class="createdBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                <td style="display:none;" class="createdBy align-middle white-space-nowrap">
                                     {{order.creator_name}}
                                 </td>
                                 <td class="createdOn align-middle white-space-nowrap text-700 ">
                                     {{order.so_created_on | date:"d/m/Y h:i A"}}
                                 </td>
-                                <td class="updatedBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                <td class=" align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_employee' order.so_updated_by %}">{{order.updater_name}}</a>
                                 </td>
-                                <td style="display:none;" class="createdBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                <td style="display:none;" class="updatedBy align-middle white-space-nowrap text-900 fs--1 text-start">
                                     {{order.updater_name}}
                                 </td>
                                 <td class="updatedOn align-middle white-space-nowrap text-700 ">

@@ -222,9 +222,12 @@
                                     <p class="mb-0 text-900">{{expense.se_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap createdBy">
+                                <td class="align-middle white-space-nowrap">
                                     <a class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_employee' expense.se_created_by %}">{{expense.creator_name}}</a>
+                                </td>
+                                <td style="display:none;" class="align-middle white-space-nowrap createdBy">
+                                    {{expense.creator_name}}
                                 </td>
 
                             </tr>

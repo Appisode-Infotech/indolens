@@ -148,7 +148,7 @@
                                         <a class="fw-semi-bold" target="_blank"
                                            href="{% url 'own_store_eye_test_print' test.et_eye_test_id %}">TEST{{test.et_eye_test_id}}</a>
                                     </td>
-                                    <td class="customer align-middle white-space-nowrap pe-5"><a
+                                    <td class="align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
                                             href="{% url 'view_store_customer_details' test.et_customer_id %}">
                                         <div class="avatar avatar-m">
@@ -157,6 +157,8 @@
                                         </div>
                                         <p class="mb-0 ms-3 text-1100 fw-bold name">{{test.customer_name}}</p>
                                     </a></td>
+                                    <td style="display:none;" class="customer align-middle white-space-nowrap pe-5">
+                                        {{test.customer_name}}</td>
                                     <td class="customerphone align-middle white-space-nowrap pe-5">{{test.customer_phone}}</td>
 
                                     <td class="createdBy align-middle white-space-nowrap fw-semi-bold text-1000">

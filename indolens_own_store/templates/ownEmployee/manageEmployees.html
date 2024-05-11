@@ -156,11 +156,14 @@
                                     </div>
                                         </a>
                                 </td>
-                                <td class="align-middle time white-space-nowrap ps-0 name py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_employee' employee.ose_employee_id %}">
                                     {{employee.ose_name}}
                                 </a>
+                                </td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 name py-4">
+                                    {{employee.ose_name}}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 phone">
@@ -174,21 +177,20 @@
                                 <td class="align-middle white-space-nowrap text-end role">
                                     {% if employee.ose_role == 1 %}
                                     <p class="mb-0 fs--1 text-900">Store Manager</p>
-
-                                {% elif employee.ose_role == 2 %}
-                                    <p class="mb-0 fs--1 text-900">Optimetry</p>
-                                {% elif employee.ose_role == 3 %}
-                                    <p class="mb-0 fs--1 text-900">Sales Executive</p>
-                                {% elif employee.ose_role == 4 %}
-                                    <p class="mb-0 fs--1 text-900">House Keeping</p>
-                                {% endif %}
+                                    {% elif employee.ose_role == 2 %}
+                                        <p class="mb-0 fs--1 text-900">Optimetry</p>
+                                    {% elif employee.ose_role == 3 %}
+                                        <p class="mb-0 fs--1 text-900">Sales Executive</p>
+                                    {% elif employee.ose_role == 4 %}
+                                        <p class="mb-0 fs--1 text-900">House Keeping</p>
+                                    {% endif %}
 
                                 <td class="align-middle white-space-nowrap text-end status">
                                     {% if employee.ose_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
-                                {% elif employee.ose_status == 1 %}
-                                <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
-                                {% endif %}
+                                    {% elif employee.ose_status == 1 %}
+                                    <span class="badge badge-phoenix fs--2 badge-phoenix-success">Active</span>
+                                    {% endif %}
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 createdOn">
                                     <p class="mb-0 fs--1 text-900">{{employee.ose_created_on|date:"d/m/Y h:i A"}}</p>

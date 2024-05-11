@@ -476,19 +476,20 @@ def makeSaleOwnStore(request):
             url = reverse('order_details_store', kwargs={'orderId': order_id})
             return redirect(url)
         else:
-            employee_list, emp_status_code = store_employee_controller.get_all_active_store_employee(
+            employee_list, emp_status_code = store_employee_controller.get_all_active_store_optometry(
                 assigned_store)
             lab_list, lab_status_code = own_store_lab_controller.get_all_active_labs()
-            store_products, status_code = store_inventory_controller.get_all_products_for_store(
+            store_products, status_code = store_inventory_controller.get_available_products_for_store(
                 assigned_store)
             customerResponse, cust_status_code = store_customers_controller.get_all_customers()
             lens_response, lens_status_code = central_inventory_controller.get_central_inventory_lens()
+            print(lens_response)
             return render(request, 'expenses/makeSaleOwnStore.html',
                           {"other_products_list": store_products['stocks_list'],
                            'customers_list': customerResponse['customers_list'],
                            "lens_list": lens_response['lens_list'],
                            "contact_lens_list": lens_response['contact_lens_list'],
-                           "employee_list": employee_list['active_employee_list'],
+                           "employee_list": employee_list['optometry_list'],
                            "lab_list": lab_list['lab_list']})
     else:
         return redirect('own_store_login')

@@ -84,7 +84,7 @@
                     </div>
                 </div>
 
-                <div data-list='{"valueNames":["slNo","customer","email","language","totalOrders","totalSpent","city","lastOrder"],"page":20,"pagination":true}'
+                <div data-list='{"valueNames":["slNo","customer","email","language","totalOrders","totalSpent","city","createdBY","createdOn"],"page":20,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -138,10 +138,10 @@
                                     <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
                                         CITY
                                     </th>
-                                    <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
+                                    <th class="sort align-middle ps-7" data-sort="createdBY" scope="col" style="width:25%;">
                                         CREATED BY
                                     </th>
-                                    <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
+                                    <th class="sort align-middle ps-7" data-sort="createdOn" scope="col" style="width:25%;">
                                         CREATED ON
                                     </th>
 
@@ -151,7 +151,7 @@
                                 {% for customer in store_customers_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                     <td class="fs--1 align-middle px-0 py-3 slNo"></td>
-                                    <td class="customer align-middle white-space-nowrap pe-5"><a
+                                    <td class="align-middle white-space-nowrap pe-5"><a
                                             class="d-flex align-items-center"
                                             href="{% url 'view_store_customer_details' customer.customer_customer_id %}">
                                         <div class="avatar avatar-m">
@@ -160,6 +160,9 @@
                                         </div>
                                         <p class="mb-0 ms-3 text-1100 fw-bold name">{{customer.customer_name}}</p>
                                     </a></td>
+                                    <td style="display:none;" class="customer align-middle white-space-nowrap pe-5">
+                                        {{customer.customer_name}}
+                                    </td>
                                     <td class="email align-middle white-space-nowrap pe-5">
                                         <a href="mailto:{{customer.customer_email}}">{{customer.customer_email}}</a>
                                     </td>
@@ -170,22 +173,32 @@
                                     <td class="totalOrders align-middle white-space-nowrap fw-semi-bold text-end text-1000">
                                         {{customer.order_count}}
                                     </td>
-                                    <td class="totalSpent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100 text-end">
+                                    <td class="align-middle white-space-nowrap fw-bold text-end ps-3 text-1100 text-end">
                                         {% if customer.total_spend == None %}
                                         ₹0
                                         {% else %}
                                         ₹ {{customer.total_spend}}
                                         {% endif %}
                                     </td>
+                                    <td style="display:none;" class="totalSpent align-middle white-space-nowrap fw-bold text-end ps-3 text-1100 text-end">
+                                        {% if customer.total_spend == None %}
+                                        0
+                                        {% else %}
+                                        {{customer.total_spend}}
+                                        {% endif %}
+                                    </td>
                                     <td class="city align-middle white-space-nowrap text-1000 ps-7">
                                         {{customer.customer_city}}
                                     </td>
-                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">
+                                    <td class="align-middle white-space-nowrap text-1000 ps-7">
                                         <a class="d-flex align-items-center"
                                            href="{% url 'view_employee' customer.customer_created_by_employee_id %}">
                                             {{customer.creator_name}}</a>
                                     </td>
-                                    <td class="city align-middle white-space-nowrap text-1000 ps-7">
+                                    <td style="display:none;" class="createdBY align-middle white-space-nowrap text-1000 ps-7">
+                                        {{customer.creator_name}}
+                                    </td>
+                                    <td class="createdOn align-middle white-space-nowrap text-1000 ps-7">
                                         {{customer.customer_created_on|date:"d/m/Y h:i A"}}
                                     </td>
 

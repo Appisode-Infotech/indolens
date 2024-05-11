@@ -159,7 +159,7 @@
                                     {{stock.store_name}}
                                 </td>
 
-                                <td class="align-middle white-space-nowrap py-4" type>
+                                <td class="align-middle white-space-nowrap py-4 type" >
                                     {% if stock.pr_store_type == 1 %}
                                     <p class="mb-0 fs--1 text-900">OWN STORE</p>
                                     {% else %}
@@ -174,10 +174,13 @@
                                     {% endif %}
                                 </td>
 
-                                <td class="product align-middle">
+                                <td class="align-middle">
                                     <a class="fw-semi-bold line-clamp-2 mb-0 "
                                        href="{% url 'view_central_inventory_products' stock.pr_product_id %}">
                                         {{stock.ci_product_name}}</a>
+                                </td>
+                                <td style="display:none;" class="product align-middle">
+                                    {{stock.ci_product_name}}
                                 </td>
 
 
@@ -185,8 +188,11 @@
                                     <p class="mb-0 fs--1 text-900 text-end">{{stock.pr_product_quantity}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 price">
+                                <td class="align-middle white-space-nowrap ps-3 py-4">
                                     <p class="mb-0 fs--1 text-900 text-end">₹{{stock.ci_sale_price}}</p>
+                                </td>
+                                <td style="display:none;" class="align-middle white-space-nowrap ps-3 py-4 price">
+                                    {{stock.ci_sale_price}}
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 req_date">
                                     {% if stock.pr_is_requested == 1 %}
@@ -202,7 +208,7 @@
                                     <p class="mb-0 fs--1 text-900">NOT DELIVERED</p>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end approvalStatus">
+                                <td class="align-middle white-space-nowrap">
                                     {% if stock.pr_request_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">PENDING</span>
@@ -214,7 +220,16 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">REJECTED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap text-end deliveryStatus">
+                                <td style="display:none;" class="align-middle white-space-nowrap approvalStatus">
+                                    {% if stock.pr_request_status == 0 %}
+                                    PENDING
+                                    {% elif stock.pr_request_status == 1 %}
+                                    APPROVED
+                                    {% else %}
+                                    REJECTED
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle white-space-nowrap">
                                     {% if stock.pr_delivery_status == 0 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-secondary">NOT DELIVERED YET</span>
@@ -227,6 +242,17 @@
                                     {% elif stock.pr_delivery_status == 3 %}
                                     <span
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">CANCELLED</span>
+                                    {% endif %}
+                                </td>
+                                <td style="display:none;" class="align-middle white-space-nowrap deliveryStatus">
+                                    {% if stock.pr_delivery_status == 0 %}
+                                    NOT DELIVERED YET
+                                    {% elif stock.pr_delivery_status == 1 %}
+                                    DISPATCHED
+                                    {% elif stock.pr_delivery_status == 2 %}
+                                    DELIVERED
+                                    {% elif stock.pr_delivery_status == 3 %}
+                                    CANCELLED
                                     {% endif %}
                                 </td>
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
