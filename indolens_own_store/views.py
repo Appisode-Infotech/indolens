@@ -465,9 +465,9 @@ def makeSaleOwnStore(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
+            print(request.POST)
             order_id = f"""OS_{assigned_store}_{expense_controller.get_current_epoch_time()}"""
             cart_data = json.loads(request.POST['cartData'])
-            print(cart_data)
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
@@ -483,7 +483,6 @@ def makeSaleOwnStore(request):
                 assigned_store)
             customerResponse, cust_status_code = store_customers_controller.get_all_customers()
             lens_response, lens_status_code = central_inventory_controller.get_central_inventory_lens()
-            print(lens_response)
             return render(request, 'expenses/makeSaleOwnStore.html',
                           {"other_products_list": store_products['stocks_list'],
                            'customers_list': customerResponse['customers_list'],
