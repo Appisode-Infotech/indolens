@@ -2460,6 +2460,7 @@ def manageAuthenticityCard(request, saleId, frame):
     if request.session.get('is_admin_logged_in') is not None and request.session.get(
             'is_admin_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
+        print(job_detail)
         return render(request, 'Tasks/authenticityCar.html', {"order_detail": job_detail['orders_details'],
                                                               "frame": frame})
     else:
