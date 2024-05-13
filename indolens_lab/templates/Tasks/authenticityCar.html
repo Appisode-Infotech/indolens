@@ -137,25 +137,6 @@
                                     <tr>
                                         <th scope="row">R</th>
                                         <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensSphStock}}</p>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensCylStock}}</p>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensAxisStock}}</p>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensAddStock}}</p>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensPdStock}}</p>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">L</th>
-                                        <td class="col-6 col-lg-2">
                                             <p>{{order_detail.so_power_attribute.rightLensSphStock}}</p>
                                         </td>
                                         <td class="col-6 col-lg-2">
@@ -173,30 +154,29 @@
                                             </p>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <th scope="row">L</th>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensSphStock}}</p>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensCylStock}}</p>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensAxisStock}}</p>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensAddStock}}</p>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensPdStock}}</p>
+                                        </td>
+                                    </tr>
                                     </tbody>
                                     {% else %}
                                     <tbody>
                                     <tr>
                                         <th scope="row">R</th>
-                                        <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensSphRx}}</p>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensCylRx}}</p>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensAxisRx}}</p>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensAddRx}}</p>
-                                        </td>
-                                        <td class="col-6 col-lg-2">
-                                            <p>{{order_detail.so_power_attribute.leftLensPdRx}}</p>
-                                        </td>
-                                    </tr>
-
-                                    <tr>
-                                        <th scope="row">L</th>
                                         <td class="col-6 col-lg-2">
                                             <p>{{order_detail.so_power_attribute.rightLensSphRx}}</p>
                                         </td>
@@ -211,6 +191,24 @@
                                         </td>
                                         <td class="col-6 col-lg-3">
                                             <p>{{order_detail.so_power_attribute.rightLensPdRx}}</p>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <th scope="row">L</th>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensSphRx}}</p>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensCylRx}}</p>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensAxisRx}}</p>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensAddRx}}</p>
+                                        </td>
+                                        <td class="col-6 col-lg-2">
+                                            <p>{{order_detail.so_power_attribute.leftLensPdRx}}</p>
                                         </td>
                                     </tr>
                                     </tbody>
@@ -280,45 +278,4 @@
 
 </body>
 
-{{ customers_list|json_script:"customersList" }}
-
-<script>
-
-function updateCustomerFields(selectCustomerField) {
-    var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
-
-    var customerNameInput = document.getElementsByName("customer_name")[0];
-    var customerEmailInput = document.getElementsByName("customer_email")[0];
-    var customerPhoneInput = document.getElementsByName("customer_phone")[0];
-    var customerAgeInput = document.getElementsByName("customer_age")[0];
-    var customerGenderSelect = document.getElementsByName("customer_gender")[0];
-    var customerCityInput = document.getElementsByName("customer_city")[0];
-    var customerLanguageSelect = document.getElementsByName("customer_language")[0];
-    var customerAddressTextarea = document.getElementsByName("customer_address")[0];
-    //customerDataField
-    var customerDataTextarea = document.getElementsByName("customerData")[0];
-
-    if (selectCustomer) {
-        customerNameInput.value = selectCustomer.name;
-        customerEmailInput.value = selectCustomer.email;
-        customerPhoneInput.value = selectCustomer.phone;
-        customerAgeInput.value = selectCustomer.age;
-        customerGenderSelect.value = selectCustomer.gender;
-        customerCityInput.value = selectCustomer.city;
-        customerLanguageSelect.value = selectCustomer.language;
-        customerAddressTextarea.value = selectCustomer.address;
-    } else {
-        customerNameInput.value = '';
-        customerEmailInput.value = '';
-        customerPhoneInput.value = '';
-        customerAgeInput.value = '';
-        customerGenderSelect.value = '';
-        customerCityInput.value = '';
-        customerLanguageSelect.value = '';
-        customerAddressTextarea.value = '';
-        customerDataTextarea.value = '';
-    }
-}
-</script>
 </html>
