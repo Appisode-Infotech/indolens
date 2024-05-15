@@ -59,10 +59,24 @@
 
     th {
       background-color: #f2f2f2;
+          font-weight: bold; /* Add this line to make the text bold */
     }
 
     #preview {
       margin-top: 20px;
+    }
+
+     /* Add responsive styling for smaller screens */
+    @media only screen and (max-width: 600px) {
+        table {
+            width: 100%;
+            overflow-x: auto;
+            display: block;
+        }
+
+        th, td {
+            white-space: nowrap;
+        }
     }
 
         /* Add some basic styling to the table */
@@ -85,7 +99,12 @@
     padding: 8px;
 }
 
-
+.mb2 h6 {
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
 
     </style>
     <script>
@@ -102,43 +121,6 @@
         linkRTL.setAttribute('disabled', true);
         userLinkRTL.setAttribute('disabled', true);
       }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     </script>
 </head>
 
@@ -161,12 +143,12 @@
                 <input type="hidden" name="billingDetailsData">
                 <input type="hidden" id="linkedData" name="linkedData">
             </form>
-            <div class="col-12 col-xxl-6">
+            <div class="col-12">
                 <div class="card shadow-none border border-300 my-4" data-component-card="data-component-card">
                     <div class="card-header p-4 border-bottom border-300 bg-soft">
                         <div class="row g-3 justify-content-between align-items-center">
                             <div class="col-12 col-md">
-                                <h4 class="text-900 mb-0" data-anchor="data-anchor">Make a sale</h4>
+                                <h4 class="text-900 mb-0">Make a sale</h4>
                             </div>
                         </div>
                     </div>
@@ -237,7 +219,6 @@
                                                             <div class="dropdown-menu">
                                                                 <a type="button" onclick="addLensContainer()"
                                                                    class="dropdown-item">Add a Lens</a>
-                                                                <!--                                                                <a type="button" onclick="addStockContactLensContainer()" class="dropdown-item">Add Stock Contact Lens</a>-->
                                                                 <a type="button" onclick="addRxContactLensContainer()"
                                                                    class="dropdown-item">Add Contact Lens</a>
                                                                 <a type="button" onclick="addOtherProductsContainer()"
@@ -261,8 +242,8 @@
                                                             name="customers">
                                                         <option value="">Select Customer</option>
                                                         {% for customer in customers_list %}
-                                                        <option value="{{customer.phone}}">
-                                                            {{customer.phone}}
+                                                        <option value="{{customer.customer_phone}}">
+                                                            {{customer.customer_phone}}
                                                         </option>
                                                         {% endfor %}
                                                     </select>
@@ -397,7 +378,7 @@
                                                                 required="required">
                                                             <option value="" selected>Please select employee</option>
                                                             {% for employee in employee_list %}
-                                                            <option value="{{employee.employee_id}}">{{employee.name}}
+                                                            <option value="{{employee.ose_employee_id}}">{{employee.ose_name}}
                                                             </option>
                                                             {% endfor %}
                                                         </select>
@@ -412,7 +393,7 @@
                                                                 required="required">
                                                             <option value="0" selected>Please select lab</option>
                                                             {% for lab in lab_list %}
-                                                            <option value="{{lab.lab_id}}">{{lab.lab_name}}</option>
+                                                            <option value="{{lab.lab_lab_id}}">{{lab.lab_name}}</option>
                                                             {% endfor %}
                                                         </select>
                                                         <div class="invalid-feedback">This field is required.</div>
@@ -436,17 +417,32 @@
                                                         <h5 class="mb-3">Advance Amount Paid(₹)</h5>
                                                         <input
                                                                 onchange="genBillingInfoObject()"
-                                                                value="0" required
+                                                                required
                                                                 name="amount_paid"
                                                                 class="form-control"
-                                                                type="number" min="1" placeholder="&#8377;">
+                                                                type="number" min="0" value="0" placeholder="&#8377;">
                                                         <div class="invalid-feedback">This field is required and should be less than billing amount.</div>
+                                                    </div>
+                                                    <div class="mb2 col-6">
+                                                        <h5 class="mb-3">Payment Mode</h5>
+                                                        <select
+                                                                onchange="genBillingInfoObject()"
+                                                                name="payment_mode" class="form-select"
+                                                                aria-label="Default select example" disabled
+                                                                required="required">
+                                                            <option value="" selected>Please select payment mode</option>
+                                                            <option value="1"> CASH </option>
+                                                            <option value="2"> UPI </option>
+                                                            <option value="3"> DEBIT CARD </option>
+                                                            <option value="4"> CREDIT CARD </option>
+                                                        </select>
+                                                        <div class="invalid-feedback">This field is required when advance amount paid.</div>
                                                     </div>
 
 
                                                 </div>
 
-                                                <div id="category1Container"></div>
+                                                                                <div id="category1Container"></div>
 
 
                                                 <div class="mb2 col-12 mt-3">
@@ -495,11 +491,13 @@
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
             {% include 'footer.html' %}
         </div>
     </div>
+
     <script>
         var navbarTopStyle = localStorage.getItem('phoenixNavbarTopStyle');
         var navbarTop = document.querySelector('.navbar-top');
@@ -574,7 +572,7 @@ function addLensContainer() {
         </a>
     </div>
     <div class="mb-3 col-12">
-        <h5 class="mb-3">Select Lens</h5>
+        <h6 class="mb-3">Select Lens</h6>
         <select onchange="updateLensProductFields(this, ${productCardCount})" class="form-select" data-choices="data-choices" data-options='{"removeItemButton":true,"placeholder":true}'
             name="product" required="required">
             <option value="">Select Lens</option>
@@ -589,14 +587,14 @@ function addLensContainer() {
     <input name ="product_category[${productCardCount}]" id="product_category" type="hidden"/>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h5 class="mb-3">Lens Type</h5>
+            <h6 class="mb-3">Vision Type</h6>
             <input class="form-control" name="lens_type[${productCardCount}]" placeholder="Lens Type" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Brand</h5>
+            <h6 class="mb-3">Product Brand</h6>
             <input class="form-control" name="product_brand[${productCardCount}]" placeholder="Brand" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
@@ -604,39 +602,46 @@ function addLensContainer() {
         </div>
         <!-- Add the rest of your product card HTML structure here -->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product HSN</h5>
+            <h6 class="mb-3">Product HSN</h6>
             <input class="form-control" name="product_hsn[${productCardCount}]" placeholder="HSN" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Available Quantity</h5>
+            <h6 class="mb-3">Available Quantity</h6>
             <input class="form-control" name="available_qty[${productCardCount}]" placeholder="Available Quantity" required="required"
                 type="text" value="" readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price(₹)</h5>
+            <h6 class="mb-3">Unit Price(₹)</h6>
             <input class="form-control" name="unit_price[${productCardCount}]" placeholder="Unit Price" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Type</h5>
+            <h6 class="mb-3">Unit Type</h6>
             <input class="form-control" name="unit_type[${productCardCount}]" placeholder="Unit Type" required="required" type="text" value=""
                 readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Stock Type</h5>
+            <h6 class="mb-3">Type</h6>
             <input readonly class="form-control" name="stock_type[${productCardCount}]" placeholder="Rx/Stock" required="required" min="1"
                 type="text" value="" />
             <div class="invalid-feedback">This field should be 1 in
                 minimum and should be less than available quantity.
+            </div>
+        </div>
+        <div class="mb2 col-4">
+            <h6 class="mb-3">Index</h6>
+            <input readonly class="form-control" name="lens_index[${productCardCount}]" placeholder="Index value" required="required" min="1"
+                type="text" value="" />
+            <div class="invalid-feedback">This field should not be empty..
             </div>
         </div>
 
@@ -653,7 +658,7 @@ function addLensContainer() {
                    hidden
                    type="text" value="" readonly/>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Purchase Quantity</h5>
+            <h6 class="mb-3">Purchase Quantity</h6>
             <input class="form-control" name="purchase_qty[${productCardCount}]" placeholder="Purchase quantity" required="required" min="1"
                 type="number" value="" />
             <div class="invalid-feedback">This field should be 1 in
@@ -661,33 +666,34 @@ function addLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Total</h5>
+            <h6 class="mb-3">Product Total</h6>
             <input class="form-control" name="product_total[${productCardCount}]" placeholder="Product Total" required="required" type="text"
                 value="0" readonly />
             <div class="invalid-feedback">This field is required.
             </div>
         </div>
-        <div class="mb2 col-6" id="discount_check_div[${productCardCount}]" style="display:none">
+
+    </div>
+    <div class="mb-3 col-6" id="discount_check_div[${productCardCount}]" style="display:none">
             <input id="discount_value_field[${productCardCount}]" type="hidden" class="form-check" name="discount_percentage[${productCardCount}]" required="required"
                 readonly />
             <input class="form-check-input" type="checkbox" name="discount_checked[${productCardCount}]"
-                id="bootstrap-wizard-validation-wizard-checkbox[${productCardCount}]" />
+                id="bootstrap-wizard-validation-wizard-checkbox[${productCardCount}]" value="off"/>
             <label id="discount_value[${productCardCount}]" class="form-check-label text-900"
                 for="bootstrap-wizard-validation-wizard-checkbox[${productCardCount}]"></label>
         </div>
-    </div>
     <div class="dropdown-divider"></div>
-    <h5 class="mb-3">Power attributes</h5>
+    <h6 class="mb-3">Power attributes</h6>
     <div class="row mb-3 stock_power_card[${productCardCount}]" id="stock_power_card[${productCardCount}]" style="display:none">
         <div class="col-12">
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Eye</th>
-                        <th scope="col">Sph</th>
-                        <th scope="col">Cyl</th>
-                        <th scope="col">Axis</th>
-                        <th scope="col">Add</th>
+                        <th scope="col">EYE</th>
+                        <th scope="col">SPH</th>
+                        <th scope="col">CYL</th>
+                        <th scope="col">AXIS</th>
+                        <th scope="col">ADD</th>
                         <th scope="col">PD</th>
                     </tr>
                 </thead>
@@ -695,48 +701,299 @@ function addLensContainer() {
 
                     <tr>
                         <th scope="row">Right</th>
-                        <td class="col-6 col-lg-2">
-                            <select required name="rightLensSphStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                        <td class="col-auto col-lg-2">
+                            <select name="rightLensSphStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                                <option value="2">2</option>
+                                <option value="-20.00">-20.00</option>
+                                <option value="-19.75">-19.75</option>
+                                <option value="-19.50">-19.50</option>
+                                <option value="-19.25">-19.25</option>
+                                <option value="-19.00">-19.00</option>
+                                <option value="-18.75">-18.75</option>
+                                <option value="-18.50">-18.50</option>
+                                <option value="-18.25">-18.25</option>
+                                <option value="-18.00">-18.00</option>
+                                <option value="-17.75">-17.75</option>
+                                <option value="-17.50">-17.50</option>
+                                <option value="-17.25">-17.25</option>
+                                <option value="-17.00">-17.00</option>
+                                <option value="-16.75">-16.75</option>
+                                <option value="-16.50">-16.50</option>
+                                <option value="-16.25">-16.25</option>
+                                <option value="-16.00">-16.00</option>
+                                <option value="-15.75">-15.75</option>
+                                <option value="-15.50">-15.50</option>
+                                <option value="-15.25">-15.25</option>
+                                <option value="-15.00">-15.00</option>
+                                <option value="-14.75">-14.75</option>
+                                <option value="-14.50">-14.50</option>
+                                <option value="-14.25">-14.25</option>
+                                <option value="-14.00">-14.00</option>
+                                <option value="-13.75">-13.75</option>
+                                <option value="-13.50">-13.50</option>
+                                <option value="-13.25">-13.25</option>
+                                <option value="-13.00">-13.00</option>
+                                <option value="-12.75">-12.75</option>
+                                <option value="-12.50">-12.50</option>
+                                <option value="-12.25">-12.25</option>
+                                <option value="-12.00">-12.00</option>
+                                <option value="-11.75">-11.75</option>
+                                <option value="-11.50">-11.50</option>
+                                <option value="-11.25">-11.25</option>
+                                <option value="-11.00">-11.00</option>
+                                <option value="-10.75">-10.75</option>
+                                <option value="-10.50">-10.50</option>
+                                <option value="-10.25">-10.25</option>
+                                <option value="-10.00">-10.00</option>
+                                <option value="-9.75">-9.75</option>
+                                <option value="-9.50">-9.50</option>
+                                <option value="-9.25">-9.25</option>
+                                <option value="-9.00">-9.00</option>
+                                <option value="-8.75">-8.75</option>
+                                <option value="-8.50">-8.50</option>
+                                <option value="-8.25">-8.25</option>
+                                <option value="-8.00">-8.00</option>
+                                <option value="-7.75">-7.75</option>
+                                <option value="-7.50">-7.50</option>
+                                <option value="-7.25">-7.25</option>
+                                <option value="-7.00">-7.00</option>
+                                <option value="-6.75">-6.75</option>
+                                <option value="-6.50">-6.50</option>
+                                <option value="-6.25">-6.25</option>
+                                <option value="-6.00">-6.00</option>
+                                <option value="-5.75">-5.75</option>
+                                <option value="-5.50">-5.50</option>
+                                <option value="-5.25">-5.25</option>
+                                <option value="-5.00">-5.00</option>
+                                <option value="-4.75">-4.75</option>
+                                <option value="-4.50">-4.50</option>
+                                <option value="-4.25">-4.25</option>
+                                <option value="-4.00">-4.00</option>
+                                <option value="-3.75">-3.75</option>
+                                <option value="-3.50">-3.50</option>
+                                <option value="-3.25">-3.25</option>
+                                <option value="-3.00">-3.00</option>
+                                <option value="-2.75">-2.75</option>
+                                <option value="-2.50">-2.50</option>
+                                <option value="-2.25">-2.25</option>
+                                <option value="-2.00">-2.00</option>
+                                <option value="-1.75">-1.75</option>
+                                <option value="-1.50">-1.50</option>
+                                <option value="-1.25">-1.25</option>
+                                <option value="-1.00">-1.00</option>
+                                <option value="-0.75">-0.75</option>
+                                <option value="-0.50">-0.50</option>
+                                <option value="-0.25">-0.25</option>
+                                <option value="Plano">Plano</option>
+                                <option value="+0.25">+0.25</option>
+                                <option value="+0.50">+0.50</option>
+                                <option value="+0.75">+0.75</option>
+                                <option value="+1.00">+1.00</option>
+                                <option value="+1.25">+1.25</option>
+                                <option value="+1.50">+1.50</option>
+                                <option value="+1.75">+1.75</option>
+                                <option value="+2.00">+2.00</option>
+                                <option value="+2.25">+2.25</option>
+                                <option value="+2.50">+2.50</option>
+                                <option value="+2.75">+2.75</option>
+                                <option value="+3.00">+3.00</option>
+                                <option value="+3.25">+3.25</option>
+                                <option value="+3.50">+3.50</option>
+                                <option value="+3.75">+3.75</option>
+                                <option value="+4.00">+4.00</option>
+                                <option value="+4.25">+4.25</option>
+                                <option value="+4.50">+4.50</option>
+                                <option value="+4.75">+4.75</option>
+                                <option value="+5.00">+5.00</option>
+                                <option value="+5.25">+5.25</option>
+                                <option value="+5.50">+5.50</option>
+                                <option value="+5.75">+5.75</option>
+                                <option value="+6.00">+6.00</option>
+                                <option value="+6.25">+6.25</option>
+                                <option value="+6.50">+6.50</option>
+                                <option value="+6.75">+6.75</option>
+                                <option value="+7.00">+7.00</option>
+                                <option value="+7.25">+7.25</option>
+                                <option value="+7.50">+7.50</option>
+                                <option value="+7.75">+7.75</option>
+                                <option value="+8.00">+8.00</option>
+                                <option value="+8.25">+8.25</option>
+                                <option value="+8.50">+8.50</option>
+                                <option value="+8.75">+8.75</option>
+                                <option value="+9.00">+9.00</option>
+                                <option value="+9.25">+9.25</option>
+                                <option value="+9.50">+9.50</option>
+                                <option value="+9.75">+9.75</option>
+                                <option value="+10.00">+10.00</option>
+                                <option value="+10.25">+10.25</option>
+                                <option value="+10.50">+10.50</option>
+                                <option value="+10.75">+10.75</option>
+                                <option value="+11.00">+11.00</option>
+                                <option value="+11.25">+11.25</option>
+                                <option value="+11.50">+11.50</option>
+                                <option value="+11.75">+11.75</option>
+                                <option value="+12.00">+12.00</option>
+                                <option value="+12.25">+12.25</option>
+                                <option value="+12.50">+12.50</option>
+                                <option value="+12.75">+12.75</option>
+                                <option value="+13.00">+13.00</option>
+                                <option value="+13.25">+13.25</option>
+                                <option value="+13.50">+13.50</option>
+                                <option value="+13.75">+13.75</option>
+                                <option value="+14.00">+14.00</option>
+                                <option value="+14.25">+14.25</option>
+                                <option value="+14.50">+14.50</option>
+                                <option value="+14.75">+14.75</option>
+                                <option value="+15.00">+15.00</option>
+                                <option value="+15.25">+15.25</option>
+                                <option value="+15.50">+15.50</option>
+                                <option value="+15.75">+15.75</option>
+                                <option value="+16.00">+16.00</option>
+                                <option value="+16.25">+16.25</option>
+                                <option value="+16.50">+16.50</option>
+                                <option value="+16.75">+16.75</option>
+                                <option value="+17.00">+17.00</option>
+                                <option value="+17.25">+17.25</option>
+                                <option value="+17.50">+17.50</option>
+                                <option value="+17.75">+17.75</option>
+                                <option value="+18.00">+18.00</option>
+                                <option value="+18.25">+18.25</option>
+                                <option value="+18.50">+18.50</option>
+                                <option value="+18.75">+18.75</option>
+                                <option value="+19.00">+19.00</option>
+                                <option value="+19.25">+19.25</option>
+                                <option value="+19.50">+19.50</option>
+                                <option value="+19.75">+19.75</option>
+                                <option value="+20.00">+20.00</option>
                             </select>
-                                        <div class="invalid-feedback">This field is required.
+                                        <div class="invalid-feedback">This field is required.</div>
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <select required name="rightLensCylStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                        <td class="col-auto col-lg-2">
+                            <select name="rightLensCylStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
-                                <option value="1">1</option>
+                                <option value="-6.00">-6.00</option>
+                                <option value="-5.75">-5.75</option>
+                                <option value="-5.50">-5.50</option>
+                                <option value="-5.25">-5.25</option>
+                                <option value="-5.00">-5.00</option>
+                                <option value="-4.75">-4.75</option>
+                                <option value="-4.50">-4.50</option>
+                                <option value="-4.25">-4.25</option>
+                                <option value="-4.00">-4.00</option>
+                                <option value="-3.75">-3.75</option>
+                                <option value="-3.50">-3.50</option>
+                                <option value="-3.25">-3.25</option>
+                                <option value="-3.00">-3.00</option>
+                                <option value="-2.75">-2.75</option>
+                                <option value="-2.50">-2.50</option>
+                                <option value="-2.25">-2.25</option>
+                                <option value="-2.00">-2.00</option>
+                                <option value="-1.75">-1.75</option>
+                                <option value="-1.50">-1.50</option>
+                                <option value="-1.25">-1.25</option>
+                                <option value="-1.00">-1.00</option>
+                                <option value="-0.75">-0.75</option>
+                                <option value="-0.50">-0.50</option>
+                                <option value="-0.25">-0.25</option>
+                                <option value="+0.25">+0.25</option>
+                                <option value="+0.50">+0.50</option>
+                                <option value="+0.75">+0.75</option>
+                                <option value="+1.00">+1.00</option>
+                                <option value="+1.25">+1.25</option>
+                                <option value="+1.50">+1.50</option>
+                                <option value="+1.75">+1.75</option>
+                                <option value="+2.00">+2.00</option>
+                                <option value="+2.25">+2.25</option>
+                                <option value="+2.50">+2.50</option>
+                                <option value="+2.75">+2.75</option>
+                                <option value="+3.00">+3.00</option>
+                                <option value="+3.25">+3.25</option>
+                                <option value="+3.50">+3.50</option>
+                                <option value="+3.75">+3.75</option>
+                                <option value="+4.00">+4.00</option>
+                                <option value="+4.25">+4.25</option>
+                                <option value="+4.50">+4.50</option>
+                                <option value="+4.75">+4.75</option>
+                                <option value="+5.00">+5.00</option>
+                                <option value="+5.25">+5.25</option>
+                                <option value="+5.50">+5.50</option>
+                                <option value="+5.75">+5.75</option>
+                                <option value="+6.00">+6.00</option>
+
                             </select>
                                         <div class="invalid-feedback">This field is required.
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <select required name="rightLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                        <td class="col-auto col-lg-2">
+                            <select name="rightLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
-                                <option value="1">1</option>
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                                <option value="60">60</option>
+                                <option value="65">65</option>
+                                <option value="70">70</option>
+                                <option value="75">75</option>
+                                <option value="80">80</option>
+                                <option value="85">85</option>
+                                <option value="90">90</option>
+                                <option value="95">95</option>
+                                <option value="100">100</option>
+                                <option value="105">105</option>
+                                <option value="110">110</option>
+                                <option value="115">115</option>
+                                <option value="120">120</option>
+                                <option value="125">125</option>
+                                <option value="130">130</option>
+                                <option value="135">135</option>
+                                <option value="140">140</option>
+                                <option value="145">145</option>
+                                <option value="150">150</option>
+                                <option value="155">155</option>
+                                <option value="160">160</option>
+                                <option value="165">165</option>
+                                <option value="170">170</option>
+                                <option value="175">175</option>
+                                <option value="180">180</option>
                             </select>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <select required name="rightLensAddStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                        <td class="col-auto col-lg-2">
+                            <select name="rightLensAddStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
-                                <option value="1">1</option>
+                                <option value="+1.00">+1.00</option>
+                                <option value="+1.25">+1.25</option>
+                                <option value="+1.50">+1.50</option>
+                                <option value="+1.75">+1.75</option>
+                                <option value="+2.00">+2.00</option>
+                                <option value="+2.25">+2.25</option>
+                                <option value="+2.50">+2.50</option>
+                                <option value="+2.75">+2.75</option>
+                                <option value="+3.00">+3.00</option>
+                                <option value="+3.50">+3.50</option>
+                                <option value="+4.00">+4.00</option>
                             </select>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <select required name="rightLensPdStock[${productCardCount}]" class="form-select" aria-label="Default select example">
-                                <option value="">Select</option>
-                                <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                            </select>
+                        <td class="col-auto col-lg-2">
+                        <input name="rightLensPdStock[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            placeholder = "PD value"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
+
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
@@ -744,49 +1001,298 @@ function addLensContainer() {
 
                      <tr>
                         <th scope="row">Left</th>
-                        <td class="col-6 col-lg-2">
-                            <select required name="leftLensSphStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                        <td class="col-auto col-lg-2">
+                            <select name="leftLensSphStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
-                                <option value="1">1</option>
+                                <option value="-20.00">-20.00</option>
+                                <option value="-19.75">-19.75</option>
+                                <option value="-19.50">-19.50</option>
+                                <option value="-19.25">-19.25</option>
+                                <option value="-19.00">-19.00</option>
+                                <option value="-18.75">-18.75</option>
+                                <option value="-18.50">-18.50</option>
+                                <option value="-18.25">-18.25</option>
+                                <option value="-18.00">-18.00</option>
+                                <option value="-17.75">-17.75</option>
+                                <option value="-17.50">-17.50</option>
+                                <option value="-17.25">-17.25</option>
+                                <option value="-17.00">-17.00</option>
+                                <option value="-16.75">-16.75</option>
+                                <option value="-16.50">-16.50</option>
+                                <option value="-16.25">-16.25</option>
+                                <option value="-16.00">-16.00</option>
+                                <option value="-15.75">-15.75</option>
+                                <option value="-15.50">-15.50</option>
+                                <option value="-15.25">-15.25</option>
+                                <option value="-15.00">-15.00</option>
+                                <option value="-14.75">-14.75</option>
+                                <option value="-14.50">-14.50</option>
+                                <option value="-14.25">-14.25</option>
+                                <option value="-14.00">-14.00</option>
+                                <option value="-13.75">-13.75</option>
+                                <option value="-13.50">-13.50</option>
+                                <option value="-13.25">-13.25</option>
+                                <option value="-13.00">-13.00</option>
+                                <option value="-12.75">-12.75</option>
+                                <option value="-12.50">-12.50</option>
+                                <option value="-12.25">-12.25</option>
+                                <option value="-12.00">-12.00</option>
+                                <option value="-11.75">-11.75</option>
+                                <option value="-11.50">-11.50</option>
+                                <option value="-11.25">-11.25</option>
+                                <option value="-11.00">-11.00</option>
+                                <option value="-10.75">-10.75</option>
+                                <option value="-10.50">-10.50</option>
+                                <option value="-10.25">-10.25</option>
+                                <option value="-10.00">-10.00</option>
+                                <option value="-9.75">-9.75</option>
+                                <option value="-9.50">-9.50</option>
+                                <option value="-9.25">-9.25</option>
+                                <option value="-9.00">-9.00</option>
+                                <option value="-8.75">-8.75</option>
+                                <option value="-8.50">-8.50</option>
+                                <option value="-8.25">-8.25</option>
+                                <option value="-8.00">-8.00</option>
+                                <option value="-7.75">-7.75</option>
+                                <option value="-7.50">-7.50</option>
+                                <option value="-7.25">-7.25</option>
+                                <option value="-7.00">-7.00</option>
+                                <option value="-6.75">-6.75</option>
+                                <option value="-6.50">-6.50</option>
+                                <option value="-6.25">-6.25</option>
+                                <option value="-6.00">-6.00</option>
+                                <option value="-5.75">-5.75</option>
+                                <option value="-5.50">-5.50</option>
+                                <option value="-5.25">-5.25</option>
+                                <option value="-5.00">-5.00</option>
+                                <option value="-4.75">-4.75</option>
+                                <option value="-4.50">-4.50</option>
+                                <option value="-4.25">-4.25</option>
+                                <option value="-4.00">-4.00</option>
+                                <option value="-3.75">-3.75</option>
+                                <option value="-3.50">-3.50</option>
+                                <option value="-3.25">-3.25</option>
+                                <option value="-3.00">-3.00</option>
+                                <option value="-2.75">-2.75</option>
+                                <option value="-2.50">-2.50</option>
+                                <option value="-2.25">-2.25</option>
+                                <option value="-2.00">-2.00</option>
+                                <option value="-1.75">-1.75</option>
+                                <option value="-1.50">-1.50</option>
+                                <option value="-1.25">-1.25</option>
+                                <option value="-1.00">-1.00</option>
+                                <option value="-0.75">-0.75</option>
+                                <option value="-0.50">-0.50</option>
+                                <option value="-0.25">-0.25</option>
+                                <option value="Plano">Plano</option>
+                                <option value="+0.25">+0.25</option>
+                                <option value="+0.50">+0.50</option>
+                                <option value="+0.75">+0.75</option>
+                                <option value="+1.00">+1.00</option>
+                                <option value="+1.25">+1.25</option>
+                                <option value="+1.50">+1.50</option>
+                                <option value="+1.75">+1.75</option>
+                                <option value="+2.00">+2.00</option>
+                                <option value="+2.25">+2.25</option>
+                                <option value="+2.50">+2.50</option>
+                                <option value="+2.75">+2.75</option>
+                                <option value="+3.00">+3.00</option>
+                                <option value="+3.25">+3.25</option>
+                                <option value="+3.50">+3.50</option>
+                                <option value="+3.75">+3.75</option>
+                                <option value="+4.00">+4.00</option>
+                                <option value="+4.25">+4.25</option>
+                                <option value="+4.50">+4.50</option>
+                                <option value="+4.75">+4.75</option>
+                                <option value="+5.00">+5.00</option>
+                                <option value="+5.25">+5.25</option>
+                                <option value="+5.50">+5.50</option>
+                                <option value="+5.75">+5.75</option>
+                                <option value="+6.00">+6.00</option>
+                                <option value="+6.25">+6.25</option>
+                                <option value="+6.50">+6.50</option>
+                                <option value="+6.75">+6.75</option>
+                                <option value="+7.00">+7.00</option>
+                                <option value="+7.25">+7.25</option>
+                                <option value="+7.50">+7.50</option>
+                                <option value="+7.75">+7.75</option>
+                                <option value="+8.00">+8.00</option>
+                                <option value="+8.25">+8.25</option>
+                                <option value="+8.50">+8.50</option>
+                                <option value="+8.75">+8.75</option>
+                                <option value="+9.00">+9.00</option>
+                                <option value="+9.25">+9.25</option>
+                                <option value="+9.50">+9.50</option>
+                                <option value="+9.75">+9.75</option>
+                                <option value="+10.00">+10.00</option>
+                                <option value="+10.25">+10.25</option>
+                                <option value="+10.50">+10.50</option>
+                                <option value="+10.75">+10.75</option>
+                                <option value="+11.00">+11.00</option>
+                                <option value="+11.25">+11.25</option>
+                                <option value="+11.50">+11.50</option>
+                                <option value="+11.75">+11.75</option>
+                                <option value="+12.00">+12.00</option>
+                                <option value="+12.25">+12.25</option>
+                                <option value="+12.50">+12.50</option>
+                                <option value="+12.75">+12.75</option>
+                                <option value="+13.00">+13.00</option>
+                                <option value="+13.25">+13.25</option>
+                                <option value="+13.50">+13.50</option>
+                                <option value="+13.75">+13.75</option>
+                                <option value="+14.00">+14.00</option>
+                                <option value="+14.25">+14.25</option>
+                                <option value="+14.50">+14.50</option>
+                                <option value="+14.75">+14.75</option>
+                                <option value="+15.00">+15.00</option>
+                                <option value="+15.25">+15.25</option>
+                                <option value="+15.50">+15.50</option>
+                                <option value="+15.75">+15.75</option>
+                                <option value="+16.00">+16.00</option>
+                                <option value="+16.25">+16.25</option>
+                                <option value="+16.50">+16.50</option>
+                                <option value="+16.75">+16.75</option>
+                                <option value="+17.00">+17.00</option>
+                                <option value="+17.25">+17.25</option>
+                                <option value="+17.50">+17.50</option>
+                                <option value="+17.75">+17.75</option>
+                                <option value="+18.00">+18.00</option>
+                                <option value="+18.25">+18.25</option>
+                                <option value="+18.50">+18.50</option>
+                                <option value="+18.75">+18.75</option>
+                                <option value="+19.00">+19.00</option>
+                                <option value="+19.25">+19.25</option>
+                                <option value="+19.50">+19.50</option>
+                                <option value="+19.75">+19.75</option>
+                                <option value="+20.00">+20.00</option>
+
+                            </select>
+                        </td>
+                        <td class="col-auto col-lg-2">
+                            <select name="leftLensCylStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                                <option value="">Select</option>
+                                <!-- Add options dynamically -->
+                                <option value="-6.00">-6.00</option>
+                                <option value="-5.75">-5.75</option>
+                                <option value="-5.50">-5.50</option>
+                                <option value="-5.25">-5.25</option>
+                                <option value="-5.00">-5.00</option>
+                                <option value="-4.75">-4.75</option>
+                                <option value="-4.50">-4.50</option>
+                                <option value="-4.25">-4.25</option>
+                                <option value="-4.00">-4.00</option>
+                                <option value="-3.75">-3.75</option>
+                                <option value="-3.50">-3.50</option>
+                                <option value="-3.25">-3.25</option>
+                                <option value="-3.00">-3.00</option>
+                                <option value="-2.75">-2.75</option>
+                                <option value="-2.50">-2.50</option>
+                                <option value="-2.25">-2.25</option>
+                                <option value="-2.00">-2.00</option>
+                                <option value="-1.75">-1.75</option>
+                                <option value="-1.50">-1.50</option>
+                                <option value="-1.25">-1.25</option>
+                                <option value="-1.00">-1.00</option>
+                                <option value="-0.75">-0.75</option>
+                                <option value="-0.50">-0.50</option>
+                                <option value="-0.25">-0.25</option>
+                                <option value="+0.25">+0.25</option>
+                                <option value="+0.50">+0.50</option>
+                                <option value="+0.75">+0.75</option>
+                                <option value="+1.00">+1.00</option>
+                                <option value="+1.25">+1.25</option>
+                                <option value="+1.50">+1.50</option>
+                                <option value="+1.75">+1.75</option>
+                                <option value="+2.00">+2.00</option>
+                                <option value="+2.25">+2.25</option>
+                                <option value="+2.50">+2.50</option>
+                                <option value="+2.75">+2.75</option>
+                                <option value="+3.00">+3.00</option>
+                                <option value="+3.25">+3.25</option>
+                                <option value="+3.50">+3.50</option>
+                                <option value="+3.75">+3.75</option>
+                                <option value="+4.00">+4.00</option>
+                                <option value="+4.25">+4.25</option>
+                                <option value="+4.50">+4.50</option>
+                                <option value="+4.75">+4.75</option>
+                                <option value="+5.00">+5.00</option>
+                                <option value="+5.25">+5.25</option>
+                                <option value="+5.50">+5.50</option>
+                                <option value="+5.75">+5.75</option>
+                                <option value="+6.00">+6.00</option>
+
+                            </select>
+                        </td>
+                        <td class="col-auto col-lg-2">
+                            <select name="leftLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                                <option value="">Select</option>
+                                <!-- Add options dynamically -->
+                                <option value="5">5</option>
+                                <option value="10">10</option>
+                                <option value="15">15</option>
+                                <option value="20">20</option>
+                                <option value="25">25</option>
+                                <option value="30">30</option>
+                                <option value="35">35</option>
+                                <option value="40">40</option>
+                                <option value="45">45</option>
+                                <option value="50">50</option>
+                                <option value="55">55</option>
+                                <option value="60">60</option>
+                                <option value="65">65</option>
+                                <option value="70">70</option>
+                                <option value="75">75</option>
+                                <option value="80">80</option>
+                                <option value="85">85</option>
+                                <option value="90">90</option>
+                                <option value="95">95</option>
+                                <option value="100">100</option>
+                                <option value="105">105</option>
+                                <option value="110">110</option>
+                                <option value="115">115</option>
+                                <option value="120">120</option>
+                                <option value="125">125</option>
+                                <option value="130">130</option>
+                                <option value="135">135</option>
+                                <option value="140">140</option>
+                                <option value="145">145</option>
+                                <option value="150">150</option>
+                                <option value="155">155</option>
+                                <option value="160">160</option>
+                                <option value="165">165</option>
+                                <option value="170">170</option>
+                                <option value="175">175</option>
+                                <option value="180">180</option>
                             </select>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <select required name="leftLensCylStock[${productCardCount}]" class="form-select" aria-label="Default select example">
+                        <td class="col-auto col-lg-2">
+                            <select name="leftLensAddStock[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select</option>
                                 <!-- Add options dynamically -->
-                                <option value="1">1</option>
+                                <option value="+1.00">+1.00</option>
+                                <option value="+1.25">+1.25</option>
+                                <option value="+1.50">+1.50</option>
+                                <option value="+1.75">+1.75</option>
+                                <option value="+2.00">+2.00</option>
+                                <option value="+.2.25">+.2.25</option>
+                                <option value="+2.50">+2.50</option>
+                                <option value="+2.75">+2.75</option>
+                                <option value="+3.00">+3.00</option>
+                                <option value="+3.50">+3.50</option>
+                                <option value="+4.00">+4.00</option>
                             </select>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <select  required name="leftLensAxisStock[${productCardCount}]" class="form-select" aria-label="Default select example">
-                                <option value="">Select</option>
-                                <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                            </select>
-                                                                    <div class="invalid-feedback">This field is required.
+                        <td class="col-auto col-lg-2">
+                        <input name="leftLensPdStock[${productCardCount}]" class="form-control" aria-label="Default select example"
+                        placeholder = "PD value"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
 
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <select required name="leftLensAddStock[${productCardCount}]" class="form-select" aria-label="Default select example">
-                                <option value="">Select</option>
-                                <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                            </select>
-                                                                    <div class="invalid-feedback">This field is required.
-
-                        </td>
-                        <td class="col-6 col-lg-2">
-                            <select required name="leftLensPdStock[${productCardCount}]" class="form-select" aria-label="Default select example">
-                                <option value="">Select</option>
-                                <!-- Add options dynamically -->
-                                <option value="1">1</option>
-                            </select>
-                                                                    <div class="invalid-feedback">This field is required.
+                            <div class="invalid-feedback">This field is required.
 
                         </td>
                     </tr>
@@ -799,44 +1305,44 @@ function addLensContainer() {
             <table class="table">
                 <thead>
                     <tr>
-                        <th scope="col">Eye</th>
-                        <th scope="col">Sph</th>
-                        <th scope="col">Cyl</th>
-                        <th scope="col">Axis</th>
-                        <th scope="col">Add</th>
+                        <th scope="col">EYE</th>
+                        <th scope="col">SPH</th>
+                        <th scope="col">CYL</th>
+                        <th scope="col">AXIS</th>
+                        <th scope="col">ADD</th>
                         <th scope="col">PD</th>
                     </tr>
                 </thead>
                 <tbody class="rx_power_card_table[${productCardCount}]" id="rx_power_card_table[${productCardCount}]">
                     <tr>
                         <th scope="row">Right</th>
-                        <td class="col-6 col-lg-2">
-                            <input required name="rightLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                        <td class="col-auto col-lg-2">
+                            <input name="rightLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <input required name="rightLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                        <td class="col-auto col-lg-2">
+                            <input name="rightLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <input required name="rightLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                        <td class="col-auto col-lg-2">
+                            <input name="rightLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <input required name="rightLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                        <td class="col-auto col-lg-2">
+                            <input name="rightLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <input required name="rightLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                        <td class="col-auto col-lg-2">
+                            <input name="rightLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
@@ -844,32 +1350,32 @@ function addLensContainer() {
                      <tr>
                         <th scope="row">Left</th>
                         <td class="col-6 col-lg-2">
-                            <input required name="leftLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                            <input name="leftLensSphRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <input required name="leftLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                        <td class="col-auto col-lg-2">
+                            <input name="leftLensCylRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <input required name="leftLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                        <td class="col-auto col-lg-2">
+                            <input name="leftLensAxisRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <input required name="leftLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                        <td class="col-auto col-lg-2">
+                            <input name="leftLensAddRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
 
                         </td>
-                        <td class="col-6 col-lg-2">
-                            <input required name="leftLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
-                            oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"/>
+                        <td class="col-auto col-lg-2">
+                            <input name="leftLensPdRx[${productCardCount}]" class="form-control" aria-label="Default select example"
+                            oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                                                     <div class="invalid-feedback">This field is required.
                         </td>
                     </tr>
@@ -881,242 +1387,6 @@ function addLensContainer() {
     document.querySelector("#products_container").appendChild(lensProductCard);
 
     let choicesInstance = new Choices(lensProductCard.querySelector("[name='product']"), {
-        // Pass any necessary options for Choices.js
-        removeItemButton: true,
-        placeholder: true,
-    });
-
-    productCardCount++;
-
-}
-
-
-function addStockContactLensContainer() {
-    let contactLensProductCard = document.createElement("div");
-    contactLensProductCard.classList.add("product_widget", "card-header", "bg-100", "mb-4");
-    contactLensProductCard.innerHTML = `
-
-    <div class="col text-end">
-        <a onclick="removeProductCard(this)" type="button" class="text-danger">
-            Remove <i class="fas fa-trash"></i>
-        </a>
-    </div>
-
-    <div class="mb-3 col-12">
-        <h5 class="mb-3">Select Contact Lens</h5>
-        <select onchange="updateContactLensProductFields(this, ${productCardCount})" class="form-select" data-choices="data-choices"
-                data-options='{"removeItemButton":true,"placeholder":true}'
-                name="product" required="required">
-            <option value="">Select Contact Lens</option>
-            {% for product in contact_lens_list %}
-            {% if product.ci_category_id == 3 %}
-            <option value="{{product.ci_product_id}}">
-                {{product.ci_product_name}}
-            </option>
-            {% endif %}
-            {% endfor %}
-        </select>
-        <div class="custom-error" style="color: red;"></div>
-    </div>
-    <div class="row g-3 mb-3">
-        <div class="mb2 col-4">
-            <h5 class="mb-3">Lens Type</h5>
-            <input class="form-control"
-                   name="lens_type[${productCardCount}]"
-                   placeholder="Stock/Rx"
-                   required="required"
-                   type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
-
-        <input class="form-control"
-                   name="product_category_id[${productCardCount}]"
-                   placeholder="Category"
-                   required="required"
-                   hidden
-
-                   type="text" value="" readonly/>
-        <input class="form-control"
-                   name="product_name[${productCardCount}]"
-                   placeholder="Name"
-                   required="required"
-                   hidden
-                   type="text" value="" readonly/>
-
-        <div class="mb2 col-4">
-            <h5 class="mb-3">Contact Lens Physicality</h5>
-            <input class="form-control"
-                   name="lens_physicality[${productCardCount}]"
-                   placeholder="Physicality"
-                   required="required"
-                   type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
-        <div class="mb2 col-4">
-            <h5 class="mb-3">Contact Lens Disposablility</h5>
-            <input class="form-control"
-                   name="lens_disposablility[${productCardCount}]"
-                   placeholder="Disposablility"
-                   required="required"
-                   type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
-<!--        <div class="mb2 col-4">-->
-<!--            <h5 class="mb-3">Vision Type</h5>-->
-<!--            <input class="form-control"-->
-<!--                   name="vision_type[${productCardCount}]"-->
-<!--                   placeholder="Vision Type"-->
-<!--                   required="required"-->
-<!--                   type="text" value="" readonly/>-->
-<!--            <div class="invalid-feedback">This field is required.-->
-<!--            </div>-->
-<!--        </div>-->
-        <div class="mb2 col-4">
-            <h5 class="mb-3">Product Brand</h5>
-            <input class="form-control"
-                   name="product_brand[${productCardCount}]"
-                   placeholder="Brand"
-                   required="required"
-                   type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
-        <!-- Add the rest of your product card HTML structure here -->
-        <div class="mb2 col-4">
-            <h5 class="mb-3">Product HSN</h5>
-            <input class="form-control"
-                   name="product_hsn[${productCardCount}]"
-                   placeholder="HSN"
-                   required="required"
-                   type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
-        <div class="mb2 col-4">
-            <h5 class="mb-3">Available Quantity</h5>
-            <input class="form-control"
-                   name="available_qty[${productCardCount}]"
-                   placeholder="Available Quantity"
-                   required="required"
-                   type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
-        <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price(₹)</h5>
-            <input class="form-control"
-                   name="unit_price[${productCardCount}]"
-                   placeholder="Unit Price"
-                   required="required"
-                   type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
-        <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Type</h5>
-            <input class="form-control"
-                   name="unit_type[${productCardCount}]"
-                   placeholder="Unit Type"
-                   required="required"
-                   type="text" value="" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
-        <div class="mb2 col-6">
-            <h5 class="mb-3">Purchase Quantity</h5>
-            <input class="form-control"
-                   name="purchase_qty[${productCardCount}]"
-                   placeholder="Purchase quantity"
-                   required="required"
-                   min="1"
-                   type="number" value=""/>
-            <div class="invalid-feedback">This field should be 1 in
-                minimum and should be less than available quantity.
-            </div>
-        </div>
-        <div class="mb2 col-6">
-            <h5 class="mb-3">Product Total</h5>
-            <input class="form-control"
-                   name="product_total[${productCardCount}]"
-                   placeholder="Product Total"
-                   required="required"
-                   type="text" value="0" readonly/>
-            <div class="invalid-feedback">This field is required.
-            </div>
-        </div>
-        <div class="mb2 col-6" id="discount_check_div[${productCardCount}]">
-            <input id="discount_value_field[${productCardCount}]"
-                   type="hidden"
-                   class="form-check"
-                   name="discount_percentage[${productCardCount}]"
-                   required="required" readonly/>
-            <input class="form-check-input" type="checkbox"
-                   name="discount_checked[${productCardCount}]"
-                   id="bootstrap-wizard-validation-wizard-checkbox_cl"/>
-            <label id="discount_value[${productCardCount}]"
-                   class="form-check-label text-900"
-                   for="bootstrap-wizard-validation-wizard-checkbox"></label>
-        </div>
-    </div>
-    <div class="dropdown-divider"></div>
-    <h5 class="mb-3">Power attributes</h5>
-
-    <div class="row mb-3 cl_rx_power_card" id="cl_rx_power_card[${productCardCount}]">
-        <div class="col-12">
-            <table class="table">
-                <thead>
-                <tr>
-                    <th scope="col">Power</th>
-                    <th scope="col">BC</th>
-                    <th scope="col">Dia</th>
-                    <th scope="col">Cylinder</th>
-                    <th scope="col">Axis</th>
-                </tr>
-                </thead>
-                <tbody>
-                <tr>
-                    <td class="col-4 col-lg-2">
-                        <input readonly name="cl_power[${productCardCount}]"
-                               class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
-                               aria-label="Default select example"/>
-                    </td>
-                    <td class="col-4 col-lg-2">
-                        <input readonly name="cl_bc[${productCardCount}]"
-                               class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
-                               aria-label="Default select example">
-                    </td>
-                    <td class="col-4 col-lg-2">
-                        <input readonly name="cl_dia[${productCardCount}]"
-                               class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
-                               aria-label="Default select example"/>
-                    </td>
-                    <td class="col-4 col-lg-2">
-                        <input readonly name="cl_cylinder[${productCardCount}]"
-                               class="form-control"
-                               oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
-                               aria-label="Default select example"/>
-                    </td>
-                    <td class="col-4 col-lg-2">
-                        <input readonly name="cl_axis[${productCardCount}]"
-                        oninput="event.target.value = event.target.value.replace(/[^-0-9.]/g, '');"
-                               class="form-control"
-                               aria-label="Default select example"/>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-        </div>
-    </div>
-    `;
-
-    document.querySelector("#products_container").appendChild(contactLensProductCard);
-    let choicesInstance = new Choices(contactLensProductCard.querySelector("[name='product']"), {
         // Pass any necessary options for Choices.js
         removeItemButton: true,
         placeholder: true,
@@ -1140,7 +1410,7 @@ function addRxContactLensContainer() {
     </div>
 
     <div class="mb-3 col-12">
-        <h5 class="mb-3">Select Contact Lens</h5>
+        <h6 class="mb-3">Select Contact Lens</h6>
         <select onchange="updateRxContactLensProductFields(this, ${productCardCount})" class="form-select" data-choices="data-choices"
                 data-options='{"removeItemButton":true,"placeholder":true}'
                 name="product" required="required">
@@ -1157,7 +1427,7 @@ function addRxContactLensContainer() {
     </div>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h5 class="mb-3">Stock Type</h5>
+            <h6 class="mb-3">Type</h6>
             <input class="form-control"
                    name="ContactLensStockType[${productCardCount}]"
                    placeholder="Stock/Rx"
@@ -1188,7 +1458,7 @@ function addRxContactLensContainer() {
                    hidden
                    type="text" value="" readonly/>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Contact Lens Physicality</h5>
+            <h6 class="mb-3">Contact Lens Type</h6>
             <input class="form-control"
                    name="lens_physicality[${productCardCount}]"
                    placeholder="Physicality"
@@ -1198,7 +1468,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Contact Lens Disposablility</h5>
+            <h6 class="mb-3">Contact Lens Disposablility</h6>
             <input class="form-control"
                    name="lens_disposablility[${productCardCount}]"
                    placeholder="Disposablility"
@@ -1208,7 +1478,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
 <!--        <div class="mb2 col-4">-->
-<!--            <h5 class="mb-3">Vision Type</h5>-->
+<!--            <h6 class="mb-3">Vision Type</h6>-->
 <!--            <input class="form-control"-->
 <!--                   name="vision_type[${productCardCount}]"-->
 <!--                   placeholder="Vision Type"-->
@@ -1218,7 +1488,7 @@ function addRxContactLensContainer() {
 <!--            </div>-->
 <!--        </div>-->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Brand</h5>
+            <h6 class="mb-3">Product Brand</h6>
             <input class="form-control"
                    name="product_brand[${productCardCount}]"
                    placeholder="Brand"
@@ -1229,7 +1499,7 @@ function addRxContactLensContainer() {
         </div>
         <!-- Add the rest of your product card HTML structure here -->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product HSN</h5>
+            <h6 class="mb-3">Product HSN</h6>
             <input class="form-control"
                    name="product_hsn[${productCardCount}]"
                    placeholder="HSN"
@@ -1239,7 +1509,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Available Quantity</h5>
+            <h6 class="mb-3">Available Quantity</h6>
             <input class="form-control"
                    name="available_qty[${productCardCount}]"
                    placeholder="Available Quantity"
@@ -1249,7 +1519,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price(₹)</h5>
+            <h6 class="mb-3">Unit Price(₹)</h6>
             <input class="form-control"
                    name="unit_price[${productCardCount}]"
                    placeholder="Unit Price"
@@ -1259,7 +1529,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Type</h5>
+            <h6 class="mb-3">Unit Type</h6>
             <input class="form-control"
                    name="unit_type[${productCardCount}]"
                    placeholder="Unit Type"
@@ -1269,7 +1539,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Purchase Quantity</h5>
+            <h6 class="mb-3">Purchase Quantity</h6>
             <input class="form-control"
                    name="purchase_qty[${productCardCount}]"
                    placeholder="Purchase quantity"
@@ -1281,7 +1551,7 @@ function addRxContactLensContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Product Total</h5>
+            <h6 class="mb-3">Product Total</h6>
             <input class="form-control"
                    name="product_total[${productCardCount}]"
                    placeholder="Product Total"
@@ -1298,65 +1568,76 @@ function addRxContactLensContainer() {
                    required="required" readonly/>
             <input class="form-check-input" type="checkbox"
                    name="discount_checked[${productCardCount}]"
-                   id="bootstrap-wizard-validation-wizard-checkbox_cl"/>
+                   id="bootstrap-wizard-validation-wizard-checkbox_cl" value="off"/>
             <label id="discount_value[${productCardCount}]"
                    class="form-check-label text-900"
                    for="bootstrap-wizard-validation-wizard-checkbox"></label>
         </div>
     </div>
     <div class="dropdown-divider"></div>
-    <h5 class="mb-3">Power attributes</h5>
+    <h6 class="mb-3">Power attributes</h6>
 
     <div class="row mb-3 cl_rx_power_card" id="cl_rx_power_card[${productCardCount}]">
         <div class="col-12">
             <table class="table">
                 <thead>
                 <tr>
+                    <th scope="col">Eye</th>
                     <th scope="col">Power</th>
                     <th scope="col">BC</th>
-                    <th scope="col">Dia</th>
-                    <th scope="col">Cylinder</th>
-                    <th scope="col">Axis</th>
+                    <th scope="col">DIA</th>
+                    <th scope="col">CYLINDER</th>
+                    <th scope="col">AXIS</th>
                 </tr>
                 </thead>
                 <tbody>
                 <tr>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
+                            <select required name="cl_eye[${productCardCount}]" class="form-select" aria-label="Default select example">
+                                <option value="">Select Eye</option>
+                                <option value="Right">Right</option>
+                                <option value="Left">Left</option>
+                                <option value="Both">Both</option>
+                            </select>
+                                        <div class="invalid-feedback">This field is required.
+
+                        </td>
+                    <td class="col-auto col-lg-2">
                         <input name="cl_power[${productCardCount}]"
                                class="form-control"
-                               required="required"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input name="cl_bc[${productCardCount}]"
                                class="form-control"
-                               required="required"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example">
                                            <div class="invalid-feedback">This field is required.
 
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input name="cl_dia[${productCardCount}]"
                                class="form-control"
-                               required="required"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input name="cl_cylinder[${productCardCount}]"
                                class="form-control"
-                               required="required"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
                     </td>
-                    <td class="col-4 col-lg-2">
+                    <td class="col-auto col-lg-2">
                         <input name="cl_axis[${productCardCount}]"
-                        required="required"
                                class="form-control"
+                               oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"
                                aria-label="Default select example"/>
                                            <div class="invalid-feedback">This field is required.
 
@@ -1391,14 +1672,14 @@ function addOtherProductsContainer() {
     </div>
 
     <div class="mb-3 col-12">
-        <h5 class="mb-3">Select Product</h5>
+        <h6 class="mb-3">Select Product</h6>
         <select onchange="updateOtherProductFields(this, ${productCardCount})" class="form-select" data-choices="data-choices"
                 data-options='{"removeItemButton":true,"placeholder":true}'
                 name="product" required="required">
             <option value="">Select Product</option>
             {% for product in other_products_list %}
-            <option value="{{product.product_id}}">
-                {{product.product_name}}
+            <option value="{{product.ci_product_id}}">
+                {{product.ci_product_name}}
             </option>
             {% endfor %}
         </select>
@@ -1406,7 +1687,7 @@ function addOtherProductsContainer() {
     </div>
     <div class="row g-3 mb-3">
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Category</h5>
+            <h6 class="mb-3">Product Category</h6>
             <input class="form-control"
                    name="product_category[${productCardCount}]"
                    placeholder="Category"
@@ -1428,7 +1709,7 @@ function addOtherProductsContainer() {
                    hidden
                    type="text" value="" readonly/>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product Brand</h5>
+            <h6 class="mb-3">Product Brand</h6>
             <input class="form-control"
                    name="product_brand[${productCardCount}]"
                    placeholder="Brand"
@@ -1439,7 +1720,7 @@ function addOtherProductsContainer() {
         </div>
         <!-- Add the rest of your product card HTML structure here -->
         <div class="mb2 col-4">
-            <h5 class="mb-3">Product HSN</h5>
+            <h6 class="mb-3">Product HSN</h6>
             <input class="form-control"
                    name="product_hsn[${productCardCount}]"
                    placeholder="HSN"
@@ -1449,7 +1730,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Available Quantity</h5>
+            <h6 class="mb-3">Available Quantity</h6>
             <input class="form-control"
                    name="available_qty[${productCardCount}]"
                    placeholder="Available Quantity"
@@ -1459,7 +1740,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Price(₹)</h5>
+            <h6 class="mb-3">Unit Price(₹)</h6>
             <input class="form-control"
                    name="unit_price[${productCardCount}]"
                    placeholder="Unit Price"
@@ -1469,7 +1750,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-4">
-            <h5 class="mb-3">Unit Type</h5>
+            <h6 class="mb-3">Unit Type</h6>
             <input class="form-control"
                    name="unit_type[${productCardCount}]"
                    placeholder="Unit Type"
@@ -1479,7 +1760,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Purchase Quantity</h5>
+            <h6 class="mb-3">Purchase Quantity</h6>
             <input class="form-control"
                    name="purchase_qty[${productCardCount}]"
                    placeholder="Purchase quantity"
@@ -1491,7 +1772,7 @@ function addOtherProductsContainer() {
             </div>
         </div>
         <div class="mb2 col-6">
-            <h5 class="mb-3">Product Total</h5>
+            <h6 class="mb-3">Product Total</h6>
             <input class="form-control"
                    name="product_total[${productCardCount}]"
                    placeholder="Product Total"
@@ -1508,7 +1789,7 @@ function addOtherProductsContainer() {
                    required="required" readonly/>
             <input class="form-check-input" type="checkbox"
                    name="discount_checked[${productCardCount}]"
-                   id="bootstrap-wizard-validation-wizard-checkbox_cl"/>
+                   id="bootstrap-wizard-validation-wizard-checkbox_cl" value="off"/>
             <label id="discount_value[${productCardCount}]"
                    class="form-check-label text-900"
                    for="discount_value_field[${productCardCount}]"></label>
@@ -1541,7 +1822,9 @@ function removeProductCard(removeButton) {
 <script>
 function updateCustomerFields(selectCustomerField) {
     var customers_list = JSON.parse(document.getElementById('customersList').textContent);
-    let selectCustomer = customers_list.find(customer => customer.phone == selectCustomerField.value);
+    let selectCustomer = customers_list.find(customer => customer.customer_phone == selectCustomerField.value);
+
+    console.log(selectCustomer)
 
     var customerNameInput = document.getElementsByName("customer_name")[0];
     var customerEmailInput = document.getElementsByName("customer_email")[0];
@@ -1554,29 +1837,49 @@ function updateCustomerFields(selectCustomerField) {
     //customerDataField
     var customerDataTextarea = document.getElementsByName("customerData")[0];
 
-    customerNameInput.value = selectCustomer.name;
-    customerEmailInput.value = selectCustomer.email;
-    customerPhoneInput.value = selectCustomer.phone;
-    customerAgeInput.value = selectCustomer.age;
-    customerGenderSelect.value = selectCustomer.gender;
-    customerCityInput.value = selectCustomer.city;
-    customerLanguageSelect.value = selectCustomer.language;
-    customerAddressTextarea.value = selectCustomer.address;
-    customerDataTextarea.value = selectCustomer.address;
+    if(selectCustomer){
+    customerNameInput.value = selectCustomer.customer_name;
+    customerEmailInput.value = selectCustomer.customer_email;
+    customerPhoneInput.value = selectCustomer.customer_phone;
+    customerAgeInput.value = selectCustomer.customer_age;
+    customerGenderSelect.value = selectCustomer.customer_gender;
+    customerCityInput.value = selectCustomer.customer_city;
+    customerLanguageSelect.value = selectCustomer.customer_language;
+    customerAddressTextarea.value = selectCustomer.customer_address;
+    customerDataTextarea.value = selectCustomer.customer_address;
 
     var customerdata = {
-        name: selectCustomer.name,
-        email: selectCustomer.email,
-        phone: selectCustomer.phone,
-        age: selectCustomer.age,
-        gender: selectCustomer.gender,
-        city: selectCustomer.city,
-        language: selectCustomer.language,
-        address: selectCustomer.address
+        name: selectCustomer.customer_name,
+        email: selectCustomer.customer_email,
+        phone: selectCustomer.customer_phone,
+        age: selectCustomer.customer_age,
+        gender: selectCustomer.customer_gender,
+        city: selectCustomer.customer_city,
+        language: selectCustomer.customer_language,
+        address: selectCustomer.customer_address
     };
 
     // Convert customerdata to JSON string and assign it to customerDataTextarea
     customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
+    }else{
+    customerNameInput.value = '';
+    customerEmailInput.value = '';
+    customerPhoneInput.value = '';
+    customerAgeInput.value = '';
+    customerGenderSelect.value = '';
+    customerCityInput.value = '';
+    customerLanguageSelect.value = '';
+    customerAddressTextarea.value = '';
+    customerDataTextarea.value ='';
+
+    var customerdata = {
+
+    };
+
+    // Convert customerdata to JSON string and assign it to customerDataTextarea
+    customerDataTextarea.value = JSON.stringify(customerdata, null, 2);
+    }
+
 }
 
 function genCustomerObject() {
@@ -1611,13 +1914,25 @@ function genBillingInfoObject() {
     var billingDetailsDataTextarea = document.getElementsByName("billingDetailsData")[0];
     var amountPaidInput = document.getElementsByName("amount_paid")[0];
     var saleNoteInput = document.getElementsByName("sale_note")[0];
+    var paymentModeInput = document.getElementsByName("payment_mode")[0];
+
+    var amountPaid = parseFloat(amountPaidInput.value);
+
+    if(amountPaid>0){
+    paymentModeInput.disabled = false;
+    }else{
+    paymentModeInput.value = "";
+    paymentModeInput.disabled = true;
+    }
+
     var billingInfoData = {
         estDeliveryDate: estDeliveryDateInput.value,
         assignedLab: assignedLabInput.value,
         orderByEmployee: orderByEmployeeInput.value,
         amount_paid: amountPaidInput.value,
         orderId: "ORDER" + generateRandomId(),
-        "saleNote": saleNoteInput.value
+        saleNote: saleNoteInput.value,
+        paymentMode:paymentModeInput.value
     };
     billingDetailsDataTextarea.value = JSON.stringify(billingInfoData, null, 2);
 }
@@ -1666,11 +1981,11 @@ document.getElementById('confirmSale').addEventListener('click', function () {
 
 function updateLensProductFields(selectElement, cardIndex) {
     let selectedProduct = lens_list.find(product => product.ci_product_id == selectElement.value);
-    let productUnitTypeField = document.querySelector(`[name='unit_name[${cardIndex}]']`);
-    let productCategoryIdField = document.querySelector(`[name='ci_category_id[${cardIndex}]']`);
-    let productNameField = document.querySelector(`[name='ci_product_name[${cardIndex}]']`);
+    let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
+    let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
+    let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
     let stockTypeField = document.querySelector(`[name='stock_type[${cardIndex}]']`);
-    let productLensTypeField = document.querySelector(`[name='contact_lens_type[${cardIndex}]']`);
+    let productLensTypeField = document.querySelector(`[name='lens_type[${cardIndex}]']`);
     let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
     let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
     let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
@@ -1683,44 +1998,48 @@ function updateLensProductFields(selectElement, cardIndex) {
     let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
     let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
     let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
+    let lensIndexField = document.querySelector(`[name='lens_index[${cardIndex}]']`);
 
     let stockPowerCard = document.getElementById('stock_power_card[' + cardIndex + ']');
     let rxPowerCard = document.getElementById('rx_power_card[' + cardIndex + ']');
 
-    productBrandField.value = selectedProduct?.brand_name ?? '';
-    productLensTypeField.value = selectedProduct?.power_attribute.vision_type ?? '';
-    productHsnField.value = selectedProduct?.hsn ?? '';
-    productAvailableQtyField.value = selectedProduct?.product_quantity ?? '';
-    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
-    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
-    productUnitTypeField.value = selectedProduct?.unit_name ?? '';
-    stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
-    productCategoryIdField.value = selectedProduct?.category_id ?? '';
-    productNameField.value = selectedProduct?.product_name ?? '';
-    productCategoryField.value = selectedProduct?.category_name ?? '';
-    productPurchaseQtyField.value = '';
-    productPurchaseQtyField.max = selectedProduct?.product_quantity;
 
-    if (selectedProduct.discount > 0) {
+    var power_attribute = JSON.parse(selectedProduct.ci_power_attribute);
+
+    productBrandField.value = selectedProduct?.brand_name ?? '';
+    productLensTypeField.value = power_attribute.vision_type ?? '';
+    productHsnField.value = selectedProduct?.ci_hsn ?? '';
+    productAvailableQtyField.value = selectedProduct?.ci_product_quantity ?? '';
+    productUnitPriceField.value = selectedProduct?.ci_sale_price ?? '';
+    productUnitTypeField.value = selectedProduct?.unit_name ?? '';
+    stockTypeField.value = power_attribute.stock_type ?? '';
+    productCategoryIdField.value = selectedProduct?.ci_category_id ?? '';
+    productNameField.value = selectedProduct?.ci_product_name ?? '';
+    productCategoryField.value = selectedProduct?.pc_category_name ?? '';
+    productPurchaseQtyField.value = '';
+    lensIndexField.value = power_attribute.index;
+    productPurchaseQtyField.max = selectedProduct?.ci_product_quantity;
+
+    if (selectedProduct.ci_discount > 0) {
         discountCheckDiv.style.display = 'block';
-        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-        discountValueField.value = selectedProduct.discount;
+        discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.ci_discount + '%';
+        discountValueField.value = selectedProduct.ci_discount;
     } else {
         discountCheckDiv.style.display = 'none';
     }
-    if (selectedProduct.power_attribute.stock_type == 'stock') {
+    if (power_attribute.stock_type == 'stock') {
         stockPowerCard.style.display = 'block';
         rxPowerCard.style.display = 'none';
         // Remove 'required' attribute from all inputs and selects in rxPowerCard
         let rxPowerCardInputs = rxPowerCard.querySelectorAll('input, select');
         let stockPowerCardInputs = stockPowerCard.querySelectorAll('input, select');
 
-        rxPowerCardInputs.forEach(input => {
-            input.removeAttribute('required');
-        });
-        stockPowerCardInputs.forEach(input => {
-            input.setAttribute('required', 'required');
-        });
+<!--        rxPowerCardInputs.forEach(input => {-->
+<!--            input.removeAttribute('required');-->
+<!--        });-->
+<!--        stockPowerCardInputs.forEach(input => {-->
+<!--            input.setAttribute('required', 'required');-->
+<!--        });-->
     } else {
         rxPowerCard.style.display = 'block';
         stockPowerCard.style.display = 'none';
@@ -1728,12 +2047,12 @@ function updateLensProductFields(selectElement, cardIndex) {
         let rxPowerCardInputs = rxPowerCard.querySelectorAll('input, select');
         let stockPowerCardInputs = stockPowerCard.querySelectorAll('input, select');
 
-        stockPowerCardInputs.forEach(input => {
-            input.removeAttribute('required');
-        });
-        rxPowerCardInputs.forEach(input => {
-            input.setAttribute('required', 'required');
-        });
+<!--        stockPowerCardInputs.forEach(input => {-->
+<!--            input.removeAttribute('required');-->
+<!--        });-->
+<!--        rxPowerCardInputs.forEach(input => {-->
+<!--            input.setAttribute('required', 'required');-->
+<!--        });-->
     }
 
     productPurchaseQtyField.addEventListener('input', function () {
@@ -1742,11 +2061,11 @@ function updateLensProductFields(selectElement, cardIndex) {
         if (discountCheckbox.checked) {
             // Apply discount if the checkbox is checked
             let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            let discountedPrice = selectedProduct.ci_sale_price * (1 - discountPercentage / 100);
             productTotal = purchaseQty * discountedPrice;
         } else {
             // No discount, use the original sale price
-            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+            productTotal = purchaseQty * parseFloat(selectedProduct.ci_sale_price) || 0;
         }
         productProductTotalField.value = productTotal.toFixed(2);
     });
@@ -1755,102 +2074,21 @@ function updateLensProductFields(selectElement, cardIndex) {
         let isChecked = discountCheckbox.checked;
         if (isChecked) {
             let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            let discountedPrice = selectedProduct.ci_sale_price * (1 - discountPercentage / 100);
             productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+            discountCheckbox.value = 'on';
         } else {
-            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+            productProductTotalField.value = (selectedProduct.ci_sale_price * productPurchaseQtyField.value).toFixed(2);
             productProductTotalField.innerHTML = '';
+            discountCheckbox.value = 'off';
         }
     });
 }
 
-function updateContactLensProductFields(selectElement, cardIndex) {
-    let selectedProduct = contact_lens_list.find(product => product.product_id == selectElement.value);
-    let lensTypeField = document.querySelector(`[name='lens_type[${cardIndex}]']`);
-    let lensPhysicalityField = document.querySelector(`[name='lens_physicality[${cardIndex}]']`);
-    let lensDisposablilityField = document.querySelector(`[name='lens_disposablility[${cardIndex}]']`);
-    let lensVisionTypeField = document.querySelector(`[name='vision_type[${cardIndex}]']`);
-    let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
-    let productHsnField = document.querySelector(`[name='product_hsn[${cardIndex}]']`);
-    let productAvailableQtyField = document.querySelector(`[name='available_qty[${cardIndex}]']`);
-    let productUnitPriceField = document.querySelector(`[name='unit_price[${cardIndex}]']`);
-    let productPurchaseQtyField = document.querySelector(`[name='purchase_qty[${cardIndex}]']`);
-    let productProductTotalField = document.querySelector(`[name='product_total[${cardIndex}]']`);
-    let productDiscountCheckedField = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-    let discountCheckDiv = document.getElementById('discount_check_div[' + cardIndex + ']');
-    let discountValueText = document.getElementById('discount_value[' + cardIndex + ']');
-    let discountValueField = document.getElementById('discount_value_field[' + cardIndex + ']');
-    let discountCheckbox = document.querySelector(`[name='discount_checked[${cardIndex}]']`);
-    let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
-    let clPowerField = document.querySelector(`[name='cl_power[${cardIndex}]']`);
-    let clBcField = document.querySelector(`[name='cl_bc[${cardIndex}]']`);
-    let clDiaField = document.querySelector(`[name='cl_dia[${cardIndex}]']`);
-    let clCylField = document.querySelector(`[name='cl_cylinder[${cardIndex}]']`);
-    let clAxisField = document.querySelector(`[name='cl_axis[${cardIndex}]']`);
-    let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
-    let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
-    let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
-
-    lensTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
-    lensPhysicalityField.value = selectedProduct?.power_attribute.contact_lens_type ?? '';
-    lensDisposablilityField.value = selectedProduct?.power_attribute.contact_lens_disposability ?? '';
-    productHsnField.value = selectedProduct?.hsn ?? '';
-    productAvailableQtyField.value = selectedProduct?.store_product_quantity ?? '';
-    productBrandField.value = selectedProduct?.brand_name ?? '';
-    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
-    productUnitTypeField.value = selectedProduct?.unit_name ?? '';
-    productCategoryIdField.value = selectedProduct?.category_id ?? '';
-    productNameField.value = selectedProduct?.product_name ?? '';
-    productCategoryField.value = selectedProduct?.category_name ?? '';
-    productPurchaseQtyField.value = '';
-    productPurchaseQtyField.max = selectedProduct?.store_product_quantity;
-
-    clPowerField.value = selectedProduct?.power_attribute.power ?? '';
-    clBcField.value = selectedProduct?.power_attribute.bc ?? '';
-    clDiaField.value = selectedProduct?.power_attribute.dia ?? '';
-    clCylField.value = selectedProduct?.power_attribute.cyl ?? '';
-    clAxisField.value = selectedProduct?.power_attribute.axis ?? '';
-
-    if (selectedProduct.discount > 0) {
-        discountCheckDiv.style.display = 'block';
-        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-        discountValueField.value = selectedProduct.discount;
-    } else {
-        discountCheckDiv.style.display = 'none';
-    }
-
-    productPurchaseQtyField.addEventListener('input', function () {
-        let purchaseQty = parseFloat(productPurchaseQtyField.value) || 0;
-        let productTotal;
-        if (discountCheckbox.checked) {
-            // Apply discount if the checkbox is checked
-            let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-            productTotal = purchaseQty * discountedPrice;
-        } else {
-            // No discount, use the original sale price
-            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
-        }
-        productProductTotalField.value = productTotal.toFixed(2);
-    });
-
-    discountCheckbox.addEventListener('change', function () {
-        let isChecked = discountCheckbox.checked;
-        if (isChecked) {
-            let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
-            productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
-        } else {
-            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
-            productProductTotalField.innerHTML = '';
-        }
-    });
-}
 
 
 function updateRxContactLensProductFields(selectElement, cardIndex) {
-    let selectedProduct = contact_lens_list.find(product => product.product_id == selectElement.value);
-    console.log(selectedProduct);
+    let selectedProduct = contact_lens_list.find(product => product.ci_product_id == selectElement.value);
     let stockTypeField = document.querySelector(`[name='ContactLensStockType[${cardIndex}]']`);
     let lensPhysicalityField = document.querySelector(`[name='lens_physicality[${cardIndex}]']`);
     let lensDisposablilityField = document.querySelector(`[name='lens_disposablility[${cardIndex}]']`);
@@ -1875,24 +2113,26 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
     let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
     let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
 
-    stockTypeField.value = selectedProduct?.power_attribute.stock_type ?? '';
-    lensPhysicalityField.value = selectedProduct?.power_attribute.contact_lens_type ?? '';
-    lensDisposablilityField.value = selectedProduct?.power_attribute.contact_lens_disposability ?? '';
-    productHsnField.value = selectedProduct?.hsn ?? '';
-    productAvailableQtyField.value = selectedProduct?.product_quantity ?? '';
-    productBrandField.value = selectedProduct?.brand_name ?? '';
-    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
-    productUnitTypeField.value = selectedProduct?.unit_name ?? '';
-    productCategoryIdField.value = selectedProduct?.category_id ?? '';
-    productNameField.value = selectedProduct?.product_name ?? '';
-    productCategoryField.value = selectedProduct?.category_name ?? '';
-    productPurchaseQtyField.value = '';
-    productPurchaseQtyField.max = selectedProduct?.product_quantity;
+    var power_attribute = JSON.parse(selectedProduct.ci_power_attribute);
 
-    if (selectedProduct.discount > 0) {
+    stockTypeField.value = power_attribute.stock_type ?? '';
+    lensPhysicalityField.value = power_attribute.contact_lens_type ?? '';
+    lensDisposablilityField.value = power_attribute.contact_lens_disposability ?? '';
+    productHsnField.value = selectedProduct?.ci_hsn ?? '';
+    productAvailableQtyField.value = selectedProduct?.ci_product_quantity ?? '';
+    productBrandField.value = selectedProduct?.brand_name ?? '';
+    productUnitPriceField.value = selectedProduct?.ci_sale_price ?? '';
+    productUnitTypeField.value = selectedProduct?.unit_name ?? '';
+    productCategoryIdField.value = selectedProduct?.ci_category_id ?? '';
+    productNameField.value = selectedProduct?.ci_product_name ?? '';
+    productCategoryField.value = selectedProduct?.pc_category_name ?? '';
+    productPurchaseQtyField.value = '';
+    productPurchaseQtyField.max = selectedProduct?.ci_product_quantity;
+
+    if (selectedProduct.ci_discount > 0) {
         discountCheckDiv.style.display = 'block';
-        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-        discountValueField.value = selectedProduct.discount;
+        discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.ci_discount + '%';
+        discountValueField.value = selectedProduct.ci_discount;
     } else {
         discountCheckDiv.style.display = 'none';
     }
@@ -1903,11 +2143,11 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
         if (discountCheckbox.checked) {
             // Apply discount if the checkbox is checked
             let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            let discountedPrice = selectedProduct.ci_sale_price * (1 - discountPercentage / 100);
             productTotal = purchaseQty * discountedPrice;
         } else {
             // No discount, use the original sale price
-            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+            productTotal = purchaseQty * parseFloat(selectedProduct.ci_sale_price) || 0;
         }
         productProductTotalField.value = productTotal.toFixed(2);
     });
@@ -1916,18 +2156,20 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
         let isChecked = discountCheckbox.checked;
         if (isChecked) {
             let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            let discountedPrice = selectedProduct.ci_sale_price * (1 - discountPercentage / 100);
             productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+            discountCheckbox.value = 'on';
         } else {
-            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+            productProductTotalField.value = (selectedProduct.ci_sale_price * productPurchaseQtyField.value).toFixed(2);
             productProductTotalField.innerHTML = '';
+            discountCheckbox.value = 'off';
         }
     });
 }
 
 
 function updateOtherProductFields(selectElement, cardIndex) {
-    let selectedProduct = other_products_list.find(product => product.product_id == selectElement.value);
+    let selectedProduct = other_products_list.find(product => product.ci_product_id == selectElement.value);
     let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
     let productBrandField = document.querySelector(`[name='product_brand[${cardIndex}]']`);
     let productCategoryIdField = document.querySelector(`[name='product_category_id[${cardIndex}]']`);
@@ -1945,22 +2187,22 @@ function updateOtherProductFields(selectElement, cardIndex) {
     let productUnitTypeField = document.querySelector(`[name='unit_type[${cardIndex}]']`);
     let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
 
-    productCategoryField.value = selectedProduct?.category_name ?? '';
-    productHsnField.value = selectedProduct?.hsn ?? '';
-    productAvailableQtyField.value = selectedProduct?.store_product_quantity ?? '';
+    productCategoryField.value = selectedProduct?.pc_category_name ?? '';
+    productHsnField.value = selectedProduct?.ci_hsn ?? '';
+    productAvailableQtyField.value = selectedProduct?.si_product_quantity ?? '';
     productBrandField.value = selectedProduct?.brand_name ?? '';
-    productUnitPriceField.value = selectedProduct?.sale_price ?? '';
+    productUnitPriceField.value = selectedProduct?.ci_sale_price ?? '';
     productUnitTypeField.value = selectedProduct?.unit_name ?? '';
-    productCategoryIdField.value = selectedProduct?.category_id ?? '';
-    productNameField.value = selectedProduct?.product_name ?? '';
+    productCategoryIdField.value = selectedProduct?.ci_category_id ?? '';
+    productNameField.value = selectedProduct?.ci_product_name ?? '';
     productPurchaseQtyField.value = '';
-    productPurchaseQtyField.max = selectedProduct?.store_product_quantity;
+    productPurchaseQtyField.max = selectedProduct?.si_product_quantity;
 
 
-    if (selectedProduct.discount > 0) {
+    if (selectedProduct.ci_discount > 0) {
         discountCheckDiv.style.display = 'block';
-        discountValueText.innerHTML = '<h5>Discount available !</h5> Apply discount : ' + selectedProduct.discount + '%';
-        discountValueField.value = selectedProduct.discount;
+        discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.ci_discount + '%';
+        discountValueField.value = selectedProduct.ci_discount;
     } else {
         discountCheckDiv.style.display = 'none';
     }
@@ -1971,11 +2213,11 @@ function updateOtherProductFields(selectElement, cardIndex) {
         if (discountCheckbox.checked) {
             // Apply discount if the checkbox is checked
             let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            let discountedPrice = selectedProduct.ci_sale_price * (1 - discountPercentage / 100);
             productTotal = purchaseQty * discountedPrice;
         } else {
             // No discount, use the original sale price
-            productTotal = purchaseQty * parseFloat(selectedProduct.sale_price) || 0;
+            productTotal = purchaseQty * parseFloat(selectedProduct.ci_sale_price) || 0;
         }
         productProductTotalField.value = productTotal.toFixed(2);
     });
@@ -1984,11 +2226,13 @@ function updateOtherProductFields(selectElement, cardIndex) {
         let isChecked = discountCheckbox.checked;
         if (isChecked) {
             let discountPercentage = parseFloat(discountValueField.value) || 0;
-            let discountedPrice = selectedProduct.sale_price * (1 - discountPercentage / 100);
+            let discountedPrice = selectedProduct.ci_sale_price * (1 - discountPercentage / 100);
             productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
+            discountCheckbox.value = 'on';
         } else {
             productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
             productProductTotalField.innerHTML = '';
+            discountCheckbox.value = 'off';
         }
     });
 
@@ -2056,7 +2300,7 @@ function getProductsData() {
 
 
         var tableHtml = '<table>';
-        tableHtml += '<thead><tr><th>Sl. No</th><th>Product Name</th><th>Category</th><th>Purchase Qty</th><th>Product Total</th></tr></thead>';
+        tableHtml += '<thead><tr><th>Sl. No</th><th>Product Name</th><th>Category</th><th style="text-align: end;">Purchase Qty</th><th style="text-align: end;">Product Total</th></tr></thead>';
         tableHtml += '<tbody>';
 
         var grandTotal = 0;
@@ -2080,23 +2324,27 @@ function getProductsData() {
             tableHtml += '<td>' + slNo + '</td>';
             tableHtml += '<td>' + productName + '</td>';
             tableHtml += '<td>' + category + '</td>';
-            tableHtml += '<td>' + purchaseQty + '</td>';
-            tableHtml += '<td>₹' + productTotal.toFixed(2) + '</td>';
+            tableHtml += '<td style="text-align: end;">' + purchaseQty + '</td>';
+            tableHtml += '<td style="text-align: end;">₹' + productTotal.toFixed(2) + '</td>';
             tableHtml += '</tr>';
         });
 
         tableHtml += '</tbody>';
-        tableHtml += '<tfoot><tr><td colspan="4">Grand Total</td><td>₹' + grandTotal.toFixed(2) + '</td></tr></tfoot>';
+        tableHtml += '<tfoot><tr><td colspan="4">Grand Total</td><td style="text-align: end;">₹' + grandTotal.toFixed(2) + '</td></tr></tfoot>';
         tableHtml += '</table>';
 
         document.getElementById('preview').innerHTML = tableHtml;
 
+        generateLinkedItemUi(productsArray);
+    }
+}
+</script>
+<script>
+    function generateLinkedItemUi(productsArray){
 
-
-        // for generating linked items ui
         let category1Products = [];
         let category2Products = [];
-
+        document.getElementById('category1Container').innerHTML = ``;
         productsArray.forEach(product => {
             // Extracting the keys dynamically
             const keys = Object.keys(product);
@@ -2113,6 +2361,8 @@ function getProductsData() {
                 }
             }
         });
+
+        if(category2Products.length>0){
         var category1Container = document.getElementById('category1Container');
         var productCategoryDiv = document.createElement('div');
         productCategoryDiv.className = 'product-category';
@@ -2122,123 +2372,250 @@ function getProductsData() {
         var heading = document.createElement('h2');
         heading.textContent = 'Link items';
         category1Container.appendChild(heading);
-        // Display the separated lists
-        // console.log('Category 1 Products:', category1Products);
-        // console.log('Category 2 Products:', category2Products);
-
-
-
-        category1Products.forEach((product, index) => {
-            const keys = Object.keys(product);
-            const purchaseQtyKey = keys.find(key => key.startsWith("purchase_qty"));
-            const productNameKey = keys.find(key => key.startsWith("product_name"));
-
-            // Create a table for each product category
-            var table = document.createElement('table');
-            table.className = 'product-category-table';
-
-            // Create the table header
-            var headerRow = table.insertRow();
-            var slnoHeader = headerRow.insertCell(0);
-            slnoHeader.textContent = 'Sl. No';
-
-            var frameHeader = headerRow.insertCell(1);
-            frameHeader.textContent = 'Frame';
-
-            var optionHeader = headerRow.insertCell(2);
-            optionHeader.textContent = 'Options';
-
-            for (let i = 1; i <= parseInt(product[purchaseQtyKey]); i++) {
-                // Create a row for each frame
-                var row = table.insertRow();
-
-                // Sl. No column
-                var slnoCell = row.insertCell(0);
-                slnoCell.textContent = i;
-
-                // Frame column
-                var frameCell = row.insertCell(1);
-                frameCell.textContent = product[productNameKey];
-
-                // Options column
-                var optionCell = row.insertCell(2);
-                optionCell.className = 'linked-item-cell';
-
-                // Create a dropdown for each frame
-                var dropdown = document.createElement('select');
-                dropdown.className = 'form-select linkedItemSelect';
-                dropdown.name = product[productNameKey] + '--' + productNameKey + "--" + product.product;
-
-                // Add an initial option to represent no linked item
-                var noLinkedItemOption = document.createElement('option');
-                noLinkedItemOption.value = '';
-                noLinkedItemOption.textContent = 'No Linked Item';
-                dropdown.appendChild(noLinkedItemOption);
-
-                // Populate the dropdown with options from category2Products
-                category2Products.forEach(category2Product => {
-                    const keys = Object.keys(category2Product);
-                    const purchaseQtyLensKey = keys.find(key => key.startsWith("purchase_qty"));
-                    const productNameLensKey = keys.find(key => key.startsWith("product_name"));
-
-                    for (let j = 1; j <= parseInt(category2Product[purchaseQtyLensKey]); j++) {
-                        var option = document.createElement('option');
-                        option.value = category2Product[productNameLensKey] + "--" + j + "--" + productNameLensKey + "--" + category2Product.product; // Set the actual value based on your data
-                        option.textContent = category2Product[productNameLensKey] + "-" + j; // Set the actual text based on your data
-                        dropdown.appendChild(option);
-                    }
-                });
-                dropdown.addEventListener('change', handleDropdownChange);
-
-                // Append the dropdown to the option cell
-                optionCell.appendChild(dropdown);
-            }
-
-            // Append the table to the productCategoryDiv
-            productCategoryDiv.appendChild(table);
-        });
-
-        function handleDropdownChange(event) {
-            const selectedValue = event.target.value;
-            console.log(selectedValue);
-
-            // Create an array to store the linked items in JSON format
-            const linkJsonList = [];
-
-            // Get all selects with class name 'linkedItemSelect'
-            const linkedItemSelects = document.querySelectorAll('.linkedItemSelect');
-
-            linkedItemSelects.forEach((select, index) => {
-                const [frameName, frameIndexKey, frameId] = select.name.split('--');
-                const [lensName, lensLinkedCount, attachedFrameIndexKey, lensId] = select.value.split('--');
-
-                linkJsonList.push({
-                    "frameName": frameName,
-                    "frameIndexKey": frameIndexKey,
-                    "lensName": lensName,
-                    "lensLinkedCount": lensLinkedCount,
-                    "frameId": frameId,
-                    "lensId": lensId
-                });
-            });
-
-            const jsonString = JSON.stringify(linkJsonList);
-
-            // Set the value of the input field with ID 'linkedData'
-            const linkedDataInput = document.getElementById('linkedData');
-            linkedDataInput.value = jsonString;
-            console.log(linkJsonList);
         }
 
+        // Create a table for each product category
+        var table = document.createElement('table');
+        table.className = 'product-category-table';
 
-        // Append the productCategoryDiv to the main container
-        category1Container.appendChild(productCategoryDiv);
+        // Create the table header
+        var headerRow = table.createTHead().insertRow();
+
+        var slnoHeader = document.createElement('th');
+        slnoHeader.textContent = 'Sl. No';
+        headerRow.appendChild(slnoHeader);
+
+        var lensHeader = document.createElement('th');
+        lensHeader.textContent = 'Lens';
+        headerRow.appendChild(lensHeader);
+        var optionHeader = document.createElement('th');
+        optionHeader.textContent = 'Options';
+        headerRow.appendChild(optionHeader);
+
+        category2Products.forEach((product, index) => {
+        const keys = Object.keys(product);
+        const purchaseQtyKey = keys.find(key => key.startsWith("purchase_qty"));
+        const productNameKey = keys.find(key => key.startsWith("product_name"));
+
+        for(let i = 1; i <= parseInt(product[purchaseQtyKey]);i++){
+        var row = table.insertRow();
+        var slnoCell = row.insertCell(0);
+        slnoCell.textContent = i;
+
+        // lens column
+        var lensCell = row.insertCell(1);
+        lensCell.textContent = product[productNameKey];
+
+        // Options column
+        var optionCell = row.insertCell(2);
+        optionCell.className = 'linked-item-cell';
+
+        var dropdown = document.createElement('select');
+        dropdown.className = 'form-select linkedItemSelect';
+        dropdown.name = product[productNameKey] + '--' + productNameKey + "--" + product.product;
+
+        var noLinkedItemOption = document.createElement('option');
+        noLinkedItemOption.value = '';
+        noLinkedItemOption.textContent = 'No Linked Item';
+        dropdown.appendChild(noLinkedItemOption);
+
+          category1Products.forEach(category1Product => {
+            const keys = Object.keys(category1Product);
+            const lensKeys = Object.keys(product);
+            const purchaseQtyLensKey = keys.find(key => key.startsWith("purchase_qty"));
+            const productNameLensKey = keys.find(key => key.startsWith("product_name"));
+            const productLensKey = lensKeys.find(key => key.startsWith("product_name"));
+
+            for (let j = 1; j <= parseInt(category1Product[purchaseQtyLensKey]); j++) {
+                var option = document.createElement('option');
+                option.value = category1Product[productNameLensKey] + "--" + j + "--" + productLensKey + "--" + category1Product.product+"--"+productNameLensKey; // Set the actual value based on your data
+                option.textContent = category1Product[productNameLensKey] + "-" + j; // Set the actual text based on your data
+                dropdown.appendChild(option);
+            }
+        });
+        dropdown.addEventListener('change', function () {
+            handleDropdownChange(productsArray);
+        });
+        // Append the dropdown to the option cell
+        optionCell.appendChild(dropdown);
+        }
+
+        document.getElementById('category1Container').appendChild(table);
+
+        });
+
+
     }
+</script>
+<script>
+  function generateLinkedItemUi(productsArray) {
+
+    let frameProductsList = [];
+    let lensProductsList = [];
+
+    document.getElementById('category1Container').innerHTML = ``;
+    productsArray.forEach(product => {
+        const keys = Object.keys(product);
+        const categoryIdKey = keys.find(key => key.startsWith("product_category_id"));
+        if (categoryIdKey && (product[categoryIdKey] === "1" || product[categoryIdKey] === "2")) {
+            if (product[categoryIdKey] === "1") {
+                frameProductsList.push(product);
+            } else if (product[categoryIdKey] === "2") {
+                lensProductsList.push(product);
+            }
+        }
+    });
+
+    if (lensProductsList.length > 0) {
+        var category1Container = document.getElementById('category1Container');
+        var productCategoryDiv = document.createElement('div');
+        productCategoryDiv.className = 'product-category';
+
+        productCategoryDiv.innerHTML = '';
+        category1Container.innerHTML = '';
+        var heading = document.createElement('h2');
+        heading.textContent = 'Link items';
+        category1Container.appendChild(heading);
+    }
+
+    // Create a table for each product category
+    var table = document.createElement('table');
+    table.className = 'product-category-table';
+
+    // Create the table header
+    var headerRow = table.createTHead().insertRow();
+
+    var slnoHeader = document.createElement('th');
+    slnoHeader.textContent = 'Sl. No';
+    headerRow.appendChild(slnoHeader);
+
+    var lensHeader = document.createElement('th');
+    lensHeader.textContent = 'Lens';
+    headerRow.appendChild(lensHeader);
+    var optionHeader = document.createElement('th');
+    optionHeader.textContent = 'Options';
+    headerRow.appendChild(optionHeader);
+    let serialNumberCounter = 0;
+
+    lensProductsList.forEach((product, index) => {
+        const keys = Object.keys(product);
+        const purchaseQtyKey = keys.find(key => key.startsWith("purchase_qty"));
+        const productNameKey = keys.find(key => key.startsWith("product_name"));
+
+        for (let i = 1; i <= parseInt(product[purchaseQtyKey]); i++) {
+            var row = table.insertRow();
+            serialNumberCounter++;
+            var slnoCell = row.insertCell(0);
+            slnoCell.textContent = serialNumberCounter;
+
+            // lens column
+            var lensCell = row.insertCell(1);
+            lensCell.textContent = product[productNameKey];
+
+            // Options column
+            var optionCell = row.insertCell(2);
+            optionCell.className = 'linked-item-cell';
+
+            var dropdown = document.createElement('select');
+            dropdown.className = 'form-select linkedItemSelect';
+            dropdown.name = product[productNameKey] + '--' + productNameKey + "--" + product.product;
+
+            var noLinkedItemOption = document.createElement('option');
+            noLinkedItemOption.value = 'NA';
+            noLinkedItemOption.textContent = 'No Linked Item';
+            dropdown.appendChild(noLinkedItemOption);
+
+            frameProductsList.forEach(category1Product => {
+                const keys = Object.keys(category1Product);
+                const lensKeys = Object.keys(product);
+                const purchaseQtyLensKey = keys.find(key => key.startsWith("purchase_qty"));
+                const productNameLensKey = keys.find(key => key.startsWith("product_name"));
+                const productLensKey = lensKeys.find(key => key.startsWith("product_name"));
+
+                for (let j = 1; j <= parseInt(category1Product[purchaseQtyLensKey]); j++) {
+                    var option = document.createElement('option');
+                    option.value = category1Product[productNameLensKey] + "--" + j + "--" + productLensKey + "--" + category1Product.product + "--" + productNameLensKey; // Set the actual value based on your data
+                    option.textContent = category1Product[productNameLensKey]; // Set the actual text based on your data
+                    dropdown.appendChild(option);
+                }
+            });
+             // Append the dropdown to the option cell
+            optionCell.appendChild(dropdown);
+
+            dropdown.addEventListener('change', function (event) {
+                handleDropdownChange(productsArray,event);
+            });
+
+        }
+
+        document.getElementById('category1Container').appendChild(table);
+
+    });
+
+
 }
 
+function handleDropdownChange(productsArray,event) {
+    var selectedOptions = [];
+    const linkJsonList = [];
 
+    // Get all linkedItemSelect dropdowns
+    const linkedItemSelects = document.querySelectorAll('.linkedItemSelect');
+    // Iterate through all dropdowns and their options
+    linkedItemSelects.forEach(currentDropdown => {
+        selectedOptions.push(currentDropdown.value);
+    });
 
+    linkedItemSelects.forEach(currentDropdown => {
+            Array.from(currentDropdown.options).forEach(option => {
+                 if (option.value !== 'NA' && selectedOptions.includes(option.value)) {
+                    // Hide the option
+                    option.style.display = 'none';
+                } else {
+                    // Show the option (in case it was previously hidden)
+                    option.style.display = '';
+                }
+            });
+    });
 
+    linkedItemSelects.forEach((select, index) => {
+        const [lensName, lensLinkedCount, attachedLensIndexKey, frameId] = select.value.split('--');
+        linkJsonList.push({
+            "lensIndexKey": attachedLensIndexKey,
+            "frameId": frameId,
+        });
+    });
+    const jsonString = JSON.stringify(linkJsonList);
+
+    // Set the value of the input field with ID 'linkedData'
+    const linkedDataInput = document.getElementById('linkedData');
+    linkedDataInput.value = jsonString;
+    linkJsonList.forEach(link => {
+        productsArray.forEach(category1Product => {
+            category1Product.linkedFrameIds = [];
+        });
+    });
+
+    linkJsonList.forEach(link => {
+        productsArray.forEach(category1Product => {
+            const keys = Object.keys(category1Product);
+            // Check if attachedLensIndexKey is present in category1Product
+            if (keys.includes(link.lensIndexKey)) {
+                // Check if linkedFrameIds array exists, if not, create it
+                if (!category1Product.linkedFrameIds) {
+                    category1Product.linkedFrameIds = [];
+                }
+
+                // Add linkedFrameId value to the array
+                category1Product.linkedFrameIds.push(link.frameId);
+            }
+        });
+    });
+    let cartDataField = document.querySelector(`[name='cartData']`);
+    let jsonData = JSON.stringify(productsArray);
+    cartDataField.value = jsonData;
+
+}
 </script>
 </body>
 
