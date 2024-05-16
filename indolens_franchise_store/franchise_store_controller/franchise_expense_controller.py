@@ -69,7 +69,7 @@ def get_all_franchise_store_expense(store_id, store_type):
         return {"status": False, "message": str(e)}, 301
 
 
-def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id, order_id):
+def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id, order_id, total_amount):
     try:
         with getConnection().cursor() as cursor:
             create_update_customer = f"""INSERT INTO `customers`(`customer_name`, `customer_gender`, `customer_age`, 
@@ -234,9 +234,22 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                                          order_id, getIndianTime(),
                                                                          convert_to_db_date_format(
                                                                              billingDetailsData.get('estDeliveryDate')))
-            response = send_notification_controller.send_email(subject, body, customerData.get('email'))
-            print("email response")
-            print(response)
+            send_notification_controller.send_email(subject, body, customerData.get('email'))
+
+            if float(total_amount) == float(billingDetailsData.get('amount_paid')):
+                order_payment_status_change_query = f"""
+                                            UPDATE sales_order 
+                                            SET 
+                                                so_payment_status = 2
+                                            WHERE so_order_id = '{order_id}'
+                                        """
+                cursor.execute(order_payment_status_change_query)
+                subject = email_template_controller.get_order_payment_status_change_email_subject(order_id)
+                body = email_template_controller.get_order_payment_status_change_email_body(customerData.get('name'),
+                                                                                            order_id,
+                                                                                            'Completed',
+                                                                                            getIndianTime())
+                send_notification_controller.send_email(subject, body, customerData.get('email'))
 
             return {
                 "status": True,

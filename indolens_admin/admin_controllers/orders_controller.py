@@ -393,7 +393,6 @@ def get_invoice_details(orderId):
             get_order_details_query = f""" SELECT * FROM invoice WHERE invoice_order_id = '{orderId}'"""
             cursor.execute(get_order_details_query)
             orders_details = cursor.fetchone()
-            print(orders_details)
             return {
                 "status": True,
                 "invoice_details": orders_details

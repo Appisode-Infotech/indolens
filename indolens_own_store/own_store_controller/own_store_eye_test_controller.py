@@ -54,8 +54,8 @@ def add_eye_test(customerData, created_by, store_id):
             power_attributes = lens_sale_power_attribute_controller.get_eye_test_power_attribute(customerData)
 
             add_eye_test_query = f""" INSERT INTO eye_test (et_customer_id, et_power_attributes, 
-            et_created_by_store_id, et_created_by_store_type, et_created_by, et_created_on, et_updated_by, et_updated_on)
-            VALUES({customer_id}, '{json.dumps(power_attributes)}', {store_id},1, {customerData.get('optometry_id')}, '{getIndianTime()}', {customerData.get('optometry_id')}, '{getIndianTime()}')"""
+            et_created_by_store_id, et_created_by_store_type, et_optometry_id, et_created_by, et_created_on, et_updated_by, et_updated_on)
+            VALUES({customer_id}, '{json.dumps(power_attributes)}', {store_id},1, {customerData.get('optometry_id')}, {created_by}, '{getIndianTime()}', {customerData.get('optometry_id')}, '{getIndianTime()}')"""
             cursor.execute(add_eye_test_query)
             test_id = cursor.lastrowid
 

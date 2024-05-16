@@ -218,7 +218,7 @@
                                             type="button"><span class="fas fa-times fs--1"></span></button>
                                 </div>
                                 <div class="p-4 code-to-copy">
-                                    <form action="{% url 'create_request_franchise_store' %}" class="row g-3 needs-validation"
+                                    <form action="{% url 'create_request_store' %}" class="row g-3 needs-validation"
                                           method='POST'
                                           novalidate="">
                                         {% csrf_token %}
@@ -248,7 +248,7 @@
                                                value="{{request.session.assigned_store_id}}"/>
                                         <input name="created_by" type="hidden" value="{{request.session.id}}"/>
                                         <input name="store_type" type="hidden" value="{{request.session.store_type}}"/>
-                                        <input name="route" type="hidden" value="create_request_franchise_store"/>
+                                        <input name="route" type="hidden" value="create_request_store"/>
 
                                         <div class="modal-footer">
                                             <button class="btn btn-primary" type="submit">Submit</button>

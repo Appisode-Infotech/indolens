@@ -139,6 +139,7 @@
                 {% csrf_token %}
 
                 <input type="hidden" name="cartData">
+                <input type="hidden" name="totalAmount" id="totalAmount">
                 <input type="hidden" name="customerData">
                 <input type="hidden" name="billingDetailsData">
                 <input type="hidden" id="linkedData" name="linkedData">
@@ -378,7 +379,7 @@
                                                                 required="required">
                                                             <option value="" selected>Please select employee</option>
                                                             {% for employee in employee_list %}
-                                                            <option value="{{employee.ose_employee_id}}">{{employee.ose_name}}
+                                                            <option value="{{employee.fse_employee_id}}">{{employee.fse_name}}
                                                             </option>
                                                             {% endfor %}
                                                         </select>
@@ -2290,6 +2291,8 @@ function getProductsData() {
 
         // Display total sum in the <p> element with id 'totalSum'
         document.getElementById('totalSum').textContent = "Billing amount: ₹" + totalSum.toFixed(2);
+        document.getElementById('totalAmount').value = totalSum.toFixed(2);
+
         document.getElementsByName('amount_paid')[0].max = totalSum.toFixed(2);
 
         // Display total number of products in the <p> element with id 'totalProducts'

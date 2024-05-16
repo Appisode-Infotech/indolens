@@ -252,10 +252,12 @@ def orderInvoice(request, orderId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
+        print(order_detail)
         invoice_details, inv_status_code = orders_controller.get_invoice_details(orderId)
         store_data, store_status_code = orders_controller.get_store_details(
             order_detail['orders_details'][0]['so_created_by_store'],
             order_detail['orders_details'][0]['so_created_by_store_type'])
+        print(store_data)
         return render(request, 'orders/store_order_invoice.html', {"order_detail": order_detail['orders_details'],
                                                                    "store_data": store_data['store_data'],
                                                                    "invoice_details": invoice_details[
@@ -470,11 +472,15 @@ def makeSaleOwnStore(request):
             cart_data = json.loads(request.POST['cartData'])
             customerData = json.loads(request.POST['customerData'])
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
+            total_amount = request.POST['totalAmount']
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),
-                                                                   assigned_store, order_id)
-            url = reverse('order_details_store', kwargs={'orderId': order_id})
-            return redirect(url)
+                                                                   assigned_store, order_id, total_amount)
+            if status_code == False:
+                return redirect('own_store_make_sale')
+            else:
+                url = reverse('order_details_store', kwargs={'orderId': order_id})
+                return redirect(url)
         else:
             employee_list, emp_status_code = store_employee_controller.get_all_active_store_optometry(
                 assigned_store)
@@ -531,6 +537,7 @@ def getOwnStoreEyeTestById(request, testId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         response, status_code = own_store_eye_test_controller.get_eye_test_by_id(testId)
+        print(response)
         return render(request, 'ownStoreEyeTest/viewAllStoreEyeTest.html',
                       {'eye_test_list': response['eye_test']})
 

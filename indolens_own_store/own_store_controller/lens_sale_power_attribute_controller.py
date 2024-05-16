@@ -8,7 +8,7 @@ def get_power_attribute(data):
                 'leftLensCylStock': data.get('leftLensCylStock', ''),
                 'leftLensAxisStock': data.get('leftLensAxisStock', ''),
                 'leftLensAddStock': data.get('leftLensAddStock', ''),
-                'leftLensPdStock': data.get('leftLensAxisStock', ''),
+                'leftLensPdStock': data.get('leftLensPdStock', ''),
                 'rightLensSphStock': data.get('rightLensSphStock', ''),
                 'rightLensCylStock': data.get('rightLensCylStock', ''),
                 'rightLensAxisStock': data.get('rightLensAxisStock', ''),

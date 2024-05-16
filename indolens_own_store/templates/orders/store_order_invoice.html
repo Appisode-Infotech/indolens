@@ -206,7 +206,7 @@ body {
                                 <th scope="row" class="align-middle">Order No</th>
                                 <td class="align-middle"><b>{{order_detail.0.so_order_id}}</b></td>
                                 <th scope="row" class="align-middle">GSTIN</th>
-                                {% if order_detail.0.so_created_by_store == 1 %}
+                                {% if order_detail.0.so_created_by_store_type == 1 %}
                                 <td class="align-middle">{{store_data.os_store_gst}}</td>
                                 {% else %}
                                 <td class="align-middle">{{store_data.fs_store_gst}}</td>
@@ -216,7 +216,7 @@ body {
                                 <th scope="row" class="align-middle">Order Date</th>
                                 <td class="align-middle">{{order_detail.0.so_created_on|date:"d/m/Y h:i A"}}</td>
                                 <th scope="row" class="align-middle">Sold by</th>
-                                {% if order_detail.0.so_created_by_store == 1 %}
+                                {% if order_detail.0.so_created_by_store_type == 1 %}
                                 <td class="align-middle" colspan="3">{{store_data.os_store_name}}<br/>{{store_data.os_store_address}}
                                     <br/>{{store_data.os_store_email}}<br/>{{store_data.os_store_phone}}
                                 </td>
