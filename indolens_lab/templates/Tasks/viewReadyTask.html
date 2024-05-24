@@ -218,7 +218,7 @@
                                                 {{order.brand_name}}
                                                 {% endif %}
                                             </td>
-                                            <td class="jobStatus align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            <td class="align-middle text-900 fw-semi-bold text-end py-0 ps-4">
                                                 {% if order.so_order_status == 1 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
                                                         class="badge-label">NEW</span></span>
@@ -232,6 +232,17 @@
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
                                                         class="badge-label">DISPATCHED</span></span>
 
+                                                {% endif %}
+                                            </td>
+                                            <td style="display:none;" class="jobStatus align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                                {% if order.so_order_status == 1 %}
+                                                NEW
+                                                {% elif order.so_order_status == 2 %}
+                                                PROCESSING
+                                                {% elif order.so_order_status == 3 %}
+                                                READY IN LAB
+                                                {% else %}
+                                                DISPATCHED
                                                 {% endif %}
                                             </td>
 
