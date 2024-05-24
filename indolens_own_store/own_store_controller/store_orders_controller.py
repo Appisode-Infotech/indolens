@@ -342,6 +342,10 @@ def order_payment_status_change(order_data, store_id, created_by):
                                 WHERE so_order_id = '{order_data['order_id']}'
                                 """
                 cursor.execute(order_status_change_query)
+                add_order_track_query = f""" 
+                                            INSERT INTO order_track (order_id, status, created_on) 
+                                            VALUES ('{order_data['order_id']}', {7}, '{getIndianTime()}' ) """
+                cursor.execute(add_order_track_query)
 
             get_order_details_query = f"""
                                        SELECT 

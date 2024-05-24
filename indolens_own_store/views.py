@@ -272,7 +272,6 @@ def orderStatusChange(request, orderId, status):
         order_update, status_code = store_orders_controller.order_status_change(orderId, status,
                                                                                 request.session.get('id'),
                                                                                 assigned_store)
-        print(order_update)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:
@@ -286,7 +285,6 @@ def orderPaymentStatusChange(request):
 
         order_detail, status_code = store_orders_controller.order_payment_status_change(vars(order_obj), assigned_store,
                                                                                         request.session.get('id'))
-        print(order_detail)
         url = reverse('order_details_store', kwargs={'orderId': order_obj.get_attribute('order_id')})
 
         return redirect(url)
@@ -489,6 +487,7 @@ def makeSaleOwnStore(request):
                 assigned_store)
             customerResponse, cust_status_code = store_customers_controller.get_all_customers()
             lens_response, lens_status_code = central_inventory_controller.get_central_inventory_lens()
+            print(lens_response)
             return render(request, 'expenses/makeSaleOwnStore.html',
                           {"other_products_list": store_products['stocks_list'],
                            'customers_list': customerResponse['customers_list'],

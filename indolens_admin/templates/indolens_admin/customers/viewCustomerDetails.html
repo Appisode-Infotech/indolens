@@ -139,8 +139,8 @@
 
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3 class="name">{{ customer.customer_name }}</h3>
-                                                <p class="text-800">Joined on {{ customer.customer_created_on
-                                                    |date:"d/m/Y h:i A" }}</p>
+                                                <p class="text-800">Joined on
+                                                    {{ customer.customer_created_on|date:"d/m/Y h:i A" }}</p>
                                                 {% if membership == 'Gold' %}
                                                 <div class="golden-card">
                                                     <h4>{{membership}} Member</h4>

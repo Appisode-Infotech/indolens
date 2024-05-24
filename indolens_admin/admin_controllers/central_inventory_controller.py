@@ -958,7 +958,7 @@ def get_central_inventory_lens():
                                     LEFT JOIN product_colors AS co ON ci.ci_color_id = co.pcol_color_id
                                     LEFT JOIN units AS u ON ci.ci_unit_id = u.unit_unit_id
                                     LEFT JOIN brands AS b ON ci.ci_brand_id = b.brand_brand_id 
-                                    WHERE ci.ci_category_id = 2 AND ci.ci_status = 1 """
+                                    WHERE ci.ci_category_id = 2 AND ci.ci_status = 1 AND ci.ci_product_quantity != 0 """
 
             cursor.execute(get_all_lens_from_central_inventory)
             lens_list = cursor.fetchall()
@@ -976,7 +976,7 @@ def get_central_inventory_lens():
                                     LEFT JOIN product_colors AS co ON ci.ci_color_id = co.pcol_color_id
                                     LEFT JOIN units AS u ON ci.ci_unit_id = u.unit_unit_id
                                     LEFT JOIN brands AS b ON ci.ci_brand_id = b.brand_brand_id 
-                                    WHERE ci.ci_category_id = 3 AND ci.ci_status = 1 """
+                                    WHERE ci.ci_category_id = 3 AND ci.ci_status = 1 AND ci.ci_product_quantity != 0 """
             cursor.execute(get_all_contact_lens_from_central_inventory)
             contact_lens_list = cursor.fetchall()
             return {

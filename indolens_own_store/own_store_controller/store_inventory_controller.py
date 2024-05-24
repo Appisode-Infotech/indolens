@@ -233,9 +233,19 @@ def get_all_central_inventory_products(store_id):
 
             cursor.execute(get_stores_product_query)
             store_product_list = cursor.fetchall()
+
+            if product_list == ():
+                print("product is NONE")
+                product_list = []
+            if store_product_list == ():
+                print("store product is none")
+                store_product_list = []
+
+            combined_list = product_list + store_product_list
+
             return {
                 "status": True,
-                "product_list": (product_list + store_product_list)
+                "product_list": combined_list
             }, 200
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301
