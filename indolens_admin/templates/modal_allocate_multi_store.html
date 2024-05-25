@@ -59,9 +59,8 @@
             selectCard.innerHTML = `
 
             <select name="store_id" class="form-select" id="store_id" multiple="multiple">
-            console.log({{available_stores|safe}});
                         <option value="">Select a store</option>
-                        {% for store in available_stores|safe %}
+                        {% for store in available_stores %}
                         <option value="{{store.store_id}}" ${actualArray.includes({{ store.store_id }}) ? 'selected' : ''}>{{store.store_name}}</option>
                         {% endfor %}
             </select>

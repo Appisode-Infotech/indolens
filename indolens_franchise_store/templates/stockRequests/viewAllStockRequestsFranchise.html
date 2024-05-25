@@ -248,7 +248,7 @@
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                    {% if stock.pr_request_status == 1 and stock.pr_delivery_status != 2 and stock.pr_request_to_store_id != request.session.assigned_store_id %}
+                                    {% if stock.pr_request_status == 1 and stock.pr_delivery_status != 2 %}
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
                                                 aria-haspopup="true"

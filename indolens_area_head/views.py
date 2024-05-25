@@ -79,7 +79,7 @@ def getAreaHeadAssignedStores(request):
         else:
             return f"""({assigned_store})"""
     else:
-        return redirect('is_area_head_logged_in')
+        return redirect('login_area_head')
 
 
 # =================================ADMIN DASH======================================
@@ -88,11 +88,10 @@ def dashboard(request):
     assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
-        # new_order, status_code = area_head_dashboard_controller.get_order_stats('New', 1)
-        # delivered_orders, status_code = area_head_dashboard_controller.get_order_stats('Completed', 1)
-        # store_sales, status_code = area_head_dashboard_controller.get_sales_stats(1)
+        stats, stats_status_code = area_head_dashboard_controller.get_store_employee_stats(assigned_sores)
+        print(stats)
         orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All', assigned_sores)
-        return render(request, 'dashboard.html', {"orders_list": orders_list['dash_orders_list']})
+        return render(request, 'dashboard.html', {"orders_list": orders_list['dash_orders_list'], "stats": stats})
     else:
         return redirect('login_area_head')
 
@@ -149,7 +148,7 @@ def viewEmployee(request, employeeId):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = store_employee_controller.get_store_employee_by_id(employeeId)
-        
+
         return render(request, 'storeEmployee/viewStoreEmployee.html',
                       {"store_employee": response['store_employee']})
     else:

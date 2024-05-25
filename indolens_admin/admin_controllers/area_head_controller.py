@@ -196,33 +196,32 @@ def assignStore(empId, storeId):
             update_store_manager_query = f"""
                 UPDATE area_head
                 SET
-                    assigned_stores = '{storeId}'
+                    ah_assigned_stores = '{storeId}'
                 WHERE
-                    area_head_id = {empId}
+                    ah_area_head_id = {empId}
             """
             # Execute the update query using your cursor
             cursor.execute(update_store_manager_query)
 
-            get_employee_query = f""" SELECT name,email,phone FROM area_head WHERE area_head_id = {empId}
-                                                            """
+            get_employee_query = f""" SELECT ah_name,ah_email,ah_phone FROM area_head WHERE ah_area_head_id = {empId}"""
             # Execute the update query using your cursor
             cursor.execute(get_employee_query)
             manager_data = cursor.fetchone()
             if len(storeId) == 1:
                 storeId = f"""({storeId})"""
 
-            get_store_query = f""" SELECT store_name, store_phone, store_address FROM own_store 
-                                                                                    WHERE store_id IN {tuple(storeId)}"""
+            get_store_query = f""" SELECT os_store_name, os_store_phone, os_store_address FROM own_store 
+                                                                                    WHERE os_store_id IN {tuple(storeId)}"""
 
             cursor.execute(get_store_query)
             store_data = cursor.fetchall()
 
-            subject = email_template_controller.get_area_head_assigned_store_email_subject(manager_data[0])
-            body = email_template_controller.get_area_head_assigned_store_email_body(manager_data[0], 'Area Head',
-                                                                                     manager_data[1],
+            subject = email_template_controller.get_area_head_assigned_store_email_subject(manager_data['ah_name'])
+            body = email_template_controller.get_area_head_assigned_store_email_body(manager_data['ah_name'], 'Area Head',
+                                                                                     manager_data['ah_email'],
                                                                                      store_data)
 
-            response = send_notification_controller.send_email(subject, body, manager_data[1])
+            response = send_notification_controller.send_email(subject, body, manager_data['ah_email'])
 
             return {
                 "status": True,

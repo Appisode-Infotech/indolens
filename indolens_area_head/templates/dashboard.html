@@ -82,434 +82,38 @@
                     <div class="col-12 col-xxl-6">
                         <div class="mb-8">
                             <h2 class="mb-2">Hi {{ request.session.name }}</h2>
-                            <h5 class="text-700 fw-semi-bold">Here’s what’s going on at your business right now</h5>
+                            <h5 class="text-700 fw-semi-bold">Here’s what’s going on at your business area now</h5>
                         </div>
+                        <div class="row align-items-center g-4">
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"
+                                        width="46"/>
 
-<!--                        <div class="row align-items-center g-4">-->
-<!--                            <div class="col-12 col-md-auto">-->
-<!--                                <div class="d-flex align-items-center"><img-->
-<!--                                        alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"-->
-<!--                                        width="46"/>-->
-
-<!--                                    <div class="ms-3">-->
-<!--                                        <h4 class="mb-0">₹18,000 Sales</h4>-->
-<!--                                        <p class="text-800 fs&#45;&#45;1 mb-0">From Own Stores Today</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-12 col-md-auto">-->
-<!--                                <div class="d-flex align-items-center"><img-->
-<!--                                        alt=""-->
-<!--                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>-->
-
-<!--                                    <div class="ms-3">-->
-<!--                                        <h4 class="mb-0">₹12,000 Sales</h4>-->
-<!--                                        <p class="text-800 fs&#45;&#45;1 mb-0">From Franchise Stores Today</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-12 col-md-auto">-->
-<!--                                <div class="d-flex align-items-center"><img-->
-<!--                                        alt=""-->
-<!--                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>-->
-<!--                                    <div class="ms-3">-->
-<!--                                        <h4 class="mb-0">15 Orders</h4>-->
-<!--                                        <p class="text-800 fs&#45;&#45;1 mb-0">From Own Stores Today</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-12 col-md-auto">-->
-<!--                                <div class="d-flex align-items-center"><img-->
-<!--                                        alt=""-->
-<!--                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>-->
-<!--                                    <div class="ms-3">-->
-<!--                                        <h4 class="mb-0">5 Delivered</h4>-->
-<!--                                        <p class="text-800 fs&#45;&#45;1 mb-0">From Franchise Stores Today</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="row align-items-center g-4 mt-2">-->
-<!--                            <div class="col-12 col-md-auto">-->
-<!--                                <div class="d-flex align-items-center"><img-->
-<!--                                        alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"-->
-<!--                                        width="46"/>-->
-
-<!--                                    <div class="ms-3">-->
-<!--                                        <h4 class="mb-0">>57-->
-<!--                                            new orders</h4>-->
-<!--                                        <p class="text-800 fs&#45;&#45;1 mb-0">Pending orders</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-12 col-md-auto">-->
-<!--                                <div class="d-flex align-items-center"><img-->
-<!--                                        alt=""-->
-<!--                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>-->
-
-<!--                                    <div class="ms-3">-->
-<!--                                        <h4 class="mb-0">5 Delivered><h4>-->
-<!--                                        <p class="text-800 fs&#45;&#45;1 mb-0">Orders delivered today</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-12 col-md-auto">-->
-<!--                                <div class="d-flex align-items-center"><img-->
-<!--                                        alt=""-->
-<!--                                        height="46" src="{% static 'img/icons/illustrations/2l.png' %}" width="46"/>-->
-<!--                                    <div class="ms-3">-->
-<!--                                        <h4 class="mb-0">15 products-->
-<!--                                        </h4>-->
-<!--                                        <p class="text-800 fs&#45;&#45;1 mb-0">Out of stock</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-<!--                        <div class="row align-items-center g-4 mt-2">-->
-<!--                            <div class="col-12 col-md-auto">-->
-<!--                                <div class="d-flex align-items-center"><img-->
-<!--                                        alt="" height="46" src="{% static 'img/icons/illustrations/4l.png' %}"-->
-<!--                                        width="46"/>-->
-
-<!--                                    <div class="ms-3">-->
-<!--                                        <h4 class="mb-0">9 Own stores</h4>-->
-<!--                                        <p class="text-800 fs&#45;&#45;1 mb-0">Indolens owns them</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="col-12 col-md-auto">-->
-<!--                                <div class="d-flex align-items-center"><img-->
-<!--                                        alt=""-->
-<!--                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>-->
-
-<!--                                    <div class="ms-3">-->
-<!--                                        <h4 class="mb-0">5 Franchise-->
-<!--                                            stores-->
-<!--                                        </h4>-->
-<!--                                        <p class="text-800 fs&#45;&#45;1 mb-0">For franchise owners</p>-->
-<!--                                    </div>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                        </div>-->
-
-                        <hr class="bg-200 mb-6 mt-4"/>
-                        <div class="row flex-between-center mb-4 g-3">
-                            <div class="col-auto">
-                                <h3>Total sells Own Stores v/s Franchise</h3>
-                                <p class="text-700 lh-sm mb-0">Payment received across all channels</p>
-                            </div>
-                            <div class="col-8 col-sm-4">
-                                <select class="form-select form-select-sm mt-2" id="select-gross-revenue-month">
-                                    <option>Mar 1 - 31, 2022</option>
-                                    <option>April 1 - 30, 2022</option>
-                                    <option>May 1 - 31, 2022</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="echart-total-sales-chart" data-echart-responsive="data-echart-responsive"
-                             style="min-height:320px;width:100%"></div>
-                        <!--  OWN STORE FRANCHISE ANALYTICS STARTS HERE-->
-
-                        <div class="row gx-6">
-                            <div class="col-12 col-xl-6">
-                                <div class="mb-5 mt-7">
-                                    <h3>Own stores - Analytics</h3>
-                                    <p class="text-700">Glimpses of revenue and spend for own stores</p>
-                                    <div class="col-12 col-sm-auto">
-                                        <div class="btn-group" data-gantt-scale="data-gantt-scale" role="group">
-                                            <input checked="" class="btn-check" id="own_stores_weekView"
-                                                   name="scaleView"
-                                                   type="radio" value="week"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="own_stores_weekView">Week</label>
-                                            <input class="btn-check" id="own_stores_monthView" name="scaleView"
-                                                   type="radio"
-                                                   value="month"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="own_stores_monthView">Month</label>
-                                            <input class="btn-check" id="own_stores_yearView" name="scaleView"
-                                                   type="radio"
-                                                   value="year"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="own_stores_yearView">Year</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive scrollbar">
-                                    <table class="table fs--2 mb-0">
-                                        <thead>
-                                        <tr>
-                                            <th class="border-top border-200 ps-0 align-middle" scope="col"
-                                                style="width:32%">
-                                                SHOP
-                                            </th>
-                                            <th class="border-top border-200 align-middle" scope="col"
-                                                style="width:17%">SALES
-                                            </th>
-                                            <th class="border-top border-200 text-end align-middle" scope="col"
-                                                style="width:16%">
-                                                EXPENSES
-                                            </th>
-                                            <th class="border-top border-200 text-end align-middle" scope="col"
-                                                style="width:20%">
-                                                NET BALANCE
-                                            </th>
-
-                                        </tr>
-                                        </thead>
-                                        <tbody class="list">
-                                        <tr>
-                                            <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal"> {{ own_store_list|length }}</h4>
-                                            </td>
-                                            <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal">₹22,367</h4>
-
-                                            </td>
-                                            <td class="align-middle text-end py-4">
-                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
-                                            </td>
-                                            <td class="align-middle text-end py-4">
-                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
-                                            </td>
-                                        </tr>
-                                        {% for store in own_store_list %}
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">{{store.store_id}} </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1"><a
-                                                                href="{% url 'view_own_store_area_head' %}">{{store.store_city}}</a>
-                                                        </p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!--                                <div class="d-flex align-items-center justify-content-between py-2 fs&#45;&#45;1 mb-1">-->
-                                <!--                                    <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="">1 to-->
-                                <!--                                        5 <span-->
-                                <!--                                                class="text-600"> Items of </span> 15</p><a class="fw-semi-bold"-->
-                                <!--                                                                                            href="#!"-->
-                                <!--                                                                                            data-list-view="*">View-->
-                                <!--                                    all<span-->
-                                <!--                                            class="fas fa-angle-right ms-2" data-fa-transform="down-1"></span></a>-->
-                                <!--                                </div>-->
-                            </div>
-
-
-                            <div class="col-12 col-xl-6">
-                                <div class="mb-5 mt-7">
-                                    <h3>Franchise stores - Analytics</h3>
-                                    <p class="text-700">Glimpses of revenue and spend for franchise stores</p>
-                                    <div class="col-12 col-sm-auto">
-                                        <div class="btn-group" data-gantt-scale="data-gantt-scale" role="group">
-                                            <input checked="" class="btn-check" id="weekView2" name="scaleView"
-                                                   type="radio" value="week"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="weekView2">Week</label>
-                                            <input class="btn-check" id="monthView2" name="scaleView" type="radio"
-                                                   value="month"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="monthView2">Month</label>
-                                            <input class="btn-check" id="yearView2" name="scaleView" type="radio"
-                                                   value="year"/>
-                                            <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                   for="yearView2">Year</label>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="table-responsive scrollbar">
-                                    <table class="table fs--2 mb-0">
-                                        <thead>
-                                        <tr>
-                                            <th class="border-top border-200 ps-0 align-middle" scope="col"
-                                                style="width:32%">
-                                                SHOP
-                                            </th>
-                                            <th class="border-top border-200 align-middle" scope="col"
-                                                style="width:17%">SALES
-                                            </th>
-                                            <th class="border-top border-200 text-end align-middle" scope="col"
-                                                style="width:16%">
-                                                EXPENSES
-                                            </th>
-                                            <th class="border-top border-200 text-end align-middle" scope="col"
-                                                style="width:20%">
-                                                NET BALANCE
-                                            </th>
-
-                                        </tr>
-                                        </thead>
-                                        <tbody class="list">
-                                        <tr>
-                                            <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal"> {{ franchise_store_list|length }}</h4>
-                                            </td>
-                                            <td class="align-middle py-4">
-                                                <h4 class="mb-0 fw-normal">₹377,620</h4>
-                                            </td>
-                                            <td class="align-middle text-end py-4">
-                                                <h4 class="mb-0 fw-normal">₹2,367</h4>
-                                            </td>
-                                            <td class="align-middle text-end py-4">
-                                                <h4 class="mb-0 fw-normal">₹15,758</h4>
-                                            </td>
-                                        </tr>
-                                        {% for store in franchise_store_list %}
-                                        <tr>
-                                            <td class="white-space-nowrap ps-0" style="width:32%">
-                                                <div class="d-flex align-items-center">
-                                                    <h6 class="mb-0 me-3">{{store.store_id}} </h6><a href="#!">
-                                                    <div class="d-flex align-items-center">
-                                                        <p class="mb-0 text-primary fw-bold fs--1"><a
-                                                                href="{% url 'view_franchise_store_area_head' store.store_id  %}">{{store.store_city}}</a>
-                                                        </p>
-                                                    </div>
-                                                </a>
-                                                </div>
-                                            </td>
-                                            <td class="align-middle" style="width:17%">
-                                                <h6 class="mb-0">92896<span
-                                                        class="text-700 fw-semi-bold ms-2">(41.6%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">67<span
-                                                        class="text-700 fw-semi-bold ms-2">(34.3%)</span></h6>
-                                            </td>
-                                            <td class="align-middle text-end" style="width:17%">
-                                                <h6 class="mb-0">₹7560<span
-                                                        class="text-700 fw-semi-bold ms-2">(36.9%)</span></h6>
-                                            </td>
-                                        </tr>
-                                        {% endfor %}
-
-                                        </tbody>
-                                    </table>
-                                </div>
-                                <!--                                <div class="d-flex align-items-center justify-content-between py-2 fs&#45;&#45;1 mb-1">-->
-                                <!--                                    <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900" data-list-info="">1 to-->
-                                <!--                                        5 <span-->
-                                <!--                                                class="text-600"> Items of </span> 15</p><a class="fw-semi-bold"-->
-                                <!--                                                                                            href="#!"-->
-                                <!--                                                                                            data-list-view="*">View-->
-                                <!--                                    all<span-->
-                                <!--                                            class="fas fa-angle-right ms-2" data-fa-transform="down-1"></span></a>-->
-                                <!--                                </div>-->
-                            </div>
-                        </div>
-
-                        <!-- OWN STORE FRANCHISE ANALYTICS ENDS HERE-->
-
-                    </div>
-                    <div class="col-12 col-xxl-6">
-                        <div class="row g-3">
-                            <div class="col-12 col-md-6">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <h5 class="mb-1">Total orders<span
-                                                        class="badge badge-phoenix badge-phoenix-warning rounded-pill fs--1 ms-2"><span
-                                                        class="badge-label">-6.8%</span></span></h5>
-                                                <div class="col-12 col-sm-auto">
-                                                    <div class="btn-group" data-gantt-scale="data-gantt-scale"
-                                                         role="group">
-                                                        <input checked="" class="btn-check" id="weekView3"
-                                                               name="scaleView" type="radio" value="week"/>
-                                                        <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                               for="weekView3">Week</label>
-                                                        <input class="btn-check" id="monthView3" name="scaleView"
-                                                               type="radio" value="month"/>
-                                                        <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                               for="monthView3">Month</label>
-                                                        <input class="btn-check" id="yearView3" name="scaleView"
-                                                               type="radio" value="year"/>
-                                                        <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                               for="yearView3">Year</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <h4>16,247</h4>
-                                        </div>
-                                        <div class="d-flex justify-content-center px-4 py-6">
-                                            <div class="echart-total-orders" style="height:85px;width:115px"></div>
-                                        </div>
-                                        <div class="mt-2">
-                                            <div class="d-flex align-items-center mb-2">
-                                                <div class="bullet-item bg-primary me-2"></div>
-                                                <h6 class="text-900 fw-semi-bold flex-1 mb-0">Completed</h6>
-                                                <h6 class="text-900 fw-semi-bold mb-0">52%</h6>
-                                            </div>
-                                            <div class="d-flex align-items-center">
-                                                <div class="bullet-item bg-primary-100 me-2"></div>
-                                                <h6 class="text-900 fw-semi-bold flex-1 mb-0">Pending payment</h6>
-                                                <h6 class="text-900 fw-semi-bold mb-0">48%</h6>
-                                            </div>
-                                        </div>
+                                    <div class="ms-3"><h4 class="mb-0"><a href="{% url 'manage_own_stores_area_head' 'All'%}">
+                                        {{stats.store_count}} Stores</a></h4>
+                                        <p class="text-800 fs--1 mb-0">Stores Assigned In Your Area</p>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6">
-                                <div class="card h-100">
-                                    <div class="card-body">
-                                        <div class="d-flex justify-content-between">
-                                            <div>
-                                                <h5 class="mb-1">New customers<span
-                                                        class="badge badge-phoenix badge-phoenix-warning rounded-pill fs--1 ms-2"> <span
-                                                        class="badge-label">+26.5%</span></span></h5>
-                                                <div class="col-12 col-sm-auto">
-                                                    <div class="btn-group" data-gantt-scale="data-gantt-scale"
-                                                         role="group">
-                                                        <input checked="" class="btn-check" id="weekView4"
-                                                               name="scaleView" type="radio" value="week"/>
-                                                        <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                               for="weekView4">Week</label>
-                                                        <input class="btn-check" id="monthView4" name="scaleView"
-                                                               type="radio" value="month"/>
-                                                        <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                               for="monthView4">Month</label>
-                                                        <input class="btn-check" id="yearView4" name="scaleView"
-                                                               type="radio" value="year"/>
-                                                        <label class="btn btn-phoenix-secondary hover-bg-100 fs--2 py-1 mb-0"
-                                                               for="yearView4">Year</label>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <h4>356</h4>
-                                        </div>
-                                        <div class="pb-0 pt-4">
-                                            <div class="echarts-new-customers" data-echart-responsive="true"
-                                                 style="height:180px;width:100%;"></div>
-                                        </div>
+                            <div class="col-12 col-md-auto">
+                                <div class="d-flex align-items-center"><img
+                                        alt=""
+                                        height="46" src="{% static 'img/icons/illustrations/3l.png' %}" width="46"/>
+
+                                    <div class="ms-3"><h4 class="mb-0"><a href="{% url 'manage_employees' %}">
+                                        {{stats.employee_count}} Employees</a></h4>
+                                        <p class="text-800 fs--1 mb-0">Total Employees From Your Assigned Store</p>
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                     </div>
                 </div>
             </div>
             <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white pt-7 border-y border-300">
-                <div data-list='{"valueNames":["slno", "order","total","customer","paymentStatus","fulfilmentStatus","createdBy","createdOn","updatedBy","updatedOn"],"page":10}'>
+                <div data-list='{"valueNames":["slno", "order","total","customer","payment_status","fulfilment_status","createdBy","createdOn","updatedBy","updatedOn"],"page":10}'>
                     <div class="row align-items-end justify-content-between pb-5 g-3">
                         <div class="col-auto">
                             <h3>Latest Sales</h3>
@@ -577,8 +181,9 @@
                                 <td class="align-middle white-space-nowrap py-0 slno"></td>
                                 <td class="order align-middle white-space-nowrap py-0">{{order.so_order_id}}
                                 </td>
-                                <td class="total align-middle text-end fw-semi-bold text-1000">{{order.total_cost}}</td>
-                                <td class="customer align-middle white-space-nowrap ps-8">
+                                <td class="align-middle text-end fw-semi-bold text-1000">₹{{order.total_cost}}</td>
+                                <td style="display:none;" class="total align-middle text-end fw-semi-bold text-1000">{{order.total_cost}}</td>
+                                <td class="align-middle white-space-nowrap ps-8">
                                     <a class="d-flex align-items-center"
                                        href="{% url 'customer_details_area_head' order.so_customer_id %}">
                                         <div class="avatar avatar-m">
@@ -587,6 +192,9 @@
                                         </div>
                                         <h6 class="mb-0 ms-3 text-900">{{order.customer_name}}</h6>
                                     </a>
+                                </td>
+                                <td style="display:none;" class="customer align-middle white-space-nowrap ps-8">
+                                    {{order.customer_name}}
                                 </td>
                                 <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                     {% if order.so_payment_status == 1 %}
@@ -600,7 +208,7 @@
                                             class="badge-label">REFUNDED</span></span>
                                     {% endif %}
                                 </td>
-                                <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                <td class="align-middle white-space-nowrap text-start fw-bold text-700">
                                     {% if order.so_order_status == 1 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                             class="badge-label">NEW</span></span>
@@ -624,17 +232,39 @@
                                             class="badge-label">CANCELLED</span></span>
                                     {% endif %}
                                 </td>
-                                <td class="createdBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                <td style="display:none;" class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                    {% if order.so_order_status == 1 %}
+                                    NEW
+                                    {% elif order.so_order_status == 2 %}
+                                    PROCESSING
+                                    {% elif order.so_order_status == 3 %}
+                                    READY
+                                    {% elif order.so_order_status == 4 %}
+                                    DISPATCHED
+                                    {% elif order.so_order_status == 5 %}
+                                    READY IN STORE
+                                    {% elif order.so_order_status == 6 %}
+                                    DELIVERED CUSTOMER
+                                    {% elif order.so_order_status == 7 %}
+                                    CANCELLED
+                                    {% endif %}
+                                </td>
+                                <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_employees' order.so_created_by %}">{{order.creator_name}}</a>
                                 </td>
-                                <td class="createdOn align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                <td style="display:none;" class="createdBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    {{order.creator_name}}
+                                </td>
+                                <td class="createdOn align-middle white-space-nowrap text-700 fs--1">
                                     {{order.so_created_on}}
                                 </td>
-                                <td class="updatedBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_employees' order.so_updated_by %}">{{order.updater_name}}</a>
-
                                 </td>
-                                <td class="updatedOn align-middle white-space-nowrap text-700 fs--1 ps-4 text-end">
+                                <td style="display:none;" class="updatedBy align-middle white-space-nowrap text-900 fs--1 text-start">
+                                    {{order.updater_name}}
+                                </td>
+                                <td class="updatedOn align-middle white-space-nowrap text-700 fs--1">
                                     {{order.so_updated_on}}
                                 </td>
                             </tr>

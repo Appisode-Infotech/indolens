@@ -117,7 +117,7 @@ def forgot_password(email):
             reset_pwd_link = f"{get_base_url()}/own_store/reset_password/code={pwd_code}"
             print(reset_pwd_link)
 
-            check_email_query = f"""SELECT os_email, os_status, os_name FROM own_store_employees WHERE os_email = '{email}'"""
+            check_email_query = f"""SELECT ose_email, ose_status, ose_name FROM own_store_employees WHERE ose_email = '{email}'"""
             cursor.execute(check_email_query)
             check_email = cursor.fetchone()
 
@@ -127,13 +127,13 @@ def forgot_password(email):
                     "message": "Please enter the valid email to reset the password"
                 }, 200
 
-            elif check_email is not None and check_email['os_status'] != 0:
-                update_pwd_code_query = f"""INSERT INTO reset_password (email, code, status, created_on) 
+            elif check_email is not None and check_email['ose_status'] != 0:
+                update_pwd_code_query = f"""INSERT INTO reset_password (rpwd_email, rpwd_code, rpwd_status, rpwd_created_on) 
                                             VALUES (%s, %s, %s, %s)"""
                 cursor.execute(update_pwd_code_query, (email, pwd_code, 0, getIndianTime()))
 
                 subject = email_template_controller.get_password_reset_email_subject(email)
-                body = email_template_controller.get_password_reset_email_body(check_email['os_name'], reset_pwd_link, email)
+                body = email_template_controller.get_password_reset_email_body(check_email['ose_name'], reset_pwd_link, email)
                 email_response = send_notification_controller.send_email(subject, body, email)
                 print(email_response.status_code)
 
@@ -170,7 +170,7 @@ def check_link_validity(code):
 
             if link_validity is None:
                 return {
-                    "status": True,
+                    "status": False,
                     "message": "Invalid link to reset Password",
                     "email": ""
                 }, 200
@@ -184,7 +184,7 @@ def check_link_validity(code):
 
                 if link_validity is not None and (link_validity['rpwd_status'] == 1 or time_difference_mins > 15):
                     return {
-                        "status": True,
+                        "status": False,
                         "message": "Password reset link has been expired",
                         "email": ""
                     }, 200

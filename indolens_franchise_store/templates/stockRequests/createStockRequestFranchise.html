@@ -194,7 +194,7 @@
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
                                                 class="dropdown-item" data-bs-target="#verticallyCentered"
                                                 data-bs-product-id="{{product.ci_product_id}}"
-                                                data-bs-target-store-id="{{product.ci_target_store_id}}"
+                                                data-bs-target-store-id="{{product.target_store_id}}"
                                                 data-bs-unit-cost="{{product.ci_franchise_sale_price}}"
                                                 data-bs-toggle="modal">Request</a>
                                         </div>
@@ -224,9 +224,12 @@
                                             <label class="form-label" for="product_id">Product
                                                 ID</label>
 
+                                            <input class="form-control" readonly id="product_id_show"
+                                                   required="" name="product_id_show"
+                                                   type="text"/>
                                             <input class="form-control" readonly id="product_id"
                                                    required="" name="product_id"
-                                                   type="text"/>
+                                                   type="hidden"/>
                                         </div>
 
                                         <div class="col-12">
@@ -329,6 +332,7 @@ document.addEventListener("DOMContentLoaded", function () {
     var enableDisableButtons = document.querySelectorAll('[data-bs-target="#verticallyCentered"]');
     var modal = document.getElementById('verticallyCentered');
     var productIdField = modal.querySelector('#product_id');
+    var productIdFieldShow = modal.querySelector('#product_id_show');
     var targetStoreField = modal.querySelector('#request_to_store_id');
     var unitCostField = modal.querySelector('#unit_cost');
 
@@ -340,6 +344,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var unitCost = event.currentTarget.getAttribute('data-bs-unit-cost');
 
             productIdField.value = productId;
+            productIdFieldShow.value = "PID"+productId;
             targetStoreField.value = targetStore;
             unitCostField.value = unitCost;
         });

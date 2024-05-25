@@ -186,11 +186,17 @@ def get_all_central_inventory_products(store_id):
                                                             LEFT JOIN own_store AS os ON os.os_store_id = store_products.si_store_id 
                                                             AND si.si_store_type = 1
                                                             WHERE store_products.si_store_type = 1 AND 
-                                                            store_products.si_product_quantity != 0 AND store_products.si_store_id != {store_id}
+                                                            store_products.si_product_quantity != 0
                                                             GROUP BY store_products.si_store_inventory_id ORDER BY store_products.si_store_inventory_id DESC"""
 
             cursor.execute(get_stores_product_query)
             store_product_list = cursor.fetchall()
+            if product_list == ():
+                print("product is NONE")
+                product_list = []
+            if store_product_list == ():
+                print("store product is none")
+                store_product_list = []
             return {
                 "status": True,
                 "product_list": (product_list + store_product_list)

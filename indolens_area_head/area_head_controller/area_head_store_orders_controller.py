@@ -11,7 +11,6 @@ def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
 def get_all_orders(status, pay_status, store_id):
-    print(store_id)
     status_conditions = {
         "All": "LIKE '%'",
         "New": "= 1",

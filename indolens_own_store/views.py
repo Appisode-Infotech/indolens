@@ -53,7 +53,8 @@ def login(request):
 def forgotPassword(request):
     if request.method == 'POST':
         response, status_code = own_store_auth_controller.forgot_password(request.POST['email'])
-        return render(request, 'auth/own_store_forgot_password.html', {"message": response['message']})
+        return render(request, 'auth/own_store_forgot_password.html',
+                      {"message": response['message'], "status": response['status']})
     else:
         return render(request, 'auth/own_store_forgot_password.html', {"status": False})
 
@@ -64,11 +65,13 @@ def resetPassword(request, code):
                                                                                          request.POST['email'])
         print(response)
         print(status_code)
-        return render(request, 'auth/own_store_reset_password.html', {"code": code, "message": response['message']})
+        return render(request, 'auth/own_store_reset_password.html',
+                      {"status": response['status'], "message": response['message']})
     else:
         response, status_code = own_store_auth_controller.check_link_validity(code)
         return render(request, 'auth/own_store_reset_password.html',
-                      {"code": code, "message": response['message'], "email": response['email']})
+                      {"code": code, "message": response['message'], "email": response['email'],
+                       "status": response['status']})
 
 
 def storeEmployeeLogout(request):
@@ -184,7 +187,7 @@ def processingStoreOrders(request):
         return redirect('own_store_login')
 
 
-def readyStoreOrders(request):
+def readylabOrders(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('Ready', 'All',
@@ -198,7 +201,7 @@ def completedStoreOrders(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('Delivered Customer', 'All',
-                                                                                assigned_store)
+                                                                          assigned_store)
         return render(request, 'orders/deliveredStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
@@ -209,7 +212,7 @@ def DeliveredStoreOrders(request):
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         orders_list, status_code = store_orders_controller.get_all_orders('Delivered Store', 'All',
                                                                           assigned_store)
-        return render(request, 'orders/deliveredStoreOrders.html', {"orders_list": orders_list["orders_list"]})
+        return render(request, 'orders/readyStoreOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('own_store_login')
 
@@ -240,7 +243,8 @@ def orderDetails(request, orderId):
         order_detail, order_status_code = orders_controller.get_order_details(orderId)
         print(order_detail['orders_details'][0]['so_assigned_lab'])
         payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
-        lab_details, lab_status_code = lab_controller.get_lab_by_id(order_detail['orders_details'][0]['so_assigned_lab'])
+        lab_details, lab_status_code = lab_controller.get_lab_by_id(
+            order_detail['orders_details'][0]['so_assigned_lab'])
         return render(request, 'orders/orderDetails.html', {"order_detail": order_detail['orders_details'],
                                                             "payment_logs": payment_logs['payment_logs'],
                                                             "lab_details": lab_details['lab_data']})

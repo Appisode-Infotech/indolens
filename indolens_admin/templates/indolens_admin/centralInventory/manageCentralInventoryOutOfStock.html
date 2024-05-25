@@ -90,12 +90,12 @@
                     <li class="nav-item"><a aria-current="page" class="nav-link filter active" href="#filter-all-category">All</a></li>
                     {% for category in categories_list %}
                     <li class="nav-item">
-                        <a class="nav-link filter" href="#filter-filterIn_{{ category.pc_category_name }}-category">{{ category.pc_category_name }}</a>
+                        <a class="nav-link filter" href="#filter-filterIn_{{ category.pc_category_name }}{{ category.pc_category_name }}-category">{{ category.pc_category_name }}</a>
                     </li>
                     {% endfor %}
                 </ul>
 
-                <div data-list='{"valueNames":["slno","product","price","category","brand","quantity","date"],"page":20,"pagination":true}'
+                <div data-list='{"valueNames":["slno","productId","product","price","category","brand","quantity","date"],"page":20,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -113,22 +113,6 @@
                             <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
                                 <div class="btn-group position-static" role="group">
                                     <div class="btn-group position-static text-nowrap">
-<!--                                        <button aria-expanded="false"-->
-<!--                                                aria-haspopup="true"-->
-<!--                                                class="btn btn-phoenix-secondary px-7 flex-shrink-0"-->
-<!--                                                data-boundary="window"-->
-<!--                                                data-bs-reference="parent" data-bs-toggle="dropdown"-->
-<!--                                                type="button">-->
-<!--                                            Category<span class="fas fa-angle-down ms-2"></span></button>-->
-<!--                                        <ul class="dropdown-menu">-->
-<!--                                            <li><a class="dropdown-item" href="#">Action</a></li>-->
-<!--                                            <li><a class="dropdown-item" href="#">Another action</a></li>-->
-<!--                                            <li><a class="dropdown-item" href="#">Something else here</a></li>-->
-<!--                                            <li>-->
-<!--                                                <hr class="dropdown-divider"/>-->
-<!--                                            </li>-->
-<!--                                            <li><a class="dropdown-item" href="#">Separated link</a></li>-->
-<!--                                        </ul>-->
                                     </div>
                                 </div>
                             </div>
@@ -148,6 +132,9 @@
                                     <th class="sort white-space-nowrap align-middle ps-0" data-sort="slno"
                                          scope="col"
                                         style="width:50px;">SL NO
+                                    </th>
+                                    <th class="sort white-space-nowrap align-middle ps-0" data-sort="productId"
+                                        scope="col" style="width:350px;">PRODUCT ID
                                     </th>
                                     <th class="sort white-space-nowrap align-middle fs--1" scope="col"
                                         style="width:250px;">PRODUCT IMAGE</th>
@@ -180,7 +167,7 @@
                                 {% for product in stocks_list %}
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"  data-category="{{ product.ci_category_name }}">
                                     <td class="order align-middle white-space-nowrap py-0 slno"></td>
-
+                                    <td class="order align-middle white-space-nowrap py-0 productId"> PID{{product.ci_product_id}}</td>
                                     <td class="align-middle white-space-nowrap py-0">
                                         <a href="{{ MEDIA_URL }}{{ product.product_images }}" target="_blank">
                                             <div class="avatar avatar-m">
@@ -200,8 +187,11 @@
                                     <td style="display:none;" class="price align-middle white-space-nowrap text-end fw-bold text-700 ps-4">
                                         {{product.ci_sale_price}}
                                     </td>
-                                    <td class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        <p style="display: none;">filterIn_{{product.pc_category_name}}</p>{{product.pc_category_name}}
+                                    <td class=" align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                        {{product.pc_category_name}}
+                                    </td>
+                                    <td style="display:none;" class="category align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
+                                        filterIn_{{product.pc_category_name}}{{product.pc_category_name}}
                                     </td>
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
                                         {{product.brand_name}}

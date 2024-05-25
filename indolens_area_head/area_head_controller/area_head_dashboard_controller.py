@@ -4,9 +4,12 @@ import pytz
 from indolens.db_connection import getConnection
 
 ist = pytz.timezone('Asia/Kolkata')
+
+
 def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
+
 
 def get_order_stats(status, store_type):
     status_conditions = {
@@ -53,6 +56,31 @@ def get_sales_stats(store):
                 "sale": total_sale
             }, 200
 
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_store_employee_stats(store):
+    print(store)
+    try:
+        with getConnection().cursor() as cursor:
+            get_order_query = f"""
+                                SELECT COUNT(*) AS employee_count
+                                FROM own_store_employees
+                                WHERE ose_assigned_store_id IN {store} 
+                                """
+            cursor.execute(get_order_query)
+            orders_list = cursor.fetchone()
+
+            stores_tuple = eval(store)
+
+            return {
+                "status": True,
+                "employee_count": orders_list['employee_count'],
+                "store_count": len(stores_tuple)
+            }, 200
 
     except pymysql.Error as e:
         return {"status": False, "message": str(e)}, 301

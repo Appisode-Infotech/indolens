@@ -196,7 +196,7 @@
                                         <div class="dropdown-menu dropdown-menu-end py-2"><a
                                                 class="dropdown-item" data-bs-target="#verticallyCentered"
                                                 data-bs-product-id="{{product.ci_product_id}}"
-                                                data-bs-target-store-id="{{product.ci_target_store_id}}"
+                                                data-bs-target-store-id="{{product.target_store_id}}"
                                                 data-bs-unit-cost="{{product.ci_franchise_sale_price}}"
                                                 data-bs-toggle="modal">Request</a>
                                         </div>
@@ -227,9 +227,12 @@
                                             <label class="form-label" for="product_id">Product
                                                 ID</label>
 
+                                            <input class="form-control" readonly id="product_id_show"
+                                                   required="" name="product_id_show"
+                                                   type="text"/>
                                             <input class="form-control" readonly id="product_id"
                                                    required="" name="product_id"
-                                                   type="text"/>
+                                                   type="hidden"/>
                                         </div>
 
                                         <div class="col-12">
@@ -341,10 +344,12 @@ document.addEventListener("DOMContentLoaded", function () {
         enableDisableButtons.forEach(function (button) {
             button.addEventListener('click', function (event) {
                 var productId = event.currentTarget.getAttribute('data-bs-product-id');
+                var productIdFieldShow = modal.querySelector('#product_id_show');
                 var targetStore = event.currentTarget.getAttribute('data-bs-target-store-id');
                 var unitCost = event.currentTarget.getAttribute('data-bs-unit-cost');
 
                 productIdField.value = productId;
+                productIdFieldShow.value = "PID"+productId;
                 targetStoreField.value = targetStore;
                 unitCostField.value = unitCost;
             });

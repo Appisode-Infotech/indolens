@@ -55,7 +55,8 @@ def login(request):
 def forgotPassword(request):
     if request.method == 'POST':
         response, status_code = franchise_store_auth_controller.forgot_password(request.POST['email'])
-        return render(request, 'auth/franchise_store_forgot_password.html', {"message": response['message']})
+        return render(request, 'auth/franchise_store_forgot_password.html',
+                      {"message": response['message'], "status": response['status']})
     else:
         return render(request, 'auth/franchise_store_forgot_password.html', {"status": False})
 
@@ -65,11 +66,12 @@ def resetPassword(request, code):
         response, status_code = franchise_store_auth_controller.update_store_employee_password(request.POST['password'],
                                                                                                request.POST['email'])
         return render(request, 'auth/franchise_store_reset_password.html',
-                      {"code": code, "message": response['message']})
+                      {"code": code, "message": response['message'], "status": response['status']})
     else:
         response, status_code = franchise_store_auth_controller.check_link_validity(code)
         return render(request, 'auth/franchise_store_reset_password.html',
-                      {"code": code, "message": response['message'], "email": response['email']})
+                      {"code": code, "message": response['message'], "email": response['email'],
+                       "status": response['status']})
 
 
 def franchiseStoreLogout(request):
@@ -185,7 +187,7 @@ def deliveredFranchiseOrders(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         orders_list, status_code = franchise_store_orders_controller.get_all_orders('Delivered Customer', 'All',
-                                                                                          assigned_store)
+                                                                                    assigned_store)
         return render(request, 'orders/deliveredFranchiseOrders.html', {"orders_list": orders_list["orders_list"]})
     else:
         return redirect('franchise_store_login')
@@ -363,7 +365,7 @@ def createStockRequestFranchise(request):
             return redirect('create_request_franchise_store')
         else:
             response, status_code = franchise_inventory_controller.get_all_central_inventory_products(assigned_store)
-
+            print(response)
             return render(request, 'stockRequests/createStockRequestFranchise.html',
                           {"product_list": response['product_list']})
     else:
@@ -603,9 +605,11 @@ def franchiseStoreEyeTestPrint(request, testId):
     else:
         return redirect('franchise_store_login')
 
+
 def viewFranchiseJobAuthenticityCard(request, saleId, frame):
     assigned_store = getAssignedStores(request)
-    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
         print(job_detail)
         return render(request, 'orders/authenticityCar.html', {"order_detail": job_detail['orders_details'],
@@ -613,9 +617,11 @@ def viewFranchiseJobAuthenticityCard(request, saleId, frame):
     else:
         return redirect('franchise_store_login')
 
+
 def franchiseStoreContactLensPowerCard(request, saleId):
     assigned_store = getAssignedStores(request)
-    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
         print(job_detail)
         return render(request, 'indolens_admin/labs/contactLensPowerCard.html',
@@ -623,9 +629,11 @@ def franchiseStoreContactLensPowerCard(request, saleId):
     else:
         return redirect('franchise_store_login')
 
+
 def viewFranchiseJobItemDetails(request, saleId):
     assigned_store = getAssignedStores(request)
-    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get('is_franchise_store_logged_in') is True:
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
         print(job_detail['frame_list'])
         return render(request, 'orders/franchiseJobItemDetails.html',

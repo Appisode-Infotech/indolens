@@ -137,9 +137,12 @@
                             {% for store in own_stores %}
                             <tr class="position-static">
                                 <td class="align-middle white-space-nowrap py-0 slno"></td>
-                                <td class="align-middle time white-space-nowrap ps-0 storeName py-4"><a
+                                <td class="align-middle time white-space-nowrap ps-0 py-4"><a
                                         class="text-decoration-none fw-bold fs-0"
                                         href="{% url 'view_own_store_area_head' store.os_store_id %}">{{store.os_store_name}}</a>
+                                </td>
+                                <td style="display:none;" class="align-middle time white-space-nowrap ps-0 storeName py-4">
+                                    {{store.os_store_name}}
                                 </td>
 
                                 <td class="align-middle white-space-nowrap displayName ps-3 py-4">
