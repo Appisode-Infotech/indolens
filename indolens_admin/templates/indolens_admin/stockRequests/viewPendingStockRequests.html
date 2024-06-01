@@ -323,9 +323,9 @@
                                                data-bs-toggle="modal"
                                                data-bs-target="#reject_modal"
                                                data-employee-id="{{ stock.pr_request_products_id }}"
-                                               data-employee-name="{{ stock.product_name }}"
+                                               data-employee-name="{{ stock.ci_product_name }}"
                                                data-action-type="reject"
-                                               data-action-store-type="{{stock.store_type}}"
+                                               data-action-store-type="{{stock.pr_store_type}}"
                                                data-action-by="{{stock.store_name}}"
                                                data-action-url="{% url 'change_stock_request_status' 'Pending' stock.pr_request_products_id 2 %}">Reject</a>
 

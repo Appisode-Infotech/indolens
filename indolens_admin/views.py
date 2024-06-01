@@ -2354,7 +2354,6 @@ def viewRefundedOrders(request, store):
 def viewOrderDetails(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         order_detail, order_status_code = orders_controller.get_order_details(orderId)
-        print(order_detail)
         payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
         # print(payment_logs)
         return render(request, 'indolens_admin/orders/viewOrderDetails.html',
@@ -3110,23 +3109,17 @@ def manageMoveStocks(request):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         if request.method == 'POST':
             stock_obj = store_create_stock_request_model.store_create_stock_request_model_from_dict(request.POST)
-            print(vars(stock_obj))
             if request.POST['own_store_id'] != '':
                 store_id = request.POST['own_store_id']
             else:
                 store_id = request.POST['franchise_store_id']
             response = central_inventory_controller.create_store_stock_request(stock_obj, store_id)
-            print(response)
             return redirect('manageMoveStocks')
         else:
             moved_stocks, status_code = central_inventory_controller.get_all_moved_stocks_list('1')
-            print(moved_stocks)
             own_store, status_code = own_store_controller.get_all_own_stores('Active')
-            # print(own_store)
             franchise_store, status_code = franchise_store_controller.get_all_franchise_stores('Active')
-            # print(franchise_store)
             products, status_code = central_inventory_controller.get_central_inventory_products_to_move('Active')
-            # print(products)
             return render(request, 'indolens_admin/centralInventory/manageMoveStocks.html',
                           {"own_store_list": own_store['own_stores'], "products": products['product_list'],
                            "franchise_store_list": franchise_store['franchise_store'],

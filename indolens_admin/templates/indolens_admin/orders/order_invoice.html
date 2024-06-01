@@ -206,7 +206,7 @@ body {
                                 <th scope="row" class="align-middle">Order No</th>
                                 <td class="align-middle"><b>{{order_detail.0.so_order_id}}</b></td>
                                 <th scope="row" class="align-middle">GSTIN</th>
-                                {% if order_detail.0.so_created_by_store == 1 %}
+                                {% if order_detail.0.so_created_by_store_type == 1 %}
                                 <td class="align-middle">{{store_data.os_store_gst}}</td>
                                 {% else %}
                                 <td class="align-middle">{{store_data.fs_store_gst}}</td>
@@ -216,7 +216,7 @@ body {
                                 <th scope="row" class="align-middle">Order Date</th>
                                 <td class="align-middle">{{order_detail.0.so_created_on|date:"d/m/Y h:i A"}}</td>
                                 <th scope="row" class="align-middle">Sold by</th>
-                                {% if order_detail.0.so_created_by_store == 1 %}
+                                {% if order_detail.0.so_created_by_store_type == 1 %}
                                 <td class="align-middle" colspan="3">{{store_data.os_store_name}}<br/>{{store_data.os_store_address}}
                                     <br/>{{store_data.os_store_email}}<br/>{{store_data.os_store_phone}}
                                 </td>
@@ -309,8 +309,7 @@ body {
                                 <td colspan="1"></td>
                                 <td colspan="1"></td>
                                 <td class="align-middle fw-semi-bold" colspan="1"><b>Subtotal</b></td>
-                                <td style="text-align: end;" class="align-middle text-end fw-bold" colspan="2">₹
-                                    {{order_detail.0.total_cost }}
+                                <td style="text-align: end;" class="align-middle text-end fw-bold" colspan="2">₹{{order_detail.0.discount_cost }}
                                 </td>
                             </tr>
                             <tr>
@@ -342,8 +341,7 @@ body {
                             <tr class="bg-200">
                                 <td class="align-middle ps-4 fw-bold text-1000" colspan="2"><b>Balance Amount</b></td>
                                 <td id="totalWords" class="align-middle fw-bold text-1000" colspan="7"></td>
-                                <td class="align-middle text-end fw-bold" style="text-align: end; font-weight: bold;"
-                                    id="balance">
+                                <td class="align-middle text-end fw-bold" style="text-align: end; font-weight: bold;"> ₹{{order_detail.0.balance_amount}}
                                 </td>
                             </tr>
                             {% else %}
@@ -408,8 +406,8 @@ body {
 </body>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
-        var totalCost = {{ order_detail.0.so_total_cost }};
-        var discountCost = {{ order_detail.0.so_discount_cost }};
+        var totalCost = {{ order_detail.0.total_cost }};
+        var discountCost = {{ order_detail.0.discount_cost }};
         var amountPaid = {{order_detail.0.so_amount_paid}};
 
         var discountedAmount = totalCost - discountCost;
@@ -487,11 +485,11 @@ body {
     }
     console.log(discountCostText);
 
-    const totalWords2 = numberToWords({{ order_detail.0.so_discount_cost }});
+    const totalWords2 = numberToWords({{ order_detail.0.discount_cost }});
     if(document.getElementById('totalWords2')){
         document.getElementById('totalWords2').innerText = totalWords2 + ' Rupees Only';
     }
-        const totalWords = numberToWords(grandTotalInNumber);
+    const totalWords = numberToWords({{order_detail.0.balance_amount}});
 
     if(document.getElementById('totalWords')){
         document.getElementById('totalWords').innerText = totalWords + ' Rupees Only';

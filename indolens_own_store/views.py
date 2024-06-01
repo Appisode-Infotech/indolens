@@ -241,7 +241,6 @@ def orderDetails(request, orderId):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         order_detail, order_status_code = orders_controller.get_order_details(orderId)
-        print(order_detail['orders_details'][0]['so_assigned_lab'])
         payment_logs, payment_status_code = orders_controller.get_payment_logs(orderId)
         lab_details, lab_status_code = lab_controller.get_lab_by_id(
             order_detail['orders_details'][0]['so_assigned_lab'])
