@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens-{{order_detail.0.so_order_id}}</title>
+    <title>Indolens-StockMovement{{stocks_request.pr_request_products_id}}</title>
     {% load static %}
 
 
@@ -189,13 +189,13 @@ body {
                     {% if invoice_details.invoice_invoice_number|length != 0 %}
                     <h1 class="mb-3">Invoice</h1>
                     {% else %}
-                    <h1 class="mb-3">Franchise Stock Movement Challan</h1>
+                    <h1 class="mb-3">Franchise Stock Movement Invoice</h1>
                     {% endif %}
                     <div class="table-responsive">
                         <table class="table table-borderless">
                             <tbody>
                             <tr>
-                                <th scope="row" class="align-middle">Order No</th>
+                                <th scope="row" class="align-middle">Stock Movement No</th>
                                 <td class="align-middle"><b>{{stocks_request.pr_request_products_id}}</b></td>
                                 <th scope="row" class="align-middle">GSTIN</th>
                                 {% if stocks_request.pr_request_to_store_id == 0 %}
@@ -209,9 +209,9 @@ body {
                                 {% endif %}
                             </tr>
                             <tr>
-                                <th scope="row" class="align-middle">Order Date</th>
+                                <th scope="row" class="align-middle">Stock Movement Date</th>
                                 <td class="align-middle">{{stocks_request.pr_created_on|date:"d/m/Y h:i A"}}</td>
-                                <th scope="row" class="align-middle">Sold by</th>
+                                <th scope="row" class="align-middle">Sold By</th>
                                 {% if stocks_request.pr_request_to_store_id == 0 %}
                                 <td class="align-middle" colspan="3">
                                     <p class="fs--1 text-800 fw-semi-bold mb-0">Central Inventory</p>
@@ -226,7 +226,7 @@ body {
 
                             </tr>
                             <tr>
-                                <th scope="row" class="align-middle">Billing Address :</th>
+                                <th scope="row" class="align-middle">Billing Address</th>
                                 <td class="align-middle" colspan="3">
                                     <div class="fs--1 text-800 fw-semi-bold mb-0">
                                             <p class="mb-2">{{stocks_request.store_name}}</p>
@@ -239,7 +239,7 @@ body {
                                 </td>
                             </tr>
                             <tr>
-                                <th scope="row" class="align-middle">Shipping Address :</th>
+                                <th scope="row" class="align-middle">Shipping Address</th>
                                 <td class="align-middle" colspan="3">
                                     <div class="fs--1 text-800 fw-semi-bold mb-0">
                                             <p class="mb-2">{{stocks_request.store_name}}</p>

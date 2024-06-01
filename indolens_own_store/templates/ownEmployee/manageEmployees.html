@@ -174,7 +174,7 @@
                                     <a href="mailto:{{employee.ose_email}}">{{employee.ose_email}}</a>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap text-end role">
+                                <td class="align-middle white-space-nowrap role">
                                     {% if employee.ose_role == 1 %}
                                     <p class="mb-0 fs--1 text-900">Store Manager</p>
                                     {% elif employee.ose_role == 2 %}
@@ -185,7 +185,7 @@
                                         <p class="mb-0 fs--1 text-900">House Keeping</p>
                                     {% endif %}
 
-                                <td class="align-middle white-space-nowrap text-end status">
+                                <td class="align-middle white-space-nowrap status">
                                     {% if employee.ose_status == 0 %}
                                     <span class="badge badge-phoenix fs--2 badge-phoenix-danger">InActive</span></td>
                                     {% elif employee.ose_status == 1 %}
