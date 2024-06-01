@@ -182,71 +182,54 @@
                         <table class="table fs--1 mb-0 border-top border-200" id="myTable">
                             <thead>
                             <tr>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="slNo"
-                                    scope="col" style="width:30%;">SL NO
+                                <th class="sort white-space-nowrap align-middle " data-sort="SlNo"
+                                    scope="col" style="width:5%;">SL NO
                                 </th>
-                                <th class="sort white-space-nowrap align-middle ps-0" data-sort="reason"
-                                    scope="col" style="width:30%;">REASON
+                                <th class="sort white-space-nowrap align-middle " data-sort="reason"
+                                    scope="col" style="width:5%;">REASON
                                 </th>
-                                <th class="sort align-middle ps-3" data-sort="amount" scope="col" style="width:10%;">
+                                <th class="sort align-middle text-end" data-sort="amount" scope="col" style="width:3%;">
                                     AMOUNT
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="date" scope="col" style="width:10%;">
+                                <th class="sort align-middle " data-sort="date" scope="col" style="width:5%;">
                                     DATE
                                 </th>
 
-                                <th class="sort align-middle ps-3" data-sort="createdBy" scope="col"
+                                <th class="sort align-middle" data-sort="createdBy" scope="col"
                                     style="width:5%;">CREATED BY
                                 </th>
-
-
                             </tr>
                             </thead>
                             <tbody class="list" id="project-list-table-body">
                             {% for expense in stor_expense_list %}
                             <tr class="position-static">
-                                <td class="align-middle white-space-nowrap py-0 slNo"></td>
+                                <td class="align-middle white-space-nowrap SlNo"></td>
 
-                                <td class="align-middle white-space-nowrap py-4 reason">
+                                <td class="align-middle white-space-nowrap reason">
                                     <p class="mb-0 fs--1 text-900">{{expense.se_expense_reason}}</p>
                                 </td>
-                                <td class="align-middle white-space-nowrap ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900">₹{{expense.se_expense_amount}}</p>
+
+
+                                <td class="align-middle white-space-nowrap text-end">
+                                    <p class="mb-0 fs--1 text-900 text-end">₹{{expense.se_expense_amount}}</p>
                                 </td>
                                 <td style="display:none;" class="align-middle white-space-nowrap ps-3 py-4 amount">
                                     <p class="mb-0 fs--1 text-900">{{expense.se_expense_amount}}</p>
                                 </td>
 
-                                <td class="align-middle white-space-nowrap ps-3 py-4 date">
-                                    <p class="mb-0 fs--1 text-900">{{expense.se_expense_date | date:"d/m/Y H:i A"}}</p>
+                                <td class="align-middle white-space-nowrap date">
+                                    <p class="mb-0 text-900">{{expense.se_created_on|date:"d/m/Y h:i A"}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap">
                                     <a class="text-decoration-none fw-bold fs-0"
-                                       href="{% url 'view_franchise_store_employee_details' expense.se_created_by %}">
-                                        {{expense.creator_name}}</a>
+                                        href="{% url 'view_employee' expense.se_created_by %}">{{expense.creator_name}}</a>
                                 </td>
-                                <td style="display:none;" class="createdBy align-middle white-space-nowrap">
-                                        {{expense.creator_name}}
+                                <td style="display:none;" class="align-middle white-space-nowrap createdBy">
+                                    {{expense.creator_name}}
                                 </td>
 
-<!--                                <td class="align-middle text-end white-space-nowrap pe-0 action">-->
-<!--                                    <div class="font-sans-serif btn-reveal-trigger position-static">-->
-<!--                                        <button aria-expanded="false"-->
-<!--                                                aria-haspopup="true"-->
-<!--                                                class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs&#45;&#45;2"-->
-<!--                                                data-boundary="window"-->
-<!--                                                data-bs-reference="parent" data-bs-toggle="dropdown" type="button">-->
-<!--                                            <span class="fas fa-ellipsis-h fs&#45;&#45;2"></span></button>-->
-<!--                                        <div class="dropdown-menu dropdown-menu-end py-2">-->
-
-<!--                                            <a class="dropdown-item text-success" href="#!">Accept</a>-->
-<!--                                            <div class="dropdown-divider"></div>-->
-<!--                                            <a class="dropdown-item text-danger" href="#!">Reject</a>-->
-<!--                                        </div>-->
-<!--                                    </div>-->
-<!--                                </td>-->
                             </tr>
                             {% endfor %}
                             </tbody>

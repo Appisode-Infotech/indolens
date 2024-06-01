@@ -116,7 +116,7 @@ def get_all_active_store_optometry(assigned_store):
                                             LEFT JOIN admin AS creator ON sm.fse_created_by = creator.admin_admin_id
                                             LEFT JOIN admin AS updater ON sm.fse_last_updated_by = updater.admin_admin_id
                                             WHERE sm.fse_assigned_store_id = '{assigned_store}' AND sm.fse_status = 1 
-                                            AND sm.fse_role != 4
+                                            AND sm.fse_role = 2
                                             ORDER BY sm.fse_employee_id DESC"""
             cursor.execute(get_store_employee_query)
             store_employees = cursor.fetchall()

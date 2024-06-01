@@ -550,17 +550,13 @@ def franchiseStoreEyeTest(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
             response = franchise_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
                                                                         assigned_store)
-            print(response)
             return redirect('get_franchise_eye_test')
         else:
             customerResponse, cust_status_code = franchise_store_customers_controller.get_all_customers()
-            print(customerResponse)
             optometryResponse, cust_status_code = franchise_store_employee_controller.get_all_active_store_optometry(
                 assigned_store)
-            print(optometryResponse)
             return render(request, 'franchiseStoreEyeTest/franchiseStoreEyeTest.html',
                           {'customers_list': customerResponse['customers_list'],
                            'optometry_list': optometryResponse['optometry_list']})

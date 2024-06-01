@@ -230,7 +230,7 @@
                                         {{order.updater_name}}
                                     </td>
                                     <td class="createdOn align-middle white-space-nowrap text-700 ">
-                                        {{order.so_created_on|date:"d/m/Y H:i A"}}
+                                        {{order.so_created_on|date:"d/m/Y h:i A"}}
                                     </td>
                                     <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
                                         <a href="{% url 'view_franchise_store_employee_details' order.so_updated_by %}">{{order.updater_name}}</a>
@@ -239,7 +239,7 @@
                                         {{order.updater_name}}
                                     </td>
                                     <td class="updatedOn align-middle white-space-nowrap text-700 ">
-                                        {{order.so_updated_on|date:"d/m/Y H:i A"}}
+                                        {{order.so_updated_on|date:"d/m/Y h:i A"}}
                                     </td>
                                 </tr>
                                 {% endfor %}
