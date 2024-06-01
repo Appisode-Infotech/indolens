@@ -116,7 +116,7 @@
                                                 <p class="text-800">Joined on: {{optimetry.ose_created_on|date:"d/m/Y h:i A" }}</p>
                                                 {% if optimetry.ose_assigned_store_id != 0 %}
                                                 <p class="text-800">Optometry - <a href="{%url 'view_own_store' optimetry.ose_assigned_store_id %}">
-                                                    {{optimetry.ose_store_name}}
+                                                    {{optimetry.store_name}}
                                                 </a></p>
                                                 {% else %}
                                                 <p class="text-800">Optometry - <span
