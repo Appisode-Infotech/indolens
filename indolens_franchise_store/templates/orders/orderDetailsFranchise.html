@@ -83,20 +83,24 @@
             <div class="mb-9">
                 <h2 class="mb-0">Order : <span>{{order_detail.0.so_order_id}}</span></h2>
                 <div class="d-flex flex-wrap flex-between-center mb-1">
-                    {% if lab_details.0.lab_name != None %}
-                    <p class="text-800 lh-sm mb-0">Lab : {{lab_details.0.lab_name}}
+                    <p class="text-800 lh-sm mb-0">Store :
+                        {% if order_detail.0.so_created_by_store_type == 1%}
+                            {{order_detail.0.store_name}}
+                        {% else %}
+                            {{order_detail.0.store_name}}
+                        {% endif %}
                     </p>
-                    {% else %}
-                    <p class="text-800 lh-sm mb-0">
+                    {% if order_detail.0.so_assigned_lab != 0 %}
+                    <p class="text-800 lh-sm mb-0">Lab : {{order_detail.0.lab_name}}
                     </p>
                     {% endif %}
                     <div class="d-flex">
                         <button class="btn pe-3 ps-0 text-900"><a target="_blank"
                                                                   href="{% url 'order_invoice_franchise_store' order_detail.0.so_order_id %}"><span
                                 class="fas fa-file-invoice"></span> Invoice</a></button>
-                        
                     </div>
                 </div>
+
                 <div class="row g-5 gy-7">
                     <div class="col-12 col-xl-8 col-xxl-9">
                         <div data-list='{"valueNames":["products","color","size","price","quantity","total"],"page":10}'

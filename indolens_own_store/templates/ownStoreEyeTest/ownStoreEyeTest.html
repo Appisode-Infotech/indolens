@@ -133,10 +133,9 @@
                                         <input class="form-control"
                                                name="customer_phone"
                                                placeholder="Phone"
-                                               required="required"
+                                               required="required" max="9999999999" min="1111111111"
                                                onchange="genCustomerObject()"
-
-                                               type="text" value=""/>
+                                               type="number" value=""/>
                                         <div class="invalid-feedback">This field is required.</div>
                                     </div>
                                     <div class="mb2 col-6">

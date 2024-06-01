@@ -133,8 +133,8 @@
                                                placeholder="Phone"
                                                required="required"
                                                onchange="genCustomerObject()"
-
-                                               type="text" value=""/>
+                                               max="9999999999" min="1111111111"
+                                               type="number" value=""/>
                                         <div class="invalid-feedback">This field is required.</div>
                                     </div>
                                     <div class="mb2 col-6">
@@ -469,13 +469,19 @@
                                 </div>
                                 <div class="col-12 col-lg-3 mt-3">
                                     <label class="form-label">PDR</label>
-                                    <input class="form-control" type="text"
-                                           name="pdr"/>
+                                    <input class="form-control"
+                                                   name="pdr"
+                                                   placeholder="PDR"
+                                                   type="text" value=""
+                                                   oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                 </div>
                                 <div class="col-12 col-lg-3 mt-3">
                                     <label class="form-label">PDL</label>
-                                    <input class="form-control" type="text"
-                                           name="pdl"/>
+                                    <input class="form-control"
+                                                   name="pdl"
+                                                   placeholder="PDL"
+                                                   type="text" value=""
+                                                   oninput="event.target.value = event.target.value.replace(/[^-+0-9.]/g, '');"/>
                                 </div>
                             </div>
                         </div>

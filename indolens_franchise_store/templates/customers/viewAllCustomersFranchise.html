@@ -82,7 +82,7 @@
                     </div>
                 </div>
 
-                <div data-list='{"valueNames":["SlNo","customer","email","language","totalOrders","totalSpent","city","lastOrder"],"page":20,"pagination":true}'
+                <div data-list='{"valueNames":["SlNo","customer","email","language","totalOrders","totalSpent","city","createdBY","createdOn"],"page":20,"pagination":true}'
                      id="products">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -131,6 +131,12 @@
                                     <th class="sort align-middle ps-7" data-sort="city" scope="col" style="width:25%;">
                                         CITY
                                     </th>
+                                    <th class="sort align-middle ps-7" data-sort="createdBY" scope="col" style="width:25%;">
+                                        CREATED BY
+                                    </th>
+                                    <th class="sort align-middle ps-7" data-sort="createdOn" scope="col" style="width:25%;">
+                                        CREATED ON
+                                    </th>
 
                                 </tr>
                                 </thead>
@@ -166,6 +172,17 @@
                                     </td>
                                     <td class="city align-middle white-space-nowrap text-1000 ps-7">
                                         {{customer.customer_city}}
+                                    </td>
+                                    <td class="align-middle white-space-nowrap text-1000 ps-7">
+                                        <a class="d-flex align-items-center"
+                                           href="{% url 'view_franchise_store_employee_details' customer.customer_created_by_employee_id %}">
+                                            {{customer.creator_name}}</a>
+                                    </td>
+                                    <td style="display:none;" class="createdBY align-middle white-space-nowrap text-1000 ps-7">
+                                        {{customer.creator_name}}
+                                    </td>
+                                    <td class="createdOn align-middle white-space-nowrap text-1000 ps-7">
+                                        {{customer.customer_created_on|date:"d/m/Y h:i A"}}
                                     </td>
 
                                 </tr>

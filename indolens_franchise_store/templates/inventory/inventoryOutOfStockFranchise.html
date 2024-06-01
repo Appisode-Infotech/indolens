@@ -90,10 +90,10 @@
                 <ul class="nav nav-links mb-3 mb-lg-2 mx-n3">
                     <li class="nav-item"><a aria-current="page" class="nav-link filter active" href="#filter-all-category">All</a></li>
                     {% for category in categories_List %}
-                    {% if category.category_id != 2 and category.category_id != 3 %}
+                    {% if category.pc_category_id != 2 and category.pc_category_id != 3 %}
                     <li class="nav-item">
-                        <a class="nav-link filter" href="#filter-filterIn_{{ category.category_name }}-category">
-                            {{ category.category_name}}</a>
+                        <a class="nav-link filter" href="#filter-filterIn_{{ category.pc_category_name }}-category">
+                            {{ category.pc_category_name}}</a>
                     </li>
                     {% endif %}
                     {% endfor %}
@@ -139,6 +139,8 @@
                                     </th>
                                     <th class="sort white-space-nowrap align-middle pe-3" scope="col"
                                         style="width:5%;">PRODUCT IMAGE</th>
+                                    <th class="sort white-space-nowrap align-middle fs--1" scope="col"
+                                        style="width:70px;">PRODUCT QR</th>
                                     <th class="sort white-space-nowrap align-middle ps-4" data-sort="product"
                                         scope="col" style="width:350px;">PRODUCT NAME
                                     </th>
@@ -176,7 +178,15 @@
                                             </div>
                                         </a>
                                     </td>
+                                    <td class="align-middle white-space-nowrap fw-bold text-700 ps-4 ">
+                                        <a href="{{ MEDIA_URL }}{{ stock.ci_product_qr_code }}" target="_blank">
+                                            <div class="avatar avatar-m">
+                                                <img alt="" class="rounded-circle"
+                                                     src="{{ MEDIA_URL }}{{ stock.ci_product_qr_code }}"/>
+                                            </div>
+                                        </a>
 
+                                    </td>
                                     <td class="align-middle ps-4"><a href="{% url 'view_franchise_store_inventory_products' stock.si_store_inventory_id %}"
                                             class="fw-semi-bold line-clamp-3 mb-0" > {{stock.ci_product_name}}</a>
                                     </td>
