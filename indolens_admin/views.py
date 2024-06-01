@@ -3148,14 +3148,12 @@ def viewAllStockRequests(request):
 def viewStockRequestInvoice(request, requestId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = central_inventory_controller.get_stock_requests_by_id(requestId)
-        print(response['stocks_request'])
         store_data = []
         if response['stocks_request'].get('pr_request_to_store_id') != 0:
             store, resp_status_code = own_store_controller.get_own_store_by_id(
                 response['stocks_request']['pr_request_to_store_id'])
             store_data = store['own_stores']
 
-        print(store_data)
         return render(request, 'indolens_admin/stockRequests/franchiseStockMovementInvoice.html',
                       {"stocks_request": response['stocks_request'], "store_data": store_data})
     else:

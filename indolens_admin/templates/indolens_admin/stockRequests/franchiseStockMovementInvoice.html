@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens admin - Order details</title>
+    <title>Indolens-{{order_detail.0.so_order_id}}</title>
     {% load static %}
 
 
@@ -27,6 +27,8 @@
     <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
     <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
     <script src="{% static 'js/config.js' %}"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/css/bootstrap.min.css"
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <!-- Stylesheets -->
     <link href="https://fonts.googleapis.com" rel="preconnect">
@@ -35,63 +37,123 @@
           rel="stylesheet">
     <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
     <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
-    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
-    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
-
-    <script>
-      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
-      if (isRTL) {
-        var linkDefault = document.getElementById('style-default');
-        var userLinkDefault = document.getElementById('user-style-default');
-        linkDefault.setAttribute('disabled', true);
-        userLinkDefault.setAttribute('disabled', true);
-        document.querySelector('html').setAttribute('dir', 'rtl');
-      } else {
-        var linkRTL = document.getElementById('style-rtl');
-        var userLinkRTL = document.getElementById('user-style-rtl');
-        linkRTL.setAttribute('disabled', true);
-        userLinkRTL.setAttribute('disabled', true);
-      }
-
-
-    </script>
+    <!--    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">-->
+    <!--    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">-->
+    <!--    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">-->
+    <!--    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">-->
     <style>
-    @media print {
-        body, html {
-            width: 100%;
-            margin: 0;
-            padding: 0;
-        }
+        /* Reset some default styles */
+body, h1, h2, h3, p, table {
+    margin: 0;
+    padding: 0;
+}
 
-        .btn {
-            display: none;
-        }
-        table {
-            width: 100%;
-        }
+body {
+    font-family: 'Arial', sans-serif;
+}
 
-        th, td {
-            padding: 8px; /* Adjust padding as needed */
-        }
-        /* Show all table columns when printing */
-        @page {
-            size: auto;
-            margin: 0;
-        }
+/* Main container styling */
+.main {
+    background-color: #f4f4f4;
+}
 
-        table {
-            page-break-inside: auto;
-        }
+/* Header section styling */
+.content {
+    padding: 20px;
+}
 
-        tr {
-            page-break-inside: avoid;
-            page-break-after: auto;
+/* Invoice details section styling */
+.container-small {
+    background-color: #fff;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+/* Table styling */
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-bottom: 20px;
+}
+
+.table th, .table td {
+    border: 1px solid #ddd;
+    padding: 10px;
+    text-align: left;
+}
+
+.table th {
+    background-color: #f2f2f2;
+}
+
+/* Button styling */
+.btn {
+    background-color: #007bff;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+/* Authorized Signatory section styling */
+.text-end h4 {
+    margin-top: 20px;
+}
+
+/* Terms & Conditions section styling */
+.py-4 p {
+    line-height: 1.5;
+}
+
+/* Footer styling */
+.d-flex.justify-content-center.mb-3 {
+    margin-top: 20px;
+}
+
+/* Adjustments for responsiveness */
+@media (max-width: 768px) {
+    .container-small {
+        padding: 15px;
+    }
+
+
+    .table th, .table td {
+        padding: 8px;
+    }
+}
+
+
+@media print {
+    .print-button {
+        display: none;
+    }
+
+    /* Add any additional print-specific styles here */
+}
+
+{% if order_detail.0.so_order_status == 7 %}
+      @media print {
+        body::after {
+          content: "CANCELLED";
+          position: fixed;
+          top: 50%;
+          left: 50%;
+           transform: translate(-50%, -50%) rotate(-45deg); /* Rotate by 45 degrees */
+          font-size: 6em; /* Increase font size */
+          color: rgba(255, 0, 0, 0.5); /* Set the color and transparency of the watermark */
+          text-align: center;
+          z-index: 999;
         }
+      }
+    {% endif %}
+
 
 
     </style>
+
 </head>
 
 
@@ -105,89 +167,68 @@
 
         <div class="content">
 
-            <section class="pt-5 pb-9 bg-white border-top border-300">
 
-                <div class="container-small">
-                    <div class="d-flex justify-content-between align-items-end mb-4">
-                        <h2 class="mb-0">Invoice</h2>
-                        <div>
-                            <button class="btn btn-phoenix-secondary" onclick="window.print()"><span
-                                    class="fa-solid fa-print me-sm-2"></span><span class="d-none d-sm-inline-block">Print</span>
-                            </button>
-                        </div>
+            <div class="container-small">
+                <div class="d-flex justify-content-between align-items-center">
+                    <!-- Other content or elements here -->
+                    <div></div>
+                    <div class="ms-auto">
+                        <button class="btn btn-phoenix-secondary print-button" onclick="window.print()">
+                            <span class="fa-solid fa-print me-sm-2"></span>
+                            <span class="d-none d-sm-inline-block">Print</span>
+                        </button>
                     </div>
-                    <div class="bg-soft p-4 mb-4 rounded-2">
-                        <div class="row g-4">
-                            <div class="col-12 col-lg-3">
-                                <div class="row g-4 g-lg-2">
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="me-3">Invoice Date :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0" id="invoiceDate">
-                                                </p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="me-3">Order No :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{stocks_request.pr_request_products_id}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% if stocks_request.pr_request_to_store_id != 0 %}
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="me-3">GST Reg No :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{store_data.os_store_gst}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    {% endif %}
-                                    <div class="col-12 col-sm-6 col-lg-12">
-                                        <div class="row align-items-center g-0">
-                                            <div class="col-auto col-lg-6 col-xl-5">
-                                                <h6 class="me-3">Order Date :</h6>
-                                            </div>
-                                            <div class="col-auto col-lg-6 col-xl-7">
-                                                <p class="fs--1 text-800 fw-semi-bold mb-0">
-                                                    {{stocks_request.pr_created_on|date:"d/m/Y h:i A"}}</p>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-12 col-lg-5">
-                                <div class="d-flex justify-content-center">
-                                    <div class="col-12 col-lg-4">
-                                        <h6 class="mb-2 me-3">Sold by :</h6>
-                                        {% if stocks_request.pr_request_to_store_id == 0 %}
-                                        <p class="fs--1 text-800 fw-semi-bold mb-0">Central Inventory</p>
-                                        {% else %}
-                                        <p class="fs--1 text-800 fw-semi-bold mb-0">{{store_data.os_store_name}}<br/>
+                </div>
+
+                <div id="invoice_details" class="bg-soft p-4 mb-4 rounded-2">
+                    <div>
+                        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 60px;">
+                        <h2 class="mt-2">Indolens</h2>
+                        <h2 class="mt-2">ಇಂಡೊಲೆನ್ಸ್</h2>
+                    </div>
+                    {% if invoice_details.invoice_invoice_number|length != 0 %}
+                    <h1 class="mb-3">Invoice</h1>
+                    {% else %}
+                    <h1 class="mb-3">Franchise Stock Movement Challan</h1>
+                    {% endif %}
+                    <div class="table-responsive">
+                        <table class="table table-borderless">
+                            <tbody>
+                            <tr>
+                                <th scope="row" class="align-middle">Order No</th>
+                                <td class="align-middle"><b>{{stocks_request.pr_request_products_id}}</b></td>
+                                <th scope="row" class="align-middle">GSTIN</th>
+                                {% if stocks_request.pr_request_to_store_id == 0 %}
+                                <td class="align-middle" colspan="3">
+                                    <p class="fs--1 text-800 fw-semi-bold mb-0">Central Inventory GST</p>
+                                </td>
+                                {% else %}
+                                <td class="align-middle" colspan="3">
+                                    <p class="fs--1 text-800 fw-semi-bold mb-0">{{store_data.os_store_gst}}</p>
+                                </td>
+                                {% endif %}
+                            </tr>
+                            <tr>
+                                <th scope="row" class="align-middle">Order Date</th>
+                                <td class="align-middle">{{stocks_request.pr_created_on|date:"d/m/Y h:i A"}}</td>
+                                <th scope="row" class="align-middle">Sold by</th>
+                                {% if stocks_request.pr_request_to_store_id == 0 %}
+                                <td class="align-middle" colspan="3">
+                                    <p class="fs--1 text-800 fw-semi-bold mb-0">Central Inventory</p>
+                                </td>
+                                {% else %}
+                                <td class="align-middle" colspan="3">
+                                    <p class="fs--1 text-800 fw-semi-bold mb-0">{{store_data.os_store_name}}<br/>
                                             {{store_data.os_store_address}} <br/>{{store_data.os_store_email}}
                                             <br/>{{store_data.os_store_phone}}</p>
-                                        {% endif %}
+                                </td>
+                                {% endif %}
 
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-12 col-sm-6 col-lg-4">
-                                <div class="row g-4">
-                                    <div class="col-12 col-lg-6">
-                                        <h6 class="mb-2"> Billing Address :</h6>
-                                        <div class="fs--1 text-800 fw-semi-bold mb-0">
+                            </tr>
+                            <tr>
+                                <th scope="row" class="align-middle">Billing Address :</th>
+                                <td class="align-middle" colspan="3">
+                                    <div class="fs--1 text-800 fw-semi-bold mb-0">
                                             <p class="mb-2">{{stocks_request.store_name}}</p>
                                             <div style="max-width: 200px;">
                                                 <p class="mb-2">{{stocks_request.store_address}}</p>
@@ -195,10 +236,12 @@
                                             <p class="mb-2">{{stocks_request.store_email}}</p>
                                             <p class="mb-0">{{stocks_request.store_phone}}</p>
                                         </div>
-                                    </div>
-                                    <div class="col-12 col-lg-6">
-                                        <h6 class="mb-2"> Shipping Address :</h6>
-                                        <div class="fs--1 text-800 fw-semi-bold mb-0">
+                                </td>
+                            </tr>
+                            <tr>
+                                <th scope="row" class="align-middle">Shipping Address :</th>
+                                <td class="align-middle" colspan="3">
+                                    <div class="fs--1 text-800 fw-semi-bold mb-0">
                                             <p class="mb-2">{{stocks_request.store_name}}</p>
                                             <div style="max-width: 200px;">
                                                 <p class="mb-2">{{stocks_request.store_address}}</p>
@@ -206,28 +249,26 @@
                                             <p class="mb-2">{{stocks_request.store_email}}</p>
                                             <p class="mb-0">{{stocks_request.store_phone}}</p>
                                         </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
                     </div>
-                    <div class="px-0">
+                </div>
+                <div class="px-0">
                         <div class="table-responsive scrollbar">
                             <table class="table fs--1 text-900 mb-0">
                                 <thead class="bg-200">
                                 <tr>
-                                    <th scope="col" style="width: 24px;"></th>
                                     <th scope="col" colspan="1">Product ID</th>
                                     <th scope="col" colspan="3">Product Name</th>
                                     <th class="text-end" colspan="2">Unit Price</th>
                                     <th class="text-end" colspan="2">Quantity</th>
                                     <th class="text-end" colspan="2">Billing Amount</th>
-                                    <th scope="col" style="width: 24px;"></th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 <tr>
-                                    <td class="align-middle"></td>
                                     <td class="align-middle" colspan="1">
                                         <p class="line-clamp-1 mb-0 fw-semi-bold">
                                             PID{{stocks_request.pr_product_id}}</p>
@@ -245,16 +286,16 @@
                                     <td class="align-middle text-end" colspan="2">
                                         ₹{{stocks_request.billing_amount}}
                                     </td>
-                                    <td class="border-0"></td>
                                 </tr>
 
                                 <tr class="bg-200">
-                                    <td></td>
+                                    <td colspan="1"></td>
+                                    <td colspan="3"></td>
+                                    <td colspan="2"></td>
                                     <td class="align-middle fw-semi-bold" colspan="2">Subtotal</td>
                                     <td class="align-middle text-end fw-bold" colspan="8">
                                         ₹ {{stocks_request.billing_amount}}
                                     </td>
-                                    <td></td>
                                 </tr>
 
                                 </tbody>
@@ -268,10 +309,10 @@
 
 
                     </div>
-                </div>
-                <!-- end of .container-->
 
-            </section>
+            </div>
+            <!-- end of .container-->
+
 
         </div>
     </div>
@@ -297,14 +338,6 @@
 <script src="{% static 'js/phoenix.js' %}"></script>
 
 </body>
-<script>
-    let currentDate = new Date();
 
-    let formattedDate = currentDate.toISOString().split('T')[0];
-
-    document.getElementById("invoiceDate").innerText = formattedDate;
-
-
-</script>
 
 </html>
