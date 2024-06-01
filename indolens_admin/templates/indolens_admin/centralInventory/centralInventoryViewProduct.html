@@ -536,27 +536,30 @@
 <script src="{% static 'js/file-upload-preview.js' %}"></script>
 
 <script>
-    //set valuesfor lens power attribute
     document.addEventListener("DOMContentLoaded", function() {
-        var stockData = {
-            "vision_type": "{{product_data.ci_power_attribute.vision_type}}",
-            "stock_type": "{{product_data.ci_power_attribute.stock_type}}",
-            "index": "{{product_data.ci_power_attribute.index}}",
-            };
+        // Parse the backend data
+        var stockData = {{product_data.ci_power_attribute | safe}};
+
+        console.log(stockData);
 
         // Function to check the corresponding checkbox based on the value
         function checkCheckbox(elementId, valueToCheck) {
             var checkbox = document.getElementById(elementId);
             var correspondingDiv = document.querySelector('.' + elementId);
-            console.log(elementId);
-            if (checkbox && checkbox.value === valueToCheck) {
-                checkbox.checked = true;
-                correspondingDiv.style.display = 'block';
-            } else {
-                checkbox.style.display = 'none';
-                correspondingDiv.style.display = 'none';
-            }
 
+            if (checkbox) {
+                if (checkbox.value === valueToCheck) {
+                    checkbox.checked = true;
+                    correspondingDiv.style.display = 'block';
+                    console.log('Checkbox checked:', elementId);
+                } else {
+                    checkbox.checked = false;
+                    correspondingDiv.style.display = 'none';
+                    console.log('Checkbox not checked:', elementId);
+                }
+            } else {
+                console.log('Checkbox not found:', elementId);
+            }
         }
 
         function setSelectValue(selectId, valueToSelect) {
@@ -568,6 +571,9 @@
                         break;
                     }
                 }
+                console.log('Select value set for', selectId, 'to', valueToSelect);
+            } else {
+                console.log('Select element not found:', selectId);
             }
         }
 
@@ -582,33 +588,36 @@
         checkCheckbox("stockType", stockData.stock_type);
         checkCheckbox("visionType4", stockData.stock_type);
     });
-
-
-
-
-
-
 </script>
 
 
 <script>
     document.addEventListener("DOMContentLoaded", function() {
-        var stockData = {
-            "stock_type": "{{product_data.ci_power_attribute.stock_type}}",
-            "contact_lens_type": "{{product_data.ci_power_attribute.contact_lens_type}}",
-            "contact_lens_disposability": "{{product_data.ci_power_attribute.contact_lens_disposability}}"
-        };
+        // Assuming the backend data is correctly provided as a JSON string
+        var stockData = {{product_data.ci_power_attribute | safe}};
 
         // Function to set the checked attribute for checkboxes
         function setCheckboxValue(elementId, valueToCheck) {
             var checkbox = document.getElementById(elementId);
             var correspondingDiv = document.querySelector('.' + elementId);
-            if (checkbox && checkbox.value === valueToCheck) {
-                checkbox.checked = true;
-                correspondingDiv.style.display = 'block';
-            }else {
-                checkbox.style.display = 'none';
-                correspondingDiv.style.display = 'none';
+            console.log('Checking element:', elementId, 'with value:', valueToCheck);
+
+            if (checkbox) {
+                if (checkbox.value === valueToCheck) {
+                    checkbox.checked = true;
+                    if (correspondingDiv) {
+                        correspondingDiv.style.display = 'block';
+                    }
+                    console.log('Checkbox checked:', elementId);
+                } else {
+                    checkbox.checked = false;
+                    if (correspondingDiv) {
+                        correspondingDiv.style.display = 'none';
+                    }
+                    console.log('Checkbox not checked and hidden:', elementId);
+                }
+            } else {
+                console.log('Checkbox not found:', elementId);
             }
         }
 
@@ -623,13 +632,9 @@
         setCheckboxValue("contact_lens_disposability3", stockData.contact_lens_disposability);
         setCheckboxValue("contact_lens_disposability4", stockData.contact_lens_disposability);
         setCheckboxValue("contact_lens_disposability5", stockData.contact_lens_disposability);
-
-        });
-
-
-
-
+    });
 </script>
+
 
 
 <script src="{% static 'js/breadcrumbs.js' %}"></script>

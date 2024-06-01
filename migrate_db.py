@@ -684,11 +684,8 @@ try:
                  (category_name, category_prefix, category_description, status, created_on, created_by, last_updated_on, last_updated_by) 
                  VALUES 
                  ('Contact Lens', 'IND-CL', 'description for lens goes here', 1, NOW(), 1, NOW(), 1)""")
-    connection.commit()
     print("Tables created successfully!")
 
 except Exception as e:
     print(f"Error: {str(e)}")
 
-finally:
-    connection.close()

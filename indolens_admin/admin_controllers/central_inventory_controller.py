@@ -84,7 +84,6 @@ def get_all_active_types():
 
 
 def add_central_inventory_products(product_obj, file, power_attributes):
-    power_attributes_json = json.dumps(power_attributes)
     frame_type_id_value = product_obj.frame_type_id if product_obj.frame_type_id != '' else 0
     frame_shape_id_value = product_obj.frame_shape_id if product_obj.frame_shape_id != '' else 0
     try:
@@ -129,7 +128,7 @@ def add_central_inventory_products(product_obj, file, power_attributes):
                 'product_gst': product_obj.product_gstin,
                 'discount': product_obj.discount,
                 'franchise_sale_price': product_obj.franchise_sale_price,
-                'power_attribute': json.dumps(power_attributes_json),
+                'power_attribute': json.dumps(power_attributes),
                 'status': 1
             }
 
