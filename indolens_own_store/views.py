@@ -469,20 +469,14 @@ def makeSaleOwnStore(request):
     assigned_store = getAssignedStores(request)
     if request.session.get('is_store_logged_in') is not None and request.session.get('is_store_logged_in') is True:
         if request.method == 'POST':
-            print(request.POST)
             order_id = f"""OS_{assigned_store}_{expense_controller.get_current_epoch_time()}"""
             cart_data = json.loads(request.POST['cartData'])
-            print(cart_data)
             customerData = json.loads(request.POST['customerData'])
-            print(customerData)
             billingDetailsData = json.loads(request.POST['billingDetailsData'])
-            print(billingDetailsData)
             total_amount = request.POST['totalAmount']
-            print(total_amount)
             make_order, status_code = expense_controller.make_sale(cart_data, customerData, billingDetailsData,
                                                                    request.session.get('id'),
                                                                    assigned_store, order_id, total_amount)
-            print(make_order)
             if make_order['status'] == False:
                 return redirect('own_store_make_sale')
             else:
