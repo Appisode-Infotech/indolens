@@ -104,7 +104,6 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                 `customer_updated_on` = '{getIndianTime()}' """
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
-
             if billingDetailsData.get('amount_paid') != '0':
                 order_payment_track_query = f"""INSERT INTO sales_order_payment_track (sopt_order_id, sopt_payment_amount, 
                                                     sopt_payment_mode, sopt_payment_type, sopt_created_by_store, 
@@ -132,7 +131,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             `so_purchase_quantity`, `so_product_total_cost`, `so_discount_percentage`,
                                             `so_is_discount_applied`, `so_power_attribute`, `so_assigned_lab`, 
                                             `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
-                                            `so_payment_mode`, `so_amount_paid`, `so_estimated_delivery_date`, 
+                                            `so_amount_paid`, `so_estimated_delivery_date`, 
                                             `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
                                             `so_updated_on`, `so_created_by_store_type`, `so_sales_note`, `so_linked_item`)
                                             VALUES
@@ -142,7 +141,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                             {discount_percentage}, {is_discount_applied}, 
                                             '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
-                                            {customer_id}, 1, 1, 1, {billingDetailsData.get('paymentMode')}, {billingDetailsData.get('amount_paid')}, %s, 
+                                            {customer_id}, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                             '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
                                             '{getIndianTime()}', 1, '{billingDetailsData.get('saleNote')}', 
@@ -151,8 +150,9 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     cursor.execute(insert_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
 
-                    update_central_Inventory = f"""UPDATE central_inventory SET ci_product_quantity = ci_product_quantity - {new_data.get('purchase_qty')}
-                                                                                                WHERE ci_product_id = {new_data.get('product')}"""
+                    update_central_Inventory = f"""UPDATE central_inventory 
+                                                    SET ci_product_quantity = ci_product_quantity - {new_data.get('purchase_qty')}
+                                                    WHERE ci_product_id = {new_data.get('product')}"""
                     cursor.execute(update_central_Inventory)
 
                 elif new_data.get('product_category_id') == '3':
@@ -167,7 +167,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             `so_purchase_quantity`, `so_product_total_cost`, `so_discount_percentage`,
                                                             `so_is_discount_applied`, `so_power_attribute`, `so_assigned_lab`, 
                                                             `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
-                                                            `so_payment_mode`, `so_amount_paid`, `so_estimated_delivery_date`, 
+                                                            `so_amount_paid`, `so_estimated_delivery_date`, 
                                                             `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
                                                             `so_updated_on`, `so_created_by_store_type`, `so_sales_note`)
                                                             VALUES
@@ -177,14 +177,13 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                             {discount_percentage}, {is_discount_applied}, 
                                                             '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
-                                                            {customer_id}, 
-                                                            1, 1, 1, {billingDetailsData.get('paymentMode')},{billingDetailsData.get('amount_paid')}, %s, 
+                                                            {customer_id}, 1, 1, 1,
+                                                            {int(billingDetailsData.get('amount_paid'))}, %s, 
                                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                                             '{getIndianTime()}', 
                                                             {billingDetailsData.get('orderByEmployee')}, 
                                                             '{getIndianTime()}', 1, '{billingDetailsData.get('saleNote')}') """
-                    cursor.execute(insert_contact_len_sales_query,
-                                   (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
+                    cursor.execute(insert_contact_len_sales_query, (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
 
                     update_central_Inventory = f"""UPDATE central_inventory
                                                 SET ci_product_quantity = ci_product_quantity - {new_data.get('purchase_qty')}
@@ -203,7 +202,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             `so_purchase_quantity`, `so_product_total_cost`, `so_discount_percentage`,
                                                             `so_is_discount_applied`, `so_assigned_lab`, 
                                                             `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
-                                                            `so_payment_mode`, `so_amount_paid`, `so_estimated_delivery_date`, 
+                                                            `so_amount_paid`, `so_estimated_delivery_date`, 
                                                             `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
                                                             `so_updated_on`, `so_power_attribute`, `so_created_by_store_type`, `so_sales_note`)
                                                                     VALUES
@@ -212,15 +211,10 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                     {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                     {discount_percentage}, {is_discount_applied}, 
                                                     {billingDetailsData.get('assignedLab')}, {customer_id}, 1, 
-                                                    1, 1, {billingDetailsData.get('paymentMode')}, {billingDetailsData.get('amount_paid')}, %s, 
-                                                    {store_id}, {billingDetailsData.get('orderByEmployee')}, 
-                                                    '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
-                                                    '{getIndianTime()}', '{power_attributes}', 1 , 
-                                                    '{billingDetailsData.get('saleNote')}')
+                                                    1, 1, {billingDetailsData.get('amount_paid')}, %s,{store_id}, {billingDetailsData.get('orderByEmployee')},'{getIndianTime()}',{billingDetailsData.get('orderByEmployee')},'{getIndianTime()}', '{power_attributes}', 1 , '{billingDetailsData.get('saleNote')}')
                                                 """
 
-                    cursor.execute(insert_contact_len_sales_query,
-                                   (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
+                    cursor.execute(insert_contact_len_sales_query,(convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
                     update_central_Inventory = f"""UPDATE store_inventory SET
                      si_product_quantity = si_product_quantity - {new_data.get('purchase_qty')}
                                           WHERE si_product_id = {new_data.get('product')} AND
