@@ -139,8 +139,8 @@
                 {% csrf_token %}
 
                 <input type="hidden" name="cartData">
-                <input type="hidden" name="totalAmount" id="totalAmount">
                 <input type="hidden" name="customerData">
+                <input type="hidden" name="totalAmount" id="totalAmount">
                 <input type="hidden" name="billingDetailsData">
                 <input type="hidden" id="linkedData" name="linkedData">
             </form>
@@ -1593,6 +1593,7 @@ function addRxContactLensContainer() {
                 </thead>
                 <tbody>
                 <tr>
+
                     <td class="col-auto col-lg-2">
                             <select required name="cl_eye[${productCardCount}]" class="form-select" aria-label="Default select example">
                                 <option value="">Select Eye</option>
@@ -1643,6 +1644,7 @@ function addRxContactLensContainer() {
                                            <div class="invalid-feedback">This field is required.
 
                     </td>
+
                 </tr>
                 </tbody>
             </table>
@@ -2004,31 +2006,32 @@ function updateLensProductFields(selectElement, cardIndex) {
     let stockPowerCard = document.getElementById('stock_power_card[' + cardIndex + ']');
     let rxPowerCard = document.getElementById('rx_power_card[' + cardIndex + ']');
 
-
-    var power_attribute = JSON.parse(selectedProduct.ci_power_attribute);
+    if(selectedProduct!=null){
+    var power_attribute = JSON.parse(selectedProduct?.ci_power_attribute);
+    }
 
     productBrandField.value = selectedProduct?.brand_name ?? '';
-    productLensTypeField.value = power_attribute.vision_type ?? '';
+    productLensTypeField.value = power_attribute?.vision_type ?? '';
     productHsnField.value = selectedProduct?.ci_hsn ?? '';
     productAvailableQtyField.value = selectedProduct?.ci_product_quantity ?? '';
     productUnitPriceField.value = selectedProduct?.ci_sale_price ?? '';
     productUnitTypeField.value = selectedProduct?.unit_name ?? '';
-    stockTypeField.value = power_attribute.stock_type ?? '';
+    stockTypeField.value = power_attribute?.stock_type ?? '';
     productCategoryIdField.value = selectedProduct?.ci_category_id ?? '';
     productNameField.value = selectedProduct?.ci_product_name ?? '';
     productCategoryField.value = selectedProduct?.pc_category_name ?? '';
     productPurchaseQtyField.value = '';
-    lensIndexField.value = power_attribute.index;
+    lensIndexField.value = power_attribute?.index;
     productPurchaseQtyField.max = selectedProduct?.ci_product_quantity;
 
-    if (selectedProduct.ci_discount > 0) {
+    if (selectedProduct?.ci_discount > 0) {
         discountCheckDiv.style.display = 'block';
         discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.ci_discount + '%';
         discountValueField.value = selectedProduct.ci_discount;
     } else {
         discountCheckDiv.style.display = 'none';
     }
-    if (power_attribute.stock_type == 'stock') {
+    if (power_attribute?.stock_type == 'stock') {
         stockPowerCard.style.display = 'block';
         rxPowerCard.style.display = 'none';
         // Remove 'required' attribute from all inputs and selects in rxPowerCard
@@ -2114,11 +2117,14 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
     let productNameField = document.querySelector(`[name='product_name[${cardIndex}]']`);
     let productCategoryField = document.querySelector(`[name='product_category[${cardIndex}]']`);
 
-    var power_attribute = JSON.parse(selectedProduct.ci_power_attribute);
 
-    stockTypeField.value = power_attribute.stock_type ?? '';
-    lensPhysicalityField.value = power_attribute.contact_lens_type ?? '';
-    lensDisposablilityField.value = power_attribute.contact_lens_disposability ?? '';
+    if(selectedProduct!=null){
+    var power_attribute = JSON.parse(selectedProduct?.ci_power_attribute);
+    }
+
+    stockTypeField.value = power_attribute?.stock_type ?? '';
+    lensPhysicalityField.value = power_attribute?.contact_lens_type ?? '';
+    lensDisposablilityField.value = power_attribute?.contact_lens_disposability ?? '';
     productHsnField.value = selectedProduct?.ci_hsn ?? '';
     productAvailableQtyField.value = selectedProduct?.ci_product_quantity ?? '';
     productBrandField.value = selectedProduct?.brand_name ?? '';
@@ -2130,7 +2136,7 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
     productPurchaseQtyField.value = '';
     productPurchaseQtyField.max = selectedProduct?.ci_product_quantity;
 
-    if (selectedProduct.ci_discount > 0) {
+    if (selectedProduct?.ci_discount > 0) {
         discountCheckDiv.style.display = 'block';
         discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.ci_discount + '%';
         discountValueField.value = selectedProduct.ci_discount;
@@ -2164,10 +2170,10 @@ function updateRxContactLensProductFields(selectElement, cardIndex) {
             productProductTotalField.value = (selectedProduct.ci_sale_price * productPurchaseQtyField.value).toFixed(2);
             productProductTotalField.innerHTML = '';
             discountCheckbox.value = 'off';
+
         }
     });
 }
-
 
 function updateOtherProductFields(selectElement, cardIndex) {
     let selectedProduct = other_products_list.find(product => product.ci_product_id == selectElement.value);
@@ -2200,7 +2206,7 @@ function updateOtherProductFields(selectElement, cardIndex) {
     productPurchaseQtyField.max = selectedProduct?.si_product_quantity;
 
 
-    if (selectedProduct.ci_discount > 0) {
+    if (selectedProduct?.ci_discount > 0) {
         discountCheckDiv.style.display = 'block';
         discountValueText.innerHTML = '<h6>Discount available !</h6> Apply discount : ' + selectedProduct.ci_discount + '%';
         discountValueField.value = selectedProduct.ci_discount;
@@ -2292,7 +2298,6 @@ function getProductsData() {
         // Display total sum in the <p> element with id 'totalSum'
         document.getElementById('totalSum').textContent = "Billing amount: ₹" + totalSum.toFixed(2);
         document.getElementById('totalAmount').value = totalSum.toFixed(2);
-
         document.getElementsByName('amount_paid')[0].max = totalSum.toFixed(2);
 
         // Display total number of products in the <p> element with id 'totalProducts'
