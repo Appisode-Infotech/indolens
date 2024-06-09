@@ -106,11 +106,21 @@
                                             </div>
                                             <div class="col-12 col-sm-auto flex-1">
                                                 <h3>{{store_employee.ose_name}}</h3>
-                                                <p class="text-800">Joined on: {{store_employee.ose_created_on}} </p>
+                                                <p class="text-800">Joined on: {{store_employee.ose_created_on|date:"d/m/Y h:i A"}} </p>
                                                 {% if store_employee.ose_assigned_store_id != 0 %}
-                                                <p class="text-800">Manager - <a
+                                                <p class="text-800">
+                                                    {% if store_employee.ose_role == 1 %}
+                                                        Manager
+                                                    {% elif store_employee.ose_role == 2 %}
+                                                        Optometry
+                                                    {% elif store_employee.ose_role == 3 %}
+                                                        Sales Executive
+                                                    {% elif store_employee.ose_role == 4 %}
+                                                        Employee
+                                                    {% endif %}
+                                                    - <a
                                                         href="{%url 'view_own_store_area_head' store_employee.ose_assigned_store_id %}">
-                                                    {{store_employee.ose_store_name}}
+                                                    {{store_employee.store_name}}
                                                 </a></p>
                                                 {% else %}
                                                 Manager - Not Assigned

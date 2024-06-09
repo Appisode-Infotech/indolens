@@ -148,10 +148,9 @@
                             {% for test in eye_test_list %}
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slNo"></td>
-                                <td class="testid fs--1 align-middle px-0 py-3 ">
-                                    <a class="dropdown-item view-button" target="_blank"
-                                                   href="{% url 'franchise_store_eye_test_print' test.et_eye_test_id %}"
-                                                   type="button">TEST{{test.et_eye_test_id}}</a>
+                                <td class="testId align-middle white-space-nowrap py-0">
+                                    <a class="fw-semi-bold" target="_blank"
+                                       href="{% url 'franchise_store_eye_test_print' test.et_eye_test_id %}">TEST{{test.et_eye_test_id}}</a>
                                 </td>
                                 <td class="align-middle white-space-nowrap pe-5"><a
                                         class="d-flex align-items-center"
@@ -198,7 +197,9 @@
                             {% endfor %}
                             </tbody>
                         </table>
-                        <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+
+                    </div>
+                    <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
                             <div class="col-auto d-flex">
                                 <p class="mb-0 d-none d-sm-block me-3 text-900"
                                    data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
@@ -215,7 +216,6 @@
                                         class="fas fa-chevron-right"></span></button>
                             </div>
                         </div>
-                    </div>
                     {% include 'modal_master_view.html' %}
                 </div>
             </div>

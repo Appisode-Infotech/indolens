@@ -117,37 +117,37 @@
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
                                         style="width:5%;">SL NO
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="jobId" scope="col"
+                                    <th class="sort align-middle" data-sort="jobId" scope="col"
                                         style="width:150px;">JOB ID
                                     </th>
                                     <th class="sort align-middle " data-sort="store" scope="col"
                                         style="width:150px;">STORE
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="category" scope="col"
+                                    <th class="sort align-middle " data-sort="category" scope="col"
                                         style="width:150px;">CATEGORY
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="material" scope="col"
+                                    <th class="sort align-middle " data-sort="material" scope="col"
                                         style="width:300px;">MATERIAL
                                     </th>
-                                    <th class="sort align-middle ps-4" data-sort="type" scope="col"
+                                    <th class="sort align-middle " data-sort="type" scope="col"
                                         style="width:300px;">TYPE
                                     </th>
-                                    <th class="sort align-middle text-end ps-4" data-sort="shape" scope="col"
+                                    <th class="sort align-middle  " data-sort="shape" scope="col"
                                         style="width:200px;">SHAPE
                                     </th>
-                                    <th class="sort align-middle text-end ps-4" data-sort="color" scope="col"
+                                    <th class="sort align-middle  " data-sort="color" scope="col"
                                         style="width:250px;">COLOR
                                     </th>
-                                    <th class="sort align-middle text-end ps-4" data-sort="unit" scope="col"
+                                    <th class="sort align-middle  " data-sort="unit" scope="col"
                                         style="width:250px;">UNIT
                                     </th>
-                                    <th class="sort align-middle text-end ps-4" data-sort="brand" scope="col"
+                                    <th class="sort align-middle  " data-sort="brand" scope="col"
                                         style="width:250px;">BRAND
                                     </th>
-                                    <th class="sort align-middle text-end ps-4" data-sort="jobStatus" scope="col"
+                                    <th class="sort align-middle  " data-sort="jobStatus" scope="col"
                                         style="width:250px;">JOB STATUS
                                     </th>
-                                    <th class="sort align-middle text-end ps-4" scope="col"
+                                    <th class="sort align-middle text-end " scope="col"
                                         style="width:250px;">ACTION
                                     </th>
 
@@ -158,17 +158,17 @@
                                 <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                             data-category="{{ order.so_order_status }}">
                                             <td class="fs--1 align-middle px-0 py-3 slno"></td>
-                                            <td class="jobId align-middle py-0">
+                                            <td class="jobId align-middle ">
                                                 <a class="fw-semi-bold line-clamp-2 mb-0"
                                                    href="{% url 'lab_job_details' order.so_order_id %}">
                                                     {{order.so_order_id}}
                                                 </a>
                                             </td>
-                                            <td class="jobId align-middle py-0">
+                                            <td class="store align-middle ">
                                                 {{order.store_name}}
                                             </td>
 
-                                            <td class="category align-middle white-space-nowrap text-900 py-0 ps-4">
+                                            <td class="category align-middle white-space-nowrap text-900  ">
                                                 {% if order.pc_category_name == None %}
                                                 N/A
                                                 {% else %}
@@ -176,49 +176,49 @@
                                                 {% endif %}
 
                                             </td>
-                                            <td class="material align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            <td class="material align-middle white-space-nowrap text-700 fw-semi-bold  ">
                                                 {% if order.pm_material_name == None %}
                                                 N/A
                                                 {% else %}
                                                 {{order.pm_material_name}}
                                                 {% endif %}
                                             </td>
-                                            <td class="type align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4">
+                                            <td class="type align-middle white-space-nowrap text-700 fw-semi-bold  ">
                                                 {% if order.ftype_name == None %}
                                                 N/A
                                                 {% else %}
                                                 {{order.ftype_name}}
                                                 {% endif %}
                                             </td>
-                                            <td class="shape align-middle text-end py-0 ps-4 text-700">
+                                            <td class="shape align-middle    text-700">
                                                 {% if order.fshape_name == None %}
                                                 N/A
                                                 {% else %}
                                                 {{order.fshape_name}}
                                                 {% endif %}
                                             </td>
-                                            <td class="color align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            <td class="color align-middle text-900 fw-semi-bold   ">
                                                 {% if order.pcol_color_name == None %}
                                                 N/A
                                                 {% else %}
                                                 {{order.pcol_color_name}}
                                                 {% endif %}
                                             </td>
-                                            <td class="unit align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            <td class="unit align-middle text-900 fw-semi-bold   ">
                                                 {% if order.unit_name == None %}
                                                 N/A
                                                 {% else %}
                                                 {{order.unit_name}}
                                                 {% endif %}
                                             </td>
-                                            <td class="brand align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            <td class="brand align-middle text-900 fw-semi-bold   ">
                                                 {% if order.brand_name == None %}
                                                 N/A
                                                 {% else %}
                                                 {{order.brand_name}}
                                                 {% endif %}
                                             </td>
-                                            <td class="align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            <td class="align-middle text-900 fw-semi-bold   ">
                                                 {% if order.so_order_status == 1 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
                                                         class="badge-label">NEW</span></span>
@@ -234,7 +234,7 @@
 
                                                 {% endif %}
                                             </td>
-                                            <td style="display:none;" class="jobStatus align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            <td style="display:none;" class="jobStatus align-middle text-900 fw-semi-bold   ">
                                                 {% if order.so_order_status == 1 %}
                                                 NEW
                                                 {% elif order.so_order_status == 2 %}
@@ -246,7 +246,7 @@
                                                 {% endif %}
                                             </td>
 
-                                            <td class="price align-middle text-900 fw-semi-bold text-end py-0 ps-4">
+                                            <td class="price align-middle text-900 fw-semi-bold text-end  ">
                                                 <div class="font-sans-serif btn-reveal-trigger position-static">
                                                     <button aria-expanded="false"
                                                             aria-haspopup="true"

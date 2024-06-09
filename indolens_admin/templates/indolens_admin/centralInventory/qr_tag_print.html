@@ -1,94 +1,85 @@
-<!DOCTYPE html>
-<html lang="en">
-
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-
     <style>
-        @media print {
-            body {
-                margin: 0;
-                padding: 0;
-            }
+    .container {
+        display: flex;
+        align-items: center;
+    }
 
-            #quantityInput,
-            button {
-                display: none;
-            }
+    .info {
+        display: flex;
+        flex-direction: column;
+    }
 
+    img {
+        margin-right: 20px;
+        margin-left: 10px;
+    }
 
-            @page {
-                size: auto;
-                margin: 55px 0 0 40px; /* Set top margin to 50px, left margin to 40px, other margins set to 0 */
-            }
+    .info span {
+        font-size: 12px;
+    }
+
+    .print-button {
+        display: block;
+        margin-top: 20px;
+        margin-left: 40px;
+        background-color: blue;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        cursor: pointer;
+        border-radius: 5px;
+    }
+
+    .print-button i {
+        margin-right: 5px;
+    }
+
+    @media print {
+        .print-button {
+            display: none;
         }
-
-        div {
-            display: flex;
-            align-items: left;
-            margin-bottom: 11.5px; /* Adjust the margin as needed for spacing */
-
-        }
-
-        img {
-            margin-right: 40px; /* Adjust the margin as needed for spacing */
-        }
-
-body {
-    padding: 0;
-}
-.info {
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Align items to the center vertically */
-    align-items: flex-start; /* Align items to the start (left) horizontally */
-}
-
-
-        .info span {
-            margin: 2px; /* Adjust the margin as needed for spacing */
-            text-align: left; /* Align text to the left */
-        }
+    }
     </style>
 </head>
 
-<body>
-    <input type="number" min="1" value="1" id="quantityInput" oninput="generateDivs()">
-    <button onclick="printDivs();">Print</button>
-    <div style="display:flex;
-        flex-direction: column;" id="outputContainer"></div>
-</body>
+<div class="container">
+    <img width="50" height="45" src="{{ MEDIA_URL }}{{ qrUrl }}">
+    <div class="info">
+        <span>Price: ₹{{ price }}</span>
+        <span>Id: {{ pId }}</span>
+    </div>
+</div>
+
+<button class="print-button" onclick="window.print()">Print</button>
+
 
 <script>
-generateDivs();
-        function generateDivs() {
-            var quantity = document.getElementById('quantityInput').value;
-            var outputContainer = document.getElementById('outputContainer');
+     var walker = document.createTreeWalker(
+            document.body,
+            NodeFilter.SHOW_TEXT,
+            null,
+            false
+        );
 
-            // Clear previous content
-            outputContainer.innerHTML = '';
-
-            for (var i = 0; i < quantity; i++) {
-                // Create new div
-                var newDiv = document.createElement('div');
-                newDiv.innerHTML = `
-                    <img width="50" height="50" src="{{ MEDIA_URL }}{{ qrUrl }}">
-                    <div class="info">
-                        <span>Price: ₹{{ price }}</span>
-                        <span>Id: {{ pId }}</span>
-                    </div>
-                `;
-
-                // Append new div to outputContainer
-                outputContainer.appendChild(newDiv);
+        while (walker.nextNode()) {
+            var textNode = walker.currentNode;
+            var match = textNode.nodeValue.match(/₹\s?(\d+)/);
+            if (match) {
+                var currentAmount = parseInt(match[1]);
+                var formattedAmount = formatIndianNumberingSystem(currentAmount);
+                textNode.nodeValue = textNode.nodeValue.replace(/₹\s?(\d+)/, "₹ " + formattedAmount);
             }
         }
-    </script>
-<script>
-    function printDivs() {
-        window.print();
+
+        function formatIndianNumberingSystem(number) {
+        number = number.toString();
+        var lastThree = number.substring(number.length - 3);
+        var otherNumbers = number.substring(0, number.length - 3);
+        if (otherNumbers !== '') {
+            lastThree = ',' + lastThree;
+        }
+        var formattedNumber = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+        return formattedNumber;
     }
 </script>
-
-</html>

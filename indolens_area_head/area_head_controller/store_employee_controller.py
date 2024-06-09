@@ -38,7 +38,7 @@ def get_all_store_employee(store_id):
 def get_store_employee_by_id(employee_id):
     try:
         with getConnection().cursor() as cursor:
-            get_store_manager_query = f""" SELECT sm.*, os.os_store_name, creator.admin_name AS creator, 
+            get_store_manager_query = f""" SELECT sm.*, os.os_store_name AS store_name, creator.admin_name AS creator, 
                                                         updater.admin_name AS updater FROM own_store_employees AS sm
                                                         LEFT JOIN own_store AS os ON sm.ose_assigned_store_id = os.os_store_id
                                                         LEFT JOIN admin AS creator ON sm.ose_created_by = creator.admin_admin_id

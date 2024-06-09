@@ -256,7 +256,7 @@
                                     {{order.creator_name}}
                                 </td>
                                 <td class="createdOn align-middle white-space-nowrap text-700 fs--1">
-                                    {{order.so_created_on}}
+                                    {{order.so_created_on|date:"d/m/Y h:i A"}}
                                 </td>
                                 <td class="align-middle white-space-nowrap text-900 fs--1 text-start">
                                     <a href="{% url 'view_employees' order.so_updated_by %}">{{order.updater_name}}</a>
@@ -265,7 +265,7 @@
                                     {{order.updater_name}}
                                 </td>
                                 <td class="updatedOn align-middle white-space-nowrap text-700 fs--1">
-                                    {{order.so_updated_on}}
+                                    {{order.so_updated_on|date:"d/m/Y h:i A"}}
                                 </td>
                             </tr>
                             {% endfor %}

@@ -254,7 +254,7 @@
                         <li class="nav-item"><a class="nav-link filter" href="#filter-CANCELLED-fulfilment_status">Cancelled</a>
                         </li>
                     </ul>
-                    <div data-list='{"valueNames":["order","total","customer","payment_status","fulfilment_status","delivery_type","date"],"page":5,"pagination":true}'
+                    <div data-list='{"valueNames":["slno","order","store","payment_status","fulfilment_status","order_date"],"page":5,"pagination":true}'
                          id="orderTable">
                         <div class="mb-4">
                             <div class="row g-3">
@@ -283,18 +283,18 @@
                         </div>
                         <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                             <div class="table-responsive scrollbar mx-n1 px-1">
-                                <table class="table table-sm fs--1 mb-0">
+                                <table class="table table-sm fs--1 mb-0" id="myTable">
                                     <thead>
                                     <tr>
-                                        <th class="sort white-space-nowrap align-middle pe-3"
+                                        <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno"
                                             scope="col"
-                                            style="width:0%;">
+                                            style="width:0%;">SL NO
                                         </th>
                                         <th class="sort white-space-nowrap align-middle pe-3" data-sort="order"
                                             scope="col"
                                             style="width:20%;">JOB ID
                                         </th>
-                                        <th class="sort white-space-nowrap align-middle pe-3" data-sort="order"
+                                        <th class="sort white-space-nowrap align-middle pe-3" data-sort="store"
                                             scope="col"
                                             style="width:20%;">STORE
                                         </th>
@@ -306,7 +306,7 @@
                                             scope="col" style="width:20%;">JOB
                                             STATUS
                                         </th>
-                                        <th class="sort align-middle text-start pe-3" data-sort="fulfilment_status"
+                                        <th class="sort align-middle text-start pe-3" data-sort="order_date"
                                             scope="col" style="width:20%;">ORDER
                                             DATE
                                         </th>
@@ -316,7 +316,7 @@
                                     {% for job in lab_job %}
                                     <tr class="hover-actions-trigger btn-reveal-trigger position-static"
                                         data-category="{{ job.so_order_status }}">
-                                        <td class="fs--1 align-middle px-0 py-3">
+                                        <td class="fs--1 align-middle px-0 py-3 slno">
                                             <div class="form-check mb-0 fs-0">
                                             </div>
                                         </td>
@@ -324,7 +324,7 @@
                                         <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                                   href="{% url 'job_details' job.so_order_id %}">{{job.so_order_id}}</a>
                                         </td>
-                                        <td class="customer align-middle white-space-nowrap ">
+                                        <td class="store align-middle white-space-nowrap ">
                                             {% if job.so_created_by_store_type == 1%}
                                             <a class="fw-semi-bold"
                                                href="{% url 'view_own_store' job.so_created_by_store %}">
@@ -333,7 +333,7 @@
                                             {% else %}
                                             <a class="fw-semi-bold"
                                                href="{% url 'view_franchise_store' job.so_created_by_store %}">
-                                                {{job.so_store_name}}
+                                                {{job.store_name}}
                                             </a>
                                             {% endif %}
                                         </td>
@@ -353,7 +353,7 @@
                                                     class="badge-label">REFUNDED</span></span>
                                             {% endif %}
                                         </td>
-                                        <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <td class="align-middle white-space-nowrap text-start fw-bold text-700">
                                             {% if job.so_order_status == 1 %}
                                             <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                     class="badge-label">NEW</span><span class="ms-1"
@@ -392,7 +392,25 @@
                                             {% endif %}
 
                                         </td>
-                                        <td class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                        <td style="display:none;" class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                            {% if job.so_order_status == 1 %}
+                                            NEW
+                                            {% elif job.so_order_status == 2 %}
+                                            PROCESSING
+                                            {% elif job.so_order_status == 3 %}
+                                            READY IN LAB
+                                            {% elif job.so_order_status == 4 %}
+                                            DISPATCHED
+                                            {% elif job.so_order_status == 5 %}
+                                            READY IN STORE
+                                            {% elif job.so_order_status == 6 %}
+                                            DELIVERED CUSTOMER
+                                            {% elif job.so_order_status == 7 %}
+                                            CANCELLED
+                                            {% endif %}
+
+                                        </td>
+                                        <td class="order_date align-middle white-space-nowrap text-start fw-bold text-700">
                                             {{job.so_created_on|date:"d/m/Y h:i A"}}
                                         </td>
                                     </tr>

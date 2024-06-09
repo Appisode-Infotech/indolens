@@ -2487,7 +2487,6 @@ def viewLab(request, labId):
         lab_job, status_cde = lab_controller.get_lab_job(labId)
         # print(lab_job)
         lab_stats, status_cde = lab_controller.get_lab_stats(labId)
-        print(lab_stats)
         return render(request, 'indolens_admin/labs/viewLab.html',
                       {"lab_data": response['lab_data'], "lab_job": lab_job['orders_list'], "lab_stats": lab_stats})
     else:
@@ -2998,48 +2997,59 @@ def restockProductOutOfStock(request):
 
 
 def centralInventoryUpdateProduct(request, productId):
-    if request.method == 'POST':
-        print(request.POST)
-        power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
-        product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
-        print(vars(product_obj))
-        response, status_code = central_inventory_controller.update_central_inventory_products(product_obj, productId,
-                                                                                               power_attributes)
-        url = reverse('view_products', kwargs={'productId': productId})
-        return redirect(url)
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        if request.method == 'POST':
+            power_attributes = lens_power_attribute_controller.get_power_attribute(request.POST)
+            product_obj = central_inventory_products_model.inventory_add_products_from_dict(request.POST)
+            central_inventory_controller.update_central_inventory_products(product_obj, productId, power_attributes)
+            url = reverse('view_products', kwargs={'productId': productId})
+            return redirect(url)
+        else:
+            response, status_code = get_central_inventory_product_single(productId)
+            types, status_code = central_inventory_controller.get_all_active_types()
+            return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
+                          {'product_data': response['product_data'], 'productId': productId, "response": types})
     else:
-        response, status_code = get_central_inventory_product_single(productId)
-        print(response)
-        types, status_code = central_inventory_controller.get_all_active_types()
-        return render(request, 'indolens_admin/centralInventory/centralInventoryUpdateProduct.html',
-                      {'product_data': response['product_data'], 'productId': productId, "response": types})
+        return redirect('login')
 
 
 def centralInventoryUpdateProductStatus(request, filter, productId, status):
-    response, status_code = central_inventory_controller.change_product_status(productId, status)
-    url = reverse('manage_central_inventory_products', kwargs={'status': filter})
-    return redirect(url)
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = central_inventory_controller.change_product_status(productId, status)
+        url = reverse('manage_central_inventory_products', kwargs={'status': filter})
+        return redirect(url)
+    else:
+        return redirect('login')
+
 
 
 def centralInventoryUpdateProductImages(request, productId):
-    response, status_code = get_central_inventory_product_single(productId)
-    # print(response)
-    return render(request, 'indolens_admin/centralInventory/updateproductImages.html',
-                  {'product_data': response['product_data'], 'productId': productId})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = get_central_inventory_product_single(productId)
+        return render(request, 'indolens_admin/centralInventory/updateproductImages.html',
+                      {'product_data': response['product_data'], 'productId': productId})
+    else:
+        return redirect('login')
+
 
 
 def centralInventoryViewProducts(request, productId):
-    response, status_code = get_central_inventory_product_single(productId)
-    print(response)
-    return render(request, 'indolens_admin/centralInventory/centralInventoryViewProduct.html',
-                  {'product_data': response['product_data'], 'productId': productId})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = get_central_inventory_product_single(productId)
+        return render(request, 'indolens_admin/centralInventory/centralInventoryViewProduct.html',
+                      {'product_data': response['product_data'], 'productId': productId})
+    else:
+        return redirect('login')
+
 
 
 def centralInventoryViewProductRestockLogs(request, productId):
-    response, status_code = get_central_inventory_product_restoc_log(productId)
-    print(response)
-    return render(request, 'indolens_admin/centralInventory/centralInventoryProductLogs.html',
-                  {"restock_logs": response['restock_logs']})
+    if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
+        response, status_code = get_central_inventory_product_restoc_log(productId)
+        return render(request, 'indolens_admin/centralInventory/centralInventoryProductLogs.html',
+                      {"restock_logs": response['restock_logs']})
+    else:
+        return redirect('login')
 
 
 def centralInventoryAddProducts(request):
