@@ -165,8 +165,21 @@
                                                name="support_phone"
                                                placeholder="Support Phone"
                                                required="required"
-                                               type="number"
-                                               max="9999999999" min="1111111111"
+                                               type="text"
+                                               maxlength="10"
+                                               oninput="event.target.value = event.target.value.replace(/[^0-9.]/g, '');"
+                                               value="{{admin_setting.support_attributes.support_phone}}"/>
+                                        <div class="invalid-feedback">Support Phone is mandatory.</div>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Support Phone</h5>
+                                        <input class="form-control"
+                                               name="support_phone"
+                                               placeholder="Support Phone"
+                                               required="required"
+                                               type="text"
+                                               maxlength="10"
+                                               oninput="event.target.value = event.target.value.replace(/[^0-9.]/g, '');"
                                                value="{{admin_setting.support_attributes.support_phone}}"/>
                                         <div class="invalid-feedback">Support Phone is mandatory.</div>
                                     </div>
@@ -179,6 +192,57 @@
                                                type="text"
                                                value="{{admin_setting.support_attributes.support_hour}}"/>
                                         <div class="invalid-feedback">Support Hour is mandatory.</div>
+                                    </div>
+
+                                </div>
+                                <h5 class="mb-3 mt-6">INDOLENS Company Info</h5>
+                                <div class="row g-3 mb-3">
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Name</h5>
+                                        <input class="form-control"
+                                               name="ci_name"
+                                               placeholder="Company Name"
+                                               required="required"
+                                               type="text"
+                                               value="{{admin_setting.central_inventory_details.ci_name}}"/>
+                                        <div class="invalid-feedback">Support Phone is mandatory.</div>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">GST</h5>
+                                        <input class="form-control"
+                                               name="ci_gst"
+                                               placeholder="Company  GST"
+                                               required="required"
+                                               type="email" value="{{admin_setting.central_inventory_details.ci_gst}}"/>
+                                        <div class="invalid-feedback">Email is mandatory.</div>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Phone</h5>
+                                        <input class="form-control"
+                                               name="ci_phone"
+                                               placeholder="Company Phone"
+                                               required="required"
+                                               type="text"
+                                               maxlength="10"
+                                               oninput="event.target.value = event.target.value.replace(/[^0-9.]/g, '');"
+                                               value="{{admin_setting.central_inventory_details.ci_phone}}"/>
+                                        <div class="invalid-feedback">Support Phone is mandatory.</div>
+                                    </div>
+                                    <div class="mb2 col-6">
+                                        <h5 class="mb-3">Email</h5>
+                                        <input class="form-control"
+                                               name="ci_email"
+                                               placeholder="Company Email"
+                                               required="required"
+                                               type="text"
+                                               value="{{admin_setting.central_inventory_details.ci_email}}"/>
+                                        <div class="invalid-feedback">Support Phone is mandatory.</div>
+                                    </div>
+                                    <div class="col-12">
+                                        <label class="form-label" for="ci_address">Address</label>
+                                        <textarea class="form-control" id="ci_address" name="ci_address" rows="3"
+                                                  required maxlength="255">{{admin_setting.central_inventory_details.ci_address}}</textarea>
+                                        <div class="invalid-feedback">Address is mandatory.</div>
                                     </div>
 
                                 </div>

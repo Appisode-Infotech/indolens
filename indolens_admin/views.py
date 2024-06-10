@@ -3163,6 +3163,10 @@ def viewStockRequestInvoice(request, requestId):
             store, resp_status_code = own_store_controller.get_own_store_by_id(
                 response['stocks_request']['pr_request_to_store_id'])
             store_data = store['own_stores']
+        if response['stocks_request'].get('pr_request_to_store_id') == 0:
+            company, resp_status_code = admin_setting_controller.get_admin_setting()
+            store_data = company['admin_setting']['central_inventory_details']
+            print(store_data)
 
         return render(request, 'indolens_admin/stockRequests/franchiseStockMovementInvoice.html',
                       {"stocks_request": response['stocks_request'], "store_data": store_data})

@@ -200,7 +200,7 @@ body {
                                 <th scope="row" class="align-middle">GSTIN</th>
                                 {% if stocks_request.pr_request_to_store_id == 0 %}
                                 <td class="align-middle" colspan="3">
-                                    <p class="fs--1 text-800 fw-semi-bold mb-0">Central Inventory GST</p>
+                                    <p class="fs--1 text-800 fw-semi-bold mb-0">{{store_data.ci_gst}}</p>
                                 </td>
                                 {% else %}
                                 <td class="align-middle" colspan="3">
@@ -214,7 +214,8 @@ body {
                                 <th scope="row" class="align-middle">Sold By</th>
                                 {% if stocks_request.pr_request_to_store_id == 0 %}
                                 <td class="align-middle" colspan="3">
-                                    <p class="fs--1 text-800 fw-semi-bold mb-0">Central Inventory</p>
+                                    <p class="fs--1 text-800 fw-semi-bold mb-0">{{store_data.ci_name}} <br/>
+                                    {{store_data.ci_address}}<br/>{{store_data.ci_email}}<br/>{{store_data.ci_phone}}<br/> </p>
                                 </td>
                                 {% else %}
                                 <td class="align-middle" colspan="3">

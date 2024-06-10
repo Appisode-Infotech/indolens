@@ -21,9 +21,6 @@ def admin_setting(data):
             admin_setting_check = f""" SELECT COUNT(*) FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_check = cursor.fetchone()
-            print(admin_check['COUNT(*)'])
-            print(type(admin_check['COUNT(*)']))
-            print(data.get('base_url'))
 
             emailjs_attributes = {
                 'emailjs_url': data.get('emailjs_url', ''),
@@ -38,10 +35,19 @@ def admin_setting(data):
                 'support_hour': data.get('support_hours', ''),
             }
 
+            central_inventory_details = {
+                'ci_gst': data.get('ci_gst', ''),
+                'ci_phone': data.get('ci_phone', ''),
+                'ci_address': data.get('ci_address', ''),
+                'ci_email': data.get('ci_email', ''),
+                'ci_name': data.get('ci_name', ''),
+            }
+
             if admin_check['COUNT(*)'] == 0:
                 admin_setting_query = f"""INSERT INTO admin_setting (emailjs_attribute, base_url, created_on,
-                created_by, updated_on, updated_by, support_attributes ) VALUES('{json.dumps(emailjs_attributes)}', '{data.get('base_url')}',
-                '{getIndianTime()}', 1, '{getIndianTime()}', 1, '{json.dumps(support_attributes)}') """
+                created_by, updated_on, updated_by, support_attributes, central_inventory_details ) 
+                VALUES('{json.dumps(emailjs_attributes)}', '{data.get('base_url')}', '{getIndianTime()}', 1, 
+                '{getIndianTime()}', 1, '{json.dumps(support_attributes)}', '{json.dumps(central_inventory_details)}') """
                 cursor.execute(admin_setting_query)
                 return {"status": True, "message": "Insert Success"}, 200
             else:
@@ -52,7 +58,8 @@ def admin_setting(data):
                         base_url = '{data.get('base_url')}',
                         updated_on = '{getIndianTime()}',
                         updated_by = 1,
-                        support_attributes = '{json.dumps(support_attributes)}'
+                        support_attributes = '{json.dumps(support_attributes)}',
+                        central_inventory_details = '{json.dumps(central_inventory_details)}'
                     WHERE setting_id = 1
                 """
                 cursor.execute(admin_setting_query)
@@ -74,6 +81,7 @@ def get_admin_setting():
 
             admin_settings['emailjs_attribute'] = json.loads(admin_settings['emailjs_attribute']) if admin_settings['emailjs_attribute'] else []
             admin_settings['support_attributes'] = json.loads(admin_settings['support_attributes']) if admin_settings['support_attributes'] else []
+            admin_settings['central_inventory_details'] = json.loads(admin_settings['central_inventory_details']) if admin_settings['central_inventory_details'] else []
             return {"status": True,
                     "message": "fetch Success",
                     "admin_setting": admin_settings if admin_settings is not None else {},
