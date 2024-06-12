@@ -85,7 +85,7 @@
                     </div>
                 </div>
 
-                <div data-list='{"valueNames":["SlNo","order","total","customer","paymentStatus","orderStatus","createdBy","createdOn","updatedBy","updatedOn"],"page":20,"pagination":true}'
+                <div data-list='{"valueNames":["SlNo","order","invoice","total","customer","paymentStatus","orderStatus","createdBy","createdOn","updatedBy","updatedOn"],"page":20,"pagination":true}'
                      id="orderTable">
                     <div class="mb-4">
                         <div class="row g-3">
@@ -123,6 +123,9 @@
                                     <th class="sort white-space-nowrap align-middle pe-3" data-sort="order" scope="col"
                                         style="width:5%;">ORDER ID
                                     </th>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="invoice" scope="col"
+                                        style="width:5%;">INVOICE NUMBER
+                                    </th>
                                     <th class="sort align-middle text-end" data-sort="total" scope="col"
                                         style="width:6%; min-width: 100px;">TOTAL
                                     </th>
@@ -157,6 +160,9 @@
                                     <td class="fs--1 align-middle px-0 py-3 SlNo"></td>
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details_franchise_store' order.so_order_id %}">{{order.so_order_id}}</a>
+                                    </td>
+                                    <td class="invoice align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
+                                                                                              href="{% url 'order_invoice' order.invoice_number %}">{{order.invoice_number}}</a>
                                     </td>
                                     <td class="align-middle text-end fw-semi-bold text-1000">₹{{order.total_cost}}
                                     </td>

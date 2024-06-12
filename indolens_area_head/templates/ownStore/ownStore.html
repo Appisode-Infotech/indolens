@@ -421,8 +421,7 @@
                                             style="width:10%;">PAYMENT STATUS
                                         </th>
                                         <th class="sort align-middle text-start pe-3" data-sort="fulfilmentStatus"
-                                            scope="col" style="width:12%; min-width: 200px;">ORDER
-                                            STATUS
+                                            scope="col" style="width:12%; min-width: 200px;">ORDER STATUS
                                         </th>
                                         <th class="sort align-middle text-start" data-sort="createdby" scope="col"
                                             style="width:30%;">CREATED BY
@@ -496,7 +495,7 @@
                                                 class="badge-label">CANCELLED</span></span>
                                         {% endif %}
                                     </td>
-                                    <td style="display:none;" class="fulfilment_status align-middle white-space-nowrap text-start fw-bold text-700">
+                                    <td style="display:none;" class="fulfilmentStatus align-middle white-space-nowrap text-start fw-bold text-700">
                                         {% if order.so_order_status == 1 %}
                                         NEW
                                         {% elif order.so_order_status == 2 %}

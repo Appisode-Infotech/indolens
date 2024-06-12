@@ -275,6 +275,7 @@ def orderStatusChange(request, orderId, status):
         order_update, status_code = store_orders_controller.order_status_change(orderId, status,
                                                                                 request.session.get('id'),
                                                                                 assigned_store)
+        print(order_update)
         url = reverse('order_details_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:

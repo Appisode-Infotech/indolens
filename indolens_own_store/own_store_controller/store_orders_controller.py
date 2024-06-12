@@ -226,10 +226,8 @@ def order_status_change(orderID, orderStatus, updated_by, store_id):
                             """
             cursor.execute(get_order_details_query)
             order = cursor.fetchall()
-            print(order)
 
             if orderStatus == "6":
-                print("order completed")
                 # payment_status_change_query = f"""
                 #                 UPDATE sales_order SET payment_status = 2
                 #                 WHERE order_id = '{orderID}'
@@ -253,9 +251,9 @@ def order_status_change(orderID, orderStatus, updated_by, store_id):
                     invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
                 else:
                     number_part = '00000001'
-                    store_code = 'OS' if order[0]['created_by_store_type'] == 1 else 'FS'
+                    store_code = 'OS'
 
-                    store_id = order[0]['created_by_store']
+                    store_id = order[0]['so_created_by_store']
                     date_part = getIndianTime().strftime('%d%m%Y')
 
                     invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
@@ -272,8 +270,6 @@ def order_status_change(orderID, orderStatus, updated_by, store_id):
                 body = email_template_controller.get_order_completion_email_body(order[0]['customer_name'],
                                                                                  order[0]['so_order_id'],
                                                                                  status_condition, getIndianTime())
-                print(subject)
-                print(body)
                 send_notification_controller.send_email(subject, body, order[0]['customer_email'])
 
             if orderStatus == "7":
@@ -281,20 +277,15 @@ def order_status_change(orderID, orderStatus, updated_by, store_id):
                 body = email_template_controller.get_order_cancelled_email_body(order[0]['customer_name'],
                                                                                     order[0]['so_order_id'],
                                                                                     status_condition, getIndianTime())
-                print(subject)
-                print(body)
                 email_resp = send_notification_controller.send_email(subject, body, order[0]['customer_email'])
-                print(email_resp)
 
             else:
                 subject = email_template_controller.get_order_status_change_email_subject(order[0]['so_order_id'])
                 body = email_template_controller.get_order_status_change_email_body(order[0]['customer_name'],
                                                                                     order[0]['so_order_id'],
                                                                                     status_condition, getIndianTime())
-                print(subject)
-                print(body)
+
                 email_resp = send_notification_controller.send_email(subject, body, order[0]['customer_email'])
-                print(email_resp)
 
             return {
                 "status": True,

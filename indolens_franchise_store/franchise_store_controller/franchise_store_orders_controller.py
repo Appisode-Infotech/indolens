@@ -371,9 +371,9 @@ def franchise_order_status_change(orderID, orderStatus, updated_by, store_id):
                     invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
                 else:
                     number_part = '00000001'
-                    store_code = 'OS' if order[0]['created_by_store_type'] == 1 else 'FS'
+                    store_code = 'FS'
 
-                    store_id = order[0]['created_by_store']
+                    store_id = order[0]['so_created_by_store']
                     date_part = getIndianTime().strftime('%d%m%Y')
 
                     invoice_number = f"{store_code}_{store_id}_{date_part}_{number_part}"
