@@ -244,17 +244,7 @@
                                                 {{order.total_cost}}
                                             </td>
                                             <td class="store align-middle white-space-nowrap ">
-                                                {% if order.so_created_by_store_type == 1%}
-                                                <a class="fw-semi-bold"
-                                                   href="{% url 'view_own_store' order.so_created_by_store %}">
-                                                    {{order.store_name}}
-                                                </a>
-                                                {% else %}
-                                                <a class="fw-semi-bold"
-                                                   href="{% url 'view_franchise_store' order.so_created_by_store %}">
-                                                    {{order.store_name}}
-                                                </a>
-                                                {% endif %}
+                                                {{order.store_name}}
                                             </td>
                                             <td class="payment_status align-middle white-space-nowrap text-start fw-bold text-700">
                                                 {% if order.so_payment_status == 1 %}

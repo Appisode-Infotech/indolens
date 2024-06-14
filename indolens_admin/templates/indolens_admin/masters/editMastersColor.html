@@ -94,7 +94,7 @@
                             <label class="form-label" for="colorCode">Color Code</label>
 
                             <input class="form-control" id="colorCode" name="color_code" required="" type="text"
-                                   value="{{color.pcol_color_code}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
+                                   value="{{color.pcol_color_code}}" />
                             <div class="invalid-feedback">Color Code is mandatory.</div>
                         </div>
                         <div class="col-md-6">
@@ -102,7 +102,7 @@
                             <label class="form-label" for="color">Color</label>
 
                             <input class="form-control" id="color" name="color_name" required=""
-                                   type="text" value="{{color.pcol_color_name}}"/>
+                                   type="text" value="{{color.pcol_color_name}}" oninput="this.value = this.value.replace(/[^a-zA-Z\s]/g, '');"/>
                             <div class="invalid-feedback">Code is mandatory.</div>
                         </div>
 
