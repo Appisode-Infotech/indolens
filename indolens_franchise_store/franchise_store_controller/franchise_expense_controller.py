@@ -130,7 +130,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
                                             `so_payment_mode`, `so_amount_paid`, `so_estimated_delivery_date`, 
                                             `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
-                                            `so_updated_on`, `so_created_by_store_type`, `so_sales_note`, `so_linked_item`)
+                                            `so_updated_on`, `so_created_by_store_type`, `so_sales_note`, `so_linked_item`, `so_order_mode`)
                                             VALUES
                                             ('{order_id}', {new_data.get('product')}, 
                                             '{new_data.get('product_hsn')}', 
@@ -142,7 +142,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                             '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
                                             '{getIndianTime()}', 2, '{billingDetailsData.get('saleNote')}', 
-                                            '{json.dumps(linked_items)}') """
+                                            '{json.dumps(linked_items)}',1) """
 
                     cursor.execute(insert_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
@@ -166,7 +166,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
                                                             `so_payment_mode`, `so_amount_paid`, `so_estimated_delivery_date`, 
                                                             `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
-                                                            `so_updated_on`, `so_created_by_store_type`, `so_sales_note`)
+                                                            `so_updated_on`, `so_created_by_store_type`, `so_sales_note`, `so_order_mode`)
                                                             VALUES
                                                             ('{order_id}', 
                                                             {new_data.get('product')}, '{new_data.get('product_hsn')}', 
@@ -179,7 +179,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                                             '{getIndianTime()}', 
                                                             {billingDetailsData.get('orderByEmployee')}, 
-                                                            '{getIndianTime()}', 2, '{billingDetailsData.get('saleNote')}') """
+                                                            '{getIndianTime()}', 2, '{billingDetailsData.get('saleNote')}',1) """
                     cursor.execute(insert_contact_len_sales_query,
                                    (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
 
@@ -202,7 +202,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
                                                             `so_payment_mode`, `so_amount_paid`, `so_estimated_delivery_date`, 
                                                             `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
-                                                            `so_updated_on`, `so_power_attribute`, `so_created_by_store_type`, `so_sales_note`)
+                                                            `so_updated_on`, `so_power_attribute`, `so_created_by_store_type`, `so_sales_note`, `so_order_mode`)
                                                                     VALUES
                                                     ('{order_id}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
                                                     {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
@@ -213,7 +213,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                     {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                                     '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
                                                     '{getIndianTime()}', '{power_attributes}', 2 , 
-                                                    '{billingDetailsData.get('saleNote')}')
+                                                    '{billingDetailsData.get('saleNote')}',1)
                                                 """
 
                     cursor.execute(insert_contact_len_sales_query,

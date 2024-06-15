@@ -41,9 +41,9 @@ If you encounter any issues during the login process or have any questions about
                         
 Best regards,
 INDOLENS 
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -71,9 +71,9 @@ If you encounter any issues during the login process or have any questions about
 
 Best regards,
 INDOLENS 
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 # EMPLOYEE CREATION EMAIL
@@ -100,9 +100,9 @@ If you encounter any issues during the login process or have any questions about
 
 Best regards,
 INDOLENS 
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 def get_store_employee_creation_email_body(name, role, email):
@@ -114,9 +114,9 @@ Username/Email: {email}
                  
 Best regards,
 INDOLENS 
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 def get_employee_update_email_subject(name):
@@ -135,9 +135,9 @@ Date: {getIndianTime()}
 
 Best regards,
 INDOLENS 
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -163,9 +163,9 @@ Thank you for your continued dedication to Indolens. We look forward to witnessi
 
 Best regards,
 INDOLENS
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -194,9 +194,9 @@ Thank you for your continued dedication to Indolens. We look forward to witnessi
 
 Best regards,
 INDOLENS
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -220,9 +220,9 @@ If you have any issues or need further assistance, feel free to contact our supp
 
 Best regards,
 INDOLENS
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -272,9 +272,9 @@ Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -295,9 +295,9 @@ Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -317,9 +317,9 @@ Invoice: {base_url}/customer_order_invoice/orderId={order_number}
 
 Best regards,
 INDOLENS
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -338,9 +338,9 @@ Date of Change: {getIndianTime()}
 
 Best regards,
 INDOLENS
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -361,9 +361,9 @@ Track Order on: {base_url}/customer_order_tracking/orderId={order_number}
 
 Best regards,
 INDOLENS
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
 
 
@@ -387,7 +387,7 @@ Thank you once again for choosing INDOLENS. We value your trust in us and look f
 
 Best regards,
 INDOLENS 
-Email: {support_data['support_email']}
-Phone: {support_data['support_phone']}
-Working Hours: {support_data['support_hour']}
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
 """
