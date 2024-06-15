@@ -119,6 +119,25 @@
                     </a>
                     </div>
                 </li>
+                <li class="nav-item">
+                    <!-- label-->
+                    <p class="navbar-vertical-label">JOBS POWER DETAILS
+                    </p>
+                    <hr class="navbar-vertical-line"/>
+                    <!-- parent pages-->
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'active_task_powers' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'active_task_powers' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="shopping-bag"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Active Jobs Power</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
             </ul>
         </div>
     </div>

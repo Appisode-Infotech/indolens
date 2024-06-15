@@ -2365,13 +2365,11 @@ def viewOrderDetails(request, orderId):
 def orderInvoice(request, orderId):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         order_detail, status_code = orders_controller.get_order_details(orderId)
-        print(order_detail['orders_details'][0])
+        print(order_detail['orders_details'])
         invoice_details, inv_status_code = orders_controller.get_invoice_details(orderId)
-        print(invoice_details)
         store_data, store_status_code = orders_controller.get_store_details(
             order_detail['orders_details'][0]['so_created_by_store'],
             order_detail['orders_details'][0]['so_created_by_store_type'])
-        print(store_data)
         return render(request, 'indolens_admin/orders/order_invoice.html',
                       {"order_detail": order_detail['orders_details'],
                        "store_data": store_data['store_data'], "invoice_details": invoice_details['invoice_details']})

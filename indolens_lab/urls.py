@@ -12,6 +12,7 @@ urlpatterns = [
     # Dashboard
     path('dashboard_lab/', labDashboard, name='dashboard_lab'),
     path('all_task/', allTask, name='all_task'),
+    path('active_task_powers/', activeJobsPower, name='active_task_powers'),
     path('new_task/', newTask, name='new_task'),
     path('processing_task/', processingTask, name='processing_task'),
     path('ready_task/', readyTask, name='ready_task'),
