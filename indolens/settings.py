@@ -88,7 +88,7 @@ WSGI_APPLICATION = 'indolens.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '2_indolens_db',
+        'NAME': 'indolens_db',
         'USER': 'root',
         'PASSWORD': '',
         'HOST': 'localhost',

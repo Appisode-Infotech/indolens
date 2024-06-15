@@ -112,7 +112,8 @@ sql_queries = [
     CHANGE COLUMN updated_by_store_type customer_updated_by_store_type INT(11),
     CHANGE COLUMN updated_on customer_updated_on DATETIME;""",
 
-    """ALTER TABLE eye_test
+    """
+    ALTER TABLE eye_test
     CHANGE COLUMN eye_test_id et_eye_test_id INT(11) NOT NULL AUTO_INCREMENT,
     CHANGE COLUMN customer_id et_customer_id INT(11),
     CHANGE COLUMN power_attributes et_power_attributes longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`et_power_attributes`)),
@@ -121,7 +122,13 @@ sql_queries = [
     CHANGE COLUMN created_by et_created_by INT(11),
     CHANGE COLUMN created_on et_created_on DATETIME,
     CHANGE COLUMN updated_by et_updated_by INT(11),
-    CHANGE COLUMN updated_on et_updated_on DATETIME;""",
+    CHANGE COLUMN updated_on et_updated_on DATETIME,
+    ADD COLUMN et_optometry_id INT(11);
+    """,
+    
+    """
+    UPDATE eye_test SET et_optometry_id = et_created_by;
+    """,
 
     """ALTER TABLE frame_shapes
     CHANGE COLUMN shape_id fshape_shape_id INT(11) NOT NULL AUTO_INCREMENT,

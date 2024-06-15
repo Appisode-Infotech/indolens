@@ -78,10 +78,10 @@ def get_admin_setting():
             admin_setting_check = f""" SELECT * FROM admin_setting """
             cursor.execute(admin_setting_check)
             admin_settings = cursor.fetchone()
-
-            admin_settings['emailjs_attribute'] = json.loads(admin_settings['emailjs_attribute']) if admin_settings['emailjs_attribute'] else []
-            admin_settings['support_attributes'] = json.loads(admin_settings['support_attributes']) if admin_settings['support_attributes'] else []
-            admin_settings['central_inventory_details'] = json.loads(admin_settings['central_inventory_details']) if admin_settings['central_inventory_details'] else []
+            if admin_settings is not None:
+                admin_settings['emailjs_attribute'] = json.loads(admin_settings['emailjs_attribute']) if admin_settings['emailjs_attribute'] else []
+                admin_settings['support_attributes'] = json.loads(admin_settings['support_attributes']) if admin_settings['support_attributes'] else []
+                admin_settings['central_inventory_details'] = json.loads(admin_settings['central_inventory_details']) if admin_settings['central_inventory_details'] else []
             return {"status": True,
                     "message": "fetch Success",
                     "admin_setting": admin_settings if admin_settings is not None else {},
