@@ -510,11 +510,9 @@ def ownStoreEyeTest(request):
         if request.method == 'POST':
             response = own_store_eye_test_controller.add_eye_test(request.POST, request.session.get('id'),
                                                                   assigned_store)
-            print(response)
             return redirect('get_eye_test')
         else:
             customerResponse, cust_status_code = store_customers_controller.get_all_customers()
-            print(customerResponse)
             optometryResponse, cust_status_code = store_employee_controller.get_all_active_store_optometry(
                 assigned_store)
             return render(request, 'ownStoreEyeTest/ownStoreEyeTest.html',

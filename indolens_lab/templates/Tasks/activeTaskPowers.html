@@ -154,7 +154,7 @@
                                         style="width:250px;">BRAND
                                     </th>
                                     <th class="sort align-middle  " data-sort="jobStatus" scope="col"
-                                        style="width:250px;">JOB STATUS
+                                        style="width:250px;">CREATED ON
                                     </th>
                                     <th class="sort align-middle text-end " scope="col"
                                         style="width:250px;">ACTION
@@ -272,32 +272,8 @@
                                         {{order.brand_name}}
                                         {% endif %}
                                     </td>
-                                    <td class="align-middle text-900 fw-semi-bold   ">
-                                        {% if order.so_order_status == 1 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-warning"><span
-                                                class="badge-label">NEW</span></span>
-                                        {% elif order.so_order_status == 2 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">PROCESSING</span></span>
-                                        {% elif order.so_order_status == 3 %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
-                                                class="badge-label">READY IN LAB</span></span>
-                                        {% else %}
-                                        <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
-                                                class="badge-label">DISPATCHED</span></span>
-
-                                        {% endif %}
-                                    </td>
-                                    <td style="display:none;" class="jobStatus align-middle text-900 fw-semi-bold   ">
-                                        {% if order.so_order_status == 1 %}
-                                        NEW
-                                        {% elif order.so_order_status == 2 %}
-                                        PROCESSING
-                                        {% elif order.so_order_status == 3 %}
-                                        READY IN LAB
-                                        {% else %}
-                                        DISPATCHED
-                                        {% endif %}
+                                    <td class="jobStatus align-middle text-900 fw-semi-bold ">
+                                        {{order.so_created_on|date:"d/m/Y h:i A"}}
                                     </td>
 
                                     <td class="price align-middle text-900 fw-semi-bold text-end  ">
