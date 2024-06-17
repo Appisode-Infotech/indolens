@@ -128,7 +128,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             `so_purchase_quantity`, `so_product_total_cost`, `so_discount_percentage`,
                                             `so_is_discount_applied`, `so_power_attribute`, `so_assigned_lab`, 
                                             `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
-                                            `so_payment_mode`, `so_amount_paid`, `so_estimated_delivery_date`, 
+                                            `so_amount_paid`, `so_estimated_delivery_date`, 
                                             `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
                                             `so_updated_on`, `so_created_by_store_type`, `so_sales_note`, `so_linked_item`, `so_order_mode`)
                                             VALUES
@@ -138,7 +138,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                             {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                             {discount_percentage}, {is_discount_applied}, 
                                             '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
-                                            {customer_id}, 1, 1, 1, {billingDetailsData.get('paymentMode')}, {billingDetailsData.get('amount_paid')}, %s, 
+                                            {customer_id}, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                             '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
                                             '{getIndianTime()}', 2, '{billingDetailsData.get('saleNote')}', 
@@ -164,7 +164,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             `so_purchase_quantity`, `so_product_total_cost`, `so_discount_percentage`,
                                                             `so_is_discount_applied`, `so_power_attribute`, `so_assigned_lab`, 
                                                             `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
-                                                            `so_payment_mode`, `so_amount_paid`, `so_estimated_delivery_date`, 
+                                                            `so_amount_paid`, `so_estimated_delivery_date`, 
                                                             `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
                                                             `so_updated_on`, `so_created_by_store_type`, `so_sales_note`, `so_order_mode`)
                                                             VALUES
@@ -175,7 +175,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             {discount_percentage}, {is_discount_applied}, 
                                                             '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
                                                             {customer_id}, 
-                                                            1, 1, 1, {billingDetailsData.get('paymentMode')},{billingDetailsData.get('amount_paid')}, %s, 
+                                                            1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                                             {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                                             '{getIndianTime()}', 
                                                             {billingDetailsData.get('orderByEmployee')}, 
@@ -200,7 +200,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                             `so_purchase_quantity`, `so_product_total_cost`, `so_discount_percentage`,
                                                             `so_is_discount_applied`, `so_assigned_lab`, 
                                                             `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
-                                                            `so_payment_mode`, `so_amount_paid`, `so_estimated_delivery_date`, 
+                                                            `so_amount_paid`, `so_estimated_delivery_date`, 
                                                             `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
                                                             `so_updated_on`, `so_power_attribute`, `so_created_by_store_type`, `so_sales_note`, `so_order_mode`)
                                                                     VALUES
@@ -209,7 +209,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                                                     {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
                                                     {discount_percentage}, {is_discount_applied}, 
                                                     {billingDetailsData.get('assignedLab')}, {customer_id}, 1, 
-                                                    1, 1, {billingDetailsData.get('paymentMode')}, {billingDetailsData.get('amount_paid')}, %s, 
+                                                    1, 1, {billingDetailsData.get('amount_paid')}, %s, 
                                                     {store_id}, {billingDetailsData.get('orderByEmployee')}, 
                                                     '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
                                                     '{getIndianTime()}', '{power_attributes}', 2 , 

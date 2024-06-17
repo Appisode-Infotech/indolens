@@ -219,7 +219,6 @@ def orderDetailsFranchise(request, orderId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         order_detail, status_code = franchise_store_orders_controller.get_order_details(orderId)
-        print(order_detail)
         payment_logs, status_code = orders_controller.get_payment_logs(orderId)
         lab_details, lab_status_code = lab_controller.get_lab_by_id(
             order_detail['orders_details'][0]['so_assigned_lab'])
@@ -517,21 +516,17 @@ def makeSaleFranchiseStore(request):
                                                                              billingDetailsData,
                                                                              request.session.get('id'),
                                                                              assigned_store, order_id, total_amount)
+            print(make_order)
             url = reverse('order_details_franchise_store', kwargs={'orderId': order_id})
             return redirect(url)
         else:
             employee_list, emp_status_code = franchise_store_employee_controller.get_all_active_store_optometry(
                 assigned_store)
-            # print(employee_list)
             lab_list, lab_status_code = franchise_store_lab_controller.get_all_active_labs()
-            # print(lab_list)
             store_products, status_code = franchise_inventory_controller.get_all_products_for_franchise_store(
                 assigned_store)
-            # print(store_products)
             customerResponse, cust_status_code = franchise_store_customers_controller.get_all_customers()
-            # print(customerResponse)
             lens_response, lens_status_code = central_inventory_controller.get_central_inventory_lens()
-            # print(lens_response)
             return render(request, 'expenses/makeSaleFranchiseStore.html',
                           {"other_products_list": store_products['stocks_list'],
                            'customers_list': customerResponse['customers_list'],

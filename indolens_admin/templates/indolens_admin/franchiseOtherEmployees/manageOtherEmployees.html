@@ -152,7 +152,7 @@
                                     EMAIL
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="store" scope="col"
-                                    style="width:5%;">ASSIGNED TO STORE
+                                    style="width:5%;">ASSIGNED STORE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
@@ -220,7 +220,7 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap ps-3 py-4 store">
+                                <td style="display:none;" class="align-middle white-space-nowrap ps-3 py-4 store">
                                     {% if emp.fs_store_name|length != 0 %}
                                     {{emp.fs_store_name}}
                                     {% else %}

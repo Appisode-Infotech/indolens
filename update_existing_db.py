@@ -32,7 +32,7 @@ sql_queries = [
     CHANGE COLUMN phone ah_phone VARCHAR(255),
     CHANGE COLUMN password ah_password VARCHAR(255),
     CHANGE COLUMN profile_pic ah_profile_pic VARCHAR(255),
-    CHANGE COLUMN assigned_stores ah_assigned_stores longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ah_assigned_stores`)),
+    CHANGE COLUMN assigned_stores ah_assigned_stores longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN address ah_address VARCHAR(255),
     CHANGE COLUMN document_1_type ah_document_1_type VARCHAR(255),
     CHANGE COLUMN document_1_url ah_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ah_document_1_url`)),

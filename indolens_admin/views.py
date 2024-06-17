@@ -763,9 +763,7 @@ def deleteFranchiseOwnersDocuments(request, franchiseOwnersId, documentURL, docu
 def manageAreaHead(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_all_area_head(status)
-        print(response)
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
-        print(available_stores_response)
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
                       {"area_heads_list": response['area_heads_list'],
                        "available_stores": available_stores_response['available_stores'],
@@ -1823,9 +1821,7 @@ def enableDisableAccountant(request, route, accountantId, status):
 def manageLabTechnician(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = lab_technician_controller.get_all_lab_technician(status)
-        print(response)
         lab_list, status_code = lab_controller.get_all_active_labs()
-        print(lab_list)
         return render(request, 'indolens_admin/labTechnician/manageLabTechnician.html',
                       {"lab_technician_list": response['lab_technician_list'], "lab_list": lab_list['lab_list'],
                        "status": status})
@@ -3365,7 +3361,6 @@ def unAssignFranchiseStoreOtherEmployee(request, route, FranchiseOtherEmployeeId
 
 def assignAreaHeadOwnStore(request):
     if request.method == 'POST':
-        print(request.POST)
         response, status_code = area_head_controller.assignStore(request.POST['emp_id'],
                                                                  ','.join(request.POST.getlist('store_id')))
     url = reverse('manage_area_head', kwargs={'status': 'All'})
@@ -3388,6 +3383,7 @@ def assignLabTechnician(request, route):
 
 def unAssignLabTechnician(request, route, LabTechnicianId, labId):
     response, status_code = lab_technician_controller.unassign_lab(LabTechnicianId, labId)
+    print(response)
     url = reverse('manage_lab_technician', kwargs={'status': route})
     return redirect(url)
 
