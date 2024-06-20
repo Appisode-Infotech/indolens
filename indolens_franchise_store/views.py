@@ -360,11 +360,9 @@ def createStockRequestFranchise(request):
             stock_obj = franchise_create_stock_request_model.franchise_create_stock_request_model_from_dict(
                 request.POST)
             response = franchise_inventory_controller.create_store_stock_request(stock_obj)
-            print(response)
             return redirect('create_request_franchise_store')
         else:
             response, status_code = franchise_inventory_controller.get_all_central_inventory_products(assigned_store)
-            print(response)
             return render(request, 'stockRequests/createStockRequestFranchise.html',
                           {"product_list": response['product_list']})
     else:
