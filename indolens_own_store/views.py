@@ -484,7 +484,7 @@ def makeSaleOwnStore(request):
                 url = reverse('order_details_store', kwargs={'orderId': order_id})
                 return redirect(url)
         else:
-            employee_list, emp_status_code = store_employee_controller.get_all_active_store_optometry(
+            employee_list, emp_status_code = store_employee_controller.get_all_active_store_employee(
                 assigned_store)
             lab_list, lab_status_code = own_store_lab_controller.get_all_active_labs()
             store_products, status_code = store_inventory_controller.get_all_products_for_store(
