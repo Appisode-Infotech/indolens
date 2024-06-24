@@ -900,7 +900,7 @@ def create_store_stock_request(stock_obj, store_id):
     try:
         with getConnection().cursor() as cursor:
             unit_cost = 0
-            if stock_obj.store_type == 1:
+            if stock_obj.store_type == '1':
                 cursor.execute("SELECT ci_cost_price AS unit_cost FROM central_inventory WHERE ci_product_id = %s",
                                (stock_obj.product_id,))
                 unit_cost = cursor.fetchone()['unit_cost']
