@@ -10,7 +10,7 @@
     <!-- ===============================================-->
     <!--    Document Title-->
     <!-- ===============================================-->
-    <title>Indolens {{request.session.lab_name}} - Dispatched Jobs</title>
+    <title>Indolens {{request.session.lab_name}} - Cancelled Jobs</title>
     {% load static %}
 
 
@@ -58,6 +58,7 @@
       }
 
 
+
     </script>
 </head>
 
@@ -76,10 +77,9 @@
             <div class="mb-9">
                 <div class="row g-3 mb-4">
                     <div class="col-auto">
-                        <h2 class="mb-0">Dispatched Jobs<span class="fw-normal text-700 ms-3">({{all_task|length}})</span></h2>
+                        <h2 class="mb-0">Cancelled Jobs<span class="fw-normal text-700 ms-3">({{all_task|length}})</span></h2>
                     </div>
                 </div>
-
                 <div data-list='{"valueNames":["slno","jobId","store","category","material","type","shape","color","unit","brand","jobStatus"],"page":20,"pagination":true}'
                      id="orderTable">
                     <div class="mb-4">
@@ -294,6 +294,7 @@
                         </div>
                     </div>
                 </div>
+
             </div>
             {% include 'footer.html' %}
 

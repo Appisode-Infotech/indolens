@@ -18,7 +18,8 @@ def get_lab_jobs(labId, status):
         "New": "= 1",
         "Processing": "= 2",
         "Ready": "= 3",
-        "Dispatched": "IN (4,5,6,7)",
+        "Dispatched": "IN (4,5,6)",
+        "Cancelled": "= 7",
     }
     status_condition = status_conditions[status]
     try:

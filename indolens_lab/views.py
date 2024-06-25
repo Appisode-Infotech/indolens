@@ -142,6 +142,15 @@ def dispatchedTask(request):
     else:
         return redirect('lab_login')
 
+def cancelledTask(request):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        dispatched_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "Cancelled")
+        return render(request, 'Tasks/viewCancelledTask.html', {"all_task": dispatched_task['task_list']})
+    else:
+        return redirect('lab_login')
+
 
 def labJobDetails(request, jobId):
     assigned_lab = getAssignedLab(request)

@@ -149,7 +149,10 @@
                             {% for test in eye_test_list %}
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slNo"></td>
-                                <td class="fs--1 align-middle px-0 py-3 testNo">TEST{{test.et_eye_test_id}}
+                                <td class="fs--1 align-middle px-0 py-3 testNo">
+                                    <a target="_blank"
+                                               href="{% url 'eye_test_print' test.et_eye_test_id %}">
+                                        TEST{{test.et_eye_test_id}}</a>
                                 </td>
                                 <td class="align-middle white-space-nowrap pe-5"><a
                                         class="d-flex align-items-center"
