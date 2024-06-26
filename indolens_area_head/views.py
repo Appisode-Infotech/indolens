@@ -89,6 +89,7 @@ def dashboard(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         stats, stats_status_code = area_head_dashboard_controller.get_store_employee_stats(assigned_sores)
+        print(stats)
         orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All', assigned_sores)
         return render(request, 'dashboard.html', {"orders_list": orders_list['dash_orders_list'], "stats": stats})
     else:

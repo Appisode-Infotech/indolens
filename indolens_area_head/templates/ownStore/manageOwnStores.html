@@ -97,13 +97,20 @@
                                 <div class="search-box me-3">
                                     <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
                                         <input aria-label="Search" class="form-control search-input search"
-                                               placeholder="Search Store" type="search"/>
+                                               placeholder="Search Stores" type="search"/>
                                         <span class="fas fa-search search-box-icon"></span>
                                     </form>
                                 </div>
 
                             </div>
+
                         </div>
+                        <div class="col-auto">
+                                <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                    </button>
+                            </div>
+
                     </div>
                     <div class="table-responsive scrollbar">
                         <table class="table fs--1 mb-0 border-top border-200" id="myTable">
@@ -256,6 +263,7 @@
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
+<script src="{% static 'js/csvExport.js' %}"></script>
 
 </body>
 

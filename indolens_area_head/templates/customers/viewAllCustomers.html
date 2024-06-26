@@ -82,25 +82,27 @@
 
                 <div data-list='{"valueNames":["slno","customer","type","name","email","language","orders","total","city","last-order"],"page":20,"pagination":true}'
                      id="products">
-                    <div class="mb-4">
-                        <div class="row g-3">
-                            <div class="col-auto">
-                                <div class="search-box">
+                    <div class="row g-3 justify-content-between align-items-end mb-4">
+
+                        <div class="col-12 col-sm-auto">
+                            <div class="d-flex align-items-center">
+                                <div class="search-box me-3">
                                     <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
                                         <input aria-label="Search" class="form-control search-input search"
-                                               placeholder="Search customers" type="search"/>
+                                               placeholder="Search Customers" type="search"/>
                                         <span class="fas fa-search search-box-icon"></span>
-
                                     </form>
                                 </div>
+
                             </div>
 
-                            <div class="col-auto">
-                                <button class="btn btn-link text-900 me-4 px-0"><span
-                                        class="fa-solid fa-file-export fs--1 me-2"></span>Export
-                                </button>
-                            </div>
                         </div>
+                        <div class="col-auto">
+                                <button id="btnExport" class="btn btn-link text-900 me-4 px-0"><span
+                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                    </button>
+                            </div>
+
                     </div>
                     <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
                         <div class="table-responsive scrollbar-overlay mx-n1 px-1">
@@ -251,7 +253,7 @@ document.addEventListener("DOMContentLoaded", function () {
 <script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
 <script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
 <script src="{% static 'js/phoenix.js' %}"></script>
-
+<script src="{% static 'js/csvExport.js' %}"></script>
 </body>
 
 </html>
