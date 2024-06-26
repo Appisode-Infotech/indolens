@@ -2236,7 +2236,7 @@ function updateOtherProductFields(selectElement, cardIndex) {
             productProductTotalField.value = (discountedPrice * productPurchaseQtyField.value).toFixed(2);
             discountCheckbox.value = 'on';
         } else {
-            productProductTotalField.value = (selectedProduct.sale_price * productPurchaseQtyField.value).toFixed(2);
+            productProductTotalField.value = (selectedProduct.ci_sale_price * productPurchaseQtyField.value).toFixed(2);
             productProductTotalField.innerHTML = '';
             discountCheckbox.value = 'off';
         }

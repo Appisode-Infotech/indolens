@@ -111,10 +111,10 @@ def manageOwnStores(request, status):
 
 
 def viewOwnStore(request, ownStoreId):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = own_store_controller.get_own_store_by_id(ownStoreId)
-        print(response)
         products_list, status_code = stores_inventory_controller.get_all_products_for_own_store(ownStoreId)
         store_stats, status_code = own_store_controller.get_own_storestore_stats(ownStoreId)
         revenue_generated, sale_status_code = orders_controller.get_store_sales(ownStoreId, 1)
@@ -145,10 +145,10 @@ def manageEmployee(request):
 
 
 def viewEmployee(request, employeeId):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = store_employee_controller.get_store_employee_by_id(employeeId)
-        print(response)
         return render(request, 'storeEmployee/viewStoreEmployee.html',
                       {"store_employee": response['store_employee']})
     else:
@@ -156,6 +156,7 @@ def viewEmployee(request, employeeId):
 
 
 def viewAreaHeadProfile(request, areaHeadId):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = area_head_controller.get_area_head_by_id(areaHeadId)
@@ -168,6 +169,7 @@ def viewAreaHeadProfile(request, areaHeadId):
 # =================================ADMIN ACCOUNTANT MANAGEMENT======================================
 
 def manageLabTechnician(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = lab_technician_controller.get_all_lab_technician()
@@ -178,6 +180,7 @@ def manageLabTechnician(request):
 
 
 def viewLabTechnician(request, ltid):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = lab_technician_controller.get_lab_technician_by_id(ltid)
@@ -190,6 +193,7 @@ def viewLabTechnician(request, ltid):
 # =================================ADMIN ORDERS MANAGEMENT======================================
 
 def viewAllOrders(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         orders_list, status_code = area_head_store_orders_controller.get_all_orders('All', 'All',
@@ -201,6 +205,7 @@ def viewAllOrders(request):
 
 
 def viewdispatchedOrders(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         orders_list, status_code = area_head_store_orders_controller.get_all_orders('Dispatched', 'All',
@@ -212,6 +217,7 @@ def viewdispatchedOrders(request):
 
 
 def viewReceivedOrders(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'orders/viewNewOrders.html')
@@ -220,6 +226,7 @@ def viewReceivedOrders(request):
 
 
 def viewProcessingOrders(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'orders/viewProcessingOrders.html')
@@ -228,6 +235,7 @@ def viewProcessingOrders(request):
 
 
 def viewReadyOrders(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'orders/viewReadyOrders.html')
@@ -236,6 +244,7 @@ def viewReadyOrders(request):
 
 
 def viewDeliveredOrders(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'orders/viewCompletedOrders.html')
@@ -244,6 +253,7 @@ def viewDeliveredOrders(request):
 
 
 def viewCancelledOrders(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'orders/viewCancelledOrders.html')
@@ -252,6 +262,7 @@ def viewCancelledOrders(request):
 
 
 def viewRefundedOrders(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'orders/viewRefundedOrders.html')
@@ -260,6 +271,7 @@ def viewRefundedOrders(request):
 
 
 def viewOrderDetails(request, orderId):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         orders_list, status_code = area_head_store_orders_controller.get_order_details(orderId)
@@ -275,13 +287,13 @@ def viewAllCustomers(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = area_head_customers_controller.get_all_area_stores_customers(assigned_sores)
-        print(response)
         return render(request, 'customers/viewAllCustomers.html', {"customers_list": response['customers_list']})
     else:
         return redirect('login_area_head')
 
 
 def viewCustomerDetails(request, customerId):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = area_head_customers_controller.get_customers_by_id(customerId)
@@ -303,6 +315,7 @@ def viewCustomerDetails(request, customerId):
 # =================================ADMIN LABS MANAGEMENT======================================
 
 def manageLabs(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = lab_controller.get_all_labs()
@@ -312,6 +325,7 @@ def manageLabs(request):
 
 
 def viewLab(request, labid):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = lab_controller.get_lab_by_id(labid)
@@ -322,6 +336,7 @@ def viewLab(request, labid):
 
 
 def viewActiveJobs(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'labs/viewActiveJobs.html')
@@ -330,6 +345,7 @@ def viewActiveJobs(request):
 
 
 def viewAllJobs(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'labs/viewAllJobs.html')
@@ -338,6 +354,7 @@ def viewAllJobs(request):
 
 
 def jobDetails(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'labs/jobDetails.html')
@@ -346,6 +363,7 @@ def jobDetails(request):
 
 
 def manageAuthenticityCard(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'labs/manageAuthenticityCard.html')
@@ -357,6 +375,7 @@ def manageAuthenticityCard(request):
 
 
 def manageCentralInventoryProducts(request, status):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_central_inventory_products(status)
@@ -368,6 +387,7 @@ def manageCentralInventoryProducts(request, status):
 
 
 def manageCentralInventoryOutOfStock(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = central_inventory_controller.get_all_out_of_stock_central_inventory_products(15)
@@ -378,6 +398,7 @@ def manageCentralInventoryOutOfStock(request):
 
 
 def manageMoveStocks(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         response, status_code = own_store_controller.get_all_own_stores()
@@ -388,6 +409,7 @@ def manageMoveStocks(request):
 
 
 def manageMoveAStock(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'centralInventory/manageMoveAStock.html')
@@ -399,6 +421,7 @@ def manageMoveAStock(request):
 
 
 def viewAllStockRequests(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'stockRequests/viewAllStockRequests.html')
@@ -407,6 +430,7 @@ def viewAllStockRequests(request):
 
 
 def viewPendingStockRequests(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'stockRequests/viewPendingStockRequests.html')
@@ -415,6 +439,7 @@ def viewPendingStockRequests(request):
 
 
 def viewCompletedStockRequests(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'stockRequests/viewCompletedStockRequests.html')
@@ -423,6 +448,7 @@ def viewCompletedStockRequests(request):
 
 
 def viewRejectedStockRequests(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return render(request, 'stockRequests/viewrejectedStockRequests.html')
@@ -431,6 +457,7 @@ def viewRejectedStockRequests(request):
 
 
 def manageTask(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return redirect('dashboard_area_head')
@@ -439,6 +466,7 @@ def manageTask(request):
 
 
 def manageCampaigns(request):
+    assigned_sores = getAreaHeadAssignedStores(request)
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         return redirect('dashboard_area_head')

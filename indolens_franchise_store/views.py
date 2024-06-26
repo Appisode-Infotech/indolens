@@ -515,8 +515,12 @@ def makeSaleFranchiseStore(request):
                                                                              request.session.get('id'),
                                                                              assigned_store, order_id, total_amount)
             print(make_order)
-            url = reverse('order_details_franchise_store', kwargs={'orderId': order_id})
-            return redirect(url)
+            if not make_order['status']:
+                return redirect('franchise_store_make_sale')
+            else:
+                url = reverse('order_details_franchise_store', kwargs={'orderId': order_id})
+                return redirect(url)
+
         else:
             employee_list, emp_status_code = franchise_store_employee_controller.get_all_active_store_employee(
                 assigned_store)

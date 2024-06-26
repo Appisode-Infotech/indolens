@@ -12,13 +12,18 @@ from indolens_own_store.own_store_controller import lens_sale_power_attribute_co
 from indolens_own_store.own_store_model.response_model.store_expense_resp_model import get_store_expenses
 
 ist = pytz.timezone('Asia/Kolkata')
+
+
 def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
 
+
 def convert_to_db_date_format(date_str):
     date_obj = datetime.datetime.strptime(date_str, "%d/%m/%Y")
     return date_obj.date()
+
+
 def get_current_epoch_time():
     epoch_time = int(time.time())
     return epoch_time
@@ -101,7 +106,7 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
             cursor.execute(create_update_customer)
             customer_id = cursor.lastrowid
 
-            if billingDetailsData.get('amount_paid') != '0':
+            if int(billingDetailsData.get('amount_paid')) > 0:
                 order_payment_track_query = f"""INSERT INTO sales_order_payment_track (sopt_order_id, sopt_payment_amount, 
                                                     sopt_payment_mode, sopt_payment_type, sopt_created_by_store, 
                                                     sopt_created_by_store_type, sopt_created_by_id, sopt_created_on )
@@ -123,29 +128,34 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     if discount_percentage == "" or is_discount_applied == 0 or None:
                         discount_percentage = 0
 
-                    insert_len_sales_query = f""" INSERT INTO `sales_order`
-                                            (`so_order_id`, `so_product_id`, `so_hsn`, `so_unit_sale_price`, `so_unit_type`,
-                                            `so_purchase_quantity`, `so_product_total_cost`, `so_discount_percentage`,
-                                            `so_is_discount_applied`, `so_power_attribute`, `so_assigned_lab`, 
-                                            `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
-                                            `so_amount_paid`, `so_estimated_delivery_date`, 
-                                            `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
-                                            `so_updated_on`, `so_created_by_store_type`, `so_sales_note`, `so_linked_item`, `so_order_mode`)
-                                            VALUES
-                                            ('{order_id}', {new_data.get('product')}, 
-                                            '{new_data.get('product_hsn')}', 
-                                            {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
-                                            {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
-                                            {discount_percentage}, {is_discount_applied}, 
-                                            '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
-                                            {customer_id}, 1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
-                                            {store_id}, {billingDetailsData.get('orderByEmployee')}, 
-                                            '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
-                                            '{getIndianTime()}', 2, '{billingDetailsData.get('saleNote')}', 
-                                            '{json.dumps(linked_items)}',1) """
+                    # Insert query
+                    insert_len_sales_query = """
+                    INSERT INTO sales_order
+                    (so_order_id, so_product_id, so_hsn, so_unit_sale_price, so_unit_type, so_purchase_quantity, so_product_total_cost, 
+                    so_discount_percentage, so_is_discount_applied, so_power_attribute, so_assigned_lab, so_customer_id, so_order_status, 
+                    so_payment_status, so_delivery_status, so_amount_paid, so_estimated_delivery_date, so_created_by_store, so_created_by, 
+                    so_created_on, so_updated_by, so_updated_on, so_created_by_store_type, so_sales_note, so_linked_item, so_order_mode)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """
 
-                    cursor.execute(insert_len_sales_query,
-                                   (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
+                    # Data to be inserted
+                    data_to_insert = (
+                        order_id,
+                        new_data.get('product'), new_data.get('product_hsn'),
+                        new_data.get('unit_price'), new_data.get('unit_type'),
+                        new_data.get('purchase_qty'), new_data.get('product_total'),
+                        discount_percentage, is_discount_applied,
+                        json.dumps(power_attributes), billingDetailsData.get('assignedLab'),
+                        customer_id, 1, 1, 1,
+                        billingDetailsData.get('amount_paid'),
+                        convert_to_db_date_format(billingDetailsData.get('estDeliveryDate')),
+                        store_id, billingDetailsData.get('orderByEmployee'), getIndianTime(),
+                        billingDetailsData.get('orderByEmployee'), getIndianTime(),
+                        2, billingDetailsData.get('saleNote'), json.dumps(linked_items), 1
+                    )
+
+                    # Executing the query
+                    cursor.execute(insert_len_sales_query, data_to_insert)
 
                     update_central_Inventory = f"""UPDATE central_inventory 
                                                     SET ci_product_quantity = ci_product_quantity - {new_data.get('purchase_qty')}
@@ -159,29 +169,33 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     is_discount_applied = 1 if discount_checked and discount_checked.lower() == 'on' else 0
                     if discount_percentage == "" or is_discount_applied == 0 or None:
                         discount_percentage = 0
-                    insert_contact_len_sales_query = f""" INSERT INTO `sales_order`
-                                                            (`so_order_id`, `so_product_id`, `so_hsn`, `so_unit_sale_price`, `so_unit_type`,
-                                                            `so_purchase_quantity`, `so_product_total_cost`, `so_discount_percentage`,
-                                                            `so_is_discount_applied`, `so_power_attribute`, `so_assigned_lab`, 
-                                                            `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
-                                                            `so_amount_paid`, `so_estimated_delivery_date`, 
-                                                            `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
-                                                            `so_updated_on`, `so_created_by_store_type`, `so_sales_note`, `so_order_mode`)
-                                                            VALUES
-                                                            ('{order_id}', 
-                                                            {new_data.get('product')}, '{new_data.get('product_hsn')}', 
-                                                            '{new_data.get('unit_price')}', '{new_data.get('unit_type')}', 
-                                                            {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
-                                                            {discount_percentage}, {is_discount_applied}, 
-                                                            '{json.dumps(power_attributes)}', {billingDetailsData.get('assignedLab')}, 
-                                                            {customer_id}, 
-                                                            1, 1, 1, {billingDetailsData.get('amount_paid')}, %s, 
-                                                            {store_id}, {billingDetailsData.get('orderByEmployee')}, 
-                                                            '{getIndianTime()}', 
-                                                            {billingDetailsData.get('orderByEmployee')}, 
-                                                            '{getIndianTime()}', 2, '{billingDetailsData.get('saleNote')}',1) """
-                    cursor.execute(insert_contact_len_sales_query,
-                                   (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
+                    # Insert query
+                    insert_contact_len_sales_query = """
+                    INSERT INTO sales_order
+                    (so_order_id, so_product_id, so_hsn, so_unit_sale_price, so_unit_type, so_purchase_quantity, so_product_total_cost, 
+                    so_discount_percentage, so_is_discount_applied, so_power_attribute, so_assigned_lab, so_customer_id, so_order_status, 
+                    so_payment_status, so_delivery_status, so_amount_paid, so_estimated_delivery_date, so_created_by_store, so_created_by, 
+                    so_created_on, so_updated_by, so_updated_on, so_created_by_store_type, so_sales_note, so_order_mode)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """
+
+                    # Data to be inserted
+                    data_to_insert = (
+                        order_id,
+                        new_data.get('product'), new_data.get('product_hsn'),
+                        new_data.get('unit_price'), new_data.get('unit_type'),
+                        new_data.get('purchase_qty'), new_data.get('product_total'),
+                        discount_percentage, convert_to_db_date_format(billingDetailsData.get('estDeliveryDate')),
+                        json.dumps(power_attributes), billingDetailsData.get('assignedLab'),
+                        customer_id, 1, 1, 1,
+                        billingDetailsData.get('amount_paid'), getIndianTime(),
+                        store_id, billingDetailsData.get('orderByEmployee'), getIndianTime(),
+                        billingDetailsData.get('orderByEmployee'), getIndianTime(),
+                        2, billingDetailsData.get('saleNote'), 1
+                    )
+
+                    # Executing the query
+                    cursor.execute(insert_contact_len_sales_query, data_to_insert)
 
                     update_central_Inventory = f"""UPDATE central_inventory
                                                 SET ci_product_quantity = ci_product_quantity - {new_data.get('purchase_qty')}
@@ -194,30 +208,35 @@ def make_sale(cart_data, customerData, billingDetailsData, employee_id, store_id
                     if discount_percentage == "" or is_discount_applied == 0 or None:
                         discount_percentage = 0
                     power_attributes = {}
-                    insert_contact_len_sales_query = f"""
-                                                    INSERT INTO `sales_order`
-                                                    (`so_order_id`, `so_product_id`, `so_hsn`, `so_unit_sale_price`, `so_unit_type`,
-                                                            `so_purchase_quantity`, `so_product_total_cost`, `so_discount_percentage`,
-                                                            `so_is_discount_applied`, `so_assigned_lab`, 
-                                                            `so_customer_id`, `so_order_status`, `so_payment_status`, `so_delivery_status`, 
-                                                            `so_amount_paid`, `so_estimated_delivery_date`, 
-                                                            `so_created_by_store`, `so_created_by`, `so_created_on`, `so_updated_by`, 
-                                                            `so_updated_on`, `so_power_attribute`, `so_created_by_store_type`, `so_sales_note`, `so_order_mode`)
-                                                                    VALUES
-                                                    ('{order_id}', {new_data.get('product')}, '{new_data.get('product_hsn')}', 
-                                                    {new_data.get('unit_price')}, '{new_data.get('unit_type')}', 
-                                                    {new_data.get('purchase_qty')}, {new_data.get('product_total')}, 
-                                                    {discount_percentage}, {is_discount_applied}, 
-                                                    {billingDetailsData.get('assignedLab')}, {customer_id}, 1, 
-                                                    1, 1, {billingDetailsData.get('amount_paid')}, %s, 
-                                                    {store_id}, {billingDetailsData.get('orderByEmployee')}, 
-                                                    '{getIndianTime()}', {billingDetailsData.get('orderByEmployee')}, 
-                                                    '{getIndianTime()}', '{power_attributes}', 2 , 
-                                                    '{billingDetailsData.get('saleNote')}',1)
-                                                """
+                    # Insert query
+                    insert_contact_len_sales_query = """
+                    INSERT INTO sales_order
+                    (so_order_id, so_product_id, so_hsn, so_unit_sale_price, so_unit_type, so_purchase_quantity, so_product_total_cost, 
+                    so_discount_percentage, so_is_discount_applied, so_assigned_lab, so_customer_id, so_order_status, so_payment_status, 
+                    so_delivery_status, so_amount_paid, so_estimated_delivery_date, so_created_by_store, so_created_by, so_created_on, 
+                    so_updated_by, so_updated_on, so_power_attribute, so_created_by_store_type, so_sales_note, so_order_mode)
+                    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+                    """
 
-                    cursor.execute(insert_contact_len_sales_query,
-                                   (convert_to_db_date_format(billingDetailsData.get('estDeliveryDate'))))
+                    # Data to be inserted
+                    data_to_insert = (
+                        order_id,
+                        new_data.get('product'), new_data.get('product_hsn'),
+                        new_data.get('unit_price'), new_data.get('unit_type'),
+                        new_data.get('purchase_qty'), new_data.get('product_total'),
+                        discount_percentage, is_discount_applied,
+                        billingDetailsData.get('assignedLab'), customer_id, 1,
+                        1, 1, billingDetailsData.get('amount_paid'),
+                        convert_to_db_date_format(billingDetailsData.get('estDeliveryDate')),
+                        store_id, billingDetailsData.get('orderByEmployee'),
+                        getIndianTime(), billingDetailsData.get('orderByEmployee'),
+                        getIndianTime(), json.dumps(power_attributes), 2,
+                        billingDetailsData.get('saleNote'), 1
+                    )
+
+                    # Executing the query
+                    cursor.execute(insert_contact_len_sales_query, data_to_insert)
+
                     update_central_Inventory = f"""UPDATE store_inventory SET
                      si_product_quantity = si_product_quantity - {new_data.get('purchase_qty')}
                                           WHERE si_product_id = {new_data.get('product')} AND

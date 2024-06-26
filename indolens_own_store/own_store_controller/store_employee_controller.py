@@ -90,7 +90,7 @@ def get_all_active_store_employee(store_id):
                                             LEFT JOIN admin AS creator ON sm.ose_created_by = creator.admin_admin_id
                                             LEFT JOIN admin AS updater ON sm.ose_last_updated_by = updater.admin_admin_id
                                             WHERE sm.ose_assigned_store_id = '{store_id}' AND sm.ose_assigned_store_id != 0 
-                                            AND sm.ose_status = 1
+                                            AND sm.ose_status = 1 AND sm.ose_role != 4
                                             ORDER BY sm.ose_employee_id DESC"""
             cursor.execute(get_store_employee_query)
             store_employees = cursor.fetchall()

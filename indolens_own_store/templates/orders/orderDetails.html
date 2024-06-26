@@ -148,8 +148,8 @@
                                                href="{% url 'view_central_inventory_products' order.so_product_id %}">
                                                 {{order.ci_product_name}}</a>
                                         </td>
-                                        <td class="color align-middle white-space-nowrap text-900 py-0 text-end ps-4">₹
-                                            {{order.so_unit_sale_price}}
+                                        <td class="color align-middle white-space-nowrap text-900 py-0 text-end ps-4">
+                                            ₹{{order.so_unit_sale_price}}
                                         </td>
                                         <td class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 text-end">
                                             {{order.so_discount_percentage}}%
@@ -160,8 +160,8 @@
                                         <td class="quantity align-middle  py-0 ps-4 text-700 text-end">
                                             {{order.so_purchase_quantity}}
                                         </td>
-                                        <td class="price align-middle text-900 fw-semi-bold  py-0 ps-4 text-end">₹
-                                            {{order.so_product_total_cost}}
+                                        <td class="price align-middle white-space-nowrap text-900 py-0 text-end ps-4">
+                                            ₹{{order.so_product_total_cost}}
                                         </td>
                                         <td class="align-middle  white-space-nowrap pe-0 action text-end">
                                             {% if order.ci_category_id == 2 or order.ci_category_id == 3 %}
