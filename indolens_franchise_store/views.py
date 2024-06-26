@@ -254,7 +254,7 @@ def franchiseOrderStatusChange(request, orderId, status):
                                                                                                     request.session.get(
                                                                                                         'id'),
                                                                                                     assigned_store)
-        print(order_detail)
+        
         url = reverse('order_details_franchise_store', kwargs={'orderId': orderId})
         return redirect(url)
     else:
@@ -270,7 +270,7 @@ def franchisePaymentStatusChange(request):
                                                                                                       assigned_store,
                                                                                                       request.session.get(
                                                                                                           'id'))
-        print(order_detail)
+        
         url = reverse('order_details_franchise_store', kwargs={'orderId': order_obj.get_attribute('order_id')})
         return redirect(url)
     else:
@@ -319,7 +319,7 @@ def viewAllEmployeFranchise(request):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_store_employee_controller.get_all_franchise_emp(assigned_store)
-        print(response)
+        
         return render(request, 'employee/manageFranchiseEmployees.html',
                       {"franchise_employee_list": response['franchise_employee_list']})
     else:
@@ -331,7 +331,7 @@ def viewEmployeeDetailsFranchise(request, employeeId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_store_employee_controller.get_franchise_emp_by_id(assigned_store, employeeId)
-        print(response)
+        
         return render(request, 'employee/viewEmployee.html',
                       {"franchise_employee": response['franchise_employee']})
     else:
@@ -421,7 +421,7 @@ def stockRequestDeliveryStatusChange(request, requestId, status):
             'is_franchise_store_logged_in') is True:
         response, status_code = franchise_inventory_controller.request_delivery_status_change(requestId, status,
                                                                                               request.session.get('id'))
-        print(response)
+        
 
         return redirect('completed_franchise_store_stock_requests')
     else:
@@ -514,7 +514,6 @@ def makeSaleFranchiseStore(request):
                                                                              billingDetailsData,
                                                                              request.session.get('id'),
                                                                              assigned_store, order_id, total_amount)
-            print(make_order)
             if not make_order['status']:
                 return redirect('franchise_store_make_sale')
             else:
@@ -604,7 +603,7 @@ def viewFranchiseJobAuthenticityCard(request, saleId, frame):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
-        print(job_detail)
+        
         return render(request, 'orders/authenticityCar.html', {"order_detail": job_detail['orders_details'],
                                                                "frame": frame})
     else:
@@ -616,7 +615,7 @@ def franchiseStoreContactLensPowerCard(request, saleId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
-        print(job_detail)
+        
         return render(request, 'indolens_admin/labs/contactLensPowerCard.html',
                       {"order_detail": job_detail['orders_details']})
     else:
@@ -628,7 +627,6 @@ def viewFranchiseJobItemDetails(request, saleId):
     if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
             'is_franchise_store_logged_in') is True:
         job_detail, status_code = lab_controller.get_lab_job_authenticity_card(saleId)
-        print(job_detail['frame_list'])
         return render(request, 'orders/franchiseJobItemDetails.html',
                       {"job_item_detail": job_detail['orders_details'],
                        "frame_list": job_detail['frame_list']})
