@@ -84,9 +84,7 @@ def labDashboard(request):
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
         latest_task, task_status_code = lab_task_controller.get_lab_jobs(assigned_lab, "All")
-        print(latest_task)
         lab_stats, lab_stats_code = lab_task_controller.get_lab_job_stats(assigned_lab)
-        print(lab_stats)
         return render(request, 'lab_dashboard.html', {"latest_task": latest_task['task_list'][:10],
                                                       "lab_stats": lab_stats})
     else:
@@ -157,7 +155,6 @@ def labJobDetails(request, jobId):
     if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
             'is_lab_tech_logged_in') is True:
         job_detail, status_code = lab_task_controller.get_lab_job_details(jobId, assigned_lab)
-        print(job_detail)
         return render(request, 'Tasks/jobDetails.html', {"order_detail": job_detail['orders_details']})
     else:
         return redirect('lab_login')
