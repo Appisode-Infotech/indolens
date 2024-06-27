@@ -7,7 +7,7 @@ def getConnection():
         port=3306,
         user="root",
         password="",
-        db="indolens_db",
+        db="2_indolens_db",
         autocommit=True,
         max_allowed_packet=67108864,
         cursorclass=pymysql.cursors.DictCursor
