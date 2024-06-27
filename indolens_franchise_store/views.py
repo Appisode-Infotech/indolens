@@ -4,7 +4,7 @@ from django.shortcuts import redirect, render
 from rest_framework.reverse import reverse
 
 from indolens_admin.admin_controllers import central_inventory_controller, eye_test_controller, orders_controller, \
-    lab_controller, customers_controller
+    lab_controller, customers_controller, own_store_controller, admin_setting_controller
 from indolens_admin.admin_controllers.central_inventory_controller import get_central_inventory_product_single
 from indolens_franchise_store.franchise_store_controller import franchise_store_auth_controller, \
     franchise_store_customers_controller, franchise_expense_controller, franchise_inventory_controller, \
@@ -411,6 +411,25 @@ def viewRejectedStockRequestsFranchise(request):
             assigned_store, '2')
         return render(request, 'stockRequests/viewRejectedStockRequestsFranchise.html',
                       {"stocks_request_list": response['stocks_request_list']})
+    else:
+        return redirect('franchise_store_login')
+
+
+def viewFranchiseStockRequestInvoice(request, requestId):
+    assigned_store = getAssignedStores(request)
+    if request.session.get('is_franchise_store_logged_in') is not None and request.session.get(
+            'is_franchise_store_logged_in') is True:
+        response, status_code = central_inventory_controller.get_stock_requests_by_id(requestId)
+        store_data = []
+        if response['stocks_request'].get('pr_request_to_store_id') != 0:
+            store, resp_status_code = own_store_controller.get_own_store_by_id(
+                response['stocks_request']['pr_request_to_store_id'])
+            store_data = store['own_stores']
+        if response['stocks_request'].get('pr_request_to_store_id') == 0:
+            company, resp_status_code = admin_setting_controller.get_admin_setting()
+            store_data = company['admin_setting']['central_inventory_details']
+        return render(request, 'indolens_admin/stockRequests/franchiseStockMovementInvoice.html',
+                      {"stocks_request": response['stocks_request'], "store_data": store_data})
     else:
         return redirect('franchise_store_login')
 

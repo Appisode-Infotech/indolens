@@ -199,7 +199,7 @@ def assign_store_franchise_owner(empId, storeId, role):
             cursor.execute(get_store_query)
             store_data = cursor.fetchone()
 
-            subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data[0])
+            subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data['fse_name'])
             body = email_template_controller.get_employee_assigned_store_email_body(manager_data['fse_name'],
                                                                                     role,
                                                                                     manager_data['fse_email'],
@@ -245,7 +245,7 @@ def unassign_store_franchise_owner(FranchiseOwnerId, storeId, role):
             cursor.execute(get_store_query)
             store_data = cursor.fetchone()
 
-            subject = email_template_controller.get_employee_unassigned_store_email_subject(manager_data[0])
+            subject = email_template_controller.get_employee_unassigned_store_email_subject(manager_data['fse_name'])
             body = email_template_controller.get_employee_unassigned_store_email_body((manager_data['fse_name'],
                                                                                        role,
                                                                                        manager_data['fse_email'],
