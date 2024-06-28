@@ -248,7 +248,6 @@
                                 </td>
 
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
-
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
                                                 aria-haspopup="true"
@@ -256,25 +255,17 @@
                                                 data-boundary="window"
                                                 data-bs-reference="parent" data-bs-toggle="dropdown" type="button">
                                             <span class="fas fa-ellipsis-h fs--2"></span></button>
-                                        {% if stock.pr_request_status == 1 and stock.pr_delivery_status != 2 %}
                                         <div class="dropdown-menu dropdown-menu-end py-2">
+                                            {% if stock.pr_request_status == 1 and stock.pr_delivery_status != 2 %}
                                             <a class="dropdown-item text-success"
                                                href="{% url 'franchise_request_delivery_status_change' stock.pr_request_products_id 2 %}">DELIVERED</a>
-                                        </div>
-                                        {% endif %}
-                                        <div class="dropdown-menu dropdown-menu-end py-2">
-                                            <a class="dropdown-item text-success"
-                                               href="{% url 'franchise_request_delivery_status_change' stock.pr_request_products_id 2 %}">DELIVERED</a>
-                                        </div>
-                                        <div class="dropdown-menu dropdown-menu-end py-2">
-                                            <a class="dropdown-item view-button"
-                                               href="{% url 'franchise_stock_request_invoice' stock.pr_request_products_id %}"
-                                               type="button" target="_blank">View Invoice</a>
+                                            <div class="dropdown-divider"></div>
+                                            {% endif %}
+                                            <a class="dropdown-item" target="_blank"
+                                               href="{% url 'franchise_stock_request_invoice' stock.pr_request_products_id %}">View Invoice</a>
                                         </div>
                                     </div>
-
                                 </td>
-
                             </tr>
                             {% endfor %}
                             </tbody>

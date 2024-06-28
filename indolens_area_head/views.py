@@ -73,7 +73,7 @@ def getAreaHeadAssignedStores(request):
     if request.session.get('is_area_head_logged_in') is not None and request.session.get(
             'is_area_head_logged_in') is True:
         assigned_store = area_head_auth_controller.get_area_head_assigned_store(request.session.get('id'))
-        if assigned_store == 0:
+        if assigned_store == 0 or assigned_store is None:
             request.session.clear()
             return assigned_store
         else:
