@@ -735,7 +735,8 @@ def deleteFranchiseOwnersDocuments(request, franchiseOwnersId, documentURL, docu
 def manageAreaHead(request, status):
     if request.session.get('is_admin_logged_in') is not None and request.session.get('is_admin_logged_in') is True:
         response, status_code = area_head_controller.get_all_area_head(status)
-        available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
+        available_stores_response, available_stores_status_code = own_store_controller.get_own_stores_for_area_head()
+        print(available_stores_response)
         return render(request, 'indolens_admin/areaHead/manageAreaHead.html',
                       {"area_heads_list": response['area_heads_list'],
                        "available_stores": available_stores_response['available_stores'],

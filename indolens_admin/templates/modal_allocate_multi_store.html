@@ -55,16 +55,31 @@
             var actualArray = JSON.parse(activeList);
             console.log(actualArray);
 
+<!--            let selectCard = document.createElement("div");-->
+<!--            selectCard.innerHTML = `-->
+
+<!--            <select name="store_id" class="form-select" id="store_id" multiple="multiple">-->
+<!--                        <option value="">Select a store</option>-->
+<!--                        {% for store in available_stores %}-->
+<!--                        <option value="{{store.store_id}}" ${actualArray.includes({{ store.store_id }}) ? 'selected' : ''}>{{store.store_name}}</option>-->
+<!--                        {% endfor %}-->
+<!--            </select>-->
+<!--            `;-->
+
             let selectCard = document.createElement("div");
             selectCard.innerHTML = `
-
-            <select name="store_id" class="form-select" id="store_id" multiple="multiple">
-                        <option value="">Select a store</option>
-                        {% for store in available_stores %}
-                        <option value="{{store.store_id}}" ${actualArray.includes({{ store.store_id }}) ? 'selected' : ''}>{{store.store_name}}</option>
-                        {% endfor %}
-            </select>
+                <select name="store_id" class="form-select" id="store_id" multiple="multiple">
+                    <option value="">Select a store</option>
+                    {% for store in available_stores %}
+                        {% if store.is_active == 1 %}
+                            <option value="{{store.store_id}}" ${actualArray.includes({{ store.store_id }}) ? 'selected' : ''}>{{store.store_name}}</option>
+                           {% elif store.is_active == 0 %}
+                           <option ${actualArray.includes({{ store.store_id }}) ? 'selected' : 'disabled'}>{{store.store_name}}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
             `;
+
             document.querySelector("#select_container").appendChild(selectCard);
 
             let choicesInstance = new Choices(selectCard.querySelector("[name='store_id']"), {
