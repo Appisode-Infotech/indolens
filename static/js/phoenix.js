@@ -4720,12 +4720,19 @@
                     // -------fallback-----------
 
                     list.on('updated', function (item) {
-                        console.log("case1");
                         const fallback =
                             el.querySelector('.fallback') ||
                             document.getElementById(options.fallback);
-                        updateListControlsOnSearch();
+//                        updateListControlsOnSearch();
+                         let visibleItemCount = list.visibleItems.length;
+                         let startCount = 1;
+                         if (visibleItemCount == 0) {
+                         startCount = 0;
+                         }
+                        const nextInitialIndex = startCount;
+                        numberOfcurrentItems = visibleItemCount;
 
+                        updateListControls();
                         if (fallback) {
                             if (item.matchingItems.length === 0) {
                                 fallback.classList.remove('d-none');
