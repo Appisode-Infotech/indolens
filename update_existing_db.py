@@ -1,6 +1,21 @@
 from indolens.db_connection import getConnection
 
 sql_queries = [
+    """ALTER TABLE admin DROP CONSTRAINT admin_chk_1;""",
+    """ALTER TABLE admin DROP CONSTRAINT admin_chk_2;""",
+    """ ALTER TABLE area_head DROP CONSTRAINT area_head_chk_1;""",
+    """ ALTER TABLE area_head DROP CONSTRAINT area_head_chk_2;""",
+    """ALTER TABLE central_inventory DROP CONSTRAINT central_inventory_chk_1;""",
+    """ALTER TABLE central_inventory DROP CONSTRAINT central_inventory_chk_2;""",
+    """ALTER TABLE eye_test DROP CONSTRAINT eye_test_chk_1;""",
+    """ALTER TABLE lab_technician DROP CONSTRAINT lab_technician_chk_1;""",
+    """ALTER TABLE lab_technician DROP CONSTRAINT lab_technician_chk_2;""",
+    """ALTER TABLE own_store_employees DROP CONSTRAINT own_store_employees_chk_2;""",
+    """ALTER TABLE own_store_employees DROP CONSTRAINT own_store_employees_chk_1;""",
+    """ALTER TABLE marketing_head DROP CONSTRAINT marketing_head_chk_1;""",
+    """ALTER TABLE marketing_head DROP CONSTRAINT marketing_head_chk_2;""",
+    """ALTER TABLE sales_order DROP CONSTRAINT sales_order_chk_2;""",
+    """ALTER TABLE sales_order DROP CONSTRAINT sales_order_chk_1;""",
     """
   ALTER TABLE `admin_setting`
   ADD COLUMN `support_attributes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
@@ -125,7 +140,7 @@ sql_queries = [
     CHANGE COLUMN updated_on et_updated_on DATETIME,
     ADD COLUMN et_optometry_id INT(11);
     """,
-    
+
     """
     UPDATE eye_test SET et_optometry_id = et_created_by;
     """,
@@ -150,7 +165,6 @@ sql_queries = [
     CHANGE COLUMN last_updated_on ftype_last_updated_on DATETIME,
     CHANGE COLUMN last_updated_by ftype_last_updated_by INT(11);""",
 
-
     """
     ALTER TABLE franchise_store
 CHANGE COLUMN store_id fs_store_id INT(11) NOT NULL AUTO_INCREMENT,
@@ -172,8 +186,7 @@ CHANGE COLUMN last_updated_by fs_last_updated_by INT(11),
 CHANGE COLUMN last_updated_on fs_last_updated_on DATETIME;
     """,
 
-   
-   """
+    """
    ALTER TABLE franchise_store_employees
 CHANGE COLUMN employee_id fse_employee_id INT(11) NOT NULL AUTO_INCREMENT,
 CHANGE COLUMN name fse_name VARCHAR(255),
@@ -419,7 +432,6 @@ CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLA
     CHANGE COLUMN created_by si_created_by INT(11),
     CHANGE COLUMN last_updated_on si_last_updated_on DATETIME,
     CHANGE COLUMN last_updated_by si_last_updated_by INT(11);""",
-
 
     """ALTER TABLE units
     CHANGE COLUMN unit_id unit_unit_id INT(11) NOT NULL AUTO_INCREMENT,
