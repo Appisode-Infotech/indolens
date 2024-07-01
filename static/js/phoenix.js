@@ -4728,6 +4728,7 @@
                          let startCount = 1;
                          if (visibleItemCount == 0) {
                          startCount = 0;
+                         noTableData();
                          }
                         const nextInitialIndex = startCount;
                         numberOfcurrentItems = visibleItemCount;
@@ -4802,7 +4803,12 @@
                     }
 
                     const updateListControls = () => {
+                    if(list.visibleItems.length>0){
                         listInfo && (listInfo.innerHTML = `${list.i} to ${numberOfcurrentItems} <span class='text-600'> Items of </span>${totalItem}`);
+                    }else{
+                        listInfo && (listInfo.innerHTML = `0 to ${numberOfcurrentItems} <span class='text-600'> Items of </span>${totalItem}`);
+                                            numberOfcurrentItems = (list.i+parseInt(list.page));
+                    }
                         paginationButtonPrev &&
                             togglePaginationButtonDisable(
                                 paginationButtonPrev,
