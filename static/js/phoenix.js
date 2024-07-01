@@ -3870,6 +3870,15 @@
     /*                              Form Validation                               */
     /* -------------------------------------------------------------------------- */
     const fromValidationInit = () => {
+      const removeOverlay = () => {
+        const overlay = document.querySelector('.loading-overlay');
+        if (overlay) {
+            overlay.remove();
+        }
+    };
+        window.addEventListener('load', removeOverlay);
+    window.addEventListener('pageshow', removeOverlay);
+
         const forms = document.querySelectorAll('.needs-validation, .needs-password-validation');
         forms.forEach(form => {
             form.addEventListener(
@@ -3906,7 +3915,7 @@
                           display: flex;
                           justify-content: center;
                           align-items: center;
-                          z-index: 1000; /* Adjust the z-index as needed */
+                          z-index: 1050; /* Adjust the z-index as needed */
                       `;
                             overlay.innerHTML = `
                            <div style="text-align: center; color: white;">
@@ -3922,9 +3931,6 @@
                             form.submit();
                         }
                     }
-
-
-
 
                     event.preventDefault();
                     event.stopPropagation();

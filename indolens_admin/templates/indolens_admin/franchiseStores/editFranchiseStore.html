@@ -300,6 +300,12 @@
             var lng = marker.getPosition().lng();
             store_lat_lng.value = 'Latitude: ' + lat + ', Longitude: ' + lng;
         });
+         searchInput.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault();
+            }
+        });
+
     }
 </script>
 
