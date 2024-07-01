@@ -345,14 +345,14 @@ def assign_store_own_store_sales_executive(empId, storeId):
             cursor.execute(get_store_query)
             store_data = cursor.fetchone()
 
-            subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data[0])
+            subject = email_template_controller.get_employee_assigned_store_email_subject(manager_data['ose_name'])
             body = email_template_controller.get_employee_assigned_store_email_body(manager_data['ose_name'], 'Sales Executive',
                                                                                     manager_data['ose_email'],
                                                                                     store_data['os_store_name'],
                                                                                     store_data['os_store_phone'],
                                                                                     store_data['os_store_address'])
 
-            send_notification_controller.send_email(subject, body, manager_data[1])
+            send_notification_controller.send_email(subject, body, manager_data['ose_email'])
 
             return {
                 "status": True,
@@ -390,7 +390,7 @@ def unassign_store_own_store_sales_executive(empId, storeId):
             cursor.execute(get_store_query)
             store_data = cursor.fetchone()
 
-            subject = email_template_controller.get_employee_unassigned_store_email_subject(manager_data[0])
+            subject = email_template_controller.get_employee_unassigned_store_email_subject(manager_data['ose_name'])
             body = email_template_controller.get_employee_unassigned_store_email_body(manager_data['ose_name'], 'Sales Executive',
                                                                                       manager_data['ose_email'],
                                                                                       store_data['os_store_name'],

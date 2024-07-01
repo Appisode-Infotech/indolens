@@ -176,11 +176,15 @@ def get_area_head_assigned_store_email_subject(name):
 
 def get_area_head_assigned_store_email_body(name, role, email, store_data):
     stores_info = ""
-    for store_name, store_phone, store_address in store_data:
-        stores_info += f"  Store Name: {store_name}\n"
-        stores_info += f"  Assigned Date: {getIndianTime()}\n"
-        stores_info += f"  Location: {store_address}\n"
-        stores_info += f"  Store Phone: {store_phone}\n\n"
+    for store_info in store_data:
+        store_name = store_info['os_store_name']
+        store_phone = store_info['os_store_phone']
+        store_address = store_info['os_store_address']
+
+        stores_info += f"Store Name: {store_name}\n"
+        stores_info += f"Assigned Date: {getIndianTime()}\n"
+        stores_info += f"Location: {store_address}\n"
+        stores_info += f"Store Phone: {store_phone}\n\n"
     return f""" Hello {name},
 
 We are pleased to inform you of your recent store assignment at Indolens. We are confident that you will make valuable contributions to the success of the assigned store.
@@ -191,6 +195,40 @@ Store Assignment Details:
 As a team member of this store, your responsibilities will include {role} for employee: {email}. Your role is crucial to the store's success, and we believe your expertise will enhance the overall performance of the team.
 
 Thank you for your continued dedication to Indolens. We look forward to witnessing your positive impact on the assigned store.
+
+Best regards,
+INDOLENS
+Email: {support_data.get('support_email', '')}
+Phone: {support_data.get('support_phone', '')}
+Working Hours: {support_data.get('support_hour', '')}
+"""
+
+
+
+# AREA HEAD STORE ASSIGNED
+def get_area_head_unassigned_store_email_subject(name):
+    return f""" INDOLENS Store Un Assigned - {name} """
+
+
+def get_area_head_unassigned_store_email_body(name, store_data):
+    stores_info = ""
+    for store_info in store_data:
+        store_name = store_info['os_store_name']
+        store_phone = store_info['os_store_phone']
+        store_address = store_info['os_store_address']
+
+        stores_info += f"Store Name: {store_name}\n"
+        stores_info += f"Assigned Date: {getIndianTime()}\n"
+        stores_info += f"Location: {store_address}\n"
+        stores_info += f"Store Phone: {store_phone}\n\n"
+    return f""" Hello {name},
+
+ We wanted to inform you of a recent change in your store assignment at Indolens. It has been decided to unassign you from the below list of stores
+
+Store Un Assignment Details:
+{stores_info}
+
+We anticipate your ongoing success in your future assignments.
 
 Best regards,
 INDOLENS

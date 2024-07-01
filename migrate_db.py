@@ -15,7 +15,6 @@ super_phone = input("Enter phone for super admin : ")
 super_password = input("Enter password for super admin : ")
 
 password_hash = bcrypt.hashpw(super_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-print(password_hash)
 
 sql_queries = [
     """CREATE TABLE `accountant` (

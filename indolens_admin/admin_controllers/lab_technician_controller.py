@@ -195,9 +195,9 @@ def unassign_lab(labtechId, labId):
             update_lab_technician_query = f"""
                 UPDATE lab_technician
                 SET
-                    assigned_lab_id = 0
+                    lt_assigned_lab_id = 0
                 WHERE
-                    lab_technician_id = {labtechId}
+                    lt_lab_technician_id = {labtechId}
             """
             # Execute the update query using your cursor
             cursor.execute(update_lab_technician_query)

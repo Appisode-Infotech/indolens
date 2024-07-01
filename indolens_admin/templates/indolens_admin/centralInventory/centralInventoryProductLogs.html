@@ -155,7 +155,7 @@
                                         <a href="{% url 'view_sub_admin' log.cirl_created_by %}">{{log.restocked_by}}</a>
                                     </td>
                                     <td class="brand align-middle white-space-nowrap text-600 fs--1 ps-4 fw-semi-bold">
-                                        {{log.cirl_created_on}}
+                                        {{log.cirl_created_on|date:"d/m/Y h:i A"}}
                                     </td>
                                 </tr>
                                 {% endfor %}

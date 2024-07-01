@@ -149,7 +149,7 @@
                                     EMAIL
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="store" scope="col"
-                                    style="width:5%;">ASSIGNED TO STORE
+                                    style="width:5%;">ASSIGNED STORE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
@@ -215,7 +215,7 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap ps-3 py-4 store">
+                                <td style="display:none;" class="align-middle white-space-nowrap ps-3 py-4 store">
                                     {% if opti.fse_assigned_store_id != 0 %}
                                     {{opti.fs_store_name}}
                                     {% else %}
@@ -278,7 +278,7 @@
                                                data-bs-target="#operations_modal"
                                                data-employee-id="{{ opti.fse_employee_id }}"
                                                data-employee-name="{{ opti.fse_name }}"
-                                               data-store-name="{{opti.fse_store_name}}"
+                                               data-store-name="{{opti.fs_store_name}}"
                                                data-action-type="unallocate"
                                                data-action-url="{% url 'un_assign_franchise_store_optimetry' status opti.fse_employee_id opti.fse_assigned_store_id %}">
                                                 Un allocate Store

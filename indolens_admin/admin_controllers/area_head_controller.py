@@ -125,7 +125,6 @@ def get_area_head_by_id(ahid):
             area_head['id_name_pair'] = list(
                 zip(area_head['ah_assigned_stores'], area_head['assigned_stores_names']))
 
-
             area_head['ah_document_1_url'] = json.loads(area_head['ah_document_1_url']) if area_head[
                 'ah_document_1_url'] else []
             area_head['ah_document_2_url'] = json.loads(area_head['ah_document_2_url']) if area_head[
@@ -193,35 +192,81 @@ def enable_disable_area_head(ahId, status):
 def assignStore(empId, storeId):
     try:
         with getConnection().cursor() as cursor:
-            update_store_manager_query = f"""
-                UPDATE area_head
-                SET
-                    ah_assigned_stores = '{storeId}'
-                WHERE
-                    ah_area_head_id = {empId}
-            """
-            # Execute the update query using your cursor
-            cursor.execute(update_store_manager_query)
+            get_area_head_old_stores_query = f"""
+                                    SELECT ah_assigned_stores
+                                    FROM area_head 
+                                    WHERE ah_area_head_id = '{empId}' """
+            cursor.execute(get_area_head_old_stores_query)
+            old_stores = cursor.fetchone()['ah_assigned_stores']
+            missing_elements = []
+            if old_stores is None:
+                old_stores = []
+            else:
+                old_store_ids = old_stores.split(',')
+                new_store_ids = storeId.split(',')
+                missing_elements = [element for element in old_store_ids if element not in new_store_ids]
 
-            get_employee_query = f""" SELECT ah_name,ah_email,ah_phone FROM area_head WHERE ah_area_head_id = {empId}"""
-            # Execute the update query using your cursor
-            cursor.execute(get_employee_query)
-            manager_data = cursor.fetchone()
-            if len(storeId) == 1:
-                storeId = f"""({storeId})"""
+            if storeId is None or storeId == '':
+                update_store_manager_query = f"""
+                    UPDATE area_head
+                    SET
+                        ah_assigned_stores = NULL
+                    WHERE
+                        ah_area_head_id = {empId}
+                """
+                # Execute the update query using your cursor
+                cursor.execute(update_store_manager_query)
+            else:
+                update_store_manager_query = f"""
+                    UPDATE area_head
+                    SET
+                        ah_assigned_stores = '{storeId}'
+                    WHERE
+                        ah_area_head_id = {empId}
+                """
+                # Execute the update query using your cursor
+                cursor.execute(update_store_manager_query)
 
-            get_store_query = f""" SELECT os_store_name, os_store_phone, os_store_address FROM own_store 
-                                                                                    WHERE os_store_id IN {tuple(storeId)}"""
+                get_employee_query = f""" SELECT ah_name,ah_email,ah_phone FROM area_head WHERE ah_area_head_id = {empId}"""
+                # Execute the update query using your cursor
+                cursor.execute(get_employee_query)
+                manager_data = cursor.fetchone()
+                if len(storeId) == 1:
+                    storeId = f"""({storeId})"""
 
-            cursor.execute(get_store_query)
-            store_data = cursor.fetchall()
+                get_store_query = f""" SELECT os_store_name, os_store_phone, os_store_address FROM own_store 
+                                                                                        WHERE os_store_id IN {tuple(storeId)}"""
 
-            subject = email_template_controller.get_area_head_assigned_store_email_subject(manager_data['ah_name'])
-            body = email_template_controller.get_area_head_assigned_store_email_body(manager_data['ah_name'], 'Area Head',
-                                                                                     manager_data['ah_email'],
-                                                                                     store_data)
+                cursor.execute(get_store_query)
+                store_data = cursor.fetchall()
 
-            response = send_notification_controller.send_email(subject, body, manager_data['ah_email'])
+                subject = email_template_controller.get_area_head_assigned_store_email_subject(manager_data['ah_name'])
+                body = email_template_controller.get_area_head_assigned_store_email_body(manager_data['ah_name'],
+                                                                                         'Area Head',
+                                                                                         manager_data['ah_email'],
+                                                                                         store_data)
+
+                send_notification_controller.send_email(subject, body, manager_data['ah_email'])
+
+            if missing_elements:
+                get_employee_query = f""" SELECT ah_name,ah_email,ah_phone FROM area_head WHERE ah_area_head_id = {empId}"""
+                # Execute the update query using your cursor
+                cursor.execute(get_employee_query)
+                manager_data = cursor.fetchone()
+                if len(missing_elements) == 1:
+                    missing_elements_str = f"({missing_elements[0]})"
+                else:
+                    missing_elements_str = tuple(int(x) for x in missing_elements)
+                get_store_query = f""" SELECT os_store_name, os_store_phone, os_store_address FROM own_store 
+                                       WHERE os_store_id IN {missing_elements_str}"""
+
+                cursor.execute(get_store_query)
+                store_data = cursor.fetchall()
+
+                subject = email_template_controller.get_area_head_unassigned_store_email_subject(manager_data['ah_name'])
+                body = email_template_controller.get_area_head_unassigned_store_email_body(manager_data['ah_name'], store_data)
+
+                send_notification_controller.send_email(subject, body, manager_data['ah_email'])
 
             return {
                 "status": True,
@@ -246,7 +291,6 @@ def unAssignStore(empId, storeId):
             """
             # Execute the update query using your cursor
             cursor.execute(update_store_manager_query)
-
             return {
                 "status": True,
                 "message": "Store un assigned"

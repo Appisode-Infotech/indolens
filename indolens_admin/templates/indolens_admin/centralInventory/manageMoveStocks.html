@@ -217,7 +217,7 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 price text-end">
-                                    <p class="mb-0 fs--1 text-900">₹{{stock.ci_cost_price}}</p>
+                                    <p class="mb-0 fs--1 text-900">₹{{stock.pr_unit_cost}}</p>
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4 requestDate">
@@ -334,8 +334,6 @@
                     <div class="modal-header">
                         <h5 class="modal-title" id="verticallyCenteredModalLabel">Move a
                             product</h5>
-                        <button aria-label="Close" class="btn p-1" data-bs-dismiss="modal"
-                                type="button"><span class="fas fa-times fs--1"></span></button>
                     </div>
                     <div class="p-4 code-to-copy">
                         <form action="{% url 'manageMoveStocks' %}"

@@ -150,7 +150,7 @@
                                     EMAIL
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="store" scope="col"
-                                    style="width:5%;">ASSIGNED TO STORE
+                                    style="width:5%;">ASSIGNED STORE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
@@ -287,7 +287,7 @@
                                                data-bs-target="#operations_modal"
                                                data-employee-id="{{ sales_executiveemployee_id }}"
                                                data-employee-name="{{ sales_executive.ose_name }}"
-                                               data-store-name="{{sales_executive.ose_store_name}}"
+                                               data-store-name="{{sales_executive.store_name}}"
                                                data-action-type="unallocate"
                                                data-action-url="{% url 'un_assign_sales_executive_own_store' status sales_executive.ose_employee_id sales_executive.ose_assigned_store_id %}">
                                                 Un allocate Store

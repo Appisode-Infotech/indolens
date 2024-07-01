@@ -151,7 +151,7 @@
                                     EMAIL
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="store" scope="col"
-                                    style="width:5%;">ASSIGNED TO STORE
+                                    style="width:5%;">ASSIGNED STORE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
@@ -219,7 +219,7 @@
                                             class="badge badge-phoenix fs--2 badge-phoenix-danger">UNASSIGNED</span>
                                     {% endif %}
                                 </td>
-                                <td class="align-middle white-space-nowrap ps-3 py-4 store">
+                                <td style="display:none;" class="align-middle white-space-nowrap ps-3 py-4 store">
                                     {% if sales_executive.fs_store_name|length != 0 %}
                                     {{sales_executive.fs_store_name}}
                                     {% else %}
@@ -283,7 +283,7 @@
                                                data-bs-target="#operations_modal"
                                                data-employee-id="{{ sales_executive.fse_employee_id }}"
                                                data-employee-name="{{ sales_executive.fse_name }}"
-                                               data-store-name="{{sales_executive.fse_store_name}}"
+                                               data-store-name="{{sales_executive.fs_store_name}}"
                                                data-action-type="unallocate"
                                                data-action-url="{% url 'un_assign_franchise_store_sales_executive' status sales_executive.fse_employee_id sales_executive.fse_assigned_store_id %}">
                                                 Un allocate Store

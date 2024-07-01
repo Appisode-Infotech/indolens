@@ -1,6 +1,7 @@
 import datetime
 import pymysql
 import pytz
+import ast
 from indolens.db_connection import getConnection
 
 ist = pytz.timezone('Asia/Kolkata')
@@ -64,6 +65,7 @@ def get_sales_stats(store):
 
 def get_store_employee_stats(store):
     print(store)
+    print(type(store))
     try:
         with getConnection().cursor() as cursor:
             get_order_query = f"""
@@ -74,7 +76,12 @@ def get_store_employee_stats(store):
             cursor.execute(get_order_query)
             orders_list = cursor.fetchone()
 
-            stores_tuple = eval(store)
+            stores_tuple = ast.literal_eval(store)
+            print(stores_tuple)
+
+            if not isinstance(stores_tuple, tuple):
+                stores_tuple = (stores_tuple,)
+                print(stores_tuple)
 
             return {
                 "status": True,

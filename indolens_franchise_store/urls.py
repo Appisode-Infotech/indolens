@@ -61,6 +61,8 @@ urlpatterns = [
          name='completed_franchise_store_stock_requests'),
     path('rejected_franchise_store_stock_requests/', viewRejectedStockRequestsFranchise,
          name='rejected_franchise_store_stock_requests'),
+    path('franchise_stock_request_invoice/requestId=<int:requestId>', viewFranchiseStockRequestInvoice,
+         name='franchise_stock_request_invoice'),
     path('franchise_request_delivery_status_change/requestId=<int:requestId>/status=<int:status>', stockRequestDeliveryStatusChange, name='franchise_request_delivery_status_change'),
     # Make sale
     path('franchise_store_make_sale/', makeSaleFranchiseStore, name='franchise_store_make_sale'),

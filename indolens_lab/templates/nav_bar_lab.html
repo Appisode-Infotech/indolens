@@ -119,6 +119,20 @@
                     </a>
                     </div>
                 </li>
+
+                <li class="nav-item">
+                    <!-- parent pages-->
+                    <div class="nav-item-wrapper"><a aria-expanded="false" asd="index"
+                                                     class="nav-link label-1 {% if 'cancelled_task' in request.path %}active{% endif %}"
+                                                     data-bs-toggle="" href="{% url 'cancelled_task' %}"
+                                                     role="button">
+                        <div class="d-flex align-items-center"><span class="nav-link-icon"><span
+                                data-feather="clock"></span></span><span class="nav-link-text-wrapper"><span
+                                class="nav-link-text">Cancelled Jobs</span></span>
+                        </div>
+                    </a>
+                    </div>
+                </li>
                 <li class="nav-item">
                     <!-- label-->
                     <p class="navbar-vertical-label">JOBS POWER DETAILS

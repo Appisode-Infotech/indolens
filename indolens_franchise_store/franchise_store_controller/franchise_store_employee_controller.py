@@ -129,3 +129,27 @@ def get_all_active_store_optometry(assigned_store):
         return {"status": False, "message": str(e)}, 301
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
+
+def get_all_active_store_employee(assigned_store):
+    try:
+        with getConnection().cursor() as cursor:
+            get_store_employee_query = f""" SELECT sm.*, fs.fs_store_name, creator.admin_name AS creator, 
+                                            updater.admin_name AS updater
+                                            FROM franchise_store_employees AS sm
+                                            LEFT JOIN franchise_store AS fs ON sm.fse_assigned_store_id = fs.fs_store_id
+                                            LEFT JOIN admin AS creator ON sm.fse_created_by = creator.admin_admin_id
+                                            LEFT JOIN admin AS updater ON sm.fse_last_updated_by = updater.admin_admin_id
+                                            WHERE sm.fse_assigned_store_id = '{assigned_store}' AND sm.fse_status = 1
+                                            AND sm.fse_role != 4
+                                            ORDER BY sm.fse_employee_id DESC"""
+            cursor.execute(get_store_employee_query)
+            store_employees = cursor.fetchall()
+            return {
+                "status": True,
+                "optometry_list": store_employees
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301

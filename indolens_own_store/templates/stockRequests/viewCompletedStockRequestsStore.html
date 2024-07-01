@@ -189,10 +189,10 @@
                                 </td>
 
                                 <td class="align-middle white-space-nowrap ps-3 py-4">
-                                    <p class="mb-0 fs--1 text-900 text-end">₹{{stock.ci_sale_price}}</p>
+                                    <p class="mb-0 fs--1 text-900 text-end">₹{{stock.pr_unit_cost}}</p>
                                 </td>
                                 <td style="display:none;" class="align-middle white-space-nowrap ps-3 py-4 price">
-                                    {{stock.ci_sale_price}}
+                                    {{stock.pr_unit_cost}}
                                 </td>
                                 <td class="align-middle white-space-nowrap ps-3 py-4 req_date">
                                     {% if stock.pr_is_requested == 1 %}
@@ -256,7 +256,7 @@
                                     {% endif %}
                                 </td>
                                 <td class="align-middle text-end white-space-nowrap pe-0 action">
-                                    {% if stock.pr_request_status == 1 and stock.pr_delivery_status != 2 %}
+                                    {% if stock.pr_request_status == 1 and stock.pr_delivery_status != 2 and stock.pr_request_to_store_id != request.session.assigned_store_id %}
                                     <div class="font-sans-serif btn-reveal-trigger position-static">
                                         <button aria-expanded="false"
                                                 aria-haspopup="true"

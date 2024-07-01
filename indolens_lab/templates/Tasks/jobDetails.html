@@ -81,7 +81,7 @@
 
             <div class="mb-9">
                 <div class="d-flex flex-wrap flex-between-center mb-3 mt-3">
-                    <p class="text-800 lh-sm mb-0">Order : {{order_detail.0.so_order_id}}</p>
+                    <p class="text-800 lh-sm mb-0">Job Id : {{order_detail.0.so_order_id}}</p>
                     <p class="text-800 lh-sm mb-0">Store : {{order_detail.0.store_name}}</p>
 
 
@@ -95,9 +95,11 @@
                                 <table class="table fs--1 mb-0 border-top border-200">
                                     <thead>
                                     <tr>
-                                        <th class="sort white-space-nowrap align-middle fs--2" scope="col"></th>
                                         <th class="sort white-space-nowrap align-middle"
                                             scope="col" style="min-width:200px;">PRODUCTS
+                                        </th>
+                                        <th class="sort align-middle " scope="col"
+                                            style="width:150px;">Quantity
                                         </th>
                                         <th class="sort align-middle " scope="col"
                                             style="width:150px;">CATEGORY
@@ -127,18 +129,14 @@
                                     </thead>
                                     <tbody class="list" id="order-table-body">
                                     {% for order in order_detail %}
-
-                                    <tr class="hover-actions-trigger btn-reveal-trigger position-static">
-                                        <td class="align-middle white-space-nowrap py-2">
-                                            <div class="border rounded-2"><img
-                                                    alt="" src="{{ MEDIA_URL }}{{ order.so_product_images.0 }}"
-                                                    width="53"/>
-                                            </div>
-                                        </td>
                                         <td class="products align-middle py-0">
                                             <a class="fw-semi-bold line-clamp-2 mb-0" href="{% url 'view_lab_central_inventory_products' order.so_product_id %}">
                                                 {{order.ci_product_name}}
                                             </a>
+                                        </td>
+                                        <td class="color align-middle white-space-nowrap text-900 text-end ">
+                                            {{order.so_purchase_quantity}}
+
                                         </td>
                                         <td class="color align-middle white-space-nowrap text-900 py-0 ">
                                             {% if order.pc_category_name == None %}
@@ -361,15 +359,15 @@
                             <div class="col-12">
                                 <div class="card">
                                     <div class="card-body">
-                                        <h3 class="card-title mb-4">Order Status</h3>
-                                        <h6 class="mb-2">Order status</h6>
+                                        <h3 class="card-title mb-4">Job Status</h3>
+                                        <h6 class="mb-2">Job status</h6>
                                         <select aria-label="delivery type" class="form-select"
                                                 onchange="changeOrderStatus(this,'{{order_detail.0.so_order_id}}')"
                                                 id="orderStatusSelect">
                                             <option value="1">New</option>
-                                            <option value="2">Process</option>
+                                            <option value="2">Processing</option>
                                             <option value="3">Ready</option>
-                                            <option value="4">Dispatch</option>
+                                            <option value="4">Dispatched</option>
                                             <option value="5" style="display:none;"
                                                     {% if order_detail.0.order_status == 5 %}selected{% endif %}>
                                                 Dispatch
@@ -380,7 +378,7 @@
                                             </option>
                                             <option value="7" style="display:none;"
                                                     {% if order_detail.0.order_status == 7 %}selected{% endif %}>
-                                                Dispatch
+                                                Cancelled
                                             </option>
                                         </select>
                                     </div>

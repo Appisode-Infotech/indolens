@@ -117,7 +117,6 @@ def forgot_password(email):
         with getConnection().cursor() as cursor:
             pwd_code = generate_random_string()
             reset_pwd_link = f"{get_base_url()}/franchise_store/franchise_store_reset_password/code={pwd_code}"
-            print(reset_pwd_link)
 
             check_email_query = f"""SELECT fse_email,fse_status, fse_name FROM franchise_store_employees 
                                     WHERE fse_email = '{email}'"""
@@ -135,8 +134,8 @@ def forgot_password(email):
                                             VALUES (%s, %s, %s, %s)"""
                 cursor.execute(update_pwd_code_query, (email, pwd_code, 0, getIndianTime()))
 
-                subject = email_template_controller.get_password_reset_email_subject(email)
-                body = email_template_controller.get_password_reset_email_body(check_email['fse_email'], reset_pwd_link, email)
+                subject = email_template_controller.get_password_reset_email_subject(check_email['fse_name'])
+                body = email_template_controller.get_password_reset_email_body(check_email['fse_name'], reset_pwd_link, email)
                 email_response = send_notification_controller.send_email(subject, body, email)
 
                 if email_response.status_code == 200:

@@ -187,8 +187,8 @@
                                     <td class="order align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
                                                                                               href="{% url 'order_details' order.so_order_id %}">{{order.so_order_id}}</a>
                                     </td>
-                                    <td class="invoice align-middle white-space-nowrap py-0"><a class="fw-semi-bold"
-                                                                                              href="{% url 'order_invoice' order.invoice_invoice_number %}">{{order.invoice_invoice_number}}</a>
+                                    <td class="invoice align-middle white-space-nowrap py-0"><a class="fw-semi-bold" target="_blank"
+                                                                                              href="{% url 'order_invoice' order.so_order_id %}">{{order.invoice_invoice_number}}</a>
                                     </td>
                                     <td class="align-middle  fw-semi-bold text-1000 text-end">₹{{order.total_cost}}
                                     </td>

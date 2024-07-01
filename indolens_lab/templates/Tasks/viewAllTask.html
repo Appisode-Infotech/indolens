@@ -87,6 +87,7 @@
                     <li class="nav-item"><a class="nav-link filter" href="#filter-PROCESSING-jobStatus">Processing</a></li>
                     <li class="nav-item"><a class="nav-link filter" href="#filter-READY IN LAB-jobStatus">Ready In Lab</a></li>
                     <li class="nav-item"><a class="nav-link filter" href="#filter-DISPATCHED-jobStatus">Dispatched</a></li>
+                    <li class="nav-item"><a class="nav-link filter" href="#filter-CANCELLED-jobStatus">Cancelled</a></li>
                 </ul>
                 <div data-list='{"valueNames":["slno","jobId","store","category","material","type","shape","color","unit","brand","jobStatus"],"page":20,"pagination":true}'
                      id="orderTable">
@@ -236,6 +237,9 @@
                                                 {% elif order.so_order_status == 3 %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-secondary"><span
                                                         class="badge-label">READY IN LAB</span></span>
+                                                {% elif order.so_order_status == 7 %}
+                                                <span class="badge badge-phoenix fs--2 badge-phoenix-danger"><span
+                                                        class="badge-label">CANCELLED</span></span>
                                                 {% else %}
                                                 <span class="badge badge-phoenix fs--2 badge-phoenix-success"><span
                                                         class="badge-label">DISPATCHED</span></span>
@@ -249,6 +253,8 @@
                                                 PROCESSING
                                                 {% elif order.so_order_status == 3 %}
                                                 READY IN LAB
+                                                {% elif order.so_order_status == 7 %}
+                                                CANCELLED
                                                 {% else %}
                                                 DISPATCHED
                                                 {% endif %}

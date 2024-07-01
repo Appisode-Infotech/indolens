@@ -148,7 +148,7 @@
                                     EMAIL
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="store" scope="col"
-                                    style="width:5%;">FRANCHISED STORE
+                                    style="width:5%;">ASSIGNED STORE
                                 </th>
                                 <th class="sort align-middle ps-3" data-sort="status" scope="col"
                                     style="width:5%;">STATUS
@@ -278,7 +278,7 @@
                                                data-bs-target="#operations_modal"
                                                data-employee-id="{{ owner.fse_employee_id }}"
                                                data-employee-name="{{ owner.fse_name }}"
-                                               data-store-name="{{owner.fse_assigned_store_id}}"
+                                               data-store-name="{{owner.fs_store_name}}"
                                                data-action-type="unallocate"
                                                data-action-url="{% url 'un_assign_franchise_store_owner' status owner.fse_employee_id owner.fse_assigned_store_id %}">
                                                 Un allocate Store

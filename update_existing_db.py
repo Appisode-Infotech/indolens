@@ -1,10 +1,25 @@
 from indolens.db_connection import getConnection
 
 sql_queries = [
+    """ALTER TABLE admin DROP CONSTRAINT admin_chk_1;""",
+    """ALTER TABLE admin DROP CONSTRAINT admin_chk_2;""",
+    """ ALTER TABLE area_head DROP CONSTRAINT area_head_chk_1;""",
+    """ ALTER TABLE area_head DROP CONSTRAINT area_head_chk_2;""",
+    """ALTER TABLE central_inventory DROP CONSTRAINT central_inventory_chk_1;""",
+    """ALTER TABLE central_inventory DROP CONSTRAINT central_inventory_chk_2;""",
+    """ALTER TABLE eye_test DROP CONSTRAINT eye_test_chk_1;""",
+    """ALTER TABLE lab_technician DROP CONSTRAINT lab_technician_chk_1;""",
+    """ALTER TABLE lab_technician DROP CONSTRAINT lab_technician_chk_2;""",
+    """ALTER TABLE own_store_employees DROP CONSTRAINT own_store_employees_chk_2;""",
+    """ALTER TABLE own_store_employees DROP CONSTRAINT own_store_employees_chk_1;""",
+    """ALTER TABLE marketing_head DROP CONSTRAINT marketing_head_chk_1;""",
+    """ALTER TABLE marketing_head DROP CONSTRAINT marketing_head_chk_2;""",
+    """ALTER TABLE sales_order DROP CONSTRAINT sales_order_chk_2;""",
+    """ALTER TABLE sales_order DROP CONSTRAINT sales_order_chk_1;""",
     """
   ALTER TABLE `admin_setting`
-  ADD COLUMN `support_attributes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`support_attributes`)),
-  ADD COLUMN `central_inventory_details` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`central_inventory_details`));""",
+  ADD COLUMN `support_attributes` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
+  ADD COLUMN `central_inventory_details` longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;""",
 
     """ALTER TABLE admin
     CHANGE COLUMN admin_id admin_admin_id INT(11) NOT NULL AUTO_INCREMENT,
@@ -16,9 +31,9 @@ sql_queries = [
     CHANGE COLUMN profile_pic admin_profile_pic VARCHAR(255),
     CHANGE COLUMN address admin_address VARCHAR(255),
     CHANGE COLUMN document_1_type admin_document_1_type VARCHAR(255),
-    CHANGE COLUMN document_1_url admin_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`admin_document_1_url`)),
+    CHANGE COLUMN document_1_url admin_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN document_2_type admin_document_2_type VARCHAR(255),
-    CHANGE COLUMN document_2_url admin_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`admin_document_2_url`)),
+    CHANGE COLUMN document_2_url admin_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN status admin_status INT(11),
     CHANGE COLUMN created_by admin_created_by INT(11),
     CHANGE COLUMN created_on admin_created_on DATETIME,
@@ -32,12 +47,12 @@ sql_queries = [
     CHANGE COLUMN phone ah_phone VARCHAR(255),
     CHANGE COLUMN password ah_password VARCHAR(255),
     CHANGE COLUMN profile_pic ah_profile_pic VARCHAR(255),
-    CHANGE COLUMN assigned_stores ah_assigned_stores longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ah_assigned_stores`)),
+    CHANGE COLUMN assigned_stores ah_assigned_stores longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN address ah_address VARCHAR(255),
     CHANGE COLUMN document_1_type ah_document_1_type VARCHAR(255),
-    CHANGE COLUMN document_1_url ah_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ah_document_1_url`)),
+    CHANGE COLUMN document_1_url ah_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN document_2_type ah_document_2_type VARCHAR(255),
-    CHANGE COLUMN document_2_url ah_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ah_document_2_url`)),
+    CHANGE COLUMN document_2_url ah_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN status ah_status INT(11),
     CHANGE COLUMN created_by ah_created_by INT(11),
     CHANGE COLUMN created_on ah_created_on DATETIME,
@@ -60,7 +75,7 @@ sql_queries = [
   CHANGE COLUMN product_id ci_product_id INT(11) NOT NULL AUTO_INCREMENT,
   CHANGE COLUMN product_name ci_product_name VARCHAR(255),
   CHANGE COLUMN product_description ci_product_description LONGTEXT,
-  CHANGE COLUMN product_images ci_product_images longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ci_product_images`)),
+  CHANGE COLUMN product_images ci_product_images longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   CHANGE COLUMN product_qr_code ci_product_qr_code VARCHAR(255),
   CHANGE COLUMN category_id ci_category_id INT(11),
   CHANGE COLUMN brand_id ci_brand_id INT(11),
@@ -74,7 +89,7 @@ sql_queries = [
   CHANGE COLUMN sale_price ci_sale_price INT(11),
   CHANGE COLUMN model_number ci_model_number VARCHAR(255),
   CHANGE COLUMN hsn ci_hsn VARCHAR(255),
-  CHANGE COLUMN power_attribute ci_power_attribute longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ci_power_attribute`)),
+  CHANGE COLUMN power_attribute ci_power_attribute longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
   CHANGE COLUMN franchise_sale_price ci_franchise_sale_price INT(11),
   CHANGE COLUMN product_quantity ci_product_quantity INT(11),
   CHANGE COLUMN product_gst ci_product_gst FLOAT,
@@ -116,7 +131,7 @@ sql_queries = [
     ALTER TABLE eye_test
     CHANGE COLUMN eye_test_id et_eye_test_id INT(11) NOT NULL AUTO_INCREMENT,
     CHANGE COLUMN customer_id et_customer_id INT(11),
-    CHANGE COLUMN power_attributes et_power_attributes longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`et_power_attributes`)),
+    CHANGE COLUMN power_attributes et_power_attributes longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN created_by_store_id et_created_by_store_id INT(11),
     CHANGE COLUMN created_by_store_type et_created_by_store_type INT(11),
     CHANGE COLUMN created_by et_created_by INT(11),
@@ -125,7 +140,7 @@ sql_queries = [
     CHANGE COLUMN updated_on et_updated_on DATETIME,
     ADD COLUMN et_optometry_id INT(11);
     """,
-    
+
     """
     UPDATE eye_test SET et_optometry_id = et_created_by;
     """,
@@ -150,7 +165,6 @@ sql_queries = [
     CHANGE COLUMN last_updated_on ftype_last_updated_on DATETIME,
     CHANGE COLUMN last_updated_by ftype_last_updated_by INT(11);""",
 
-
     """
     ALTER TABLE franchise_store
 CHANGE COLUMN store_id fs_store_id INT(11) NOT NULL AUTO_INCREMENT,
@@ -172,8 +186,7 @@ CHANGE COLUMN last_updated_by fs_last_updated_by INT(11),
 CHANGE COLUMN last_updated_on fs_last_updated_on DATETIME;
     """,
 
-   
-   """
+    """
    ALTER TABLE franchise_store_employees
 CHANGE COLUMN employee_id fse_employee_id INT(11) NOT NULL AUTO_INCREMENT,
 CHANGE COLUMN name fse_name VARCHAR(255),
@@ -184,16 +197,16 @@ CHANGE COLUMN profile_pic fse_profile_pic VARCHAR(255),
 CHANGE COLUMN assigned_store_id fse_assigned_store_id INT(11),
 CHANGE COLUMN address fse_address VARCHAR(255),
 CHANGE COLUMN document_1_type fse_document_1_type VARCHAR(255),
-CHANGE COLUMN document_1_url fse_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`fse_document_1_url`)),
+CHANGE COLUMN document_1_url fse_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
 CHANGE COLUMN document_2_type fse_document_2_type VARCHAR(255),
-CHANGE COLUMN document_2_url fse_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`fse_document_2_url`)),
+CHANGE COLUMN document_2_url fse_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
 CHANGE COLUMN status fse_status INT(11),
 CHANGE COLUMN role fse_role INT(11),
 CHANGE COLUMN created_by fse_created_by INT(11),
 CHANGE COLUMN created_on fse_created_on DATETIME,
 CHANGE COLUMN last_updated_by fse_last_updated_by INT(11),
 CHANGE COLUMN last_updated_on fse_last_updated_on DATETIME,
-CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`fse_certificates`));
+CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;
    """,
 
     """ ALTER TABLE invoice
@@ -234,9 +247,9 @@ CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLA
     CHANGE COLUMN assigned_lab_id lt_assigned_lab_id INT(11),
     CHANGE COLUMN address lt_address VARCHAR(255),
     CHANGE COLUMN document_1_type lt_document_1_type VARCHAR(255),
-    CHANGE COLUMN document_1_url lt_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`lt_document_1_url`)),
+    CHANGE COLUMN document_1_url lt_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN document_2_type lt_document_2_type VARCHAR(255),
-    CHANGE COLUMN document_2_url lt_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`lt_document_2_url`)),
+    CHANGE COLUMN document_2_url lt_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN status lt_status INT(11),
     CHANGE COLUMN created_by lt_created_by INT(11),
     CHANGE COLUMN created_on lt_created_on DATETIME,
@@ -253,9 +266,9 @@ CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLA
     CHANGE COLUMN assigned_area_head mh_assigned_area_head INT(11),
     CHANGE COLUMN address mh_address VARCHAR(255),
     CHANGE COLUMN document_1_type mh_document_1_type VARCHAR(255),
-    CHANGE COLUMN document_1_url mh_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`mh_document_1_url`)),
+    CHANGE COLUMN document_1_url mh_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN document_2_type mh_document_2_type VARCHAR(255),
-    CHANGE COLUMN document_2_url mh_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`mh_document_2_url`)),
+    CHANGE COLUMN document_2_url mh_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN status mh_status INT(11),
     CHANGE COLUMN created_by mh_created_by INT(11),
     CHANGE COLUMN created_on mh_created_on DATETIME,
@@ -291,16 +304,16 @@ CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLA
     CHANGE COLUMN assigned_store_id ose_assigned_store_id INT(11),
     CHANGE COLUMN address ose_address VARCHAR(255),
     CHANGE COLUMN document_1_type ose_document_1_type VARCHAR(255),
-    CHANGE COLUMN document_1_url ose_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ose_document_1_url`)),
+    CHANGE COLUMN document_1_url ose_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN document_2_type ose_document_2_type VARCHAR(255),
-    CHANGE COLUMN document_2_url ose_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ose_document_2_url`)),
+    CHANGE COLUMN document_2_url ose_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN status ose_status INT(11),
     CHANGE COLUMN role ose_role INT(11),
     CHANGE COLUMN created_by ose_created_by INT(11),
     CHANGE COLUMN created_on ose_created_on DATETIME,
     CHANGE COLUMN last_updated_by ose_last_updated_by INT(11),
     CHANGE COLUMN last_updated_on ose_last_updated_on DATETIME,
-    CHANGE COLUMN certificates ose_certificates longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ose_certificates`));""",
+    CHANGE COLUMN certificates ose_certificates longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin;""",
 
     """ALTER TABLE product_categories
     CHANGE COLUMN category_id pc_category_id INT(11) NOT NULL AUTO_INCREMENT,
@@ -381,7 +394,7 @@ CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLA
     CHANGE COLUMN product_total_cost so_product_total_cost INT(11),
     CHANGE COLUMN discount_percentage so_discount_percentage INT(11),
     CHANGE COLUMN is_discount_applied so_is_discount_applied INT(11),
-    CHANGE COLUMN power_attribute so_power_attribute longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`so_power_attribute`)),
+    CHANGE COLUMN power_attribute so_power_attribute longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN assigned_lab so_assigned_lab INT(11),
     CHANGE COLUMN customer_id so_customer_id INT(11),
     CHANGE COLUMN order_status so_order_status INT(11),
@@ -390,7 +403,7 @@ CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLA
     CHANGE COLUMN payment_mode so_order_mode INT(11),
     CHANGE COLUMN amount_paid so_amount_paid INT(11),
     CHANGE COLUMN estimated_delivery_date so_estimated_delivery_date DATE,
-    CHANGE COLUMN linked_item so_linked_item longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`so_linked_item`)),
+    CHANGE COLUMN linked_item so_linked_item longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN sales_note so_sales_note LONGTEXT,
     CHANGE COLUMN created_by_store so_created_by_store INT(11),
     CHANGE COLUMN created_by_store_type so_created_by_store_type INT(11),
@@ -420,7 +433,6 @@ CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLA
     CHANGE COLUMN last_updated_on si_last_updated_on DATETIME,
     CHANGE COLUMN last_updated_by si_last_updated_by INT(11);""",
 
-
     """ALTER TABLE units
     CHANGE COLUMN unit_id unit_unit_id INT(11) NOT NULL AUTO_INCREMENT,
     CHANGE COLUMN unit_name unit_name VARCHAR(255),
@@ -439,9 +451,9 @@ CHANGE COLUMN certificates fse_certificates longtext CHARACTER SET utf8mb4 COLLA
     CHANGE COLUMN profile_pic ac_profile_pic VARCHAR(255),
     CHANGE COLUMN address ac_address VARCHAR(255),
     CHANGE COLUMN document_1_type ac_document_1_type VARCHAR(255),
-    CHANGE COLUMN document_1_url ac_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ac_document_1_url`)),
+    CHANGE COLUMN document_1_url ac_document_1_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN document_2_type ac_document_2_type VARCHAR(255),
-    CHANGE COLUMN document_2_url ac_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin CHECK (json_valid(`ac_document_2_url`)),
+    CHANGE COLUMN document_2_url ac_document_2_url longtext CHARACTER SET utf8mb4 COLLATE utf8mb4_bin,
     CHANGE COLUMN status ac_status INT(11),
     CHANGE COLUMN created_by ac_created_by INT(11),
     CHANGE COLUMN created_on ac_created_on DATETIME,
