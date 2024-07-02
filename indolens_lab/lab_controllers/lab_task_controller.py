@@ -12,6 +12,7 @@ def getIndianTime():
     today = datetime.datetime.now(ist)
     return today
 
+
 def get_lab_jobs(labId, status):
     status_conditions = {
         "All": "IN (1,2,3,4,5,6,7)",
@@ -81,6 +82,83 @@ def get_lab_jobs(labId, status):
                         """
             cursor.execute(get_order_details_query)
             jobs_details = cursor.fetchall()
+
+            return {
+                "status": True,
+                "task_list": jobs_details,
+            }, 200
+
+    except pymysql.Error as e:
+        return {"status": False, "message": str(e)}, 301
+    except Exception as e:
+        return {"status": False, "message": str(e)}, 301
+
+
+def get_active_jobs_power(labId):
+    try:
+        with getConnection().cursor() as cursor:
+            get_order_details_query = f"""
+                            SELECT 
+                                so.*,
+                                CASE 
+                                    WHEN so.so_created_by_store_type = 1 THEN os.os_store_name 
+                                    ELSE fs.fs_store_name 
+                                END AS store_name,
+                                CASE 
+                                    WHEN so.so_created_by_store_type = 1 THEN creator_os.ose_name 
+                                    ELSE creator_fs.fse_name 
+                                END AS creator_name,
+                                CASE 
+                                    WHEN so.so_created_by_store_type = 1 THEN updater_os.ose_name 
+                                    ELSE updater_fs.fse_name 
+                                END AS updater_name,
+                                c.*, ci.*, pc.pc_category_name, pm.pm_material_name,
+                                ft.ftype_name, fsh.fshape_name,co.pcol_color_name, u.unit_name, b.brand_name
+                            FROM 
+                                sales_order AS so
+                            LEFT JOIN 
+                                customers AS c ON c.customer_customer_id = so.so_customer_id
+                            LEFT JOIN 
+                                lab AS l ON so.so_assigned_lab = l.lab_lab_id
+                            LEFT JOIN 
+                                central_inventory AS ci ON ci.ci_product_id = so.so_product_id
+                            LEFT JOIN 
+                                product_categories AS pc ON ci.ci_category_id = pc.pc_category_id
+                            LEFT JOIN 
+                                product_materials AS pm ON ci.ci_material_id = pm.pm_material_id
+                            LEFT JOIN 
+                                frame_types AS ft ON ci.ci_frame_type_id = ft.ftype_frame_id
+                            LEFT JOIN 
+                                frame_shapes AS fsh ON ci.ci_frame_shape_id = fsh.fshape_shape_id
+                            LEFT JOIN 
+                                product_colors AS co ON ci.ci_color_id = co.pcol_color_id
+                            LEFT JOIN 
+                                units AS u ON ci.ci_unit_id = u.unit_unit_id
+                            LEFT JOIN 
+                                brands AS b ON ci.ci_brand_id = b.brand_brand_id
+                            LEFT JOIN 
+                                own_store os ON so.so_created_by_store = os.os_store_id AND so.so_created_by_store_type = 1
+                            LEFT JOIN 
+                                franchise_store fs ON so.so_created_by_store = fs.fs_store_id AND so.so_created_by_store_type = 2
+                            LEFT JOIN 
+                                own_store_employees creator_os ON so.so_created_by = creator_os.ose_employee_id AND so.so_created_by_store_type = 1
+                            LEFT JOIN 
+                                franchise_store_employees creator_fs ON so.so_created_by = creator_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                            LEFT JOIN 
+                                own_store_employees updater_os ON so.so_updated_by = updater_os.ose_employee_id AND so.so_created_by_store_type = 1
+                            LEFT JOIN 
+                                franchise_store_employees updater_fs ON so.so_updated_by = updater_fs.fse_employee_id AND so.so_created_by_store_type = 2
+                            WHERE so.so_assigned_lab = {labId} AND so.so_order_status IN (1,2) AND ci.ci_category_id IN (2,3)
+                            ORDER BY so.so_sale_item_id DESC 
+                        """
+            cursor.execute(get_order_details_query)
+            jobs_details = cursor.fetchall()
+
+            for job in jobs_details:
+                so_power_attribute = json.loads(job['so_power_attribute'])
+                job['so_power_attribute'] = so_power_attribute
+                job['so_power_attribute_formatted'] = ', '.join(
+                    f"{key}: {value}" for key, value in so_power_attribute.items())
 
             return {
                 "status": True,
@@ -235,11 +313,11 @@ def get_sale_item_details(saleId, assigned_lab):
             sale_item_details['so_linked_item'] = json.loads(sale_item_details['so_linked_item']) if sale_item_details[
                 'so_linked_item'] else []
             sale_item_details['so_power_attribute'] = json.loads(sale_item_details['so_power_attribute']) if \
-            sale_item_details[
-                'so_power_attribute'] else []
+                sale_item_details[
+                    'so_power_attribute'] else []
             sale_item_details['ci_power_attribute'] = json.loads(sale_item_details['ci_power_attribute']) if \
-            sale_item_details[
-                'ci_power_attribute'] else []
+                sale_item_details[
+                    'ci_power_attribute'] else []
             all_frame_details = []
 
             if sale_item_details['so_linked_item'] != 0:
@@ -332,6 +410,7 @@ def get_lab_job_stats(labId):
     except Exception as e:
         return {"status": False, "message": str(e)}, 301
 
+
 def task_status_change(orderID, orderStatus):
     print(orderStatus)
     status_conditions = {
@@ -411,8 +490,8 @@ def task_status_change(orderID, orderStatus):
             if orderStatus == "7":
                 subject = email_template_controller.get_order_cancelled_email_subject(order[0]['so_order_id'])
                 body = email_template_controller.get_order_cancelled_email_body(order[0]['customer_name'],
-                                                                                    order[0]['so_order_id'],
-                                                                                    status_condition, getIndianTime())
+                                                                                order[0]['so_order_id'],
+                                                                                status_condition, getIndianTime())
                 print(subject)
                 print(body)
                 email_resp = send_notification_controller.send_email(subject, body, order[0]['customer_email'])

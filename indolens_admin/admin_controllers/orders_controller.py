@@ -1,4 +1,6 @@
 import datetime
+import json
+
 import pymysql
 import pytz
 from indolens.db_connection import getConnection
@@ -348,6 +350,12 @@ def get_order_details(orderId):
             cursor.execute(get_order_details_query)
 
             orders_details = cursor.fetchall()
+
+            for order in orders_details:
+                so_power_attribute = json.loads(order['so_power_attribute'])
+                order['so_power_attribute'] = json.loads(order['so_power_attribute'])
+                order['so_power_attribute_formatted'] = ', '.join(
+                    f"{key}: {value}" for key, value in so_power_attribute.items())
 
             return {
                 "status": True,

@@ -627,7 +627,7 @@ def createFranchiseOwners(request):
 
             franchise_owner_obj = store_employee_model.store_employee_from_dict(request.POST)
             response, status_code = franchise_manager_controller.create_franchise_owner(franchise_owner_obj, file_data)
-            
+
             if status_code == 200:
                 url = reverse('view_franchise_owner', kwargs={'franchiseOwnersId': response['franchiseOwnersId']})
                 return redirect(url)
@@ -1025,7 +1025,7 @@ def manageOptimetry(request, status):
         response, status_code = optimetry_controller.get_all_optimetry(status)
 
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
-        
+
         return render(request, 'indolens_admin/optimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1184,7 +1184,7 @@ def manageFranchiseOptimetry(request, status):
         response, status_code = optimetry_controller.get_all_franchise_optimetry(status)
 
         available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
-        
+
         return render(request, 'indolens_admin/franchiseOptimetry/manageOptimetry.html',
                       {"optimetry_list": response['optimetry_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1339,7 +1339,7 @@ def manageSaleExecutives(request, status):
         response, status_code = sales_executives_controller.get_all_own_sales_executive(status)
 
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
-        
+
         return render(request, 'indolens_admin/salesExecutive/manageSaleExecutives.html',
                       {"sales_executive_list": response['sales_executive_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1494,7 +1494,7 @@ def manageFranchiseSaleExecutives(request, status):
         response, status_code = sales_executives_controller.get_all_franchise_sales_executive(status)
 
         available_stores_response, available_stores_status_code = franchise_manager_controller.get_active_franchise_stores()
-        
+
         return render(request, 'indolens_admin/franchiseSalesExecutive/manageSaleExecutives.html',
                       {"franchise_sales_executive_list": response['franchise_sales_executive_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -1937,7 +1937,7 @@ def manageOtherEmployees(request, status):
         response, status_code = other_employee_controller.get_all_other_emp(status)
 
         available_stores_response, available_stores_status_code = own_store_controller.get_active_own_stores()
-        
+
         return render(request, 'indolens_admin/otherEmployees/manageOtherEmployees.html',
                       {"other_employee_list": response['other_emp_list'],
                        "available_stores": available_stores_response['available_stores'], "status": status})
@@ -3049,7 +3049,7 @@ def centralInventoryAddProducts(request):
             return redirect(url)
         else:
             response, status_code = central_inventory_controller.get_all_active_types()
-            # 
+            #
             return render(request, 'indolens_admin/centralInventory/centralInventoryAddProducts.html', response)
 
     else:

@@ -152,6 +152,17 @@ body {
 
 
 
+
+
+
+
+
+
+
+
+
+
+
     </style>
 
 </head>
@@ -179,18 +190,24 @@ body {
                         </button>
                     </div>
                 </div>
+                <div style="display: flex; justify-content: space-between; align-items: center; text-align: center;">
+                    <div style="display: flex; flex-direction: column; align-items: flex-start;">
+                        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" height="60">
+                        <h1 style="margin: 0;" class="mt-2">Indolens</h1>
+                    </div>
+                    <div>
+                        <h1 style="margin-left: 0px;" class="mt-2">ಇಂಡೊಲೆನ್ಸ್</h1>
+                    </div>
+                    <div style="display: flex; flex-direction: column; align-items: centre;">
+                        {% if invoice_details.invoice_invoice_number|length != 0 %}
+                        <h1 class="mb-3">Invoice</h1>
+                        {% else %}
+                        <h1 class="mb-3">Approval Challan</h1>
+                        {% endif %}
+                    </div>
+                </div>
 
                 <div id="invoice_details" class="bg-soft p-4 mb-4 rounded-2">
-                    <div>
-                        <img src="{% static 'img/icons/logo.png' %}" alt="Logo" style="max-height: 60px;">
-                        <h2 class="mt-2">Indolens</h2>
-                        <h2 class="mt-2">ಇಂಡೊಲೆನ್ಸ್</h2>
-                    </div>
-                    {% if invoice_details.invoice_invoice_number|length != 0 %}
-                    <h1 class="mb-3">Invoice</h1>
-                    {% else %}
-                    <h1 class="mb-3">Approval Challan</h1>
-                    {% endif %}
                     <div class="table-responsive">
                         <table class="table table-borderless">
                             <tbody>
@@ -199,7 +216,7 @@ body {
                                 <th scope="row" class="align-middle">Invoice No</th>
                                 <td class="align-middle"><b>{{invoice_details.invoice_invoice_number}}</b></td>
                                 <th scope="row" class="align-middle">Invoice Date</th>
-                                <td class="align-middle">{{invoice_details.invoice_invoice_date|date:"d/m/Y "}}</td>
+                                <td class="align-middle">{{invoice_details.invoice_invoice_date|date:"d/m/Y"}}</td>
                             </tr>
                             {% endif %}
                             <tr>
@@ -215,7 +232,7 @@ body {
                             <tr>
                                 <th scope="row" class="align-middle">Order Date</th>
                                 <td class="align-middle">{{order_detail.0.so_created_on|date:"d/m/Y h:i A"}}</td>
-                                <th scope="row" class="align-middle">Sold by</th>
+                                <th scope="row" class="align-middle">Sold By</th>
                                 {% if order_detail.0.so_created_by_store_type == 1 %}
                                 <td class="align-middle" colspan="3">{{store_data.os_store_name}}<br/>{{store_data.os_store_address}}
                                     <br/>{{store_data.os_store_email}}<br/>{{store_data.os_store_phone}}
@@ -309,7 +326,8 @@ body {
                                 <td colspan="1"></td>
                                 <td colspan="1"></td>
                                 <td class="align-middle fw-semi-bold" colspan="1"><b>Subtotal</b></td>
-                                <td style="text-align: end;" class="align-middle text-end fw-bold" colspan="2">₹{{order_detail.0.discount_cost }}
+                                <td style="text-align: end;" class="align-middle text-end fw-bold" colspan="2">
+                                    ₹{{order_detail.0.discount_cost }}
                                 </td>
                             </tr>
                             <tr>
@@ -341,7 +359,8 @@ body {
                             <tr class="bg-200">
                                 <td class="align-middle ps-4 fw-bold text-1000" colspan="2"><b>Balance Amount</b></td>
                                 <td id="totalWords" class="align-middle fw-bold text-1000" colspan="7"></td>
-                                <td class="align-middle text-end fw-bold" style="text-align: end; font-weight: bold;"> ₹{{order_detail.0.balance_amount}}
+                                <td class="align-middle text-end fw-bold" style="text-align: end; font-weight: bold;">
+                                    ₹{{order_detail.0.balance_amount}}
                                 </td>
                             </tr>
                             {% else %}
@@ -358,6 +377,7 @@ body {
                             </tbody>
                         </table>
                     </div>
+                    <br>
                     <div style="margin-top: 100px;">
                         <h4>Authorized Signatory</h4>
                     </div>
@@ -373,13 +393,190 @@ body {
                             7. All legal disputes are subjected to Nelamangala jurisdiction.<br/>
                         </p>
                     </div>
+                    <br>
+                    {% if invoice_details.invoice_invoice_number|length == 0 %}
+                    <div class="tab-pane">
+                        <table class="table">
+                            <tbody>
+                            <tr>
+                                <td>
+                                    <b>CUSTOMER DETAILS</b><br>
+                                    Name: {{order_detail.0.customer_name}}<br>
+                                    Phone: {{order_detail.0.customer_phone}}<br>
+                                    Order Placed By: {{order_detail.0.creator_name}}<br>
+                                </td>
+                                <td>
+                                    <b>ORDER DETAILS</b><br>
+                                    Order: {{order_detail.0.so_order_id}}<br>
+                                    Date: {{order_detail.0.so_created_on|date:"d/m/Y h:i A"}}<br>
+                                    Delivery On: {{order_detail.0.so_estimated_delivery_date|date:"d/m/Y"}}<br>
+                                </td>
+                                {% for order in order_detail %}
+                                <td>
+                                    <b>PRODUCT DETAILS</b><br>
+                                    Category: {{order.pc_category_name}}<br>
+                                    Lens Name: {{order.ci_product_name}}<br>
+                                    Lens Material: {{order.pm_material_name}}<br>
+                                    Lens Type: {{order.so_power_attribute.lens_type}}<br>
+                                    Brand: {{order.brand_name}}<br>
+                                </td>
+                                {% endfor %}
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    {% for order_detail in order_detail %}
+                    <div class="row mb-3 mt-3 mb-3">
+                        <div class="col-12">
+                            {% if order_detail.ci_category_id == 2 %}
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                        scope="col"></th>
+                                    <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                        scope="col">SPH
+                                    </th>
+                                    <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                        scope="col">CYL
+                                    </th>
+                                    <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                        scope="col">AXIS
+                                    </th>
+                                    <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                        scope="col">ADD
+                                    </th>
+                                    <th class="size align-middle white-space-nowrap text-700 fw-semi-bold py-0 ps-4"
+                                        scope="col">PD
+                                    </th>
+                                </tr>
+                                </thead>
+                                {% if order_detail.so_power_attribute.stock_type == 'stock' %}
+                                <tbody>
+                                <tr>
+                                    <th scope="row">R</th>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.rightLensSphStock}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.rightLensCylStock}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.rightLensAxisStock}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.rightLensAddStock}}</p>
+                                    </td>
+                                    <td>
+                                        <p>
+                                            {{order_detail.so_power_attribute.rightLensPdStock}}
+                                        </p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">L</th>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensSphStock}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensCylStock}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensAxisStock}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensAddStock}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensPdStock}}</p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {% else %}
+                                <tbody>
+                                <tr>
+                                    <th scope="row">R</th>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.rightLensSphRx}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.rightLensCylRx}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.rightLensAxisRx}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.rightLensAddRx}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.rightLensPdRx}}</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th scope="row">L</th>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensSphRx}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensCylRx}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensAxisRx}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensAddRx}}</p>
+                                    </td>
+                                    <td>
+                                        <p>{{order_detail.so_power_attribute.leftLensPdRx}}</p>
+                                    </td>
+                                </tr>
+                                </tbody>
+                                {% endif %}
+                            </table>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+
+                    {% if order_detail.0.ci_category_id == 3 %}
+                    <div class="row mb-3 cl_rx_power_card" id="cl_rx_power_card[${productCardCount}]">
+                        <div class="col-12">
+                            <table class="table">
+                                <thead>
+                                <tr>
+                                    <th scope="col">EYE</th>
+                                    <th scope="col">Power</th>
+                                    <th scope="col">BC</th>
+                                    <th scope="col">DIA</th>
+                                    <th scope="col">CYLINDER</th>
+                                    <th scope="col">AXIS</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                {% for order_detail in order_detail %}
+                                <tr>
+                                    <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.eye }}</td>
+                                    <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.power }}
+                                    </td>
+                                    <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.bc }}</td>
+                                    <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.dia }}</td>
+                                    <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.cyl }}</td>
+                                    <td class="col-auto col-lg-2">{{ order_detail.so_power_attribute.axis }}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endif %}
 
                 </div>
+                <!-- end of .container-->
+
 
             </div>
-            <!-- end of .container-->
-
-
         </div>
     </div>
 
@@ -496,6 +693,17 @@ body {
 
     }
     });
+
+
+
+
+
+
+
+
+
+
+
 
 </script>
 

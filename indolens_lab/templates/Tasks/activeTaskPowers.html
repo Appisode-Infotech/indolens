@@ -1,0 +1,355 @@
+<!DOCTYPE html>
+<html dir="ltr" lang="en-US">
+
+<head>
+    <meta charset="utf-8">
+    <meta content="IE=edge" http-equiv="X-UA-Compatible">
+    <meta content="width=device-width, initial-scale=1" name="viewport">
+
+
+    <!-- ===============================================-->
+    <!--    Document Title-->
+    <!-- ===============================================-->
+    <title>Indolens {{request.session.lab_name}} - Active Jobs Powers </title>
+    {% load static %}
+
+
+    <!-- ===============================================-->
+    <!--    Favicons-->
+    <!-- ===============================================-->
+    <link href="{% static 'img/favicons/apple-touch-icon.png' %}" rel="apple-touch-icon" sizes="180x180">
+    <link href="{% static 'img/favicons/favicon-32x32.png' %}" rel="icon" sizes="32x32" type="image/png">
+    <link href="{% static 'img/favicons/favicon-16x16.png' %}" rel="icon" sizes="16x16" type="image/png">
+    <link href="{% static 'img/favicons/favicon.ico' %}" rel="shortcut icon" type="image/x-icon">
+    <link href="{% static 'img/favicons/manifest.json' %}" rel="manifest">
+    <meta content="{% static 'img/favicons/mstile-150x150.png' %}" name="msapplication-TileImage">
+    <meta content="#ffffff" name="theme-color">
+    <script src="{% static 'vendors/imagesloaded/imagesloaded.pkgd.min.js' %}"></script>
+    <script src="{% static 'vendors/simplebar/simplebar.min.js' %}"></script>
+    <script src="{% static 'js/config.js' %}"></script>
+
+    <!-- ===============================================-->
+    <!-- Stylesheets -->
+    <!-- ===============================================-->
+    <link href="https://fonts.googleapis.com" rel="preconnect">
+    <link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700;800;900&amp;display=swap"
+          rel="stylesheet">
+    <link href="{% static 'vendors/simplebar/simplebar.min.css' %}" rel="stylesheet">
+    <link href="https://unicons.iconscout.com/release/v4.0.0/css/line.css" rel="stylesheet">
+    <link href="{% static 'css/theme-rtl.min.css' %}" id="style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/theme.min.css' %}" id="style-default" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user-rtl.min.css' %}" id="user-style-rtl" rel="stylesheet" type="text/css">
+    <link href="{% static 'css/user.min.css' %}" id="user-style-default" rel="stylesheet" type="text/css">
+
+    <script>
+      var isRTL = JSON.parse(localStorage.getItem('isRTL'));
+      if (isRTL) {
+        var linkDefault = document.getElementById('style-default');
+        var userLinkDefault = document.getElementById('user-style-default');
+        linkDefault.setAttribute('disabled', true);
+        userLinkDefault.setAttribute('disabled', true);
+        document.querySelector('html').setAttribute('dir', 'rtl');
+      } else {
+        var linkRTL = document.getElementById('style-rtl');
+        var userLinkRTL = document.getElementById('user-style-rtl');
+        linkRTL.setAttribute('disabled', true);
+        userLinkRTL.setAttribute('disabled', true);
+      }
+
+
+
+
+    </script>
+</head>
+
+
+<body>
+
+<!-- ===============================================-->
+<!--    Main Content-->
+<!-- ===============================================-->
+<main class="main" id="top">
+    <div class="container-fluid px-0">
+        {% include 'nav_bar_lab.html' %}
+
+        <div class="content">
+
+            <div class="mb-9">
+                <div class="row g-3 mb-4">
+                    <div class="col-auto">
+                        <h2 class="mb-0">Active Jobs Powers<span
+                                class="fw-normal text-700 ms-3">({{all_task|length}})</span></h2>
+                    </div>
+                </div>
+
+                <div data-list='{"valueNames":["slno","jobId","store","product","category","material","type","shape","color","unit","brand","jobStatus"],"page":20,"pagination":true}'
+                     id="orderTable">
+                    <div class="mb-4">
+                        <div class="row g-3">
+                            <div class="col-auto">
+                                <div class="search-box">
+                                    <form class="position-relative" data-bs-display="static" data-bs-toggle="search">
+                                        <input aria-label="Search" class="form-control search-input search"
+                                               placeholder="Search Tasks" type="search"/>
+                                        <span class="fas fa-search search-box-icon"></span>
+
+                                    </form>
+                                </div>
+                            </div>
+
+                            <div class="col-auto scrollbar overflow-hidden-y flex-grow-1">
+                                <div class="btn-group position-static" role="group">
+                                    <div class="col-auto scrollbar overflow-hidden-y flex-grow-1 me-4">
+                                        <div class="btn-group position-static" role="group">
+                                        </div>
+                                    </div>
+                                    <button id="btnExport" class="btn btn-link text-900 me-4 px-0 ms-4"><span
+                                            class="fa-solid fa-file-export fs--1 me-2"></span>Export
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="mx-n4 px-4 mx-lg-n6 px-lg-6 bg-white border-top border-bottom border-200 position-relative top-1">
+                        <div class="table-responsive scrollbar mx-n1 px-1">
+                            <table class="table table-sm fs--1 mb-0" id="myTable">
+                                <thead>
+                                <tr>
+                                    <th class="sort white-space-nowrap align-middle pe-3" data-sort="slno" scope="col"
+                                        style="width:5%;">SL NO
+                                    </th>
+                                    <th class="sort align-middle" data-sort="jobId" scope="col"
+                                        style="width:150px;">JOB ID
+                                    </th>
+                                    <th class="sort align-middle " data-sort="store" scope="col"
+                                        style="width:150px;">STORE
+                                    </th>
+                                    <th class="sort align-middle " data-sort="product" scope="col"
+                                        style="width:150px;">PRODUCT NAME
+                                    </th>
+                                    <th class="sort align-middle " scope="col"
+                                        style="width:150px;">PRODUCT POWERS
+                                    </th>
+                                    <th class="sort align-middle " data-sort="category" scope="col"
+                                        style="width:150px;">CATEGORY
+                                    </th>
+                                    <th class="sort align-middle " data-sort="material" scope="col"
+                                        style="width:300px;">MATERIAL
+                                    </th>
+                                    <th class="sort align-middle " data-sort="type" scope="col"
+                                        style="width:300px;">TYPE
+                                    </th>
+                                    <th class="sort align-middle  " data-sort="shape" scope="col"
+                                        style="width:200px;">SHAPE
+                                    </th>
+                                    <th class="sort align-middle  " data-sort="color" scope="col"
+                                        style="width:250px;">COLOR
+                                    </th>
+                                    <th class="sort align-middle  " data-sort="unit" scope="col"
+                                        style="width:250px;">UNIT
+                                    </th>
+                                    <th class="sort align-middle  " data-sort="brand" scope="col"
+                                        style="width:250px;">BRAND
+                                    </th>
+                                    <th class="sort align-middle  " data-sort="jobStatus" scope="col"
+                                        style="width:250px;">CREATED ON
+                                    </th>
+                                    <th class="sort align-middle text-end " scope="col"
+                                        style="width:250px;">ACTION
+                                    </th>
+
+                                </tr>
+                                </thead>
+                                <tbody class="list" id="order-table-body">
+                                {% for order in all_task %}
+                                <tr class="hover-actions-trigger btn-reveal-trigger position-static"
+                                    data-category="{{ order.so_order_status }}">
+                                    <td class="fs--1 align-middle px-0 py-3 slno"></td>
+                                    <td class="jobId align-middle ">
+                                        <a class="fw-semi-bold line-clamp-2 mb-0"
+                                           href="{% url 'lab_job_details' order.so_order_id %}">
+                                            {{order.so_order_id}}
+                                        </a>
+                                    </td>
+                                    <td class="store align-middle ">
+                                        {{order.store_name}}
+                                    </td>
+                                    <td class="product align-middle white-space-nowrap text-700 fw-semi-bold  ">
+                                        {{order.ci_product_name}}
+                                    </td>
+                                    <td class=" align-middle white-space-nowrap text-700 fw-semi-bold  ">
+                                        {% if order.ci_category_id == 2 %}
+                                            {% if order.so_power_attribute.stock_type == 'stock' %}
+                                                Lens Type: {{order.so_power_attribute.lens_type}}<br>
+                                                Stock Type: {{order.so_power_attribute.stock_type}}<br>
+                                                Right Lens Sph Stock: {{order.so_power_attribute.rightLensSphStock}}<br>
+                                                Right Lens Cyl Stock: {{order.so_power_attribute.rightLensCylStock}}<br>
+                                                Right Lens Axis Stock: {{order.so_power_attribute.rightLensAxisStock}}<br>
+                                                Right Lens Add Stock: {{order.so_power_attribute.rightLensAddStock}}<br>
+                                                Right Lens Pd Stock: {{order.so_power_attribute.rightLensPdStock}}<br>
+                                                Left Lens Sph Stock: {{order.so_power_attribute.leftLensSphStock}}<br>
+                                                Left Lens Cyl Stock: {{order.so_power_attribute.leftLensCylStock}}<br>
+                                                Left Lens Axis Stock: {{order.so_power_attribute.leftLensAxisStock}}<br>
+                                                Left Lens Add Stock: {{order.so_power_attribute.leftLensAddStock}}<br>
+                                                Left Lens Pd Stock: {{order.so_power_attribute.leftLensPdStock}}<br>
+                                            {% else %}
+                                                Lens Type: {{order.so_power_attribute.lens_type}}<br>
+                                                Stock Type: {{order.so_power_attribute.stock_type}}<br>
+                                                Right Lens Sph Rx: {{ order.so_power_attribute.rightLensSphRx }}<br>
+                                                Right Lens Cyl Rx: {{ order.so_power_attribute.rightLensCylRx }}<br>
+                                                Right Lens Axis Rx: {{ order.so_power_attribute.rightLensAxisRx }}<br>
+                                                Right Lens Add Rx: {{ order.so_power_attribute.rightLensAddRx }}<br>
+                                                Right Lens PD Rx: {{ order.so_power_attribute.rightLensPdRx }}<br>
+                                                Left Lens Sph Rx: {{ order.so_power_attribute.leftLensSphRx }}<br>
+                                                Left Lens Cyl Rx: {{ order.so_power_attribute.leftLensCylRx }}<br>
+                                                Left Lens Axis Rx: {{ order.so_power_attribute.leftLensAxisRx }}<br>
+                                                Left Lens Add Rx: {{ order.so_power_attribute.leftLensAddRx }}<br>
+                                                Left Lens PD Rx: {{ order.so_power_attribute.leftLensPdRx }}<br>
+                                            {% endif %}
+                                        {% elif order.ci_category_id == 3 %}
+                                        Stock Type: {{ order.so_power_attribute.stock_type }}<br>
+                                        Contact Lens Type: {{ order.so_power_attribute.contact_lens_type }}<br>
+                                        Contact Lens Disposability: {{ order.so_power_attribute.contact_lens_disposability }}<br>
+                                        Eye: {{ order.so_power_attribute.eye }}<br>
+                                        Power: {{ order.so_power_attribute.power }}<br>
+                                        BC: {{ order.so_power_attribute.bc }}<br>
+                                        Dia: {{ order.so_power_attribute.dia }}<br>
+                                        Cyl: {{ order.so_power_attribute.cyl }}<br>
+                                        Axis: {{ order.so_power_attribute.axis }}<br>
+
+                                        {% endif%}
+                                    </td>
+
+                                    <td class="category align-middle white-space-nowrap text-900  ">
+                                        {% if order.pc_category_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.pc_category_name}}
+                                        {% endif %}
+
+                                    </td>
+                                    <td class="material align-middle white-space-nowrap text-700 fw-semi-bold  ">
+                                        {% if order.pm_material_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.pm_material_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="type align-middle white-space-nowrap text-700 fw-semi-bold  ">
+                                        {% if order.ftype_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.ftype_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="shape align-middle    text-700">
+                                        {% if order.fshape_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.fshape_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="color align-middle text-900 fw-semi-bold   ">
+                                        {% if order.pcol_color_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.pcol_color_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="unit align-middle text-900 fw-semi-bold   ">
+                                        {% if order.unit_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.unit_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="brand align-middle text-900 fw-semi-bold   ">
+                                        {% if order.brand_name == None %}
+                                        N/A
+                                        {% else %}
+                                        {{order.brand_name}}
+                                        {% endif %}
+                                    </td>
+                                    <td class="jobStatus align-middle text-900 fw-semi-bold ">
+                                        {{order.so_created_on|date:"d/m/Y h:i A"}}
+                                    </td>
+
+                                    <td class="price align-middle text-900 fw-semi-bold text-end  ">
+                                        <div class="font-sans-serif btn-reveal-trigger position-static">
+                                            <button aria-expanded="false"
+                                                    aria-haspopup="true"
+                                                    class="btn btn-sm dropdown-toggle dropdown-caret-none transition-none btn-reveal fs--2"
+                                                    data-boundary="window"
+                                                    data-bs-reference="parent" data-bs-toggle="dropdown"
+                                                    type="button">
+                                                <span class="fas fa-ellipsis-h fs--2"></span></button>
+                                            <div class="dropdown-menu dropdown-menu-end py-2">
+                                                <a class="dropdown-item"
+                                                   href="{% url 'lab_job_details' order.so_order_id %}">View
+                                                    Job</a>
+
+                                            </div>
+                                        </div>
+                                    </td>
+
+                                </tr>
+                                {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="row align-items-center justify-content-between py-2 pe-0 fs--1">
+                            <div class="col-auto d-flex">
+                                <p class="mb-0 d-none d-sm-block me-3 fw-semi-bold text-900"
+                                   data-list-info="data-list-info"></p><a class="fw-semi-bold" data-list-view="*"
+                                                                          href="#!">View all<span
+                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a><a
+                                    class="fw-semi-bold d-none" data-list-view="less" href="#!">View Less<span
+                                    class="fas fa-angle-right ms-1" data-fa-transform="down-1"></span></a>
+                            </div>
+                            <div class="col-auto d-flex">
+                                <button class="page-link" data-list-pagination="prev"><span
+                                        class="fas fa-chevron-left"></span></button>
+                                <ul class="mb-0 pagination"></ul>
+                                <button class="page-link pe-0" data-list-pagination="next"><span
+                                        class="fas fa-chevron-right"></span></button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            {% include 'footer.html' %}
+
+        </div>
+    </div>
+</main>
+<!-- ===============================================-->
+<!--    End of Main Content-->
+<!-- ===============================================-->
+
+
+<!-- ===============================================-->
+<!--    JavaScripts-->
+<!-- ===============================================-->
+<script src="{% static 'vendors/popper/popper.min.js' %}"></script>
+<script src="{% static 'vendors/bootstrap/bootstrap.min.js' %}"></script>
+<script src="{% static 'vendors/anchorjs/anchor.min.js' %}"></script>
+<script src="{% static 'vendors/is/is.min.js' %}"></script>
+<script src="{% static 'vendors/fontawesome/all.min.js' %}"></script>
+<script src="{% static 'vendors/lodash/lodash.min.js' %}"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=window.scroll"></script>
+<script src="{% static 'vendors/list.js/list.min.js' %}"></script>
+<script src="{% static 'vendors/feather-icons/feather.min.js' %}"></script>
+<script src="{% static 'vendors/dayjs/dayjs.min.js' %}"></script>
+<script src="{% static 'js/phoenix.js' %}"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
+<script src="{% static 'js/csvExport.js' %}"></script>
+<script src="{% static 'js/custom_modals.js' %}"></script>
+
+</body>
+
+</html>

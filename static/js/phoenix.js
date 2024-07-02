@@ -3870,6 +3870,15 @@
     /*                              Form Validation                               */
     /* -------------------------------------------------------------------------- */
     const fromValidationInit = () => {
+      const removeOverlay = () => {
+        const overlay = document.querySelector('.loading-overlay');
+        if (overlay) {
+            overlay.remove();
+        }
+    };
+        window.addEventListener('load', removeOverlay);
+    window.addEventListener('pageshow', removeOverlay);
+
         const forms = document.querySelectorAll('.needs-validation, .needs-password-validation');
         forms.forEach(form => {
             form.addEventListener(
@@ -3906,7 +3915,7 @@
                           display: flex;
                           justify-content: center;
                           align-items: center;
-                          z-index: 1000; /* Adjust the z-index as needed */
+                          z-index: 1050; /* Adjust the z-index as needed */
                       `;
                             overlay.innerHTML = `
                            <div style="text-align: center; color: white;">
@@ -3922,9 +3931,6 @@
                             form.submit();
                         }
                     }
-
-
-
 
                     event.preventDefault();
                     event.stopPropagation();
@@ -4720,12 +4726,20 @@
                     // -------fallback-----------
 
                     list.on('updated', function (item) {
-                        console.log("case1");
                         const fallback =
                             el.querySelector('.fallback') ||
                             document.getElementById(options.fallback);
-                        updateListControlsOnSearch();
+//                        updateListControlsOnSearch();
+                         let visibleItemCount = list.visibleItems.length;
+                         let startCount = 1;
+                         if (visibleItemCount == 0) {
+                         startCount = 0;
+                         noTableData();
+                         }
+                        const nextInitialIndex = startCount;
+                        numberOfcurrentItems = visibleItemCount;
 
+                        updateListControls();
                         if (fallback) {
                             if (item.matchingItems.length === 0) {
                                 fallback.classList.remove('d-none');
@@ -4795,7 +4809,12 @@
                     }
 
                     const updateListControls = () => {
+                    if(list.visibleItems.length>0){
                         listInfo && (listInfo.innerHTML = `${list.i} to ${numberOfcurrentItems} <span class='text-600'> Items of </span>${totalItem}`);
+                    }else{
+                        listInfo && (listInfo.innerHTML = `0 to ${numberOfcurrentItems} <span class='text-600'> Items of </span>${totalItem}`);
+                                            numberOfcurrentItems = (list.i+parseInt(list.page));
+                    }
                         paginationButtonPrev &&
                             togglePaginationButtonDisable(
                                 paginationButtonPrev,

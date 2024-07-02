@@ -7,23 +7,26 @@ class csvExport {
     }
   }
 
-exportCsv() {
-  const lines = [];
-  const ncols = this._longestRow();
-  for (const row of this.rows) {
-    let line = "";
-    // Iterate through one less column by using `ncols - 1`
-    for (let i = 0; i < ncols - 1; i++) {
-      if (row.children[i] !== undefined) {
-        line += csvExport.safeData(row.children[i]);
+  exportCsv() {
+    const lines = [];
+    const ncols = this._longestRow();
+    for (const row of this.rows) {
+      let line = "";
+      let colCount = 0;
+      for (let i = 0; i < ncols; i++) {
+        const cell = row.children[i];
+        if (cell && cell.style.display !== "none") {
+          if (colCount > 0) {
+            line += ",";
+          }
+          line += csvExport.safeData(cell);
+          colCount++;
+        }
       }
-      line += i !== ncols - 2 ? "," : "";
+      lines.push(line);
     }
-    lines.push(line);
+    return lines.join("\n");
   }
-  return lines.join("\n");
-}
-
 
   _longestRow() {
     let maxCols = 0;
@@ -36,19 +39,17 @@ exportCsv() {
     return maxCols;
   }
 
-static safeData(td) {
-  let data = td.textContent;
-  // Trim leading and trailing spaces
-  data = data.trim();
-  data = data.replace(/"/g, `""`);
-  data = /[",\n"]/.test(data) ? `"${data}"` : data;
-  return data;
-}
-
+  static safeData(td) {
+    let data = td.textContent;
+    data = data.trim();
+    data = data.replace(/"/g, `""`);
+    data = /[",\n"]/.test(data) ? `"${data}"` : data;
+    return data;
+  }
 }
 
 const btnExport = document.querySelector("#btnExport");
-const tableElement = document.querySelector(".table"); // Use the class selector here
+const tableElement = document.querySelector(".table");
 
 btnExport.addEventListener("click", () => {
   const obj = new csvExport(tableElement);

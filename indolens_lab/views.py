@@ -100,6 +100,16 @@ def allTask(request):
     else:
         return redirect('lab_login')
 
+def activeJobsPower(request):
+    assigned_lab = getAssignedLab(request)
+    if request.session.get('is_lab_tech_logged_in') is not None and request.session.get(
+            'is_lab_tech_logged_in') is True:
+        active_jobs_power, task_status_code = lab_task_controller.get_active_jobs_power(assigned_lab)
+        print(active_jobs_power)
+        return render(request, 'Tasks/activeTaskPowers.html', {"all_task": active_jobs_power['task_list']})
+    else:
+        return redirect('lab_login')
+
 
 def newTask(request):
     assigned_lab = getAssignedLab(request)

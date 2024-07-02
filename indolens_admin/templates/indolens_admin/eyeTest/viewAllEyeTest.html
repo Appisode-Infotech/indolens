@@ -150,6 +150,9 @@
                             <tr class="hover-actions-trigger btn-reveal-trigger position-static">
                                 <td class="fs--1 align-middle px-0 py-3 slNo"></td>
                                 <td class="fs--1 align-middle px-0 py-3 testNo">
+                                    <a target="_blank" href="{% url 'eye_test_print' test.et_eye_test_id %}">
+                                        TEST{{test.et_eye_test_id}} </a>
+                                <td class="fs--1 align-middle px-0 py-3 testNo">
                                     <a target="_blank"
                                                href="{% url 'eye_test_print' test.et_eye_test_id %}">
                                         TEST{{test.et_eye_test_id}}</a>
@@ -259,7 +262,6 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
 
 
 
